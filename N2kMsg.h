@@ -43,12 +43,13 @@ double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf,
 class tN2kMsg
 {
 public:
+  static const int MaxDataLen=255;
   unsigned char Priority;
   unsigned long PGN;
   mutable unsigned char Source;
   mutable unsigned char Destination;
   int DataLen;
-  unsigned char Data[255];
+  unsigned char Data[MaxDataLen];
   unsigned long MsgTime;
 
 public:
