@@ -10,4 +10,7 @@ To use Arduino Due board internal CAN you will also need NMEA2000_due library an
 due_can library, which you can download from  https://github.com/collin80/due_can
 
 To use Arduino boards with MCP2515 CAN bus controller, you will also need NMEA2000_mcp library
-and mcp_can library, which you can download from https://github.com/Seeed-Studio/CAN_BUS_Shield
+and mcp_can library. mcp_can library can be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
+Currently NMEA2000_mcp library uses developed version, which allows also to use 8MHz clock and
+has been tested with Maple Mini. So until these improvements has not been implemented to Seeed-Studio
+library, use library found on https://github.com/peppeve/CAN_BUS_Shield
