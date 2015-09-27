@@ -28,7 +28,8 @@ CAN_BUS shield card. Under documents there is file ArduinoMega_CAN_with_MCP2515_
 for layout to build CAN-bus interface by yourself. MCP2515, MCP2551, ocillator and few
 components cost only few euros, if you are handy and used to use soldering device.
 
-Library has been also used with Maple Mini board, which is much cheaper than arduino.
+Library has been also used with Maple Mini board, which is much cheaper than Arduino. mcp_can
+possibly works also with other Arduinos, but has not yet been tested.
 
 If you using Arduino for transfering all messages to PC, I'll prefere Due version, since it is more powerful.
 I Also prefere it, if you use handle messages (like GNSS) containing 8 byte double values. Arduino Mega has
@@ -48,7 +49,8 @@ library zip depending you hw.
 
 - Install all libraries (Add .ZIP library).
 
-- Open NMEA2000\Examples\TemperatureMonitor.
+- Open NMEA2000\Examples\TemperatureMonitor. On beginning of code uncomment and comment lines 
+(see // Uncomment these for using Arduino...) depending your hw. Alremember to set you board right.
 
 - Connect you Arduino to USB and NMEA2000 bus.
 
@@ -58,7 +60,7 @@ library zip depending you hw.
 "Simple temp monitor" on the list.
 
 So you are ready to play with your own device. Check also the NMEA2000\Examples\ActisenseListener, which reads all data
-from NEMA2000 bus and sends it to PC.
+from NMEA2000 bus and sends it to PC.
 
 == License ==
 
