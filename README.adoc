@@ -37,15 +37,23 @@ only 4 byte double, so you may loose some accuracy.
 == Software setup ==
 
 Library has been developed with Arduino Software 1.6.5. I'll expect you are familiar with Arduino
-and using libraries. When your Arduino environment is ready,</br>
-- Download NMEA2000 library zip.</br>
-- Download either NMEA2000_due or NMEA2000_mcp library zip depending you hw.</br>
+and using libraries. When your Arduino environment is ready,
+
+- Download NMEA2000 library zip.
+
+- Download either NMEA2000_due or NMEA2000_mcp library zip depending you hw.
+
 - Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/peppeve/CAN_BUS_Shield) 
-library zip depending you hw.</br>
-- Install all libraries (Add .ZIP library).</br>
-- Open NMEA2000\Examples\TemperatureMonitor.</br>
-- Connect you Arduino to USB and NMEA2000 bus.</br>
-- Send sketch to Arduino.</br>
+library zip depending you hw.
+
+- Install all libraries (Add .ZIP library).
+
+- Open NMEA2000\Examples\TemperatureMonitor.
+
+- Connect you Arduino to USB and NMEA2000 bus.
+
+- Send sketch to Arduino.
+
 - If you have Multi Function Display (e.g. Garmin GMI-20) on your NMEA2000 bus, you should see on it's NMEA2000 bus devices new device
 "Simple temp monitor" on the list.
 
