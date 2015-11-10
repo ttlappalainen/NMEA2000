@@ -133,7 +133,7 @@ bool tNMEA2000::Open() {
     }
 
     delay(200);
-    if (DeviceReady && (N2kMode!=N2km_ListenOnly) ) { // Start address claim automatically
+    if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) ) { // Start address claim automatically
       AddressClaimStarted=0;
       if ( ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println("Start address claim");
       SendIsoAddressClaim(0xff,0);

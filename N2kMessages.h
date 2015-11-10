@@ -39,17 +39,31 @@ NMEA2000.h
 #include <N2kMsg.h>
 
 #define TempUndef -300
+#define HumidityUndef -1
+#define PressureUndef -1
 #define EngineBoostUndef 0xffff
 #define EngineTrimTiltUndef 0xff
 #define AngleUndef -1000 
+#define SpeedUndef -1000 
 
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
+inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
 inline double CToKelvin(double v) { return v+273.15; }
+inline double mBarToPascal(double v) { return v*100; }
 
 
 typedef enum tN2kHeadingReference {N2khr_true=0,
                                    N2khr_magnetic=1
                                    };
+typedef enum tN2kDistanceCalculationType {N2kdct_GreatCircle=0,
+                                          N2kdct_RhumbLine=1
+                                         };
+typedef enum tN2kXTEMode  {N2kxtem_Autonomous=0,
+                           N2kxtem_Differential=1,
+                           N2kxtem_Estimated=2,
+                           N2kxtem_Simulator=3,
+                           N2kxtem_Manual=4
+                           };
 typedef enum tN2kGNSStype {N2kGNSSt_GPS=0,
                            N2kGNSSt_GLONASS=1,
                            N2kGNSSt_GPSGLONASS=2,
@@ -73,6 +87,11 @@ typedef enum tN2kTempSource {N2kts_SeaTemperature=0,
                              N2kts_FreezerTemperature=9
                              };
 
+typedef enum tN2kHumiditySource {N2khs_InsideHumidity=0,
+                             N2khs_OutsideHumidity=1,
+                             N2khs_Undef=1
+                             };
+
 typedef enum tN2kTimeSource {N2ktimes_GPS=0,
                              N2ktimes_GLONASS=1,
                              N2ktimes_RadioStation=2,
@@ -89,6 +108,20 @@ typedef enum tN2kFluidType {N2kft_Fuel=0,
                             N2kft_BlackWater=5
                              };
 
+typedef enum tN2kWindReference {N2kWind_True_North=0,
+                                N2kWind_Magnetic=1,
+                                N2kWind_Apprent=2,
+                                N2kWind_True_boat=3
+                               };
+
+typedef enum tN2kSpeedWaterReferenceType {N2kSWRT_Paddle_wheel=0,
+                                N2kSWRT_Pitot_tube=1,
+                                N2kSWRT_Doppler_log=2,
+                                N2kSWRT_Ultra_Sound=3,
+                                N2kSWRT_Electro_magnetic=4
+                               };
+
+                             
 //*****************************************************************************
 // System date/time
 void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
@@ -101,7 +134,13 @@ inline void SetN2kPGNSystemTime(tN2kMsg &N2kMsg, unsigned char SID, unsigned int
 
 //*****************************************************************************
 // Vessel Heading
-// Angles should be in radians
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Heading               Heading in radians
+//  - Deviation             Magnetic deviation in radians. Use AngleUndef for undefined value.
+//  - Variation             Magnetic variation in radians. Use AngleUndef for undefined value.
+//  - ref                   Heading reference. See definition of tN2kHeadingReference.
 void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation, double Variation, tN2kHeadingReference ref);
 
 inline void SetN2kPGNTrueHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading) {
@@ -146,6 +185,12 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, int EngineInstance, double
                        
 //*****************************************************************************
 // Fluid level
+// Input:
+//  - Instance              Tank instance. This must be unic within on device on bus. So if you measure e.g. water and diesel with same
+//                          device, you must use different Instance anyway.
+//  - FluidType             Defines type of fluid. See definition of tN2kFluidType
+//  - Level                 Tank level in % of full tank.
+//  - Capacity              Tank Capacity in litres
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity);
 
 inline void SetN2kFluidLevel(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
@@ -159,7 +204,26 @@ inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, t
 }
 
 //*****************************************************************************
+// Boat speed
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and wind at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - WaterRefereced        Speed over water in m/s
+//  - GroundReferenced      Ground referenced speed in m/s
+//  - SWRT                  Type of transducer. See definition for tN2kSpeedWaterReferenceType
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
+
+inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
+  SetN2kPGN128259(N2kMsg,SID,WaterRefereced,GroundReferenced,SWRT);
+}
+ 
+//*****************************************************************************
 // Water depth
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and depth at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DepthBelowTransducer  Depth below transducer in meters
+//  - Offset                Distance in meters between transducer and surface (positive) or transducer and keel (negative) 
 void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset);
 
 inline void SetN2kWaterDepth(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset) {
@@ -174,6 +238,9 @@ inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double
 
 //*****************************************************************************
 // Lat/lon rapid
+// Input:
+//  - Latitude               Latitude in degrees
+//  - Longitude              Longitude in degrees
 void SetN2kPGN129025(tN2kMsg &N2kMsg, double Latitude, double Longitude);
 
 inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude) {
@@ -182,8 +249,9 @@ inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude
 
 //*****************************************************************************
 // COG SOG rapid
-// COG should be in radians
-// SOG should be in m/s
+// Input:
+//  - COG                   Cource Over Ground in radians
+//  - SOG                   Speed Over Ground in m/s
 void SetN2kPGN129026(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference ref, double COG, double SOG);
 
 inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference ref, double COG, double SOG) {
@@ -191,6 +259,21 @@ inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingRef
 }
 
 //*****************************************************************************
+// GNSS Position Data
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DaysSince1970         Days since 1.1.1970. You can find sample how to convert e.g. NMEA0183 date info to this on my NMEA0183 library on
+//                          NMEA0183Messages.cpp on function NMEA0183ParseRMC_nc
+//  - Latitude              Latitude in degrees
+//  - Longitude             Longitude in degrees
+//  - Altitude              Altitude in meters
+//  - GNSStype              GNSS type. See definition of tN2kGNSStype
+//  - GNSSmethod            GNSS method type. See definition of tN2kGNSSmethod
+//  - nSatellites           Number of satellites used for data
+//  - HDOP                  Horizontal Dilution Of Precision in meters.
+//  - PDOP                  Probable dilution of precision in meters.
+//  - GeoidalSeparation     Geoidal separation in meters
 void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
@@ -212,6 +295,76 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, do
                   nSatellites,HDOP,PDOP,GeoidalSeparation,
                   nReferenceStations,ReferenceStationType,ReferenceSationID,
                   AgeOfCorrection);
+}
+
+//*****************************************************************************
+// Cross Track Error
+void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE);
+
+inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
+  SetN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
+}
+
+//*****************************************************************************
+// Navigation info
+void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
+                      bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
+                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity);
+
+inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
+                      bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
+                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
+  SetN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference,
+                      PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
+                      ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
+                      OriginWaypointNumber, DestinationWaypointNumber, 
+                      DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
+}
+                      
+//*****************************************************************************
+// Wind Speed
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and wind at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - WindSpeed             Measured wind speed in m/s
+//  - WindAngle             Measured wind angle in radians. If you have value in degrees, use function DegToRad(myval) in call.
+//  - WindReference         Wind reference, see definition of tN2kWindReference
+void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference);
+
+inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
+  SetN2kPGN130306(N2kMsg,SID,WindSpeed,WindAngle,WindReference);
+}
+
+//bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindType &WindType);
+
+//inline bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &Offset) {
+//  return ParseN2kWaterDepth(N2kMsg, SID, DepthBelowTransducer, Offset);
+//}
+
+//*****************************************************************************
+// Outside Environmental parameters
+void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
+                     double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef);
+
+inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
+                     double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef) {
+  SetN2kPGN130310(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
+}
+//*****************************************************************************
+// Environmental parameters
+// Note that in PGN 130311 TempInstance is as TempSource in PGN 130312. I do not know why this
+// renaming is confusing.
+// Pressure has to be in pascal. Use function mBarToPascal, if you like to use mBar
+void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
+                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=HumidityUndef, double AtmosphericPressure=PressureUndef);
+
+inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
+                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=HumidityUndef, double AtmosphericPressure=PressureUndef) {
+  SetN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
 }
 
 //*****************************************************************************

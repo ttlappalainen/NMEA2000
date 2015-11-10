@@ -46,6 +46,8 @@ address anymore. See also method ReadResetAddressChanged().
 #include <N2kMsg.h>
 #include <N2kCANMsg.h>
 
+// Documenta says for leghts 33,40,24,32, but then values
+// has not been translated right on devices.
 #define Max_N2kModelID_len 32
 #define Max_N2kSwCode_len 32
 #define Max_N2kModelVersion_len 32

@@ -77,7 +77,7 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
   N2kMsg.Add2ByteDouble(EngineOilTemp + 273.15, 0.01);
   N2kMsg.Add2ByteDouble(EngineCoolantTemp + 273.15, 0.01);
   N2kMsg.Add2ByteDouble(AltenatorVoltage, 0.01);
-  N2kMsg.Add2ByteDouble(FuelRate, 0.01);
+  N2kMsg.Add2ByteDouble(FuelRate, 0.1);
   N2kMsg.Add4ByteDouble(EngineHours, 1);
   N2kMsg.Add2ByteDouble(EngineCoolantPress, 1);
   N2kMsg.Add2ByteDouble(EngineFuelPress, 1);
@@ -142,6 +142,18 @@ bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluid
   Capacity=N2kMsg.Get4ByteDouble(0.1,Index);
   
   return true;
+}
+
+//*****************************************************************************
+// Boat speed
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced, tN2kSpeedWaterReferenceType SWRT) {
+    N2kMsg.SetPGN(128259L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteDouble(WaterRefereced,0.01);
+    if (GroundReferenced!=SpeedUndef) { N2kMsg.Add2ByteDouble(GroundReferenced,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.AddByte(SWRT);
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 //*****************************************************************************
@@ -222,6 +234,77 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, doub
 //    N2kMsg.AddByte(0);
     N2kMsg.Add2ByteInt( (((int)ReferenceStationType) & 0x0f) | ReferenceSationID<<4 );
     N2kMsg.Add2ByteDouble(AgeOfCorrection,0.01);
+}
+
+//*****************************************************************************
+// Cross Track Error
+void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
+    N2kMsg.SetPGN(129283L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte((char)XTEMode | (NavigationTerminated?0x40:0));
+    N2kMsg.Add4ByteDouble(XTE,0.01);
+}
+
+//*****************************************************************************
+// Navigation info
+void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
+                      bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
+                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
+    N2kMsg.SetPGN(129284L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add4ByteDouble(DistanceToWaypoint,0.01);
+    N2kMsg.AddByte((char)BearingReference | (PerpendicularCrossed?0x04:0) | (ArrivalCircleEntered?0x10:0)  | (CalculationType==N2kdct_RhumbLine?0x40:0));
+    if (ETATime>0) { N2kMsg.Add4ByteDouble(ETATime,0.0001); } else { N2kMsg.Add4ByteUInt(0xffffffff); }
+    if (ETADate>0) { N2kMsg.Add2ByteInt(ETADate); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.Add2ByteDouble(BearingOriginToDestinationWaypoint,0.0001);
+    N2kMsg.Add2ByteDouble(BearingPositionToDestinationWaypoint,0.0001);
+    N2kMsg.Add4ByteUInt(OriginWaypointNumber);
+    N2kMsg.Add4ByteUInt(DestinationWaypointNumber);
+    N2kMsg.Add4ByteDouble(DestinationLatitude,1e-07);
+    N2kMsg.Add4ByteDouble(DestinationLongitude,1e-07);
+    N2kMsg.Add2ByteDouble(WaypointClosingVelocity,0.01);
+}
+
+//*****************************************************************************
+// Wind Speed
+void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
+    N2kMsg.SetPGN(130306L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteDouble(WindSpeed,0.01);
+    N2kMsg.Add2ByteDouble(WindAngle,0.0001);
+    N2kMsg.AddByte((unsigned char)WindReference);
+    //N2kMsg.AddByte(0xff); // Reserved
+    //N2kMsg.AddByte(0xff); // Reserved
+}
+
+//*****************************************************************************
+// Outside Environmental parameters
+void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
+                     double OutsideAmbientAirTemperature, double AtmosphericPressure) {
+    N2kMsg.SetPGN(130310L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    if (WaterTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(WaterTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
+    if (OutsideAmbientAirTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(OutsideAmbientAirTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
+    if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
+}
+                     
+//*****************************************************************************
+// Environmental parameters
+void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
+                     tN2kHumiditySource HumidityInstance, double Humidity, double AtmosphericPressure) {
+    N2kMsg.SetPGN(130311L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(((HumidityInstance) & 0x03)<<6 | (TempInstance & 0x3f));
+    N2kMsg.Add2ByteDouble(Temperature,0.01);
+    if (Humidity!=HumidityUndef) { N2kMsg.Add2ByteDouble(Humidity,0.004); } else { N2kMsg.Add2ByteInt(0xffff); }
+    if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
 }
 
 //*****************************************************************************
