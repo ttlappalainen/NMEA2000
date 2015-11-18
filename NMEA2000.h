@@ -109,7 +109,10 @@ public:
   // System mode. Meaning how it acts in NMEA2000 bus.    
   typedef enum { N2km_ListenOnly, // Default mode. Listen bus and forwards messages to default port in Actisense format. You can not send any data to the bus.
                  N2km_NodeOnly, // This is for devices, which only sends data to the bus e.g. RPM or temperature monitor. Remember to set right device information first.
-                 N2km_ListenAndNode // In this mode, device can be e.g. temperature monitor and as N2km_ListenOnly.
+                 N2km_ListenAndNode, // In this mode, device can be e.g. temperature monitor and as N2km_ListenOnly.
+                 N2km_SendOnly, // Only for message sending. Device will not inform itself to the bus. Messages will not be forwarded to the stream.
+                                // By setting message handler, you can still read messages and handle them by yourself.
+                 N2km_ListenAndSend // Listen bus and forwards messages to default port in Actisense format. Messages can be send. Device will not inform itself to the bus.
                } tN2kMode;
 
   // For debugging we have some cases for SendMsg
@@ -182,7 +185,7 @@ protected:
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
     
-    bool ForwardEnabled() const { return ((ForwardMode&FwdModeBit_EnableForward)>0); }
+    bool ForwardEnabled() const { return ((ForwardMode&FwdModeBit_EnableForward)>0 && (N2kMode!=N2km_SendOnly)); }
     bool ForwardSystemMessages() const { return ((ForwardMode&FwdModeBit_SystemMessages)>0); }
     bool ForwardOnlyKnownMessages() const { return ((ForwardMode&FwdModeBit_OnlyKnownMessages)>0); }
     bool ForwardOwnMessages() const { return ((ForwardMode&FwdModeBit_OwnMessages)>0); }
@@ -242,6 +245,7 @@ public:
     // Set type how messages will be forwarded in listen mode. Defult is fwdt_Actisense
     void SetForwardType(tForwardType fwdType) { ForwardType=fwdType; }
 
+    // Set the stream, where messages will be forwarded in listen mode. Default is &Serial.
     void SetForwardStream(Stream* _stream) { ForwardStream=_stream; }
     
     // You can call this. It will be called anyway automatically by ParseMessages(); 
@@ -255,6 +259,7 @@ public:
     // abot itselt to others.
     void ParseMessages();
 
+    // Set the message handler for incoming N2kMessages.
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));
     
     // You can check has this device changed its address. If yes, it is prefeable to

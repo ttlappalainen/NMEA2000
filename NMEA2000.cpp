@@ -133,7 +133,7 @@ bool tNMEA2000::Open() {
     }
 
     delay(200);
-    if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) ) { // Start address claim automatically
+    if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
       AddressClaimStarted=0;
       if ( ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println("Start address claim");
       SendIsoAddressClaim(0xff,0);
@@ -188,9 +188,9 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
   static int SendOrder=0;
   bool result=false;
   
-  if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return result;
+  if ( DeviceIndex>=DeviceCount) return result;
   N2kMsg.CheckDestination();
-  N2kMsg.ForceSource(N2kSource[DeviceIndex]);
+  if (DeviceIndex>=0) N2kMsg.ForceSource(N2kSource[DeviceIndex]);
   
   if (N2kMsg.Source>253) return false; // CAN bus address range is 0-253.
   
@@ -500,6 +500,8 @@ void tNMEA2000::GetNextAddress(int DeviceIndex) {
 bool tNMEA2000::HandleReceivedSystemMessage(int MsgIndex) {
   bool result=false;
 
+    if ( N2kMode==N2km_SendOnly || N2kMode==N2km_ListenAndSend ) return result;
+    
     if ( N2kCANMsgBuf[MsgIndex].SystemMessage ) {
       if ( ForwardSystemMessages() ) ForwardMessage(N2kCANMsgBuf[MsgIndex].N2kMsg);
       if ( N2kMode!=N2km_ListenOnly ) { // Note that in listen only mode we will not inform us to the bus
