@@ -14,3 +14,5 @@ and mcp_can library. mcp_can library can be originally found on https://github.c
 Currently NMEA2000_mcp library uses developed version, which allows also to use 8MHz clock and
 has been tested with Maple Mini. So until these improvements has not been implemented to Seeed-Studio
 library, use library found on https://github.com/peppeve/CAN_BUS_Shield
+
+To use a Teensy 3.1/3.2 board with a MCP2551 CAN transeiver, you will need the [NMEA2000_teensy](https://github.com/sarfata/NMEA2000_teensy) contributed by [Thomas Sarlandie](https://twitter.com/sarfata/) and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library).
