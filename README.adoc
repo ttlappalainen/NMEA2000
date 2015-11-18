@@ -14,22 +14,25 @@ Currently NMEA2000_mcp library uses developed version of mcp_can library, which 
 has been tested with Maple Mini. So until these improvements has not been implemented to Seeed-Studio,
 use library found on https://github.com/peppeve/CAN_BUS_Shield
 
+To use a Teensy 3.1/3.2 board internal CAN with a MCP2551 CAN transceiver, you will need the NMEA2000_teensy library
+found on https://github.com/sarfata/NMEA2000_teensy contributed by Thomas Sarlandie and the FlexCAN library from
+https://github.com/teachop/FlexCAN_Library.
+
 == Hardware setup ==
 
 To use Arduino NMEA2000 library you will need either
 
-- Arduino Due and CAN-bus_tranceiver chip e.g. MCP2562 or
+- Arduino Due and CAN-bus_transceiver chip e.g. MCP2562 or
 SN65HVD234. I used MCP2562, since that was available also in DIP package.
 Under Documents there is file ArduinoDUE_CAN_with_MCP2562.pdf for using MCP2562
 and file ArduinoDue_CAN_with_SN65HVD234.jpg for using SN65HVD234.
 
-- Arduino Mega and MCP2515 CAN-bus controller + MCP2551 CAN-bus_tranceiver or buy
+- Arduino Mega and MCP2515 CAN-bus controller + MCP2551 CAN-bus_transceiver or buy
 CAN_BUS shield card. Under documents there is file ArduinoMega_CAN_with_MCP2515_MCP2551.pdf
 for layout to build CAN-bus interface by yourself. MCP2515, MCP2551, ocillator and few
 components cost only few euros, if you are handy and used to use soldering device.
 
-Library has been also used with Maple Mini board, which is much cheaper than Arduino. mcp_can
-possibly works also with other Arduinos, but has not yet been tested.
+Library has been also used with Maple Mini board, which is much cheaper than arduino.
 
 If you using Arduino for transfering all messages to PC, I'll prefere Due version, since it is more powerful.
 I Also prefere it, if you use handle messages (like GNSS) containing 8 byte double values. Arduino Mega has
@@ -38,29 +41,20 @@ only 4 byte double, so you may loose some accuracy.
 == Software setup ==
 
 Library has been developed with Arduino Software 1.6.5. I'll expect you are familiar with Arduino
-and using libraries. When your Arduino environment is ready,
-
-- Download NMEA2000 library zip.
-
-- Download either NMEA2000_due or NMEA2000_mcp library zip depending you hw.
-
+and using libraries. When your Arduino environment is ready,</br>
+- Download NMEA2000 library zip.</br>
+- Download either NMEA2000_due or NMEA2000_mcp library zip depending you hw.</br>
 - Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/peppeve/CAN_BUS_Shield) 
-library zip depending you hw.
-
-- Install all libraries (Add .ZIP library).
-
-- Open NMEA2000\Examples\TemperatureMonitor. On beginning of code uncomment and comment lines 
-(see // Uncomment these for using Arduino...) depending your hw. Alremember to set you board right.
-
-- Connect you Arduino to USB and NMEA2000 bus.
-
-- Send sketch to Arduino.
-
+library zip depending you hw.</br>
+- Install all libraries (Add .ZIP library).</br>
+- Open NMEA2000\Examples\TemperatureMonitor.</br>
+- Connect you Arduino to USB and NMEA2000 bus.</br>
+- Send sketch to Arduino.</br>
 - If you have Multi Function Display (e.g. Garmin GMI-20) on your NMEA2000 bus, you should see on it's NMEA2000 bus devices new device
 "Simple temp monitor" on the list.
 
 So you are ready to play with your own device. Check also the NMEA2000\Examples\ActisenseListener, which reads all data
-from NMEA2000 bus and sends it to PC.
+from NEMA2000 bus and sends it to PC.
 
 == License ==
 
