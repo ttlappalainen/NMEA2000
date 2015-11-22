@@ -124,6 +124,8 @@ typedef enum tN2kSpeedWaterReferenceType {N2kSWRT_Paddle_wheel=0,
                              
 //*****************************************************************************
 // System date/time
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS);
                      
@@ -141,6 +143,8 @@ inline void SetN2kPGNSystemTime(tN2kMsg &N2kMsg, unsigned char SID, unsigned int
 //  - Deviation             Magnetic deviation in radians. Use AngleUndef for undefined value.
 //  - Variation             Magnetic variation in radians. Use AngleUndef for undefined value.
 //  - ref                   Heading reference. See definition of tN2kHeadingReference.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation, double Variation, tN2kHeadingReference ref);
 
 inline void SetN2kPGNTrueHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading) {
@@ -153,6 +157,13 @@ inline void SetN2kPGNMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double 
 
 //*****************************************************************************
 // Engine parameters rapid
+// Input:
+//  - EngineInstance        Engine instance.
+//  - EngineSpeed           RPM (Revolutions Per Minute)
+//  - EngineBoostPressure   in Pascal
+//  - EngineTiltTrim        in %
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
                      int EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef);
 
@@ -163,6 +174,20 @@ inline void SetN2kEngineParamRapid(tN2kMsg &N2kMsg, unsigned char EngineInstance
 
 //*****************************************************************************
 // Engine parameters dynamic
+// Input:
+//  - EngineInstance        Engine instance.
+//  - EngineOilPress        in Pascal
+//  - EngineOilTemp         in Celcius
+//  - EngineCoolantTemp     in Celcius
+//  - AltenatorVoltage      in Voltage
+//  - FuelRate              in litres/hour
+//  - EngineHours           in seconds
+//  - EngineCoolantPress    in Pascal
+//  - EngineFuelPress       in Pascal
+//  - EngineLoad            in %
+//  - EngineTorque          in %
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
                        double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, float EngineLoad, float EngineTorque, bool flagCheckEngine,
                        bool flagOverTemp, bool flagLowOilPress, bool flagLowOilLevel, bool flagLowFuelPress, bool flagLowSystemVoltage, bool flagLowCoolantLevel,
@@ -186,17 +211,25 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, int EngineInstance, double
 //*****************************************************************************
 // Fluid level
 // Input:
-//  - Instance              Tank instance. This must be unic within on device on bus. So if you measure e.g. water and diesel with same
-//                          device, you must use different Instance anyway.
+//  - Instance              Tank instance. Different devices handles this a bit differently. So it is best to have instance unique over 
+//                          all devices on the bus. 
 //  - FluidType             Defines type of fluid. See definition of tN2kFluidType
 //  - Level                 Tank level in % of full tank.
 //  - Capacity              Tank Capacity in litres
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity);
 
 inline void SetN2kFluidLevel(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
   SetN2kPGN127505(N2kMsg, Instance, FluidType, Level, Capacity);
 }
 
+// Parse fluid level message
+// Output:
+//  - Instance              Tank instance.  
+//  - FluidType             Defines type of fluid. See definition of tN2kFluidType
+//  - Level                 Tank level in % of full tank.
+//  - Capacity              Tank Capacity in litres
 bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluidType &FluidType, double &Level, double &Capacity);
 
 inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluidType &FluidType, double &Level, double &Capacity) {
@@ -211,6 +244,8 @@ inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, t
 //  - WaterRefereced        Speed over water in m/s
 //  - GroundReferenced      Ground referenced speed in m/s
 //  - SWRT                  Type of transducer. See definition for tN2kSpeedWaterReferenceType
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
 
 inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
@@ -224,6 +259,8 @@ inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefe
 //                          to indicate that they are measured at same time.
 //  - DepthBelowTransducer  Depth below transducer in meters
 //  - Offset                Distance in meters between transducer and surface (positive) or transducer and keel (negative) 
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset);
 
 inline void SetN2kWaterDepth(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset) {
@@ -241,6 +278,8 @@ inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double
 // Input:
 //  - Latitude               Latitude in degrees
 //  - Longitude              Longitude in degrees
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129025(tN2kMsg &N2kMsg, double Latitude, double Longitude);
 
 inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude) {
@@ -252,6 +291,8 @@ inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude
 // Input:
 //  - COG                   Cource Over Ground in radians
 //  - SOG                   Speed Over Ground in m/s
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129026(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference ref, double COG, double SOG);
 
 inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference ref, double COG, double SOG) {
@@ -274,6 +315,8 @@ inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingRef
 //  - HDOP                  Horizontal Dilution Of Precision in meters.
 //  - PDOP                  Probable dilution of precision in meters.
 //  - GeoidalSeparation     Geoidal separation in meters
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
@@ -299,6 +342,8 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, do
 
 //*****************************************************************************
 // Cross Track Error
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE);
 
 inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
@@ -307,6 +352,8 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
 
 //*****************************************************************************
 // Navigation info
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
                       bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
                       double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
@@ -333,6 +380,8 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
 //  - WindSpeed             Measured wind speed in m/s
 //  - WindAngle             Measured wind angle in radians. If you have value in degrees, use function DegToRad(myval) in call.
 //  - WindReference         Wind reference, see definition of tN2kWindReference
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference);
 
 inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
@@ -347,6 +396,13 @@ inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed
 
 //*****************************************************************************
 // Outside Environmental parameters
+// Input:
+//  - SID                   Sequence ID. 
+//  - WaterTemperature      Water temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - OutsideAmbientAirTemperature      Outside ambient temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
                      double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef);
 
@@ -359,6 +415,15 @@ inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char 
 // Note that in PGN 130311 TempInstance is as TempSource in PGN 130312. I do not know why this
 // renaming is confusing.
 // Pressure has to be in pascal. Use function mBarToPascal, if you like to use mBar
+// Input:
+//  - SID                   Sequence ID. 
+//  - TempInstance          see tN2kTempSource
+//  - Temperature           Temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - HumidityInstance      see tN2kHumiditySource.
+//  - Humidity              Humidity in %
+//  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
                      tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=HumidityUndef, double AtmosphericPressure=PressureUndef);
 
@@ -370,6 +435,16 @@ inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN
 //*****************************************************************************
 // Temperature
 // Temperatures should be in Kelvins
+// Input:
+//  - SID                   Sequence ID. 
+//  - TempInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - TempSource            see tN2kTempSource
+//  - ActualTemperature     Temperature in °K. Use function CToKelvin, if you want to use °C. 
+//  - SetTemperature        Set temperature in °K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
+//                          which can be controlled like cabin, freezer, refridgeration temperature. God can use value for this for
+//                          outside and sea temperature values.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130312(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
                      double ActualTemperature, double SetTemperature=TempUndef);
 

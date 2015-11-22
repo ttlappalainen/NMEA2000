@@ -56,7 +56,7 @@ void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
     N2kMsg.Priority=3;
     N2kMsg.AddByte(EngineInstance);
     N2kMsg.Add2ByteDouble(EngineSpeed,0.25);
-    N2kMsg.Add2ByteInt(EngineBoostPressure);
+    N2kMsg.Add2ByteDouble(EngineBoostPressure, 100);
     N2kMsg.AddByte(EngineTiltTrim);
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
@@ -73,14 +73,14 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
     N2kMsg.Priority=6;
                        
   N2kMsg.AddByte(EngineInstance);
-  N2kMsg.Add2ByteDouble(EngineOilPress, 1);
-  N2kMsg.Add2ByteDouble(EngineOilTemp + 273.15, 0.01);
+  N2kMsg.Add2ByteDouble(EngineOilPress, 100);
+  N2kMsg.Add2ByteDouble(EngineOilTemp + 273.15, 0.1);
   N2kMsg.Add2ByteDouble(EngineCoolantTemp + 273.15, 0.01);
   N2kMsg.Add2ByteDouble(AltenatorVoltage, 0.01);
   N2kMsg.Add2ByteDouble(FuelRate, 0.1);
   N2kMsg.Add4ByteDouble(EngineHours, 1);
-  N2kMsg.Add2ByteDouble(EngineCoolantPress, 1);
-  N2kMsg.Add2ByteDouble(EngineFuelPress, 1);
+  N2kMsg.Add2ByteDouble(EngineCoolantPress, 100);
+  N2kMsg.Add2ByteDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
   N2kMsg.Add2ByteInt(0xffff);  // Discrete Status 1
   N2kMsg.Add2ByteInt(0xffff);  // Discrete Status 2
@@ -292,6 +292,7 @@ void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature
     if (WaterTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(WaterTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
     if (OutsideAmbientAirTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(OutsideAmbientAirTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
     if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.AddByte(0xff);  // reserved
 }
                      
 //*****************************************************************************
