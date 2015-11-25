@@ -36,6 +36,21 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate
 }
 
 //*****************************************************************************
+// Rudder
+// Angles should be in radians
+void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance, 
+                     tN2kRudderDirectionOrder RudderDirectionOrder, double AngleOrder) {
+    N2kMsg.SetPGN(127245L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(Instance);
+    N2kMsg.AddByte(0xf8 | RudderDirectionOrder&0x07);
+    if (AngleOrder!=AngleUndef) { N2kMsg.Add2ByteDouble(AngleOrder,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
+    if (RudderPosition!=AngleUndef) { N2kMsg.Add2ByteDouble(RudderPosition,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+//*****************************************************************************
 // Vessel Heading
 // Angles should be in radians
 void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation, double Variation, tN2kHeadingReference ref) {
