@@ -208,6 +208,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
       if (N2kMsg.DataLen<=8) { // We can send single frame
           result=CANSendFrame(canId, N2kMsg.DataLen, N2kMsg.Data); 
+          if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print("PGN "); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(" send failed"); }
       } else { // Send it as fast packet in multiple frames
         unsigned char temp[8]; // {0,0,0,0,0,0,0,0};
         int cur=0;
@@ -235,8 +236,8 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
                  }
             }
             
-            result=CANSendFrame(canId, 8, temp, (frames>1));
-            if (!result && ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println("Send failed");
+            result=CANSendFrame(canId, 8, temp, true);
+            if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print("PGN "); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(" send failed"); }
         }
         SendOrder++; if (SendOrder>7) SendOrder=0;
       };
@@ -380,7 +381,7 @@ bool tNMEA2000::IsMySource(unsigned char Source) {
 
 //*****************************************************************************
 void tNMEA2000::ForwardMessage(const tN2kMsg &N2kMsg) {
-  if ( !ForwardEnabled() || !(ForwardOwnMessages() && IsMySource(N2kMsg.Source)) && N2kMode==N2km_NodeOnly ) return; 
+  if ( !ForwardEnabled() || ( !( ForwardOwnMessages() && IsMySource(N2kMsg.Source) ) && N2kMode==N2km_NodeOnly ) ) return; 
 
   switch (ForwardType) {
     case fwdt_Actisense: 
@@ -424,7 +425,7 @@ void tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
 //*****************************************************************************
 void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
   unsigned long RequestedPGN;
-  unsigned char Destination;
+  unsigned char Destination=0xff;
   int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
   
     if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
@@ -483,14 +484,14 @@ bool tNMEA2000::ReadResetAddressChanged() {
 
 //*****************************************************************************
 void tNMEA2000::GetNextAddress(int DeviceIndex) {
-  bool FoundSame;
+  bool FoundSame=false;
   // Currently simply add address
   // Note that 253 is the last source. We do not send data if address is higher than that.
   do {
     if (N2kSource[DeviceIndex]<255) N2kSource[DeviceIndex]++; 
     
     // Check that we do not have same on our list
-    for (int i=0, FoundSame=false; i<DeviceCount && !FoundSame; i++) {
+    for (int i=0; i<DeviceCount && !FoundSame; i++) {
       if (i!=DeviceIndex) FoundSame=(N2kSource[DeviceIndex]==N2kSource[i]);
     }
   } while (FoundSame);
@@ -529,7 +530,7 @@ void tNMEA2000::ParseMessages() {
     unsigned char buf[8];
     int MsgIndex;
 //    tN2kMsg N2kMsg;
-
+  
     if (!Open()) return;  // Can not do much
     
     if (CANGetFrame(canId,len,buf) ) {           // check if data coming
@@ -582,7 +583,7 @@ void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int Manufacture
     N2kMsg.AddByte(DeviceInstance);
     N2kMsg.AddByte(DeviceFunction);
     N2kMsg.AddByte((DeviceClass&0x7f)<<1);
-    N2kMsg.AddByte(0x80 | (IndustryGroup&0x7)<<4 | SystemInstance&0x0f);
+    N2kMsg.AddByte( 0x80 | ((IndustryGroup&0x7)<<4) | (SystemInstance&0x0f) );
 }
 
 //*****************************************************************************

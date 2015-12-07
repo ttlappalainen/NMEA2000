@@ -329,7 +329,7 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN);
 
 inline bool ParseN2kPGNISORequest(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
-  ParseN2kPGN59904(N2kMsg, RequestedPGN);
+  return ParseN2kPGN59904(N2kMsg, RequestedPGN);
 }
 
 #endif

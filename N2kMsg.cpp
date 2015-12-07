@@ -38,6 +38,7 @@ tN2kMsg::tN2kMsg(unsigned char _Source) {
 
 //*****************************************************************************
 void tN2kMsg::SetPGN(unsigned long _PGN) {
+  Clear();
   PGN=_PGN;
   MsgTime=millis();
 }
@@ -184,7 +185,7 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
 
 //*****************************************************************************
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  long *vl=(long *)(&buf[index]);
+  unsigned long *vl=(unsigned long *)(&buf[index]);
   index+=4;
 
   if (*vl==0xffffffff) return def;

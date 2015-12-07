@@ -52,35 +52,35 @@ inline double CToKelvin(double v) { return v+273.15; }
 inline double mBarToPascal(double v) { return v*100; }
 
 
-typedef enum tN2kHeadingReference {
+enum tN2kHeadingReference {
                             N2khr_true=0,
                             N2khr_magnetic=1
                           };
-typedef enum tN2kDistanceCalculationType {
+enum tN2kDistanceCalculationType {
                             N2kdct_GreatCircle=0,
                             N2kdct_RhumbLine=1
                           };
-typedef enum tN2kXTEMode  {
+enum tN2kXTEMode  {
                             N2kxtem_Autonomous=0,
                             N2kxtem_Differential=1,
                             N2kxtem_Estimated=2,
                             N2kxtem_Simulator=3,
                             N2kxtem_Manual=4
                           };
-typedef enum tN2kGNSStype {
+enum tN2kGNSStype {
                             N2kGNSSt_GPS=0,
                             N2kGNSSt_GLONASS=1,
                             N2kGNSSt_GPSGLONASS=2,
                             N2kGNSSt_GPSSBASWAAS=3,
                             N2kGNSSt_GPSSBASWAASGLONASS=4
                           };
-typedef enum tN2kGNSSmethod {
+enum tN2kGNSSmethod {
                             N2kGNSSm_noGNSS=0,
                             N2kGNSSm_GNSSfix=1,
                             N2kGNSSm_DGNSS=2,
                             N2kGNSSm_PreciseGNSS=3
                           };
-typedef enum tN2kTempSource {
+enum tN2kTempSource {
                             N2kts_SeaTemperature=0,
                             N2kts_OutsideTemperature=1,
                             N2kts_InsideTemperature=2,
@@ -93,13 +93,13 @@ typedef enum tN2kTempSource {
                             N2kts_FreezerTemperature=9
                           };
 
-typedef enum tN2kHumiditySource {
+enum tN2kHumiditySource {
                             N2khs_InsideHumidity=0,
                             N2khs_OutsideHumidity=1,
                             N2khs_Undef=1
                           };
 
-typedef enum tN2kTimeSource {
+enum tN2kTimeSource {
                             N2ktimes_GPS=0,
                             N2ktimes_GLONASS=1,
                             N2ktimes_RadioStation=2,
@@ -108,7 +108,7 @@ typedef enum tN2kTimeSource {
                             N2ktimes_LocalCrystalClock=5
                           };
 
-typedef enum tN2kFluidType {
+enum tN2kFluidType {
                             N2kft_Fuel=0,
                             N2kft_Water=1,
                             N2kft_GrayWater=2,
@@ -117,14 +117,14 @@ typedef enum tN2kFluidType {
                             N2kft_BlackWater=5
                           };
 
-typedef enum tN2kWindReference {
+enum tN2kWindReference {
                             N2kWind_True_North=0,
                             N2kWind_Magnetic=1,
                             N2kWind_Apprent=2,
                             N2kWind_True_boat=3
                           };
 
-typedef enum tN2kSpeedWaterReferenceType {
+enum tN2kSpeedWaterReferenceType {
                             N2kSWRT_Paddle_wheel=0,
                             N2kSWRT_Pitot_tube=1,
                             N2kSWRT_Doppler_log=2,
@@ -132,7 +132,7 @@ typedef enum tN2kSpeedWaterReferenceType {
                             N2kSWRT_Electro_magnetic=4
                           };
 
-typedef enum tN2kRudderDirectionOrder {
+enum tN2kRudderDirectionOrder {
                             N2kRDO_NoDirectioOrder=0,
                             N2kRDO_MoveToStarboard=1,
                             N2kRDO_MoveToPort=2

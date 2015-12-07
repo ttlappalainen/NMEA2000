@@ -1,28 +1,8 @@
-// Demo: NMEA2000 library. Send main cabin temperature to the bus.
+// Demo: NMEA2000 library. Send main wind data to the bus.
 
 #include <Arduino.h>
-#include <N2kMsg.h>
-#include <NMEA2000.h>
+#include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
 #include <N2kMessages.h>
-
-// Uncomment these for using Arduino Due internal CAN
-//#include <due_can.h>  // https://github.com/collin80/due_can
-//#include <NMEA2000_due.h>
-//tNMEA2000_due NMEA2000;
-// Uncomment these for using Arduino Due internal CAN
-
-// CAN_BUS_shield libraries will be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
-// There is improved library, which branch can be found on https://github.com/peppeve/CAN_BUS_Shield
-// That works also with Maple mini and 8 MHz clock. Hopefully these improvements will be applied to
-// original library
-
-// Uncomment these for using Arduino Mega and external MCP2551 CAN bus chip
-#include <SPI.h>
-#include <mcp_can.h> 
-#include <NMEA2000_mcp.h>
-#define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
-tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN);
-// Uncomment these for using Arduino Mega and external MCP2551 CAN bus chip
 
 void setup() {
   // Set Product information
@@ -39,13 +19,14 @@ void setup() {
                                 2046 // Just choosen free from code list on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf                               
                                );
   // Uncomment 3 rows below to see, what device will send to bus                           
-  Serial.begin(115200);
+  // Serial.begin(115200);
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.
-  NMEA2000.SetForwardOwnMessages();
+  // NMEA2000.SetForwardOwnMessages();
 
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
   NMEA2000.SetMode(tNMEA2000::N2km_NodeOnly,23);
   // NMEA2000.SetDebugMode(tNMEA2000::dm_Actisense); // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
+  NMEA2000.EnableForward(false);
   NMEA2000.Open();
 }
 

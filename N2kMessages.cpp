@@ -43,7 +43,7 @@ void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Insta
     N2kMsg.SetPGN(127245L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(Instance);
-    N2kMsg.AddByte(0xf8 | RudderDirectionOrder&0x07);
+    N2kMsg.AddByte(0xf8 | (RudderDirectionOrder&0x07));
     if (AngleOrder!=AngleUndef) { N2kMsg.Add2ByteDouble(AngleOrder,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
     if (RudderPosition!=AngleUndef) { N2kMsg.Add2ByteDouble(RudderPosition,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
     N2kMsg.AddByte(0xff); // Reserved
@@ -139,7 +139,7 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
     N2kMsg.SetPGN(127505L);
     N2kMsg.Priority=6;
-    N2kMsg.AddByte(Instance&0x0f | (FluidType&0x0f)<<4);
+    N2kMsg.AddByte((Instance&0x0f) | ((FluidType&0x0f)<<4));
     N2kMsg.Add2ByteDouble(Level,0.004);
     N2kMsg.Add4ByteDouble(Capacity,0.1);
     N2kMsg.AddByte(0xff); // Reserved
@@ -319,7 +319,7 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInst
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(((HumidityInstance) & 0x03)<<6 | (TempInstance & 0x3f));
     N2kMsg.Add2ByteDouble(Temperature,0.01);
-    if (Humidity!=HumidityUndef) { N2kMsg.Add2ByteDouble(Humidity,0.004); } else { N2kMsg.Add2ByteInt(0xffff); }
+    if (Humidity!=HumidityUndef) { N2kMsg.Add2ByteDouble(Humidity,0.004); } else { N2kMsg.Add2ByteInt(0x7fff); }
     if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
 }
 
