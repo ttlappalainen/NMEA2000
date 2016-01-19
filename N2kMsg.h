@@ -30,14 +30,21 @@ Definition for NMEA2000 message class used in my NMEA2000 libraries.
 
 void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *buf);
 void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *buf);
+void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf);
 void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *buf);
+void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *buf);
 void SetBuf2ByteInt(int v, int &index, unsigned char *buf);
+void SetBuf3ByteInt(long v, int &index, unsigned char *buf);
 void SetBuf4ByteUInt(unsigned long v, int &index, unsigned char *buf);
 void SetBufUInt64(uint64_t v, int &index, unsigned char *buf);
 void SetBufStr(const char *str, int len, int &index, unsigned char *buf);
 
+double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
+double GetBuf1UByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
+double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
+double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 
 class tN2kMsg
@@ -62,16 +69,23 @@ public:
   bool IsValid() const { return (PGN!=0 && DataLen>0); }
   void Add8ByteDouble(double v, double precision);
   void Add4ByteDouble(double v, double precision);
+  void Add3ByteDouble(double v, double precision);
   void Add2ByteDouble(double v, double precision);
+  void Add1ByteDouble(double v, double precision);
   void Add2ByteInt(int v);
+  void Add3ByteInt(long v);
   void Add4ByteUInt(unsigned long v);
   void AddUInt64(uint64_t v);
   void AddByte(unsigned char v);
   void AddStr(const char *str, int len);
 
   unsigned char GetByte(int &Index) const;
+  double Get1ByteDouble(double precision, int &Index, double def=0) const;
+  double Get1UByteDouble(double precision, int &Index, double def=0) const;
   double Get2ByteDouble(double precision, int &Index, double def=0) const;
+  double Get3ByteDouble(double precision, int &Index, double def=0) const;
   double Get4ByteDouble(double precision, int &Index, double def=0) const;
+  double Get8ByteDouble(double precision, int &Index, double def=0) const;
 
   void Print(Stream *port, bool NoData=false) const;
   void SendInActisenseFormat(Stream *port) const;

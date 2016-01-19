@@ -49,7 +49,11 @@ NMEA2000.h
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
 inline double CToKelvin(double v) { return v+273.15; }
+inline double KelvinToC(double v) { return v-273.15; }
 inline double mBarToPascal(double v) { return v*100; }
+inline double PascalTomBar(double v) { return v/100; }
+inline double AhToCoulomb(double v) { return v*3600; }
+inline double CoulombToAh(double v) { return v/3600; }
 
 
 enum tN2kHeadingReference {
@@ -136,6 +140,44 @@ enum tN2kRudderDirectionOrder {
                             N2kRDO_NoDirectioOrder=0,
                             N2kRDO_MoveToStarboard=1,
                             N2kRDO_MoveToPort=2
+                          };
+                             
+enum tN2kDCType {
+                            N2kDCt_Battery=0,
+                            N2kDCt_Alternator=1,
+                            N2kDCt_Converter=2,
+                            N2kDCt_SolarCell=3,
+                            N2kDCt_WindGenerator=4
+                          };
+
+enum tN2kBatType  {
+                            N2kDCbt_Flooded=0,
+                            N2kDCbt_Gel=1,
+                            N2kDCbt_AGM=2
+                          };
+                          
+enum tN2kBatEqSupport  {
+                            N2kDCES_No=0,  // No, Off, Disabled
+                            N2kDCES_Yes=1, // Yes, On, Enabled
+                            N2kDCES_Error=2, // Error
+                            N2kDCES_Unavailable=3 // Unavailable
+                          };
+                          
+enum tN2kBatChem {
+                            N2kDCbc_LeadAcid=0,
+                            N2kDCbc_LiIon=1,
+                            N2kDCbc_NiCad=2,
+                            N2kDCbc_NiMh=3
+                          };
+                          
+enum tN2kBatNomVolt {
+                            N2kDCbnv_6v=0,
+                            N2kDCbnv_12v=1,
+                            N2kDCbnv_24v=2,
+                            N2kDCbnv_32v=3,
+                            N2kDCbnv_62v=4,
+                            N2kDCbnv_42v=5,
+                            N2kDCbnv_48v=6
                           };
                              
 //*****************************************************************************
@@ -265,6 +307,96 @@ bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluid
 
 inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluidType &FluidType, double &Level, double &Capacity) {
   return ParseN2kPGN127505(N2kMsg, Instance, FluidType, Level, Capacity);
+}
+
+//*****************************************************************************
+// DC Detailed Status
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DCInstance            DC instance.  
+//  - DCType                Defines type of DC source. See definition of tN2kDCType
+//  - StateOfCharge         % of charge
+//  - StateOfHealth         % of heath
+//  - TimeRemaining         Time remaining in minutes
+//  - RippleVoltage         DC output voltage ripple in V
+void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage);
+
+inline void SetN2kDCStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage) {
+  SetN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
+}
+
+bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
+                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage);
+
+inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
+                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage) {
+  return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
+}
+
+
+//*****************************************************************************
+// Battery Status
+// Input:
+//  - BatteryInstance       BatteryInstance.
+//  - BatteryVoltage        Battery voltage in V
+//  - BatteryCurrent        Current in A 
+//  - BatteryTemperature    Battery temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - SID                   Sequence ID.
+void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
+                     double BatteryTemperature, unsigned char SID);
+
+inline void SetN2kDCBatStatus(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
+                     double BatteryTemperature, unsigned char SID) {
+  SetN2kPGN127508(N2kMsg,BatteryInstance,BatteryVoltage,BatteryCurrent,BatteryTemperature,SID);
+}
+
+bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
+                     double &BatteryTemperature, unsigned char &SID);
+inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
+                     double &BatteryTemperature, unsigned char &SID) {
+  return ParseN2kPGN130312(N2kMsg, BatteryInstance, BatteryVoltage, BatteryCurrent, BatteryTemperature, SID);
+}
+
+
+//*****************************************************************************
+// Battery Configuration Status
+// Note this has not yet confirmed to be right. Specially Peukert Exponent can have in
+// this configuration values from 1 to 1.504. And I expect on code that I have to send
+// value PeukertExponent-1 to the bus.
+// Input:
+//  - BatteryInstance       BatteryInstance.
+//  - BatType               Type of battery. See definition of tN2kBatType
+//  - SupportsEqual         Supports equalization. See definition of tN2kBatEqSupport
+//  - BatNominalVoltage     Battery nominal voltage. See definition of tN2kBatNomVolt
+//  - BatChemistry          Battery See definition of tN2kBatChem
+//  - BatCapacity           Battery capacity in Coulombs. Use AhToCoulombs, if you have your value in Ah.
+//  - BatTemperatureCoeff   Battery temperature coefficient in %
+//  - PeukertExponent       Peukert Exponent
+//  - ChargeEfficiencyFactor Charge efficiency factor
+void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, double BatTemperatureCoefficient,
+				double PeukertExponent, double ChargeEfficiencyFactor);
+
+inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, double BatTemperatureCoefficient,
+				double PeukertExponent, double ChargeEfficiencyFactor) {
+   SetN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
+				PeukertExponent,ChargeEfficiencyFactor);
+}
+
+bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, double &BatTemperatureCoefficient,
+				double &PeukertExponent, double &ChargeEfficiencyFactor);
+
+
+inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, double &BatTemperatureCoefficient,
+				double &PeukertExponent, double &ChargeEfficiencyFactor) {
+	return ParseN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
+				PeukertExponent,ChargeEfficiencyFactor);
 }
 
 //*****************************************************************************
@@ -489,6 +621,34 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
                      double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130312(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
+}
+
+//*****************************************************************************
+// Temperature
+// Temperatures should be in Kelvins
+// Input:
+//  - SID                   Sequence ID. 
+//  - TempInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - TempSource            see tN2kTempSource
+//  - ActualTemperature     Temperature in °K. Use function CToKelvin, if you want to use °C. 
+//  - SetTemperature        Set temperature in °K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
+//                          which can be controlled like cabin, freezer, refridgeration temperature. God can use value for this for
+//                          outside and sea temperature values.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
+                     double ActualTemperature, double SetTemperature=TempUndef);
+
+inline void SetN2kTemperatureExt(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
+                     double ActualTemperature, double SetTemperature=TempUndef) {
+  SetN2kPGN130316(N2kMsg,SID,TempInstance,TempSource,ActualTemperature,SetTemperature);
+}
+
+bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
+                     double &ActualTemperature, double &SetTemperature);
+inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
+                     double &ActualTemperature, double &SetTemperature) {
+  return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
 
 #endif

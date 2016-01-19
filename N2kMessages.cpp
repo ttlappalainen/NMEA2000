@@ -145,6 +145,7 @@ void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType Flui
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+//*****************************************************************************
 bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluidType &FluidType, double &Level, double &Capacity) {
   if (N2kMsg.PGN!=127505L) return false;
 
@@ -155,6 +156,101 @@ bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluid
   FluidType=(tN2kFluidType)((IFt>>4)&0x0f);
   Level=N2kMsg.Get2ByteDouble(0.004,Index);
   Capacity=N2kMsg.Get4ByteDouble(0.1,Index);
+  
+  return true;
+}
+
+//*****************************************************************************
+// DC Detailed Status
+//
+void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage) {
+    N2kMsg.SetPGN(127506L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(DCInstance);
+    N2kMsg.AddByte((unsigned char)DCType);
+    N2kMsg.AddByte(StateOfCharge);
+    N2kMsg.AddByte(StateOfHealth);
+    N2kMsg.Add2ByteDouble(TimeRemaining,1.0);
+    N2kMsg.Add2ByteDouble(RippleVoltage,0.001);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
+                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage){
+  if (N2kMsg.PGN!=127506L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  DCInstance=N2kMsg.GetByte(Index);
+  DCType=(tN2kDCType)(N2kMsg.GetByte(Index));
+  StateOfCharge=N2kMsg.GetByte(Index);
+  StateOfHealth=N2kMsg.GetByte(Index);
+  TimeRemaining=N2kMsg.Get2ByteDouble(1.0,Index);
+  RippleVoltage=N2kMsg.Get2ByteDouble(0.001,Index);
+
+  return true;
+}
+
+//*****************************************************************************
+// Battery Status
+// Temperatures should be in Kelvins
+void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
+                     double BatteryTemperature, unsigned char SID) {
+    N2kMsg.SetPGN(127508L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(BatteryInstance);
+    N2kMsg.Add2ByteDouble(BatteryVoltage,0.01);
+    N2kMsg.Add2ByteDouble(BatteryCurrent,0.1);
+    N2kMsg.Add2ByteDouble(BatteryTemperature,0.01);
+    N2kMsg.AddByte(SID);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127508(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
+                     double &BatteryTemperature, unsigned char &SID) {
+  if (N2kMsg.PGN!=127508L) return false;
+  int Index=0;
+  BatteryInstance=N2kMsg.GetByte(Index);
+  BatteryVoltage=N2kMsg.Get2ByteDouble(0.01,Index);
+  BatteryCurrent=N2kMsg.Get2ByteDouble(0.01,Index);
+  BatteryTemperature=N2kMsg.Get2ByteDouble(0.01,Index,TempUndef);
+  SID=N2kMsg.GetByte(Index);
+
+  return true;
+}
+
+//*****************************************************************************
+// Battery Configuration Status
+void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, double BatTemperatureCoefficient,
+				double PeukertExponent, double ChargeEfficiencyFactor) {
+    N2kMsg.SetPGN(127513L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(BatInstance);
+    N2kMsg.AddByte(0xc0 | ((SupportsEqual & 0x03) << 4) | (BatType & 0x0f)); // BatType (4 bit), SupportsEqual (2 bit), Reserved (2 bit) 
+    N2kMsg.AddByte( ((BatChemistry & 0x0f) << 4) | (BatNominalVoltage & 0x0f) ); // BatNominalVoltage (4 bit), BatChemistry (4 bit)
+    N2kMsg.Add2ByteDouble(BatCapacity,3600);
+    N2kMsg.AddByte((int8_t)BatTemperatureCoefficient);
+    PeukertExponent-=1; // Is this right or not I am not yet sure!
+    if (PeukertExponent<0 || PeukertExponent>0.504) { N2kMsg.AddByte(0xff); } else { N2kMsg.Add1ByteDouble(PeukertExponent,0.002); }
+    N2kMsg.AddByte((int8_t)ChargeEfficiencyFactor);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, double &BatTemperatureCoefficient,
+				double &PeukertExponent, double &ChargeEfficiencyFactor) {
+  if (N2kMsg.PGN!=127513L) return false;
+  int Index=0;
+  unsigned char v; 
+  BatInstance = N2kMsg.GetByte(Index);
+  v = N2kMsg.GetByte(Index); BatType=(tN2kBatType)(v & 0x0f); SupportsEqual=(tN2kBatEqSupport)((v>>4) & 0x03);
+  v = N2kMsg.GetByte(Index); BatNominalVoltage=(tN2kBatNomVolt)(v & 0x0f);  BatChemistry=(tN2kBatChem)((v>>4) & 0x0f);
+  BatCapacity=N2kMsg.Get2ByteDouble(3600,Index);
+  BatTemperatureCoefficient=N2kMsg.GetByte(Index);
+  PeukertExponent=N2kMsg.Get1UByteDouble(0.002,Index); PeukertExponent+=1;
+  ChargeEfficiencyFactor=N2kMsg.GetByte(Index);
   
   return true;
 }
@@ -347,6 +443,34 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
   ActualTemperature=N2kMsg.Get2ByteDouble(0.01,Index);
   SetTemperature=N2kMsg.Get2ByteDouble(0.01,Index,TempUndef);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Temperature extended range
+// Temperatures should be in Kelvins
+void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
+                     double ActualTemperature, double SetTemperature) {
+    N2kMsg.SetPGN(130316L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte((unsigned char)TempInstance);
+    N2kMsg.AddByte((unsigned char)TempSource);
+    N2kMsg.Add3ByteDouble(ActualTemperature,0.001);
+    (SetTemperature>-300?N2kMsg.Add3ByteDouble(SetTemperature,0.001):N2kMsg.Add3ByteInt(0xffffff));
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
+                     double &ActualTemperature, double &SetTemperature) {
+  if (N2kMsg.PGN!=130316L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  TempInstance=N2kMsg.GetByte(Index);
+  TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
+  ActualTemperature=N2kMsg.Get3ByteDouble(0.001,Index);
+  SetTemperature=N2kMsg.Get3ByteDouble(0.001,Index,TempUndef);
   
   return true;
 }
