@@ -94,7 +94,12 @@ enum tN2kTempSource {
                             N2kts_BaitWellTemperature=6,
                             N2kts_RefridgerationTemperature=7,
                             N2kts_HeatingSystemTemperature=8,
-                            N2kts_FreezerTemperature=9
+                            N2kts_DewPointTemperature=9,
+                            N2kts_ApparentWindChillTemperature=10,
+                            N2kts_TheoreticalWindChillTemperature=11,
+                            N2kts_HeatIndexTemperature=12,
+                            N2kts_FreezerTemperature=13,
+                            N2kts_ExhaustGasTemperature=14
                           };
 
 enum tN2kHumiditySource {
