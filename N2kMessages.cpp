@@ -458,8 +458,7 @@ void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInsta
     N2kMsg.AddByte((unsigned char)TempInstance);
     N2kMsg.AddByte((unsigned char)TempSource);
     N2kMsg.Add3ByteDouble(ActualTemperature,0.001);
-    (SetTemperature>-300?N2kMsg.Add3ByteDouble(SetTemperature,0.001):N2kMsg.Add3ByteInt(0xffffff));
-    N2kMsg.AddByte(0xff); // Reserved
+    (SetTemperature>TempUndef?N2kMsg.Add2ByteDouble(SetTemperature,0.1):N2kMsg.Add2ByteInt(0xffff));
 }
 
 bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
@@ -470,7 +469,7 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   TempInstance=N2kMsg.GetByte(Index);
   TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
   ActualTemperature=N2kMsg.Get3ByteDouble(0.001,Index);
-  SetTemperature=N2kMsg.Get3ByteDouble(0.001,Index,TempUndef);
+  SetTemperature=N2kMsg.Get2ByteDouble(0.1,Index,TempUndef);
   
   return true;
 }

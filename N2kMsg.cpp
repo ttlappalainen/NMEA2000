@@ -124,42 +124,42 @@ unsigned char tN2kMsg::GetByte(int &Index) const {
   
 //*****************************************************************************
 double tN2kMsg::Get1ByteDouble(double precision, int &Index, double def) const {
-  if (Index+1<DataLen) {
+  if (Index<DataLen) {
     return GetBuf1ByteDouble(precision,Index,Data,def);
   } else return def;
 }
 
 //*****************************************************************************
 double tN2kMsg::Get1UByteDouble(double precision, int &Index, double def) const {
-  if (Index+1<DataLen) {
+  if (Index<DataLen) {
     return GetBuf1UByteDouble(precision,Index,Data,def);
   } else return def;
 }
 
 //*****************************************************************************
 double tN2kMsg::Get2ByteDouble(double precision, int &Index, double def) const {
-  if (Index+2<DataLen) {
+  if (Index+2<=DataLen) {
     return GetBuf2ByteDouble(precision,Index,Data,def);
   } else return def;
 }
 
 //*****************************************************************************
 double tN2kMsg::Get3ByteDouble(double precision, int &Index, double def) const {
-  if (Index+3<DataLen) {
+  if (Index+3<=DataLen) {
     return GetBuf3ByteDouble(precision,Index,Data,def);
   } else return def;
 }
 
 //*****************************************************************************
 double tN2kMsg::Get4ByteDouble(double precision, int &Index, double def) const {
-  if (Index+4<DataLen) {
+  if (Index+4<=DataLen) {
     return GetBuf4ByteDouble(precision,Index,Data,def);
   } else return def;
 }
 
 //*****************************************************************************
 double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
-  if (Index+4<DataLen) {
+  if (Index+8<=DataLen) {
     return GetBuf8ByteDouble(precision,Index,Data,def);
   } else return def;
 }
@@ -255,18 +255,18 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
 //*****************************************************************************
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   long long *vl=(long long *)(&buf[index]);
-  index+=4;
+  index+=8;
 
-  if (*vl==0xffffffffffffffff) return def;
+  if (((unsigned long long)(*vl))==0xffffffffffffffff) return def;
   
   return ((double)(*vl))*precision;
 }
 
 //*****************************************************************************
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  unsigned long *vl=(unsigned long *)(&buf[index]);
-  unsigned long vll=*vl;
-  index+=4;
+  long *vl=(long *)(&buf[index]);
+  long vll=*vl;
+  index+=3;
 
   // We use only 3 bytes, so set highest byte to 0
   vll&=0x00ffffff;
@@ -277,7 +277,7 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
 
 //*****************************************************************************
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  unsigned long *vl=(unsigned long *)(&buf[index]);
+  long *vl=(long *)(&buf[index]);
   index+=4;
 
   if (*vl==0xffffffff) return def;
