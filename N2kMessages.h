@@ -76,7 +76,11 @@ enum tN2kGNSStype {
                             N2kGNSSt_GLONASS=1,
                             N2kGNSSt_GPSGLONASS=2,
                             N2kGNSSt_GPSSBASWAAS=3,
-                            N2kGNSSt_GPSSBASWAASGLONASS=4
+                            N2kGNSSt_GPSSBASWAASGLONASS=4,
+                            N2kGNSSt_Chayka=5,
+                            N2kGNSSt_integrated=6,
+                            N2kGNSSt_surveyed=7,
+                            N2kGNSSt_Galileo=8
                           };
 enum tN2kGNSSmethod {
                             N2kGNSSm_noGNSS=0,
@@ -189,12 +193,19 @@ enum tN2kBatNomVolt {
 // System date/time
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
+void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS);
                      
-inline void SetN2kPGNSystemTime(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
+inline void SetN2kPGNSystemTime(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS) {
-  SetN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime);
+  SetN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
+}
+
+bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
+                     double &SystemTime, tN2kTimeSource &TimeSource);
+inline bool ParseN2kPGNSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
+                     double &SystemTime, tN2kTimeSource &TimeSource) {
+  return ParseN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);                   
 }
 
 //*****************************************************************************
@@ -467,6 +478,11 @@ inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingRef
   SetN2kPGN129026(N2kMsg,SID,ref,COG,SOG);
 }
 
+bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingReference &ref, double &COG, double &SOG);
+inline bool ParseN2kCOGSOGRapid(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingReference &ref, double &COG, double &SOG) {
+  return ParseN2kPGN129026(N2kMsg,SID,ref,COG,SOG);                   
+}
+
 //*****************************************************************************
 // GNSS Position Data
 // Input:
@@ -485,19 +501,19 @@ inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingRef
 //  - GeoidalSeparation     Geoidal separation in meters
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
+void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
                      unsigned char nSatellites, double HDOP, double PDOP=0, double GeoidalSeparation=0,
-                     unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, int ReferenceSationID=0,
+                     unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, uint16_t ReferenceSationID=0,
                      double AgeOfCorrection=0
                      );
 
-inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
+inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
                      unsigned char nSatellites, double HDOP, double PDOP=0, double GeoidalSeparation=0,
-                     unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, int ReferenceSationID=0,
+                     unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, uint16_t ReferenceSationID=0,
                      double AgeOfCorrection=0
                      ) {
   SetN2kPGN129029(N2kMsg,SID,DaysSince1970,SecondsSinceMidnight,
@@ -507,6 +523,30 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, do
                   nReferenceStations,ReferenceStationType,ReferenceSationID,
                   AgeOfCorrection);
 }
+
+bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight, 
+                     double &Latitude, double &Longitude, double &Altitude, 
+                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                     unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                     unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                     double &AgeOfCorrection
+                     );
+inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight, 
+                     double &Latitude, double &Longitude, double &Altitude, 
+                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                     unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                     unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                     double &AgeOfCorrection
+                     ) {
+  return ParseN2kPGN129029(N2kMsg, SID, DaysSince1970, SecondsSinceMidnight, 
+                     Latitude, Longitude, Altitude, 
+                     GNSStype, GNSSmethod,
+                     nSatellites, HDOP, PDOP, GeoidalSeparation,
+                     nReferenceStations, ReferenceStationType, ReferenceSationID,
+                     AgeOfCorrection
+                     );
+}
+
 
 //*****************************************************************************
 // Cross Track Error

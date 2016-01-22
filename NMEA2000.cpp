@@ -31,7 +31,7 @@ unsigned long FastPacketSystemMessages[]={126208L,
                                        0};
 unsigned long DefSingleFrameMessages[]={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
                                        0};
-unsigned long DefFastPacketMessages[]={126996L,126998L,127489L,127506L,128275L,
+unsigned long DefFastPacketMessages[]={126996L,126998L,127489L,127506L,128275L,129029L,
                                       0};
 
 //*****************************************************************************
@@ -306,11 +306,7 @@ int tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned 
     CanIdToN2k(canId,Priority,PGN,Source,Destination);
     if ( (CheckKnownMessage(PGN,SystemMessage,FastPacket)? true: !ForwardOnlyKnownMessages()) ) {
       if (FastPacket && ((buf[0] & 0x1F)>0) ) { // Not first frame
-/*    Serial.print("New frame=");
-    Serial.print(PGN);
-    Serial.print(" frame=");
-    Serial.print(buf[0],HEX);
-    Serial.print("\r\n"); */
+//    Serial.print("New frame="); Serial.print(PGN); Serial.print(" frame="); Serial.print(buf[0],HEX); Serial.print("\r\n");
         // Find previous slot for this PGN
         for (i=0; i<MaxN2kCANMsgs && !(N2kCANMsgBuf[i].N2kMsg.PGN==PGN && N2kCANMsgBuf[i].N2kMsg.Source==Source); i++);
         if (i==MaxN2kCANMsgs) return result; // we did not find start for this message, so just skip it.
@@ -337,18 +333,14 @@ int tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned 
         N2kCANMsgBuf[i].N2kMsg.Init(Priority,PGN,Source,Destination);
         N2kCANMsgBuf[i].CopiedLen=0;
         if (FastPacket) {
-//    Serial.print("First frame=");
-//    Serial.print(PGN);
-//    Serial.print("\r\n");
+//    Serial.print("First frame="); Serial.print(PGN);  Serial.print("\r\n");
           N2kCANMsgBuf[i].LastFrame=buf[0];
           N2kCANMsgBuf[i].N2kMsg.DataLen=buf[1];
           for (int j=2; j<len; j++, N2kCANMsgBuf[i].CopiedLen++) {
             N2kCANMsgBuf[i].N2kMsg.Data[N2kCANMsgBuf[i].CopiedLen]=buf[j];
           }
         } else {
-//    Serial.print("Single frame=");
-//    Serial.print(PGN);
-//    Serial.print("\r\n");
+//    Serial.print("Single frame="); Serial.print(PGN); Serial.print("\r\n");
           N2kCANMsgBuf[i].LastFrame=0;
           N2kCANMsgBuf[i].N2kMsg.DataLen=len;
           for (int j=0; j<len; j++, N2kCANMsgBuf[i].CopiedLen++) {
@@ -538,13 +530,13 @@ void tNMEA2000::ParseMessages() {
         MsgIndex=SetN2kCANBufMsg(canId,len,buf);
         if (MsgIndex>=0) {
           if ( !HandleReceivedSystemMessage(MsgIndex) ) {
+//            Serial.println(MsgIndex);
             ForwardMessage(N2kCANMsgBuf[MsgIndex].N2kMsg);
           }
 //          N2kCANMsgBuf[MsgIndex].N2kMsg.Print(Serial);
           if ( MsgHandler!=0 ) MsgHandler(N2kCANMsgBuf[MsgIndex].N2kMsg);
           N2kCANMsgBuf[MsgIndex].FreeMessage();
-//          Serial.print(MsgIndex);
-//          Serial.print("\r\n");
+//          Serial.print(MsgIndex); Serial.print("\r\n");
         }
     }
 }

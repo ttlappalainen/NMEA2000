@@ -25,7 +25,7 @@ Author: Timo Lappalainen
 
 //*****************************************************************************
 // System time
-void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
+void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource) {
     N2kMsg.SetPGN(126992L);
     N2kMsg.Priority=3;
@@ -33,6 +33,21 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate
     N2kMsg.AddByte(TimeSource);
     N2kMsg.Add2ByteInt(SystemDate);
     N2kMsg.Add4ByteDouble(SystemTime,0.0001);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
+                     double &SystemTime, tN2kTimeSource &TimeSource) {
+  if (N2kMsg.PGN!=126992L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  TimeSource=(tN2kTimeSource)(N2kMsg.GetByte(Index));
+  SystemDate=N2kMsg.Get2ByteUInt(Index);
+  SystemTime=N2kMsg.Get4ByteDouble(0.0001,Index);
+  
+  return true;
 }
 
 //*****************************************************************************
@@ -306,20 +321,33 @@ void SetN2kPGN129026(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference re
     N2kMsg.SetPGN(129026L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
-    N2kMsg.AddByte((ref==N2khr_true?0xfc:0xfd));
+    N2kMsg.AddByte( (((unsigned char)(ref)) & 0x03) | 0xfc );
     N2kMsg.Add2ByteDouble(COG,0.0001); //0.0057295779513082332);
     N2kMsg.Add2ByteDouble(SOG,0.01);
-    N2kMsg.AddByte(0xff);
-    N2kMsg.AddByte(0xff);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingReference &ref, double &COG, double &SOG) {
+  if (N2kMsg.PGN!=129026L) return false;
+  int Index=0;
+  unsigned char b;
+  
+  SID=N2kMsg.GetByte(Index);
+  b=N2kMsg.GetByte(Index); ref=(tN2kHeadingReference)( b & 0x03 );
+  COG=N2kMsg.Get2ByteDouble(0.0001,Index);
+  SOG=N2kMsg.Get2ByteDouble(0.01,Index);
+
+  return true;
 }
 
 //*****************************************************************************
 // GNSS Position Data
-void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
+void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
                      unsigned char nSatellites, double HDOP, double PDOP, double GeoidalSeparation,
-                     unsigned char nReferenceStations, tN2kGNSStype ReferenceStationType, int ReferenceSationID,
+                     unsigned char nReferenceStations, tN2kGNSStype ReferenceStationType, uint16_t ReferenceSationID,
                      double AgeOfCorrection
                      ) {
 
@@ -337,16 +365,48 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, doub
     N2kMsg.AddByte(nSatellites);
     N2kMsg.Add2ByteDouble(HDOP,0.01);
     N2kMsg.Add2ByteDouble(PDOP,0.01);
-//    N2kMsg.AddByte(0);
-//    N2kMsg.AddByte(0);
     N2kMsg.Add4ByteDouble(GeoidalSeparation,0.01);
-    N2kMsg.AddByte(nReferenceStations);
-//    N2kMsg.AddByte(0);
-//    N2kMsg.AddByte(0);
-    N2kMsg.Add2ByteInt( (((int)ReferenceStationType) & 0x0f) | ReferenceSationID<<4 );
-    N2kMsg.Add2ByteDouble(AgeOfCorrection,0.01);
+    if (nReferenceStations!=0xff && nReferenceStations>0) {
+      N2kMsg.AddByte(1); // Note that we have values for only one reference station, so pass only one values.
+      N2kMsg.Add2ByteInt( (((int)ReferenceStationType) & 0x0f) | ReferenceSationID<<4 );
+      N2kMsg.Add2ByteDouble(AgeOfCorrection,0.01);
+    } else N2kMsg.AddByte(nReferenceStations);
 }
 
+bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight, 
+                     double &Latitude, double &Longitude, double &Altitude, 
+                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                     unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                     unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                     double &AgeOfCorrection
+                     ) {
+  if (N2kMsg.PGN!=129029L) return false;
+  int Index=0;
+  unsigned char vb;
+  int16_t vi;
+  
+  SID=N2kMsg.GetByte(Index);
+  DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+  SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+  Latitude=N2kMsg.Get8ByteDouble(1e-16,Index);
+  Longitude=N2kMsg.Get8ByteDouble(1e-16,Index);
+  Altitude=N2kMsg.Get8ByteDouble(1e-6,Index);
+  vb=N2kMsg.GetByte(Index); GNSStype=(tN2kGNSStype)(vb & 0x0f); GNSSmethod=(tN2kGNSSmethod)((vb>>4) & 0x0f);
+  vb=N2kMsg.GetByte(Index);  // Integrity 2 bit, reserved 6 bits
+  nSatellites=N2kMsg.GetByte(Index);
+  HDOP=N2kMsg.Get2ByteDouble(0.01,Index);
+  PDOP=N2kMsg.Get2ByteDouble(0.01,Index);
+  GeoidalSeparation=N2kMsg.Get4ByteDouble(0.01,Index);
+  nReferenceStations=N2kMsg.GetByte(Index);
+  if (nReferenceStations!=0xff && nReferenceStations>0) {
+    // Note that we return real number of stations, but we only have variabes for one.
+    vi=N2kMsg.Get2ByteUInt(Index); ReferenceStationType=(tN2kGNSStype)(vi & 0x0f); ReferenceSationID=(vi>>4);
+    AgeOfCorrection=N2kMsg.Get2ByteDouble(0.01,Index);
+  } 
+  
+  return true;
+}
+                     
 //*****************************************************************************
 // Cross Track Error
 void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {

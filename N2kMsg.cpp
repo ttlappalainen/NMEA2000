@@ -123,6 +123,20 @@ unsigned char tN2kMsg::GetByte(int &Index) const {
 }  
   
 //*****************************************************************************
+int16_t tN2kMsg::Get2ByteInt(int &Index, int16_t def) const {
+  if (Index+2<=DataLen) {
+    return GetBuf2ByteInt(Index,Data);
+  } else return def;
+}  
+  
+//*****************************************************************************
+uint16_t tN2kMsg::Get2ByteUInt(int &Index, uint16_t def) const {
+  if (Index+2<=DataLen) {
+    return GetBuf2ByteUInt(Index,Data);
+  } else return def;
+}  
+  
+//*****************************************************************************
 double tN2kMsg::Get1ByteDouble(double precision, int &Index, double def) const {
   if (Index<DataLen) {
     return GetBuf1ByteDouble(precision,Index,Data,def);
@@ -203,16 +217,6 @@ void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *bu
   index+=4;
   
   (*vi)=(int32_t)(v/precision);
-/*  long vl;
-  vl=(long)(v/precision);
-    buf[index]=vl&255; index++;
-    vl>>=8;
-    buf[index]=vl&255; index++;
-    vl>>=8;
-    buf[index]=vl&255; index++;
-    vl>>=8;
-    buf[index]=vl&255; index++;
-*/
 }
 
 //*****************************************************************************
@@ -220,6 +224,22 @@ void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *bu
   long vl;
   vl=(long)(v/precision);
     SetBuf3ByteInt(vl,index,buf);
+}
+
+//*****************************************************************************
+int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
+  int16_t *vi=(int16_t *)(&buf[index]);
+  index+=2;
+  
+  return *vi;
+}
+
+//*****************************************************************************
+uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
+  uint16_t *vi=(uint16_t *)(&buf[index]);
+  index+=2;
+  
+  return *vi;
 }
 
 //*****************************************************************************
@@ -254,12 +274,22 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
 
 //*****************************************************************************
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  long long *vl=(long long *)(&buf[index]);
-  index+=8;
+  long *vllo=(long *)(&buf[index]);
+  index+=4;
+  long *vlhi=(long *)(&buf[index]);
+  index+=4;
 
-  if (((unsigned long long)(*vl))==0xffffffffffffffff) return def;
+  long long vll=*vlhi;
+  vll<<32;
+  vll|=*vllo;
+
+  // Next does not work
+//  long long *vll=(long long *)(&buf[index]);
+//  index+=8;
+
+  if (((unsigned long long)(vll))==0xffffffffffffffff) return def;
   
-  return ((double)(*vl))*precision;
+  return ((double)(vll))*precision;
 }
 
 //*****************************************************************************
