@@ -271,25 +271,35 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
   
   return ((double)(*vi))*precision;
 }
+//  long long fpll=1/fp;
+//  long long vll=v*1e6;
 
 //*****************************************************************************
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  long *vllo=(long *)(&buf[index]);
+  // Next does not work on any board I tested
+//  long long *vll=(long long *)(&buf[index]);
+//  index+=8;
+  double fp=precision*1e6;
+  unsigned long *vllo=(unsigned long *)(&buf[index]);
   index+=4;
   long *vlhi=(long *)(&buf[index]);
   index+=4;
-
-  long long vll=*vlhi;
-  vll<<32;
-  vll|=*vllo;
-
-  // Next does not work
-//  long long *vll=(long long *)(&buf[index]);
-//  index+=8;
-
-  if (((unsigned long long)(vll))==0xffffffffffffffff) return def;
+  double v=*vlhi * 4294967296.0;
   
-  return ((double)(vll))*precision;
+  if (v>=0) { v += *vllo; } else { v -= *vllo; }
+  
+  // Below did not work even with Due
+  //long long vll=*vlhi;
+  //vll<<=32;
+  //vll|=*vllo;
+ 
+  
+  //Serial.print(*vlhi,HEX); Serial.print(","); Serial.println(*vllo,HEX); 
+
+
+//  if (((unsigned long long)(vll))==0xffffffffffffffff) return def;
+  
+  return v*precision;
 }
 
 //*****************************************************************************
@@ -310,7 +320,7 @@ double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf,
   long *vl=(long *)(&buf[index]);
   index+=4;
 
-  if (*vl==0xffffffff) return def;
+  if (((unsigned long)(*vl))==0xffffffff) return def;
   
   return ((double)(*vl))*precision;
 }

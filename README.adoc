@@ -21,6 +21,12 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 
 == Changes ==
 
+23.01.2016 Added some comments to samples and several new message readers. Also added support for 130316 extended temperature.
+Added new include N2kMessagesEnumToStr.h for translating library enums to clear text. This is now just for preliminary
+so I may changes texts in coming future.
+Added also new examples DataDisplay2.ini and MessageSender.ino. They are extended versions of DataDisplay.ino and 
+TemperatureMonitor.ino.
+
 05.12.2015 Added NMEA2000_CAN.h and some fixes. Library has been originally developed with Arduino Software 1.6.5
 On Arduino Software 1.6.6 it is possible to include libraries within included files, so now it is possible to just
 include one file NMEA2000_CAN.h, which automatically selects right CAN library according. So you can have same code for

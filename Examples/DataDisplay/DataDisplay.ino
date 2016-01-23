@@ -1,4 +1,5 @@
 // Demo: NMEA2000 library. Read some data and their show values.
+// See also DataDisplay2.ino, which handles more data.
 
 // #define USE_DUE_CAN 1
 #define N2K_SOURCE 15
@@ -31,6 +32,9 @@ typedef struct {
   unsigned long PGN;
   void (*Handler)(const tN2kMsg &N2kMsg); 
 } tNMEA2000Handler;
+
+void FluidLevel(const tN2kMsg &N2kMsg);
+void WaterDepth(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {127505L,&FluidLevel},

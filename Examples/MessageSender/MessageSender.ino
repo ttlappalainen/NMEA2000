@@ -32,8 +32,8 @@ void setup() {
 
 
 void loop() {
-  SendN2kSlowData();
   SendN2kRapidData();
+  SendN2kSlowData();
   NMEA2000.ParseMessages();
 }
 
@@ -50,33 +50,36 @@ double ReadWaterTemp() {
 void SendN2kSlowData() {
   static unsigned long SlowDataUpdated=millis();
   tN2kMsg N2kMsg;
-  const int DelayBetweenSend=3; // Arduino Due needs delay between send. Why?
-
+  // !delay is not good practise withing loops! I use it in this sample since
+  // I tested Arduino Mega as receiver, ad it could not handle all messages
+  // send without delay.
+  const int DelayBetweenSend=3; 
+  
   if ( SlowDataUpdated+SlowDataUpdatePeriod<millis() ) {
     SlowDataUpdated=millis();
     SetN2kTemperatureExt(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+
     SetN2kTemperature(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kEnvironmentalParameters(N2kMsg, 1, N2kts_MainCabinTemperature, ReadCabinTemp());
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kOutsideEnvironmentalParameters(N2kMsg, 1, ReadWaterTemp());
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kBatConf(N2kMsg,1,N2kDCbt_AGM,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(410),95,1.26,97);
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Alternator,86,91,1420,0.21);
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kPGNSystemTime(N2kMsg,1,17555,62000);
-    NMEA2000.SendMsg(N2kMsg);
-    delay(DelayBetweenSend);
-    SetN2kGNSS(N2kMsg,1,17555,62000,60.1,21.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
-    NMEA2000.SendMsg(N2kMsg);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
+    SetN2kGNSS(N2kMsg,1,17555,62000,-60.1,67.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Temperature send ready");
   }
 }

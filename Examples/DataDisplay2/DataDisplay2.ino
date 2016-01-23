@@ -1,4 +1,17 @@
-// Demo: NMEA2000 library. Read some data and their show values.
+// Demo: NMEA2000 library. 
+// This demo reads messages from NMEA 2000 bus and
+// sends them translated to clear text to Serial.
+
+// Note! I noticed that e.g. Arduino Mega 
+// serial handling is so slow that it can not print all messages.
+// Specially problem arises with fastpackage (>8 bytes) messages. So if try to print
+// only GNSS message with Arduino Mega, it misses every second GNSS. 
+// Arduino due can print all messages.
+// If you use ActisenseListener demo, even Arduino Mega can forward all messages
+// from MessageSender demo in Actisense format, if you use 3 ms delay on MessageSender
+// between messages.
+//
+// Above is important also with Due.
 
 // #define USE_DUE_CAN 1
 
@@ -46,6 +59,7 @@ void setup() {
   // Do not forward bus messages at all
   NMEA2000.SetForwardType(tNMEA2000::fwdt_Text);
   NMEA2000.SetForwardStream(OutputStream);
+  // Set false below, if you do not want to see messages parsed to HEX withing library
   NMEA2000.EnableForward(true);
   NMEA2000.SetMsgHandler(HandleNMEA2000Msg);
   NMEA2000.Open();
