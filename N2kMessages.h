@@ -189,6 +189,13 @@ enum tN2kBatNomVolt {
                             N2kDCbnv_48v=6
                           };
                              
+enum tN2kTransmissionGear {
+                            N2kTG_Forward=0,
+                            N2kTG_Neutral=1,
+                            N2kTG_Reverse=2,
+                            N2kTG_Unknown=3,
+                          };
+                          
 //*****************************************************************************
 // System date/time
 // Output:
@@ -254,11 +261,18 @@ inline void SetN2kPGNMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double 
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                     int EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef);
+                     double EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef);
 
 inline void SetN2kEngineParamRapid(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                      int EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef) {
+                      double EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef) {
   SetN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);
+}
+
+bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
+                     double &EngineBoostPressure, unsigned char &EngineTiltTrim);
+inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
+                     double &EngineBoostPressure, unsigned char &EngineTiltTrim) {
+  return ParseN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);                   
 }
 
 //*****************************************************************************
@@ -297,6 +311,31 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, int EngineInstance, double
                        flagMaintenanceNeeded, flagEngineCommError, flagSubThrottle, flagNeutralStartProtect, flagEngineShuttingDown);
 }
                        
+//*****************************************************************************
+// Transmission parameters, dynamic
+// Input:
+//  - EngineInstance        Engine instance.
+//  - TransmissionGear      Selected transmission. See tN2kTransmissionGear
+//  - OilPressure           in Pascal
+//  - OilTemperature        in K
+//  - EngineTiltTrim        in %
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1);
+
+inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1) {
+  SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
+}
+
+bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
+                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1);
+inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
+                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1) {
+  return ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);                   
+}
+
 //*****************************************************************************
 // Fluid level
 // Input:
@@ -618,6 +657,14 @@ inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char 
                      double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef) {
   SetN2kPGN130310(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
 }
+
+bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
+                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure);
+inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
+                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure) {
+  return ParseN2kPGN130310(N2kMsg, SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
+}
+
 //*****************************************************************************
 // Environmental parameters
 // Note that in PGN 130311 TempInstance is as TempSource in PGN 130312. I do not know why this

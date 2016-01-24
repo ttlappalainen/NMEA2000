@@ -2,21 +2,15 @@
 // This demo reads messages from NMEA 2000 bus and
 // sends them translated to clear text to Serial.
 
-// Note! I noticed that e.g. Arduino Mega 
-// serial handling is so slow that it can not print all messages.
-// Specially problem arises with fastpackage (>8 bytes) messages. So if try to print
-// only GNSS message with Arduino Mega, it misses every second GNSS. 
-// Arduino due can print all messages.
-// If you use ActisenseListener demo, even Arduino Mega can forward all messages
-// from MessageSender demo in Actisense format, if you use 3 ms delay on MessageSender
-// between messages.
-//
-// Above is important also with Due.
-
-// #define USE_DUE_CAN 1
+// Note! If you use this on Arduino Mega, I prefer to also connect interrupt line
+// for MCP2515 and define N2k_CAN_INT_PIN to related line. E.g. MessageSender
+// sends so many meaages that Meaga can not handle them. If you only use
+// received messages internally without slow operations, then youmay survive
+// without interrupt.
 
 #include <Arduino.h>
 //#include <Time.h>  // 
+//#define N2k_CAN_INT_PIN 21
 #include <NMEA2000_CAN.h>
 #include <N2kMessages.h>
 #include <N2kMessagesEnumToStr.h>
@@ -26,24 +20,30 @@ typedef struct {
   void (*Handler)(const tN2kMsg &N2kMsg); 
 } tNMEA2000Handler;
 
+void SystemTime(const tN2kMsg &N2kMsg);
+void EngineRapid(const tN2kMsg &N2kMsg);
+void TransmissionParameters(const tN2kMsg &N2kMsg);
 void WaterDepth(const tN2kMsg &N2kMsg);
 void FluidLevel(const tN2kMsg &N2kMsg);
+void OutsideEnvironmental(const tN2kMsg &N2kMsg);
 void Temperature(const tN2kMsg &N2kMsg);
 void TemperatureExt(const tN2kMsg &N2kMsg);
 void DCStatus(const tN2kMsg &N2kMsg);
 void BatteryConfigurationStatus(const tN2kMsg &N2kMsg);
 void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
-void SystemTime(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
+  {127488L,&EngineRapid},
+  {127493L,&TransmissionParameters},
   {127505L,&FluidLevel},
   {127506L,&DCStatus},
   {127513L,&BatteryConfigurationStatus},
   {128267L,&WaterDepth},
   {129026L,&COGSOG},
   {129029L,&GNSS},
+  {130310L,&OutsideEnvironmental},
   {130312L,&Temperature},
   {130316L,&TemperatureExt},
   {0,0}
@@ -60,7 +60,7 @@ void setup() {
   NMEA2000.SetForwardType(tNMEA2000::fwdt_Text);
   NMEA2000.SetForwardStream(OutputStream);
   // Set false below, if you do not want to see messages parsed to HEX withing library
-  NMEA2000.EnableForward(true);
+  NMEA2000.EnableForward(false);
   NMEA2000.SetMsgHandler(HandleNMEA2000Msg);
   NMEA2000.Open();
   OutputStream->print("Running...");
@@ -78,6 +78,42 @@ void SystemTime(const tN2kMsg &N2kMsg) {
       OutputStream->print("  days since 1.1.1970: "); OutputStream->println(SystemDate);
       OutputStream->print("  seconds since midnight: "); OutputStream->println(SystemTime);
       OutputStream->print("  time source: "); PrintN2kEnumType(TimeSource,OutputStream);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void EngineRapid(const tN2kMsg &N2kMsg) {
+    unsigned char EngineInstance;
+    double EngineSpeed;
+    double EngineBoostPressure;
+    unsigned char EngineTiltTrim;
+    
+    if (ParseN2kEngineParamRapid(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim) ) {
+      OutputStream->print("Engine rapid params: "); OutputStream->println(EngineInstance);
+      OutputStream->print("  RPM: "); OutputStream->println(EngineSpeed);
+      OutputStream->print("  boost pressure: "); OutputStream->println(EngineBoostPressure);
+      OutputStream->print("  tilt trim: "); OutputStream->println(EngineTiltTrim);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void TransmissionParameters(const tN2kMsg &N2kMsg) {
+    unsigned char EngineInstance;
+    tN2kTransmissionGear TransmissionGear;
+    double OilPressure;
+    double OilTemperature;
+    unsigned char DiscreteStatus1;
+    
+    if (ParseN2kTransmissionParameters(N2kMsg,EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1) ) {
+      OutputStream->print("Transmission params: "); OutputStream->println(EngineInstance);
+      OutputStream->print("  gear: "); PrintN2kEnumType(TransmissionGear,OutputStream);
+      OutputStream->print("  oil pressure: "); OutputStream->println(OilPressure);
+      OutputStream->print("  oil temperature: "); OutputStream->println(KelvinToC(OilTemperature));
+      OutputStream->print("  discrete status: "); OutputStream->println(DiscreteStatus1);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -140,6 +176,28 @@ void GNSS(const tN2kMsg &N2kMsg) {
       OutputStream->print("  reference stations: "); OutputStream->println(nReferenceStations);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void OutsideEnvironmental(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    double WaterTemperature;
+    double OutsideAmbientAirTemperature;
+    double AtmosphericPressure;
+    
+    if (ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure) ) {
+      OutputStream->print("Water temp: "); OutputStream->print(KelvinToC(WaterTemperature));
+      OutputStream->print(", outside ambient temp: "); 
+      if (OutsideAmbientAirTemperature!=TempUndef) {
+        OutputStream->print(KelvinToC(OutsideAmbientAirTemperature));
+      } else OutputStream->print("not available");   
+      OutputStream->print(", pressure: ");
+      if (AtmosphericPressure!=PressureUndef) {
+        OutputStream->println(PascalTomBar(AtmosphericPressure));    
+      } else OutputStream->println("not available");
+    } else {
+      OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
     }
 }
 

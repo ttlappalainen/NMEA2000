@@ -61,7 +61,7 @@ tNMEA2000_due NMEA2000;
 #include <NMEA2000_teensy.h> // https://github.com/sarfata/NMEA2000_teensy
 tNMEA2000_teensy NMEA2000;
 
-#else
+#else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
 // CAN_BUS_shield libraries will be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
 // There is improved library, which branch can be found on https://github.com/peppeve/CAN_BUS_Shield
@@ -85,7 +85,12 @@ tNMEA2000_teensy NMEA2000;
 #define MCP_CAN_CLOCK_SET MCP_16MHz
 #endif
 
-tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET);
+#if !defined(N2k_CAN_INT_PIN)
+#define N2k_CAN_INT_PIN 0xff   // No interrupt.
+#define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
+#endif
+
+tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN);
 
 #endif
 

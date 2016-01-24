@@ -271,15 +271,12 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
   
   return ((double)(*vi))*precision;
 }
-//  long long fpll=1/fp;
-//  long long vll=v*1e6;
 
 //*****************************************************************************
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   // Next does not work on any board I tested
 //  long long *vll=(long long *)(&buf[index]);
 //  index+=8;
-  double fp=precision*1e6;
   unsigned long *vllo=(unsigned long *)(&buf[index]);
   index+=4;
   long *vlhi=(long *)(&buf[index]);

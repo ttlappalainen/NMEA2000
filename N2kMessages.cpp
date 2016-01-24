@@ -81,7 +81,7 @@ void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double 
 //*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                     int EngineBoostPressure, unsigned char EngineTiltTrim) {
+                     double EngineBoostPressure, unsigned char EngineTiltTrim) {
     N2kMsg.SetPGN(127488L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(EngineInstance);
@@ -90,6 +90,20 @@ void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
     N2kMsg.AddByte(EngineTiltTrim);
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
+                     double &EngineBoostPressure, unsigned char &EngineTiltTrim) {
+  if (N2kMsg.PGN!=127488L) return false;
+
+  int Index=0;
+  
+  EngineInstance=N2kMsg.GetByte(Index);
+  EngineSpeed=N2kMsg.Get2ByteDouble(0.25,Index);
+  EngineBoostPressure=N2kMsg.Get2ByteDouble(100,Index,PressureUndef);
+  EngineTiltTrim=N2kMsg.GetByte(Index);
+  
+  return true;
 }
 
 //*****************************************************************************
@@ -149,6 +163,35 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
   N2kMsg.AddByte(EngineTorque);
 }
 
+//*****************************************************************************
+// Transmission parameters, dynamic
+void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1) {
+  N2kMsg.SetPGN(127493L);
+  N2kMsg.Priority=6;
+  N2kMsg.AddByte(EngineInstance);
+  N2kMsg.AddByte((TransmissionGear & 0x03) | 0xfc );
+  N2kMsg.Add2ByteDouble(OilPressure, 100);
+  N2kMsg.Add2ByteDouble(OilTemperature, 0.1);
+  N2kMsg.AddByte(DiscreteStatus1);
+  N2kMsg.AddByte(0xff);  // Reserved
+}
+
+bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
+                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1) {
+  if (N2kMsg.PGN!=127493L) return false;
+
+  int Index=0;
+  
+  EngineInstance=N2kMsg.GetByte(Index);
+  TransmissionGear=(tN2kTransmissionGear)(N2kMsg.GetByte(Index) & 0x03);
+  OilPressure=N2kMsg.Get2ByteDouble(100,Index,PressureUndef);
+  OilTemperature=N2kMsg.Get2ByteDouble(0.1,Index,TempUndef);
+  DiscreteStatus1=N2kMsg.GetByte(Index);
+  
+  return true;
+}
+                     
 //*****************************************************************************
 // Fluid level
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
@@ -465,6 +508,19 @@ void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature
     if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
     N2kMsg.AddByte(0xff);  // reserved
 }
+                     
+bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
+                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure) {
+  if (N2kMsg.PGN!=130310L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  WaterTemperature=N2kMsg.Get2ByteDouble(0.01,Index,TempUndef);
+  OutsideAmbientAirTemperature=N2kMsg.Get2ByteDouble(0.01,Index,TempUndef);
+  AtmosphericPressure=N2kMsg.Get2ByteDouble(1,Index,PressureUndef);
+  
+  return true;
+}                     
+
                      
 //*****************************************************************************
 // Environmental parameters

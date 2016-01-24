@@ -51,9 +51,9 @@ void SendN2kSlowData() {
   static unsigned long SlowDataUpdated=millis();
   tN2kMsg N2kMsg;
   // !delay is not good practise withing loops! I use it in this sample since
-  // I tested Arduino Mega as receiver, ad it could not handle all messages
-  // send without delay.
-  const int DelayBetweenSend=3; 
+  // I tested Arduino Mega as receiver without inteerupt and it could not handle all messages
+  // send without delay. With interrupt, it can do it and you can set DelayBetweenSend to 0.
+  const int DelayBetweenSend=0; 
   
   if ( SlowDataUpdated+SlowDataUpdatePeriod<millis() ) {
     SlowDataUpdated=millis();
@@ -74,6 +74,9 @@ void SendN2kSlowData() {
     
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Alternator,86,91,1420,0.21);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+
+    SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),0x6f);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kPGNSystemTime(N2kMsg,1,17555,62000);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
@@ -84,7 +87,7 @@ void SendN2kSlowData() {
   }
 }
 
-#define RapidDataUpdatePeriod 200
+#define RapidDataUpdatePeriod 167 // Some strange periot to cause Slow and rapid to run unsync.
 
 void SendN2kRapidData() {
   static unsigned long RapidDataUpdated=millis();
@@ -92,6 +95,8 @@ void SendN2kRapidData() {
 
   if ( RapidDataUpdated+RapidDataUpdatePeriod<millis() ) {
     RapidDataUpdated=millis();
+    SetN2kEngineParamRapid(N2kMsg,1,4350,820000,48);
+    NMEA2000.SendMsg(N2kMsg);
     SetN2kCOGSOGRapid(N2kMsg,1,N2khr_true,DegToRad(115.6),0.1);
     NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Temperature send ready");

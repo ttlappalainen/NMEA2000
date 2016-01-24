@@ -21,6 +21,8 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 
 == Changes ==
 
+23.01.2016 Added PGN 127493 support. NMEA2000_mcp has now interrupt support. Some other fixes.
+
 23.01.2016 Added some comments to samples and several new message readers. Also added support for 130316 extended temperature.
 Added new include N2kMessagesEnumToStr.h for translating library enums to clear text. This is now just for preliminary
 so I may changes texts in coming future.

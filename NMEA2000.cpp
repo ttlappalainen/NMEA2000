@@ -266,7 +266,9 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
   int i;
 //    return true;
     FastPacket=false;
-    if ( PGN==0 ) { SystemMessage=0; return false; }  // Unknown
+    if ( PGN==0 ) { SystemMessage=false; return false; }  // Unknown
+    
+    // First check system messages
     SystemMessage=true;
     for (i=0; SingleFrameSystemMessages[i]!=PGN && SingleFrameSystemMessages[i]!=0; i++);
     if (SingleFrameSystemMessages[i]==PGN) return true;
@@ -277,6 +279,7 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
       return true;
     }
 
+    // It was not system message, so check other messages
     SystemMessage=false;
     for (i=0; SingleFrameMessages[i]!=PGN && SingleFrameMessages[i]!=0; i++);
     if (SingleFrameMessages[i]==PGN) return true;

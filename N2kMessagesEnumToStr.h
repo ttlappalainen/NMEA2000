@@ -75,4 +75,7 @@ MakeN2kEnumTypeToStrFunc(tN2kBatChem,tN2kBatChemStrs)
 const char* tN2kDCTypeStrs[] = { "battery", "altenator", "converter", "solar cell", "wind generator"};
 MakeN2kEnumTypeToStrFunc(tN2kDCType,tN2kDCTypeStrs)
 
+const char* tN2kTransmissionGearStrs[] = { "forward", "neutral", "reverse", "unknown"};
+MakeN2kEnumTypeToStrFunc(tN2kTransmissionGear,tN2kTransmissionGearStrs)
+
 #endif
