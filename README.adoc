@@ -29,17 +29,21 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
     SetN2kPGNSystemTime -> SetN2kSystemTime +
     ParseN2kPGNSystemTime -> ParseN2kSystemTime +
     SetN2kPGNTrueHeading -> SetN2kTrueHeading +
-    SetN2kPGNMagneticHeading -> SetN2kMagneticHeading +
+    SetN2kPGNMagneticHeading -> SetN2kMagneticHeading
+    
 - Variable types has been changed on some functions in N2kMessages. So when you get an compiler error about functions in N2kMessages, check
-  carefully all parameter definitions for function from N2kMessages.h.<br/>
+  carefully all parameter definitions for function from N2kMessages.h.
+  
 - If you do not have value for some parameter for functions in N2kMessages, use related N2kxxxxNA constant defined in N2kMsg.h. So e.g. if you only have
-  wind speed, call<br/>
-  SetN2kWindSpeed(N2kMsg, 1, ReadWindSpeed(),N2kDoubleNA,N2kWind_Apprent);<br/>
+  wind speed, call +
+  SetN2kWindSpeed(N2kMsg, 1, ReadWindSpeed(),N2kDoubleNA,N2kWind_Apprent);
+  
 - If you are reading values from N2k bus, you can now check does some value exist by using function N2kIsNA.
-  So if you e.g. call<br/>
-  ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);<br/>
-  then check pressure value with<br/>
-  if ( !N2kIsNA(AtmosphericPressure) ) { // It is available, so we can show it!<br/>
+  So if you e.g. call +
+  ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure); +
+  then check pressure value with +
+  if ( !N2kIsNA(AtmosphericPressure) ) { // It is available, so we can show it!
+  
 - Added reference document to the documents, which hopefully helps to get started.
 
 23.01.2016 Added PGN 127493 support. NMEA2000_mcp has now interrupt support. Some other fixes.
@@ -81,15 +85,23 @@ only 4 byte double, so you may loose some accuracy.
 == Software setup ==
 
 You need at least Arduino Software 1.6.6 for this sample. I'll expect you are familiar with Arduino
-and using libraries. When your Arduino environment is ready,<br/>
-- Download NMEA2000 library zip.<br/>
-- Download either NMEA2000_due, NMEA2000_mcp or NMEA2000_teensy (https://github.com/sarfata/NMEA2000_teensy) library zip depending you hw.<br/>
+and using libraries. When your Arduino environment is ready,
+
+- Download NMEA2000 library zip.
+
+- Download either NMEA2000_due, NMEA2000_mcp or NMEA2000_teensy (https://github.com/sarfata/NMEA2000_teensy) library zip depending you hw.
+
 - Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/peppeve/CAN_BUS_Shield) 
-library zip depending you hw or install Teensyduino for Teensy 3.1/3.2 boards.<br/>
-- Install all libraries (Add .ZIP library).<br/>
-- Open NMEA2000\Examples\TemperatureMonitor.<br/>
-- Connect you Arduino to USB and NMEA2000 bus.<br/>
-- Send sketch to Arduino.<br/>
+library zip depending you hw or install Teensyduino for Teensy 3.1/3.2 boards.
+
+- Install all libraries (Add .ZIP library).
+
+- Open NMEA2000\Examples\TemperatureMonitor.
+
+- Connect you Arduino to USB and NMEA2000 bus.
+
+- Send sketch to Arduino.
+
 - If you have Multi Function Display (e.g. Garmin GMI-20) on your NMEA2000 bus, you should see on it's NMEA2000 bus devices new device
 "Simple temp monitor" on the list.
 
@@ -101,28 +113,28 @@ from NEMA2000 bus and sends it to PC.
 With latest version of Arduino sw it is possible to simply include NMEA2000_CAN.h, which automatically selects necessary CAN libraries.
 For older versions you have to add library includes to main project file. So depending on board add lines:
 
-For use board with MCP2515 SPI can bus tranceiver and mcp_can library<br/>
-#include <N2kMsg.h><br/>
-#include <NMEA2000.h><br/>
-#include <SPI.h><br/>
-#include <mcp_can.h> // https://github.com/peppeve/CAN_BUS_Shield<br/>
-#include <NMEA2000_mcp.h><br/>
-#define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select<br/>
-tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN);<br/>
+For use board with MCP2515 SPI can bus tranceiver and mcp_can library +
+#include <N2kMsg.h> +
+#include <NMEA2000.h> +
+#include <SPI.h> +
+#include <mcp_can.h> // https://github.com/peppeve/CAN_BUS_Shield +
+#include <NMEA2000_mcp.h> +
+#define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select +
+tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN); +
 
-For use with Arduino due and due_can library<br/>
-#include <N2kMsg.h><br/>
-#include <NMEA2000.h><br/>
-#include <due_can.h>  // https://github.com/collin80/due_can<br/>
-#include <NMEA2000_due.h><br/>
-tNMEA2000_due NMEA2000;<br/>
+For use with Arduino due and due_can library +
+#include <N2kMsg.h> +
+#include <NMEA2000.h> +
+#include <due_can.h>  // https://github.com/collin80/due_can +
+#include <NMEA2000_due.h> +
+tNMEA2000_due NMEA2000; +
 
-For use with Teensy 3.1/3.2 board and FlexCan><br/>
-#include <N2kMsg.h><br/>
-#include <NMEA2000.h><br/>
-#include <FlexCAN.h>><br/>
-#include <NMEA2000_teensy.h> // https://github.com/sarfata/NMEA2000_teensy><br/>
-tNMEA2000_teensy NMEA2000;><br/>
+For use with Teensy 3.1/3.2 board and FlexCan> +
+#include <N2kMsg.h> +
+#include <NMEA2000.h> +
+#include <FlexCAN.h> +
+#include <NMEA2000_teensy.h> // https://github.com/sarfata/NMEA2000_teensy> +
+tNMEA2000_teensy NMEA2000;
 
 == License ==
 
