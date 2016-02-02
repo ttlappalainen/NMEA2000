@@ -1,7 +1,7 @@
 /* 
 N2kMessages.h
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -38,14 +38,6 @@ NMEA2000.h
 
 #include <N2kMsg.h>
 
-#define TempUndef -300
-#define HumidityUndef -1
-#define PressureUndef -1
-#define EngineBoostUndef 0xffff
-#define EngineTrimTiltUndef 0xff
-#define AngleUndef -1000 
-#define SpeedUndef -1000 
-
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
 inline double CToKelvin(double v) { return v+273.15; }
@@ -54,6 +46,8 @@ inline double mBarToPascal(double v) { return v*100; }
 inline double PascalTomBar(double v) { return v/100; }
 inline double AhToCoulomb(double v) { return v*3600; }
 inline double CoulombToAh(double v) { return v/3600; }
+inline double hToSeconds(double v) { return v*3600; }
+inline double SecondsToh(double v) { return v/3600; }
 
 
 enum tN2kHeadingReference {
@@ -198,19 +192,25 @@ enum tN2kTransmissionGear {
                           
 //*****************************************************************************
 // System date/time
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - SystemDate            Days since 1979-01-01
+//  - SystemTime            seconds since midnight
+//  - TimeSource            see tN2kTimeSource
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS);
-                     
-inline void SetN2kPGNSystemTime(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
+              
+inline void SetN2kSystemTime(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS) {
   SetN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
 }
 
 bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
                      double &SystemTime, tN2kTimeSource &TimeSource);
-inline bool ParseN2kPGNSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
+inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
                      double &SystemTime, tN2kTimeSource &TimeSource) {
   return ParseN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);                   
 }
@@ -222,11 +222,13 @@ inline bool ParseN2kPGNSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uin
 // - Instance               Rudder instance. 
 // - RudderDirectionOrder   See tN2kRudderDirectionOrder. Direction, where rudder should be turned.
 // - AngleOrder             In radians angle where rudder should be turned.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=AngleUndef);
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA);
 
 inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=AngleUndef) {
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA) {
   SetN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
 }
                      
@@ -236,18 +238,17 @@ inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char I
 //  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
 //                          to indicate that they are measured at same time.
 //  - Heading               Heading in radians
-//  - Deviation             Magnetic deviation in radians. Use AngleUndef for undefined value.
-//  - Variation             Magnetic variation in radians. Use AngleUndef for undefined value.
+//  - Deviation             Magnetic deviation in radians. Use N2kDoubleNA for undefined value.
+//  - Variation             Magnetic variation in radians. Use N2kDoubleNA for undefined value.
 //  - ref                   Heading reference. See definition of tN2kHeadingReference.
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation, double Variation, tN2kHeadingReference ref);
 
-inline void SetN2kPGNTrueHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading) {
-  SetN2kPGN127250(N2kMsg,SID,Heading,AngleUndef,AngleUndef,N2khr_true);
+inline void SetN2kTrueHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading) {
+  SetN2kPGN127250(N2kMsg,SID,Heading,N2kDoubleNA,N2kDoubleNA,N2khr_true);
 }
-
-inline void SetN2kPGNMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation=AngleUndef, double Variation=AngleUndef) {
+inline void SetN2kMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double Deviation=N2kDoubleNA, double Variation=N2kDoubleNA) {
   SetN2kPGN127250(N2kMsg,SID,Heading,Deviation,Variation,N2khr_magnetic);
 }
 
@@ -261,17 +262,17 @@ inline void SetN2kPGNMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double 
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                     double EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef);
+                     double EngineBoostPressure=N2kDoubleNA, int8_t EngineTiltTrim=N2kInt8NA);
 
 inline void SetN2kEngineParamRapid(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                      double EngineBoostPressure=EngineBoostUndef, unsigned char EngineTiltTrim=EngineTrimTiltUndef) {
+                      double EngineBoostPressure=N2kDoubleNA, int8_t EngineTiltTrim=N2kInt8NA) {
   SetN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);
 }
 
 bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
-                     double &EngineBoostPressure, unsigned char &EngineTiltTrim);
+                     double &EngineBoostPressure, int8_t &EngineTiltTrim);
 inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
-                     double &EngineBoostPressure, unsigned char &EngineTiltTrim) {
+                     double &EngineBoostPressure, int8_t &EngineTiltTrim) {
   return ParseN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);                   
 }
 
@@ -280,8 +281,8 @@ inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &Engin
 // Input:
 //  - EngineInstance        Engine instance.
 //  - EngineOilPress        in Pascal
-//  - EngineOilTemp         in Celcius
-//  - EngineCoolantTemp     in Celcius
+//  - EngineOilTemp         in Kelvin
+//  - EngineCoolantTemp     in Kelvin
 //  - AltenatorVoltage      in Voltage
 //  - FuelRate              in litres/hour
 //  - EngineHours           in seconds
@@ -291,24 +292,57 @@ inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &Engin
 //  - EngineTorque          in %
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, float EngineLoad, float EngineTorque, bool flagCheckEngine,
-                       bool flagOverTemp, bool flagLowOilPress, bool flagLowOilLevel, bool flagLowFuelPress, bool flagLowSystemVoltage, bool flagLowCoolantLevel,
-                       bool flagWaterFlow, bool flagWaterInFuel, bool flagChargeIndicator, bool flagPreheatIndicator, bool flagHighBoostPress, bool flagRevLimitExceeded,
-                       bool flagEgrSystem, bool flagTPS, bool flagEmergencyStopMode, bool flagWarning1, bool flagWarning2, bool flagPowerReduction,
-                       bool flagMaintenanceNeeded, bool flagEngineCommError, bool flagSubThrottle, bool flagNeutralStartProtect, bool flagEngineShuttingDown);
-inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, float EngineLoad, float EngineTorque, bool flagCheckEngine,
-                       bool flagOverTemp, bool flagLowOilPress, bool flagLowOilLevel, bool flagLowFuelPress, bool flagLowSystemVoltage, bool flagLowCoolantLevel,
-                       bool flagWaterFlow, bool flagWaterInFuel, bool flagChargeIndicator, bool flagPreheatIndicator, bool flagHighBoostPress, bool flagRevLimitExceeded,
-                       bool flagEgrSystem, bool flagTPS, bool flagEmergencyStopMode, bool flagWarning1, bool flagWarning2, bool flagPowerReduction,
-                       bool flagMaintenanceNeeded, bool flagEngineCommError, bool flagSubThrottle, bool flagNeutralStartProtect, bool flagEngineShuttingDown) {
+void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
+                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA, 
+                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA, 
+                       bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false, 
+                       bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false, 
+                       bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false, 
+                       bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false, 
+                       bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false, 
+                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false);
+inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
+                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA, 
+                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA, 
+                       bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false, 
+                       bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false, 
+                       bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false, 
+                       bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false, 
+                       bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false, 
+                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
   SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque, flagCheckEngine,
-                       flagOverTemp, flagLowOilPress, flagLowOilLevel, flagLowFuelPress, flagLowSystemVoltage, flagLowCoolantLevel,
-                       flagWaterFlow, flagWaterInFuel, flagChargeIndicator, flagPreheatIndicator, flagHighBoostPress, flagRevLimitExceeded,
-                       flagEgrSystem, flagTPS, flagEmergencyStopMode, flagWarning1, flagWarning2, flagPowerReduction,
-                       flagMaintenanceNeeded, flagEngineCommError, flagSubThrottle, flagNeutralStartProtect, flagEngineShuttingDown);
+                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                       flagCheckEngine, flagOverTemp, flagLowOilPress, flagLowOilLevel, 
+                       flagLowFuelPress, flagLowSystemVoltage, flagLowCoolantLevel, flagWaterFlow, 
+                       flagWaterInFuel, flagChargeIndicator, flagPreheatIndicator, flagHighBoostPress, 
+                       flagRevLimitExceeded, flagEgrSystem, flagTPS, flagEmergencyStopMode, 
+                       flagWarning1, flagWarning2, flagPowerReduction, flagMaintenanceNeeded, 
+                       flagEngineCommError, flagSubThrottle, flagNeutralStartProtect, flagEngineShuttingDown);
+}
+
+bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress, 
+                      int8_t &EngineLoad, int8_t &EngineTorque);
+
+inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress, 
+                      int8_t &EngineLoad, int8_t &EngineTorque) {
+    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress, 
+                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage, 
+                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress, 
+                      EngineLoad, EngineTorque);
+}
+inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours) {
+    double EngineCoolantPress, EngineFuelPress;
+    int8_t EngineLoad, EngineTorque;
+    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress, 
+                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage, 
+                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress, 
+                      EngineLoad, EngineTorque);
 }
                        
 //*****************************************************************************
@@ -400,11 +434,11 @@ inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
 //  - BatteryCurrent        Current in A 
 //  - BatteryTemperature    Battery temperature in °K. Use function CToKelvin, if you want to use °C.
 //  - SID                   Sequence ID.
-void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
-                     double BatteryTemperature, unsigned char SID);
+void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=N2kDoubleNA,
+                     double BatteryTemperature=N2kDoubleNA, unsigned char SID=1);
 
-inline void SetN2kDCBatStatus(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
-                     double BatteryTemperature, unsigned char SID) {
+inline void SetN2kDCBatStatus(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=N2kDoubleNA,
+                     double BatteryTemperature=N2kDoubleNA, unsigned char SID=1) {
   SetN2kPGN127508(N2kMsg,BatteryInstance,BatteryVoltage,BatteryCurrent,BatteryTemperature,SID);
 }
 
@@ -432,24 +466,24 @@ inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryIns
 //  - PeukertExponent       Peukert Exponent
 //  - ChargeEfficiencyFactor Charge efficiency factor
 void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
-                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, double BatTemperatureCoefficient,
-				double PeukertExponent, double ChargeEfficiencyFactor);
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
+				double PeukertExponent, int8_t ChargeEfficiencyFactor);
 
 inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
-                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, double BatTemperatureCoefficient,
-				double PeukertExponent, double ChargeEfficiencyFactor) {
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
+				double PeukertExponent, int8_t ChargeEfficiencyFactor) {
    SetN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
 				PeukertExponent,ChargeEfficiencyFactor);
 }
 
 bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
-                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, double &BatTemperatureCoefficient,
-				double &PeukertExponent, double &ChargeEfficiencyFactor);
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
+				double &PeukertExponent, int8_t &ChargeEfficiencyFactor);
 
 
 inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
-                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, double &BatTemperatureCoefficient,
-				double &PeukertExponent, double &ChargeEfficiencyFactor) {
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
+				double &PeukertExponent, int8_t &ChargeEfficiencyFactor) {
 	return ParseN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
 				PeukertExponent,ChargeEfficiencyFactor);
 }
@@ -464,9 +498,9 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
 //  - SWRT                  Type of transducer. See definition for tN2kSpeedWaterReferenceType
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
 
-inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=SpeedUndef, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
+inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
   SetN2kPGN128259(N2kMsg,SID,WaterRefereced,GroundReferenced,SWRT);
 }
  
@@ -629,17 +663,17 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
 //  - WindReference         Wind reference, see definition of tN2kWindReference
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference);
+void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference);
 
 inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
   SetN2kPGN130306(N2kMsg,SID,WindSpeed,WindAngle,WindReference);
 }
 
-//bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindType &WindType);
+bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindReference &WindReference);
 
-//inline bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &Offset) {
-//  return ParseN2kWaterDepth(N2kMsg, SID, DepthBelowTransducer, Offset);
-//}
+inline bool ParseN2kWindSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindReference &WindReference) {
+  return ParseN2kPGN130306(N2kMsg,SID,WindSpeed,WindAngle,WindReference);
+}
 
 //*****************************************************************************
 // Outside Environmental parameters
@@ -651,10 +685,10 @@ inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
-                     double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef);
+                     double OutsideAmbientAirTemperature=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
 
 inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
-                     double OutsideAmbientAirTemperature=TempUndef, double AtmosphericPressure=PressureUndef) {
+                     double OutsideAmbientAirTemperature=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
   SetN2kPGN130310(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
 }
 
@@ -680,10 +714,10 @@ inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsign
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
-                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=HumidityUndef, double AtmosphericPressure=PressureUndef);
+                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
 
 inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
-                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=HumidityUndef, double AtmosphericPressure=PressureUndef) {
+                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
   SetN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
 }
 
@@ -701,10 +735,10 @@ inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130312(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=TempUndef);
+                     double ActualTemperature, double SetTemperature=N2kDoubleNA);
 
 inline void SetN2kTemperature(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=TempUndef) {
+                     double ActualTemperature, double SetTemperature=N2kDoubleNA) {
   SetN2kPGN130312(N2kMsg,SID,TempInstance,TempSource,ActualTemperature,SetTemperature);
 }
 
@@ -729,10 +763,10 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=TempUndef);
+                     double ActualTemperature, double SetTemperature=N2kDoubleNA);
 
 inline void SetN2kTemperatureExt(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=TempUndef) {
+                     double ActualTemperature, double SetTemperature=N2kDoubleNA) {
   SetN2kPGN130316(N2kMsg,SID,TempInstance,TempSource,ActualTemperature,SetTemperature);
 }
 

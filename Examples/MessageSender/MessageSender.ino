@@ -57,6 +57,7 @@ void SendN2kSlowData() {
   
   if ( SlowDataUpdated+SlowDataUpdatePeriod<millis() ) {
     SlowDataUpdated=millis();
+    
     SetN2kTemperatureExt(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
 
@@ -75,10 +76,13 @@ void SendN2kSlowData() {
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Alternator,86,91,1420,0.21);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
 
+    SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55));
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
     SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),0x6f);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kPGNSystemTime(N2kMsg,1,17555,62000);
+    SetN2kSystemTime(N2kMsg,1,17555,62000);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kGNSS(N2kMsg,1,17555,62000,-60.1,67.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
@@ -95,11 +99,10 @@ void SendN2kRapidData() {
 
   if ( RapidDataUpdated+RapidDataUpdatePeriod<millis() ) {
     RapidDataUpdated=millis();
-    SetN2kEngineParamRapid(N2kMsg,1,4350,820000,48);
+    SetN2kEngineParamRapid(N2kMsg,1,4350); //,820000,48);
     NMEA2000.SendMsg(N2kMsg);
     SetN2kCOGSOGRapid(N2kMsg,1,N2khr_true,DegToRad(115.6),0.1);
     NMEA2000.SendMsg(N2kMsg);
-    // Serial.print(millis()); Serial.println(", Temperature send ready");
   }
 }
 

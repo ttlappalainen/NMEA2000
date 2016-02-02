@@ -1,7 +1,7 @@
 /* 
 NMEA2000.h
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -192,8 +192,6 @@ protected:
 public:
     tNMEA2000();
     
-    unsigned char GetN2kSource(int DeviceIndex) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return N2kSource[DeviceIndex]; return N2kSource[DeviceCount-1]; }
-
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
     // LoadEquivalency is multiplication of 50 mA, what your device will take power from
@@ -262,6 +260,10 @@ public:
     // Set the message handler for incoming N2kMessages.
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));
     
+    // Read address for current device.
+    // Multidevice support is under construction.
+    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return N2kSource[DeviceIndex]; return N2kSource[DeviceCount-1]; }
+
     // You can check has this device changed its address. If yes, it is prefeable to
     // save changed address to EEPROM and on next start use that.
     // When you call this, AddressChanged will be reset. Anyway, if system for

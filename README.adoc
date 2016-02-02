@@ -20,6 +20,25 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 [Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension.
 
 == Changes ==
+02.02.2016 NOTE! Updates, which effects backward compatibility. See list below.</br>
+- PGN 127489, SetN2kPGN127489 EngineOilTemp and EngineCoolantTemp is in Kelvins as in other temperature functions. So add for call to this
+  function CToKelvin(...)</br>
+- Some function names withing N2kMessages have been changed. Change function names listed below!</br>
+    SetN2kPGNSystemTime -> SetN2kSystemTime</br>
+    ParseN2kPGNSystemTime -> ParseN2kSystemTime</br>
+    SetN2kPGNTrueHeading -> SetN2kTrueHeading</br>
+    SetN2kPGNMagneticHeading -> SetN2kMagneticHeading</br>
+- Variable types has been changed on some functions in N2kMessages. So when you get an compiler error about functions in N2kMessages, check
+  carefully all parameter definitions for function from N2kMessages.h.</br>
+- If you do not have value for some parameter for functions in N2kMessages, use related N2kxxxxNA constant defined in N2kMsg.h. So e.g. if you only have
+  wind speed, call</br>
+  SetN2kWindSpeed(N2kMsg, 1, ReadWindSpeed(),N2kDoubleNA,N2kWind_Apprent);</br>
+- If you are reading values from N2k bus, you can now check does some value exist by using function N2kIsNA.
+  So if you e.g. call</br>
+  ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);</br>
+  then check pressure value with</br>
+  if ( !N2kIsNA(AtmosphericPressure) ) { // It is available, so we can show it!</br>
+- Added reference document to the documents, which hopefully helps to get started.
 
 23.01.2016 Added PGN 127493 support. NMEA2000_mcp has now interrupt support. Some other fixes.
 

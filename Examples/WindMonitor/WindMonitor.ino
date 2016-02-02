@@ -19,7 +19,7 @@ void setup() {
                                 2046 // Just choosen free from code list on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf                               
                                );
   // Uncomment 3 rows below to see, what device will send to bus                           
-  // Serial.begin(115200);
+  Serial.begin(115200);
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.
   // NMEA2000.SetForwardOwnMessages();
 

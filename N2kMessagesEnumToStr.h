@@ -1,7 +1,7 @@
 /* 
 N2kMessagesEnumToStr.h
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -17,7 +17,7 @@ This is collection of functions for handling NMEA2000 bus messages.
 Library contains functions to convert enums in N2kMessages.h to
 const char *
 
-If you do not enums in clear text, you do not need this library. 
+If you do not need enums in clear text, you do not need this library. 
 */
 
 #ifndef _N2kMessagesEnumToStr_H_

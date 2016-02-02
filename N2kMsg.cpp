@@ -1,7 +1,7 @@
 /* 
 N2kMsg.cpp
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -60,43 +60,95 @@ void tN2kMsg::Clear() {
 }
 
 //*****************************************************************************
-void tN2kMsg::Add8ByteDouble(double v, double precision) {
-  SetBuf8ByteDouble(v,precision,DataLen,Data);
+void tN2kMsg::Add8ByteDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf8ByteDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf4ByteUInt(N2kUInt32NA,DataLen,Data);
+    SetBuf4ByteUInt(N2kInt32NA,DataLen,Data);
+  }
 }
 
 //*****************************************************************************
-void tN2kMsg::Add4ByteDouble(double v, double precision) {
-  SetBuf4ByteDouble(v,precision,DataLen,Data);
+void tN2kMsg::Add4ByteDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf4ByteDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf4ByteUInt(N2kInt32NA,DataLen,Data);
+  }
 }
 
 //*****************************************************************************
-void tN2kMsg::Add3ByteDouble(double v, double precision) {
-  SetBuf3ByteDouble(v,precision,DataLen,Data);
+void tN2kMsg::Add4ByteUDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf4ByteUDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf4ByteUInt(N2kUInt32NA,DataLen,Data);
+  }
 }
 
 //*****************************************************************************
-void tN2kMsg::Add2ByteDouble(double v, double precision) {
-  SetBuf2ByteDouble(v,precision,DataLen,Data);
+void tN2kMsg::Add3ByteDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf3ByteDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf3ByteInt(0x7fffff,DataLen,Data);
+  }
 }
 
 //*****************************************************************************
-void tN2kMsg::Add1ByteDouble(double v, double precision) {
-  SetBuf1ByteDouble(v,precision,DataLen,Data);
+void tN2kMsg::Add2ByteDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf2ByteDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf2ByteUInt(N2kInt16NA,DataLen,Data);
+  }
 }
 
+//*****************************************************************************
+void tN2kMsg::Add2ByteUDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf2ByteUDouble(v,precision,DataLen,Data);
+  } else {
+    SetBuf2ByteUInt(N2kUInt16NA,DataLen,Data);
+  }
+}
 
 //*****************************************************************************
-void tN2kMsg::Add2ByteInt(int v) {
+void tN2kMsg::Add1ByteDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf1ByteDouble(v,precision,DataLen,Data);
+  } else {
+    AddByte(N2kInt8NA);
+  }
+}
+
+//*****************************************************************************
+void tN2kMsg::Add1ByteUDouble(double v, double precision, double UndefVal) {
+  if (v!=UndefVal) {
+    SetBuf1ByteUDouble(v,precision,DataLen,Data);
+  } else {
+    AddByte(N2kUInt8NA);
+  }
+}
+
+//*****************************************************************************
+void tN2kMsg::Add2ByteInt(int16_t v) {
   SetBuf2ByteInt(v,DataLen,Data);
 }
 
 //*****************************************************************************
-void tN2kMsg::Add3ByteInt(long v) {
+void tN2kMsg::Add2ByteUInt(uint16_t v) {
+  SetBuf2ByteUInt(v,DataLen,Data);
+}
+
+//*****************************************************************************
+void tN2kMsg::Add3ByteInt(int32_t v) {
   SetBuf3ByteInt(v,DataLen,Data);
 }
 
 //*****************************************************************************
-void tN2kMsg::Add4ByteUInt(unsigned long v) {
+void tN2kMsg::Add4ByteUInt(uint32_t v) {
   SetBuf4ByteUInt(v,DataLen,Data);
 }
 
@@ -144,9 +196,9 @@ double tN2kMsg::Get1ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
-double tN2kMsg::Get1UByteDouble(double precision, int &Index, double def) const {
+double tN2kMsg::Get1ByteUDouble(double precision, int &Index, double def) const {
   if (Index<DataLen) {
-    return GetBuf1UByteDouble(precision,Index,Data,def);
+    return GetBuf1ByteUDouble(precision,Index,Data,def);
   } else return def;
 }
 
@@ -154,6 +206,13 @@ double tN2kMsg::Get1UByteDouble(double precision, int &Index, double def) const 
 double tN2kMsg::Get2ByteDouble(double precision, int &Index, double def) const {
   if (Index+2<=DataLen) {
     return GetBuf2ByteDouble(precision,Index,Data,def);
+  } else return def;
+}
+
+//*****************************************************************************
+double tN2kMsg::Get2ByteUDouble(double precision, int &Index, double def) const {
+  if (Index+2<=DataLen) {
+    return GetBuf2ByteUDouble(precision,Index,Data,def);
   } else return def;
 }
 
@@ -168,6 +227,13 @@ double tN2kMsg::Get3ByteDouble(double precision, int &Index, double def) const {
 double tN2kMsg::Get4ByteDouble(double precision, int &Index, double def) const {
   if (Index+4<=DataLen) {
     return GetBuf4ByteDouble(precision,Index,Data,def);
+  } else return def;
+}
+
+//*****************************************************************************
+double tN2kMsg::Get4ByteUDouble(double precision, int &Index, double def) const {
+  if (Index+4<=DataLen) {
+    return GetBuf4ByteUDouble(precision,Index,Data,def);
   } else return def;
 }
 
@@ -220,6 +286,14 @@ void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *bu
 }
 
 //*****************************************************************************
+void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
+  uint32_t *vi=(uint32_t *)(&buf[index]);
+  index+=4;
+  
+  (*vi)=(uint32_t)(v/precision);
+}
+
+//*****************************************************************************
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   long vl;
   vl=(long)(v/precision);
@@ -247,13 +321,13 @@ double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf,
   int8_t *vi=(int8_t *)(&buf[index]);
   index+=1;
   
-  if (*vi==0xff) return def;
+  if (*vi==0x7f) return def;
   
   return ((double)(*vi))*precision;
 }
 
 //*****************************************************************************
-double GetBuf1UByteDouble(double precision, int &index, const unsigned char *buf, double def) {
+double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
   uint8_t *vi=(uint8_t *)(&buf[index]);
   index+=1;
   
@@ -265,6 +339,16 @@ double GetBuf1UByteDouble(double precision, int &index, const unsigned char *buf
 //*****************************************************************************
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   int16_t *vi=(int16_t *)(&buf[index]);
+  index+=2;
+  
+  if (*vi==0x7fff) return def;
+  
+  return ((double)(*vi))*precision;
+}
+
+//*****************************************************************************
+double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
+  uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
   
   if (*vi==0xffff) return def;
@@ -281,6 +365,8 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
   index+=4;
   long *vlhi=(long *)(&buf[index]);
   index+=4;
+  
+  if ( (*vlhi==0x7fff) && (*vllo==0xffff) ) return def;
   double v=*vlhi * 4294967296.0;
   
   if (v>=0) { v += *vllo; } else { v -= *vllo; }
@@ -307,7 +393,7 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
 
   // We use only 3 bytes, so set highest byte to 0
   vll&=0x00ffffff;
-  if (vll==0x00ffffff) return def;
+  if (vll==0x007fffff) return def;
   
   return ((double)(vll))*precision;
 }
@@ -317,7 +403,17 @@ double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf,
   long *vl=(long *)(&buf[index]);
   index+=4;
 
-  if (((unsigned long)(*vl))==0xffffffff) return def;
+  if (*vl==0x7fffffff) return def;
+  
+  return ((double)(*vl))*precision;
+}
+
+//*****************************************************************************
+double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
+  unsigned long *vl=(unsigned long *)(&buf[index]);
+  index+=4;
+
+  if (*vl==0xffffffff) return def;
   
   return ((double)(*vl))*precision;
 }
@@ -328,11 +424,14 @@ void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *bu
   index+=2;
   
   (*vi)=(int16_t)(v/precision);
-//  long vl;
-//  vl=(long)(v/precision);
-//    buf[index]=vl&255; index++;
-//    vl>>=8;
-//    buf[index]=vl&255; index++;
+}
+
+//*****************************************************************************
+void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
+  uint16_t *vi=(uint16_t *)(&buf[index]);
+  index+=2;
+  
+  (*vi)=(uint16_t)(v/precision);
 }
 
 //*****************************************************************************
@@ -344,20 +443,34 @@ void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *bu
 }
 
 //*****************************************************************************
-void SetBuf2ByteInt(int v, int &index, unsigned char *buf) {
+void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
+  uint8_t *vi=(uint8_t *)(&buf[index]);
+  index+=1;
+  
+  (*vi)=(uint8_t)(v/precision);
+}
+
+//*****************************************************************************
+void SetBuf2ByteInt(int16_t v, int &index, unsigned char *buf) {
     buf[index]=lowByte(v); index++;
     buf[index]=highByte(v); index++;
 }
 
 //*****************************************************************************
-void SetBuf3ByteInt(long v, int &index, unsigned char *buf) {
+void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf) {
+    buf[index]=lowByte(v); index++;
+    buf[index]=highByte(v); index++;
+}
+
+//*****************************************************************************
+void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf) {
     buf[index]=v&0xff; v>>=8; index++;
     buf[index]=v&0xff; v>>=8; index++;
     buf[index]=v&0xff; index++;
 }
 
 //*****************************************************************************
-void SetBuf4ByteUInt(unsigned long v, int &index, unsigned char *buf) {
+void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf) {
   uint32_t *vl=(uint32_t *)(&buf[index]);
   index+=4;
   
