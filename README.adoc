@@ -20,14 +20,16 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 [Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension.
 
 == Changes ==
-02.02.2016 NOTE! Updates, which effects backward compatibility. See list below.<br/>
+02.02.2016 NOTE! Updates, which effects backward compatibility. See list below. 
+
 - PGN 127489, SetN2kPGN127489 EngineOilTemp and EngineCoolantTemp is in Kelvins as in other temperature functions. So add for call to this
-  function CToKelvin(...)<br/>
-- Some function names withing N2kMessages have been changed. Change function names listed below!<br/>
-    SetN2kPGNSystemTime -> SetN2kSystemTime<br/>
-    ParseN2kPGNSystemTime -> ParseN2kSystemTime<br/>
-    SetN2kPGNTrueHeading -> SetN2kTrueHeading<br/>
-    SetN2kPGNMagneticHeading -> SetN2kMagneticHeading<br/>
+  function CToKelvin(...)
+  
+- Some function names withing N2kMessages have been changed. Change function names listed below! +
+    SetN2kPGNSystemTime -> SetN2kSystemTime +
+    ParseN2kPGNSystemTime -> ParseN2kSystemTime +
+    SetN2kPGNTrueHeading -> SetN2kTrueHeading +
+    SetN2kPGNMagneticHeading -> SetN2kMagneticHeading +
 - Variable types has been changed on some functions in N2kMessages. So when you get an compiler error about functions in N2kMessages, check
   carefully all parameter definitions for function from N2kMessages.h.<br/>
 - If you do not have value for some parameter for functions in N2kMessages, use related N2kxxxxNA constant defined in N2kMsg.h. So e.g. if you only have
