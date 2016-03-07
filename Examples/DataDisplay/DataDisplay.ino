@@ -5,28 +5,11 @@
 #define N2K_SOURCE 15
 
 #include <Arduino.h>
-#include <Time.h>
+#include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
 #include <N2kMsg.h>
 #include <NMEA2000.h>
 #include <N2kMessages.h>
 
-// Uncomment these for using Arduino Due internal CAN
-#include <due_can.h>  // https://github.com/collin80/due_can
-#include <NMEA2000_due.h>
-tNMEA2000_due NMEA2000;
-// Uncomment these for using Arduino Due internal CAN
-
-// Uncomment these for using Arduino Mega and external MCP2551 CAN bus chip
-//#include <SPI.h>
-// CAN_BUS_shield libraries will be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
-// There is improved library, which branch can be found on https://github.com/peppeve/CAN_BUS_Shield
-// That works also with Maple mini and 8 MHz clock. Hopefully these improvements will be applied to
-// original library
-//#include <mcp_can.h> 
-//#include <NMEA2000_mcp.h>
-//#define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
-//tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN);
-// Uncomment these for using Arduino Mega and external MCP2551 CAN bus chip
 
 typedef struct {
   unsigned long PGN;
