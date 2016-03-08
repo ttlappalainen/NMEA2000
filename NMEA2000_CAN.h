@@ -37,6 +37,7 @@ Author: Timo Lappalainen
 #define USE_N2K_MCP_CAN 1
 #define USE_N2K_DUE_CAN 2
 #define USE_N2K_TEENSY_CAN 3
+#define USE_N2K_AVR_CAN 4
 
 // Select right CAN according to prosessor
 #if !defined(USE_N2K_CAN)
@@ -44,22 +45,31 @@ Author: Timo Lappalainen
 #define USE_N2K_CAN USE_N2K_DUE_CAN
 #elif defined(__MK20DX256__)
 #define USE_N2K_CAN USE_N2K_TEENSY_CAN
+#elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \        
+      defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)
+#define USE_N2K_CAN USE_N2K_AVR_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
 #endif
 
 #if USE_N2K_CAN == USE_N2K_DUE_CAN
-// Use Arduino Due internal can with due_can library
-#include <due_can.h>  // https://github.com/collin80/due_can
+// Use Arduino Due internal CAN with due_can library
+#include <due_can.h>         // https://github.com/collin80/due_can
 #include <NMEA2000_due.h>
 tNMEA2000_due NMEA2000;
 
 #elif USE_N2K_CAN == USE_N2K_TEENSY_CAN
-// Use Teensy 3.1&3.2 board internal can FlexCAN library
+// Use Teensy 3.1&3.2 board internal CAN FlexCAN library
 #include <FlexCAN.h>
-#include <NMEA2000_teensy.h> // https://github.com/sarfata/NMEA2000_teensy
+#include <NMEA2000_teensy.h>    // https://github.com/sarfata/NMEA2000_teensy
 tNMEA2000_teensy NMEA2000;
+
+#elif USE_N2K_CAN == USE_N2K_AVR_CAN
+// Use Atmel AVR internal CAN controller with avr_can library
+#include <avr_can.h>            // https://github.com/thomasonw/avr_can
+#include <NMEA2000_avr.h> 
+tNMEA2000_avr NMEA2000;
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip

@@ -51,7 +51,7 @@ void SendN2kBattery() {
     NMEA2000.SendMsg(N2kMsg);
     SetN2kBatConf(N2kMsg,1,N2kDCbt_Gel,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(420),53,0.501,75);
     NMEA2000.SendMsg(N2kMsg);
-    // Serial.print(millis()); Serial.println(", Temperature send ready");
+    // Serial.print(millis()); Serial.println(", Battery send ready");
   }
 }
 
