@@ -99,7 +99,7 @@ void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
     N2kMsg.SetPGN(127251L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteUDouble(RateOfTurn,((1e-3/32.0) * 0.0001));
+    N2kMsg.Add4ByteUDouble(RateOfTurn,((1e-3/32.0) * 0.0001));
 }
 
 bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
@@ -108,7 +108,7 @@ bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOf
   int Index=0;
   
   SID=N2kMsg.GetByte(Index);
-  RateOfTurn=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001),Index);
+  RateOfTurn=N2kMsg.Get4ByteDouble(((1e-3/32.0) * 0.0001),Index);
   
   return true;
 }
