@@ -252,6 +252,30 @@ inline void SetN2kMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double Hea
   SetN2kPGN127250(N2kMsg,SID,Heading,Deviation,Variation,N2khr_magnetic);
 }
 
+bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heading, double &Deviation, double &Variation, tN2kHeadingReference &ref);
+inline bool ParseN2kHeading(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heading, double &Deviation, double &Variation, tN2kHeadingReference &ref) {
+  return ParseN2kPGN127250(N2kMsg,SID,Heading,Deviation,Variation,ref);                   
+}
+
+//*****************************************************************************
+// Rate of Turn
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Rate of turn          Change in heading in radians per second
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn);
+
+inline void SetN2kRateOfTurn(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
+  SetN2kPGN127251(N2kMsg,SID,RateOfTurn);
+}
+
+bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn);
+inline bool ParseN2kRateOfTurn(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
+  return ParseN2kPGN127251(N2kMsg,SID,RateOfTurn);                   
+}
+
 //*****************************************************************************
 // Engine parameters rapid
 // Input:
@@ -503,7 +527,13 @@ void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, 
 inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
   SetN2kPGN128259(N2kMsg,SID,WaterRefereced,GroundReferenced,SWRT);
 }
- 
+
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT);
+
+inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+  return ParseN2kPGN128259(N2kMsg, SID, WaterRefereced, GroundReferenced, SWRT);
+}
+
 //*****************************************************************************
 // Water depth
 // Input:
@@ -523,6 +553,27 @@ bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthB
 
 inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset) {
   return ParseN2kPGN128267(N2kMsg, SID, DepthBelowTransducer, Offset);
+}
+
+//*****************************************************************************
+// Distance log
+// Input:
+//  - DaysSince1970         Timestamp
+//  - SecondsSinceMidnight  Timestamp
+//  - Log                   Total meters travelled
+//  - Trip Log              Meters travelled since last reset
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog);
+
+inline void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+  SetN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
+}
+
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog);
+
+inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+  return ParseN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
 }
 
 //*****************************************************************************
@@ -637,14 +688,14 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
                       bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
-                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
-                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, 
                       double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity);
 
 inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
                       bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
-                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
-                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, 
                       double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
   SetN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference,
                       PerpendicularCrossed, ArrivalCircleEntered, CalculationType,

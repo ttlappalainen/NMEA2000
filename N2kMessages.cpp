@@ -78,6 +78,41 @@ void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double 
     N2kMsg.AddByte(0xfc | ref);
 }
 
+bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heading, double &Deviation, double &Variation, tN2kHeadingReference &ref) {
+  if (N2kMsg.PGN!=127250L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  Heading=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Deviation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Variation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  ref=(tN2kHeadingReference)(N2kMsg.GetByte(Index)&0x03);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Rate of turn
+// Angles should be in radians
+void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
+    N2kMsg.SetPGN(127251L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteUDouble(RateOfTurn,((1e-3/32.0) * 0.0001));
+}
+
+bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
+  if (N2kMsg.PGN!=127251L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  RateOfTurn=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001),Index);
+  
+  return true;
+}
+
 //*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
@@ -352,6 +387,19 @@ void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, 
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+  if (N2kMsg.PGN!=128259L) return false;
+
+  int Index=0;
+
+  SID=N2kMsg.GetByte(Index);
+  WaterRefereced=N2kMsg.Get2ByteUDouble(0.01,Index);
+  GroundReferenced=N2kMsg.Get2ByteDouble(0.01,Index);
+  SWRT=(tN2kSpeedWaterReferenceType)(N2kMsg.GetByte(Index)&0x0F);
+
+  return true;
+}
+
 //*****************************************************************************
 // Water depth
 void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset) {
@@ -372,6 +420,30 @@ bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthB
   Offset=N2kMsg.Get2ByteDouble(0.001,Index);
   
   return true;
+}
+
+//*****************************************************************************
+// Distance log
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+    N2kMsg.SetPGN(128275L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteInt(DaysSince1970);
+    N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
+    N2kMsg.Add4ByteUInt(Log);
+    N2kMsg.Add4ByteUInt(TripLog);
+}
+
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+    if (N2kMsg.PGN!=128275L) return false;
+
+    int Index=0;
+
+    DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+    SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+    Log=N2kMsg.Get4ByteUDouble(1,Index);
+    TripLog=N2kMsg.Get4ByteUDouble(1,Index);
+
+    return true;
 }
 
 //*****************************************************************************
@@ -521,6 +593,17 @@ void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, doub
     N2kMsg.AddByte((unsigned char)WindReference);
     //N2kMsg.AddByte(0xff); // Reserved
     //N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindReference &WindReference) {
+  if (N2kMsg.PGN!=130306L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  WindSpeed=N2kMsg.Get2ByteUDouble(0.01,Index);
+  WindAngle=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  WindReference=(tN2kWindReference)(N2kMsg.GetByte(Index)&0x07);
+
+  return true;
 }
 
 //*****************************************************************************
