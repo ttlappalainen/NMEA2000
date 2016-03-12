@@ -511,16 +511,16 @@ void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData) {
 //*****************************************************************************
 void tN2kMsg::Print(Stream *port, bool NoData) const {
   if (!IsValid()) return;
-  port->print("Pri:"); port->print(Priority);
-  port->print(" PGN:"); port->print(PGN);
-  port->print(" Source:"); port->print(Source);
-  port->print(" Dest:"); port->print(Destination);
-  port->print(" Len:"); port->print(DataLen);
+  port->print(F("Pri:")); port->print(Priority);
+  port->print(F(" PGN:")); port->print(PGN);
+  port->print(F(" Source:")); port->print(Source);
+  port->print(F(" Dest:")); port->print(Destination);
+  port->print(F(" Len:")); port->print(DataLen);
   if (!NoData) {
-    port->print(" Data:");
+    port->print(F(" Data:"));
     PrintBuf(port,DataLen,Data);
   }
-  port->print("\r\n");
+  port->print(F("\r\n"));
 }
 
 //*****************************************************************************
