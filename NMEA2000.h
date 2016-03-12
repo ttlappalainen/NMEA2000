@@ -53,10 +53,10 @@ address anymore. See also method ReadResetAddressChanged().
 #define Max_N2kModelVersion_len 32
 #define Max_N2kModelSerialCode_len 32
 
-#define Max_N2kSingleFrameMessages_len 50
-#define Max_N2kFastPacketMessages_len 50
+//#define Max_N2kSingleFrameMessages_len 50
+//#define Max_N2kFastPacketMessages_len 50
 
-#define Max_N2kDevices 4
+#define Max_N2kDevices 1
 
 #define Max_N2kMsgBuf_Time 100
 
@@ -96,6 +96,18 @@ public:
   unsigned char GetSystemInstance() { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
   
   uint64_t GetName()  { return DeviceInformation.Name; }
+};
+
+struct tProductInformation {
+    unsigned int N2kVersion;
+    unsigned int ProductCode;
+    // Note that we reserve one extra char for null termination
+    char N2kModelID[Max_N2kModelID_len+1];
+    char N2kSwCode[Max_N2kSwCode_len+1];
+    char N2kModelVersion[Max_N2kModelVersion_len+1];
+    char N2kModelSerialCode[Max_N2kModelSerialCode_len+1];
+    unsigned char SertificationLevel;
+    unsigned char LoadEquivalency;
 };
 
 class tNMEA2000
@@ -146,23 +158,16 @@ protected:
     unsigned long N2kSource[Max_N2kDevices];
     
     // Product information
-    unsigned int N2kVersion;
-    unsigned int ProductCode;
-    // Note that we reserve one extra char for null termination
-    char N2kModelID[Max_N2kModelID_len+1];
-    char N2kSwCode[Max_N2kSwCode_len+1];
-    char N2kModelVersion[Max_N2kModelVersion_len+1];
-    char N2kModelSerialCode[Max_N2kModelSerialCode_len+1];
-    unsigned char SertificationLevel;
-    unsigned char LoadEquivalency;
+    const tProductInformation *ProductInformation;
+    tProductInformation *LocalProductInformation;
     
-    unsigned long SingleFrameMessages[Max_N2kSingleFrameMessages_len];
-    unsigned long FastPacketMessages[Max_N2kFastPacketMessages_len];
+    const unsigned long *SingleFrameMessages;
+    const unsigned long *FastPacketMessages;
     
 protected:
     // Buffer for received messages.
-    #define MaxN2kCANMsgs 5
-    tN2kCANMsg N2kCANMsgBuf[MaxN2kCANMsgs];
+    tN2kCANMsg *N2kCANMsgBuf;
+    unsigned char MaxN2kCANMsgs;
 
     // Handler callback
     void (*MsgHandler)(const tN2kMsg &N2kMsg);
@@ -192,6 +197,10 @@ protected:
 public:
     tNMEA2000();
     
+    // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
+    // you can set buffer size smaller like 3 or 2 by calling this before open.    
+    void SetN2kCANMsgBufSize(const unsigned char _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
+    
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
     // LoadEquivalency is multiplication of 50 mA, what your device will take power from
@@ -207,6 +216,7 @@ public:
                                unsigned int _N2kVersion=0xffff, // Default=1300
                                unsigned char _SertificationLevel=0xff // Default=1
                                );
+    void SetProductInformation(const tProductInformation *_ProductInformation);  // You can save ram by defining tProductInformation to PROGMEM
 
     // Set default device information.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -231,8 +241,8 @@ public:
       
     // Class handles automatically address claiming and tell to the bus about itself.
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
-    void SendProductInformation(int DeviceIndex);
-    void SendConfigurationInformation(int DeviceIndex);
+    void SendProductInformation(int DeviceIndex=0);
+    void SendConfigurationInformation(int DeviceIndex=0);
     
     // Set this before open. You can not change mode after Open().
     // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure. 

@@ -23,6 +23,13 @@ To use avr processors internal CAN you need also NMEA2000_avr library and avr_ca
 which you can download from https://github.com/thomasonw/avr_can
 
 == Changes ==
+12.03.2016 Memory tuning. Currently multi device and user definable message filters has not been implemented, so I changed buffer sizes to minimum.
+
+There is also new function void tNMEA2000::SetN2kCANMsgBufSize(const unsigned char _MaxN2kCANMsgs); to define buffer size for received N2k messages.
+Note that library has to collect fast packet frames, which may arrive fragmented from different devices, so as default this buffer size has been set to 5.
+If your device is only sending some data (mode is tNMEA2000::N2km_NodeOnly), you do not need to catch all fast packet messages (if any), so you can set
+buffer size smaller.
+
 09.03.2016 Additional PGN 127250, PGN 128275 Support by adwuk.
 
 08.03.2016 AVR CAN support by thomasonw.

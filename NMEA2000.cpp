@@ -25,15 +25,25 @@ Author: Timo Lappalainen
 
 #define N2kAddressClaimTimeout 250
 
-unsigned long SingleFrameSystemMessages[]={59392L /*ISO Acknowledgement*/, 59904L /*ISO Request*/, 60928L /*ISO Address Claim*/,
+const unsigned long SingleFrameSystemMessages[] PROGMEM={59392L /*ISO Acknowledgement*/, 59904L /*ISO Request*/, 60928L /*ISO Address Claim*/,
                                        0};
-unsigned long FastPacketSystemMessages[]={126208L, 
+const unsigned long FastPacketSystemMessages[] PROGMEM={126208L, 
                                        0};
-unsigned long DefSingleFrameMessages[]={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
+const unsigned long DefSingleFrameMessages[] PROGMEM={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
                                        0};
-unsigned long DefFastPacketMessages[]={126996L,126998L,127489L,127506L,128275L,129029L,
+const unsigned long DefFastPacketMessages[] PROGMEM={126996L,126998L,127489L,127506L,128275L,129029L,
                                       0};
 
+const tProductInformation DefProductInformation PROGMEM={
+                                       1300,               // N2kVersion
+                                       666,                // ProductCode
+                                       "Arduino N2k->PC",  //N2kModelID
+                                       "1.0.0.0",          //N2kSwCode
+                                       "1.0.0",    // N2kModelVersion
+                                       "00000001", // N2kModelSerialCode
+                                       0, // SertificationLevel
+                                       1 // LoadEquivalency
+                                      };                                      
 //*****************************************************************************
 void SetCharBuf(const char *str, int MaxLen, char *buf) {
   int i=0;
@@ -49,8 +59,16 @@ void SetMsgBuf(const unsigned long *msgs, int MaxLen, unsigned long* buf) {
  
 //*****************************************************************************
 tNMEA2000::tNMEA2000() {
-  SetMsgBuf(DefSingleFrameMessages,Max_N2kSingleFrameMessages_len,SingleFrameMessages);
-  SetMsgBuf(DefFastPacketMessages,Max_N2kFastPacketMessages_len,FastPacketMessages);
+  // Point for message code buffers was that developer can dynamically change them.
+  // Currentrly there has not been any need for that, so due to ram optmization do it later.
+  SingleFrameMessages=DefSingleFrameMessages;
+  FastPacketMessages=DefFastPacketMessages;
+  //SetMsgBuf(DefSingleFrameMessages,Max_N2kSingleFrameMessages_len,SingleFrameMessages);
+  //SetMsgBuf(DefFastPacketMessages,Max_N2kFastPacketMessages_len,FastPacketMessages);
+  
+  N2kCANMsgBuf=0;
+  MaxN2kCANMsgs=0;
+  
   MsgHandler=0;
   ForwardStream=&Serial;
   N2kSource[0]=0;
@@ -64,7 +82,9 @@ tNMEA2000::tNMEA2000() {
   EnableForward();
   SetForwardSystemMessages();
   SetForwardOwnMessages();
-  for (int i=0; i<MaxN2kCANMsgs; i++) N2kCANMsgBuf[i].FreeMessage();
+  LocalProductInformation=0;
+  ProductInformation=&DefProductInformation;
+  /*
   SetProductInformation("00000001", // Manufacturer's Model serial code
                         666,  // Manufacturer's product code
                         "Arduino N2k->PC", // Manufacturer's  Model ID
@@ -74,6 +94,7 @@ tNMEA2000::tNMEA2000() {
                         1310, // NMEA2000 version used
                         0 // Sertification level ??
                         );
+  */
   SetDeviceInformation(1, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
                        130, // PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
                        25, // Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
@@ -81,6 +102,13 @@ tNMEA2000::tNMEA2000() {
                        4  // Marine
                        );
   DeviceCount=1;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation) {
+  ProductInformation=_ProductInformation;
+  if (ProductInformation==0) ProductInformation=LocalProductInformation;
+  if (ProductInformation==0) ProductInformation=&DefProductInformation;
 }
 
 //*****************************************************************************
@@ -92,14 +120,18 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
                                       unsigned char _LoadEquivalency,
                                       unsigned int _N2kVersion, 
                                       unsigned char _SertificationLevel) {
-   if (_N2kVersion!=0xffff) N2kVersion=_N2kVersion;
-   if (_ProductCode!=0xffff) ProductCode=_ProductCode;
-   if (_ModelID) SetCharBuf(_ModelID,sizeof(N2kModelID),N2kModelID); 
-   if (_SwCode) SetCharBuf(_SwCode,sizeof(N2kSwCode),N2kSwCode); 
-   if (_ModelVersion) SetCharBuf(_ModelVersion,sizeof(N2kModelVersion),N2kModelVersion); 
-   if (_ModelSerialCode) SetCharBuf(_ModelSerialCode,sizeof(N2kModelSerialCode),N2kModelSerialCode); 
-   if (_SertificationLevel!=0xff) SertificationLevel=_SertificationLevel;
-   if (_LoadEquivalency!=0xff) LoadEquivalency=_LoadEquivalency;
+   if (LocalProductInformation==0) {
+     LocalProductInformation=new tProductInformation();
+   }
+   ProductInformation=LocalProductInformation;
+   if (_N2kVersion!=0xffff) LocalProductInformation->N2kVersion=_N2kVersion;
+   if (_ProductCode!=0xffff) LocalProductInformation->ProductCode=_ProductCode;
+   if (_ModelID) SetCharBuf(_ModelID,sizeof(LocalProductInformation->N2kModelID),LocalProductInformation->N2kModelID); 
+   if (_SwCode) SetCharBuf(_SwCode,sizeof(LocalProductInformation->N2kSwCode),LocalProductInformation->N2kSwCode); 
+   if (_ModelVersion) SetCharBuf(_ModelVersion,sizeof(LocalProductInformation->N2kModelVersion),LocalProductInformation->N2kModelVersion); 
+   if (_ModelSerialCode) SetCharBuf(_ModelSerialCode,sizeof(LocalProductInformation->N2kModelSerialCode),LocalProductInformation->N2kModelSerialCode); 
+   if (_SertificationLevel!=0xff) LocalProductInformation->SertificationLevel=_SertificationLevel;
+   if (_LoadEquivalency!=0xff) LocalProductInformation->LoadEquivalency=_LoadEquivalency;
 }
 
 //*****************************************************************************
@@ -126,8 +158,13 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
 //*****************************************************************************
 bool tNMEA2000::Open() {
   if (!DeviceReady) {
+    if ( N2kCANMsgBuf==0 ) {
+      if ( MaxN2kCANMsgs==0 ) MaxN2kCANMsgs=5;
+      N2kCANMsgBuf = new tN2kCANMsg[MaxN2kCANMsgs];
+      for (int i=0; i<MaxN2kCANMsgs; i++) N2kCANMsgBuf[i].FreeMessage();
+    }
+  
     DeviceReady=CANOpen();
-
     if ( ForwardType==tNMEA2000::fwdt_Text) { 
       if ( DeviceReady ) { ForwardStream->println("CAN device ready"); } else { ForwardStream->println("CAN device failed to open"); }
     }
@@ -403,7 +440,14 @@ void tNMEA2000::SendProductInformation(int DeviceIndex) {
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
   tN2kMsg RespondMsg(N2kSource[DeviceIndex]);
 
-    SetN2kProductInformation(RespondMsg,N2kVersion,ProductCode,N2kModelID,N2kSwCode,N2kModelVersion,N2kModelSerialCode,SertificationLevel,LoadEquivalency);
+    SetN2kProductInformation(RespondMsg,ProductInformation->N2kVersion,
+                                        ProductInformation->ProductCode,
+                                        ProductInformation->N2kModelID,
+                                        ProductInformation->N2kSwCode,
+                                        ProductInformation->N2kModelVersion,
+                                        ProductInformation->N2kModelSerialCode,
+                                        ProductInformation->SertificationLevel,
+                                        ProductInformation->LoadEquivalency);
     SendMsg(RespondMsg,DeviceIndex);
 }
 

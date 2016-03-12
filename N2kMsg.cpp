@@ -22,6 +22,7 @@ Author: Timo Lappalainen
 */
 
 #include <N2kMsg.h>
+//#include <MemoryFree.h>  // For testing used memory
 
 #define Escape 0x10
 #define StartOfText 0x02
@@ -29,7 +30,6 @@ Author: Timo Lappalainen
 #define MsgTypeN2k 0x93
 
 #define MaxActisenseMsgBuf 400
-unsigned char ActisenseMsgBuf[MaxActisenseMsgBuf];
 
 //*****************************************************************************
 tN2kMsg::tN2kMsg(unsigned char _Source) {
@@ -282,7 +282,7 @@ void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *bu
   int32_t *vi=(int32_t *)(&buf[index]);
   index+=4;
   
-  (*vi)=(int32_t)(v/precision);
+  (*vi)=(int32_t)round(v/precision);
 }
 
 //*****************************************************************************
@@ -290,13 +290,13 @@ void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *b
   uint32_t *vi=(uint32_t *)(&buf[index]);
   index+=4;
   
-  (*vi)=(uint32_t)(v/precision);
+  (*vi)=(uint32_t)round(v/precision);
 }
 
 //*****************************************************************************
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   long vl;
-  vl=(long)(v/precision);
+  vl=(long)round(v/precision);
     SetBuf3ByteInt(vl,index,buf);
 }
 
@@ -423,7 +423,7 @@ void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *bu
   int16_t *vi=(int16_t *)(&buf[index]);
   index+=2;
   
-  (*vi)=(int16_t)(v/precision);
+  (*vi)=(int16_t)round(v/precision);
 }
 
 //*****************************************************************************
@@ -431,7 +431,7 @@ void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *b
   uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
   
-  (*vi)=(uint16_t)(v/precision);
+  (*vi)=(uint16_t)round(v/precision);
 }
 
 //*****************************************************************************
@@ -439,7 +439,7 @@ void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *bu
   int8_t *vi=(int8_t *)(&buf[index]);
   index+=1;
   
-  (*vi)=(int8_t)(v/precision);
+  (*vi)=(int8_t)round(v/precision);
 }
 
 //*****************************************************************************
@@ -447,7 +447,7 @@ void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *b
   uint8_t *vi=(uint8_t *)(&buf[index]);
   index+=1;
   
-  (*vi)=(uint8_t)(v/precision);
+  (*vi)=(uint8_t)round(v/precision);
 }
 
 //*****************************************************************************
@@ -543,8 +543,10 @@ void tN2kMsg::SendInActisenseFormat(Stream *port) const {
   byte msgIdx=0;
   int byteSum = 0;
   byte CheckSum;
+  unsigned char ActisenseMsgBuf[MaxActisenseMsgBuf];
   
   if (!IsValid()) return;
+  // Serial.print("freeMemory()="); Serial.println(freeMemory());
   
   ActisenseMsgBuf[msgIdx++]=Escape;
   ActisenseMsgBuf[msgIdx++]=StartOfText;
