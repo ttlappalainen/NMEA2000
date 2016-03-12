@@ -68,7 +68,7 @@ tNMEA2000_teensy NMEA2000;
 #elif USE_N2K_CAN == USE_N2K_AVR_CAN
 // Use Atmel AVR internal CAN controller with avr_can library
 #include <avr_can.h>            // https://github.com/thomasonw/avr_can
-#include <NMEA2000_avr.h> 
+#include <NMEA2000_avr.h>       // https://github.com/thomasonw/NMEA2000_avr
 tNMEA2000_avr NMEA2000;
 
 #else  // Use USE_N2K_MCP_CAN
