@@ -74,7 +74,7 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
 class tN2kMsg
 {
 public:
-  static const int MaxDataLen=255;
+  static const int MaxDataLen=223; // with fast packet 1. frame can have 6 byte and rest 31 frames 7 bytes
   unsigned char Priority;
   unsigned long PGN;
   mutable unsigned char Source;
