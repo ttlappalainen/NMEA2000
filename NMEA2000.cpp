@@ -45,6 +45,12 @@ const tProductInformation DefProductInformation PROGMEM={
                                        1 // LoadEquivalency
                                       };                                      
 //*****************************************************************************
+void ClearCharBuf(int MaxLen, char *buf) {
+  int i=0;
+  for (; i<MaxLen; i++) buf[i]=0;
+}
+ 
+//*****************************************************************************
 void SetCharBuf(const char *str, int MaxLen, char *buf) {
   int i=0;
   for (; i<MaxLen-1 && str[i]!=0; i++) buf[i]=str[i];
@@ -52,6 +58,13 @@ void SetCharBuf(const char *str, int MaxLen, char *buf) {
   buf[MaxLen-1]=0; // Force null ternimation
 }
  
+//*****************************************************************************
+void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
+  ClearCharBuf(MaxLen,buf);
+  if (str) SetCharBuf(str,MaxLen,buf);
+}
+
+//*****************************************************************************
 void SetMsgBuf(const unsigned long *msgs, int MaxLen, unsigned long* buf) {
   for (int i=0; i<MaxLen-1 && msgs[i]!=0; i++) buf[i]=msgs[i];
   buf[MaxLen]=0;
@@ -124,14 +137,14 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
      LocalProductInformation=new tProductInformation();
    }
    ProductInformation=LocalProductInformation;
-   if (_N2kVersion!=0xffff) LocalProductInformation->N2kVersion=_N2kVersion;
-   if (_ProductCode!=0xffff) LocalProductInformation->ProductCode=_ProductCode;
-   if (_ModelID) SetCharBuf(_ModelID,sizeof(LocalProductInformation->N2kModelID),LocalProductInformation->N2kModelID); 
-   if (_SwCode) SetCharBuf(_SwCode,sizeof(LocalProductInformation->N2kSwCode),LocalProductInformation->N2kSwCode); 
-   if (_ModelVersion) SetCharBuf(_ModelVersion,sizeof(LocalProductInformation->N2kModelVersion),LocalProductInformation->N2kModelVersion); 
-   if (_ModelSerialCode) SetCharBuf(_ModelSerialCode,sizeof(LocalProductInformation->N2kModelSerialCode),LocalProductInformation->N2kModelSerialCode); 
-   if (_SertificationLevel!=0xff) LocalProductInformation->SertificationLevel=_SertificationLevel;
-   if (_LoadEquivalency!=0xff) LocalProductInformation->LoadEquivalency=_LoadEquivalency;
+   LocalProductInformation->N2kVersion=_N2kVersion;
+   LocalProductInformation->ProductCode=_ProductCode;
+   ClearSetCharBuf(_ModelID,sizeof(LocalProductInformation->N2kModelID),LocalProductInformation->N2kModelID); 
+   ClearSetCharBuf(_SwCode,sizeof(LocalProductInformation->N2kSwCode),LocalProductInformation->N2kSwCode); 
+   ClearSetCharBuf(_ModelVersion,sizeof(LocalProductInformation->N2kModelVersion),LocalProductInformation->N2kModelVersion); 
+   ClearSetCharBuf(_ModelSerialCode,sizeof(LocalProductInformation->N2kModelSerialCode),LocalProductInformation->N2kModelSerialCode); 
+   LocalProductInformation->SertificationLevel=_SertificationLevel;
+   LocalProductInformation->LoadEquivalency=_LoadEquivalency;
 }
 
 //*****************************************************************************
@@ -307,22 +320,22 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
     
     // First check system messages
     SystemMessage=true;
-    for (i=0; SingleFrameSystemMessages[i]!=PGN && SingleFrameSystemMessages[i]!=0; i++);
-    if (SingleFrameSystemMessages[i]==PGN) return true;
+    for (i=0; pgm_read_dword(&SingleFrameSystemMessages[i])!=PGN && pgm_read_dword(&SingleFrameSystemMessages[i])!=0; i++);
+    if (pgm_read_dword(&SingleFrameSystemMessages[i])==PGN) return true;
     
-    for (i=0; FastPacketSystemMessages[i]!=PGN && FastPacketSystemMessages[i]!=0; i++);
-    if (FastPacketSystemMessages[i]==PGN) {
+    for (i=0; pgm_read_dword(&FastPacketSystemMessages[i])!=PGN && pgm_read_dword(&FastPacketSystemMessages[i])!=0; i++);
+    if (pgm_read_dword(&FastPacketSystemMessages[i])==PGN) {
       FastPacket=true;
       return true;
     }
 
     // It was not system message, so check other messages
     SystemMessage=false;
-    for (i=0; SingleFrameMessages[i]!=PGN && SingleFrameMessages[i]!=0; i++);
-    if (SingleFrameMessages[i]==PGN) return true;
+    for (i=0; pgm_read_dword(&SingleFrameMessages[i])!=PGN && pgm_read_dword(&SingleFrameMessages[i])!=0; i++);
+    if (pgm_read_dword(&SingleFrameMessages[i])==PGN) return true;
     
-    for (i=0; FastPacketMessages[i]!=PGN && FastPacketMessages[i]!=0; i++);
-    if (FastPacketMessages[i]==PGN) {
+    for (i=0; pgm_read_dword(&FastPacketMessages[i])!=PGN && pgm_read_dword(&FastPacketMessages[i])!=0; i++);
+    if (pgm_read_dword(&FastPacketMessages[i])==PGN) {
       FastPacket=true;
       return true;
     }
@@ -435,19 +448,38 @@ void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex) 
     SendMsg(RespondMsg,DeviceIndex);
 }
 
+template <typename T> void PROGMEM_readAnything (const T * sce, T& dest)
+  {
+  memcpy_P (&dest, sce, sizeof (T));
+  }
+
+                     
 //*****************************************************************************
 void tNMEA2000::SendProductInformation(int DeviceIndex) {
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
   tN2kMsg RespondMsg(N2kSource[DeviceIndex]);
-
-    SetN2kProductInformation(RespondMsg,ProductInformation->N2kVersion,
-                                        ProductInformation->ProductCode,
-                                        ProductInformation->N2kModelID,
-                                        ProductInformation->N2kSwCode,
-                                        ProductInformation->N2kModelVersion,
-                                        ProductInformation->N2kModelSerialCode,
-                                        ProductInformation->SertificationLevel,
-                                        ProductInformation->LoadEquivalency);
+  tProductInformation ProdI;
+  
+    if ( ProductInformation==LocalProductInformation ) {
+      SetN2kProductInformation(RespondMsg,ProductInformation->N2kVersion,
+                                          ProductInformation->ProductCode,
+                                          ProductInformation->N2kModelID,
+                                          ProductInformation->N2kSwCode,
+                                          ProductInformation->N2kModelVersion,
+                                          ProductInformation->N2kModelSerialCode,
+                                          ProductInformation->SertificationLevel,
+                                          ProductInformation->LoadEquivalency);
+    } else {
+      PROGMEM_readAnything(ProductInformation,ProdI);
+      SetN2kProductInformation(RespondMsg,ProdI.N2kVersion,
+                                          ProdI.ProductCode,
+                                          ProdI.N2kModelID,
+                                          ProdI.N2kSwCode,
+                                          ProdI.N2kModelVersion,
+                                          ProdI.N2kModelSerialCode,
+                                          ProdI.SertificationLevel,
+                                          ProdI.LoadEquivalency);
+    }
     SendMsg(RespondMsg,DeviceIndex);
 }
 
@@ -540,7 +572,7 @@ void tNMEA2000::GetNextAddress(int DeviceIndex) {
 bool tNMEA2000::HandleReceivedSystemMessage(int MsgIndex) {
   bool result=false;
 
-    if ( N2kMode==N2km_SendOnly || N2kMode==N2km_ListenAndSend ) return result;
+   if ( N2kMode==N2km_SendOnly || N2kMode==N2km_ListenAndSend ) return result;
     
     if ( N2kCANMsgBuf[MsgIndex].SystemMessage ) {
       if ( ForwardSystemMessages() ) ForwardMessage(N2kCANMsgBuf[MsgIndex].N2kMsg);

@@ -3,8 +3,8 @@
 //
 //      In this example are shown ways to minimize the size and RAM usage using two techniques:
 //        1) Moving data strictures to PROGMEM vs. using inline constantans when calling a function
-//        2) Reducing the number of NMEA CAN buffers to the min needed.  Use caution with this, as some functions
-//           (specifically fastMessages) require more buffers. 
+//        2) Reducing the size of NMEA CAN buffer to the min needed.  Use caution with this, as some functions
+//           (specifically fast packet Messages) require bigger buffer. 
 //
 
 
@@ -45,14 +45,13 @@ void setup() {
   // Uncomment 3 rows below to see, what device will send to bus                           
    Serial.begin(115200);
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text);     // Show in clear text. Leave uncommented for default Actisense format.
-  NMEA2000.SetForwardOwnMessages();
 
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
   NMEA2000.SetMode(tNMEA2000::N2km_NodeOnly,22);
   //NMEA2000.SetDebugMode(tNMEA2000::dm_ClearText);     // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
-  //NMEA2000.EnableForward(false);                      // Disable all msg forwarding to USB (=Serial)
+  NMEA2000.EnableForward(false);                      // Disable all msg forwarding to USB (=Serial)
   
-  NMEA2000.SetN2kCANMsgBufSize(2);                      // For this simple example, restrict to only 2 NMEA buffers, one send, one receive.
+  NMEA2000.SetN2kCANMsgBufSize(2);                    // For this simple example, limit buffer size to 2, since we are only sending data
   NMEA2000.Open();
 }
 
@@ -74,7 +73,7 @@ void SendN2kBattery() {
     NMEA2000.SendMsg(N2kMsg);
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Battery,56,92,38500,0.012);
     NMEA2000.SendMsg(N2kMsg);
-    SetN2kBatConf(N2kMsg,1,N2kDCbt_Gel,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(420),53,0.501,75);
+    SetN2kBatConf(N2kMsg,1,N2kDCbt_Gel,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(420),53,1.251,75);
     NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Battery send ready");
   }
