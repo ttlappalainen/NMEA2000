@@ -166,13 +166,13 @@ bool tNMEA2000::Open() {
   
     DeviceReady=CANOpen();
     if ( ForwardType==tNMEA2000::fwdt_Text) { 
-      if ( DeviceReady ) { ForwardStream->println("CAN device ready"); } else { ForwardStream->println("CAN device failed to open"); }
+      if ( DeviceReady ) { ForwardStream->println(F("CAN device ready")); } else { ForwardStream->println(F("CAN device failed to open")); }
     }
 
     delay(200);
     if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
       AddressClaimStarted=0;
-      if ( ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println("Start address claim");
+      if ( ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println(F("Start address claim"));
       SendIsoAddressClaim(0xff,0);
       AddressClaimStarted=millis();
     }
@@ -245,7 +245,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
       if (N2kMsg.DataLen<=8) { // We can send single frame
           result=CANSendFrame(canId, N2kMsg.DataLen, N2kMsg.Data); 
-          if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print("PGN "); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(" send failed"); }
+          if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
       } else { // Send it as fast packet in multiple frames
         unsigned char temp[8]; // {0,0,0,0,0,0,0,0};
         int cur=0;
@@ -274,7 +274,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
             }
             // delay(3);
             result=CANSendFrame(canId, 8, temp, true);
-            if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print("PGN "); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(" send failed"); }
+            if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
         }
         SendOrder++; if (SendOrder>7) SendOrder=0;
       };

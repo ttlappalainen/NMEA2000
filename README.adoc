@@ -23,6 +23,15 @@ To use avr processors internal CAN you need also NMEA2000_avr library and avr_ca
 which you can download from https://github.com/thomasonw/avr_can
 
 == Changes ==
+13.03.2016 More memory optimization - thanks for thomasonw. Constant message strings has been marked with F(...) moving them to flash instead of RAM.
+
+Note also that there is new funtion void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation); So one can save memory by 
+defining product information to flash by using syntax: +
+  const tProductInformation BatteryMonitorProductInformation PROGMEM={ +
+  1300,               // N2kVersion +
+  ... +
+See example BatteryMonitor.ino
+
 12.03.2016 Memory tuning. Currently multi device and user definable message filters has not been implemented, so I changed buffer sizes to minimum.
 
 There is also new function void tNMEA2000::SetN2kCANMsgBufSize(const unsigned char _MaxN2kCANMsgs); to define buffer size for received N2k messages.
