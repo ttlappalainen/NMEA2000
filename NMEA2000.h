@@ -216,7 +216,10 @@ public:
                                unsigned int _N2kVersion=0xffff, // Default=1300
                                unsigned char _SertificationLevel=0xff // Default=1
                                );
-    void SetProductInformation(const tProductInformation *_ProductInformation);  // You can save ram by defining tProductInformation to PROGMEM
+    // Call this if you want to save RAM and you have defined tProductInformation to PROGMEM as in example BatteryMonitor.ino
+    // Note that I have not yet found a way to test is pointer in PROGMEM or not, so this does not work, if you define
+    // tProductInformation to RAM.
+    void SetProductInformation(const tProductInformation *_ProductInformation);  
 
     // Set default device information.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.

@@ -455,11 +455,30 @@ template <typename T> void PROGMEM_readAnything (const T * sce, T& dest)
 
                      
 //*****************************************************************************
+void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tProductInformation *ProductInformation) {
+  int i;
+
+    N2kMsg.SetPGN(126996L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteInt(pgm_read_word(&(ProductInformation->N2kVersion)));
+    N2kMsg.Add2ByteInt(pgm_read_word(&(ProductInformation->ProductCode)));
+    for (i=0; i<Max_N2kModelID_len && pgm_read_byte(&(ProductInformation->N2kModelID[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelID[i]))); }
+    for (; i<Max_N2kModelID_len; i++ ) { N2kMsg.AddByte(0); }
+    for (i=0; i<Max_N2kSwCode_len && pgm_read_byte(&(ProductInformation->N2kSwCode[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kSwCode[i]))); }
+    for (; i<Max_N2kSwCode_len; i++ ) { N2kMsg.AddByte(0); }
+    for (i=0; i<Max_N2kModelVersion_len && pgm_read_byte(&(ProductInformation->N2kModelVersion[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelVersion[i]))); }
+    for (; i<Max_N2kModelVersion_len; i++ ) { N2kMsg.AddByte(0); }
+    for (i=0; i<Max_N2kModelSerialCode_len && pgm_read_byte(&(ProductInformation->N2kModelSerialCode[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelSerialCode[i]))); }
+    for (; i<Max_N2kModelSerialCode_len; i++ ) { N2kMsg.AddByte(0); }
+    N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->SertificationLevel)));
+    N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->LoadEquivalency)));
+}
+
+//*****************************************************************************
 void tNMEA2000::SendProductInformation(int DeviceIndex) {
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
   tN2kMsg RespondMsg(N2kSource[DeviceIndex]);
-  tProductInformation ProdI;
-  
+
     if ( ProductInformation==LocalProductInformation ) {
       SetN2kProductInformation(RespondMsg,ProductInformation->N2kVersion,
                                           ProductInformation->ProductCode,
@@ -470,15 +489,7 @@ void tNMEA2000::SendProductInformation(int DeviceIndex) {
                                           ProductInformation->SertificationLevel,
                                           ProductInformation->LoadEquivalency);
     } else {
-      PROGMEM_readAnything(ProductInformation,ProdI);
-      SetN2kProductInformation(RespondMsg,ProdI.N2kVersion,
-                                          ProdI.ProductCode,
-                                          ProdI.N2kModelID,
-                                          ProdI.N2kSwCode,
-                                          ProdI.N2kModelVersion,
-                                          ProdI.N2kModelSerialCode,
-                                          ProdI.SertificationLevel,
-                                          ProdI.LoadEquivalency);
+      SetN2kPGN126996Progmem(RespondMsg,ProductInformation);
     }
     SendMsg(RespondMsg,DeviceIndex);
 }
