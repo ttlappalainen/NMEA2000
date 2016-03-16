@@ -708,7 +708,6 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
 // Waypoint list
 // Input:
 //  - Start                 The ID of the first waypoint
-//    NumItems              The number of waypoints
 //  - Database              Database ID
 //  - Route                 Route ID
 //  - RouteName             The name of the current route
@@ -718,10 +717,10 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
 //  - Longitude             The longitude of the current waypoint
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129285(tN2kMsg &N2kMsg, uint8_t Start, uint8_t NumItems, uint8_t Database, uint8_t Route,
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
                         bool NavDirection, bool SupplementaryData, char* RouteName);
 
-void AppendN2kPGN129285(tN2kMsg &N2kMsg, uint8_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
 
 //*****************************************************************************
 // Waypoint list
@@ -736,16 +735,16 @@ void AppendN2kPGN129285(tN2kMsg &N2kMsg, uint8_t WPID2, char* WPName2, double La
 //  - Longitude             The longitude of the current waypoint
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN130074(tN2kMsg &N2kMsg, unsigned char Start, unsigned char NumItems, uint8_t NumWaypoints, unsigned char Database);
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database);
 
-inline void SetN2kWaypointList(tN2kMsg &N2kMsg, unsigned char Start, unsigned char NumItems, uint8_t NumWaypoints, unsigned char Database) {
-  SetN2kPGN130074(N2kMsg,Start,NumItems,NumWaypoints,Database);
+inline void SetN2kWaypointList(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
+  SetN2kPGN130074(N2kMsg,Start,NumWaypoints,Database);
 }
 
-void AppendN2kPGN130074(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude);
+bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude);
 
-inline void AppendN2kWaypointList(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude) {
-  AppendN2kPGN130074(N2kMsg,ID,Name,Latitude,Longitude);
+inline bool AppendN2kWaypointList(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+  return AppendN2kPGN130074(N2kMsg,ID,Name,Latitude,Longitude);
 }
 
 //*****************************************************************************

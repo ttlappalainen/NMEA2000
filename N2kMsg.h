@@ -74,7 +74,7 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
 class tN2kMsg
 {
 public:
-  static const int MaxDataLen=255;
+  static const int MaxDataLen=223;
   unsigned char Priority;
   unsigned long PGN;
   mutable unsigned char Source;
@@ -118,6 +118,8 @@ public:
   double Get4ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get4ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get8ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
+
+  bool Set2ByteUInt(uint16_t v, int &Index);
 
   void Print(Stream *port, bool NoData=false) const;
   void SendInActisenseFormat(Stream *port) const;
