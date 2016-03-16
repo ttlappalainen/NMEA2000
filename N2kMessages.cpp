@@ -557,6 +557,8 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((char)XTEMode | (NavigationTerminated?0x40:0));
     N2kMsg.Add4ByteDouble(XTE,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 //*****************************************************************************
@@ -583,8 +585,78 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
 }
 
 //*****************************************************************************
+// Waypoint list
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint8_t Start, uint8_t NumItems, uint8_t Database, uint8_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName) {
+    unsigned int i;
+    N2kMsg.SetPGN(129285L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(NumItems);
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.Add2ByteUInt(Route);
+    N2kMsg.AddByte(0xC0 | (SupplementaryData & 0x03)<<4 | (NavDirection & 0x15));
+    if (strlen(RouteName) == 0) {
+      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+    } else {
+      N2kMsg.AddByte(strlen(RouteName)+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<strlen(RouteName); i++)
+        N2kMsg.AddByte(RouteName[i]);
+    }
+    N2kMsg.AddByte(0xff); // reserved
+}
+
+void AppendN2kPGN129285(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude) {
+   if (N2kMsg.PGN!=129285L) return;
+
+    unsigned int i;
+
+    N2kMsg.Add2ByteUInt(ID);
+    if (strlen(Name) == 0) {
+      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+    } else {
+      N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<strlen(Name); i++)
+        N2kMsg.AddByte(Name[i]);
+    }
+    N2kMsg.Add4ByteDouble(Latitude,1e-07);
+    N2kMsg.Add4ByteDouble(Longitude,1e-07);
+}
+
+//*****************************************************************************
+// Waypoint list
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint8_t Start, uint8_t NumItems,
+                        uint8_t NumWaypoints, uint8_t Database) {
+    N2kMsg.SetPGN(130074L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(NumItems);
+    N2kMsg.Add2ByteUInt(NumWaypoints);
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+void AppendN2kPGN130074(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude) {
+    if (N2kMsg.PGN!=130074L) return;
+
+    unsigned int i;
+
+    N2kMsg.Add2ByteUInt(ID);
+    if (strlen(Name) == 0) {
+      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+    } else {
+      N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<strlen(Name); i++)
+        N2kMsg.AddByte(Name[i]);
+    }
+    N2kMsg.Add4ByteDouble(Latitude,1e-07);
+    N2kMsg.Add4ByteDouble(Longitude,1e-07);
+}
+
+//*****************************************************************************
 // Wind Speed
-void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
+void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
     N2kMsg.SetPGN(130306L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);

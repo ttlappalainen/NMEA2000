@@ -703,7 +703,51 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
                       OriginWaypointNumber, DestinationWaypointNumber, 
                       DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
 }
-                      
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//    NumItems              The number of waypoints
+//  - Database              Database ID
+//  - Route                 Route ID
+//  - RouteName             The name of the current route
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint8_t Start, uint8_t NumItems, uint8_t Database, uint8_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName);
+
+void AppendN2kPGN129285(tN2kMsg &N2kMsg, uint8_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//    NumItems
+//  - NumWaypoints          Number of valid WPs in the WP-List
+//  - Database              Database ID
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130074(tN2kMsg &N2kMsg, unsigned char Start, unsigned char NumItems, uint8_t NumWaypoints, unsigned char Database);
+
+inline void SetN2kWaypointList(tN2kMsg &N2kMsg, unsigned char Start, unsigned char NumItems, uint8_t NumWaypoints, unsigned char Database) {
+  SetN2kPGN130074(N2kMsg,Start,NumItems,NumWaypoints,Database);
+}
+
+void AppendN2kPGN130074(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude);
+
+inline void AppendN2kWaypointList(tN2kMsg &N2kMsg, uint8_t ID, char* Name, double Latitude, double Longitude) {
+  AppendN2kPGN130074(N2kMsg,ID,Name,Latitude,Longitude);
+}
+
 //*****************************************************************************
 // Wind Speed
 // Input:
