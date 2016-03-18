@@ -74,7 +74,7 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
 class tN2kMsg
 {
 public:
-  static const int MaxDataLen=223;
+  static const int MaxDataLen=255;
   unsigned char Priority;
   unsigned long PGN;
   mutable unsigned char Source;
