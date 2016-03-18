@@ -557,6 +557,8 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((char)XTEMode | (NavigationTerminated?0x40:0));
     N2kMsg.Add4ByteDouble(XTE,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 //*****************************************************************************
