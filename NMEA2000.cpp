@@ -31,7 +31,7 @@ unsigned long FastPacketSystemMessages[]={126208L,
                                        0};
 unsigned long DefSingleFrameMessages[]={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
                                        0};
-unsigned long DefFastPacketMessages[]={126996L,126998L,127489L,127506L,128275L,129029L,
+unsigned long DefFastPacketMessages[]={126996L,126998L,127489L,127506L,128275L,129029L,129038L,129039L,
                                       0};
 
 //*****************************************************************************

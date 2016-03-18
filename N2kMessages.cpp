@@ -548,7 +548,63 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   
   return true;
 }
-                     
+
+//*****************************************************************************
+// AIS position report (class A 129038)
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading)
+{
+    if (N2kMsg.PGN!=129038L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUDouble(1,Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    SOG=N2kMsg.Get2ByteDouble(0.01, Index);
+    vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
+    vb=N2kMsg.GetByte(Index); 
+    vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
+    Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
+
+    return true;
+}
+
+//*****************************************************************************
+// AIS position report (class B 129039)
+bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &CS,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned)
+{
+    if (N2kMsg.PGN!=129039L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUDouble(1,Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    SOG=N2kMsg.Get2ByteDouble(0.01, Index);
+    vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
+    vb=N2kMsg.GetByte(Index); 
+    vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
+    Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    vb=N2kMsg.GetByte(Index); // Regional application
+    vb=N2kMsg.GetByte(Index);
+    CS=(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
+    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Assigned=(vb>>7 & 0x01);
+
+    return true;
+}
+
 //*****************************************************************************
 // Cross Track Error
 void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
