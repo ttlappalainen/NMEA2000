@@ -671,6 +671,29 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
                      );
 }
 
+//*****************************************************************************
+// AIS position report
+// Input:
+//  - N2kMsg                NMEA2000 message to decode
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading);
+
+inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading) {
+  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading);
+}
+
+bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &CS,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned);
+
+inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading,
+                        bool &CS, bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned) {
+  return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
+                            RAIM, Seconds, COG, SOG, Heading, CS, Display, DSC, Band, Msg22, Assigned);
+}
 
 //*****************************************************************************
 // Cross Track Error
