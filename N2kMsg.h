@@ -119,6 +119,8 @@ public:
   double Get4ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get8ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
 
+  bool Set2ByteUInt(uint16_t v, int &Index);
+
   void Print(Stream *port, bool NoData=false) const;
   void SendInActisenseFormat(Stream *port) const;
 };

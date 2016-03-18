@@ -585,6 +585,106 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
 }
 
 //*****************************************************************************
+// Waypoint list
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName) {
+    unsigned int i;
+    N2kMsg.SetPGN(129285L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(0); // number of items initially 0
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.Add2ByteUInt(Route);
+    N2kMsg.AddByte(0xC0 | (SupplementaryData & 0x03)<<4 | (NavDirection & 0x0F));
+    if (strlen(RouteName) == 0) {
+      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+    } else {
+      N2kMsg.AddByte(strlen(RouteName)+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<strlen(RouteName); i++)
+        N2kMsg.AddByte(RouteName[i]);
+    }
+    N2kMsg.AddByte(0xff); // reserved
+}
+
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+   if (N2kMsg.PGN!=129285L) return false;
+
+    unsigned int i;
+    int NumItemsIdx, len;
+    uint16_t NumItems;
+
+    if (strlen(Name) > 0)
+        len = 12 + strlen(Name);
+    else
+        len = 13;
+
+    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+        NumItemsIdx = 2;
+        NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
+        NumItemsIdx = 2;
+        N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
+        N2kMsg.Add2ByteUInt(ID);                          // add the new item
+        if (strlen(Name) == 0) {
+          N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+        } else {
+          N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+          for (i=0; i<strlen(Name); i++)
+            N2kMsg.AddByte(Name[i]);
+        }
+        N2kMsg.Add4ByteDouble(Latitude,1e-07);
+        N2kMsg.Add4ByteDouble(Longitude,1e-07);
+        return true;
+    } else
+        return false;
+}
+
+//*****************************************************************************
+// Waypoint list
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
+    N2kMsg.SetPGN(130074L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(0); // set number of items to 0 initially
+    N2kMsg.Add2ByteUInt(NumWaypoints);
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+    if (N2kMsg.PGN!=130074L) return false;
+
+    unsigned int i;
+    int NumItemsIdx, len;
+    uint16_t NumItems;
+
+    if (strlen(Name) > 0)
+        len = 12 + strlen(Name);
+    else
+        len = 13;
+
+    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+        NumItemsIdx = 2;
+        NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
+        NumItemsIdx = 2;
+        N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
+
+        N2kMsg.Add2ByteUInt(ID);
+        if (strlen(Name) == 0) {
+          N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+        } else {
+          N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+          for (i=0; i<strlen(Name); i++)
+            N2kMsg.AddByte(Name[i]);
+        }
+        N2kMsg.Add4ByteDouble(Latitude,1e-07);
+        N2kMsg.Add4ByteDouble(Longitude,1e-07);
+        return true;
+    } else
+        return false;
+}
+
+//*****************************************************************************
 // Wind Speed
 void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
     N2kMsg.SetPGN(130306L);

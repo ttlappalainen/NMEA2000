@@ -703,7 +703,50 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
                       OriginWaypointNumber, DestinationWaypointNumber, 
                       DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
 }
-                      
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//  - Database              Database ID
+//  - Route                 Route ID
+//  - RouteName             The name of the current route
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName);
+
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//    NumItems
+//  - NumWaypoints          Number of valid WPs in the WP-List
+//  - Database              Database ID
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database);
+
+inline void SetN2kWaypointList(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
+  SetN2kPGN130074(N2kMsg,Start,NumWaypoints,Database);
+}
+
+bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude);
+
+inline bool AppendN2kWaypointList(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+  return AppendN2kPGN130074(N2kMsg,ID,Name,Latitude,Longitude);
+}
+
 //*****************************************************************************
 // Wind Speed
 // Input:
