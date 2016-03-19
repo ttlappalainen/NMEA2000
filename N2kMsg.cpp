@@ -245,6 +245,15 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
+bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
+  if (Index+2<=DataLen) {
+    SetBuf2ByteUInt(v,Index,Data);
+    return true;
+  } else
+    return false;
+}
+
+//*****************************************************************************
 void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   double fp=precision*1e6;
   long long fpll=1/fp;
