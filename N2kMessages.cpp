@@ -558,7 +558,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_
     N2kMsg.SetPGN(129038L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-    N2kMsg.Add4ByteUDouble(UserID, 1);
+    N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteDouble(Longitude, 1e-07);
     N2kMsg.Add4ByteDouble(Latitude, 1e-07);
     N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
@@ -583,7 +583,7 @@ bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repea
     unsigned char vb;
 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
-    UserID=N2kMsg.Get4ByteUDouble(1, Index);
+    UserID=N2kMsg.Get4ByteUInt(Index);
     Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
@@ -610,7 +610,7 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_
     N2kMsg.SetPGN(129039L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-    N2kMsg.Add4ByteUDouble(UserID, 1);
+    N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteDouble(Longitude, 1e-07);
     N2kMsg.Add4ByteDouble(Latitude, 1e-07);
     N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
@@ -638,7 +638,7 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repea
     unsigned char vb;
 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
-    UserID=N2kMsg.Get4ByteUDouble(1, Index);
+    UserID=N2kMsg.Get4ByteUInt(Index);
     Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
