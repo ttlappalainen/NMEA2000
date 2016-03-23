@@ -23,6 +23,8 @@ To use avr processors internal CAN you need also NMEA2000_avr library and avr_ca
 which you can download from https://github.com/thomasonw/avr_can
 
 == Changes ==
+23.03.2016 Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk. 
+
 13.03.2016 Fix of using PROGMEM. Now also product information defined to PROGMEM works right.
 
 13.03.2016 Fix of using PROGMEM. Still does work right with product information in PROGMEM. So all changes after 09.03 are still under validation.
