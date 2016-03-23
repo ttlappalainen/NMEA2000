@@ -672,27 +672,52 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
 }
 
 //*****************************************************************************
-// AIS position report
+// AIS position reports for Class A
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
+void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, double Latitude, double Longitude,
+                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, uint8_t NavStatus);
+
+inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, double Latitude, double Longitude,
+                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, uint8_t NavStatus) {
+  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+}
+
 bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading);
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, uint8_t &NavStatus);
 
 inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading) {
-  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading);
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, uint8_t & NavStatus) {
+  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+}
+
+//*****************************************************************************
+// AIS position reports for Class B
+// Input:
+//  - N2kMsg                NMEA2000 message to decode
+void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State);
+
+inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State) {
+  SetN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds,
+                    COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &CS,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned);
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State);
 
 inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
                         bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading,
-                        bool &CS, bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned) {
+                        bool &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State) {
   return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
-                            RAIM, Seconds, COG, SOG, Heading, CS, Display, DSC, Band, Msg22, Assigned);
+                            RAIM, Seconds, COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
 //*****************************************************************************

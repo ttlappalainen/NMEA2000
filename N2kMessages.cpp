@@ -551,8 +551,31 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 
 //*****************************************************************************
 // AIS position report (class A 129038)
-bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading)
+void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
+                        double COG, double SOG, double Heading, double ROT, uint8_t NavStatus)
+{
+    N2kMsg.SetPGN(129038L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
+    N2kMsg.Add2ByteUDouble(COG, 1e-04);
+    N2kMsg.Add2ByteUDouble(SOG, 0.01);
+    N2kMsg.AddByte(0xff); // Communication State (19 bits)
+    N2kMsg.AddByte(0xff); 
+    N2kMsg.AddByte(0xff); // AIS transceiver information (5 bits)
+    N2kMsg.Add2ByteUDouble(Heading, 1e-04);
+    N2kMsg.Add2ByteDouble(ROT, ((1e-3/32.0) * 0.0001)); 
+    N2kMsg.AddByte(0xF0 | (NavStatus & 0x0f));
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
+                        double &COG, double &SOG, double &Heading, double &ROT, uint8_t &NavStatus)
 {
     if (N2kMsg.PGN!=129038L) return false;
 
@@ -560,26 +583,54 @@ bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repea
     unsigned char vb;
 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
-    UserID=N2kMsg.Get4ByteUDouble(1,Index);
+    UserID=N2kMsg.Get4ByteUInt(Index);
     Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
     COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
-    SOG=N2kMsg.Get2ByteDouble(0.01, Index);
+    SOG=N2kMsg.Get2ByteUDouble(0.01, Index);
     vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
     vb=N2kMsg.GetByte(Index); 
     vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
     Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    ROT=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001), Index);
+    vb=N2kMsg.GetByte(Index); NavStatus=(vb & 0x0f);
+    vb=N2kMsg.GetByte(Index); // Reserved
 
     return true;
 }
 
 //*****************************************************************************
 // AIS position report (class B 129039)
+void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State)
+{
+    N2kMsg.SetPGN(129039L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
+    N2kMsg.Add2ByteUDouble(COG, 1e-04);
+    N2kMsg.Add2ByteUDouble(SOG, 0.01);
+    N2kMsg.AddByte(0xff); // Communication State (19 bits)
+    N2kMsg.AddByte(0xff); 
+    N2kMsg.AddByte(0xff); // AIS transceiver information (5 bits)
+    N2kMsg.Add2ByteUDouble(Heading, 1e-04);
+    N2kMsg.AddByte(0xff); // Regional application
+    N2kMsg.AddByte((Mode & 0x01)<<7 | (Msg22 & 0x01)<<6 | (Band & 0x01)<<5 |
+                    (DSC & 0x01)<<4 | (Display & 0x01)<<3 | (Unit & 0x01)<<2);
+    N2kMsg.AddByte(0xfe | (State & 0x01));
+}
+    
+
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &CS,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Assigned)
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State)
 {
     if (N2kMsg.PGN!=129039L) return false;
 
@@ -587,20 +638,21 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repea
     unsigned char vb;
 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(vb>>6 & 0x03);
-    UserID=N2kMsg.Get4ByteUDouble(1,Index);
+    UserID=N2kMsg.Get4ByteUInt(Index);
     Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
     vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
     COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
-    SOG=N2kMsg.Get2ByteDouble(0.01, Index);
+    SOG=N2kMsg.Get2ByteUDouble(0.01, Index);
     vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
     vb=N2kMsg.GetByte(Index); 
     vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
     Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
     vb=N2kMsg.GetByte(Index); // Regional application
     vb=N2kMsg.GetByte(Index);
-    CS=(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
-    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Assigned=(vb>>7 & 0x01);
+    Unit=(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
+    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Mode=(vb>>7 & 0x01);
+    vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
 
     return true;
 }

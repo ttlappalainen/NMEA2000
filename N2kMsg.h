@@ -61,6 +61,7 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf);
 
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);
+uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf);
 double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
@@ -110,6 +111,7 @@ public:
   unsigned char GetByte(int &Index) const;
   int16_t Get2ByteInt(int &Index, int16_t def=0x7fff) const;
   uint16_t Get2ByteUInt(int &Index, uint16_t def=0xffff) const;
+  uint32_t Get4ByteUInt(int &Index, uint32_t def=0xffffffff) const;
   double Get1ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get1ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get2ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
