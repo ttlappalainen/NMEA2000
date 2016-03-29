@@ -189,6 +189,13 @@ enum tN2kTransmissionGear {
                             N2kTG_Reverse=2,
                             N2kTG_Unknown=3,
                           };
+
+enum tN2kAISRepeat {
+                            N2kAR_Initial=0,
+                            N2kAR_First=1,
+                            N2kAR_Second=2,
+                            N2kAR_Final=3,
+                          };
                           
 //*****************************************************************************
 // System date/time
@@ -675,18 +682,18 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
 // AIS position reports for Class A
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
-void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, double Latitude, double Longitude,
+void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
                         bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, uint8_t NavStatus);
 
-inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, double Latitude, double Longitude,
+inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
                         bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, uint8_t NavStatus) {
   SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
 }
 
-bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
                         bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, uint8_t &NavStatus);
 
-inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
                         bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, uint8_t & NavStatus) {
   return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
 }
@@ -695,12 +702,12 @@ inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
 // AIS position reports for Class B
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
-void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
                         uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
                         bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State);
 
-inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
                         uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
                         bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State) {
@@ -708,12 +715,12 @@ inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t 
                     COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
-bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
                         uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
                         bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State);
 
-inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
                         bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading,
                         bool &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State) {
   return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
@@ -778,11 +785,11 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double L
 //  - UserID                MMSI
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
                         double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo);
-inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
                         double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo) {
@@ -790,12 +797,12 @@ inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Re
                   Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
 }
 
-bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         uint32_t &IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
                         double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
                         double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo);
 
-inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         uint32_t & IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
                         double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
                         double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo) {
@@ -813,15 +820,15 @@ inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, u
 //  - Name                  Vessel name
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, char *Name);
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name);
 
-inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID, char *Name) {
+inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name) {
   SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
 }
 
-bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, char *Name);
+bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name);
 
-inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID, char *Name) {
+inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name) {
   return ParseN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
 }
 
@@ -834,22 +841,22 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
 //  - Name                  Vessel name
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                       unsigned char VesselType, char *Vendor, char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID);
 
-inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
+inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                       unsigned char VesselType, char *Vendor, char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID) {
   SetN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign, Length, Beam,
                   PosRefStbd, PosRefBow, MothershipID);
 }
 
-bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                       unsigned char &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
 
-inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
+inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                       unsigned char &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
   return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign,
