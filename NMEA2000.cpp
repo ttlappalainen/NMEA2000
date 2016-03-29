@@ -31,7 +31,12 @@ const unsigned long FastPacketSystemMessages[] PROGMEM={126208L,
                                        0};
 const unsigned long DefSingleFrameMessages[] PROGMEM={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
                                        0};
-const unsigned long DefFastPacketMessages[] PROGMEM={126996L,126998L,127489L,127506L,128275L,129029L,129038L,129039L,
+const unsigned long DefFastPacketMessages[] PROGMEM={126996L,126998L,127489L,127506L,128275L,129029L,
+                                      129038L, /*AIS Class A Position Report*/
+                                      129039L, /*AIS Class B Position Report*/
+                                      129794L, /*AIS Class A Static data*/
+                                      129809L, /*AIS Class B Static Data, Part A*/
+                                      129810L, /*AIS Class B Static Data Part B*/
                                       0};
 
 const tProductInformation DefProductInformation PROGMEM={
