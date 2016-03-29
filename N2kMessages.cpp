@@ -750,8 +750,8 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
 // AIS static data A
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
                         uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, uint32_t ETAtime,
-                        double Draught, char *Destination, int AISversion, int GNSStype, bool DTE, int AISinfo)
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo)
 {
     N2kMsg.SetPGN(129794L);
     N2kMsg.Priority=6;
@@ -766,17 +766,17 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_
     N2kMsg.Add2ByteDouble(PosRefStbd, 0.1);
     N2kMsg.Add2ByteDouble(PosRefBow, 0.1);
     N2kMsg.Add2ByteUInt(ETAdate);
-    N2kMsg.Add4ByteUInt(ETAtime);
+    N2kMsg.Add4ByteUDouble(ETAtime, 0.0001);
     N2kMsg.Add2ByteDouble(Draught, 0.01);
     N2kMsg.AddStr(Destination, 20);
-    N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype &0x0f)<<2 | (AISversion & 0x03));
+    N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
     N2kMsg.AddByte(AISinfo & 0x1f);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
                         uint32_t &IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, uint32_t &ETAtime,
-                        double &Draught, char *Destination, int &AISversion, int &GNSStype, bool &DTE, int &AISinfo)
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo)
 {
     if (N2kMsg.PGN!=129794L) return false;
 
@@ -794,10 +794,10 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repea
     PosRefStbd=N2kMsg.Get2ByteDouble(0.1, Index);
     PosRefBow=N2kMsg.Get2ByteDouble(0.1, Index);
     ETAdate=N2kMsg.Get2ByteUInt(Index);
-    ETAtime=N2kMsg.Get4ByteUInt(Index);
+    ETAtime=N2kMsg.Get4ByteUDouble(0.0001, Index);
     Draught=N2kMsg.Get2ByteDouble(0.01, Index);
     N2kMsg.GetStr(Destination, 20, Index);
-    vb=N2kMsg.GetByte(Index); AISversion=(vb & 0x03); GNSStype=(vb>>2 & 0x0f); DTE=(vb>>6 & 0x01);
+    vb=N2kMsg.GetByte(Index); AISversion=(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(vb>>6 & 0x01);
     vb=N2kMsg.GetByte(Index); AISinfo=(vb & 0x1f);
 
     return true;

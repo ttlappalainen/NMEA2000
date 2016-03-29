@@ -780,25 +780,25 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double L
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
                         uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, uint32_t ETAtime,
-                        double Draught, char *Destination, int AISversion, int GNSStype, bool DTE, int AISinfo);
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo);
 inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, uint8_t Repeat, uint32_t UserID,
                         uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, uint32_t ETAtime,
-                        double Draught, char *Destination, int AISversion, int GNSStype, bool DTE, int AISinfo) {
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo) {
   SetN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
                   Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
                         uint32_t &IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, uint32_t &ETAtime,
-                        double &Draught, char *Destination, int &AISversion, int &GNSStype, bool &DTE, int &AISinfo);
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo);
 
 inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, uint8_t &Repeat, uint32_t &UserID,
                         uint32_t & IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, uint32_t &ETAtime,
-                        double &Draught, char *Destination, int &AISversion, int &GNSStype, bool &DTE, int &AISinfo) {
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo) {
   return ParseN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
                           Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion,
                           GNSStype, DTE, AISinfo);  
