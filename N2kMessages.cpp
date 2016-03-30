@@ -752,7 +752,7 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
                         uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
                         double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
-                        bool DTE, tN2kAISTranceiverInfo AISinfo)
+                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo)
 {
     N2kMsg.SetPGN(129794L);
     N2kMsg.Priority=6;
@@ -778,7 +778,7 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
                         uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
                         double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
                         double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
-                        bool &DTE, tN2kAISTranceiverInfo &AISinfo)
+                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo)
 {
     if (N2kMsg.PGN!=129794L) return false;
 
@@ -799,7 +799,7 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     ETAtime=N2kMsg.Get4ByteUDouble(0.0001, Index);
     Draught=N2kMsg.Get2ByteDouble(0.01, Index);
     N2kMsg.GetStr(Destination, 20, Index);
-    vb=N2kMsg.GetByte(Index); AISversion=(tN2kAISVersion)(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(vb>>6 & 0x01);
+    vb=N2kMsg.GetByte(Index); AISversion=(tN2kAISVersion)(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(tN2kAISDTE)(vb>>6 & 0x01);
     vb=N2kMsg.GetByte(Index); AISinfo=(tN2kAISTranceiverInfo)(vb & 0x1f);
 
     return true;
