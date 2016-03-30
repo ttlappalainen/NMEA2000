@@ -553,7 +553,7 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 // AIS position report (class A 129038)
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
-                        double COG, double SOG, double Heading, double ROT, uint8_t NavStatus)
+                        double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)
 {
     N2kMsg.SetPGN(129038L);
     N2kMsg.Priority=6;
@@ -575,7 +575,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 
 bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
-                        double &COG, double &SOG, double &Heading, double &ROT, uint8_t &NavStatus)
+                        double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus)
 {
     if (N2kMsg.PGN!=129038L) return false;
 
@@ -594,7 +594,7 @@ bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
     Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
     ROT=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001), Index);
-    vb=N2kMsg.GetByte(Index); NavStatus=(vb & 0x0f);
+    vb=N2kMsg.GetByte(Index); NavStatus=(tN2kAISNavStatus)(vb & 0x0f);
     vb=N2kMsg.GetByte(Index); // Reserved
 
     return true;
@@ -749,9 +749,10 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
 //*****************************************************************************
 // AIS static data A
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, int VesselType, double Length,
+                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, int AISversion, tN2kGNSStype GNSStype, bool DTE, int AISinfo)
+                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        bool DTE, tN2kAISTranceiverInfo AISinfo)
 {
     N2kMsg.SetPGN(129794L);
     N2kMsg.Priority=6;
@@ -774,9 +775,10 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t &IMOnumber, char *Callsign, char *Name, int &VesselType, double &Length,
+                        uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
                         double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, int &AISversion, tN2kGNSStype &GNSStype, bool &DTE, int &AISinfo)
+                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                        bool &DTE, tN2kAISTranceiverInfo &AISinfo)
 {
     if (N2kMsg.PGN!=129794L) return false;
 
@@ -797,8 +799,8 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     ETAtime=N2kMsg.Get4ByteUDouble(0.0001, Index);
     Draught=N2kMsg.Get2ByteDouble(0.01, Index);
     N2kMsg.GetStr(Destination, 20, Index);
-    vb=N2kMsg.GetByte(Index); AISversion=(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(vb>>6 & 0x01);
-    vb=N2kMsg.GetByte(Index); AISinfo=(vb & 0x1f);
+    vb=N2kMsg.GetByte(Index); AISversion=(tN2kAISVersion)(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(vb>>6 & 0x01);
+    vb=N2kMsg.GetByte(Index); AISinfo=(tN2kAISTranceiverInfo)(vb & 0x1f);
 
     return true;
 }
@@ -831,7 +833,7 @@ bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 //*****************************************************************************
 // AIS static data class B part B
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      unsigned char VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID)
 {
     N2kMsg.SetPGN(129810L);
@@ -850,7 +852,7 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 }
 
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      unsigned char &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID)
 {
     if (N2kMsg.PGN!=129810L) return false;
