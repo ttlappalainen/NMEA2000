@@ -604,8 +604,8 @@ bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 // AIS position report (class B 129039)
 void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State)
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State)
 {
     N2kMsg.SetPGN(129039L);
     N2kMsg.Priority=6;
@@ -629,8 +629,8 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State)
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State)
 {
     if (N2kMsg.PGN!=129039L) return false;
 
@@ -650,8 +650,8 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
     vb=N2kMsg.GetByte(Index); // Regional application
     vb=N2kMsg.GetByte(Index);
-    Unit=(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
-    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Mode=(vb>>7 & 0x01);
+    Unit=(tN2kAISUnit)(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
+    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Mode=(tN2kAISMode)(vb>>7 & 0x01);
     vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
 
     return true;

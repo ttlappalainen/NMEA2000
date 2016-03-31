@@ -229,7 +229,17 @@ enum tN2kAISNavStatus {
 enum tN2kAISDTE {
                             N2kaisdte_Ready=0,
                             N2kaisdte_NotReady=1,
-};
+                          };
+
+enum tN2kAISUnit {
+                            N2kaisunit_ClassB_SOTDMA=0,
+                            N2kaisunit_ClassB_CS=1,
+                          };
+
+enum tN2kAISMode {
+                            N2kaismode_Autonomous=0,
+                            N2kaismode_Assigned=1,
+                          };
 
 //*****************************************************************************
 // System date/time
@@ -738,26 +748,26 @@ inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
 //  - N2kMsg                NMEA2000 message to decode
 void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State);
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State);
 
 inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, bool Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, bool Mode, bool State) {
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State) {
   SetN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds,
                     COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State);
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State);
 
 inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
                         double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, bool &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, bool &Mode, bool &State) {
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
   return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
                             RAIM, Seconds, COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
