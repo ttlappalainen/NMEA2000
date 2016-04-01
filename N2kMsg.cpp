@@ -252,6 +252,32 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
+bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
+  unsigned char vb;
+  bool nullReached = false;
+  StrBuf[0] = '\0';
+  if (Index+Length<=DataLen) {
+    for (int i=0; i<Length; i++) {
+      vb = GetByte(Index);
+      if (! nullReached) {
+        if (vb == 0x00 || vb == '@') {
+          nullReached = true; // either null or '@' (AIS null character)
+          StrBuf[i] = '\0';
+          StrBuf[i+1] = '\0';
+        } else {
+          StrBuf[i] = vb;
+          StrBuf[i+1] = '\0';
+        }
+      } else {
+        StrBuf[i] = '\0';
+        StrBuf[i+1] = '\0';
+      }
+    }
+    return true;
+  } else return false;
+}
+
+//*****************************************************************************
 bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
   if (Index+2<=DataLen) {
     SetBuf2ByteUInt(v,Index,Data);
