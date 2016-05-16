@@ -2,15 +2,15 @@
 
 Object oriented NMEA2000 library for Arduino type Boards
 
-Library gives you a easy way to make NMEA2000->PC interface like Actisense NGT1
-or e.g. temperature sensor node to NMEA2000 bus.
+Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
+NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
 
 To use Arduino Due board internal CAN you will also need NMEA2000_due library and
 due_can library, which you can download from  https://github.com/collin80/due_can
 
 To use Arduino boards with MCP2515 CAN bus controller, you will also need NMEA2000_mcp library
 and mcp_can library. mcp_can library can be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
-Currently NMEA2000_mcp library uses developed version of mcp_can library, which allows also to use 8MHz clock and
+Note that NMEA2000_mcp library uses developed version of mcp_can library, which allows also to use 8MHz clock and
 has been tested with Maple Mini. So until these improvements has not been implemented to Seeed-Studio,
 use library found on https://github.com/peppeve/CAN_BUS_Shield
 
@@ -27,7 +27,7 @@ which you can download from https://github.com/thomasonw/avr_can
 
 13.03.2016 Fix of using PROGMEM. Now also product information defined to PROGMEM works right.
 
-13.03.2016 Fix of using PROGMEM. Still does work right with product information in PROGMEM. So all changes after 09.03 are still under validation.
+13.03.2016 Fix of using PROGMEM. Still does not work right with product information in PROGMEM. So all changes after 09.03 are still under validation.
 
 13.03.2016 More memory optimization - thanks for thomasonw. Constant message strings has been marked with F(...) moving them to flash instead of RAM.
 
