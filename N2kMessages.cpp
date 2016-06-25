@@ -333,7 +333,7 @@ bool ParseN2kPGN127508(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, do
   int Index=0;
   BatteryInstance=N2kMsg.GetByte(Index);
   BatteryVoltage=N2kMsg.Get2ByteDouble(0.01,Index);
-  BatteryCurrent=N2kMsg.Get2ByteDouble(0.01,Index);
+  BatteryCurrent=N2kMsg.Get2ByteDouble(0.1,Index);
   BatteryTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
   SID=N2kMsg.GetByte(Index);
 
