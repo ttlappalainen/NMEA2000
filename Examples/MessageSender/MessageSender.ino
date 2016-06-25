@@ -26,7 +26,7 @@ void setup() {
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
   NMEA2000.SetMode(tNMEA2000::N2km_NodeOnly,22);
   //NMEA2000.SetDebugMode(tNMEA2000::dm_ClearText); // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
-  NMEA2000.EnableForward(false); // Disable all msg forwarding to USB (=Serial)
+  //NMEA2000.EnableForward(false); // Disable all msg forwarding to USB (=Serial)
   NMEA2000.Open();
 }
 
@@ -57,6 +57,12 @@ void SendN2kSlowData() {
   
   if ( SlowDataUpdated+SlowDataUpdatePeriod<millis() ) {
     SlowDataUpdated=millis();
+
+    SetN2kDCBatStatus(N2kMsg, 1, 12.72);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
+    SetN2kDCBatStatus(N2kMsg, 0, 12.45, 5.08, CToKelvin(27.15));
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kTemperatureExt(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
@@ -88,6 +94,9 @@ void SendN2kSlowData() {
     SetN2kGNSS(N2kMsg,1,17555,62000,-60.1,67.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Temperature send ready");
+
+    SetN2kMagneticHeading(N2kMsg, 0, DegToRad(127.5), DegToRad(0.0), DegToRad(7.5)); 
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
   }
 }
 
