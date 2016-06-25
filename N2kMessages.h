@@ -189,7 +189,58 @@ enum tN2kTransmissionGear {
                             N2kTG_Reverse=2,
                             N2kTG_Unknown=3,
                           };
-                          
+
+enum tN2kAISRepeat {
+                            N2kaisr_Initial=0,
+                            N2kaisr_First=1,
+                            N2kaisr_Second=2,
+                            N2kaisr_Final=3,
+                          };
+
+enum tN2kAISVersion {
+                            N2kaisv_ITU_R_M_1371_1=0,
+                            N2kaisv_ITU_R_M_1371_3=1,
+                          };
+
+enum tN2kAISTranceiverInfo {
+                            N2kaisti_Channel_A_VDL_reception=0,
+                            N2kaisti_Channel_B_VDL_reception=1,
+                            N2kaisti_Channel_A_VDL_transmission=2,
+                            N2kaisti_Channel_B_VDL_transmission=3,
+                            N2kaisti_Own_information_not_broadcast=4,
+                            N2kaisti_Reserved=5
+                          };
+
+enum tN2kAISNavStatus {
+                            N2kaisns_Under_Way_Motoring=0,
+                            N2kaisns_At_Anchor=1,
+                            N2kaisns_Not_Under_Command=2,
+                            N2kaisns_Restricted_Manoeuverability=3,
+                            N2kaisns_Constrained_By_Draught=4,
+                            N2kaisns_Moored=5,
+                            N2kaisns_Aground=6,
+                            N2kaisns_Fishing=7,
+                            N2kaisns_Under_Way_Sailing=8,
+                            N2kaisns_Hazardous_Material_High_Speed=9,
+                            N2kaisns_Hazardous_Material_Wing_In_Ground=10,
+                            N2kaisns_AIS_SART=14,
+                          };
+
+enum tN2kAISDTE {
+                            N2kaisdte_Ready=0,
+                            N2kaisdte_NotReady=1,
+                          };
+
+enum tN2kAISUnit {
+                            N2kaisunit_ClassB_SOTDMA=0,
+                            N2kaisunit_ClassB_CS=1,
+                          };
+
+enum tN2kAISMode {
+                            N2kaismode_Autonomous=0,
+                            N2kaismode_Assigned=1,
+                          };
+
 //*****************************************************************************
 // System date/time
 // Input:
@@ -671,6 +722,55 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
                      );
 }
 
+//*****************************************************************************
+// AIS position reports for Class A
+// Input:
+//  - N2kMsg                NMEA2000 message to decode
+void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
+                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus);
+
+inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
+                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus) {
+  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+}
+
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus);
+
+inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus) {
+  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+}
+
+//*****************************************************************************
+// AIS position reports for Class B
+// Input:
+//  - N2kMsg                NMEA2000 message to decode
+void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State);
+
+inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State) {
+  SetN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds,
+                    COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+}
+
+bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State);
+
+inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
+  return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
+                            RAIM, Seconds, COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+}
 
 //*****************************************************************************
 // Cross Track Error
@@ -703,7 +803,140 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
                       OriginWaypointNumber, DestinationWaypointNumber, 
                       DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
 }
-                      
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//  - Database              Database ID
+//  - Route                 Route ID
+//  - RouteName             The name of the current route
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName);
+
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+
+//*****************************************************************************
+// AIS static data class A
+// Input:
+//  - MessageID             Message type
+//  - Repeat                Repeat indicator
+//  - UserID                MMSI
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo);
+inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo) {
+  SetN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
+                  Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
+}
+
+bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo);
+
+inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        uint32_t & IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo) {
+  return ParseN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
+                          Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion,
+                          GNSStype, DTE, AISinfo);  
+}
+
+//*****************************************************************************
+// AIS static data class B part A
+// Input:
+//  - MessageID             Message type
+//  - Repeat                Repeat indicator
+//  - UserID                MMSI
+//  - Name                  Vessel name
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name);
+
+inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name) {
+  SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
+}
+
+bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name);
+
+inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name) {
+  return ParseN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
+}
+
+//*****************************************************************************
+// AIS static data class B part B
+// Input:
+//  - MessageID             Message type
+//  - Repeat                Repeat indicator
+//  - UserID                MMSI
+//  - Name                  Vessel name
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      double PosRefStbd, double PosRefBow, uint32_t MothershipID);
+
+inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      double PosRefStbd, double PosRefBow, uint32_t MothershipID) {
+  SetN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign, Length, Beam,
+                  PosRefStbd, PosRefBow, MothershipID);
+}
+
+bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
+
+inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
+  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign,
+                                Length, Beam, PosRefStbd, PosRefBow, MothershipID);
+}
+
+//*****************************************************************************
+// Waypoint list
+// Input:
+//  - Start                 The ID of the first waypoint
+//    NumItems
+//  - NumWaypoints          Number of valid WPs in the WP-List
+//  - Database              Database ID
+//  - ID                    The ID of the current waypoint
+//  - Name                  The name of the current waypoint
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database);
+
+inline void SetN2kWaypointList(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
+  SetN2kPGN130074(N2kMsg,Start,NumWaypoints,Database);
+}
+
+bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude);
+
+inline bool AppendN2kWaypointList(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+  return AppendN2kPGN130074(N2kMsg,ID,Name,Latitude,Longitude);
+}
+
 //*****************************************************************************
 // Wind Speed
 // Input:

@@ -189,6 +189,13 @@ uint16_t tN2kMsg::Get2ByteUInt(int &Index, uint16_t def) const {
 }  
   
 //*****************************************************************************
+uint32_t tN2kMsg::Get4ByteUInt(int &Index, uint32_t def) const {
+  if (Index+4<=DataLen) {
+    return GetBuf4ByteUInt(Index,Data);
+  } else return def;
+}  
+
+//*****************************************************************************
 double tN2kMsg::Get1ByteDouble(double precision, int &Index, double def) const {
   if (Index<DataLen) {
     return GetBuf1ByteDouble(precision,Index,Data,def);
@@ -242,6 +249,41 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
   if (Index+8<=DataLen) {
     return GetBuf8ByteDouble(precision,Index,Data,def);
   } else return def;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
+  unsigned char vb;
+  bool nullReached = false;
+  StrBuf[0] = '\0';
+  if (Index+Length<=DataLen) {
+    for (int i=0; i<Length; i++) {
+      vb = GetByte(Index);
+      if (! nullReached) {
+        if (vb == 0x00 || vb == '@') {
+          nullReached = true; // either null or '@' (AIS null character)
+          StrBuf[i] = '\0';
+          StrBuf[i+1] = '\0';
+        } else {
+          StrBuf[i] = vb;
+          StrBuf[i+1] = '\0';
+        }
+      } else {
+        StrBuf[i] = '\0';
+        StrBuf[i+1] = '\0';
+      }
+    }
+    return true;
+  } else return false;
+}
+
+//*****************************************************************************
+bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
+  if (Index+2<=DataLen) {
+    SetBuf2ByteUInt(v,Index,Data);
+    return true;
+  } else
+    return false;
 }
 
 //*****************************************************************************
@@ -312,6 +354,14 @@ int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
   uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
+  
+  return *vi;
+}
+
+//*****************************************************************************
+uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf) {
+  uint32_t *vi=(uint32_t *)(&buf[index]);
+  index+=4;
   
   return *vi;
 }
