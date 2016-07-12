@@ -69,20 +69,24 @@ void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
   if (str) SetCharBuf(str,MaxLen,buf);
 }
 
-//*****************************************************************************
-void SetMsgBuf(const unsigned long *msgs, int MaxLen, unsigned long* buf) {
-  for (int i=0; i<MaxLen-1 && msgs[i]!=0; i++) buf[i]=msgs[i];
-  buf[MaxLen]=0;
-}
  
 //*****************************************************************************
+void tNMEA2000::SetSingleFrameMessages(const unsigned long *_SingleFrameMessages) {
+  SingleFrameMessages=_SingleFrameMessages;
+  if (SingleFrameMessages==0) SingleFrameMessages=DefSingleFrameMessages;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetFastPacketMessages(const unsigned long *_FastPacketMessages) {
+  FastPacketMessages=_FastPacketMessages;
+  if (FastPacketMessages==0) FastPacketMessages=DefFastPacketMessages;
+}
+
+//*****************************************************************************
 tNMEA2000::tNMEA2000() {
-  // Point for message code buffers was that developer can dynamically change them.
-  // Currentrly there has not been any need for that, so due to ram optmization do it later.
+
   SingleFrameMessages=DefSingleFrameMessages;
   FastPacketMessages=DefFastPacketMessages;
-  //SetMsgBuf(DefSingleFrameMessages,Max_N2kSingleFrameMessages_len,SingleFrameMessages);
-  //SetMsgBuf(DefFastPacketMessages,Max_N2kFastPacketMessages_len,FastPacketMessages);
   
   N2kCANMsgBuf=0;
   MaxN2kCANMsgs=0;
