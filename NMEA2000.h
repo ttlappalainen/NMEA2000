@@ -220,7 +220,11 @@ public:
     // Note that I have not yet found a way to test is pointer in PROGMEM or not, so this does not work, if you define
     // tProductInformation to RAM.
     void SetProductInformation(const tProductInformation *_ProductInformation);  
-
+    
+    // Call these if you wish to modify the default message packets supported.  Pointers must be in PROGMEM
+    void SetSingleFrameMessages(const unsigned long *_SingleFrameMessages);
+    void SetFastPacketMessages (const unsigned long *_FastPacketMessages);
+ 
     // Set default device information.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
     // Note that ManufacturerCode and UniqueNumber should give unic result on any network.
