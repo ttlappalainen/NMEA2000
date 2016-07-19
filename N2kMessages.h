@@ -328,6 +328,27 @@ inline bool ParseN2kRateOfTurn(const tN2kMsg &N2kMsg, unsigned char &SID, double
 }
 
 //*****************************************************************************
+// Attitude
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Yaw                   Heading in radians.
+//  - Pitch                 Pitch in radians. Positive, when your bow rises.
+//  - Roll                  Roll in radians. Positive, when tilted right.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127257(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll);
+
+inline void SetN2kAttitude(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll) {
+  SetN2kPGN127257(N2kMsg,SID, Yaw, Pitch, Roll);
+}
+
+bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll);
+inline bool ParseN2kAttitude(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll) {
+  return ParseN2kPGN127257(N2kMsg,SID, Yaw, Pitch, Roll);                   
+}
+
+//*****************************************************************************
 // Engine parameters rapid
 // Input:
 //  - EngineInstance        Engine instance.

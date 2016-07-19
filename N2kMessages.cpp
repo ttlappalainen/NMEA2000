@@ -114,6 +114,35 @@ bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOf
 }
 
 //*****************************************************************************
+// Attitude
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Yaw                   Heading in radians.
+//  - Pitch                 Pitch in radians. Positive, when your bow rises.
+//  - Roll                  Roll in radians. Positive, when tilted right.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127257(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll) {
+    N2kMsg.SetPGN(127257L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteDouble(Yaw,0.0001);
+    N2kMsg.Add2ByteDouble(Pitch,0.0001);
+    N2kMsg.Add2ByteDouble(Roll,0.0001);
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll){
+  if (N2kMsg.PGN!=127257L) return false;
+
+  int Index=0;
+  Yaw=N2kMsg.Get2ByteDouble(0.001,Index);
+  Pitch=N2kMsg.Get2ByteDouble(0.001,Index);
+  Roll=N2kMsg.Get2ByteDouble(0.001,Index);
+}
+
+//*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
                      double EngineBoostPressure, int8_t EngineTiltTrim) {
@@ -142,6 +171,7 @@ bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, dou
 }
 
 //*****************************************************************************
+// Engine parameters dynamic
 void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
                        double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, int8_t EngineLoad, int8_t EngineTorque, 
                        bool flagCheckEngine,
@@ -162,8 +192,6 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   N2kMsg.Add2ByteUDouble(EngineCoolantPress, 100);
   N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
-  N2kMsg.Add2ByteInt(0x0000);  // Discrete Status 1
-  N2kMsg.Add2ByteInt(0x0000);  // Discrete Status 2
 
   int engineStatus1P1 = B00000000;
   int engineStatus1P2 = B00000000;
@@ -194,6 +222,8 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   if (flagSubThrottle) engineStatus2 |= B00100000;
   if (flagNeutralStartProtect) engineStatus2 |= B01000000;
   if (flagEngineShuttingDown) engineStatus2 |= B10000000;
+  N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
+  N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
 
   N2kMsg.AddByte(EngineLoad);
   N2kMsg.AddByte(EngineTorque);

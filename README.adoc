@@ -23,6 +23,14 @@ To use avr processors internal CAN you need also NMEA2000_avr library and avr_ca
 which you can download from https://github.com/thomasonw/avr_can
 
 == Changes ==
+19.07.2016 Fixed discrete status on engine dynamic parameters (PGN 127489), thanks Jason. 
+
+Added new PGN 127257, vessel attitude. Only sending has been tested with NMEA Reader
+
+12.07.2016 Added to API -- Optional message lists by thomasonw
+
+25.06.2016 Corrected Battery Current in ParseN2kPGN127508 by thomasonw. 
+
 23.03.2016 Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk. 
 
 13.03.2016 Fix of using PROGMEM. Now also product information defined to PROGMEM works right.

@@ -29,7 +29,7 @@ const unsigned long SingleFrameSystemMessages[] PROGMEM={59392L /*ISO Acknowledg
                                        0};
 const unsigned long FastPacketSystemMessages[] PROGMEM={126208L, 
                                        0};
-const unsigned long DefSingleFrameMessages[] PROGMEM={126992L, 127245L, 127250L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
+const unsigned long DefSingleFrameMessages[] PROGMEM={126992L, 127245L, 127250L, 127257L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
                                        0};
 const unsigned long DefFastPacketMessages[] PROGMEM={126996L,126998L,127489L,127506L,128275L,129029L,
                                       129038L, /*AIS Class A Position Report*/

@@ -82,7 +82,10 @@ void SendN2kSlowData() {
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Alternator,86,91,1420,0.21);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
 
-    SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55));
+    SetN2kAttitude(N2kMsg,1,DegToRad(-3.1),DegToRad(2.4),DegToRad(-7.8));
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+
+    SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55),N2kDoubleNA,N2kDoubleNA,N2kInt8NA,N2kInt8NA,true);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),0x6f);
