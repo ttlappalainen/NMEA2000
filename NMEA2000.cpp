@@ -92,6 +92,8 @@ tNMEA2000::tNMEA2000() {
   MaxN2kCANMsgs=0;
   
   MsgHandler=0;
+  RqstHandler=0;
+  
   ForwardStream=&Serial;
   N2kSource[0]=0;
   DeviceReady=false;
@@ -517,6 +519,7 @@ void tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
 void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
   unsigned long RequestedPGN;
   unsigned char Destination=0xff;
+  tN2kMsg   N2kMsgR;
   int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
   
     if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
@@ -534,7 +537,13 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
       case 126998L: /* Configuration information */
         SendConfigurationInformation(iDev);
         break;
-       // ToDo: Write default handler so that user can add their own.
+      default:
+         if (RqstHandler!=0 ) RqstHandler(N2kMsg);     /* See if user wants to handle it */
+         else {
+            SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);       // Send NAK
+            N2kMsgR.Destination  = Destination;                             // Direct the response to original requester.
+            SendMsg(N2kMsgR); 
+         }
     }
 }
 
@@ -646,6 +655,11 @@ void tNMEA2000::SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg)) {
 }
 
 //*****************************************************************************
+void tNMEA2000::SetRqstHandler(void (*_RqstHandler)(const tN2kMsg &N2kMsg)) {
+  RqstHandler=_RqstHandler;
+}
+
+//*****************************************************************************
 /// ISO Acknowledgement
 void SetN2kPGN59392(tN2kMsg &N2kMsg, unsigned char Control, unsigned char GroupFunction, unsigned long PGN) {
     N2kMsg.SetPGN(59392L);
@@ -707,6 +721,13 @@ void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int Prod
 
 //*****************************************************************************
 // Iso request
+void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN) {
+    N2kMsg.SetPGN(59904L);
+    N2kMsg.Destination=Destination;
+    N2kMsg.Priority=6;
+    N2kMsg.Add3ByteInt((unsigned int)RequestedPGN);
+}
+
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
   int result=(N2kMsg.DataLen==3);
   RequestedPGN=0;
