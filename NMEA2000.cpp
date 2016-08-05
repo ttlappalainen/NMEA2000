@@ -92,7 +92,7 @@ tNMEA2000::tNMEA2000() {
   MaxN2kCANMsgs=0;
   
   MsgHandler=0;
-  RqstHandler=0;
+  ISORqstHandler=0;
   
   ForwardStream=&Serial;
   N2kSource[0]=0;
@@ -538,12 +538,12 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
         SendConfigurationInformation(iDev);
         break;
       default:
-         if (RqstHandler!=0 ) RqstHandler(N2kMsg);     /* See if user wants to handle it */
-         else {
-            SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);       // Send NAK
-            N2kMsgR.Destination  = Destination;                             // Direct the response to original requester.
-            SendMsg(N2kMsgR); 
-         }
+         if (ISORqstHandler!=0 )                                                  /* User has estableshed a handler */
+            if (ISORqstHandler(RequestedPGN,N2kMsg.Source,iDev))  return;         /* If it handled the request, we are done */
+
+        SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);       // No user handler, or there was one and it retured FALSE.  Send NAK
+        N2kMsgR.Destination  = Destination;                             // Direct the response to original requester.
+        SendMsg(N2kMsgR); 
     }
 }
 
@@ -655,8 +655,8 @@ void tNMEA2000::SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg)) {
 }
 
 //*****************************************************************************
-void tNMEA2000::SetRqstHandler(void (*_RqstHandler)(const tN2kMsg &N2kMsg)) {
-  RqstHandler=_RqstHandler;
+void tNMEA2000::SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex)) {
+  ISORqstHandler=ISORequestHandler;
 }
 
 //*****************************************************************************
@@ -738,4 +738,3 @@ bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
   
   return result;
 }
-

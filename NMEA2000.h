@@ -171,7 +171,7 @@ protected:
 
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
-    void (*RqstHandler)(const tN2kMsg &N2kMsg);                 // 'ISORequest' messages
+    bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);                 // 'ISORequest' messages
     
     
 protected:
@@ -278,7 +278,7 @@ public:
 
     // Set the message handler for incoming N2kMessages.
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Normal messages
-    void SetRqstHandler(void (*_RqstHandler)(const tN2kMsg &N2kMsg));           // ISORequest messages
+    void SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex));           // ISORequest messages
 
     
     // Read address for current device.
