@@ -169,8 +169,10 @@ protected:
     tN2kCANMsg *N2kCANMsgBuf;
     unsigned char MaxN2kCANMsgs;
 
-    // Handler callback
-    void (*MsgHandler)(const tN2kMsg &N2kMsg);
+    // Handler callbacks
+    void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
+    bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);                 // 'ISORequest' messages
+    
     
 protected:
     // Virtual functions for different interfaces. Currently there are own classes
@@ -275,7 +277,9 @@ public:
     void ParseMessages();
 
     // Set the message handler for incoming N2kMessages.
-    void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));
+    void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Normal messages
+    void SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex));           // ISORequest messages
+
     
     // Read address for current device.
     // Multidevice support is under construction.
@@ -343,6 +347,13 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
   SetN2kPGN126996(N2kMsg,N2kVersion,ProductCode,
                   ModelID,SwCode,ModelVersion,ModelSerialCode,
                   SertificationLevel,LoadEquivalency);
+}
+
+
+void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN);
+
+inline void SetN2kPGNISORequest(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN) {
+  SetN2kPGN59904(N2kMsg,Destination,RequestedPGN);
 }
 
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN);
