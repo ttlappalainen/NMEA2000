@@ -510,8 +510,8 @@ bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingRef
   
   SID=N2kMsg.GetByte(Index);
   b=N2kMsg.GetByte(Index); ref=(tN2kHeadingReference)( b & 0x03 );
-  COG=N2kMsg.Get2ByteDouble(0.0001,Index);
-  SOG=N2kMsg.Get2ByteDouble(0.01,Index);
+  COG=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  SOG=N2kMsg.Get2ByteUDouble(0.01,Index);
 
   return true;
 }
