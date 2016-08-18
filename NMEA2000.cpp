@@ -29,14 +29,43 @@ const unsigned long SingleFrameSystemMessages[] PROGMEM={59392L /*ISO Acknowledg
                                        0};
 const unsigned long FastPacketSystemMessages[] PROGMEM={126208L, 
                                        0};
-const unsigned long DefSingleFrameMessages[] PROGMEM={126992L, 127245L, 127250L, 127257L, 127488L, 127505L, 127508L, 128259L, 128267L , 129026L, 130311L,
+const unsigned long DefSingleFrameMessages[] PROGMEM={
+                                       126992L, // System date/time
+                                       127245L, // Rudder
+                                       127250L, // Vessel Heading
+                                       127251L, // Rate of Turn
+                                       127257L, // Attitude
+                                       127488L, // Engine parameters rapid
+                                       127493L, // Transmission parameters, dynamic
+                                       127505L, // Fluid level
+                                       127508L, // Battery Status
+                                       127513L, // Battery Configuration Status
+                                       128259L, // Boat speed
+                                       128267L, // Water depth
+                                       129025L, // Lat/lon rapid
+                                       129026L, // COG SOG rapid
+                                       129283L, // Cross Track Error
+                                       130306L, // Wind Speed
+                                       130310L, // Outside Environmental parameters
+                                       130311L, // Environmental parameters
+                                       130312L, // Temperature
+                                       130316L, // Temperature extended range
                                        0};
-const unsigned long DefFastPacketMessages[] PROGMEM={126996L,126998L,127489L,127506L,128275L,129029L,
+const unsigned long DefFastPacketMessages[] PROGMEM={
+                                      126996L, /* Product information */
+                                      126998L, /* Configuration information */
+                                      127489L, /* Engine parameters dynamic */
+                                      127506L, /* DC Detailed status */
+                                      128275L, /* Distance log */
+                                      129029L, /* GNSS Position Data */
                                       129038L, /*AIS Class A Position Report*/
                                       129039L, /*AIS Class B Position Report*/
+                                      129284L, // Navigation info
+                                      129285L, // Waypoint list
                                       129794L, /*AIS Class A Static data*/
                                       129809L, /*AIS Class B Static Data, Part A*/
                                       129810L, /*AIS Class B Static Data Part B*/
+                                      130074L, // Waypoint list
                                       0};
 
 const tProductInformation DefProductInformation PROGMEM={
@@ -69,24 +98,12 @@ void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
   if (str) SetCharBuf(str,MaxLen,buf);
 }
 
- 
-//*****************************************************************************
-void tNMEA2000::SetSingleFrameMessages(const unsigned long *_SingleFrameMessages) {
-  SingleFrameMessages=_SingleFrameMessages;
-  if (SingleFrameMessages==0) SingleFrameMessages=DefSingleFrameMessages;
-}
-
-//*****************************************************************************
-void tNMEA2000::SetFastPacketMessages(const unsigned long *_FastPacketMessages) {
-  FastPacketMessages=_FastPacketMessages;
-  if (FastPacketMessages==0) FastPacketMessages=DefFastPacketMessages;
-}
-
-//*****************************************************************************
+ //*****************************************************************************
 tNMEA2000::tNMEA2000() {
 
-  SingleFrameMessages=DefSingleFrameMessages;
-  FastPacketMessages=DefFastPacketMessages;
+  SingleFrameMessages[0]=DefSingleFrameMessages;
+  FastPacketMessages[0]=DefFastPacketMessages;
+  for (int i=1; i<N2kMessageGroups; i++) {SingleFrameMessages[i]=0; FastPacketMessages[i]=0;}
   
   N2kCANMsgBuf=0;
   MaxN2kCANMsgs=0;
@@ -173,6 +190,28 @@ void tNMEA2000::SetDeviceInformation(unsigned long _UniqueNumber,
 }
 
 //*****************************************************************************
+void tNMEA2000::SetSingleFrameMessages(const unsigned long *_SingleFrameMessages) {
+  SingleFrameMessages[0]=_SingleFrameMessages;
+  if (SingleFrameMessages==0) SingleFrameMessages[0]=DefSingleFrameMessages;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetFastPacketMessages(const unsigned long *_FastPacketMessages) {
+  FastPacketMessages[0]=_FastPacketMessages;
+  if (FastPacketMessages==0) FastPacketMessages[0]=DefFastPacketMessages;
+}
+
+//*****************************************************************************
+void tNMEA2000::ExtendSingleFrameMessages(const unsigned long *_SingleFrameMessages) {
+  SingleFrameMessages[1]=_SingleFrameMessages;
+}
+
+//*****************************************************************************
+void tNMEA2000::ExtendFastPacketMessages(const unsigned long *_FastPacketMessages) {
+  FastPacketMessages[1]=_FastPacketMessages;
+}
+
+//*****************************************************************************
 void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
   N2kMode=_N2kMode;
   N2kSource[0]=_N2kSource;
@@ -189,14 +228,14 @@ bool tNMEA2000::Open() {
     }
   
     DeviceReady=CANOpen();
-    if ( ForwardType==tNMEA2000::fwdt_Text) { 
+    if ( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) ) { 
       if ( DeviceReady ) { ForwardStream->println(F("CAN device ready")); } else { ForwardStream->println(F("CAN device failed to open")); }
     }
 
     delay(200);
     if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
       AddressClaimStarted=0;
-      if ( ForwardType==tNMEA2000::fwdt_Text) ForwardStream->println(F("Start address claim"));
+      if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) ForwardStream->println(F("Start address claim"));
       SendIsoAddressClaim(0xff,0);
       AddressClaimStarted=millis();
     }
@@ -269,7 +308,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
       if (N2kMsg.DataLen<=8) { // We can send single frame
           result=CANSendFrame(canId, N2kMsg.DataLen, N2kMsg.Data); 
-          if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
+          if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
       } else { // Send it as fast packet in multiple frames
         unsigned char temp[8]; // {0,0,0,0,0,0,0,0};
         int cur=0;
@@ -298,7 +337,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
             }
             // delay(3);
             result=CANSendFrame(canId, 8, temp, true);
-            if (!result && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
+            if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
         }
         SendOrder++; if (SendOrder>7) SendOrder=0;
       };
@@ -339,18 +378,24 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
       FastPacket=true;
       return true;
     }
-
+    
     // It was not system message, so check other messages
     SystemMessage=false;
-    for (i=0; pgm_read_dword(&SingleFrameMessages[i])!=PGN && pgm_read_dword(&SingleFrameMessages[i])!=0; i++);
-    if (pgm_read_dword(&SingleFrameMessages[i])==PGN) return true;
-    
-    for (i=0; pgm_read_dword(&FastPacketMessages[i])!=PGN && pgm_read_dword(&FastPacketMessages[i])!=0; i++);
-    if (pgm_read_dword(&FastPacketMessages[i])==PGN) {
-      FastPacket=true;
-      return true;
+    for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
+      if (SingleFrameMessages[igroup]!=0) {
+        for (i=0; pgm_read_dword(&SingleFrameMessages[igroup][i])!=PGN && pgm_read_dword(&SingleFrameMessages[igroup][i])!=0; i++);
+        if (pgm_read_dword(&SingleFrameMessages[igroup][i])==PGN) return true;
+      }
+      
+      if (FastPacketMessages[igroup]!=0) {
+        for (i=0; pgm_read_dword(&FastPacketMessages[igroup][i])!=PGN && pgm_read_dword(&FastPacketMessages[igroup][i])!=0; i++);
+        if (pgm_read_dword(&FastPacketMessages[igroup][i])==PGN) {
+         FastPacket=true;
+         return true;
+        }
+      }
     }
-    
+
     return false;
 }
 
@@ -364,11 +409,13 @@ int tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned 
   unsigned char Destination;
   bool FastPacket;
   bool SystemMessage;
+  bool KnownMessage;
   int i;
   int result=-1;
 
     CanIdToN2k(canId,Priority,PGN,Source,Destination);
-    if ( (CheckKnownMessage(PGN,SystemMessage,FastPacket)? true: !ForwardOnlyKnownMessages()) ) {
+    KnownMessage=CheckKnownMessage(PGN,SystemMessage,FastPacket);
+    if ( KnownMessage || !HandleOnlyKnownMessages() ) {
       if (FastPacket && ((buf[0] & 0x1F)>0) ) { // Not first frame
 //    Serial.print("New frame="); Serial.print(PGN); Serial.print(" frame="); Serial.print(buf[0],HEX); Serial.print("\r\n");
         // Find previous slot for this PGN
@@ -393,6 +440,7 @@ int tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned 
         if ( i==MaxN2kCANMsgs && OldestMsgTime+Max_N2kMsgBuf_Time<CurTime) i=OldestIndex; // Use the old one, which has timed out
         if (i==MaxN2kCANMsgs) return result; // we did not find free place, so skip this
         N2kCANMsgBuf[i].FreeMsg=false;
+        N2kCANMsgBuf[i].KnownMessage=KnownMessage;
         N2kCANMsgBuf[i].SystemMessage=SystemMessage;
         N2kCANMsgBuf[i].N2kMsg.Init(Priority,PGN,Source,Destination);
         N2kCANMsgBuf[i].CopiedLen=0;
@@ -447,6 +495,11 @@ void tNMEA2000::ForwardMessage(const tN2kMsg &N2kMsg) {
       N2kMsg.Print(ForwardStream);
       break;
   }
+}
+
+//*****************************************************************************
+void tNMEA2000::ForwardMessage(const tN2kCANMsg &N2kCanMsg) {
+  if ( N2kCanMsg.KnownMessage || !ForwardOnlyKnownMessages() ) ForwardMessage(N2kCanMsg.N2kMsg);
 }
 
 //*****************************************************************************
@@ -639,7 +692,7 @@ void tNMEA2000::ParseMessages() {
         if (MsgIndex>=0) {
           if ( !HandleReceivedSystemMessage(MsgIndex) ) {
 //            Serial.println(MsgIndex);
-            ForwardMessage(N2kCANMsgBuf[MsgIndex].N2kMsg);
+            ForwardMessage(N2kCANMsgBuf[MsgIndex]);
           }
 //          N2kCANMsgBuf[MsgIndex].N2kMsg.Print(Serial);
           if ( MsgHandler!=0 ) MsgHandler(N2kCANMsgBuf[MsgIndex].N2kMsg);

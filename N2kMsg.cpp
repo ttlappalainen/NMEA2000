@@ -560,7 +560,7 @@ void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData) {
 
 //*****************************************************************************
 void tN2kMsg::Print(Stream *port, bool NoData) const {
-  if (!IsValid()) return;
+  if (port==0 || !IsValid()) return;
   port->print(F("Pri:")); port->print(Priority);
   port->print(F(" PGN:")); port->print(PGN);
   port->print(F(" Source:")); port->print(Source);
@@ -595,7 +595,7 @@ void tN2kMsg::SendInActisenseFormat(Stream *port) const {
   byte CheckSum;
   unsigned char ActisenseMsgBuf[MaxActisenseMsgBuf];
   
-  if (!IsValid()) return;
+  if (port==0 || !IsValid()) return;
   // Serial.print("freeMemory()="); Serial.println(freeMemory());
   
   ActisenseMsgBuf[msgIdx++]=Escape;

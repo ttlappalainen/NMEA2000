@@ -140,6 +140,8 @@ bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, d
   Yaw=N2kMsg.Get2ByteDouble(0.001,Index);
   Pitch=N2kMsg.Get2ByteDouble(0.001,Index);
   Roll=N2kMsg.Get2ByteDouble(0.001,Index);
+  
+  return true;
 }
 
 //*****************************************************************************
@@ -983,7 +985,7 @@ void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteUDouble(WaterTemperature,0.01);
     N2kMsg.Add2ByteUDouble(OutsideAmbientAirTemperature,0.01);
-    N2kMsg.Add2ByteUDouble(AtmosphericPressure,1);
+    N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
     N2kMsg.AddByte(0xff);  // reserved
 }
                      
@@ -994,7 +996,7 @@ bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterT
   SID=N2kMsg.GetByte(Index);
   WaterTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
   OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
-  AtmosphericPressure=N2kMsg.Get2ByteUDouble(1,Index);
+  AtmosphericPressure=N2kMsg.Get2ByteUDouble(100,Index);
   
   return true;
 }                     
@@ -1010,7 +1012,7 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInst
     N2kMsg.AddByte(((HumidityInstance) & 0x03)<<6 | (TempInstance & 0x3f));
     N2kMsg.Add2ByteUDouble(Temperature,0.01);
     N2kMsg.Add2ByteDouble(Humidity,0.004);
-    N2kMsg.Add2ByteUDouble(AtmosphericPressure,1);
+    N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
 }
 
 //*****************************************************************************
