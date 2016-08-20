@@ -504,6 +504,12 @@ void tNMEA2000::ForwardMessage(const tN2kCANMsg &N2kCanMsg) {
 
 //*****************************************************************************
 void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex) {
+  
+  // Some devices (Garmin) request constantly information on network about others
+  // 59904 ISO Request:  PGN = 60928
+  // So we need to Re-send Address claim, or they will stop detecting us
+  if (Destination==0xff && DeviceIndex==-1) DeviceIndex=0;
+  
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
   tN2kMsg RespondMsg(N2kSource[DeviceIndex]);
 
