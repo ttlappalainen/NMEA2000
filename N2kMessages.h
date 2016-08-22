@@ -42,8 +42,12 @@ inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
 inline double CToKelvin(double v) { return v+273.15; }
 inline double KelvinToC(double v) { return v-273.15; }
+inline double FToKelvin(double v) { return (v-32)*5.0/9.0+273.15; }
+inline double KelvinToF(double v) { return (v-273.15)*9.0/5.0+32; }
 inline double mBarToPascal(double v) { return v*100; }
 inline double PascalTomBar(double v) { return v/100; }
+inline double hPAToPascal(double v) { return v*100; }
+inline double PascalTohPA(double v) { return v/100; }
 inline double AhToCoulomb(double v) { return v*3600; }
 inline double CoulombToAh(double v) { return v/3600; }
 inline double hToSeconds(double v) { return v*3600; }
@@ -328,6 +332,27 @@ inline bool ParseN2kRateOfTurn(const tN2kMsg &N2kMsg, unsigned char &SID, double
 }
 
 //*****************************************************************************
+// Attitude
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Yaw                   Heading in radians.
+//  - Pitch                 Pitch in radians. Positive, when your bow rises.
+//  - Roll                  Roll in radians. Positive, when tilted right.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127257(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll);
+
+inline void SetN2kAttitude(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll) {
+  SetN2kPGN127257(N2kMsg,SID, Yaw, Pitch, Roll);
+}
+
+bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll);
+inline bool ParseN2kAttitude(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll) {
+  return ParseN2kPGN127257(N2kMsg,SID, Yaw, Pitch, Roll);                   
+}
+
+//*****************************************************************************
 // Engine parameters rapid
 // Input:
 //  - EngineInstance        Engine instance.
@@ -431,11 +456,25 @@ inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &Eng
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
-                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1);
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1=0);
 
 inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
-                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1) {
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1=0) {
   SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
+}
+
+inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
+                     double OilPressure, double OilTemperature,
+                     bool flagCheck,       bool flagOverTemp,         bool flagLowOilPressure=false,         bool flagLowOilLevel=false,
+                     bool flagSailDrive=false) {
+  unsigned char DiscreteStatus1=0;
+  
+  if (flagCheck) DiscreteStatus1 |= B00000001;
+  if (flagOverTemp) DiscreteStatus1 |= B00000010;
+  if (flagLowOilPressure) DiscreteStatus1 |= B00000100;
+  if (flagLowOilLevel) DiscreteStatus1 |= B00001000;
+  if (flagSailDrive) DiscreteStatus1 |= B00010000;
+  SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature,DiscreteStatus1);
 }
 
 bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
@@ -445,6 +484,21 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   return ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);                   
 }
 
+inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
+                     double &OilPressure, double &OilTemperature, 
+                     bool &flagCheck,       bool &flagOverTemp,         bool &flagLowOilPressure,         bool &flagLowOilLevel,
+                     bool &flagSailDrive) {
+  unsigned char DiscreteStatus1;
+  bool ret=ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
+  if (ret) {
+    flagCheck          = ((DiscreteStatus1&B00000001)!=0);
+    flagOverTemp       = ((DiscreteStatus1&B00000010)!=0);
+    flagLowOilPressure = ((DiscreteStatus1&B00000100)!=0);
+    flagLowOilLevel    = ((DiscreteStatus1&B00001000)!=0);
+    flagSailDrive      = ((DiscreteStatus1&B00010000)!=0);
+  }
+  return ret;
+}
 //*****************************************************************************
 // Fluid level
 // Input:

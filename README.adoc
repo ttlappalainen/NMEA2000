@@ -22,7 +22,47 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library, 
 which you can download from https://github.com/thomasonw/avr_can
 
+= Thanks =
+I thank Kees Verruijt for his excellent CanBoat project and Dr Andrew Mason for OpenSkipper project.
+I originally started to learn NMEA 2000 via OpenSkipper project, which development I continued. 
+PGN library on OpenSkipper and so on this library is mostly based on Kees work. Also it appeared that 
+some code parts are probably originally from CanBoat even I have found them from other sources.
+Actisense message format handling I have learned from OpenSkipper project.
+
+I also thank for anybody who has extended library with new PGNs or processor support.
+
 == Changes ==
+09.08.2016 NOTE! Fixed PGN 130310, PGN 130311 and added SetHandleOnlyKnownMessages(), which effects backward compatibility. See below.
+
+- NOTE! On PGN 130310 and PGN 130311 description says that "Atmospheric pressure in Pascals. Use function mBarToPascal". There was scaling
+  error and now they works like description. After update you have to provide value on Pascals and really use mBarToPascal, if you have your
+  value in mBar.
+  
+- NOTE! Added SetHandleOnlyKnownMessages(). If you have called SetForwardOnlyKnownMessages(true), library did not handle unknown messages. After 
+  update, this effects only message forwarding - as it should have been. So call also SetHandleOnlyKnownMessages(true), if you want to disable
+  any handling for unknown messages.
+  
+- NMEA 2000 Library reference update.
+
+- Added ExtendSingleFrameMessages and ExtendFastPacketMessages. With these one can own list of known messages
+  so that it is not necessary to duplicate message list as, if used only SetSingleFrameMessages and SetFastPacketMessages.
+
+- Added discrete status flags for transmission parameters (PGN 127493), thanks for testing Jason.
+
+06.08.2016 Added SetISORqstHandler for setting handler for ISO requests. Thanks thomasonw.
+
+30.07.2016 NMEA 2000 Library reference update.
+
+Added example TeensyActisenseListenerSender. Example contains code, schematics and document.
+
+19.07.2016 Fixed discrete status on engine dynamic parameters (PGN 127489), thanks Jason. 
+
+Added new PGN 127257, vessel attitude. Only sending has been tested with NMEA Reader
+
+12.07.2016 Added to API -- Optional message lists by thomasonw
+
+25.06.2016 Corrected Battery Current in ParseN2kPGN127508 by thomasonw. 
+
 23.03.2016 Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk. 
 
 13.03.2016 Fix of using PROGMEM. Now also product information defined to PROGMEM works right.
