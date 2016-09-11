@@ -138,9 +138,9 @@ bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, d
 
   int Index=0;
   SID=N2kMsg.GetByte(Index);
-  Yaw=N2kMsg.Get2ByteDouble(0.001,Index);
-  Pitch=N2kMsg.Get2ByteDouble(0.001,Index);
-  Roll=N2kMsg.Get2ByteDouble(0.001,Index);
+  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Roll=N2kMsg.Get2ByteDouble(0.0001,Index);
   
   return true;
 }
