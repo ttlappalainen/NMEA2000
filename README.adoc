@@ -32,6 +32,13 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+12.09.2016 Thanks for people (usauerbrey, OzOns), who noted below problems 
+- Fix for ISORequest handling. Now responds allways also for broadcasts.
+
+- Some fixes to avoid compiler warnings.
+
+- Fix for parsing PGN 127257/Attitude
+
 09.08.2016 NOTE! Fixed PGN 130310, PGN 130311 and added SetHandleOnlyKnownMessages(), which effects backward compatibility. See below.
 
 - NOTE! On PGN 130310 and PGN 130311 description says that "Atmospheric pressure in Pascals. Use function mBarToPascal". There was scaling

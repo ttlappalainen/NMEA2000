@@ -179,7 +179,7 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
 void tNMEA2000::SetDeviceInformation(unsigned long _UniqueNumber,
                                      unsigned char _DeviceFunction,
                                      unsigned char _DeviceClass,
-                                     int _ManufacturerCode,
+                                     uint16_t _ManufacturerCode,
                                      unsigned char _IndustryGroup
                                      ) {
    if (_ManufacturerCode!=0xffff) DeviceInformation[0].SetManufacturerCode(_ManufacturerCode);
@@ -575,20 +575,10 @@ void tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
 }
 
 //*****************************************************************************
-void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
-  unsigned long RequestedPGN;
-  unsigned char Destination=0xff;
-  tN2kMsg   N2kMsgR;
-  int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
-  
-    if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
-    
-    if (iDev!=-1) Destination=N2kMsg.Source; // Respond to caller
-    
-    ParseN2kPGNISORequest(N2kMsg,RequestedPGN);
+void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev) {
     switch (RequestedPGN) { 
       case 60928L: /*ISO Address Claim*/  // Someone is asking others to claim their addresses
-        SendIsoAddressClaim(Destination,iDev);
+        SendIsoAddressClaim(N2kMsg.Source,iDev);
         break;
       case 126996L: /* Product information */
         SendProductInformation(iDev);
@@ -600,9 +590,25 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
          if (ISORqstHandler!=0 )                                                  /* User has estableshed a handler */
             if (ISORqstHandler(RequestedPGN,N2kMsg.Source,iDev))  return;         /* If it handled the request, we are done */
 
+       tN2kMsg   N2kMsgR;
         SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);       // No user handler, or there was one and it retured FALSE.  Send NAK
-        N2kMsgR.Destination  = Destination;                             // Direct the response to original requester.
+        N2kMsgR.Destination  = N2kMsg.Source;                             // Direct the response to original requester.
         SendMsg(N2kMsgR); 
+    }
+}
+
+//*****************************************************************************
+void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
+  unsigned long RequestedPGN;
+  int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
+  
+    if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
+    
+    ParseN2kPGNISORequest(N2kMsg,RequestedPGN);
+    if (N2kMsg.Destination==0xff) { // broadcast -> respond from all devices
+      for (iDev=0; iDev<DeviceCount; iDev++) RespondISORequest(N2kMsg,RequestedPGN,iDev);
+    } else {
+      RespondISORequest(N2kMsg,RequestedPGN,iDev);
     }
 }
 
@@ -688,11 +694,14 @@ void tNMEA2000::ParseMessages() {
     unsigned char len = 0;
     unsigned char buf[8];
     int MsgIndex;
+    static const int MaxReadFramesOnParse=20;
+    int FramesRead=0;
 //    tN2kMsg N2kMsg;
   
     if (!Open()) return;  // Can not do much
     
-    if (CANGetFrame(canId,len,buf) ) {           // check if data coming
+    while (FramesRead<MaxReadFramesOnParse && CANGetFrame(canId,len,buf) ) {           // check if data coming
+        FramesRead++;
 //        ForwardStream->print("Can ID:"); ForwardStream->print(canId); ForwardStream->print(" len:"); ForwardStream->print(len); ForwardStream->print(" data:"); PrintBuf(ForwardStream,len,buf); ForwardStream->println("\r\n");
         MsgIndex=SetN2kCANBufMsg(canId,len,buf);
         if (MsgIndex>=0) {
@@ -784,7 +793,7 @@ void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long Requeste
     N2kMsg.SetPGN(59904L);
     N2kMsg.Destination=Destination;
     N2kMsg.Priority=6;
-    N2kMsg.Add3ByteInt((unsigned int)RequestedPGN);
+    N2kMsg.Add3ByteInt(RequestedPGN);
 }
 
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {

@@ -83,8 +83,8 @@ public:
   tDeviceInformation() { DeviceInformation.Name=0; }
   void SetUniqueNumber(unsigned long _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
   unsigned long GetUniqueNumber() { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
-  void SetManufacturerCode(int _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
-  int GetManufacturerCode() { return DeviceInformation.UnicNumberAndManCode>>21; }
+  void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
+  uint16_t GetManufacturerCode() { return DeviceInformation.UnicNumberAndManCode>>21; }
   void SetDeviceInstance(unsigned char _DeviceInstance) { DeviceInformation.DeviceInstance=_DeviceInstance; }
   unsigned char GetDeviceInstance() { return DeviceInformation.DeviceInstance; }
   void SetDeviceFunction(unsigned char _DeviceFunction) { DeviceInformation.DeviceFunction=_DeviceFunction; }
@@ -190,6 +190,7 @@ protected:
     bool HandleReceivedSystemMessage(int MsgIndex);
     void ForwardMessage(const tN2kMsg &N2kMsg);
     void ForwardMessage(const tN2kCANMsg &N2kCanMsg);
+    void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
     void HandleISORequest(const tN2kMsg &N2kMsg);
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
     void GetNextAddress(int DeviceIndex);
@@ -243,7 +244,7 @@ public:
     void SetDeviceInformation(unsigned long _UniqueNumber, // Default=1. 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
                               unsigned char _DeviceFunction=0xff, // Default=130, PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
                               unsigned char _DeviceClass=0xff, // Default=25, Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-                              int _ManufacturerCode=0xffff,  // Default=2046. Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
+                              uint16_t _ManufacturerCode=0xffff,  // Default=2046. Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
                               unsigned char _IndustryGroup=4  // Default=4, Marine.
                               );
      
