@@ -33,6 +33,8 @@ I also thank for anybody who has extended library with new PGNs or processor sup
 
 == Changes ==
 12.09.2016 Thanks for people (usauerbrey, OzOns), who noted below problems 
+- NOTE! If you are using NMEA2000_can, remember to update that too!
+
 - Fix for ISORequest handling. Now responds allways also for broadcasts.
 
 - Some fixes to avoid compiler warnings.
