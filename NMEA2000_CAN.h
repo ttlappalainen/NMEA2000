@@ -80,8 +80,20 @@ tNMEA2000_avr NMEA2000;
 // That works also with Maple mini and 8 MHz clock. Hopefully these improvements will be applied to
 // original library
 
+#if defined(__STM32F1__) // Maple
+#include <MapleIntCompatibility.h>
+#endif
+
 #include <SPI.h>
 #include <mcp_can.h> // https://github.com/peppeve/CAN_BUS_Shield
+
+#if !defined(N2k_CAN_INT_PIN)
+#define N2k_CAN_INT_PIN 0xff   // No interrupt.
+#ifndef MCP_CAN_RX_BUFFER_SIZE
+#define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
+#endif
+#endif
+
 #include <NMEA2000_mcp.h>
 #if !defined(N2k_SPI_CS_PIN)
 #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
@@ -97,12 +109,7 @@ tNMEA2000_avr NMEA2000;
 #define MCP_CAN_CLOCK_SET MCP_16MHz
 #endif
 
-#if !defined(N2k_CAN_INT_PIN)
-#define N2k_CAN_INT_PIN 0xff   // No interrupt.
-#define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
-#endif
-
-tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN);
+tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN,MCP_CAN_RX_BUFFER_SIZE);
 
 #endif
 
