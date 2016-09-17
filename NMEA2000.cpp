@@ -307,7 +307,8 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if (!Open()) return false;  // Can not do much
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
       if (N2kMsg.DataLen<=8) { // We can send single frame
-          result=CANSendFrame(canId, N2kMsg.DataLen, N2kMsg.Data); 
+//          PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
+          result=CANSendFrame(canId, N2kMsg.DataLen, N2kMsg.Data,true); 
           if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
       } else { // Send it as fast packet in multiple frames
         unsigned char temp[8]; // {0,0,0,0,0,0,0,0};
@@ -336,8 +337,13 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
                  }
             }
             // delay(3);
+//            PrintBuf(ForwardStream,8,temp,true);
             result=CANSendFrame(canId, 8, temp, true);
-            if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
+            if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { 
+              ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); 
+              ForwardStream->print(", frame:"); ForwardStream->print(i); ForwardStream->print("/"); ForwardStream->print(frames); 
+              ForwardStream->println(F(" send failed")); 
+            }
         }
         SendOrder++; if (SendOrder>7) SendOrder=0;
       };
@@ -574,6 +580,8 @@ void tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
     SendMsg(RespondMsg,DeviceIndex);
 }
 
+unsigned long ProductInformationRequested=0;
+
 //*****************************************************************************
 void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev) {
     switch (RequestedPGN) { 
@@ -581,7 +589,8 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
         SendIsoAddressClaim(N2kMsg.Source,iDev);
         break;
       case 126996L: /* Product information */
-        SendProductInformation(iDev);
+        ProductInformationRequested=millis();
+        // SendProductInformation(iDev);
         break;
       case 126998L: /* Configuration information */
         SendConfigurationInformation(iDev);
@@ -605,6 +614,7 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
     if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
     
     ParseN2kPGNISORequest(N2kMsg,RequestedPGN);
+//    Serial.print("ISO request: "); Serial.println(RequestedPGN);
     if (N2kMsg.Destination==0xff) { // broadcast -> respond from all devices
       for (iDev=0; iDev<DeviceCount; iDev++) RespondISORequest(N2kMsg,RequestedPGN,iDev);
     } else {
@@ -700,6 +710,11 @@ void tNMEA2000::ParseMessages() {
   
     if (!Open()) return;  // Can not do much
     
+    if ( ProductInformationRequested!=0 && ProductInformationRequested+100<millis() ) {
+      SendProductInformation();
+      ProductInformationRequested=0;
+    }
+    
     while (FramesRead<MaxReadFramesOnParse && CANGetFrame(canId,len,buf) ) {           // check if data coming
         FramesRead++;
 //        ForwardStream->print("Can ID:"); ForwardStream->print(canId); ForwardStream->print(" len:"); ForwardStream->print(len); ForwardStream->print(" data:"); PrintBuf(ForwardStream,len,buf); ForwardStream->println("\r\n");
@@ -715,6 +730,7 @@ void tNMEA2000::ParseMessages() {
 //          Serial.print(MsgIndex); Serial.print("\r\n");
         }
     }
+    
 }
 
 //*****************************************************************************
@@ -797,7 +813,7 @@ void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long Requeste
 }
 
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
-  int result=(N2kMsg.DataLen==3);
+  int result=((N2kMsg.DataLen>=3) && (N2kMsg.DataLen<=8));
   RequestedPGN=0;
   
   if (result) {

@@ -32,6 +32,8 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+17.09.2016 Temporary fix for problem to respond product information ISO request.
+
 12.09.2016 Thanks for people (usauerbrey, OzOns), who noted below problems 
 
 - NOTE! If you are using NMEA2000_can, remember to update that too!
