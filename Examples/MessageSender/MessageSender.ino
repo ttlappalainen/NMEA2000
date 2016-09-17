@@ -20,6 +20,7 @@ void setup() {
                                );
   // Uncomment 3 rows below to see, what device will send to bus                           
    Serial.begin(115200);
+   NMEA2000.SetForwardStream(&Serial);  // PC output on due programming port
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.
   // NMEA2000.SetForwardOwnMessages();
 
@@ -70,10 +71,10 @@ void SendN2kSlowData() {
     SetN2kTemperature(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kEnvironmentalParameters(N2kMsg, 1, N2kts_MainCabinTemperature, ReadCabinTemp());
+    SetN2kEnvironmentalParameters(N2kMsg, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),N2khs_InsideHumidity, 55, mBarToPascal(1013.5));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kOutsideEnvironmentalParameters(N2kMsg, 1, ReadWaterTemp());
+    SetN2kOutsideEnvironmentalParameters(N2kMsg, 1, ReadWaterTemp(), CToKelvin(25.3), mBarToPascal(1013.5));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kBatConf(N2kMsg,1,N2kDCbt_AGM,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(410),95,1.26,97);
@@ -88,7 +89,7 @@ void SendN2kSlowData() {
     SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55),N2kDoubleNA,N2kDoubleNA,N2kInt8NA,N2kInt8NA,true);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),0x6f);
+    SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),true,false,true);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kSystemTime(N2kMsg,1,17555,62000);
