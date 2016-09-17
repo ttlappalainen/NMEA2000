@@ -11,6 +11,7 @@
 #include <Arduino.h>
 //#include <Time.h>  // 
 #define N2k_CAN_INT_PIN 21
+#define MCP_CAN_RX_BUFFER_SIZE 100
 #include <NMEA2000_CAN.h>
 #include <N2kMessages.h>
 #include <N2kMessagesEnumToStr.h>
@@ -33,9 +34,11 @@ void DCStatus(const tN2kMsg &N2kMsg);
 void BatteryConfigurationStatus(const tN2kMsg &N2kMsg);
 void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
+void Attitude(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
+  {127257L,&Attitude},
   {127488L,&EngineRapid},
   {127489L,&EngineDynamicParameters},
   {127493L,&TransmissionParameters},
@@ -105,7 +108,7 @@ void EngineRapid(const tN2kMsg &N2kMsg) {
     if (ParseN2kEngineParamRapid(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim) ) {
       PrintLabelValWithConversionCheckUnDef("Engine rapid params: ",EngineInstance,0,true);
       PrintLabelValWithConversionCheckUnDef("  RPM: ",EngineSpeed,0,true);
-      PrintLabelValWithConversionCheckUnDef("  boost pressure: ",EngineBoostPressure,0,true);
+      PrintLabelValWithConversionCheckUnDef("  boost pressure (Pa): ",EngineBoostPressure,0,true);
       PrintLabelValWithConversionCheckUnDef("  tilt trim: ",EngineTiltTrim,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
@@ -131,16 +134,16 @@ void EngineDynamicParameters(const tN2kMsg &N2kMsg) {
                                    EngineCoolantPress,EngineFuelPress,
                                    EngineLoad,EngineTorque) ) {
       PrintLabelValWithConversionCheckUnDef("Engine dynamic params: ",EngineInstance,0,true);
-      PrintLabelValWithConversionCheckUnDef("  oil pressure: ",EngineOilPress,0,true);
-      PrintLabelValWithConversionCheckUnDef("  oil temp: ",EngineOilTemp,&KelvinToC,true);
-      PrintLabelValWithConversionCheckUnDef("  coolant temp: ",EngineCoolantTemp,&KelvinToC,true);
-      PrintLabelValWithConversionCheckUnDef("  altenator voltage: ",AltenatorVoltage,0,true);
-      PrintLabelValWithConversionCheckUnDef("  fuel rate: ",FuelRate,0,true);
-      PrintLabelValWithConversionCheckUnDef("  engine hours: ",EngineHours,0,true);
-      PrintLabelValWithConversionCheckUnDef("  coolant pressure: ",EngineCoolantPress,0,true);
-      PrintLabelValWithConversionCheckUnDef("  fuel pressure: ",EngineFuelPress,0,true);
-      PrintLabelValWithConversionCheckUnDef("  engine load: ",EngineLoad,0,true);
-      PrintLabelValWithConversionCheckUnDef("  engine torque: ",EngineTorque,0,true);
+      PrintLabelValWithConversionCheckUnDef("  oil pressure (Pa): ",EngineOilPress,0,true);
+      PrintLabelValWithConversionCheckUnDef("  oil temp (C): ",EngineOilTemp,&KelvinToC,true);
+      PrintLabelValWithConversionCheckUnDef("  coolant temp (C): ",EngineCoolantTemp,&KelvinToC,true);
+      PrintLabelValWithConversionCheckUnDef("  altenator voltage (V): ",AltenatorVoltage,0,true);
+      PrintLabelValWithConversionCheckUnDef("  fuel rate (l/h): ",FuelRate,0,true);
+      PrintLabelValWithConversionCheckUnDef("  engine hours (h): ",EngineHours,&SecondsToh,true);
+      PrintLabelValWithConversionCheckUnDef("  coolant pressure (Pa): ",EngineCoolantPress,0,true);
+      PrintLabelValWithConversionCheckUnDef("  fuel pressure (Pa): ",EngineFuelPress,0,true);
+      PrintLabelValWithConversionCheckUnDef("  engine load (%): ",EngineLoad,0,true);
+      PrintLabelValWithConversionCheckUnDef("  engine torque (%): ",EngineTorque,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -157,8 +160,8 @@ void TransmissionParameters(const tN2kMsg &N2kMsg) {
     if (ParseN2kTransmissionParameters(N2kMsg,EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1) ) {
       PrintLabelValWithConversionCheckUnDef("Transmission params: ",EngineInstance,0,true);
                         OutputStream->print("  gear: "); PrintN2kEnumType(TransmissionGear,OutputStream);
-      PrintLabelValWithConversionCheckUnDef("  oil pressure: ",OilPressure,0,true);
-      PrintLabelValWithConversionCheckUnDef("  oil temperature: ",OilTemperature,&KelvinToC,true);
+      PrintLabelValWithConversionCheckUnDef("  oil pressure (Pa): ",OilPressure,0,true);
+      PrintLabelValWithConversionCheckUnDef("  oil temperature (C): ",OilTemperature,&KelvinToC,true);
       PrintLabelValWithConversionCheckUnDef("  discrete status: ",DiscreteStatus1,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
@@ -175,8 +178,8 @@ void COGSOG(const tN2kMsg &N2kMsg) {
     if (ParseN2kCOGSOGRapid(N2kMsg,SID,HeadingReference,COG,SOG) ) {
       PrintLabelValWithConversionCheckUnDef("COG/SOG: ",SID,0,true);
                         OutputStream->print("  reference: "); PrintN2kEnumType(HeadingReference,OutputStream);
-      PrintLabelValWithConversionCheckUnDef("  COG: ",COG,&RadToDeg,true);
-      PrintLabelValWithConversionCheckUnDef("  SOG: ",SOG,0,true);
+      PrintLabelValWithConversionCheckUnDef("  COG (deg): ",COG,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  SOG (m/s): ",SOG,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -212,7 +215,7 @@ void GNSS(const tN2kMsg &N2kMsg) {
       PrintLabelValWithConversionCheckUnDef("  seconds since midnight: ",SecondsSinceMidnight,0,true);
       PrintLabelValWithConversionCheckUnDef("  latitude: ",Latitude,0,true);
       PrintLabelValWithConversionCheckUnDef("  longitude: ",Longitude,0,true);
-      PrintLabelValWithConversionCheckUnDef("  altitude: ",Altitude,0,true);
+      PrintLabelValWithConversionCheckUnDef("  altitude: (m): ",Altitude,0,true);
                         OutputStream->print("  GNSS type: "); PrintN2kEnumType(GNSStype,OutputStream);
                         OutputStream->print("  GNSS method: "); PrintN2kEnumType(GNSSmethod,OutputStream);
       PrintLabelValWithConversionCheckUnDef("  satellite count: ",nSatellites,0,true);
@@ -294,9 +297,9 @@ void BatteryConfigurationStatus(const tN2kMsg &N2kMsg) {
                         OutputStream->print("  - nominal voltage: "); PrintN2kEnumType(BatNominalVoltage,OutputStream);
                         OutputStream->print("  - chemistry: "); PrintN2kEnumType(BatChemistry,OutputStream);
       PrintLabelValWithConversionCheckUnDef("  - capacity (Ah): ",BatCapacity,&CoulombToAh,true);
-      PrintLabelValWithConversionCheckUnDef("  - temperature coefficient: ",BatTemperatureCoefficient,0,true);
+      PrintLabelValWithConversionCheckUnDef("  - temperature coefficient (%): ",BatTemperatureCoefficient,0,true);
       PrintLabelValWithConversionCheckUnDef("  - peukert exponent: ",PeukertExponent,0,true);
-      PrintLabelValWithConversionCheckUnDef("  - charge efficiency factor: ",ChargeEfficiencyFactor,0,true);
+      PrintLabelValWithConversionCheckUnDef("  - charge efficiency factor (%): ",ChargeEfficiencyFactor,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -379,6 +382,23 @@ void FluidLevel(const tN2kMsg &N2kMsg) {
       OutputStream->print(Level); OutputStream->print("%"); 
       OutputStream->print(" ("); OutputStream->print(Capacity*Level/100); OutputStream->print("l)");
       OutputStream->print(" capacity :"); OutputStream->println(Capacity);
+    }
+}
+
+//*****************************************************************************
+void Attitude(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    double Yaw;
+    double Pitch;
+    double Roll;
+    
+    if (ParseN2kAttitude(N2kMsg,SID,Yaw,Pitch,Roll) ) {
+      PrintLabelValWithConversionCheckUnDef("Attitude: ",SID,0,true);
+      PrintLabelValWithConversionCheckUnDef("  Yaw (deg): ",Yaw,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Pitch (deg): ",Pitch,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Roll (deg): ",Roll,&RadToDeg,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
 }
 
