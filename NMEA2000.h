@@ -78,9 +78,14 @@ protected:
   } tUnionDeviceInformation;
   
   tUnionDeviceInformation DeviceInformation;
-
+  
 public:
-  tDeviceInformation() { DeviceInformation.Name=0; }
+  uint8_t N2kSource;
+  unsigned long PendingProductInformation;
+  unsigned long PendingConfigurationInformation;
+  
+public:
+  tDeviceInformation() { DeviceInformation.Name=0; N2kSource=0; PendingProductInformation=0; PendingConfigurationInformation=0; }
   void SetUniqueNumber(unsigned long _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
   unsigned long GetUniqueNumber() { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
   void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
@@ -97,6 +102,13 @@ public:
   unsigned char GetSystemInstance() { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
   
   uint64_t GetName()  { return DeviceInformation.Name; }
+  void SetPendingProductInformation() { PendingProductInformation=millis()+N2kSource*8; }
+  void ClearPendingProductInformation() { PendingProductInformation=0; }
+  bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
+  
+  void SetPendingPendingConfigurationInformation() { PendingConfigurationInformation=millis()+N2kSource*10; }
+  void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
+  bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
 };
 
 struct tProductInformation {
@@ -135,6 +147,18 @@ public:
                 } tDebugMode;
 
 
+  struct tProgmemConfigurationInformation {
+      const char *ManufacturerInformation;
+      const char *InstallationDescription1;
+      const char *InstallationDescription2;
+  };
+
+  struct tConfigurationInformation {
+      char *ManufacturerInformation;
+      char *InstallationDescription1;
+      char *InstallationDescription2;
+  };
+
 protected:
   // Forward mode bit settings.
   static const int FwdModeBit_EnableForward     = B00000001; // If set, forward is enabled 
@@ -158,20 +182,42 @@ protected:
     // Device information
     tDeviceInformation DeviceInformation[Max_N2kDevices];
     int DeviceCount;
-    unsigned long N2kSource[Max_N2kDevices];
+//    unsigned long N2kSource[Max_N2kDevices];
     
     // Product information
     const tProductInformation *ProductInformation;
     tProductInformation *LocalProductInformation;
+
+    // Configuration information
+    const tProgmemConfigurationInformation *ConfigurationInformation;
+    tConfigurationInformation *LocalConfigurationInformation;
     
     const unsigned long *SingleFrameMessages[N2kMessageGroups];
     const unsigned long *FastPacketMessages[N2kMessageGroups];
+    
+    
+    class tCANFrame
+    {
+    public:
+      unsigned long id; 
+      unsigned char len;
+      unsigned char buf[8];
+      bool wait_sent;
+      
+    public:
+      void Clear() {id=0; len=0; for (int i=0; i<8; i++) { buf[i]=0; } }  
+    };
     
 protected:
     // Buffer for received messages.
     tN2kCANMsg *N2kCANMsgBuf;
     unsigned char MaxN2kCANMsgs;
 
+    tCANFrame *CANFrameBuf;
+    uint8_t MaxCANFrames;
+    uint8_t CANFrameBufferWrite;
+    uint8_t CANFrameBufferRead;
+    
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
     bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);                 // 'ISORequest' messages
@@ -184,6 +230,15 @@ protected:
     virtual bool CANOpen()=0;
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
 
+protected:
+    bool SendFrames(); // Sends pending frames
+    bool SendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true);
+    tCANFrame *GetNextFreeCANFrame();
+    // Currently Product Information and Configuration Information will we pended on ISO request.
+    // This is because specially for broadcasted response it may take a while, when higher priority
+    // devices sends their response.
+    void SendPendingInformation();
+    
 protected:
     int SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
@@ -208,6 +263,12 @@ public:
     // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
     // you can set buffer size smaller like 3 or 2 by calling this before open.    
     void SetN2kCANMsgBufSize(const unsigned char _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
+    // When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data
+    // This depends of your hw and device source. Device source has effect due to priority of getting sending slot. If your data is
+    // critical, use buffer size, which is large enough (default 40 frames). 
+    // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
+    // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
+    void SetN2kCANSendFrameBufSize(const unsigned char _MaxCANFrames) { if (CANFrameBuf==0) { MaxCANFrames=_MaxCANFrames; }; }
     
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -227,8 +288,20 @@ public:
     // Call this if you want to save RAM and you have defined tProductInformation to PROGMEM as in example BatteryMonitor.ino
     // Note that I have not yet found a way to test is pointer in PROGMEM or not, so this does not work, if you define
     // tProductInformation to RAM.
-    void SetProductInformation(const tProductInformation *_ProductInformation);  
+    void SetProductInformation(const tProductInformation *_ProductInformation);
     
+    // Configuration information is just some extra information about device and manufacturer. Some
+    // MFD shows it, some does not. NMEA Reader can show configuration information.
+    // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
+    void SetConfigurationInformation(const char *ManufacturerInformation,
+                                     const char *InstallationDescription1=0,
+                                     const char *InstallationDescription2=0);
+
+    // Call this if you want to save RAM and you have defined tConfigurationInformation to PROGMEM as in example BatteryMonitor.ino
+    // Note that I have not yet found a way to test is pointer in PROGMEM or not, so this does not work, if you define
+    // tProgmemConfigurationInformation to RAM.
+    void SetProgmemConfigurationInformation(const tProgmemConfigurationInformation *_ConfigurationInformation);
+
     // Call these if you wish to override the default message packets supported.  Pointers must be in PROGMEM
     void SetSingleFrameMessages(const unsigned long *_SingleFrameMessages);
     void SetFastPacketMessages (const unsigned long *_FastPacketMessages);
@@ -260,8 +333,8 @@ public:
       
     // Class handles automatically address claiming and tell to the bus about itself.
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
-    void SendProductInformation(int DeviceIndex=0);
-    void SendConfigurationInformation(int DeviceIndex=0);
+    bool SendProductInformation(int DeviceIndex=0);
+    bool SendConfigurationInformation(int DeviceIndex=0);
     
     // Set this before open. You can not change mode after Open().
     // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure. 
@@ -293,7 +366,7 @@ public:
     
     // Read address for current device.
     // Multidevice support is under construction.
-    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return N2kSource[DeviceIndex]; return N2kSource[DeviceCount-1]; }
+    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return DeviceInformation[DeviceIndex].N2kSource; return DeviceInformation[DeviceCount-1].N2kSource; }
 
     // You can check has this device changed its address. If yes, it is prefeable to
     // save changed address to EEPROM and on next start use that.
@@ -322,12 +395,14 @@ public:
     void SetDebugMode(tDebugMode _dbMode);
 };
 
+//*****************************************************************************
 // ISO Acknowledgement
 void SetN2kPGN59392(tN2kMsg &N2kMsg, unsigned char Control, unsigned char GroupFunction, unsigned long PGN);
 inline void SetN2kPGNISOAcknowledgement(tN2kMsg &N2kMsg, unsigned char Control, unsigned char GroupFunction, unsigned long PGN) {
   SetN2kPGN59392(N2kMsg,Control,GroupFunction,PGN);
 }
 
+//*****************************************************************************
 // ISO Address Claim                   
 void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int ManufacturerCode,
                    unsigned char DeviceFunction, unsigned char DeviceClass,
@@ -348,6 +423,8 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, uint64_t Name) {
   SetN2kPGN60928(N2kMsg, Name);
 }
 
+//*****************************************************************************
+// Product information
 void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
                      const char *ModelID, const char *SwCode, 
                      const char *ModelVersion, const char *ModelSerialCode,
@@ -362,7 +439,26 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
                   SertificationLevel,LoadEquivalency);
 }
 
+//*****************************************************************************
+// Product information
+void SetN2kPGN126998(tN2kMsg &N2kMsg,
+                     const char *ManufacturerInformation,
+                     const char *InstallationDescription1=0,
+                     const char *InstallationDescription2=0);
+                     
+inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
+                     const char *ManufacturerInformation,
+                     const char *InstallationDescription1=0,
+                     const char *InstallationDescription2=0) {
+  SetN2kPGN126998(N2kMsg,
+                  ManufacturerInformation,
+                  InstallationDescription1,
+                  InstallationDescription2);
+}
 
+
+//*****************************************************************************
+// ISO request
 void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN);
 
 inline void SetN2kPGNISORequest(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN) {
