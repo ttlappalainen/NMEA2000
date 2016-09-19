@@ -15,24 +15,32 @@
 
 
 
+// ---  Example of using PROGMEM to hold Product ID.  However, doing this will prevent any updating of
+//      these details outside of recompiling the program.
 const tProductInformation BatteryMonitorProductInformation PROGMEM={
                                        1300,                        // N2kVersion
                                        100,                         // Manufacturer's product code
                                        "Simple battery monitor",    // Manufacturer's Model ID
-                                       "1.0.0.12 (2016-02-02)",     // Manufacturer's Software version code
+                                       "1.0.0.13 (2016-09-19)",     // Manufacturer's Software version code
                                        "1.0.0.0 (2015-08-03)",      // Manufacturer's Model version
                                        "00000001",                  // Manufacturer's Model serial code
                                        0,                           // SertificationLevel
                                        1                            // LoadEquivalency
                                       };                                      
 
-                                      // ---  Example of using PROGMEM to hold Product ID.  However, doing this will prevent any updating of
-                                      //      these details outside of recompiling the program.
-                                      
+// ---  Example of using PROGMEM to hold Configuration information.  However, doing this will prevent any updating of
+//      these details outside of recompiling the program.
+const tNMEA2000::tProgmemConfigurationInformation BatteryMonitorConfigurationInformation PROGMEM={
+                                       "John Doe, john.doe@unknown.com", // Manufacturer information
+                                       "Just for sample", // Installation description1
+                                       "No real information send to bus" // Installation description2
+                                      };
                                       
 void setup() {
   // Set Product information
   NMEA2000.SetProductInformation(&BatteryMonitorProductInformation );
+  // Set Configuration information
+  NMEA2000.SetProgmemConfigurationInformation(&BatteryMonitorConfigurationInformation );
   // Set device information
   NMEA2000.SetDeviceInformation(1,      // Unique number. Use e.g. Serial number.
                                 170,    // Device function=Battery. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
