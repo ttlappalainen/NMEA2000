@@ -122,8 +122,8 @@ tNMEA2000::tNMEA2000() {
   N2kCANMsgBuf=0;
   MaxN2kCANMsgs=0;
   
-  MaxCANFrames=40;
-  CANFrameBuf=0;
+  MaxCANSendFrames=40;
+  CANSendFrameBuf=0;
   
   MsgHandler=0;
   ISORqstHandler=0;
@@ -283,10 +283,10 @@ bool tNMEA2000::Open() {
       for (int i=0; i<MaxN2kCANMsgs; i++) N2kCANMsgBuf[i].FreeMessage();
     }
     
-    if ( CANFrameBuf==0 ) {
-      CANFrameBuf = new tCANFrame[MaxCANFrames];
-      CANFrameBufferWrite=0;
-      CANFrameBufferRead=0;
+    if ( CANSendFrameBuf==0 ) {
+      CANSendFrameBuf = new tCANSendFrame[MaxCANSendFrames];
+      CANSendFrameBufferWrite=0;
+      CANSendFrameBufferRead=0;
     }
   
     DeviceReady=CANOpen();
@@ -341,10 +341,10 @@ unsigned long N2ktoCanID(unsigned char priority, unsigned long PGN, unsigned lon
 bool tNMEA2000::SendFrames()
 { uint8_t temp;
 
-  while (CANFrameBufferRead!=CANFrameBufferWrite) {
-    temp = (CANFrameBufferRead + 1) % MaxCANFrames;
-    if ( CANSendFrame(CANFrameBuf[temp].id, CANFrameBuf[temp].len, CANFrameBuf[temp].buf, CANFrameBuf[temp].wait_sent) ) {
-      CANFrameBufferRead=temp;
+  while (CANSendFrameBufferRead!=CANSendFrameBufferWrite) {
+    temp = (CANSendFrameBufferRead + 1) % MaxCANSendFrames;
+    if ( CANSendFrame(CANSendFrameBuf[temp].id, CANSendFrameBuf[temp].len, CANSendFrameBuf[temp].buf, CANSendFrameBuf[temp].wait_sent) ) {
+      CANSendFrameBufferRead=temp;
     } else return false;
   }
   
@@ -355,26 +355,26 @@ bool tNMEA2000::SendFrames()
 bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent) {
   
   if ( !SendFrames() || !CANSendFrame(id,len,buf,wait_sent) ) { // If we can not sent frame immediately, add it to buffer
-    tCANFrame *CANFrame=GetNextFreeCANFrame();
-    if ( CANFrame==0 ) return false;
-    CANFrame->id=id;
-    CANFrame->len=len;
-    CANFrame->wait_sent=wait_sent;
-    for (int i=0; i<len && i<8; i++) CANFrame->buf[i]=buf[i];
+    tCANSendFrame *Frame=GetNextFreeCANSendFrame();
+    if ( Frame==0 ) return false;
+    Frame->id=id;
+    Frame->len=len;
+    Frame->wait_sent=wait_sent;
+    for (int i=0; i<len && i<8; i++) Frame->buf[i]=buf[i];
   }
   
   return true;
 }
 
 //*****************************************************************************
-tNMEA2000::tCANFrame *tNMEA2000::GetNextFreeCANFrame() { 
-  if (CANFrameBuf==0) return 0;
+tNMEA2000::tCANSendFrame *tNMEA2000::GetNextFreeCANSendFrame() { 
+  if (CANSendFrameBuf==0) return 0;
 
-  uint8_t temp = (CANFrameBufferWrite + 1) % MaxCANFrames;
+  uint8_t temp = (CANSendFrameBufferWrite + 1) % MaxCANSendFrames;
   
-  if (temp != CANFrameBufferRead) {
-    CANFrameBufferWrite = temp;
-    return &(CANFrameBuf[CANFrameBufferWrite]);
+  if (temp != CANSendFrameBufferRead) {
+    CANSendFrameBufferWrite = temp;
+    return &(CANSendFrameBuf[CANSendFrameBufferWrite]);
   } else {
     return 0;
   }

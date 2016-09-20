@@ -196,7 +196,7 @@ protected:
     const unsigned long *FastPacketMessages[N2kMessageGroups];
     
     
-    class tCANFrame
+    class tCANSendFrame
     {
     public:
       unsigned long id; 
@@ -213,10 +213,10 @@ protected:
     tN2kCANMsg *N2kCANMsgBuf;
     unsigned char MaxN2kCANMsgs;
 
-    tCANFrame *CANFrameBuf;
-    uint8_t MaxCANFrames;
-    uint8_t CANFrameBufferWrite;
-    uint8_t CANFrameBufferRead;
+    tCANSendFrame *CANSendFrameBuf;
+    uint8_t MaxCANSendFrames;
+    uint8_t CANSendFrameBufferWrite;
+    uint8_t CANSendFrameBufferRead;
     
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
@@ -233,7 +233,7 @@ protected:
 protected:
     bool SendFrames(); // Sends pending frames
     bool SendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true);
-    tCANFrame *GetNextFreeCANFrame();
+    tCANSendFrame *GetNextFreeCANSendFrame();
     // Currently Product Information and Configuration Information will we pended on ISO request.
     // This is because specially for broadcasted response it may take a while, when higher priority
     // devices sends their response.
@@ -268,7 +268,7 @@ public:
     // critical, use buffer size, which is large enough (default 40 frames). 
     // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
     // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
-    void SetN2kCANSendFrameBufSize(const unsigned char _MaxCANFrames) { if (CANFrameBuf==0) { MaxCANFrames=_MaxCANFrames; }; }
+    void SetN2kCANSendFrameBufSize(const unsigned char _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
     
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -440,7 +440,7 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
 }
 
 //*****************************************************************************
-// Product information
+// Configuration information
 void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
