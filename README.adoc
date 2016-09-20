@@ -41,7 +41,7 @@ With this feature it solved my problem that time to time my MFD could not receiv
 
 - System now also has more reliable response to the Product Information ISO request (PGN 126998). Unfortunately if your system does not poll often
 enough incoming messages (ParseMessages), you still may loose the request itself. This is specially the case if you system spends some time reading
-sensors like 1-wire. Even with 1-wire asynchronous read, it may spend 10 ms interrups disabled. Within 10 ms the may be about 3000 messages on bus.
+sensors like 1-wire system. Even with 1-wire asynchronous read, it may spend 10 ms interrupts disabled. Within 10 ms there may be about 30 messages on bus.
 
 - New methods SetConfigurationInformation and SetProgmemConfigurationInformation. System can now also handle Configuration Information ISO request to 
 (PGN 126998). Default configuration information is saved to PROGMEM.
