@@ -1,7 +1,7 @@
 /* 
 N2kMessages.cpp
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -25,14 +25,44 @@ Author: Timo Lappalainen
 
 //*****************************************************************************
 // System time
-void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, unsigned int SystemDate,
+void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource) {
     N2kMsg.SetPGN(126992L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(TimeSource);
     N2kMsg.Add2ByteInt(SystemDate);
-    N2kMsg.Add4ByteDouble(SystemTime,0.0001);
+    N2kMsg.Add4ByteUDouble(SystemTime,0.0001);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
+                     double &SystemTime, tN2kTimeSource &TimeSource) {
+  if (N2kMsg.PGN!=126992L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  TimeSource=(tN2kTimeSource)(N2kMsg.GetByte(Index));
+  SystemDate=N2kMsg.Get2ByteUInt(Index);
+  SystemTime=N2kMsg.Get4ByteDouble(0.0001,Index);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Rudder
+// Angles should be in radians
+void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance, 
+                     tN2kRudderDirectionOrder RudderDirectionOrder, double AngleOrder) {
+    N2kMsg.SetPGN(127245L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(Instance);
+    N2kMsg.AddByte(0xf8 | (RudderDirectionOrder&0x07));
+    N2kMsg.Add2ByteDouble(AngleOrder,0.0001);
+    N2kMsg.Add2ByteDouble(RudderPosition,0.0001);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 //*****************************************************************************
@@ -42,29 +72,112 @@ void SetN2kPGN127250(tN2kMsg &N2kMsg, unsigned char SID, double Heading, double 
     N2kMsg.SetPGN(127250L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteDouble(Heading,0.0001);
-    if (Deviation!=AngleUndef) { N2kMsg.Add2ByteDouble(Deviation,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
-    if (Variation!=AngleUndef) { N2kMsg.Add2ByteDouble(Variation,0.0001); } else { N2kMsg.Add2ByteInt(0x7fff); }
+    N2kMsg.Add2ByteUDouble(Heading,0.0001);
+    N2kMsg.Add2ByteDouble(Deviation,0.0001);
+    N2kMsg.Add2ByteDouble(Variation,0.0001);
     N2kMsg.AddByte(0xfc | ref);
+}
+
+bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heading, double &Deviation, double &Variation, tN2kHeadingReference &ref) {
+  if (N2kMsg.PGN!=127250L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  Heading=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Deviation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Variation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  ref=(tN2kHeadingReference)(N2kMsg.GetByte(Index)&0x03);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Rate of turn
+// Angles should be in radians
+void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
+    N2kMsg.SetPGN(127251L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add4ByteUDouble(RateOfTurn,((1e-3/32.0) * 0.0001));
+}
+
+bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
+  if (N2kMsg.PGN!=127251L) return false;
+
+  int Index=0;
+  
+  SID=N2kMsg.GetByte(Index);
+  RateOfTurn=N2kMsg.Get4ByteDouble(((1e-3/32.0) * 0.0001),Index);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Attitude
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Yaw                   Heading in radians.
+//  - Pitch                 Pitch in radians. Positive, when your bow rises.
+//  - Roll                  Roll in radians. Positive, when tilted right.
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127257(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll) {
+    N2kMsg.SetPGN(127257L);
+    N2kMsg.Priority=2;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteDouble(Yaw,0.0001);
+    N2kMsg.Add2ByteDouble(Pitch,0.0001);
+    N2kMsg.Add2ByteDouble(Roll,0.0001);
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll){
+  if (N2kMsg.PGN!=127257L) return false;
+
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  Yaw=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Pitch=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Roll=N2kMsg.Get2ByteDouble(0.0001,Index);
+  
+  return true;
 }
 
 //*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
-                     int EngineBoostPressure, unsigned char EngineTiltTrim) {
+                     double EngineBoostPressure, int8_t EngineTiltTrim) {
     N2kMsg.SetPGN(127488L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(EngineInstance);
     N2kMsg.Add2ByteDouble(EngineSpeed,0.25);
-    N2kMsg.Add2ByteInt(EngineBoostPressure);
+    N2kMsg.Add2ByteUDouble(EngineBoostPressure, 100);
     N2kMsg.AddByte(EngineTiltTrim);
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed, 
+                     double &EngineBoostPressure, int8_t &EngineTiltTrim) {
+  if (N2kMsg.PGN!=127488L) return false;
+
+  int Index=0;
+  
+  EngineInstance=N2kMsg.GetByte(Index);
+  EngineSpeed=N2kMsg.Get2ByteDouble(0.25,Index);
+  EngineBoostPressure=N2kMsg.Get2ByteUDouble(100,Index);
+  EngineTiltTrim=N2kMsg.GetByte(Index);
+  
+  return true;
+}
+
 //*****************************************************************************
-void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, float EngineLoad, float EngineTorque, bool flagCheckEngine,
+// Engine parameters dynamic
+void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
+                       double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, int8_t EngineLoad, int8_t EngineTorque, 
+                       bool flagCheckEngine,
                        bool flagOverTemp, bool flagLowOilPress, bool flagLowOilLevel, bool flagLowFuelPress, bool flagLowSystemVoltage, bool flagLowCoolantLevel,
                        bool flagWaterFlow, bool flagWaterInFuel, bool flagChargeIndicator, bool flagPreheatIndicator, bool flagHighBoostPress, bool flagRevLimitExceeded,
                        bool flagEgrSystem, bool flagTPS, bool flagEmergencyStopMode, bool flagWarning1, bool flagWarning2, bool flagPowerReduction,
@@ -73,17 +186,15 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
     N2kMsg.Priority=6;
                        
   N2kMsg.AddByte(EngineInstance);
-  N2kMsg.Add2ByteDouble(EngineOilPress, 1);
-  N2kMsg.Add2ByteDouble(EngineOilTemp + 273.15, 0.01);
-  N2kMsg.Add2ByteDouble(EngineCoolantTemp + 273.15, 0.01);
+  N2kMsg.Add2ByteUDouble(EngineOilPress, 100);
+  N2kMsg.Add2ByteUDouble(EngineOilTemp, 0.1);
+  N2kMsg.Add2ByteUDouble(EngineCoolantTemp, 0.01);
   N2kMsg.Add2ByteDouble(AltenatorVoltage, 0.01);
   N2kMsg.Add2ByteDouble(FuelRate, 0.1);
-  N2kMsg.Add4ByteDouble(EngineHours, 1);
-  N2kMsg.Add2ByteDouble(EngineCoolantPress, 1);
-  N2kMsg.Add2ByteDouble(EngineFuelPress, 1);
+  N2kMsg.Add4ByteUDouble(EngineHours, 1);
+  N2kMsg.Add2ByteUDouble(EngineCoolantPress, 100);
+  N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
-  N2kMsg.Add2ByteInt(0xffff);  // Discrete Status 1
-  N2kMsg.Add2ByteInt(0xffff);  // Discrete Status 2
 
   int engineStatus1P1 = B00000000;
   int engineStatus1P2 = B00000000;
@@ -114,22 +225,80 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, int EngineInstance, double EngineOilPress,
   if (flagSubThrottle) engineStatus2 |= B00100000;
   if (flagNeutralStartProtect) engineStatus2 |= B01000000;
   if (flagEngineShuttingDown) engineStatus2 |= B10000000;
+  N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
+  N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
 
   N2kMsg.AddByte(EngineLoad);
   N2kMsg.AddByte(EngineTorque);
 }
+bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress, 
+                      int8_t &EngineLoad, int8_t &EngineTorque) {
+  if (N2kMsg.PGN != 127489L) return false;
 
+  int Index = 0;
+
+  EngineInstance = N2kMsg.GetByte(Index);
+  EngineOilPress = N2kMsg.Get2ByteUDouble(100, Index);
+  EngineOilTemp  = N2kMsg.Get2ByteUDouble(0.1, Index);
+  EngineCoolantTemp = N2kMsg.Get2ByteUDouble(0.01, Index);
+  AltenatorVoltage = N2kMsg.Get2ByteDouble(0.01, Index);
+  FuelRate =  N2kMsg.Get2ByteDouble(0.1, Index);
+  EngineHours = N2kMsg.Get4ByteUDouble(1, Index);
+  EngineCoolantPress=N2kMsg.Get2ByteUDouble(100, Index);
+  EngineFuelPress=N2kMsg.Get2ByteUDouble(1000, Index);
+  N2kMsg.GetByte(Index);  // reserved
+  N2kMsg.Get2ByteInt(Index);  // Discrete Status 1
+  N2kMsg.Get2ByteInt(Index);  // Discrete Status 2
+  EngineLoad=N2kMsg.GetByte(Index);
+  EngineTorque=N2kMsg.GetByte(Index);
+  
+  return true;
+}
+
+
+//*****************************************************************************
+// Transmission parameters, dynamic
+void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear, 
+                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1) {
+  N2kMsg.SetPGN(127493L);
+  N2kMsg.Priority=6;
+  N2kMsg.AddByte(EngineInstance);
+  N2kMsg.AddByte((TransmissionGear & 0x03) | 0xfc );
+  N2kMsg.Add2ByteUDouble(OilPressure, 100);
+  N2kMsg.Add2ByteUDouble(OilTemperature, 0.1);
+  N2kMsg.AddByte(DiscreteStatus1);
+  N2kMsg.AddByte(0xff);  // Reserved
+}
+
+bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear, 
+                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1) {
+  if (N2kMsg.PGN!=127493L) return false;
+
+  int Index=0;
+  
+  EngineInstance=N2kMsg.GetByte(Index);
+  TransmissionGear=(tN2kTransmissionGear)(N2kMsg.GetByte(Index) & 0x03);
+  OilPressure=N2kMsg.Get2ByteUDouble(100,Index);
+  OilTemperature=N2kMsg.Get2ByteUDouble(0.1,Index);
+  DiscreteStatus1=N2kMsg.GetByte(Index);
+  
+  return true;
+}
+                     
 //*****************************************************************************
 // Fluid level
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
     N2kMsg.SetPGN(127505L);
     N2kMsg.Priority=6;
-    N2kMsg.AddByte(Instance&0x0f | (FluidType&0x0f)<<4);
+    N2kMsg.AddByte((Instance&0x0f) | ((FluidType&0x0f)<<4));
     N2kMsg.Add2ByteDouble(Level,0.004);
-    N2kMsg.Add4ByteDouble(Capacity,0.1);
+    N2kMsg.Add4ByteUDouble(Capacity,0.1);
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+//*****************************************************************************
 bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluidType &FluidType, double &Level, double &Capacity) {
   if (N2kMsg.PGN!=127505L) return false;
 
@@ -139,7 +308,102 @@ bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluid
   Instance=IFt&0x0f;
   FluidType=(tN2kFluidType)((IFt>>4)&0x0f);
   Level=N2kMsg.Get2ByteDouble(0.004,Index);
-  Capacity=N2kMsg.Get4ByteDouble(0.1,Index);
+  Capacity=N2kMsg.Get4ByteUDouble(0.1,Index);
+  
+  return true;
+}
+
+//*****************************************************************************
+// DC Detailed Status
+//
+void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
+                     uint8_t StateOfCharge, uint8_t StateOfHealth, double TimeRemaining, double RippleVoltage) {
+    N2kMsg.SetPGN(127506L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(DCInstance);
+    N2kMsg.AddByte((unsigned char)DCType);
+    N2kMsg.AddByte(StateOfCharge);
+    N2kMsg.AddByte(StateOfHealth);
+    N2kMsg.Add2ByteUDouble(TimeRemaining,1.0);
+    N2kMsg.Add2ByteUDouble(RippleVoltage,0.001);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
+                     uint8_t &StateOfCharge, uint8_t &StateOfHealth, double &TimeRemaining, double &RippleVoltage){
+  if (N2kMsg.PGN!=127506L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  DCInstance=N2kMsg.GetByte(Index);
+  DCType=(tN2kDCType)(N2kMsg.GetByte(Index));
+  StateOfCharge=N2kMsg.GetByte(Index);
+  StateOfHealth=N2kMsg.GetByte(Index);
+  TimeRemaining=N2kMsg.Get2ByteUDouble(1.0,Index);
+  RippleVoltage=N2kMsg.Get2ByteUDouble(0.001,Index);
+
+  return true;
+}
+
+//*****************************************************************************
+// Battery Status
+// Temperatures should be in Kelvins
+void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,
+                     double BatteryTemperature, unsigned char SID) {
+    N2kMsg.SetPGN(127508L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(BatteryInstance);
+    N2kMsg.Add2ByteDouble(BatteryVoltage,0.01);
+    N2kMsg.Add2ByteDouble(BatteryCurrent,0.1);
+    N2kMsg.Add2ByteUDouble(BatteryTemperature,0.01);
+    N2kMsg.AddByte(SID);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127508(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
+                     double &BatteryTemperature, unsigned char &SID) {
+  if (N2kMsg.PGN!=127508L) return false;
+  int Index=0;
+  BatteryInstance=N2kMsg.GetByte(Index);
+  BatteryVoltage=N2kMsg.Get2ByteDouble(0.01,Index);
+  BatteryCurrent=N2kMsg.Get2ByteDouble(0.1,Index);
+  BatteryTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+  SID=N2kMsg.GetByte(Index);
+
+  return true;
+}
+
+//*****************************************************************************
+// Battery Configuration Status
+void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
+                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
+				double PeukertExponent, int8_t ChargeEfficiencyFactor) {
+    N2kMsg.SetPGN(127513L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(BatInstance);
+    N2kMsg.AddByte(0xc0 | ((SupportsEqual & 0x03) << 4) | (BatType & 0x0f)); // BatType (4 bit), SupportsEqual (2 bit), Reserved (2 bit) 
+    N2kMsg.AddByte( ((BatChemistry & 0x0f) << 4) | (BatNominalVoltage & 0x0f) ); // BatNominalVoltage (4 bit), BatChemistry (4 bit)
+    N2kMsg.Add2ByteUDouble(BatCapacity,3600);
+    N2kMsg.AddByte((int8_t)BatTemperatureCoefficient);
+    PeukertExponent-=1; // Is this right or not I am not yet sure!
+    if (PeukertExponent<0 || PeukertExponent>0.504) { N2kMsg.AddByte(0xff); } else { N2kMsg.Add1ByteUDouble(PeukertExponent,0.002,-1); }
+    N2kMsg.AddByte((int8_t)ChargeEfficiencyFactor);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
+                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
+				double &PeukertExponent, int8_t &ChargeEfficiencyFactor) {
+  if (N2kMsg.PGN!=127513L) return false;
+  int Index=0;
+  unsigned char v; 
+  BatInstance = N2kMsg.GetByte(Index);
+  v = N2kMsg.GetByte(Index); BatType=(tN2kBatType)(v & 0x0f); SupportsEqual=(tN2kBatEqSupport)((v>>4) & 0x03);
+  v = N2kMsg.GetByte(Index); BatNominalVoltage=(tN2kBatNomVolt)(v & 0x0f);  BatChemistry=(tN2kBatChem)((v>>4) & 0x0f);
+  BatCapacity=N2kMsg.Get2ByteDouble(3600,Index);
+  BatTemperatureCoefficient=N2kMsg.GetByte(Index);
+  PeukertExponent=N2kMsg.Get1ByteUDouble(0.002,Index); PeukertExponent+=1;
+  ChargeEfficiencyFactor=N2kMsg.GetByte(Index);
   
   return true;
 }
@@ -150,10 +414,23 @@ void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, 
     N2kMsg.SetPGN(128259L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteDouble(WaterRefereced,0.01);
-    if (GroundReferenced!=SpeedUndef) { N2kMsg.Add2ByteDouble(GroundReferenced,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.Add2ByteUDouble(WaterRefereced,0.01);
+    N2kMsg.Add2ByteUDouble(GroundReferenced,0.01);
     N2kMsg.AddByte(SWRT);
     N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+  if (N2kMsg.PGN!=128259L) return false;
+
+  int Index=0;
+
+  SID=N2kMsg.GetByte(Index);
+  WaterRefereced=N2kMsg.Get2ByteUDouble(0.01,Index);
+  GroundReferenced=N2kMsg.Get2ByteDouble(0.01,Index);
+  SWRT=(tN2kSpeedWaterReferenceType)(N2kMsg.GetByte(Index)&0x0F);
+
+  return true;
 }
 
 //*****************************************************************************
@@ -162,7 +439,7 @@ void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransd
     N2kMsg.SetPGN(128267L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteDouble(DepthBelowTransducer,0.01);
+    N2kMsg.Add4ByteUDouble(DepthBelowTransducer,0.01);
     N2kMsg.Add2ByteDouble(Offset,0.001);
     N2kMsg.AddByte(0xff); // Reserved
 }
@@ -172,10 +449,34 @@ bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthB
 
   int Index=0;
   SID=N2kMsg.GetByte(Index);
-  DepthBelowTransducer=N2kMsg.Get4ByteDouble(0.01,Index);
+  DepthBelowTransducer=N2kMsg.Get4ByteUDouble(0.01,Index);
   Offset=N2kMsg.Get2ByteDouble(0.001,Index);
   
   return true;
+}
+
+//*****************************************************************************
+// Distance log
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+    N2kMsg.SetPGN(128275L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteInt(DaysSince1970);
+    N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
+    N2kMsg.Add4ByteUInt(Log);
+    N2kMsg.Add4ByteUInt(TripLog);
+}
+
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+    if (N2kMsg.PGN!=128275L) return false;
+
+    int Index=0;
+
+    DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+    SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+    Log=N2kMsg.Get4ByteUDouble(1,Index);
+    TripLog=N2kMsg.Get4ByteUDouble(1,Index);
+
+    return true;
 }
 
 //*****************************************************************************
@@ -195,20 +496,33 @@ void SetN2kPGN129026(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference re
     N2kMsg.SetPGN(129026L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
-    N2kMsg.AddByte((ref==N2khr_true?0xfc:0xfd));
-    N2kMsg.Add2ByteDouble(COG,0.0001); //0.0057295779513082332);
-    N2kMsg.Add2ByteDouble(SOG,0.01);
-    N2kMsg.AddByte(0xff);
-    N2kMsg.AddByte(0xff);
+    N2kMsg.AddByte( (((unsigned char)(ref)) & 0x03) | 0xfc );
+    N2kMsg.Add2ByteUDouble(COG,0.0001); //0.0057295779513082332);
+    N2kMsg.Add2ByteUDouble(SOG,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingReference &ref, double &COG, double &SOG) {
+  if (N2kMsg.PGN!=129026L) return false;
+  int Index=0;
+  unsigned char b;
+  
+  SID=N2kMsg.GetByte(Index);
+  b=N2kMsg.GetByte(Index); ref=(tN2kHeadingReference)( b & 0x03 );
+  COG=N2kMsg.Get2ByteDouble(0.0001,Index);
+  SOG=N2kMsg.Get2ByteDouble(0.01,Index);
+
+  return true;
 }
 
 //*****************************************************************************
 // GNSS Position Data
-void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, double SecondsSinceMidnight, 
+void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight, 
                      double Latitude, double Longitude, double Altitude, 
                      tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
                      unsigned char nSatellites, double HDOP, double PDOP, double GeoidalSeparation,
-                     unsigned char nReferenceStations, tN2kGNSStype ReferenceStationType, int ReferenceSationID,
+                     unsigned char nReferenceStations, tN2kGNSStype ReferenceStationType, uint16_t ReferenceSationID,
                      double AgeOfCorrection
                      ) {
 
@@ -217,7 +531,7 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, doub
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteInt(DaysSince1970);
-    N2kMsg.Add4ByteDouble(SecondsSinceMidnight,0.0001);
+    N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
     N2kMsg.Add8ByteDouble(Latitude,1e-16);
     N2kMsg.Add8ByteDouble(Longitude,1e-16);
     N2kMsg.Add8ByteDouble(Altitude,1e-6);
@@ -226,14 +540,154 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, int DaysSince1970, doub
     N2kMsg.AddByte(nSatellites);
     N2kMsg.Add2ByteDouble(HDOP,0.01);
     N2kMsg.Add2ByteDouble(PDOP,0.01);
-//    N2kMsg.AddByte(0);
-//    N2kMsg.AddByte(0);
     N2kMsg.Add4ByteDouble(GeoidalSeparation,0.01);
-    N2kMsg.AddByte(nReferenceStations);
-//    N2kMsg.AddByte(0);
-//    N2kMsg.AddByte(0);
-    N2kMsg.Add2ByteInt( (((int)ReferenceStationType) & 0x0f) | ReferenceSationID<<4 );
-    N2kMsg.Add2ByteDouble(AgeOfCorrection,0.01);
+    if (nReferenceStations!=0xff && nReferenceStations>0) {
+      N2kMsg.AddByte(1); // Note that we have values for only one reference station, so pass only one values.
+      N2kMsg.Add2ByteInt( (((int)ReferenceStationType) & 0x0f) | ReferenceSationID<<4 );
+      N2kMsg.Add2ByteUDouble(AgeOfCorrection,0.01);
+    } else N2kMsg.AddByte(nReferenceStations);
+}
+
+bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight, 
+                     double &Latitude, double &Longitude, double &Altitude, 
+                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                     uint8_t &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                     uint8_t &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                     double &AgeOfCorrection
+                     ) {
+  if (N2kMsg.PGN!=129029L) return false;
+  int Index=0;
+  unsigned char vb;
+  int16_t vi;
+  
+  SID=N2kMsg.GetByte(Index);
+  DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+  SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+  Latitude=N2kMsg.Get8ByteDouble(1e-16,Index);
+  Longitude=N2kMsg.Get8ByteDouble(1e-16,Index);
+  Altitude=N2kMsg.Get8ByteDouble(1e-6,Index);
+  vb=N2kMsg.GetByte(Index); GNSStype=(tN2kGNSStype)(vb & 0x0f); GNSSmethod=(tN2kGNSSmethod)((vb>>4) & 0x0f);
+  vb=N2kMsg.GetByte(Index);  // Integrity 2 bit, reserved 6 bits
+  nSatellites=N2kMsg.GetByte(Index);
+  HDOP=N2kMsg.Get2ByteDouble(0.01,Index);
+  PDOP=N2kMsg.Get2ByteDouble(0.01,Index);
+  GeoidalSeparation=N2kMsg.Get4ByteDouble(0.01,Index);
+  nReferenceStations=N2kMsg.GetByte(Index);
+  if (nReferenceStations!=N2kUInt8NA && nReferenceStations>0) {
+    // Note that we return real number of stations, but we only have variabes for one.
+    vi=N2kMsg.Get2ByteUInt(Index); ReferenceStationType=(tN2kGNSStype)(vi & 0x0f); ReferenceSationID=(vi>>4);
+    AgeOfCorrection=N2kMsg.Get2ByteUDouble(0.01,Index);
+  } 
+  
+  return true;
+}
+
+//*****************************************************************************
+// AIS position report (class A 129038)
+void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
+                        double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)
+{
+    N2kMsg.SetPGN(129038L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
+    N2kMsg.Add2ByteUDouble(COG, 1e-04);
+    N2kMsg.Add2ByteUDouble(SOG, 0.01);
+    N2kMsg.AddByte(0xff); // Communication State (19 bits)
+    N2kMsg.AddByte(0xff); 
+    N2kMsg.AddByte(0xff); // AIS transceiver information (5 bits)
+    N2kMsg.Add2ByteUDouble(Heading, 1e-04);
+    N2kMsg.Add2ByteDouble(ROT, ((1e-3/32.0) * 0.0001)); 
+    N2kMsg.AddByte(0xF0 | (NavStatus & 0x0f));
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
+                        double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus)
+{
+    if (N2kMsg.PGN!=129038L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    SOG=N2kMsg.Get2ByteUDouble(0.01, Index);
+    vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
+    vb=N2kMsg.GetByte(Index); 
+    vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
+    Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    ROT=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001), Index);
+    vb=N2kMsg.GetByte(Index); NavStatus=(tN2kAISNavStatus)(vb & 0x0f);
+    vb=N2kMsg.GetByte(Index); // Reserved
+
+    return true;
+}
+
+//*****************************************************************************
+// AIS position report (class B 129039)
+void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State)
+{
+    N2kMsg.SetPGN(129039L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01));
+    N2kMsg.Add2ByteUDouble(COG, 1e-04);
+    N2kMsg.Add2ByteUDouble(SOG, 0.01);
+    N2kMsg.AddByte(0xff); // Communication State (19 bits)
+    N2kMsg.AddByte(0xff); 
+    N2kMsg.AddByte(0xff); // AIS transceiver information (5 bits)
+    N2kMsg.Add2ByteUDouble(Heading, 1e-04);
+    N2kMsg.AddByte(0xff); // Regional application
+    N2kMsg.AddByte((Mode & 0x01)<<7 | (Msg22 & 0x01)<<6 | (Band & 0x01)<<5 |
+                    (DSC & 0x01)<<4 | (Display & 0x01)<<3 | (Unit & 0x01)<<2);
+    N2kMsg.AddByte(0xfe | (State & 0x01));
+}
+    
+
+bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State)
+{
+    if (N2kMsg.PGN!=129039L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    COG=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    SOG=N2kMsg.Get2ByteUDouble(0.01, Index);
+    vb=N2kMsg.GetByte(Index); // Communication State (19 bits)
+    vb=N2kMsg.GetByte(Index); 
+    vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
+    Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
+    vb=N2kMsg.GetByte(Index); // Regional application
+    vb=N2kMsg.GetByte(Index);
+    Unit=(tN2kAISUnit)(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
+    Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Mode=(tN2kAISMode)(vb>>7 & 0x01);
+    vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
+
+    return true;
 }
 
 //*****************************************************************************
@@ -244,24 +698,26 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((char)XTEMode | (NavigationTerminated?0x40:0));
     N2kMsg.Add4ByteDouble(XTE,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 //*****************************************************************************
 // Navigation info
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
                       bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
-                      double ETATime, int ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
-                      unsigned long OriginWaypointNumber, unsigned long DestinationWaypointNumber, 
+                      double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                      uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, 
                       double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
     N2kMsg.SetPGN(129284L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteDouble(DistanceToWaypoint,0.01);
+    N2kMsg.Add4ByteUDouble(DistanceToWaypoint,0.01);
     N2kMsg.AddByte((char)BearingReference | (PerpendicularCrossed?0x04:0) | (ArrivalCircleEntered?0x10:0)  | (CalculationType==N2kdct_RhumbLine?0x40:0));
-    if (ETATime>0) { N2kMsg.Add4ByteDouble(ETATime,0.0001); } else { N2kMsg.Add4ByteUInt(0xffffffff); }
-    if (ETADate>0) { N2kMsg.Add2ByteInt(ETADate); } else { N2kMsg.Add2ByteInt(0xffff); }
-    N2kMsg.Add2ByteDouble(BearingOriginToDestinationWaypoint,0.0001);
-    N2kMsg.Add2ByteDouble(BearingPositionToDestinationWaypoint,0.0001);
+    N2kMsg.Add4ByteUDouble(ETATime,0.0001);
+    N2kMsg.Add2ByteUInt(ETADate);
+    N2kMsg.Add2ByteUDouble(BearingOriginToDestinationWaypoint,0.0001);
+    N2kMsg.Add2ByteUDouble(BearingPositionToDestinationWaypoint,0.0001);
     N2kMsg.Add4ByteUInt(OriginWaypointNumber);
     N2kMsg.Add4ByteUInt(DestinationWaypointNumber);
     N2kMsg.Add4ByteDouble(DestinationLatitude,1e-07);
@@ -270,16 +726,255 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
 }
 
 //*****************************************************************************
+// Waypoint list
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName) {
+    unsigned int i;
+    N2kMsg.SetPGN(129285L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(0); // number of items initially 0
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.Add2ByteUInt(Route);
+    N2kMsg.AddByte(0xC0 | (SupplementaryData & 0x03)<<4 | (NavDirection & 0x0F));
+    if (strlen(RouteName) == 0) {
+      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+    } else {
+      N2kMsg.AddByte(strlen(RouteName)+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<strlen(RouteName); i++)
+        N2kMsg.AddByte(RouteName[i]);
+    }
+    N2kMsg.AddByte(0xff); // reserved
+}
+
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+   if (N2kMsg.PGN!=129285L) return false;
+
+    unsigned int i;
+    int NumItemsIdx, len;
+    uint16_t NumItems;
+
+    if (strlen(Name) > 0)
+        len = 12 + strlen(Name);
+    else
+        len = 13;
+
+    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+        NumItemsIdx = 2;
+        NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
+        NumItemsIdx = 2;
+        N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
+        N2kMsg.Add2ByteUInt(ID);                          // add the new item
+        if (strlen(Name) == 0) {
+          N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+        } else {
+          N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+          for (i=0; i<strlen(Name); i++)
+            N2kMsg.AddByte(Name[i]);
+        }
+        N2kMsg.Add4ByteDouble(Latitude,1e-07);
+        N2kMsg.Add4ByteDouble(Longitude,1e-07);
+        return true;
+    } else
+        return false;
+}
+
+//*****************************************************************************
+// AIS static data A
+void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo)
+{
+    N2kMsg.SetPGN(129794L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteUInt(IMOnumber);
+    N2kMsg.AddStr(Callsign, 7);
+    N2kMsg.AddStr(Name, 20);
+    N2kMsg.AddByte(VesselType);
+    N2kMsg.Add2ByteDouble(Length, 0.1);
+    N2kMsg.Add2ByteDouble(Beam, 0.1);
+    N2kMsg.Add2ByteDouble(PosRefStbd, 0.1);
+    N2kMsg.Add2ByteDouble(PosRefBow, 0.1);
+    N2kMsg.Add2ByteUInt(ETAdate);
+    N2kMsg.Add4ByteUDouble(ETAtime, 0.0001);
+    N2kMsg.Add2ByteDouble(Draught, 0.01);
+    N2kMsg.AddStr(Destination, 20);
+    N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
+    N2kMsg.AddByte(AISinfo & 0x1f);
+}
+
+bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                        uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo)
+{
+    if (N2kMsg.PGN!=129794L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    IMOnumber=N2kMsg.Get4ByteUInt(Index);
+    N2kMsg.GetStr(Callsign, 7, Index);
+    N2kMsg.GetStr(Name, 20, Index);
+    VesselType=N2kMsg.GetByte(Index);
+    Length=N2kMsg.Get2ByteDouble(0.1, Index);
+    Beam=N2kMsg.Get2ByteDouble(0.1, Index);
+    PosRefStbd=N2kMsg.Get2ByteDouble(0.1, Index);
+    PosRefBow=N2kMsg.Get2ByteDouble(0.1, Index);
+    ETAdate=N2kMsg.Get2ByteUInt(Index);
+    ETAtime=N2kMsg.Get4ByteUDouble(0.0001, Index);
+    Draught=N2kMsg.Get2ByteDouble(0.01, Index);
+    N2kMsg.GetStr(Destination, 20, Index);
+    vb=N2kMsg.GetByte(Index); AISversion=(tN2kAISVersion)(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(tN2kAISDTE)(vb>>6 & 0x01);
+    vb=N2kMsg.GetByte(Index); AISinfo=(tN2kAISTranceiverInfo)(vb & 0x1f);
+
+    return true;
+}
+
+//*****************************************************************************
+// AIS static data class B part A
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name)
+{
+    N2kMsg.SetPGN(129809L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.AddStr(Name, 20);
+}
+
+bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name)
+{
+    if (N2kMsg.PGN!=129809L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    N2kMsg.GetStr(Name, 20, Index);
+
+    return true;
+}
+
+//*****************************************************************************
+// AIS static data class B part B
+void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      double PosRefStbd, double PosRefBow, uint32_t MothershipID)
+{
+    N2kMsg.SetPGN(129810L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.AddByte(VesselType);
+    N2kMsg.AddStr(Vendor, 7);
+    N2kMsg.AddStr(Callsign, 7);
+    N2kMsg.Add2ByteUDouble(Length, 0.1);
+    N2kMsg.Add2ByteUDouble(Beam, 0.1);
+    N2kMsg.Add2ByteUDouble(PosRefStbd, 0.1);
+    N2kMsg.Add2ByteUDouble(PosRefBow, 0.1);
+    N2kMsg.Add4ByteUInt(MothershipID);
+    N2kMsg.AddByte(0xff);  // Reserved
+}
+
+bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID)
+{
+    if (N2kMsg.PGN!=129810L) return false;
+
+    int Index=0;
+    unsigned char vb;
+
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    VesselType=N2kMsg.GetByte(Index);
+    N2kMsg.GetStr(Vendor, 7, Index);
+    N2kMsg.GetStr(Callsign, 7, Index);
+    Length = N2kMsg.Get2ByteUDouble(0.1, Index);
+    Beam = N2kMsg.Get2ByteUDouble(0.1, Index);
+    PosRefStbd = N2kMsg.Get2ByteUDouble(0.1, Index);
+    PosRefBow = N2kMsg.Get2ByteUDouble(0.1, Index);
+    MothershipID = N2kMsg.Get4ByteUInt(Index);
+
+    return true;
+}
+
+//*****************************************************************************
+// Waypoint list
+void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
+    N2kMsg.SetPGN(130074L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(Start);
+    N2kMsg.Add2ByteUInt(0); // set number of items to 0 initially
+    N2kMsg.Add2ByteUInt(NumWaypoints);
+    N2kMsg.Add2ByteUInt(Database);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+    if (N2kMsg.PGN!=130074L) return false;
+
+    unsigned int i;
+    int NumItemsIdx, len;
+    uint16_t NumItems;
+
+    if (strlen(Name) > 0)
+        len = 12 + strlen(Name);
+    else
+        len = 13;
+
+    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+        NumItemsIdx = 2;
+        NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
+        NumItemsIdx = 2;
+        N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
+
+        N2kMsg.Add2ByteUInt(ID);
+        if (strlen(Name) == 0) {
+          N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
+        } else {
+          N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
+          for (i=0; i<strlen(Name); i++)
+            N2kMsg.AddByte(Name[i]);
+        }
+        N2kMsg.Add4ByteDouble(Latitude,1e-07);
+        N2kMsg.Add4ByteDouble(Longitude,1e-07);
+        return true;
+    } else
+        return false;
+}
+
+//*****************************************************************************
 // Wind Speed
-void SetN2kPGN130306 (tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
+void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
     N2kMsg.SetPGN(130306L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteDouble(WindSpeed,0.01);
-    N2kMsg.Add2ByteDouble(WindAngle,0.0001);
+    N2kMsg.Add2ByteUDouble(WindSpeed,0.01);
+    N2kMsg.Add2ByteUDouble(WindAngle,0.0001);
     N2kMsg.AddByte((unsigned char)WindReference);
     //N2kMsg.AddByte(0xff); // Reserved
     //N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindReference &WindReference) {
+  if (N2kMsg.PGN!=130306L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  WindSpeed=N2kMsg.Get2ByteUDouble(0.01,Index);
+  WindAngle=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  WindReference=(tN2kWindReference)(N2kMsg.GetByte(Index)&0x07);
+
+  return true;
 }
 
 //*****************************************************************************
@@ -289,10 +984,24 @@ void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature
     N2kMsg.SetPGN(130310L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    if (WaterTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(WaterTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
-    if (OutsideAmbientAirTemperature!=TempUndef) { N2kMsg.Add2ByteDouble(OutsideAmbientAirTemperature,0.01); } else { N2kMsg.Add2ByteInt(0xffff); }
-    if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.Add2ByteUDouble(WaterTemperature,0.01);
+    N2kMsg.Add2ByteUDouble(OutsideAmbientAirTemperature,0.01);
+    N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
+    N2kMsg.AddByte(0xff);  // reserved
 }
+                     
+bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
+                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure) {
+  if (N2kMsg.PGN!=130310L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  WaterTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+  OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+  AtmosphericPressure=N2kMsg.Get2ByteUDouble(100,Index);
+  
+  return true;
+}                     
+
                      
 //*****************************************************************************
 // Environmental parameters
@@ -302,9 +1011,9 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInst
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(((HumidityInstance) & 0x03)<<6 | (TempInstance & 0x3f));
-    N2kMsg.Add2ByteDouble(Temperature,0.01);
-    if (Humidity!=HumidityUndef) { N2kMsg.Add2ByteDouble(Humidity,0.004); } else { N2kMsg.Add2ByteInt(0xffff); }
-    if (AtmosphericPressure!=PressureUndef) { N2kMsg.Add2ByteDouble(AtmosphericPressure,1); } else { N2kMsg.Add2ByteInt(0xffff); }
+    N2kMsg.Add2ByteUDouble(Temperature,0.01);
+    N2kMsg.Add2ByteDouble(Humidity,0.004);
+    N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
 }
 
 //*****************************************************************************
@@ -317,8 +1026,8 @@ void SetN2kPGN130312(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInsta
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((unsigned char)TempInstance);
     N2kMsg.AddByte((unsigned char)TempSource);
-    N2kMsg.Add2ByteDouble(ActualTemperature,0.01);
-    (SetTemperature>-300?N2kMsg.Add2ByteDouble(SetTemperature,0.01):N2kMsg.Add2ByteInt(0xffff));
+    N2kMsg.Add2ByteUDouble(ActualTemperature,0.01);
+    N2kMsg.Add2ByteUDouble(SetTemperature,0.01);
     N2kMsg.AddByte(0xff); // Reserved
 }
 
@@ -329,8 +1038,35 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   SID=N2kMsg.GetByte(Index);
   TempInstance=N2kMsg.GetByte(Index);
   TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
-  ActualTemperature=N2kMsg.Get2ByteDouble(0.01,Index);
-  SetTemperature=N2kMsg.Get2ByteDouble(0.01,Index,TempUndef);
+  ActualTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+  SetTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+  
+  return true;
+}
+
+//*****************************************************************************
+// Temperature extended range
+// Temperatures should be in Kelvins
+void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
+                     double ActualTemperature, double SetTemperature) {
+    N2kMsg.SetPGN(130316L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte((unsigned char)TempInstance);
+    N2kMsg.AddByte((unsigned char)TempSource);
+    N2kMsg.Add3ByteDouble(ActualTemperature,0.001);
+    N2kMsg.Add2ByteDouble(SetTemperature,0.1);
+}
+
+bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
+                     double &ActualTemperature, double &SetTemperature) {
+  if (N2kMsg.PGN!=130316L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  TempInstance=N2kMsg.GetByte(Index);
+  TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
+  ActualTemperature=N2kMsg.Get3ByteDouble(0.001,Index);
+  SetTemperature=N2kMsg.Get2ByteDouble(0.1,Index);
   
   return true;
 }

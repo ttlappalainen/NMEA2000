@@ -1,7 +1,7 @@
 /* 
 N2kCANMsg.h
 
-2015 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
 
 Author: Timo Lappalainen
 
@@ -32,6 +32,7 @@ public:
   bool Ready;  // Ready for handling
   bool FreeMsg; // Msg is free for fill up
   bool SystemMessage;
+  bool KnownMessage;
   unsigned char LastFrame; // Last received frame on fast packets
   unsigned char CopiedLen;
   

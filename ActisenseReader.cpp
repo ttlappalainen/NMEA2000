@@ -76,7 +76,8 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
    N2kMsg.PGN=(unsigned long)(MsgBuf[3]) | (unsigned long)(MsgBuf[4])<<8  | (unsigned long)(MsgBuf[5])<<16;
    N2kMsg.Destination=MsgBuf[6];
    N2kMsg.Source=MsgBuf[7];
-   N2kMsg.MsgTime=*((unsigned long *)(&(MsgBuf[8])));
+   // N2kMsg.MsgTime=*((unsigned long *)(&(MsgBuf[8])));  // this causes warning: dereferencing type-punned pointer will break strict-aliasing rules
+   memcpy(&(N2kMsg.MsgTime), &(MsgBuf[8]), 4);
    N2kMsg.DataLen=MsgBuf[12];
    for (int i=13, j=0; i<MsgWritePos-1; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
    

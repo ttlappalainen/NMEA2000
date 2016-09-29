@@ -40,7 +40,7 @@ protected:
     bool EscapeReceived;
     int byteSum;
     // Buffer for incoming messages from stream
-    char MsgBuf[MAX_STREAM_MSG_BUF_LEN];
+    unsigned char MsgBuf[MAX_STREAM_MSG_BUF_LEN];
     int MsgWritePos;
   
 protected:
