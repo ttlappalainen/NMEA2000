@@ -250,7 +250,7 @@ enum tN2kAISMode {
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
 //                          to indicate that they are measured at same time.
-//  - SystemDate            Days since 1979-01-01
+//  - SystemDate            Days since 1970-01-01
 //  - SystemTime            seconds since midnight
 //  - TimeSource            see tN2kTimeSource
 // Output:
