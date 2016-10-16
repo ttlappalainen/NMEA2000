@@ -32,6 +32,7 @@ public:
   bool Ready;  // Ready for handling
   bool FreeMsg; // Msg is free for fill up
   bool SystemMessage;
+  bool KnownMessage;
   unsigned char LastFrame; // Last received frame on fast packets
   unsigned char CopiedLen;
   

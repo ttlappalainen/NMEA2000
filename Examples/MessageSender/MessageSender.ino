@@ -20,13 +20,14 @@ void setup() {
                                );
   // Uncomment 3 rows below to see, what device will send to bus                           
    Serial.begin(115200);
+   NMEA2000.SetForwardStream(&Serial);  // PC output on due programming port
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.
   // NMEA2000.SetForwardOwnMessages();
 
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
   NMEA2000.SetMode(tNMEA2000::N2km_NodeOnly,22);
   //NMEA2000.SetDebugMode(tNMEA2000::dm_ClearText); // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
-  NMEA2000.EnableForward(false); // Disable all msg forwarding to USB (=Serial)
+  //NMEA2000.EnableForward(false); // Disable all msg forwarding to USB (=Serial)
   NMEA2000.Open();
 }
 
@@ -57,6 +58,12 @@ void SendN2kSlowData() {
   
   if ( SlowDataUpdated+SlowDataUpdatePeriod<millis() ) {
     SlowDataUpdated=millis();
+
+    SetN2kDCBatStatus(N2kMsg, 1, 12.72);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+    
+    SetN2kDCBatStatus(N2kMsg, 0, 12.45, 5.08, CToKelvin(27.15));
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kTemperatureExt(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
@@ -64,10 +71,10 @@ void SendN2kSlowData() {
     SetN2kTemperature(N2kMsg, 1, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),CToKelvin(21.6));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kEnvironmentalParameters(N2kMsg, 1, N2kts_MainCabinTemperature, ReadCabinTemp());
+    SetN2kEnvironmentalParameters(N2kMsg, 1, N2kts_MainCabinTemperature, ReadCabinTemp(),N2khs_InsideHumidity, 55, mBarToPascal(1013.5));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kOutsideEnvironmentalParameters(N2kMsg, 1, ReadWaterTemp());
+    SetN2kOutsideEnvironmentalParameters(N2kMsg, 1, ReadWaterTemp(), CToKelvin(25.3), mBarToPascal(1013.5));
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kBatConf(N2kMsg,1,N2kDCbt_AGM,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(410),95,1.26,97);
@@ -76,10 +83,13 @@ void SendN2kSlowData() {
     SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Alternator,86,91,1420,0.21);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
 
-    SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55));
+    SetN2kAttitude(N2kMsg,1,DegToRad(-3.1),DegToRad(2.4),DegToRad(-7.8));
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+
+    SetN2kEngineDynamicParam(N2kMsg,1,656000,CToKelvin(86.3),CToKelvin(82.1),14.21,5.67,hToSeconds(2137.55),N2kDoubleNA,N2kDoubleNA,N2kInt8NA,N2kInt8NA,true);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
-    SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),0x6f);
+    SetN2kTransmissionParameters(N2kMsg,1,N2kTG_Forward,750000, CToKelvin(65.5),true,false,true);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     
     SetN2kSystemTime(N2kMsg,1,17555,62000);
@@ -88,6 +98,9 @@ void SendN2kSlowData() {
     SetN2kGNSS(N2kMsg,1,17555,62000,-60.1,67.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Temperature send ready");
+
+    SetN2kMagneticHeading(N2kMsg, 0, DegToRad(127.5), DegToRad(0.0), DegToRad(7.5)); 
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
   }
 }
 

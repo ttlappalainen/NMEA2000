@@ -128,6 +128,6 @@ public:
   void SendInActisenseFormat(Stream *port) const;
 };
 
-void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData);
+void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData, bool AddLF=false);
 
 #endif
