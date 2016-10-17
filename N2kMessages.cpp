@@ -1016,6 +1016,20 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInst
     N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
 }
 
+bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
+                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure) {
+    if (N2kMsg.PGN!=130311L) return false;
+    unsigned char vb;
+    int Index=0;
+    SID=N2kMsg.GetByte(Index);
+    vb=N2kMsg.GetByte(Index); TempInstance=(tN2kTempSource)(vb & 0x3f); HumidityInstance=(tN2kHumiditySource)(vb>>6 & 0x03);
+    Temperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+    Humidity=N2kMsg.Get2ByteDouble(0.004,Index);
+    AtmosphericPressure=N2kMsg.Get2ByteUDouble(100,Index);
+    
+    return true;
+}
+
 //*****************************************************************************
 // Temperature
 // Temperatures should be in Kelvins
