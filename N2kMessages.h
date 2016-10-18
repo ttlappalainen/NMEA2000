@@ -1059,6 +1059,13 @@ inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN
   SetN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
 }
 
+bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
+                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure);
+inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
+                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure) {
+  return ParseN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
+}
+
 //*****************************************************************************
 // Temperature
 // Temperatures should be in Kelvins
