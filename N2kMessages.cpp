@@ -488,6 +488,14 @@ void SetN2kPGN129025(tN2kMsg &N2kMsg, double Latitude, double Longitude) {
     N2kMsg.Add4ByteDouble(Longitude,1e-7);
 }
 
+bool ParseN2kPGN129025(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude) {
+	if (N2kMsg.PGN!=129025L) return false;
+
+	int Index = 0;
+	Latitude=N2kMsg.Get4ByteDouble(1e-7, Index);
+	Longitude=N2kMsg.Get4ByteDouble(1e-7, Index);
+	return true;
+}
 //*****************************************************************************
 // COG SOG rapid
 // COG should be in radians

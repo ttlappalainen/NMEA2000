@@ -694,6 +694,10 @@ inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude
   SetN2kPGN129025(N2kMsg,Latitude,Longitude);
 }
 
+bool ParseN2kPGN129025(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude);
+inline bool ParseN2kPositionRapid(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude) {
+	return ParseN2kPGN129025(N2kMsg, Latitude, Longitude);
+}
 //*****************************************************************************
 // COG SOG rapid
 // Input:
