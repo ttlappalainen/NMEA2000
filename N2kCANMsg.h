@@ -28,6 +28,10 @@ Author: Timo Lappalainen
 class tN2kCANMsg
 {
 public:
+  tN2kCANMsg()
+  : Ready(false),FreeMsg(true),SystemMessage(false) {
+	  N2kMsg.Clear();
+  }
   tN2kMsg N2kMsg;
   bool Ready;  // Ready for handling
   bool FreeMsg; // Msg is free for fill up
