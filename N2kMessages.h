@@ -244,6 +244,17 @@ enum tN2kAISMode {
                             N2kaismode_Autonomous=0,
                             N2kaismode_Assigned=1,
                           };
+enum tN2kMagneticVariation {
+                            N2kmagvar_Manual=0,
+                            N2kmagvar_Chart=1,
+                            N2kmagvar_Table=2,
+                            N2kmagvar_Calc=3,
+                            N2kmagvar_WMM2000=4,
+                            N2kmagvar_WMM2005=5,
+                            N2kmagvar_WMM2010=6,
+                            N2kmagvar_WMM2015=7,
+                            N2kmagvar_WMM2020=8,
+                          };
 
 //*****************************************************************************
 // System date/time
@@ -350,6 +361,28 @@ inline void SetN2kAttitude(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, doubl
 bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll);
 inline bool ParseN2kAttitude(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, double &Pitch, double &Roll) {
   return ParseN2kPGN127257(N2kMsg,SID, Yaw, Pitch, Roll);                   
+}
+
+//*****************************************************************************
+// Magnetic Variation
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Source                How was the variation value generated
+//  - DaysSince1970         Days since January 1, 1970
+//  - Variation             Magnetic variation/declination in radians
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127258(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation Source, uint16_t DaysSince1970, double Variation);
+
+inline void SetN2kMagneticVariation(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation Source, uint16_t DaysSince1970, double Variation) {
+  SetN2kPGN127258(N2kMsg, SID, Source, DaysSince1970, Variation);
+}
+
+bool ParseN2kPGN127258(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVariation &Source, uint16_t &DaysSince1970, double &Variation);
+
+inline bool ParseN2kMagneticVariation(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVariation &Source, uint16_t &DaysSince1970, double &Variation) {
+  return ParseN2kPGN127258(N2kMsg, SID, Source, DaysSince1970, Variation);                   
 }
 
 //*****************************************************************************

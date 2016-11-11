@@ -146,6 +146,29 @@ bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, d
 }
 
 //*****************************************************************************
+// Magnetic variation
+void SetN2kPGN127258(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation Source, uint16_t DaysSince1970, double Variation) {
+  N2kMsg.SetPGN(127258L);
+  N2kMsg.Priority=3;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte(Source & 0x0f);
+  N2kMsg.Add2ByteUInt(DaysSince1970);
+  N2kMsg.Add2ByteDouble(Variation, 0.0001);
+}
+
+bool ParseN2kPGN127258(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVariation &Source, uint16_t &DaysSince1970, double &Variation) {
+  if (N2kMsg.PGN!=127258L) return false;
+
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  Source=(tN2kMagneticVariation) (N2kMsg.GetByte(Index) & 0x0f);
+  DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+  Variation=N2kMsg.Get2ByteDouble(0.0001, Index);
+  
+  return true;
+}
+
+//*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
                      double EngineBoostPressure, int8_t EngineTiltTrim) {
