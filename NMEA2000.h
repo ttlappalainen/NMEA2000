@@ -161,12 +161,11 @@ public:
 
 protected:
   // Forward mode bit settings.
-  static const int FwdModeBit_EnableForward     = B00000001; // If set, forward is enabled 
-  static const int FwdModeBit_SystemMessages    = B00000010; // System messages will be forwarded
-  static const int FwdModeBit_OnlyKnownMessages = B00000100; // Only known messages will be forwarded. System messages will be forwarded according its own bit.
-  static const int FwdModeBit_OwnMessages       = B00001000; // Forward also all messages, what this device will send
-
-  static const int HandleModeBit_OnlyKnownMessages       = B00010000; // Only known messages will be handled.
+  static const int FwdModeBit_EnableForward        = BIT(0); // If set, forward is enabled
+  static const int FwdModeBit_SystemMessages       = BIT(1); // System messages will be forwarded
+  static const int FwdModeBit_OnlyKnownMessages    = BIT(2); // Only known messages will be forwarded. System messages will be forwarded according its own bit.
+  static const int FwdModeBit_OwnMessages          = BIT(3); // Forward also all messages, what this device will send
+  static const int HandleModeBit_OnlyKnownMessages = BIT(4); // Only known messages will be handled.
                
 protected:
     tDebugMode dbMode; // Default dm_None
