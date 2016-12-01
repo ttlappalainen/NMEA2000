@@ -1,4 +1,4 @@
-/* 
+/*
 N2kMsg.cpp
 
 Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -23,6 +23,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "N2kMsg.h"
 #include <math.h>
+#include <stdlib.h>
 //#include <MemoryFree.h>  // For testing used memory
 
 #define Escape 0x10
@@ -173,28 +174,28 @@ unsigned char tN2kMsg::GetByte(int &Index) const {
   if (Index<DataLen) {
     return Data[Index++];
   } else return 0xff;
-}  
-  
+}
+
 //*****************************************************************************
 int16_t tN2kMsg::Get2ByteInt(int &Index, int16_t def) const {
   if (Index+2<=DataLen) {
     return GetBuf2ByteInt(Index,Data);
   } else return def;
-}  
-  
+}
+
 //*****************************************************************************
 uint16_t tN2kMsg::Get2ByteUInt(int &Index, uint16_t def) const {
   if (Index+2<=DataLen) {
     return GetBuf2ByteUInt(Index,Data);
   } else return def;
-}  
-  
+}
+
 //*****************************************************************************
 uint32_t tN2kMsg::Get4ByteUInt(int &Index, uint32_t def) const {
   if (Index+4<=DataLen) {
     return GetBuf4ByteUInt(Index,Data);
   } else return def;
-}  
+}
 
 //*****************************************************************************
 double tN2kMsg::Get1ByteDouble(double precision, int &Index, double def) const {
@@ -298,9 +299,9 @@ void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *bu
   long long *vll=(long long *)(&buf[index]);
     (*vll)=v*1e6;
     (*vll)*=fpll;
-    
+
     index+=8;
-*/    
+*/
 
     buf[index]=vll&255; index++;
     vll>>=8;
@@ -324,7 +325,7 @@ void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *bu
 void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   int32_t *vi=(int32_t *)(&buf[index]);
   index+=4;
-  
+
   (*vi)=(int32_t)round(v/precision);
 }
 
@@ -332,7 +333,7 @@ void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *bu
 void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
   uint32_t *vi=(uint32_t *)(&buf[index]);
   index+=4;
-  
+
   (*vi)=(uint32_t)round(v/precision);
 }
 
@@ -347,7 +348,7 @@ void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *bu
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
   int16_t *vi=(int16_t *)(&buf[index]);
   index+=2;
-  
+
   return *vi;
 }
 
@@ -355,7 +356,7 @@ int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
   uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
-  
+
   return *vi;
 }
 
@@ -363,7 +364,7 @@ uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
 uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf) {
   uint32_t *vi=(uint32_t *)(&buf[index]);
   index+=4;
-  
+
   return *vi;
 }
 
@@ -371,9 +372,9 @@ uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf) {
 double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   int8_t *vi=(int8_t *)(&buf[index]);
   index+=1;
-  
+
   if (*vi==0x7f) return def;
-  
+
   return ((double)(*vi))*precision;
 }
 
@@ -381,9 +382,9 @@ double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
   uint8_t *vi=(uint8_t *)(&buf[index]);
   index+=1;
-  
+
   if (*vi==0xff) return def;
-  
+
   return ((double)(*vi))*precision;
 }
 
@@ -391,9 +392,9 @@ double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   int16_t *vi=(int16_t *)(&buf[index]);
   index+=2;
-  
+
   if (*vi==0x7fff) return def;
-  
+
   return ((double)(*vi))*precision;
 }
 
@@ -401,9 +402,9 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
   uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
-  
+
   if (*vi==0xffff) return def;
-  
+
   return ((double)(*vi))*precision;
 }
 
@@ -416,23 +417,23 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
   index+=4;
   long *vlhi=(long *)(&buf[index]);
   index+=4;
-  
+
   if ( (*vlhi==0x7fff) && (*vllo==0xffff) ) return def;
   double v=*vlhi * 4294967296.0;
-  
+
   if (v>=0) { v += *vllo; } else { v -= *vllo; }
-  
+
   // Below did not work even with Due
   //long long vll=*vlhi;
   //vll<<=32;
   //vll|=*vllo;
- 
-  
-  //Serial.print(*vlhi,HEX); Serial.print(","); Serial.println(*vllo,HEX); 
+
+
+  //Serial.print(*vlhi,HEX); Serial.print(","); Serial.println(*vllo,HEX);
 
 
 //  if (((unsigned long long)(vll))==0xffffffffffffffff) return def;
-  
+
   return v*precision;
 }
 
@@ -445,7 +446,7 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
   // We use only 3 bytes, so set highest byte to 0
   vll&=0x00ffffff;
   if (vll==0x007fffff) return def;
-  
+
   return ((double)(vll))*precision;
 }
 
@@ -455,7 +456,7 @@ double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf,
   index+=4;
 
   if (*vl==0x7fffffff) return def;
-  
+
   return ((double)(*vl))*precision;
 }
 
@@ -465,7 +466,7 @@ double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf
   index+=4;
 
   if (*vl==0xffffffff) return def;
-  
+
   return ((double)(*vl))*precision;
 }
 
@@ -473,7 +474,7 @@ double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf
 void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   int16_t *vi=(int16_t *)(&buf[index]);
   index+=2;
-  
+
   (*vi)=(int16_t)round(v/precision);
 }
 
@@ -481,7 +482,7 @@ void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *bu
 void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
   uint16_t *vi=(uint16_t *)(&buf[index]);
   index+=2;
-  
+
   (*vi)=(uint16_t)round(v/precision);
 }
 
@@ -489,7 +490,7 @@ void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *b
 void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   int8_t *vi=(int8_t *)(&buf[index]);
   index+=1;
-  
+
   (*vi)=(int8_t)round(v/precision);
 }
 
@@ -497,7 +498,7 @@ void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *bu
 void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
   uint8_t *vi=(uint8_t *)(&buf[index]);
   index+=1;
-  
+
   (*vi)=(uint8_t)round(v/precision);
 }
 
@@ -524,7 +525,7 @@ void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf) {
 void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf) {
   uint32_t *vl=(uint32_t *)(&buf[index]);
   index+=4;
-  
+
   (*vl)=v;
 }
 
@@ -557,29 +558,30 @@ void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData, bool 
 
     for(int i = 0; i<len; i++) {
       if (i>0) { port->print(","); };
+      // Print bytes as hex.
       port->print(pData[i],HEX);
     }
-    
+
     if (AddLF) port->println("");
 }
 
 //*****************************************************************************
 void tN2kMsg::Print(Stream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
-  port->print(F("Pri:")); port->print(Priority);
-  port->print(F(" PGN:")); port->print(PGN);
-  port->print(F(" Source:")); port->print(Source);
-  port->print(F(" Dest:")); port->print(Destination);
-  port->print(F(" Len:")); port->print(DataLen);
+  port->print(CSTR("Pri:")); port->print(Priority);
+  port->print(CSTR(" PGN:")); port->print(PGN);
+  port->print(CSTR(" Source:")); port->print(Source);
+  port->print(CSTR(" Dest:")); port->print(Destination);
+  port->print(CSTR(" Len:")); port->print(DataLen);
   if (!NoData) {
-    port->print(F(" Data:"));
+    port->print(CSTR(" Data:"));
     PrintBuf(port,DataLen,Data);
   }
-  port->print(F("\r\n"));
+  port->println("");
 }
 
 //*****************************************************************************
-void AddByteEscapedToBuf(unsigned char byteToAdd, byte &idx, unsigned char *buf, int &byteSum)
+void AddByteEscapedToBuf(unsigned char byteToAdd, uint8_t &idx, unsigned char *buf, int &byteSum)
 {
   buf[idx++]=byteToAdd;
   byteSum+=byteToAdd;
@@ -595,14 +597,14 @@ void AddByteEscapedToBuf(unsigned char byteToAdd, byte &idx, unsigned char *buf,
 void tN2kMsg::SendInActisenseFormat(Stream *port) const {
   unsigned long _PGN=PGN;
   unsigned long _MsgTime=MsgTime;
-  byte msgIdx=0;
+  uint8_t msgIdx=0;
   int byteSum = 0;
-  byte CheckSum;
+  uint8_t CheckSum;
   unsigned char ActisenseMsgBuf[MaxActisenseMsgBuf];
-  
+
   if (port==0 || !IsValid()) return;
   // Serial.print("freeMemory()="); Serial.println(freeMemory());
-  
+
   ActisenseMsgBuf[msgIdx++]=Escape;
   ActisenseMsgBuf[msgIdx++]=StartOfText;
   AddByteEscapedToBuf(MsgTypeN2k,msgIdx,ActisenseMsgBuf,byteSum);
@@ -619,18 +621,18 @@ void tN2kMsg::SendInActisenseFormat(Stream *port) const {
   AddByteEscapedToBuf(_MsgTime & 0xff,msgIdx,ActisenseMsgBuf,byteSum); _MsgTime>>=8;
   AddByteEscapedToBuf(_MsgTime & 0xff,msgIdx,ActisenseMsgBuf,byteSum);
   AddByteEscapedToBuf(DataLen,msgIdx,ActisenseMsgBuf,byteSum);
-  
+
 
   for (int i = 0; i < DataLen; i++) AddByteEscapedToBuf(Data[i],msgIdx,ActisenseMsgBuf,byteSum);
   byteSum %= 256;
 
-  CheckSum = (byte)((byteSum == 0) ? 0 : (256 - byteSum));
+  CheckSum = (uint8_t)((byteSum == 0) ? 0 : (256 - byteSum));
   ActisenseMsgBuf[msgIdx++]=CheckSum;
   if (CheckSum==Escape) ActisenseMsgBuf[msgIdx++]=CheckSum;
 
   ActisenseMsgBuf[msgIdx++] = Escape;
   ActisenseMsgBuf[msgIdx++] = EndOfText;
-  
+
   port->write(ActisenseMsgBuf,msgIdx);
 //  Serial.print("Actisense data:");
 //  PrintBuf(msgIdx,ActisenseMsgBuf);

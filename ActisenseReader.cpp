@@ -64,7 +64,7 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
      return false; // Length does not match. Add type, length and crc
    }
    
-   byte CheckSum = (byte)((byteSum == 0) ? 0 : (256 - byteSum));
+   uint8_t CheckSum = (uint8_t)((byteSum == 0) ? 0 : (256 - byteSum));
    if ( CheckSum!=MsgBuf[MsgWritePos-1] ) {
      return false; // Checksum does not match
    }
