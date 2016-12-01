@@ -37,6 +37,7 @@ NMEA2000.h
 #define _N2kMessages_H_
 
 #include "N2kMsg.h"
+#include <stdint.h>
 
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }

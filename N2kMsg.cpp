@@ -22,6 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "N2kMsg.h"
+#include <math.h>
 //#include <MemoryFree.h>  // For testing used memory
 
 #define Escape 0x10

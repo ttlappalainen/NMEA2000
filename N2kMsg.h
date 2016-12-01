@@ -26,7 +26,9 @@ Definition for NMEA2000 message class used in my NMEA2000 libraries.
 
 #ifndef _tN2kMsg_H_
 #define _tN2kMsg_H_
+
 #include <Arduino.h>
+#include <stdint.h>
 
 const double   N2kDoubleNA=-1e9;
 const uint8_t  N2kUInt8NA=0xff;
