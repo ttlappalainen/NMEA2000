@@ -24,6 +24,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 This is class for reading Actisense format messages from given stream.
 */
 #include "ActisenseReader.h"
+#include <string.h>
 
 //*****************************************************************************
 tActisenseReader::tActisenseReader() {
