@@ -46,7 +46,14 @@ extern uint32_t millis();
 #ifdef __AVR__
 // AVR8 uses progmem.
 #include <avr/pgmspace.h>
-#define CSTR(str)       str PROGMEM
+
+// Utilize the string helper on Arduino platforms.
+#ifdef ARDUINO
+#include <Arduino.h>
+#define CSTR(str)       F(str)
+#else
+#define CSTR(str)       PSTR(str)
+#endif
 #define CDATA(data)     data PROGMEM
 #define GET_CINT8(var)  pgm_read_byte(&var)
 #define GET_CINT16(var) pgm_read_word(&var)
