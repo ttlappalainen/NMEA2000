@@ -22,6 +22,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "NMEA2000.h"
+#include "N2kDef.h"
+#include <string.h>
+#include <stdlib.h>
 
 #define N2kAddressClaimTimeout 250
 
@@ -29,12 +32,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // lenght >=90
 #define Max_conf_info_field_len 80
 
-
-const unsigned long SingleFrameSystemMessages[] PROGMEM={59392L /*ISO Acknowledgement*/, 59904L /*ISO Request*/, 60928L /*ISO Address Claim*/,
+CDATA(const unsigned long SingleFrameSystemMessages[]) = {
+                                       59392L /*ISO Acknowledgement*/,
+                                       59904L /*ISO Request*/, 60928L /*ISO Address Claim*/,
                                        0};
-const unsigned long FastPacketSystemMessages[] PROGMEM={126208L,
+CDATA(const unsigned long FastPacketSystemMessages[]) = {
+                                       126208L,
                                        0};
-const unsigned long DefSingleFrameMessages[] PROGMEM={
+CDATA(const unsigned long DefSingleFrameMessages[]) = {
                                        126992L, // System date/time
                                        127245L, // Rudder
                                        127250L, // Vessel Heading
@@ -56,7 +61,7 @@ const unsigned long DefSingleFrameMessages[] PROGMEM={
                                        130312L, // Temperature
                                        130316L, // Temperature extended range
                                        0};
-const unsigned long DefFastPacketMessages[] PROGMEM={
+CDATA(const unsigned long DefFastPacketMessages[]) = {
                                       126996L, /* Product information */
                                       126998L, /* Configuration information */
                                       127489L, /* Engine parameters dynamic */
@@ -73,7 +78,7 @@ const unsigned long DefFastPacketMessages[] PROGMEM={
                                       130074L, // Waypoint list
                                       0};
 
-const tProductInformation DefProductInformation PROGMEM={
+CDATA(const tProductInformation DefProductInformation) = {
                                        1300,               // N2kVersion
                                        666,                // ProductCode
                                        "Arduino N2k->PC",  //N2kModelID
@@ -84,7 +89,7 @@ const tProductInformation DefProductInformation PROGMEM={
                                        1 // LoadEquivalency
                                       };
 
-const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation PROGMEM={
+CDATA(const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation) = {
                                        "NMEA2000 library, https://github.com/ttlappalainen/NMEA2000", // Manufacturer information
                                        "", // Installation description1
                                        "" // Installation description2
@@ -113,8 +118,7 @@ void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
 }
 
  //*****************************************************************************
-tNMEA2000::tNMEA2000() 
-  : ForwardStream(0) {
+tNMEA2000::tNMEA2000() {
 
   SingleFrameMessages[0]=DefSingleFrameMessages;
   FastPacketMessages[0]=DefFastPacketMessages;
@@ -128,7 +132,8 @@ tNMEA2000::tNMEA2000()
 
   MsgHandler=0;
   ISORqstHandler=0;
-  
+
+  ForwardStream=&Serial;
   DeviceInformation[0].N2kSource=0;
   DeviceReady=false;
   AddressClaimStarted=0;
@@ -486,11 +491,12 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
 
     // First check system messages
     SystemMessage=true;
-    for (i=0; pgm_read_dword(&SingleFrameSystemMessages[i])!=PGN && pgm_read_dword(&SingleFrameSystemMessages[i])!=0; i++);
-    if (pgm_read_dword(&SingleFrameSystemMessages[i])==PGN) return true;
 
-    for (i=0; pgm_read_dword(&FastPacketSystemMessages[i])!=PGN && pgm_read_dword(&FastPacketSystemMessages[i])!=0; i++);
-    if (pgm_read_dword(&FastPacketSystemMessages[i])==PGN) {
+    for (i=0; GET_CINT32(SingleFrameSystemMessages[i])!=PGN && GET_CINT32(SingleFrameSystemMessages[i])!=0; i++);
+    if (GET_CINT32(SingleFrameSystemMessages[i])==PGN) return true;
+
+    for (i=0; GET_CINT32(FastPacketSystemMessages[i])!=PGN && GET_CINT32(FastPacketSystemMessages[i])!=0; i++);
+    if (GET_CINT32(FastPacketSystemMessages[i])==PGN) {
       FastPacket=true;
       return true;
     }
@@ -499,13 +505,13 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
     SystemMessage=false;
     for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
       if (SingleFrameMessages[igroup]!=0) {
-        for (i=0; pgm_read_dword(&SingleFrameMessages[igroup][i])!=PGN && pgm_read_dword(&SingleFrameMessages[igroup][i])!=0; i++);
-        if (pgm_read_dword(&SingleFrameMessages[igroup][i])==PGN) return true;
+        for (i=0; GET_CINT32(SingleFrameMessages[igroup][i])!=PGN && GET_CINT32(SingleFrameMessages[igroup][i])!=0; i++);
+        if (GET_CINT32(SingleFrameMessages[igroup][i])==PGN) return true;
       }
 
       if (FastPacketMessages[igroup]!=0) {
-        for (i=0; pgm_read_dword(&FastPacketMessages[igroup][i])!=PGN && pgm_read_dword(&FastPacketMessages[igroup][i])!=0; i++);
-        if (pgm_read_dword(&FastPacketMessages[igroup][i])==PGN) {
+        for (i=0; GET_CINT32(FastPacketMessages[igroup][i])!=PGN && GET_CINT32(FastPacketMessages[igroup][i])!=0; i++);
+        if (GET_CINT32(FastPacketMessages[igroup][i])==PGN) {
          FastPacket=true;
          return true;
         }
@@ -646,18 +652,18 @@ void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tProductInformation *ProductI
 
     N2kMsg.SetPGN(126996L);
     N2kMsg.Priority=6;
-    N2kMsg.Add2ByteInt(pgm_read_word(&(ProductInformation->N2kVersion)));
-    N2kMsg.Add2ByteInt(pgm_read_word(&(ProductInformation->ProductCode)));
-    for (i=0; i<Max_N2kModelID_len && pgm_read_byte(&(ProductInformation->N2kModelID[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelID[i]))); }
+    N2kMsg.Add2ByteInt(GET_CINT16(ProductInformation->N2kVersion));
+    N2kMsg.Add2ByteInt(GET_CINT16(ProductInformation->ProductCode));
+    for (i=0; i<Max_N2kModelID_len && GET_CINT8(ProductInformation->N2kModelID[i]); i++ ) { N2kMsg.AddByte(GET_CINT8(ProductInformation->N2kModelID[i])); }
     for (; i<Max_N2kModelID_len; i++ ) { N2kMsg.AddByte(0); }
-    for (i=0; i<Max_N2kSwCode_len && pgm_read_byte(&(ProductInformation->N2kSwCode[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kSwCode[i]))); }
+    for (i=0; i<Max_N2kSwCode_len && GET_CINT8(ProductInformation->N2kSwCode[i]); i++ ) { N2kMsg.AddByte(GET_CINT8(ProductInformation->N2kSwCode[i])); }
     for (; i<Max_N2kSwCode_len; i++ ) { N2kMsg.AddByte(0); }
-    for (i=0; i<Max_N2kModelVersion_len && pgm_read_byte(&(ProductInformation->N2kModelVersion[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelVersion[i]))); }
+    for (i=0; i<Max_N2kModelVersion_len && GET_CINT8(ProductInformation->N2kModelVersion[i]); i++ ) { N2kMsg.AddByte(GET_CINT8(ProductInformation->N2kModelVersion[i])); }
     for (; i<Max_N2kModelVersion_len; i++ ) { N2kMsg.AddByte(0); }
-    for (i=0; i<Max_N2kModelSerialCode_len && pgm_read_byte(&(ProductInformation->N2kModelSerialCode[i])); i++ ) { N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->N2kModelSerialCode[i]))); }
+    for (i=0; i<Max_N2kModelSerialCode_len && GET_CINT8(ProductInformation->N2kModelSerialCode[i]); i++ ) { N2kMsg.AddByte(GET_CINT8(ProductInformation->N2kModelSerialCode[i])); }
     for (; i<Max_N2kModelSerialCode_len; i++ ) { N2kMsg.AddByte(0); }
-    N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->SertificationLevel)));
-    N2kMsg.AddByte(pgm_read_byte(&(ProductInformation->LoadEquivalency)));
+    N2kMsg.AddByte(GET_CINT8(ProductInformation->SertificationLevel));
+    N2kMsg.AddByte(GET_CINT8(ProductInformation->LoadEquivalency));
 }
 
 //*****************************************************************************
@@ -683,7 +689,7 @@ bool tNMEA2000::SendProductInformation(int DeviceIndex) {
 int ProgmemStrLen(const char *str) {
   int len;
     if (str==0) return 0;
-    for (len=0; pgm_read_byte(&(str[len]))!=0; len++ );
+    for (len=0; GET_CINT8((str[len]))!=0; len++ );
     return len;
 }
 
@@ -709,15 +715,15 @@ void SetN2kPGN126998Progmem(tN2kMsg &N2kMsg, const tNMEA2000::tProgmemConfigurat
     // InstallationDescription1
     N2kMsg.AddByte(InstDesc1Len+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc1Len; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation->InstallationDescription1[i])));
+    for (i=0; i<InstDesc1Len; i++) N2kMsg.AddByte(GET_CINT8((ConfigurationInformation->InstallationDescription1[i])));
     // InstallationDescription2
     N2kMsg.AddByte(InstDesc2Len+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc2Len; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation->InstallationDescription2[i])));
+    for (i=0; i<InstDesc2Len; i++) N2kMsg.AddByte(GET_CINT8((ConfigurationInformation->InstallationDescription2[i])));
     // ManufacturerInformation
     N2kMsg.AddByte(ManInfoLen+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<ManInfoLen; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation->ManufacturerInformation[i])));
+    for (i=0; i<ManInfoLen; i++) N2kMsg.AddByte(GET_CINT8((ConfigurationInformation->ManufacturerInformation[i])));
 }
 
 //*****************************************************************************

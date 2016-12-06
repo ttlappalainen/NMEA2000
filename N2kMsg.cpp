@@ -553,20 +553,21 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf) {
 }
 
 //*****************************************************************************
-void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData, bool AddLF) {
+void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF) {
     if (port==0) return;
 
+    char hex[3];
     for(int i = 0; i<len; i++) {
       if (i>0) { port->print(","); };
       // Print bytes as hex.
-      port->print(pData[i],HEX);
+      port->print(itoa(pData[i], hex, 16));
     }
 
     if (AddLF) port->println("");
 }
 
 //*****************************************************************************
-void tN2kMsg::Print(Stream *port, bool NoData) const {
+void tN2kMsg::Print(N2kStream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
   port->print(CSTR("Pri:")); port->print(Priority);
   port->print(CSTR(" PGN:")); port->print(PGN);
@@ -594,7 +595,7 @@ void AddByteEscapedToBuf(unsigned char byteToAdd, uint8_t &idx, unsigned char *b
 //*****************************************************************************
 // Actisense Format:
 // <10><02><93><length (1)><priority (1)><PGN (3)><destination (1)><source (1)><time (4)><len (1)><data (len)><CRC (1)><10><03>
-void tN2kMsg::SendInActisenseFormat(Stream *port) const {
+void tN2kMsg::SendInActisenseFormat(N2kStream *port) const {
   unsigned long _PGN=PGN;
   unsigned long _MsgTime=MsgTime;
   uint8_t msgIdx=0;
