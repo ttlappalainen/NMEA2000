@@ -1,6 +1,5 @@
 #include "N2kStream.h"
 #include <string.h>
-#include <stdlib.h>
 
 #ifdef ARDUINO
 // Arduino uses its own implementation.
@@ -24,9 +23,24 @@ size_t N2kStream::print(const __FlashStringHelper* str) {
 #endif
 
 
-size_t N2kStream::print(int val) {
-   char buf[16];
-   return write((const uint8_t*) itoa(val, buf, 10), strlen(buf));
+size_t N2kStream::print(int val, uint8_t radix) {
+
+   if(val == 0) {
+      // 0 is always 0 regardless of radix.
+      return write(reinterpret_cast<const uint8_t*>("0"), 1);
+   }
+
+   // Enough for binary representation.
+   char buf[8 * sizeof(val) + 1];
+   char *ptr = &buf[sizeof(buf) - 1];
+   *ptr = '\0';
+
+   do {
+      *--ptr="0123456789abcdef"[val % radix];
+      val /= radix;
+   } while(val != 0);
+
+   return print(ptr);
 }
 
 size_t N2kStream::println(const char *str) {

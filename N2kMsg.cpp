@@ -556,11 +556,10 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf) {
 void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF) {
     if (port==0) return;
 
-    char hex[3];
     for(int i = 0; i<len; i++) {
       if (i>0) { port->print(","); };
       // Print bytes as hex.
-      port->print(itoa(pData[i], hex, 16));
+      port->print(pData[i], 16);
     }
 
     if (AddLF) port->println("");
