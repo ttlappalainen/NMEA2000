@@ -133,7 +133,6 @@ tNMEA2000::tNMEA2000() {
   MsgHandler=0;
   ISORqstHandler=0;
 
-  ForwardStream=&Serial;
   DeviceInformation[0].N2kSource=0;
   DeviceReady=false;
   AddressClaimStarted=0;
