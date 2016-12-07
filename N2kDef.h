@@ -28,11 +28,13 @@ Type definitions and utility macros used in the NMEA2000 libraries.
 
 #include <stdint.h>
 
+extern "C" {
 // Application execution delay. Must be implemented by application.
 extern void delay(unsigned long ms);
 
 // Current uptime in milliseconds. Must be implemented by application.
 extern uint32_t millis();
+}
 
 // Macro sets for handling constant data. Some platforms are able to store
 // constant strings and data on flash in order to reduce RAM consumption.
@@ -42,23 +44,17 @@ extern uint32_t millis();
 // - GET_CINT8, Get a constant 8bit integer.
 // - GET_CINT16, Get a constant 16bit integer.
 // - GET_CINT32, Get a constant 32bit integer.
-
 #ifdef __AVR__
 // AVR8 uses progmem.
 #include <avr/pgmspace.h>
-
-// Utilize the string helper on Arduino platforms.
-#ifdef ARDUINO
-#include <Arduino.h>
-#define CSTR(str)       F(str)
+class __FlashStringHelper;
+#define CSTR(str)           (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
+#define CDATA(data)         data PROGMEM
+#define GET_CINT8(var)      pgm_read_byte(&var)
+#define GET_CINT16(var)     pgm_read_word(&var)
+#define GET_CINT32(var)     pgm_read_dword(&var)
 #else
-#define CSTR(str)       PSTR(str)
-#endif
-#define CDATA(data)     data PROGMEM
-#define GET_CINT8(var)  pgm_read_byte(&var)
-#define GET_CINT16(var) pgm_read_word(&var)
-#define GET_CINT32(var) pgm_read_dword(&var)
-#else
+#error
 // No specific const storage support (default).
 #define CSTR(str)       str
 #define CDATA(data)     data

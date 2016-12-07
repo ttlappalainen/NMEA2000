@@ -27,6 +27,7 @@ I/O stream used in the NMEA2000 libraries.
 #ifndef _tN2kStream_H_
 #define _tN2kStream_H_
 
+#include "N2kDef.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -49,6 +50,11 @@ class N2kStream {
 
    // Print string to stream.
    size_t print(const char* str);
+
+#if defined(__AVR__)
+   // Flash stored string stream for AVR platforms.
+   size_t print(const __FlashStringHelper* str);
+#endif
 
    // Print value to stream.
    size_t print(int val);
