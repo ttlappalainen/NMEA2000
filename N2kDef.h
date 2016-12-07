@@ -30,7 +30,7 @@ Type definitions and utility macros used in the NMEA2000 libraries.
 
 extern "C" {
 // Application execution delay. Must be implemented by application.
-extern void delay(unsigned long ms);
+extern void delay(uint32_t ms);
 
 // Current uptime in milliseconds. Must be implemented by application.
 extern uint32_t millis();
