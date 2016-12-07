@@ -54,6 +54,7 @@ class __FlashStringHelper;
 #define GET_CINT16(var)     pgm_read_word(&var)
 #define GET_CINT32(var)     pgm_read_dword(&var)
 #else
+#error
 // No specific const storage support (default).
 #define CSTR(str)       str
 #define CDATA(data)     data
