@@ -20,6 +20,10 @@ size_t N2kStream::print(const __FlashStringHelper* str) {
 
    return bytes_written;
 }
+
+size_t N2kStream::print(const __FlashStringHelper* str) {
+   return print(str) + print("\r\n");
+}
 #endif
 
 

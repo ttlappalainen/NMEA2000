@@ -295,13 +295,13 @@ bool tNMEA2000::Open() {
 
     DeviceReady=CANOpen();
     if ( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) ) {
-      if ( DeviceReady ) { ForwardStream->println(F("CAN device ready")); } else { ForwardStream->println(F("CAN device failed to open")); }
+      if ( DeviceReady ) { ForwardStream->println(CSTR("CAN device ready")); } else { ForwardStream->println(CSTR("CAN device failed to open")); }
     }
 
     delay(200);
     if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
       AddressClaimStarted=0;
-      if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) ForwardStream->println(F("Start address claim"));
+      if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) ForwardStream->println(CSTR("Start address claim"));
       SendIsoAddressClaim(0xff,0);
       AddressClaimStarted=millis();
     }
@@ -423,7 +423,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if (N2kMsg.DataLen<=8) { // We can send single frame
 //          PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
           result=SendFrame(canId, N2kMsg.DataLen, N2kMsg.Data,false);
-          if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
+          if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(CSTR("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(CSTR(" send failed")); }
       } else { // Send it as fast packet in multiple frames
         unsigned char temp[8]; // {0,0,0,0,0,0,0,0};
         int cur=0;
@@ -454,9 +454,9 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
 //            PrintBuf(ForwardStream,8,temp,true);
             result=SendFrame(canId, 8, temp, true);
             if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) {
-              ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN);
+              ForwardStream->print(CSTR("PGN ")); ForwardStream->print(N2kMsg.PGN);
               ForwardStream->print(", frame:"); ForwardStream->print(i); ForwardStream->print("/"); ForwardStream->print(frames);
-              ForwardStream->println(F(" send failed"));
+              ForwardStream->println(CSTR(" send failed"));
             }
         }
         SendOrder++; if (SendOrder>7) SendOrder=0;

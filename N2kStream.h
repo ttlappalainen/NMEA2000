@@ -54,6 +54,7 @@ class N2kStream {
 #if defined(__AVR__)
    // Flash stored string stream for AVR platforms.
    size_t print(const __FlashStringHelper* str);
+   size_t println(const __FlashStringHelper* str);
 #endif
 
    // Print value to stream.
