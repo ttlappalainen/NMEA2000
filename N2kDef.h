@@ -36,30 +36,26 @@ extern void delay(uint32_t ms);
 extern uint32_t millis();
 }
 
-// Macro sets for handling constant data. Some platforms are able to store
-// constant strings and data on flash in order to reduce RAM consumption.
-//
-// - CSTR, A constant string.
-// - CDATA, Constant data.
-// - GET_CINT8, Get a constant 8bit integer.
-// - GET_CINT16, Get a constant 16bit integer.
-// - GET_CINT32, Get a constant 32bit integer.
-#ifdef __AVR__
-// AVR8 uses progmem.
+// Declare PROGMEM macros to nothing on non-AVR targets.
+#if !defined(__AVR__)
+#define PROGMEM
+#define pgm_read_byte(var)  *var
+#define pgm_read_word(var)  *var
+#define pgm_read_dword(var) *var
+#endif
+
+// Definition for the F(str) macro. On Arduinos use what the framework
+// provides to utilize the Stream class. On standard AVR8 we declare
+// our own helper class which is handled by the N2kStream. On anything
+// else we resort to char strings.
+#if defined(ARDUINO)
+#include <WString.h>
+#elif defined(__AVR__)
 #include <avr/pgmspace.h>
 class __FlashStringHelper;
-#define CSTR(str)           (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
-#define CDATA(data)         data PROGMEM
-#define GET_CINT8(var)      pgm_read_byte(&var)
-#define GET_CINT16(var)     pgm_read_word(&var)
-#define GET_CINT32(var)     pgm_read_dword(&var)
+#define F(str) (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
 #else
-// No specific const storage support (default).
-#define CSTR(str)       str
-#define CDATA(data)     data
-#define GET_CINT8(var)  var
-#define GET_CINT16(var) var
-#define GET_CINT32(var) var
+#define F(str) str
 #endif
 
 #endif

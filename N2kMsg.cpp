@@ -568,13 +568,13 @@ void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bo
 //*****************************************************************************
 void tN2kMsg::Print(N2kStream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
-  port->print(CSTR("Pri:")); port->print(Priority);
-  port->print(CSTR(" PGN:")); port->print(PGN);
-  port->print(CSTR(" Source:")); port->print(Source);
-  port->print(CSTR(" Dest:")); port->print(Destination);
-  port->print(CSTR(" Len:")); port->print(DataLen);
+  port->print(F("Pri:")); port->print(Priority);
+  port->print(F(" PGN:")); port->print(PGN);
+  port->print(F(" Source:")); port->print(Source);
+  port->print(F(" Dest:")); port->print(Destination);
+  port->print(F(" Len:")); port->print(DataLen);
   if (!NoData) {
-    port->print(CSTR(" Data:"));
+    port->print(F(" Data:"));
     PrintBuf(port,DataLen,Data);
   }
   port->println("");
