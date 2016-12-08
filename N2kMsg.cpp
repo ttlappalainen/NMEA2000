@@ -34,6 +34,17 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define MaxActisenseMsgBuf 400
 
 //*****************************************************************************
+// On Arduino round() is a macro, hence the definition check. On other systems
+// it is a function that may or may not be implemented so we do it ourselves.
+#if !defined(round)
+double round(double val) {
+   return val >= 0
+         ? floor(val + 0.5)
+         : ceil(val - 0.5);
+}
+#endif
+
+//*****************************************************************************
 tN2kMsg::tN2kMsg(unsigned char _Source) {
   Init(6,0,_Source,255);
 }
