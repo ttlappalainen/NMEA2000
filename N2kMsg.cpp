@@ -568,12 +568,12 @@ void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bo
     if (port==0) return;
 
     for(int i = 0; i<len; i++) {
-      if (i>0) { port->print(","); };
+      if (i>0) { port->print(F(",")); };
       // Print bytes as hex.
       port->print(pData[i], 16);
     }
 
-    if (AddLF) port->println("");
+    if (AddLF) port->println(F(""));
 }
 
 //*****************************************************************************
@@ -588,7 +588,7 @@ void tN2kMsg::Print(N2kStream *port, bool NoData) const {
     port->print(F(" Data:"));
     PrintBuf(port,DataLen,Data);
   }
-  port->println("");
+  port->println(F(""));
 }
 
 //*****************************************************************************

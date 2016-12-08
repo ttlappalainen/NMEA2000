@@ -455,7 +455,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
             result=SendFrame(canId, 8, temp, true);
             if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) {
               ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN);
-              ForwardStream->print(", frame:"); ForwardStream->print(i); ForwardStream->print("/"); ForwardStream->print(frames);
+              ForwardStream->print(F(", frame:")); ForwardStream->print(i); ForwardStream->print(F("/")); ForwardStream->print(frames);
               ForwardStream->println(F(" send failed"));
             }
         }
