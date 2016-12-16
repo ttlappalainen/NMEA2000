@@ -1,4 +1,4 @@
-/* 
+/*
 ActisenseReader.cpp
 
 Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -20,10 +20,11 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-  
+
 This is class for reading Actisense format messages from given stream.
 */
 #include "ActisenseReader.h"
+#include <string.h>
 
 //*****************************************************************************
 tActisenseReader::tActisenseReader() {
@@ -43,10 +44,10 @@ void tActisenseReader::ClearBuffer() {
 //*****************************************************************************
 bool tActisenseReader::AddByteToBuffer(char NewByte) {
   if (MsgWritePos>=MAX_STREAM_MSG_BUF_LEN) return false;
-  
+
   MsgBuf[MsgWritePos]=NewByte;
   MsgWritePos++;
-  if ( MsgBuf[1]+3!=MsgWritePos ) byteSum+=NewByte; // !Do not add CRC to byteSum 
+  if ( MsgBuf[1]+3!=MsgWritePos ) byteSum+=NewByte; // !Do not add CRC to byteSum
   return true;
 }
 
@@ -57,14 +58,14 @@ bool tActisenseReader::AddByteToBuffer(char NewByte) {
 
 //*****************************************************************************
 bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
- 
+
    N2kMsg.Clear();
-   
+
    if (MsgWritePos!=MsgBuf[1]+3) {
      return false; // Length does not match. Add type, length and crc
    }
-   
-   byte CheckSum = (byte)((byteSum == 0) ? 0 : (256 - byteSum));
+
+   uint8_t CheckSum = (uint8_t)((byteSum == 0) ? 0 : (256 - byteSum));
    if ( CheckSum!=MsgBuf[MsgWritePos-1] ) {
      return false; // Checksum does not match
    }
@@ -80,24 +81,25 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
    memcpy(&(N2kMsg.MsgTime), &(MsgBuf[8]), 4);
    N2kMsg.DataLen=MsgBuf[12];
    for (int i=13, j=0; i<MsgWritePos-1; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
-   
+
    return true;
 }
 
 //*****************************************************************************
-// Read Actisense formatted NMEA2000 message from stream 
+// Read Actisense formatted NMEA2000 message from stream
 // Actisense Format:
 // <10><02><93><length (1)><priority (1)><PGN (3)><destination (1)><source (1)><time (4)><len (1)><data (len)><CRC (1)><10><03>
 bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg) {
   bool result=false;
 
-  if (ReadStream==0) return false;
-  
-  while (ReadStream->available() > 0 && !result) {
-    int NewByte=ReadStream->read();
+  if (ReadStream==0)
+    return false;
+
+  int NewByte;
+  while ((NewByte = ReadStream->read()) != -1 && !result) {
 //        Serial.println((char)NewByte,HEX);
       if (MsgIsComing) {
-        if (EscapeReceived) {  
+        if (EscapeReceived) {
           switch (NewByte) {
             case Escape: // Escaped Escape
               EscapeReceived=false;
@@ -120,7 +122,7 @@ bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg) {
             default: // Error
               ClearBuffer();
           }
-        } else { 
+        } else {
           if (NewByte==Escape) {
             EscapeReceived=true;
           } else {
@@ -146,14 +148,14 @@ bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg) {
         EscapeReceived=(NewByte==Escape);
       }
   }
-  
+
   return result;
 }
 
 //*****************************************************************************
 void tActisenseReader::ParseMessages() {
   tN2kMsg N2kMsg;
-  
+
     while (GetMessageFromStream(N2kMsg)) {
       if (MsgHandler!=0) MsgHandler(N2kMsg);
     }

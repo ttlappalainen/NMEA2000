@@ -1,4 +1,4 @@
-/* 
+/*
 ActisenseReader.h
 
 Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -20,7 +20,7 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-  
+
 This is class for reading Actisense format messages from given stream.
 
 There is unresolved problem to use programming port with reading data.
@@ -29,7 +29,9 @@ USB port there is no problem.
 */
 #ifndef _ACTISENSE_READER_H_
 #define _ACTISENSE_READER_H_
+
 #include "N2kMsg.h"
+#include "N2kStream.h"
 
 class tActisenseReader
 {
@@ -42,26 +44,26 @@ protected:
     // Buffer for incoming messages from stream
     unsigned char MsgBuf[MAX_STREAM_MSG_BUF_LEN];
     int MsgWritePos;
-  
+
 protected:
-    Stream* ReadStream;
+    N2kStream* ReadStream;
     // Handler callback
     void (*MsgHandler)(const tN2kMsg &N2kMsg);
-  
+
 protected:
     bool AddByteToBuffer(char NewByte);
     void ClearBuffer();
     bool CheckMessage(tN2kMsg &N2kMsg);
-    
+
 public:
     tActisenseReader();
     // Set stream, which would be used for reading messages. You have to
     // open stream first, so e.g. for SerialUSB call begin first.
-    void SetReadStream(Stream* _stream) { ReadStream=_stream; }
-    
+    void SetReadStream(N2kStream* _stream) { ReadStream=_stream; }
+
     // You can either call this or ParseMessages periodically.
     bool GetMessageFromStream(tN2kMsg &N2kMsg);
-    
+
     // Set message handler with SetMsgHandler and then call this periodically or use GetMessageFromStream
     void ParseMessages();
     // Set message handler to be used in ParseMessages, when message has been received.

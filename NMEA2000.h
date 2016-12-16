@@ -1,4 +1,4 @@
-/* 
+/*
 NMEA2000.h
 
 Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -43,6 +43,8 @@ address anymore. See also method ReadResetAddressChanged().
 
 #ifndef _NMEA2000_H_
 #define _NMEA2000_H_
+
+#include "N2kStream.h"
 #include "N2kMsg.h"
 #include "N2kCANMsg.h"
 
@@ -76,14 +78,14 @@ protected:
       unsigned char IndustryGroupAndSystemInstance; // 4 bits each
     };
   } tUnionDeviceInformation;
-  
+
   tUnionDeviceInformation DeviceInformation;
-  
+
 public:
   uint8_t N2kSource;
   unsigned long PendingProductInformation;
   unsigned long PendingConfigurationInformation;
-  
+
 public:
   tDeviceInformation() { DeviceInformation.Name=0; N2kSource=0; PendingProductInformation=0; PendingConfigurationInformation=0; }
   void SetUniqueNumber(unsigned long _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
@@ -100,12 +102,12 @@ public:
   unsigned char GetIndustryGroup() { return DeviceInformation.IndustryGroupAndSystemInstance>>4; }
   void SetSystemInstance(unsigned char _SystemInstance) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0xf0) | (_SystemInstance&0x0f); }
   unsigned char GetSystemInstance() { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
-  
+
   uint64_t GetName()  { return DeviceInformation.Name; }
   void SetPendingProductInformation() { PendingProductInformation=millis()+N2kSource*8; }
   void ClearPendingProductInformation() { PendingProductInformation=0; }
   bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
-  
+
   void SetPendingPendingConfigurationInformation() { PendingConfigurationInformation=millis()+N2kSource*10; }
   void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
   bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
@@ -129,9 +131,9 @@ public:
   // Type how to forward messages in listen mode
   typedef enum { fwdt_Actisense, // Forwards messages to output port in Actisense format. Note that some Navigation sw uses this.
                  fwdt_Text // Forwards messages to output port in clear text. This is e.g. for debuging.
-                } tForwardType; 
-    
-  // System mode. Meaning how it acts in NMEA2000 bus.    
+                } tForwardType;
+
+  // System mode. Meaning how it acts in NMEA2000 bus.
   typedef enum { N2km_ListenOnly, // Default mode. Listen bus and forwards messages to default port in Actisense format. You can not send any data to the bus.
                  N2km_NodeOnly, // This is for devices, which only sends data to the bus e.g. RPM or temperature monitor. Remember to set right device information first.
                  N2km_ListenAndNode, // In this mode, device can be e.g. temperature monitor and as N2km_ListenOnly.
@@ -161,29 +163,28 @@ public:
 
 protected:
   // Forward mode bit settings.
-  static const int FwdModeBit_EnableForward     = B00000001; // If set, forward is enabled 
-  static const int FwdModeBit_SystemMessages    = B00000010; // System messages will be forwarded
-  static const int FwdModeBit_OnlyKnownMessages = B00000100; // Only known messages will be forwarded. System messages will be forwarded according its own bit.
-  static const int FwdModeBit_OwnMessages       = B00001000; // Forward also all messages, what this device will send
+  static const int FwdModeBit_EnableForward        = BIT(0); // If set, forward is enabled
+  static const int FwdModeBit_SystemMessages       = BIT(1); // System messages will be forwarded
+  static const int FwdModeBit_OnlyKnownMessages    = BIT(2); // Only known messages will be forwarded. System messages will be forwarded according its own bit.
+  static const int FwdModeBit_OwnMessages          = BIT(3); // Forward also all messages, what this device will send
+  static const int HandleModeBit_OnlyKnownMessages = BIT(4); // Only known messages will be handled.
 
-  static const int HandleModeBit_OnlyKnownMessages       = B00010000; // Only known messages will be handled.
-               
 protected:
     tDebugMode dbMode; // Default dm_None
     tN2kMode N2kMode; // Default N2km_ListenOnly.
     tForwardType ForwardType; // Default fwdt_Actisense.
     unsigned int ForwardMode; // Default all messages - also system and own.
-    Stream *ForwardStream; // Default Serial.
-    
+    N2kStream *ForwardStream;
+
     bool DeviceReady;
     unsigned long AddressClaimStarted;
     bool AddressChanged;
-    
+
     // Device information
     tDeviceInformation DeviceInformation[Max_N2kDevices];
     int DeviceCount;
 //    unsigned long N2kSource[Max_N2kDevices];
-    
+
     // Product information
     const tProductInformation *ProductInformation;
     tProductInformation *LocalProductInformation;
@@ -191,23 +192,23 @@ protected:
     // Configuration information
     const tProgmemConfigurationInformation *ConfigurationInformation;
     tConfigurationInformation *LocalConfigurationInformation;
-    
+
     const unsigned long *SingleFrameMessages[N2kMessageGroups];
     const unsigned long *FastPacketMessages[N2kMessageGroups];
-    
-    
+
+
     class tCANSendFrame
     {
     public:
-      unsigned long id; 
+      unsigned long id;
       unsigned char len;
       unsigned char buf[8];
       bool wait_sent;
-      
+
     public:
-      void Clear() {id=0; len=0; for (int i=0; i<8; i++) { buf[i]=0; } }  
+      void Clear() {id=0; len=0; for (int i=0; i<8; i++) { buf[i]=0; } }
     };
-    
+
 protected:
     // Buffer for received messages.
     tN2kCANMsg *N2kCANMsgBuf;
@@ -217,12 +218,12 @@ protected:
     uint8_t MaxCANSendFrames;
     uint8_t CANSendFrameBufferWrite;
     uint8_t CANSendFrameBufferRead;
-    
+
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
     bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);                 // 'ISORequest' messages
-    
-    
+
+
 protected:
     // Virtual functions for different interfaces. Currently there are own classes
     // for Arduino due internal CAN (NMEA2000_due) and external MCP2515 SPI CAN bus controller (NMEA2000_mcp)
@@ -238,7 +239,7 @@ protected:
     // This is because specially for broadcasted response it may take a while, when higher priority
     // devices sends their response.
     void SendPendingInformation();
-    
+
 protected:
     int SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
@@ -251,7 +252,7 @@ protected:
     void GetNextAddress(int DeviceIndex);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
-    
+
     bool ForwardEnabled() const { return ((ForwardMode&FwdModeBit_EnableForward)>0 && (N2kMode!=N2km_SendOnly)); }
     bool ForwardSystemMessages() const { return ((ForwardMode&FwdModeBit_SystemMessages)>0); }
     bool ForwardOnlyKnownMessages() const { return ((ForwardMode&FwdModeBit_OnlyKnownMessages)>0); }
@@ -259,17 +260,17 @@ protected:
     bool HandleOnlyKnownMessages() const { return ((ForwardMode&HandleModeBit_OnlyKnownMessages)>0); }
 public:
     tNMEA2000();
-    
+
     // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
-    // you can set buffer size smaller like 3 or 2 by calling this before open.    
+    // you can set buffer size smaller like 3 or 2 by calling this before open.
     void SetN2kCANMsgBufSize(const unsigned char _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
     // When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data
     // This depends of your hw and device source. Device source has effect due to priority of getting sending slot. If your data is
-    // critical, use buffer size, which is large enough (default 40 frames). 
+    // critical, use buffer size, which is large enough (default 40 frames).
     // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
     // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
     void SetN2kCANSendFrameBufSize(const unsigned char _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
-    
+
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
     // LoadEquivalency is multiplication of 50 mA, what your device will take power from
@@ -289,7 +290,7 @@ public:
     // Note that I have not yet found a way to test is pointer in PROGMEM or not, so this does not work, if you define
     // tProductInformation to RAM.
     void SetProductInformation(const tProductInformation *_ProductInformation);
-    
+
     // Configuration information is just some extra information about device and manufacturer. Some
     // MFD shows it, some does not. NMEA Reader can show configuration information.
     // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
@@ -309,7 +310,7 @@ public:
     // Note that currently subsequent calls will override previously set list.
     void ExtendSingleFrameMessages(const unsigned long *_SingleFrameMessages);
     void ExtendFastPacketMessages (const unsigned long *_FastPacketMessages);
- 
+
     // Set default device information.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
     // Note that ManufacturerCode and UniqueNumber should give unic result on any network.
@@ -320,37 +321,37 @@ public:
                               uint16_t _ManufacturerCode=0xffff,  // Default=2046. Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20140409%20nmea%202000%20registration%20list.pdf
                               unsigned char _IndustryGroup=4  // Default=4, Marine.
                               );
-     
-    // ToDo:     
+
+    // ToDo:
     // If your device has several functions, it should have own bus address for each.
     // Note that there is also in class 25 function code 132, which e.g. Alba Combi uses and it sends several different
-    // type of data. So I am not sure yet how important it is to use own addresses.    
+    // type of data. So I am not sure yet how important it is to use own addresses.
     // Returns Device index to be used on SendMsg. -1, if no more devices can be allocated.
     //int AddDeviceFunction(unsigned char _DeviceFunction,
     //                       unsigned char _DeviceClass,
     //                       unsigned long _N2kSource=0xff
     //                       );
-      
+
     // Class handles automatically address claiming and tell to the bus about itself.
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
     bool SendProductInformation(int DeviceIndex=0);
     bool SendConfigurationInformation(int DeviceIndex=0);
-    
+
     // Set this before open. You can not change mode after Open().
-    // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure. 
+    // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure.
     // You have to call ParseMessages() periodically to handle these procedures.
     // If you know your system, define source something other address you allready have on your bus.
-    void SetMode(tN2kMode _N2kMode, unsigned long _N2kSource=15); 
-    
+    void SetMode(tN2kMode _N2kMode, unsigned long _N2kSource=15);
+
     // Set type how messages will be forwarded in listen mode. Defult is fwdt_Actisense
     void SetForwardType(tForwardType fwdType) { ForwardType=fwdType; }
 
-    // Set the stream, where messages will be forwarded in listen mode. Default is &Serial.
-    void SetForwardStream(Stream* _stream) { ForwardStream=_stream; }
-    
-    // You can call this. It will be called anyway automatically by ParseMessages(); 
+    // Set the stream, where messages will be forwarded in listen mode.
+    void SetForwardStream(N2kStream* _stream) { ForwardStream=_stream; }
+
+    // You can call this. It will be called anyway automatically by ParseMessages();
     bool Open();
-    
+
     // Generate N2k message e.g. by using N2kMessages.h and simply send it to the bus.
     bool SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex=0);
 
@@ -363,7 +364,7 @@ public:
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Normal messages
     void SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex));           // ISORequest messages
 
-    
+
     // Read address for current device.
     // Multidevice support is under construction.
     unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return DeviceInformation[DeviceIndex].N2kSource; return DeviceInformation[DeviceCount-1].N2kSource; }
@@ -374,21 +375,21 @@ public:
     // some reason needs to change its address again, AddressChanged will be set.
     // So you can e.g. in every 10 min check has address changed and if it has, save it.
     bool ReadResetAddressChanged();
-    
+
     // Control how messages will be forwarded to stream in listen mode
     void EnableForward(bool v=true) {
         if (v) { ForwardMode |= FwdModeBit_EnableForward;  } else { ForwardMode &= ~FwdModeBit_EnableForward; }
     }
-    void SetForwardSystemMessages(bool v=true) { 
+    void SetForwardSystemMessages(bool v=true) {
         if (v) { ForwardMode |= FwdModeBit_SystemMessages;  } else { ForwardMode &= ~FwdModeBit_SystemMessages; }
       }
-    void SetForwardOnlyKnownMessages(bool v=true) {  
+    void SetForwardOnlyKnownMessages(bool v=true) {
         if (v) { ForwardMode |= FwdModeBit_OnlyKnownMessages;  } else { ForwardMode &= ~FwdModeBit_OnlyKnownMessages; }
       }
-    void SetForwardOwnMessages(bool v=true) {  
+    void SetForwardOwnMessages(bool v=true) {
         if (v) { ForwardMode |= FwdModeBit_OwnMessages;  } else { ForwardMode &= ~FwdModeBit_OwnMessages; }
       }
-    void SetHandleOnlyKnownMessages(bool v=true) {  
+    void SetHandleOnlyKnownMessages(bool v=true) {
         if (v) { ForwardMode |= HandleModeBit_OnlyKnownMessages;  } else { ForwardMode &= ~HandleModeBit_OnlyKnownMessages; }
       }
 
@@ -403,7 +404,7 @@ inline void SetN2kPGNISOAcknowledgement(tN2kMsg &N2kMsg, unsigned char Control, 
 }
 
 //*****************************************************************************
-// ISO Address Claim                   
+// ISO Address Claim
 void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int ManufacturerCode,
                    unsigned char DeviceFunction, unsigned char DeviceClass,
                    unsigned char DeviceInstance=0, unsigned char SystemInstance=0, unsigned char IndustryGroup=4
@@ -415,7 +416,7 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, unsigned long UniqueNumber, i
                    unsigned char DeviceFunction, unsigned char DeviceClass,
                    unsigned char DeviceInstance=0, unsigned char SystemInstance=0, unsigned char IndustryGroup=4
                    ) {
-  SetN2kPGN60928(N2kMsg, UniqueNumber, ManufacturerCode, DeviceFunction, DeviceClass, 
+  SetN2kPGN60928(N2kMsg, UniqueNumber, ManufacturerCode, DeviceFunction, DeviceClass,
                  DeviceInstance, SystemInstance, IndustryGroup);
 }
 
@@ -426,12 +427,12 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, uint64_t Name) {
 //*****************************************************************************
 // Product information
 void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
-                     const char *ModelID, const char *SwCode, 
+                     const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
                      unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1);
-                     
+
 inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
-                     const char *ModelID, const char *SwCode, 
+                     const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
                      unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1) {
   SetN2kPGN126996(N2kMsg,N2kVersion,ProductCode,
@@ -445,7 +446,7 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
                      const char *InstallationDescription2=0);
-                     
+
 inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,

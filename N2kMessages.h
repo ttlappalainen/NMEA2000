@@ -37,6 +37,7 @@ NMEA2000.h
 #define _N2kMessages_H_
 
 #include "N2kMsg.h"
+#include <stdint.h>
 
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
@@ -502,11 +503,11 @@ inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineIn
                      bool flagSailDrive=false) {
   unsigned char DiscreteStatus1=0;
   
-  if (flagCheck) DiscreteStatus1 |= B00000001;
-  if (flagOverTemp) DiscreteStatus1 |= B00000010;
-  if (flagLowOilPressure) DiscreteStatus1 |= B00000100;
-  if (flagLowOilLevel) DiscreteStatus1 |= B00001000;
-  if (flagSailDrive) DiscreteStatus1 |= B00010000;
+  if (flagCheck) DiscreteStatus1          |= BIT(0);
+  if (flagOverTemp) DiscreteStatus1       |= BIT(1);
+  if (flagLowOilPressure) DiscreteStatus1 |= BIT(2);
+  if (flagLowOilLevel) DiscreteStatus1    |= BIT(3);
+  if (flagSailDrive) DiscreteStatus1      |= BIT(4);
   SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature,DiscreteStatus1);
 }
 
@@ -524,11 +525,11 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   unsigned char DiscreteStatus1;
   bool ret=ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
   if (ret) {
-    flagCheck          = ((DiscreteStatus1&B00000001)!=0);
-    flagOverTemp       = ((DiscreteStatus1&B00000010)!=0);
-    flagLowOilPressure = ((DiscreteStatus1&B00000100)!=0);
-    flagLowOilLevel    = ((DiscreteStatus1&B00001000)!=0);
-    flagSailDrive      = ((DiscreteStatus1&B00010000)!=0);
+    flagCheck          = ((DiscreteStatus1 & BIT(0))!=0);
+    flagOverTemp       = ((DiscreteStatus1 & BIT(1))!=0);
+    flagLowOilPressure = ((DiscreteStatus1 & BIT(2))!=0);
+    flagLowOilLevel    = ((DiscreteStatus1 & BIT(3))!=0);
+    flagSailDrive      = ((DiscreteStatus1 & BIT(4))!=0);
   }
   return ret;
 }

@@ -22,6 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "N2kMessages.h"
+#include <string.h>
 
 //*****************************************************************************
 // System time
@@ -219,35 +220,35 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
 
-  int engineStatus1P1 = B00000000;
-  int engineStatus1P2 = B00000000;
-  int engineStatus2 = B00000000;
-  if (flagCheckEngine) engineStatus1P1 |= B00000001;
-  if (flagOverTemp) engineStatus1P1 |= B00000010;
-  if (flagLowOilPress) engineStatus1P1 |= B00000100;
-  if (flagLowOilLevel) engineStatus1P1 |= B00001000;
-  if (flagLowFuelPress) engineStatus1P1 |= B00010000;
-  if (flagLowSystemVoltage) engineStatus1P1 |= B00100000;
-  if (flagLowCoolantLevel) engineStatus1P1 |= B01000000;
-  if (flagWaterFlow) engineStatus1P1 |= B10000000;
+  int engineStatus1P1 = 0;
+  int engineStatus1P2 = 0;
+  int engineStatus2 = 0;
+  if (flagCheckEngine) engineStatus1P1      |= BIT(0);
+  if (flagOverTemp) engineStatus1P1         |= BIT(1);
+  if (flagLowOilPress) engineStatus1P1      |= BIT(2);
+  if (flagLowOilLevel) engineStatus1P1      |= BIT(3);
+  if (flagLowFuelPress) engineStatus1P1     |= BIT(4);
+  if (flagLowSystemVoltage) engineStatus1P1 |= BIT(5);
+  if (flagLowCoolantLevel) engineStatus1P1  |= BIT(6);
+  if (flagWaterFlow) engineStatus1P1        |= BIT(7);
 
-  if (flagWaterInFuel) engineStatus1P2 |= B00000001;
-  if (flagChargeIndicator) engineStatus1P2 |= B00000010;
-  if (flagPreheatIndicator) engineStatus1P2 |= B00000100;
-  if (flagHighBoostPress) engineStatus1P2 |= B00001000;
-  if (flagRevLimitExceeded) engineStatus1P2 |= B00010000;
-  if (flagEgrSystem) engineStatus1P2 |= B00100000;
-  if (flagTPS) engineStatus1P2 |= B01000000;
-  if (flagEmergencyStopMode) engineStatus1P2 |= B10000000;
+  if (flagWaterInFuel) engineStatus1P2       |= BIT(0);
+  if (flagChargeIndicator) engineStatus1P2   |= BIT(1);
+  if (flagPreheatIndicator) engineStatus1P2  |= BIT(2);
+  if (flagHighBoostPress) engineStatus1P2    |= BIT(3);
+  if (flagRevLimitExceeded) engineStatus1P2  |= BIT(4);
+  if (flagEgrSystem) engineStatus1P2         |= BIT(5);
+  if (flagTPS) engineStatus1P2               |= BIT(6);
+  if (flagEmergencyStopMode) engineStatus1P2 |= BIT(7);
 
-  if (flagWarning1) engineStatus2 |= B00000001;
-  if (flagWarning2) engineStatus2 |= B00000010;
-  if (flagPowerReduction) engineStatus2 |= B00000100;
-  if (flagMaintenanceNeeded) engineStatus2 |= B00001000;
-  if (flagEngineCommError) engineStatus2 |= B00010000;
-  if (flagSubThrottle) engineStatus2 |= B00100000;
-  if (flagNeutralStartProtect) engineStatus2 |= B01000000;
-  if (flagEngineShuttingDown) engineStatus2 |= B10000000;
+  if (flagWarning1) engineStatus2            |= BIT(0);
+  if (flagWarning2) engineStatus2            |= BIT(1);
+  if (flagPowerReduction) engineStatus2      |= BIT(2);
+  if (flagMaintenanceNeeded) engineStatus2   |= BIT(3);
+  if (flagEngineCommError) engineStatus2     |= BIT(4);
+  if (flagSubThrottle) engineStatus2         |= BIT(5);
+  if (flagNeutralStartProtect) engineStatus2 |= BIT(6);
+  if (flagEngineShuttingDown) engineStatus2  |= BIT(7);
   N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
   N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
 

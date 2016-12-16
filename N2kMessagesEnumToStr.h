@@ -1,4 +1,4 @@
-/* 
+/*
 N2kMessagesEnumToStr.h
 
 Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -19,12 +19,12 @@ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIG
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-  
-This is collection of functions for handling NMEA2000 bus messages. 
+
+This is collection of functions for handling NMEA2000 bus messages.
 Library contains functions to convert enums in N2kMessages.h to
 const char *
 
-If you do not need enums in clear text, you do not need this library. 
+If you do not need enums in clear text, you do not need this library.
 */
 
 #ifndef _N2kMessagesEnumToStr_H_
@@ -39,7 +39,7 @@ template<typename T> void PrintN2kEnumType(T a, Stream *OutputStream, bool addLF
   if (str[0] != '\0') {
     if (addLF) { OutputStream->println(str); } else { OutputStream->print(str); }
   } else {
-    OutputStream->print("unknown ("); OutputStream->print(a); OutputStream->println(")");
+    OutputStream->print(F("unknown (")); OutputStream->print(a); OutputStream->println(F(")"));
   }
 }
 
