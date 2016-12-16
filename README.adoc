@@ -32,6 +32,14 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+16.12.2016 Portability fixes. Thanks to denravonska and thomasonw!
+
+- NOTE! compatibility issue! There is no more default stream set on library constuctor. So in case you are using
+forwarding, you need to setup it (like in examples) NMEA2000.SetForwardStream(&Serial);
+
+- This reduces the Arduino dependency, allowing the library to more easily be used on other platforms. Check all
+changes under https://github.com/ttlappalainen/NMEA2000/pull/35
+
 01.12.2016 License change to MIT for more permissive
 
 - Also some started to remove platform dependent code.
