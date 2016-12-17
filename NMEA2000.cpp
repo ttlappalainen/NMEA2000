@@ -177,12 +177,12 @@ void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInforma
 
 //*****************************************************************************
 void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
-                                      unsigned int _ProductCode,
+                                      unsigned short _ProductCode,
                                       const char *_ModelID,
                                       const char *_SwCode,
                                       const char *_ModelVersion,
                                       unsigned char _LoadEquivalency,
-                                      unsigned int _N2kVersion,
+                                      unsigned short _N2kVersion,
                                       unsigned char _SertificationLevel) {
    if (LocalProductInformation==0) {
      LocalProductInformation=new tProductInformation();

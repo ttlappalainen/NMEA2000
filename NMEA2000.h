@@ -114,8 +114,8 @@ public:
 };
 
 struct tProductInformation {
-    unsigned int N2kVersion;
-    unsigned int ProductCode;
+    unsigned short N2kVersion;
+    unsigned short ProductCode;
     // Note that we reserve one extra char for null termination
     char N2kModelID[Max_N2kModelID_len+1];
     char N2kSwCode[Max_N2kSwCode_len+1];
@@ -278,12 +278,12 @@ public:
     // power from bus, set this to 0.
     // Note that serial code has length of 32 so just long enough to carry GUID.
     void SetProductInformation(const char *_ModelSerialCode, // Default="00000001". Max 32 chars. Manufacturer's Model serial code
-                               unsigned int _ProductCode=0xffff,  // Default=666. Manufacturer's product code
+                               unsigned short _ProductCode=0xffff,  // Default=666. Manufacturer's product code
                                const char *_ModelID=0, // Default="Arduino N2k->PC". Max 33 chars. Manufacturer's  Model ID
                                const char *_SwCode=0, // Default="1.0.0.0". Max 40 chars. Manufacturer's software version code
                                const char *_ModelVersion=0, // Default="1.0.0". Max 24 chars. Manufacturer's Model version
                                unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
-                               unsigned int _N2kVersion=0xffff, // Default=1300
+                               unsigned short _N2kVersion=0xffff, // Default=1300
                                unsigned char _SertificationLevel=0xff // Default=1
                                );
     // Call this if you want to save RAM and you have defined tProductInformation to PROGMEM as in example BatteryMonitor.ino

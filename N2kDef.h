@@ -40,7 +40,7 @@ extern uint32_t millis();
 #endif
 
 // Declare PROGMEM macros to nothing on non-AVR targets.
-#if !defined(__AVR__)
+#if !defined(__AVR__) && !defined(ARDUINO)
 #define PROGMEM
 #define pgm_read_byte(var)  *var
 #define pgm_read_word(var)  *var
