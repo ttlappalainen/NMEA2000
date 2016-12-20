@@ -32,6 +32,10 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+20.12.2016 Added support for PGN 126464L, PGN List (Transmit and Receive). Library will automatically respond to this message. 
+You need only add message lists and call to methods ExtendTransmitMessages and/or ExtendReceiveMessages. See e.g. example
+TemperatureMonitor.
+
 17.12.2016 Fixes to avoid compiler warnings
 
 16.12.2016 Portability fixes. Thanks to denravonska and thomasonw!

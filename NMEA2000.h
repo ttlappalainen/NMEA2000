@@ -195,7 +195,10 @@ protected:
 
     const unsigned long *SingleFrameMessages[N2kMessageGroups];
     const unsigned long *FastPacketMessages[N2kMessageGroups];
-
+    
+    // Transmit and receive PGNs
+    const unsigned long *TransmitMessages;
+    const unsigned long *ReceiveMessages;
 
     class tCANSendFrame
     {
@@ -242,10 +245,12 @@ protected:
 
 protected:
     int SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
+    bool IsFastPacket(unsigned long PGN);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
     bool HandleReceivedSystemMessage(int MsgIndex);
     void ForwardMessage(const tN2kMsg &N2kMsg);
     void ForwardMessage(const tN2kCANMsg &N2kCanMsg);
+    void HandlePGNListRequest(unsigned char Destination, int DeviceIndex);
     void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
     void HandleISORequest(const tN2kMsg &N2kMsg);
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
@@ -310,6 +315,11 @@ public:
     // Note that currently subsequent calls will override previously set list.
     void ExtendSingleFrameMessages(const unsigned long *_SingleFrameMessages);
     void ExtendFastPacketMessages (const unsigned long *_FastPacketMessages);
+    // Define information about PGNs, what your system can handle.  Pointers must be in PROGMEM
+    // As default for request to PGN list library responds with default messages it handles intenally.
+    // With these messages you can extent that list. See example TemperatureMonitor
+    void ExtendTransmitMessages(const unsigned long *_SingleFrameMessages);
+    void ExtendReceiveMessages (const unsigned long *_FastPacketMessages);
 
     // Set default device information.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -471,5 +481,18 @@ bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN);
 inline bool ParseN2kPGNISORequest(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
   return ParseN2kPGN59904(N2kMsg, RequestedPGN);
 }
+
+enum tN2kPGNList {N2kpgnl_transmit=0, N2kpgnl_receive=1 };
+
+//*****************************************************************************
+// PGN List (Transmit and Receive)
+// List of PGNs must be null terminated and
+// defined as PROGMEM e.g. const unsigned long TransmitMessages[] PROGMEM={130310L,0};
+void SetN2kPGN126464(tN2kMsg &N2kMsg, uint8_t Destination, tN2kPGNList tr, const unsigned long *PGNs);
+
+inline void SetN2kPGNTransmitList(tN2kMsg &N2kMsg, uint8_t Destination, const unsigned long *PGNs) {
+  SetN2kPGN126464(N2kMsg,Destination,tN2kPGNList::N2kpgnl_transmit,PGNs);
+}
+
 
 #endif

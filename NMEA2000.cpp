@@ -32,12 +32,27 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // lenght >=90
 #define Max_conf_info_field_len 80
 
+const unsigned long DefTransmitMessages[] PROGMEM = {
+                                       59392L /*ISO Acknowledgement*/,
+                                       59904L /*ISO Request*/, 
+                                       60928L /*ISO Address Claim*/,
+                                       126464L, /* PGN List (Transmit and Receive) */
+                                       126996L, /* Product information */
+                                       126998L, /* Configuration information */
+                                       0};
+const unsigned long DefReceiveMessages[] PROGMEM = {
+                                       59392L /*ISO Acknowledgement*/,
+                                       59904L /*ISO Request*/, 
+                                       60928L /*ISO Address Claim*/,
+                                       0};
 const unsigned long SingleFrameSystemMessages[] PROGMEM = {
                                        59392L /*ISO Acknowledgement*/,
-                                       59904L /*ISO Request*/, 60928L /*ISO Address Claim*/,
+                                       59904L /*ISO Request*/, 
+                                       60928L /*ISO Address Claim*/,
                                        0};
 const unsigned long FastPacketSystemMessages[] PROGMEM = {
-                                       126208L,
+                                       126208L, /* NMEA - Request group function */
+                                       126464L, /* PGN List (Transmit and Receive) */
                                        0};
 const unsigned long DefSingleFrameMessages[] PROGMEM = {
                                        126992L, // System date/time
@@ -120,6 +135,9 @@ void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
  //*****************************************************************************
 tNMEA2000::tNMEA2000() {
 
+  TransmitMessages=0;
+  ReceiveMessages=0;
+  
   SingleFrameMessages[0]=DefSingleFrameMessages;
   FastPacketMessages[0]=DefFastPacketMessages;
   for (int i=1; i<N2kMessageGroups; i++) {SingleFrameMessages[i]=0; FastPacketMessages[i]=0;}
@@ -272,6 +290,16 @@ void tNMEA2000::ExtendFastPacketMessages(const unsigned long *_FastPacketMessage
 }
 
 //*****************************************************************************
+void tNMEA2000::ExtendTransmitMessages(const unsigned long *_Messages) {
+  TransmitMessages=_Messages;
+}
+
+//*****************************************************************************
+void tNMEA2000::ExtendReceiveMessages(const unsigned long *_Messages) {
+  ReceiveMessages=_Messages;
+}
+
+//*****************************************************************************
 void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
   N2kMode=_N2kMode;
   DeviceInformation[0].N2kSource=_N2kSource;
@@ -420,8 +448,8 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
 
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
 
-      if (N2kMsg.DataLen<=8) { // We can send single frame
-//          PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
+      if (N2kMsg.DataLen<=8 && !IsFastPacket(N2kMsg.PGN) ) { // We can send single frame
+          PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
           result=SendFrame(canId, N2kMsg.DataLen, N2kMsg.Data,false);
           if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
       } else { // Send it as fast packet in multiple frames
@@ -479,6 +507,27 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
 //*****************************************************************************
 void tNMEA2000::SetDebugMode(tDebugMode _dbMode) {
   dbMode=_dbMode;
+}
+
+//*****************************************************************************
+bool tNMEA2000::IsFastPacket(unsigned long PGN) {
+  int i;
+
+    for (i=0; pgm_read_dword(&FastPacketSystemMessages[i])!=PGN && pgm_read_dword(&FastPacketSystemMessages[i])!=0; i++);
+    if (pgm_read_dword(&FastPacketSystemMessages[i])==PGN) {
+      return true;
+    }
+
+    for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
+      if (FastPacketMessages[igroup]!=0) {
+        for (i=0; pgm_read_dword(&FastPacketMessages[igroup][i])!=PGN && pgm_read_dword(&FastPacketMessages[igroup][i])!=0; i++);
+        if (pgm_read_dword(&FastPacketMessages[igroup][i])==PGN) {
+         return true;
+        }
+      }
+    }
+    
+    return false;
 }
 
 //*****************************************************************************
@@ -646,6 +695,47 @@ template <typename T> void PROGMEM_readAnything (const T * sce, T& dest)
 
 
 //*****************************************************************************
+void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex) {
+  if (Destination==0xff && DeviceIndex==-1) DeviceIndex=0;
+
+  if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
+  
+  tN2kMsg RespondMsg(DeviceInformation[DeviceIndex].N2kSource);
+  unsigned long PGN;
+  
+    // First sent transmit messages
+    RespondMsg.Destination=Destination;
+    RespondMsg.SetPGN(126464L);
+    RespondMsg.Priority=6;
+    RespondMsg.AddByte(tN2kPGNList::N2kpgnl_transmit);
+    // First add default messages
+    for (int i=0; (PGN=pgm_read_dword(&DefTransmitMessages[i]))!=0; i++) {
+      RespondMsg.Add3ByteInt(PGN);
+    }
+    if (TransmitMessages!=0) {
+      for (int i=0; (PGN=pgm_read_dword(&TransmitMessages[i]))!=0; i++) {
+        RespondMsg.Add3ByteInt(PGN);
+      }
+    }
+    SendMsg(RespondMsg,DeviceIndex);
+    
+    // Then add receive messages
+    RespondMsg.Clear();
+    RespondMsg.SetPGN(126464L);
+    RespondMsg.AddByte(tN2kPGNList::N2kpgnl_receive);
+    // First add default messages
+    for (int i=0; (PGN=pgm_read_dword(&DefReceiveMessages[i]))!=0; i++) {
+      RespondMsg.Add3ByteInt(PGN);
+    }
+    if (ReceiveMessages!=0) {
+      for (int i=0; (PGN=pgm_read_dword(&ReceiveMessages[i]))!=0; i++) {
+        RespondMsg.Add3ByteInt(PGN);
+      }
+    }
+    SendMsg(RespondMsg,DeviceIndex);
+}
+   
+//*****************************************************************************
 void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tProductInformation *ProductInformation) {
   int i;
 
@@ -748,6 +838,9 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
     switch (RequestedPGN) {
       case 60928L: /*ISO Address Claim*/  // Someone is asking others to claim their addresses
         SendIsoAddressClaim(N2kMsg.Source,iDev);
+        break;
+      case 126464L:
+        HandlePGNListRequest(N2kMsg.Source,iDev);
         break;
       case 126996L: /* Product information */
         // If query was for us, try to respond immediately
@@ -1021,10 +1114,24 @@ void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long Requeste
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN) {
   int result=((N2kMsg.DataLen>=3) && (N2kMsg.DataLen<=8));
   RequestedPGN=0;
-
   if (result) {
     RequestedPGN=((unsigned long)N2kMsg.Data[2])<<16 | ((unsigned long)N2kMsg.Data[1]) << 8 | ((unsigned long)N2kMsg.Data[0]);
   }
 
   return result;
+}
+
+//*****************************************************************************
+// PGN List (Transmit and Receive)
+void SetN2kPGN126464(tN2kMsg &N2kMsg, uint8_t Destination, tN2kPGNList tr, const unsigned long *PGNs) {
+  unsigned long PGN;
+  
+    N2kMsg.SetPGN(126464L);
+    N2kMsg.Destination=Destination;
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(tr);
+    
+    for (int i=0; (PGN=pgm_read_dword(&PGNs[i]))!=0; i++) {
+      N2kMsg.Add3ByteInt(PGN);
+    }
 }
