@@ -24,6 +24,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "N2kMsg.h"
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 //#include <MemoryFree.h>  // For testing used memory
 
 #define Escape 0x10
@@ -33,14 +34,23 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define MaxActisenseMsgBuf 400
 
+// NMEA2000 uses little endian for binary data. Swap the endian if we are
+// running on a big endian machine. There is no reliable, portable compile
+// check for this so each compiler has to be added manually.
+#if defined(__GNUC__)
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#define HOST_IS_BIG_ENDIAN
+#endif
+#endif
+
 //*****************************************************************************
 // On Arduino round() is a macro, hence the definition check. On other systems
 // it is a function that may or may not be implemented so we do it ourselves.
 #if !defined(round)
 double round(double val) {
-   return val >= 0
-         ? floor(val + 0.5)
-         : ceil(val - 0.5);
+  return val >= 0
+      ? floor(val + 0.5)
+      : ceil(val - 0.5);
 }
 #endif
 
@@ -300,256 +310,238 @@ bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
 }
 
 //*****************************************************************************
+template<typename T>
+T byteswap(T val);
+
+template<>
+uint8_t byteswap(uint8_t val) {
+  return val;
+}
+
+template<>
+int8_t byteswap(int8_t val) {
+  return val;
+}
+
+template<>
+uint16_t byteswap(uint16_t val) {
+  return (val << 8) | (val >> 8);
+}
+
+template<>
+int16_t byteswap(int16_t val)
+{
+  return byteswap((uint16_t) val);
+}
+
+template<>
+uint32_t byteswap(uint32_t val) {
+  return ((val << 24)) |
+      ((val << 8)  & 0xff00000000ULL) |
+      ((val >> 8)  & 0xff000000ULL) |
+      ((val >> 24) & 0xff0000ULL);
+}
+
+template<>
+int32_t byteswap(int32_t val) {
+  return byteswap((uint32_t) val);
+}
+
+template<>
+uint64_t byteswap(uint64_t val) {
+  return ((val << 56)) |
+      ((val << 40) & 0xff000000000000ULL) |
+      ((val << 24) & 0xff0000000000ULL) |
+      ((val << 8)  & 0xff00000000ULL) |
+      ((val >> 8)  & 0xff000000ULL) |
+      ((val >> 24) & 0xff0000ULL) |
+      ((val >> 40) & 0xff00ULL) |
+      ((val >> 56));
+}
+
+template<>
+int64_t byteswap(int64_t val) {
+  return byteswap((uint64_t) val);
+}
+
+//*****************************************************************************
+template<typename T>
+T GetBuf(size_t len, int& index, const unsigned char* buf) {
+  T v{};
+  memcpy(&v, &buf[index], len);
+
+#if defined(HOST_IS_BIG_ENDIAN)
+  v = byteswap(v);
+#endif
+
+  index += len;
+  return v;
+}
+
+//*****************************************************************************
+template<typename T>
+void SetBuf(T v, size_t len, int& index, unsigned char* buf) {
+
+#if defined(HOST_IS_BIG_ENDIAN)
+  v = byteswap(v);
+#endif
+
+  memcpy(&buf[index], &v, len);
+  index += len;
+}
+
+//*****************************************************************************
 void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   double fp=precision*1e6;
-  long long fpll=1/fp;
-  long long vll=v*1e6;
-    vll*=fpll;
-
-/* Does not work. Why?
-  long long *vll=(long long *)(&buf[index]);
-    (*vll)=v*1e6;
-    (*vll)*=fpll;
-
-    index+=8;
-*/
-
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-    vll>>=8;
-    buf[index]=vll&255; index++;
-
+  int64_t fpll=1/fp;
+  int64_t vll=v*1e6;
+  vll*=fpll;
+  SetBuf(vll, 8, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  int32_t *vi=(int32_t *)(&buf[index]);
-  index+=4;
-
-  (*vi)=(int32_t)round(v/precision);
+  SetBuf<int32_t>((int32_t)round(v/precision), 4, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  uint32_t *vi=(uint32_t *)(&buf[index]);
-  index+=4;
-
-  (*vi)=(uint32_t)round(v/precision);
+  SetBuf<uint32_t>((uint32_t)round(v/precision), 4, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   long vl;
   vl=(long)round(v/precision);
-    SetBuf3ByteInt(vl,index,buf);
+  SetBuf3ByteInt(vl,index,buf);
 }
 
 //*****************************************************************************
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
-  int16_t *vi=(int16_t *)(&buf[index]);
-  index+=2;
-
-  return *vi;
+  return GetBuf<int16_t>(2, index, buf);
 }
 
 //*****************************************************************************
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
-  uint16_t *vi=(uint16_t *)(&buf[index]);
-  index+=2;
-
-  return *vi;
+  return GetBuf<uint16_t>(2, index, buf);
 }
 
 //*****************************************************************************
 uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf) {
-  uint32_t *vi=(uint32_t *)(&buf[index]);
-  index+=4;
-
-  return *vi;
+  return GetBuf<uint32_t>(4, index, buf);
 }
 
 //*****************************************************************************
 double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  int8_t *vi=(int8_t *)(&buf[index]);
-  index+=1;
+  int8_t vl = GetBuf<int8_t>(1, index, buf);
+  if (vl==0x7f) return def;
 
-  if (*vi==0x7f) return def;
-
-  return ((double)(*vi))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
-  uint8_t *vi=(uint8_t *)(&buf[index]);
-  index+=1;
+  uint8_t vl = GetBuf<uint8_t>(1, index, buf);
+  if (vl==0xff) return def;
 
-  if (*vi==0xff) return def;
-
-  return ((double)(*vi))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  int16_t *vi=(int16_t *)(&buf[index]);
-  index+=2;
+  int16_t vl = GetBuf<int16_t>(2, index, buf);
+  if (vl==0x7fff) return def;
 
-  if (*vi==0x7fff) return def;
-
-  return ((double)(*vi))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
-  uint16_t *vi=(uint16_t *)(&buf[index]);
-  index+=2;
+  uint16_t vl = GetBuf<uint16_t>(2, index, buf);
+  if (vl==0xffff) return def;
 
-  if (*vi==0xffff) return def;
-
-  return ((double)(*vi))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  // Next does not work on any board I tested
-//  long long *vll=(long long *)(&buf[index]);
-//  index+=8;
-  unsigned long *vllo=(unsigned long *)(&buf[index]);
-  index+=4;
-  long *vlhi=(long *)(&buf[index]);
-  index+=4;
+  int64_t vl = GetBuf<int64_t>(8, index, buf);
+  if (vl==0x7fffffffffffffffLL) return def;
 
-  if ( (*vlhi==0x7fff) && (*vllo==0xffff) ) return def;
-  double v=*vlhi * 4294967296.0;
-
-  if (v>=0) { v += *vllo; } else { v -= *vllo; }
-
-  // Below did not work even with Due
-  //long long vll=*vlhi;
-  //vll<<=32;
-  //vll|=*vllo;
-
-
-  //Serial.print(*vlhi,HEX); Serial.print(","); Serial.println(*vllo,HEX);
-
-
-//  if (((unsigned long long)(vll))==0xffffffffffffffff) return def;
-
-  return v*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  long *vl=(long *)(&buf[index]);
-  long vll=*vl;
-  index+=3;
+  int32_t vl = GetBuf<int32_t>(3, index, buf);
+  if (vl==0x007fffff) return def;
 
-  // We use only 3 bytes, so set highest byte to 0
-  vll&=0x00ffffff;
-  if (vll==0x007fffff) return def;
-
-  return ((double)(vll))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
-  long *vl=(long *)(&buf[index]);
-  index+=4;
+  int32_t vl = GetBuf<int32_t>(4, index, buf);
+  if (vl==0x7fffffff) return def;
 
-  if (*vl==0x7fffffff) return def;
-
-  return ((double)(*vl))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
-  unsigned long *vl=(unsigned long *)(&buf[index]);
-  index+=4;
+  uint32_t vl = GetBuf<uint32_t>(4, index, buf);
+  if (vl==0xffffffff) return def;
 
-  if (*vl==0xffffffff) return def;
-
-  return ((double)(*vl))*precision;
+  return vl * precision;
 }
 
 //*****************************************************************************
 void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  int16_t *vi=(int16_t *)(&buf[index]);
-  index+=2;
-
-  (*vi)=(int16_t)round(v/precision);
+  int16_t vi = (int16_t)round(v/precision);
+  SetBuf(vi, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  uint16_t *vi=(uint16_t *)(&buf[index]);
-  index+=2;
-
-  (*vi)=(uint16_t)round(v/precision);
+  uint16_t vi = (uint16_t)round(v/precision);
+  SetBuf(vi, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  int8_t *vi=(int8_t *)(&buf[index]);
-  index+=1;
-
-  (*vi)=(int8_t)round(v/precision);
+  int8_t vi = (int8_t)round(v/precision);
+  SetBuf(vi, 1, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  uint8_t *vi=(uint8_t *)(&buf[index]);
-  index+=1;
-
-  (*vi)=(uint8_t)round(v/precision);
+  uint8_t vi = (uint8_t)round(v/precision);
+  SetBuf(vi, 1, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf2ByteInt(int16_t v, int &index, unsigned char *buf) {
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; index++;
+  SetBuf(v, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf) {
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; index++;
+  SetBuf(v, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf) {
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; index++;
+  SetBuf(v, 3, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf) {
-  uint32_t *vl=(uint32_t *)(&buf[index]);
-  index+=4;
-
-  (*vl)=v;
+  SetBuf(v, 4, index, buf);
 }
 
 //*****************************************************************************
 void SetBufUInt64(uint64_t v, int &index, unsigned char *buf) {
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; v>>=8; index++;
-    buf[index]=v&0xff; index++;
+  SetBuf(v, 8, index, buf);
 }
 
 //*****************************************************************************
@@ -565,15 +557,15 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf) {
 
 //*****************************************************************************
 void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF) {
-    if (port==0) return;
+  if (port==0) return;
 
-    for(int i = 0; i<len; i++) {
-      if (i>0) { port->print(F(",")); };
-      // Print bytes as hex.
-      port->print(pData[i], 16);
-    }
+  for(int i = 0; i<len; i++) {
+    if (i>0) { port->print(F(",")); };
+    // Print bytes as hex.
+    port->print(pData[i], 16);
+  }
 
-    if (AddLF) port->println(F(""));
+  if (AddLF) port->println(F(""));
 }
 
 //*****************************************************************************
@@ -645,7 +637,7 @@ void tN2kMsg::SendInActisenseFormat(N2kStream *port) const {
   ActisenseMsgBuf[msgIdx++] = EndOfText;
 
   port->write(ActisenseMsgBuf,msgIdx);
-//  Serial.print("Actisense data:");
-//  PrintBuf(msgIdx,ActisenseMsgBuf);
-//  Serial.print("\r\n");
+  //  Serial.print("Actisense data:");
+  //  PrintBuf(msgIdx,ActisenseMsgBuf);
+  //  Serial.print("\r\n");
 }
