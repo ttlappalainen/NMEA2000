@@ -1,0 +1,6 @@
+   tag        Create, list, delete or verify a tag object signed with GPG
+   tag        Create, list, delete or verify a tag object signed with GPG
+   tag        Create, list, delete or verify a tag object signed with GPG
+   tag        Create, list, delete or verify a tag object signed with GPG
+   tag        Create, list, delete or verify a tag object signed with GPG
+   tag        Create, list, delete or verify a tag object signed with GPG
