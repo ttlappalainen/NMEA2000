@@ -367,25 +367,29 @@ int64_t byteswap(int64_t val) {
 //*****************************************************************************
 template<typename T>
 T GetBuf(size_t len, int& index, const unsigned char* buf) {
-  T v{};
-  memcpy(&v, &buf[index], len);
+  T v{0};
+  
+  // This could be improved by casting the buffer to a pointer of T and
+  // doing a direct copy. That is, if unaligned data access is allowed.  
+  memcpy(&v, &buf[index], len);  
+  index += len;
 
 #if defined(HOST_IS_BIG_ENDIAN)
   v = byteswap(v);
 #endif
 
-  index += len;
   return v;
 }
 
 //*****************************************************************************
 template<typename T>
 void SetBuf(T v, size_t len, int& index, unsigned char* buf) {
-
 #if defined(HOST_IS_BIG_ENDIAN)
   v = byteswap(v);
 #endif
-
+  
+  // This could be improved by casting the buffer to a pointer of T and
+  // doing a direct copy. That is, if unaligned data access is allowed. 
   memcpy(&buf[index], &v, len);
   index += len;
 }
