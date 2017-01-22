@@ -1,7 +1,7 @@
 /*
 NMEA2000.cpp
 
-Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -33,24 +33,25 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define Max_conf_info_field_len 80
 
 const unsigned long DefTransmitMessages[] PROGMEM = {
-                                       59392L /*ISO Acknowledgement*/,
-                                       59904L /*ISO Request*/, 
-                                       60928L /*ISO Address Claim*/,
+                                        59392L, /*ISO Acknowledgement*/
+                                        59904L, /*ISO Request*/
+                                        60928L, /*ISO Address Claim*/
                                        126464L, /* PGN List (Transmit and Receive) */
                                        126996L, /* Product information */
                                        126998L, /* Configuration information */
                                        0};
 const unsigned long DefReceiveMessages[] PROGMEM = {
-                                       59392L /*ISO Acknowledgement*/,
-                                       59904L /*ISO Request*/, 
-                                       60928L /*ISO Address Claim*/,
+                                       59392L, /*ISO Acknowledgement*/
+                                       59904L, /*ISO Request*/
+                                       60928L, /*ISO Address Claim*/
                                        0};
 const unsigned long SingleFrameSystemMessages[] PROGMEM = {
-                                       59392L /*ISO Acknowledgement*/,
-                                       59904L /*ISO Request*/, 
-                                       60928L /*ISO Address Claim*/,
+                                       59392L, /*ISO Acknowledgement*/
+                                       59904L, /*ISO Request*/
+                                       60928L, /*ISO Address Claim*/
                                        0};
 const unsigned long FastPacketSystemMessages[] PROGMEM = {
+                                        65240L, /*Commanded Address*/
                                        126208L, /* NMEA - Request group function */
                                        126464L, /* PGN List (Transmit and Receive) */
                                        0};
@@ -449,7 +450,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
       if ( (AddressClaimStarted!=0) && (AddressClaimStarted+N2kAddressClaimTimeout>millis()) ) return false; // Do not send during address claiming
 
       if (N2kMsg.DataLen<=8 && !IsFastPacket(N2kMsg.PGN) ) { // We can send single frame
-          PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
+          // PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
           result=SendFrame(canId, N2kMsg.DataLen, N2kMsg.Data,false);
           if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("PGN ")); ForwardStream->print(N2kMsg.PGN); ForwardStream->println(F(" send failed")); }
       } else { // Send it as fast packet in multiple frames
@@ -909,6 +910,33 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
 }
 
 //*****************************************************************************
+void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
+  return;
+  //Serial.print(millis()); Serial.print(" Commanded address:"); Serial.println(N2kMsg.Destination);
+  int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
+    if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
+
+    if ( iDev==-1 ) iDev=0; // Should be handled for all, but no support yet.
+    
+  uint64_t *CommandedName;
+  unsigned char NewAddress;
+  
+    if ( N2kMsg.DataLen!=9 ) return;
+    
+    CommandedName=(uint64_t *)(N2kMsg.Data);
+    NewAddress=N2kMsg.Data[8];
+
+    if (DeviceInformation[iDev].GetName() == *CommandedName && 
+        DeviceInformation[iDev].N2kSource!=NewAddress) { // We have been commanded to set our address
+      DeviceInformation[iDev].N2kSource=NewAddress;
+      AddressChanged=true;
+      AddressClaimStarted=0;
+      SendIsoAddressClaim(0xff,iDev);
+      AddressClaimStarted=millis();
+    }
+}
+
+//*****************************************************************************
 bool tNMEA2000::ReadResetAddressChanged() {
   bool result=AddressChanged;
 
@@ -948,6 +976,9 @@ bool tNMEA2000::HandleReceivedSystemMessage(int MsgIndex) {
             break;
           case 60928L: /*ISO Address Claim*/
             HandleISOAddressClaim(N2kCANMsgBuf[MsgIndex].N2kMsg);
+            break;
+          case 65240L: /*Commanded Address*/
+            HandleCommandedAddress(N2kCANMsgBuf[MsgIndex].N2kMsg);
             break;
         }
       }

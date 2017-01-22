@@ -1,7 +1,7 @@
 /*
 NMEA2000.h
 
-Copyright (c) 2015-2016 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -218,9 +218,9 @@ protected:
     unsigned char MaxN2kCANMsgs;
 
     tCANSendFrame *CANSendFrameBuf;
-    uint8_t MaxCANSendFrames;
-    uint8_t CANSendFrameBufferWrite;
-    uint8_t CANSendFrameBufferRead;
+    uint16_t MaxCANSendFrames;
+    uint16_t CANSendFrameBufferWrite;
+    uint16_t CANSendFrameBufferRead;
 
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
@@ -254,6 +254,7 @@ protected:
     void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
     void HandleISORequest(const tN2kMsg &N2kMsg);
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
+    void HandleCommandedAddress(const tN2kMsg &N2kMsg);
     void GetNextAddress(int DeviceIndex);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
@@ -274,7 +275,7 @@ public:
     // critical, use buffer size, which is large enough (default 40 frames).
     // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
     // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
-    void SetN2kCANSendFrameBufSize(const unsigned char _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
+    void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
 
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -493,6 +494,5 @@ void SetN2kPGN126464(tN2kMsg &N2kMsg, uint8_t Destination, tN2kPGNList tr, const
 inline void SetN2kPGNTransmitList(tN2kMsg &N2kMsg, uint8_t Destination, const unsigned long *PGNs) {
   SetN2kPGN126464(N2kMsg,Destination,tN2kPGNList::N2kpgnl_transmit,PGNs);
 }
-
 
 #endif
