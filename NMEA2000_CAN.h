@@ -51,7 +51,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(USE_N2K_CAN)
 #if defined(__SAM3X8E__)
 #define USE_N2K_CAN USE_N2K_DUE_CAN
-#elif defined(__MK20DX256__)||defined(__ATMEGA32U4__)
+#elif defined(__MK20DX256__)||defined(__ATMEGA32U4__) || defined(__MK64FX512__) || defined (__MK66FX1M0__)
 #define USE_N2K_CAN USE_N2K_TEENSY_CAN
 #elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \
       defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)
