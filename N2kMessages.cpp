@@ -85,9 +85,9 @@ bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Headin
   int Index=0;
   
   SID=N2kMsg.GetByte(Index);
-  Heading=N2kMsg.Get2ByteDouble(0.0001,Index);
-  Deviation=N2kMsg.Get2ByteUDouble(0.0001,Index);
-  Variation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Heading=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Deviation=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Variation=N2kMsg.Get2ByteDouble(0.0001,Index);
   ref=(tN2kHeadingReference)(N2kMsg.GetByte(Index)&0x03);
   
   return true;
@@ -616,6 +616,8 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 
 //*****************************************************************************
 // AIS position report (class A 129038)
+// Latitude and Longitude in degrees (1e7)
+// COG and Heading in radians (1e4)
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
                         double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)

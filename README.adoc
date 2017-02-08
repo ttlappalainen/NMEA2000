@@ -32,6 +32,8 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+08.02.2017 Fixed Heading PGN 127250 parsing
+
 22.01.2017 Replace pointer casting with memcpy to avoid unaligned access, and add endian support. Thanks to denravonska.
 
 - Handle for PGN 65240 "Commanded address". E.g. diagnostic device may command your device to change address.
