@@ -87,6 +87,16 @@ enum tN2kGNSSmethod {
                             N2kGNSSm_DGNSS=2,
                             N2kGNSSm_PreciseGNSS=3
                           };
+
+enum tN2kGNSSDOPmode {
+                            N2kGNSSdm_1D,
+                            N2kGNSSdm_2D,
+                            N2kGNSSdm_3D,
+                            N2kGNSSdm_Auto,
+                            N2kGNSSdm_Reserved,
+                            N2kGNSSdm_Error,
+                          };
+
 enum tN2kTempSource {
                             N2kts_SeaTemperature=0,
                             N2kts_OutsideTemperature=1,
@@ -812,6 +822,36 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
                      nReferenceStations, ReferenceStationType, ReferenceSationID,
                      AgeOfCorrection
                      );
+}
+
+//*****************************************************************************
+// GNSS DOP data
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DesiredMode           Desired DOP mode.
+//  - ActualMode            Actual DOP mode.
+//  - HDOP                  Horizontal Dilution Of Precision in meters.
+//  - PDOP                  Probable dilution of precision in meters.
+//  - TDOP                  Time dilution of precision
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP);
+
+inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                              double HDOP, double VDOP, double TDOP)
+{
+    SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP);
+
+inline bool ParseN2kGNSSDOPData(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                         double& HDOP, double& VDOP, double& TDOP)
+{
+    return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
 }
 
 //*****************************************************************************

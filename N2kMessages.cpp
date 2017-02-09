@@ -614,6 +614,37 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   return true;
 }
 
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP)
+{
+    N2kMsg.SetPGN(129539L);
+    N2kMsg.Priority = 6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(((DesiredMode & 0x07) << 5) | ((ActualMode & 0x07) << 2));
+    N2kMsg.Add2ByteDouble(HDOP, 0.01);
+    N2kMsg.Add2ByteDouble(VDOP, 0.01);
+    N2kMsg.Add2ByteDouble(TDOP, 0.01);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP)
+{
+    if(N2kMsg.PGN != 129539)
+        return false;
+
+    unsigned char modes;
+    int Index = 0;
+
+    SID = N2kMsg.GetByte(Index);
+    modes = N2kMsg.GetByte(Index);
+    DesiredMode = (tN2kGNSSDOPmode)((modes >> 5) & 0x07);
+    ActualMode = (tN2kGNSSDOPmode)(modes & 0x07);
+    HDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
+    VDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
+    TDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // AIS position report (class A 129038)
 // Latitude and Longitude in degrees (1e7)
