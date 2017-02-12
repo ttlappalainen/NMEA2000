@@ -708,7 +708,7 @@ void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex)
     RespondMsg.Destination=Destination;
     RespondMsg.SetPGN(126464L);
     RespondMsg.Priority=6;
-    RespondMsg.AddByte(tN2kPGNList::N2kpgnl_transmit);
+    RespondMsg.AddByte(N2kpgnl_transmit);
     // First add default messages
     for (int i=0; (PGN=pgm_read_dword(&DefTransmitMessages[i]))!=0; i++) {
       RespondMsg.Add3ByteInt(PGN);
@@ -723,7 +723,7 @@ void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex)
     // Then add receive messages
     RespondMsg.Clear();
     RespondMsg.SetPGN(126464L);
-    RespondMsg.AddByte(tN2kPGNList::N2kpgnl_receive);
+    RespondMsg.AddByte(N2kpgnl_receive);
     // First add default messages
     for (int i=0; (PGN=pgm_read_dword(&DefReceiveMessages[i]))!=0; i++) {
       RespondMsg.Add3ByteInt(PGN);

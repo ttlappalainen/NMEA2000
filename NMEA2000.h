@@ -492,7 +492,7 @@ enum tN2kPGNList {N2kpgnl_transmit=0, N2kpgnl_receive=1 };
 void SetN2kPGN126464(tN2kMsg &N2kMsg, uint8_t Destination, tN2kPGNList tr, const unsigned long *PGNs);
 
 inline void SetN2kPGNTransmitList(tN2kMsg &N2kMsg, uint8_t Destination, const unsigned long *PGNs) {
-  SetN2kPGN126464(N2kMsg,Destination,tN2kPGNList::N2kpgnl_transmit,PGNs);
+  SetN2kPGN126464(N2kMsg,Destination,N2kpgnl_transmit,PGNs);
 }
 
 #endif
