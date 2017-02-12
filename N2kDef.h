@@ -1,5 +1,5 @@
-/* 
-N2kCANMsg.h
+/*
+N2kDef.h
 
 Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
@@ -19,29 +19,46 @@ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIG
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Type definitions and utility macros used in the NMEA2000 libraries.
+
 */
 
-#ifndef _tN2kCANMsg_H_
-#define _tN2kCANMsg_H_
-#include <N2kMsg.h>
+#ifndef _tN2kDef_H_
+#define _tN2kDef_H_
 
-class tN2kCANMsg
-{
-public:
-  tN2kCANMsg()
-  : Ready(false),FreeMsg(true),SystemMessage(false) {
-	  N2kMsg.Clear();
-  }
-  tN2kMsg N2kMsg;
-  bool Ready;  // Ready for handling
-  bool FreeMsg; // Msg is free for fill up
-  bool SystemMessage;
-  bool KnownMessage;
-  unsigned char LastFrame; // Last received frame on fast packets
-  unsigned char CopiedLen;
-  
-public:
-  void FreeMessage() {FreeMsg=true; SystemMessage=false; N2kMsg.Clear(); }  
-};
+#include <stdint.h>
+
+#if !defined(ARDUINO)
+extern "C" {
+// Application execution delay. Must be implemented by application.
+extern void delay(uint32_t ms);
+
+// Current uptime in milliseconds. Must be implemented by application.
+extern uint32_t millis();
+}
+#endif
+
+// Declare PROGMEM macros to nothing on non-AVR targets.
+#if !defined(__AVR__) && !defined(ARDUINO)
+#define PROGMEM
+#define pgm_read_byte(var)  *var
+#define pgm_read_word(var)  *var
+#define pgm_read_dword(var) *var
+#endif
+
+// Definition for the F(str) macro. On Arduinos use what the framework
+// provides to utilize the Stream class. On standard AVR8 we declare
+// our own helper class which is handled by the N2kStream. On anything
+// else we resort to char strings.
+#if defined(ARDUINO)
+#include <WString.h>
+#elif defined(__AVR__)
+#include <avr/pgmspace.h>
+class __FlashStringHelper;
+#define F(str) (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
+#else
+#define F(str) str
+#endif
 
 #endif

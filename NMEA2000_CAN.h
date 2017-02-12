@@ -1,9 +1,24 @@
 /* 
 NMEA2000_CAN.h
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   Just include this <NMEA2000_CAN.h> to your project and it will
   automatically select suitable CAN library according to board
@@ -19,22 +34,13 @@ Author: Timo Lappalainen
     #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
     #define N2k_CAN_INT_PIN 21 // Use interrupt  and it is connected to pin 21
     #define USE_MCP_CAN_CLOCK_SET 8  // possible values 8 for 8Mhz and 16 for 16 Mhz clock
-  
-
-  This library is free software; you can redistribute it and/or
-  modify it as you like.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-*/
+  */
 
 #ifndef _NMEA2000_CAN_H_
 #define _NMEA2000_CAN_H_
 
-#include <N2kMsg.h>
-#include <NMEA2000.h>
+#include "N2kMsg.h"
+#include "NMEA2000.h"
 
 #define USE_N2K_MCP_CAN 1
 #define USE_N2K_DUE_CAN 2
@@ -45,7 +51,7 @@ Author: Timo Lappalainen
 #if !defined(USE_N2K_CAN)
 #if defined(__SAM3X8E__)
 #define USE_N2K_CAN USE_N2K_DUE_CAN
-#elif defined(__MK20DX256__)
+#elif defined(__MK20DX256__)||defined(__ATMEGA32U4__) || defined(__MK64FX512__) || defined (__MK66FX1M0__)
 #define USE_N2K_CAN USE_N2K_TEENSY_CAN
 #elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \
       defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)

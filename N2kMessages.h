@@ -1,24 +1,24 @@
 /* 
 N2kMessages.h
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-
-  1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   
 This is collection of functions for handling NMEA2000 bus messages. 
@@ -36,7 +36,8 @@ NMEA2000.h
 #ifndef _N2kMessages_H_
 #define _N2kMessages_H_
 
-#include <N2kMsg.h>
+#include "N2kMsg.h"
+#include <stdint.h>
 
 inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
 inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
@@ -502,11 +503,11 @@ inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineIn
                      bool flagSailDrive=false) {
   unsigned char DiscreteStatus1=0;
   
-  if (flagCheck) DiscreteStatus1 |= B00000001;
-  if (flagOverTemp) DiscreteStatus1 |= B00000010;
-  if (flagLowOilPressure) DiscreteStatus1 |= B00000100;
-  if (flagLowOilLevel) DiscreteStatus1 |= B00001000;
-  if (flagSailDrive) DiscreteStatus1 |= B00010000;
+  if (flagCheck) DiscreteStatus1          |= BIT(0);
+  if (flagOverTemp) DiscreteStatus1       |= BIT(1);
+  if (flagLowOilPressure) DiscreteStatus1 |= BIT(2);
+  if (flagLowOilLevel) DiscreteStatus1    |= BIT(3);
+  if (flagSailDrive) DiscreteStatus1      |= BIT(4);
   SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature,DiscreteStatus1);
 }
 
@@ -524,11 +525,11 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   unsigned char DiscreteStatus1;
   bool ret=ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
   if (ret) {
-    flagCheck          = ((DiscreteStatus1&B00000001)!=0);
-    flagOverTemp       = ((DiscreteStatus1&B00000010)!=0);
-    flagLowOilPressure = ((DiscreteStatus1&B00000100)!=0);
-    flagLowOilLevel    = ((DiscreteStatus1&B00001000)!=0);
-    flagSailDrive      = ((DiscreteStatus1&B00010000)!=0);
+    flagCheck          = ((DiscreteStatus1 & BIT(0))!=0);
+    flagOverTemp       = ((DiscreteStatus1 & BIT(1))!=0);
+    flagLowOilPressure = ((DiscreteStatus1 & BIT(2))!=0);
+    flagLowOilLevel    = ((DiscreteStatus1 & BIT(3))!=0);
+    flagSailDrive      = ((DiscreteStatus1 & BIT(4))!=0);
   }
   return ret;
 }

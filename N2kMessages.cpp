@@ -1,27 +1,28 @@
 /* 
 N2kMessages.cpp
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-
-  1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <N2kMessages.h>
+#include "N2kMessages.h"
+#include <string.h>
 
 //*****************************************************************************
 // System time
@@ -84,9 +85,9 @@ bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Headin
   int Index=0;
   
   SID=N2kMsg.GetByte(Index);
-  Heading=N2kMsg.Get2ByteDouble(0.0001,Index);
-  Deviation=N2kMsg.Get2ByteUDouble(0.0001,Index);
-  Variation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Heading=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Deviation=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Variation=N2kMsg.Get2ByteDouble(0.0001,Index);
   ref=(tN2kHeadingReference)(N2kMsg.GetByte(Index)&0x03);
   
   return true;
@@ -219,35 +220,35 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
 
-  int engineStatus1P1 = B00000000;
-  int engineStatus1P2 = B00000000;
-  int engineStatus2 = B00000000;
-  if (flagCheckEngine) engineStatus1P1 |= B00000001;
-  if (flagOverTemp) engineStatus1P1 |= B00000010;
-  if (flagLowOilPress) engineStatus1P1 |= B00000100;
-  if (flagLowOilLevel) engineStatus1P1 |= B00001000;
-  if (flagLowFuelPress) engineStatus1P1 |= B00010000;
-  if (flagLowSystemVoltage) engineStatus1P1 |= B00100000;
-  if (flagLowCoolantLevel) engineStatus1P1 |= B01000000;
-  if (flagWaterFlow) engineStatus1P1 |= B10000000;
+  int engineStatus1P1 = 0;
+  int engineStatus1P2 = 0;
+  int engineStatus2 = 0;
+  if (flagCheckEngine) engineStatus1P1      |= BIT(0);
+  if (flagOverTemp) engineStatus1P1         |= BIT(1);
+  if (flagLowOilPress) engineStatus1P1      |= BIT(2);
+  if (flagLowOilLevel) engineStatus1P1      |= BIT(3);
+  if (flagLowFuelPress) engineStatus1P1     |= BIT(4);
+  if (flagLowSystemVoltage) engineStatus1P1 |= BIT(5);
+  if (flagLowCoolantLevel) engineStatus1P1  |= BIT(6);
+  if (flagWaterFlow) engineStatus1P1        |= BIT(7);
 
-  if (flagWaterInFuel) engineStatus1P2 |= B00000001;
-  if (flagChargeIndicator) engineStatus1P2 |= B00000010;
-  if (flagPreheatIndicator) engineStatus1P2 |= B00000100;
-  if (flagHighBoostPress) engineStatus1P2 |= B00001000;
-  if (flagRevLimitExceeded) engineStatus1P2 |= B00010000;
-  if (flagEgrSystem) engineStatus1P2 |= B00100000;
-  if (flagTPS) engineStatus1P2 |= B01000000;
-  if (flagEmergencyStopMode) engineStatus1P2 |= B10000000;
+  if (flagWaterInFuel) engineStatus1P2       |= BIT(0);
+  if (flagChargeIndicator) engineStatus1P2   |= BIT(1);
+  if (flagPreheatIndicator) engineStatus1P2  |= BIT(2);
+  if (flagHighBoostPress) engineStatus1P2    |= BIT(3);
+  if (flagRevLimitExceeded) engineStatus1P2  |= BIT(4);
+  if (flagEgrSystem) engineStatus1P2         |= BIT(5);
+  if (flagTPS) engineStatus1P2               |= BIT(6);
+  if (flagEmergencyStopMode) engineStatus1P2 |= BIT(7);
 
-  if (flagWarning1) engineStatus2 |= B00000001;
-  if (flagWarning2) engineStatus2 |= B00000010;
-  if (flagPowerReduction) engineStatus2 |= B00000100;
-  if (flagMaintenanceNeeded) engineStatus2 |= B00001000;
-  if (flagEngineCommError) engineStatus2 |= B00010000;
-  if (flagSubThrottle) engineStatus2 |= B00100000;
-  if (flagNeutralStartProtect) engineStatus2 |= B01000000;
-  if (flagEngineShuttingDown) engineStatus2 |= B10000000;
+  if (flagWarning1) engineStatus2            |= BIT(0);
+  if (flagWarning2) engineStatus2            |= BIT(1);
+  if (flagPowerReduction) engineStatus2      |= BIT(2);
+  if (flagMaintenanceNeeded) engineStatus2   |= BIT(3);
+  if (flagEngineCommError) engineStatus2     |= BIT(4);
+  if (flagSubThrottle) engineStatus2         |= BIT(5);
+  if (flagNeutralStartProtect) engineStatus2 |= BIT(6);
+  if (flagEngineShuttingDown) engineStatus2  |= BIT(7);
   N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
   N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
 
@@ -615,6 +616,8 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 
 //*****************************************************************************
 // AIS position report (class A 129038)
+// Latitude and Longitude in degrees (1e7)
+// COG and Heading in radians (1e4)
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
                         double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)
