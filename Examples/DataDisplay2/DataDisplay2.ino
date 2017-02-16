@@ -35,9 +35,11 @@ void BatteryConfigurationStatus(const tN2kMsg &N2kMsg);
 void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
+void Heading(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
+  {127250L,&Heading},
   {127257L,&Attitude},
   {127488L,&EngineRapid},
   {127489L,&EngineDynamicParameters},
@@ -163,6 +165,25 @@ void TransmissionParameters(const tN2kMsg &N2kMsg) {
       PrintLabelValWithConversionCheckUnDef("  oil pressure (Pa): ",OilPressure,0,true);
       PrintLabelValWithConversionCheckUnDef("  oil temperature (C): ",OilTemperature,&KelvinToC,true);
       PrintLabelValWithConversionCheckUnDef("  discrete status: ",DiscreteStatus1,0,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void Heading(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    tN2kHeadingReference HeadingReference;
+    double Heading;
+    double Deviation;
+    double Variation;
+    
+    if (ParseN2kHeading(N2kMsg,SID,Heading,Deviation,Variation,HeadingReference) ) {
+      PrintLabelValWithConversionCheckUnDef("Heading: ",SID,0,true);
+                        OutputStream->print("  reference: "); PrintN2kEnumType(HeadingReference,OutputStream);
+      PrintLabelValWithConversionCheckUnDef("  Heading (deg): ",Heading,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Deviation (deg): ",Deviation,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Variation (deg): ",Variation,&RadToDeg,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
