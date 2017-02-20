@@ -767,6 +767,20 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
+    if(N2kMsg.PGN != 129283L)
+        return false;
+
+    int Index = 0;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    c = N2kMsg.GetByte(Index);
+    XTEMode = (tN2kXTEMode)(c & 0x0F);
+    NavigationTerminated = c & 0x40;
+    XTE = N2kMsg.Get4ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // Navigation info
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,

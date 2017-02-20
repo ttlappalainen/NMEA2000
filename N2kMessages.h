@@ -914,6 +914,12 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
   SetN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
 }
 
+bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE);
+
+inline bool ParseN2kXTE(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
+   return ParseN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
+}
+
 //*****************************************************************************
 // Navigation info
 // Output:
