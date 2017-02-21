@@ -942,6 +942,22 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
                       DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
 }
 
+bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity);
+
+inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+   return ParseN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference, PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
+                            ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
+                            OriginWaypointNumber, DestinationWaypointNumber, DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
+}
+
 //*****************************************************************************
 // Waypoint list
 // Input:

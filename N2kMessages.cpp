@@ -804,6 +804,36 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
     N2kMsg.Add2ByteDouble(WaypointClosingVelocity,0.01);
 }
 
+bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+
+    if(N2kMsg.PGN != 129284L)
+      return false;
+
+    int Index;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    DistanceToWaypoint = N2kMsg.Get4ByteUDouble(0.01, Index);
+    c = N2kMsg.GetByte(Index);
+    BearingReference     = c & 0x01 ? N2khr_magnetic : N2khr_true;
+    PerpendicularCrossed = c & 0x04;
+    ArrivalCircleEntered = c & 0x10;
+    CalculationType      = c & 0x40 ? N2kdct_RhumbLine : N2kdct_GreatCircle;
+    ETATime = N2kMsg.Get4ByteUDouble(0.0001, Index);
+    ETADate = N2kMsg.Get2ByteUInt(Index);
+    BearingOriginToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    BearingPositionToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    OriginWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationLatitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    DestinationLongitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    WaypointClosingVelocity = N2kMsg.Get2ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // Waypoint list
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
