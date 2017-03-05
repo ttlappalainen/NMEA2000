@@ -28,6 +28,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   #define USE_N2K_CAN 2  // for use with due based CAN
   #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2 boards
   #define USE_N2K_CAN 4  // for use with avr boards
+  #define USE_N2K_CAN 5  // for use with socketCAN (linux, etc) systems
   
   There are also library specific defines:
   mcp_can:
@@ -35,6 +36,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     #define N2k_CAN_INT_PIN 21 // Use interrupt  and it is connected to pin 21
     #define USE_MCP_CAN_CLOCK_SET 8  // possible values 8 for 8Mhz and 16 for 16 Mhz clock
   */
+
 
 #ifndef _NMEA2000_CAN_H_
 #define _NMEA2000_CAN_H_
@@ -46,6 +48,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_DUE_CAN 2
 #define USE_N2K_TEENSY_CAN 3
 #define USE_N2K_AVR_CAN 4
+#define USE_N2K_SOCKET_CAN 5
 
 // Select right CAN according to prosessor
 #if !defined(USE_N2K_CAN)
@@ -56,6 +59,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \
       defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)
 #define USE_N2K_CAN USE_N2K_AVR_CAN
+#elif defined(__linux__)||defined(__linux)||defined(linux)
+#define USE_N2K_CAN USE_N2K_SOCKET_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
@@ -78,6 +83,12 @@ tNMEA2000_teensy NMEA2000;
 #include <avr_can.h>            // https://github.com/thomasonw/avr_can
 #include <NMEA2000_avr.h>       // https://github.com/thomasonw/NMEA2000_avr
 tNMEA2000_avr NMEA2000;
+
+#elif USE_N2K_CAN == USE_N2K_SOCKET_CAN
+// Use socketCAN devices 
+#include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
+tNMEA2000_SocketCAN NMEA2000;
+tSocketStream serStream;  
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
@@ -120,3 +131,4 @@ tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN,MCP_CAN_
 #endif
 
 #endif
+
