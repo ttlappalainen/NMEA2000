@@ -322,7 +322,7 @@ bool tNMEA2000::Open() {
       CANSendFrameBufferRead=0;
     }
 
-    DeviceReady=CANOpen();
+    DeviceReady = (dbMode!=dm_None) || CANOpen();
     if ( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) ) {
       if ( DeviceReady ) { ForwardStream->println(F("CAN device ready")); } else { ForwardStream->println(F("CAN device failed to open")); }
     }
@@ -1000,6 +1000,8 @@ void tNMEA2000::ParseMessages() {
 
     if (!Open()) return;  // Can not do much
 
+	if (dbMode != dm_None) return; // No much to do here when in Debug mode
+	
     SendFrames();
     SendPendingInformation();
 
