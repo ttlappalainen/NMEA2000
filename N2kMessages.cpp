@@ -639,9 +639,9 @@ bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmod
     modes = N2kMsg.GetByte(Index);
     DesiredMode = (tN2kGNSSDOPmode)((modes >> 5) & 0x07);
     ActualMode = (tN2kGNSSDOPmode)(modes & 0x07);
-    HDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
-    VDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
-    TDOP = N2kMsg.Get2ByteUDouble(0.01, Index);
+    HDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    VDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    TDOP = N2kMsg.Get2ByteDouble(0.01, Index);
     return true;
 }
 
