@@ -614,6 +614,37 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   return true;
 }
 
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP)
+{
+    N2kMsg.SetPGN(129539L);
+    N2kMsg.Priority = 6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(((DesiredMode & 0x07) << 5) | ((ActualMode & 0x07) << 2));
+    N2kMsg.Add2ByteDouble(HDOP, 0.01);
+    N2kMsg.Add2ByteDouble(VDOP, 0.01);
+    N2kMsg.Add2ByteDouble(TDOP, 0.01);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP)
+{
+    if(N2kMsg.PGN != 129539)
+        return false;
+
+    unsigned char modes;
+    int Index = 0;
+
+    SID = N2kMsg.GetByte(Index);
+    modes = N2kMsg.GetByte(Index);
+    DesiredMode = (tN2kGNSSDOPmode)((modes >> 5) & 0x07);
+    ActualMode = (tN2kGNSSDOPmode)(modes & 0x07);
+    HDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    VDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    TDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // AIS position report (class A 129038)
 // Latitude and Longitude in degrees (1e7)
@@ -736,6 +767,20 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
+    if(N2kMsg.PGN != 129283L)
+        return false;
+
+    int Index = 0;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    c = N2kMsg.GetByte(Index);
+    XTEMode = (tN2kXTEMode)(c & 0x0F);
+    NavigationTerminated = c & 0x40;
+    XTE = N2kMsg.Get4ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // Navigation info
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
@@ -757,6 +802,36 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
     N2kMsg.Add4ByteDouble(DestinationLatitude,1e-07);
     N2kMsg.Add4ByteDouble(DestinationLongitude,1e-07);
     N2kMsg.Add2ByteDouble(WaypointClosingVelocity,0.01);
+}
+
+bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+
+    if(N2kMsg.PGN != 129284L)
+      return false;
+
+    int Index;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    DistanceToWaypoint = N2kMsg.Get4ByteUDouble(0.01, Index);
+    c = N2kMsg.GetByte(Index);
+    BearingReference     = c & 0x01 ? N2khr_magnetic : N2khr_true;
+    PerpendicularCrossed = c & 0x04;
+    ArrivalCircleEntered = c & 0x10;
+    CalculationType      = c & 0x40 ? N2kdct_RhumbLine : N2kdct_GreatCircle;
+    ETATime = N2kMsg.Get4ByteUDouble(0.0001, Index);
+    ETADate = N2kMsg.Get2ByteUInt(Index);
+    BearingOriginToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    BearingPositionToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    OriginWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationLatitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    DestinationLongitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    WaypointClosingVelocity = N2kMsg.Get2ByteDouble(0.01, Index);
+    return true;
 }
 
 //*****************************************************************************

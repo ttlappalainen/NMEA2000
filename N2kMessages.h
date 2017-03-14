@@ -87,6 +87,16 @@ enum tN2kGNSSmethod {
                             N2kGNSSm_DGNSS=2,
                             N2kGNSSm_PreciseGNSS=3
                           };
+
+enum tN2kGNSSDOPmode {
+                            N2kGNSSdm_1D,
+                            N2kGNSSdm_2D,
+                            N2kGNSSdm_3D,
+                            N2kGNSSdm_Auto,
+                            N2kGNSSdm_Reserved,
+                            N2kGNSSdm_Error,
+                          };
+
 enum tN2kTempSource {
                             N2kts_SeaTemperature=0,
                             N2kts_OutsideTemperature=1,
@@ -815,6 +825,36 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
 }
 
 //*****************************************************************************
+// GNSS DOP data
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DesiredMode           Desired DOP mode.
+//  - ActualMode            Actual DOP mode.
+//  - HDOP                  Horizontal Dilution Of Precision in meters.
+//  - PDOP                  Probable dilution of precision in meters.
+//  - TDOP                  Time dilution of precision
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP);
+
+inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                              double HDOP, double VDOP, double TDOP)
+{
+    SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP);
+
+inline bool ParseN2kGNSSDOPData(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                         double& HDOP, double& VDOP, double& TDOP)
+{
+    return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+}
+
+//*****************************************************************************
 // AIS position reports for Class A
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
@@ -874,6 +914,12 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
   SetN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
 }
 
+bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE);
+
+inline bool ParseN2kXTE(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
+   return ParseN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
+}
+
 //*****************************************************************************
 // Navigation info
 // Output:
@@ -894,6 +940,22 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
                       ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
                       OriginWaypointNumber, DestinationWaypointNumber, 
                       DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);                      
+}
+
+bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity);
+
+inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+   return ParseN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference, PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
+                            ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
+                            OriginWaypointNumber, DestinationWaypointNumber, DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
 }
 
 //*****************************************************************************
