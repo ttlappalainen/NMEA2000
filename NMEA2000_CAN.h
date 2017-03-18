@@ -1,4 +1,4 @@
-/* 
+/*
 NMEA2000_CAN.h
 
 Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
@@ -29,7 +29,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2 boards
   #define USE_N2K_CAN 4  // for use with avr boards
   #define USE_N2K_CAN 5  // for use with socketCAN (linux, etc) systems
-  
+
   There are also library specific defines:
   mcp_can:
     #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
@@ -49,10 +49,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_TEENSY_CAN 3
 #define USE_N2K_AVR_CAN 4
 #define USE_N2K_SOCKET_CAN 5
+#define USE_N2K_MBED_CAN 6
+
 
 // Select right CAN according to prosessor
 #if !defined(USE_N2K_CAN)
-#if defined(__SAM3X8E__)
+#if  defined(__MBED__)					// Placing mbed 1st in tree, as the following CPUs can also be used in MBED IDE
+#define USE_N2K_CAN USE_N2K_MBED_CAN
+#elif defined(__SAM3X8E__)
 #define USE_N2K_CAN USE_N2K_DUE_CAN
 #elif defined(__MK20DX256__)||defined(__ATMEGA32U4__) || defined(__MK64FX512__) || defined (__MK66FX1M0__)
 #define USE_N2K_CAN USE_N2K_TEENSY_CAN
@@ -85,10 +89,16 @@ tNMEA2000_teensy NMEA2000;
 tNMEA2000_avr NMEA2000;
 
 #elif USE_N2K_CAN == USE_N2K_SOCKET_CAN
-// Use socketCAN devices 
+// Use socketCAN devices
 #include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
 tNMEA2000_SocketCAN NMEA2000;
-tSocketStream serStream;  
+tSocketStream serStream;
+
+#elif USE_N2K_CAN == USE_N2K_MBED_CAN
+// Use MBED devices
+#include <NMEA2000_mbed.h>       // https://github.com/thomasonw/NMEA2000_mbed
+tNMEA2000_mbed NMEA2000;
+tmbedStream serStream;
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
