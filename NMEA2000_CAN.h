@@ -29,6 +29,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2 boards
   #define USE_N2K_CAN 4  // for use with avr boards
   #define USE_N2K_CAN 5  // for use with socketCAN (linux, etc) systems
+  #define USE_N2K_CAN 6  // for use with MBED (ARM) systems
 
   There are also library specific defines:
   mcp_can:
