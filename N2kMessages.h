@@ -266,7 +266,15 @@ enum tN2kMagneticVariation {
                             N2kmagvar_WMM2015=7,
                             N2kmagvar_WMM2020=8,
                           };
+						  
+enum tN2kOnOff  {
+                            N2kOnOff_Off=0,  // No, Off, Disabled
+                            N2kOnOff_On=1, // Yes, On, Enabled
+                            N2kOnOff_Error=2, // Error
+                            N2kOnOff_Unavailable=3 // Unavailable
+                          };
 
+						  
 //*****************************************************************************
 // System date/time
 // Input:
@@ -543,6 +551,73 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   }
   return ret;
 }
+
+typedef uint64_t tN2kBinaryStatus;
+
+//*****************************************************************************
+// Returns single status of full binary bank status returned by ParseN2kPGN127501 or ParseN2kBinaryStatus.
+//   Status		- Full bank status read by ParseN2kPGN127501 or ParseN2kBinaryStatus
+//   ItemIndex	- Status item index 1-28
+tN2kOnOff N2kGetStatusOnBinaryStatus(tN2kBinaryStatus BankStatus, uint8_t ItemIndex=1);
+
+//*****************************************************************************
+// Reset all single binary status values to not available
+inline void N2kResetBinaryStatus(tN2kBinaryStatus &BankStatus) { BankStatus=0xffffffffffffffff; }
+
+//*****************************************************************************
+// Set single status to full binary bank status.
+void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStatus, uint8_t ItemIndex=1);
+
+//*****************************************************************************
+// Binary status report
+//  BankStatus        - Full bank status. Read single status by using N2kGetBinaryStatus
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus);
+
+inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus) {
+	SetN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+}
+
+//*****************************************************************************
+// Binary status report
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
+                      ,tN2kOnOff Status1
+                      ,tN2kOnOff Status2=N2kOnOff_Unavailable
+                      ,tN2kOnOff Status3=N2kOnOff_Unavailable
+                      ,tN2kOnOff Status4=N2kOnOff_Unavailable
+                    );
+
+inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
+                      ,tN2kOnOff Status1
+                      ,tN2kOnOff Status2=N2kOnOff_Unavailable
+                      ,tN2kOnOff Status3=N2kOnOff_Unavailable
+                      ,tN2kOnOff Status4=N2kOnOff_Unavailable
+					) {
+  SetN2kPGN127501(N2kMsg, DeviceBankInstance,Status1,Status2,Status3,Status4);
+}
+
+// Parse four first status of binary status report.
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
+                      ,tN2kOnOff &Status1
+                      ,tN2kOnOff &Status2
+                      ,tN2kOnOff &Status3
+                      ,tN2kOnOff &Status4
+                    );
+inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
+                      ,tN2kOnOff &Status1
+                      ,tN2kOnOff &Status2
+                      ,tN2kOnOff &Status3
+                      ,tN2kOnOff &Status4
+                    ) {
+ return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,Status1,Status2,Status3,Status4);
+}
+
+// Parse bank status of binary status report. Use N2kGetBinaryStatus to read specific status
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus);
+
+inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus) {
+ return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+}
+
 //*****************************************************************************
 // Fluid level
 // Input:

@@ -6,6 +6,7 @@
 
 void setup() {
   // Set Product information
+  NMEA2000.SetN2kCANSendFrameBufSize(100);
   NMEA2000.SetProductInformation("00000001", // Manufacturer's Model serial code
                                  100, // Manufacturer's product code
                                  "Message sender example",  // Manufacturer's Model ID
@@ -51,7 +52,7 @@ double ReadWaterTemp() {
 void SendN2kSlowData() {
   static unsigned long SlowDataUpdated=millis();
   tN2kMsg N2kMsg;
-  static double Heading=127.5;
+  static double Heading=227.5;
   
   // !delay is not good practise withing loops! I use it in this sample since
   // I tested Arduino Mega as receiver without inteerupt and it could not handle all messages
@@ -101,13 +102,25 @@ void SendN2kSlowData() {
     
     SetN2kGNSS(N2kMsg,1,17555,62000,60.1,22.5,10.5,N2kGNSSt_GPS,N2kGNSSm_GNSSfix,12,0.8,0.5,15,1,N2kGNSSt_GPS,15,2);
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
+
+    SetN2kGNSSDOPData(N2kMsg,1,N2kGNSSdm_Auto,N2kGNSSdm_Auto,1.2,-0.8,N2kDoubleNA);
+    delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     // Serial.print(millis()); Serial.println(", Temperature send ready");
 
-    SetN2kMagneticHeading(N2kMsg, 0, DegToRad(Heading), DegToRad(0.0), DegToRad(5.5)); 
+    SetN2kMagneticHeading(N2kMsg, 0, DegToRad(Heading), DegToRad(-3.0), DegToRad(5.5)); 
     delay(DelayBetweenSend); NMEA2000.SendMsg(N2kMsg);
     //Heading+=1; if (Heading>=360.0 ) Heading-=360.0;
 
     SetN2kAISClassAPosition(N2kMsg, 1, tN2kAISRepeat::N2kaisr_First, 123456789, 26.396, -80.075, 1, 1, 1, 20, 20, 30, 0, tN2kAISNavStatus::N2kaisns_At_Anchor);
+    NMEA2000.SendMsg(N2kMsg);
+
+    SetN2kBinaryStatus(N2kMsg,2,N2kOnOff_On,N2kOnOff_Unavailable,N2kOnOff_Off);
+    NMEA2000.SendMsg(N2kMsg);
+
+    tN2kBinaryStatus SwitchBoard;
+    N2kResetBinaryStatus(SwitchBoard);
+    N2kSetStatusBinaryOnStatus(SwitchBoard,N2kOnOff_On,7);
+    SetN2kBinaryStatus(N2kMsg,3,SwitchBoard);
     NMEA2000.SendMsg(N2kMsg);
   }
 }

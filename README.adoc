@@ -1,6 +1,6 @@
 = NMEA2000 library for Arduino =
 
-Object oriented NMEA2000 library for Arduino type Boards
+Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards
 
 Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
 NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
@@ -22,6 +22,12 @@ and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan l
 To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library, 
 which you can download from https://github.com/thomasonw/avr_can
 
+To use MBED boards you need also NMEA2000_mbed library and other related libraries. See origin for MBED port
+on https://github.com/thomasonw/NMEA2000_mbed
+
+To use Rasberry boards you need also NMEA2000_socketCAN library and other related libraries. See origin for Rasberry port
+on https://github.com/thomasonw/NMEA2000_socketCAN
+
 = Thanks =
 I thank Kees Verruijt for his excellent CanBoat project and Dr Andrew Mason for OpenSkipper project.
 I originally started to learn NMEA 2000 via OpenSkipper project, which development I continued. 
@@ -32,6 +38,10 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+08.04.2017 Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.
+
+09.03.2017 Added PGN 129539 support and PGN 129283, 129284 parsers by denravonska.
+
 07.03.2017 Debug mode check for DeviceReady and ParseMessages.
 
 05.03.2017 RPi socketCAN auto selection and MBED compiler portability fix by thomasonw.

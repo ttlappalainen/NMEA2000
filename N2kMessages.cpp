@@ -310,7 +310,86 @@ bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2
   
   return true;
 }
+
+//*****************************************************************************
+// Binary status
                      
+//*****************************************************************************
+tN2kOnOff N2kGetStatusOnBinaryStatus(tN2kBinaryStatus BankStatus, uint8_t ItemIndex) {
+	ItemIndex--;
+	if (ItemIndex>27) return N2kOnOff_Unavailable;
+	
+	return (tN2kOnOff)((BankStatus >> (2*ItemIndex)) & 0x03);
+}
+
+//*****************************************************************************
+void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStatus, uint8_t ItemIndex) {
+	ItemIndex--;
+	if (ItemIndex>27) return;
+	
+  tN2kBinaryStatus Mask = ~(3 << (2*ItemIndex));
+  
+	BankStatus = (BankStatus & Mask) | (ItemStatus << (2*ItemIndex));
+}
+
+//*****************************************************************************
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus) {
+    N2kMsg.SetPGN(127501L);
+    N2kMsg.Priority=6;
+	BankStatus = (BankStatus << 8) | DeviceBankInstance;
+	N2kMsg.AddUInt64(BankStatus);
+}
+
+//*****************************************************************************
+// Binary status report
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
+                      ,tN2kOnOff Status1
+                      ,tN2kOnOff Status2
+                      ,tN2kOnOff Status3
+                      ,tN2kOnOff Status4
+                    ) {
+  tN2kBinaryStatus BankStatus;
+    
+    N2kResetBinaryStatus(BankStatus);
+	BankStatus = (BankStatus << 2) | Status4;
+	BankStatus = (BankStatus << 2) | Status3;
+	BankStatus = (BankStatus << 2) | Status2;
+	BankStatus = (BankStatus << 2) | Status1;
+	SetN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
+                      ,tN2kOnOff &Status1
+                      ,tN2kOnOff &Status2
+                      ,tN2kOnOff &Status3
+                      ,tN2kOnOff &Status4
+                    ) {
+  if (N2kMsg.PGN!=127501L) return false;
+  
+  int Index=0;
+  DeviceBankInstance=N2kMsg.GetByte(Index);
+  unsigned char b=N2kMsg.GetByte(Index);
+  Status1=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status2=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status3=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status4=(tN2kOnOff)(b & 0x03); 
+
+  return true;
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus) {
+  if (N2kMsg.PGN!=127501L) return false;
+  
+  int Index=0;
+  BankStatus=N2kMsg.GetUInt64(Index);
+  DeviceBankInstance = BankStatus & 0xff;
+  BankStatus>>=8;
+  
+  return true;
+}
+
 //*****************************************************************************
 // Fluid level
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {

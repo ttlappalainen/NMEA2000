@@ -85,4 +85,7 @@ MakeN2kEnumTypeToStrFunc(tN2kDCType,tN2kDCTypeStrs)
 const char* tN2kTransmissionGearStrs[] = { "forward", "neutral", "reverse", "unknown"};
 MakeN2kEnumTypeToStrFunc(tN2kTransmissionGear,tN2kTransmissionGearStrs)
 
+const char* tN2kOnOffStrs[] = { "0", "1", "err", "NA" };
+MakeN2kEnumTypeToStrFunc(tN2kOnOff,tN2kOnOffStrs)
+
 #endif
