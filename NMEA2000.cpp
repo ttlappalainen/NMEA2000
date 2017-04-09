@@ -63,6 +63,7 @@ const unsigned long DefSingleFrameMessages[] PROGMEM = {
                                        127257L, // Attitude
                                        127488L, // Engine parameters rapid
                                        127493L, // Transmission parameters, dynamic
+                                       127501L, // Binary status report
                                        127505L, // Fluid level
                                        127508L, // Battery Status
                                        127513L, // Battery Configuration Status
