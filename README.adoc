@@ -38,6 +38,9 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+28.05.2017 Changed default NMEA2000 variable definition in NMEA2000_CAN.h to reference. So now it is possible to 
+refer it in other modules with definition: extern tNMEA2000 &NMEA2000;
+
 08.04.2017 Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.
 
 09.03.2017 Added PGN 129539 support and PGN 129283, 129284 parsers by denravonska.
