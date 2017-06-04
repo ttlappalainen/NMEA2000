@@ -26,6 +26,7 @@ void EngineRapid(const tN2kMsg &N2kMsg);
 void EngineDynamicParameters(const tN2kMsg &N2kMsg);
 void TransmissionParameters(const tN2kMsg &N2kMsg);
 void WaterDepth(const tN2kMsg &N2kMsg);
+void BinaryStatus(const tN2kMsg &N2kMsg);
 void FluidLevel(const tN2kMsg &N2kMsg);
 void OutsideEnvironmental(const tN2kMsg &N2kMsg);
 void Temperature(const tN2kMsg &N2kMsg);
@@ -35,13 +36,16 @@ void BatteryConfigurationStatus(const tN2kMsg &N2kMsg);
 void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
+void Heading(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
+  {127250L,&Heading},
   {127257L,&Attitude},
   {127488L,&EngineRapid},
   {127489L,&EngineDynamicParameters},
   {127493L,&TransmissionParameters},
+  {127501L,&BinaryStatus},
   {127505L,&FluidLevel},
   {127506L,&DCStatus},
   {127513L,&BatteryConfigurationStatus},
@@ -163,6 +167,25 @@ void TransmissionParameters(const tN2kMsg &N2kMsg) {
       PrintLabelValWithConversionCheckUnDef("  oil pressure (Pa): ",OilPressure,0,true);
       PrintLabelValWithConversionCheckUnDef("  oil temperature (C): ",OilTemperature,&KelvinToC,true);
       PrintLabelValWithConversionCheckUnDef("  discrete status: ",DiscreteStatus1,0,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void Heading(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    tN2kHeadingReference HeadingReference;
+    double Heading;
+    double Deviation;
+    double Variation;
+    
+    if (ParseN2kHeading(N2kMsg,SID,Heading,Deviation,Variation,HeadingReference) ) {
+      PrintLabelValWithConversionCheckUnDef("Heading: ",SID,0,true);
+                        OutputStream->print("  reference: "); PrintN2kEnumType(HeadingReference,OutputStream);
+      PrintLabelValWithConversionCheckUnDef("  Heading (deg): ",Heading,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Deviation (deg): ",Deviation,&RadToDeg,true);
+      PrintLabelValWithConversionCheckUnDef("  Variation (deg): ",Variation,&RadToDeg,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -347,6 +370,62 @@ void WaterDepth(const tN2kMsg &N2kMsg) {
         if ( N2kIsNA(DepthBelowTransducer) ) { 
           OutputStream->println(DepthBelowTransducer+Offset); 
         } else {  OutputStream->println(" not available"); }
+      }
+    }
+}
+
+void printLLNumber(Stream *OutputStream, unsigned long long n, uint8_t base=10)
+{
+  unsigned char buf[16 * sizeof(long)]; // Assumes 8-bit chars.
+  unsigned long long i = 0;
+
+  if (n == 0) {
+    OutputStream->print('0');
+    return;
+  }
+
+  while (n > 0) {
+    buf[i++] = n % base;
+    n /= base;
+  }
+
+  for (; i > 0; i--)
+    OutputStream->print((char) (buf[i - 1] < 10 ?
+      '0' + buf[i - 1] :
+      'A' + buf[i - 1] - 10));
+}
+
+//*****************************************************************************
+void BinaryStatusFull(const tN2kMsg &N2kMsg) {
+    unsigned char BankInstance;
+    tN2kBinaryStatus BankStatus;
+
+    if (ParseN2kBinaryStatus(N2kMsg,BankInstance,BankStatus) ) {
+      OutputStream->print("Binary status for bank "); OutputStream->print(BankInstance); OutputStream->println(":");
+      OutputStream->print("  "); //printLLNumber(OutputStream,BankStatus,16);
+      for (uint8_t i=1; i<=28; i++) {
+        if (i>1) OutputStream->print(",");
+        PrintN2kEnumType(N2kGetStatusOnBinaryStatus(BankStatus,i),OutputStream,false);
+      }
+      OutputStream->println();
+    }
+}
+
+//*****************************************************************************
+void BinaryStatus(const tN2kMsg &N2kMsg) {
+    unsigned char BankInstance;
+    tN2kOnOff Status1,Status2,Status3,Status4;
+
+    if (ParseN2kBinaryStatus(N2kMsg,BankInstance,Status1,Status2,Status3,Status4) ) {
+      if (BankInstance>2) { // note that this is only for testing different methods. MessageSender.ini sends 4 status for instace 2
+        BinaryStatusFull(N2kMsg);
+      } else {
+        OutputStream->print("Binary status for bank "); OutputStream->print(BankInstance); OutputStream->println(":");
+        OutputStream->print("  Status1=");PrintN2kEnumType(Status1,OutputStream,false);
+        OutputStream->print(", Status2=");PrintN2kEnumType(Status2,OutputStream,false);
+        OutputStream->print(", Status3=");PrintN2kEnumType(Status3,OutputStream,false);
+        OutputStream->print(", Status4=");PrintN2kEnumType(Status4,OutputStream,false);
+        OutputStream->println();
       }
     }
 }

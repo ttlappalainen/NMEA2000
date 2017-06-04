@@ -1,24 +1,24 @@
 /* 
 N2kMsg.h
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-
-  1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Definition for NMEA2000 message class used in my NMEA2000 libraries.
 
@@ -26,7 +26,10 @@ Definition for NMEA2000 message class used in my NMEA2000 libraries.
 
 #ifndef _tN2kMsg_H_
 #define _tN2kMsg_H_
-#include <Arduino.h>
+
+#include "N2kStream.h"
+#include "N2kDef.h"
+#include <stdint.h>
 
 const double   N2kDoubleNA=-1e9;
 const uint8_t  N2kUInt8NA=0xff;
@@ -35,6 +38,7 @@ const uint16_t N2kUInt16NA=0xffff;
 const int16_t  N2kInt16NA=0x7fff;
 const uint32_t N2kUInt32NA=0xffffffff;
 const int32_t  N2kInt32NA=0x7fffffff;
+#define BIT(n) (1 << n)
 
 inline bool N2kIsNA(double v) { return v==N2kDoubleNA; }
 inline bool N2kIsNA(uint8_t v) { return v==N2kUInt8NA; }
@@ -62,6 +66,7 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf);
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);
 uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf);
+uint64_t GetBuf8ByteUInt(int &index, const unsigned char *buf);
 double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
@@ -112,6 +117,7 @@ public:
   int16_t Get2ByteInt(int &Index, int16_t def=0x7fff) const;
   uint16_t Get2ByteUInt(int &Index, uint16_t def=0xffff) const;
   uint32_t Get4ByteUInt(int &Index, uint32_t def=0xffffffff) const;
+  uint64_t GetUInt64(int &Index, uint64_t def=0xffffffffffffffff) const;
   double Get1ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get1ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get2ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
@@ -124,10 +130,10 @@ public:
 
   bool Set2ByteUInt(uint16_t v, int &Index);
 
-  void Print(Stream *port, bool NoData=false) const;
-  void SendInActisenseFormat(Stream *port) const;
+  void Print(N2kStream *port, bool NoData=false) const;
+  void SendInActisenseFormat(N2kStream *port) const;
 };
 
-void PrintBuf(Stream *port, unsigned char len, const unsigned char *pData, bool AddLF=false);
+void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF=false);
 
 #endif

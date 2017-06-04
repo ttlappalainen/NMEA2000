@@ -1,6 +1,6 @@
 = NMEA2000 library for Arduino =
 
-Object oriented NMEA2000 library for Arduino type Boards
+Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards
 
 Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
 NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
@@ -9,18 +9,24 @@ To use Arduino Due board internal CAN you will also need NMEA2000_due library an
 due_can library, which you can download from  https://github.com/collin80/due_can
 
 To use Arduino boards with MCP2515 CAN bus controller, you will also need NMEA2000_mcp library
-and mcp_can library. mcp_can library can be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
-Note that NMEA2000_mcp library uses developed version of mcp_can library, which allows also to use 8MHz clock and
-has been tested with Maple Mini. So until these improvements has not been implemented to Seeed-Studio,
-use library found on https://github.com/peppeve/CAN_BUS_Shield
+and mcp_can library. Use mcp_can library found on https://github.com/ttlappalainen/CAN_BUS_Shield, which 
+is developed version of mcp_can library. This allows also to use 8MHz clock and has been tested with Maple Mini.
+mcp_can library can be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield, 
+but these improvements has not been implemented to Seeed-Studio.
 
-To use a Teensy 3.1/3.2 board internal CAN with a MCP2551 CAN transeiver (or similar, see FlexCAN documentation), you will need the
+To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551 CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
 [NMEA2000_teensy library](https://github.com/sarfata/NMEA2000_teensy) contributed by [Thomas Sarlandie](https://twitter.com/sarfata/) 
 and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan library is already included in 
 [Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension.
 
 To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library, 
 which you can download from https://github.com/thomasonw/avr_can
+
+To use MBED boards you need also NMEA2000_mbed library and other related libraries. See origin for MBED port
+on https://github.com/thomasonw/NMEA2000_mbed
+
+To use Rasberry boards you need also NMEA2000_socketCAN library and other related libraries. See origin for Rasberry port
+on https://github.com/thomasonw/NMEA2000_socketCAN
 
 = Thanks =
 I thank Kees Verruijt for his excellent CanBoat project and Dr Andrew Mason for OpenSkipper project.
@@ -32,6 +38,49 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+28.05.2017 Changed default NMEA2000 variable definition in NMEA2000_CAN.h to reference. So now it is possible to 
+refer it in other modules with definition: extern tNMEA2000 &NMEA2000;
+
+08.04.2017 Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.
+
+09.03.2017 Added PGN 129539 support and PGN 129283, 129284 parsers by denravonska.
+
+07.03.2017 Debug mode check for DeviceReady and ParseMessages.
+
+05.03.2017 RPi socketCAN auto selection and MBED compiler portability fix by thomasonw.
+
+08.02.2017 Fixed Heading PGN 127250 parsing
+
+22.01.2017 Replace pointer casting with memcpy to avoid unaligned access, and add endian support. Thanks to denravonska.
+
+- Handle for PGN 65240 "Commanded address". E.g. diagnostic device may command your device to change address.
+
+01.01.2017 Document and some example fixes to match library portability changes.
+
+20.12.2016 Added support for PGN 126464L, PGN List (Transmit and Receive). Library will automatically respond to this message. 
+You need only add message lists and call to methods ExtendTransmitMessages and/or ExtendReceiveMessages. See e.g. example
+TemperatureMonitor.
+
+17.12.2016 Fixes to avoid compiler warnings
+
+16.12.2016 Portability fixes. Thanks to denravonska and thomasonw!
+
+- NOTE! compatibility issue! There is no more default stream set on library constuctor. So in case you are using
+forwarding, you need to setup it (like in examples) NMEA2000.SetForwardStream(&Serial);
+
+- This reduces the Arduino dependency, allowing the library to more easily be used on other platforms. Check all
+changes under https://github.com/ttlappalainen/NMEA2000/pull/35
+
+01.12.2016 License change to MIT for more permissive
+
+- Also some started to remove platform dependent code.
+
+12.11.2016 PGN129025 parser added and some fixes by KimBP
+
+11.11.2016 Added support for PGN 127258 - magnetic variation by adwuk.
+
+18.10.2016 Added parsing for PGN 130311 by adwuk. Typo fix for system date comment by sarfata.
+
 19.09.2016 Lot of testing behind - hopefully works now better.
 
 - NOTE! New method SetN2kCANSendFrameBufSize. Added buffer for frames to be sent. This takes more RAM and may be critical for low RAM systems. 
@@ -171,7 +220,7 @@ CAN_BUS shield card. Under documents there is file ArduinoMega_CAN_with_MCP2515_
 for layout to build CAN-bus interface by yourself. MCP2515, MCP2551, ocillator and few
 components cost only few euros, if you are handy and used to use soldering device.
 
-- Teensy 3.1/3.2 board with a MCP2551 CAN transeiver (or similar, see FlexCAN documentation).
+- Teensy 3.1/3.2 or 3.5/3.6 board with a MCP2562 or MCP2551 CAN-bus transeiver transeiver (or similar, see FlexCAN documentation).
 
 Library has been also used with Maple Mini board, which is much cheaper than arduino.
 
@@ -188,8 +237,8 @@ and using libraries. When your Arduino environment is ready,
 
 - Download either NMEA2000_due, NMEA2000_mcp or NMEA2000_teensy (https://github.com/sarfata/NMEA2000_teensy) library zip depending you hw.
 
-- Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/peppeve/CAN_BUS_Shield) 
-library zip depending you hw or install Teensyduino for Teensy 3.1/3.2 boards.
+- Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/ttlappalainen/CAN_BUS_Shield) 
+library zip depending you hw or install Teensyduino for Teensy 3.1/3.2 or 3.5/3.6 boards.
 
 - Install all libraries (Add .ZIP library).
 
@@ -214,7 +263,7 @@ For use board with MCP2515 SPI can bus tranceiver and mcp_can library +
 #include <N2kMsg.h> +
 #include <NMEA2000.h> +
 #include <SPI.h> +
-#include <mcp_can.h> // https://github.com/peppeve/CAN_BUS_Shield +
+#include <mcp_can.h> // https://github.com/ttlappalainen/CAN_BUS_Shield +
 #include <NMEA2000_mcp.h> +
 #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select +
 tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN); +
@@ -242,21 +291,21 @@ tNMEA2000_avr NMEA2000;
 
 == License ==
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-
-  1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

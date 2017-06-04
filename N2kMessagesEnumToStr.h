@@ -1,29 +1,36 @@
-/* 
+/*
 N2kMessagesEnumToStr.h
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it how ever you like.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  NO WARRANTY AT ALL IN ANY CASE!
-  
-This is collection of functions for handling NMEA2000 bus messages. 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This is collection of functions for handling NMEA2000 bus messages.
 Library contains functions to convert enums in N2kMessages.h to
 const char *
 
-If you do not need enums in clear text, you do not need this library. 
+If you do not need enums in clear text, you do not need this library.
 */
 
 #ifndef _N2kMessagesEnumToStr_H_
 #define _N2kMessagesEnumToStr_H_
 
-#include <N2kMessages.h>
+#include "N2kMessages.h"
 
 const char *N2kEnumTypeEmpty="";
 
@@ -32,7 +39,7 @@ template<typename T> void PrintN2kEnumType(T a, Stream *OutputStream, bool addLF
   if (str[0] != '\0') {
     if (addLF) { OutputStream->println(str); } else { OutputStream->print(str); }
   } else {
-    OutputStream->print("unknown ("); OutputStream->print(a); OutputStream->println(")");
+    OutputStream->print(F("unknown (")); OutputStream->print(a); OutputStream->println(F(")"));
   }
 }
 
@@ -77,5 +84,8 @@ MakeN2kEnumTypeToStrFunc(tN2kDCType,tN2kDCTypeStrs)
 
 const char* tN2kTransmissionGearStrs[] = { "forward", "neutral", "reverse", "unknown"};
 MakeN2kEnumTypeToStrFunc(tN2kTransmissionGear,tN2kTransmissionGearStrs)
+
+const char* tN2kOnOffStrs[] = { "0", "1", "err", "NA" };
+MakeN2kEnumTypeToStrFunc(tN2kOnOff,tN2kOnOffStrs)
 
 #endif

@@ -1,27 +1,28 @@
 /* 
 N2kMessages.cpp
 
-2015-2016 Copyright (c) Kave Oy, www.kave.fi  All right reserved.
+Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
 
-Author: Timo Lappalainen
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-
-  1301  USA
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <N2kMessages.h>
+#include "N2kMessages.h"
+#include <string.h>
 
 //*****************************************************************************
 // System time
@@ -84,9 +85,9 @@ bool ParseN2kPGN127250(const tN2kMsg &N2kMsg, unsigned char &SID, double &Headin
   int Index=0;
   
   SID=N2kMsg.GetByte(Index);
-  Heading=N2kMsg.Get2ByteDouble(0.0001,Index);
-  Deviation=N2kMsg.Get2ByteUDouble(0.0001,Index);
-  Variation=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Heading=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  Deviation=N2kMsg.Get2ByteDouble(0.0001,Index);
+  Variation=N2kMsg.Get2ByteDouble(0.0001,Index);
   ref=(tN2kHeadingReference)(N2kMsg.GetByte(Index)&0x03);
   
   return true;
@@ -146,6 +147,29 @@ bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, d
 }
 
 //*****************************************************************************
+// Magnetic variation
+void SetN2kPGN127258(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation Source, uint16_t DaysSince1970, double Variation) {
+  N2kMsg.SetPGN(127258L);
+  N2kMsg.Priority=3;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte(Source & 0x0f);
+  N2kMsg.Add2ByteUInt(DaysSince1970);
+  N2kMsg.Add2ByteDouble(Variation, 0.0001);
+}
+
+bool ParseN2kPGN127258(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVariation &Source, uint16_t &DaysSince1970, double &Variation) {
+  if (N2kMsg.PGN!=127258L) return false;
+
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  Source=(tN2kMagneticVariation) (N2kMsg.GetByte(Index) & 0x0f);
+  DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+  Variation=N2kMsg.Get2ByteDouble(0.0001, Index);
+  
+  return true;
+}
+
+//*****************************************************************************
 // Engine rapid param
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed, 
                      double EngineBoostPressure, int8_t EngineTiltTrim) {
@@ -196,35 +220,35 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
 
-  int engineStatus1P1 = B00000000;
-  int engineStatus1P2 = B00000000;
-  int engineStatus2 = B00000000;
-  if (flagCheckEngine) engineStatus1P1 |= B00000001;
-  if (flagOverTemp) engineStatus1P1 |= B00000010;
-  if (flagLowOilPress) engineStatus1P1 |= B00000100;
-  if (flagLowOilLevel) engineStatus1P1 |= B00001000;
-  if (flagLowFuelPress) engineStatus1P1 |= B00010000;
-  if (flagLowSystemVoltage) engineStatus1P1 |= B00100000;
-  if (flagLowCoolantLevel) engineStatus1P1 |= B01000000;
-  if (flagWaterFlow) engineStatus1P1 |= B10000000;
+  int engineStatus1P1 = 0;
+  int engineStatus1P2 = 0;
+  int engineStatus2 = 0;
+  if (flagCheckEngine) engineStatus1P1      |= BIT(0);
+  if (flagOverTemp) engineStatus1P1         |= BIT(1);
+  if (flagLowOilPress) engineStatus1P1      |= BIT(2);
+  if (flagLowOilLevel) engineStatus1P1      |= BIT(3);
+  if (flagLowFuelPress) engineStatus1P1     |= BIT(4);
+  if (flagLowSystemVoltage) engineStatus1P1 |= BIT(5);
+  if (flagLowCoolantLevel) engineStatus1P1  |= BIT(6);
+  if (flagWaterFlow) engineStatus1P1        |= BIT(7);
 
-  if (flagWaterInFuel) engineStatus1P2 |= B00000001;
-  if (flagChargeIndicator) engineStatus1P2 |= B00000010;
-  if (flagPreheatIndicator) engineStatus1P2 |= B00000100;
-  if (flagHighBoostPress) engineStatus1P2 |= B00001000;
-  if (flagRevLimitExceeded) engineStatus1P2 |= B00010000;
-  if (flagEgrSystem) engineStatus1P2 |= B00100000;
-  if (flagTPS) engineStatus1P2 |= B01000000;
-  if (flagEmergencyStopMode) engineStatus1P2 |= B10000000;
+  if (flagWaterInFuel) engineStatus1P2       |= BIT(0);
+  if (flagChargeIndicator) engineStatus1P2   |= BIT(1);
+  if (flagPreheatIndicator) engineStatus1P2  |= BIT(2);
+  if (flagHighBoostPress) engineStatus1P2    |= BIT(3);
+  if (flagRevLimitExceeded) engineStatus1P2  |= BIT(4);
+  if (flagEgrSystem) engineStatus1P2         |= BIT(5);
+  if (flagTPS) engineStatus1P2               |= BIT(6);
+  if (flagEmergencyStopMode) engineStatus1P2 |= BIT(7);
 
-  if (flagWarning1) engineStatus2 |= B00000001;
-  if (flagWarning2) engineStatus2 |= B00000010;
-  if (flagPowerReduction) engineStatus2 |= B00000100;
-  if (flagMaintenanceNeeded) engineStatus2 |= B00001000;
-  if (flagEngineCommError) engineStatus2 |= B00010000;
-  if (flagSubThrottle) engineStatus2 |= B00100000;
-  if (flagNeutralStartProtect) engineStatus2 |= B01000000;
-  if (flagEngineShuttingDown) engineStatus2 |= B10000000;
+  if (flagWarning1) engineStatus2            |= BIT(0);
+  if (flagWarning2) engineStatus2            |= BIT(1);
+  if (flagPowerReduction) engineStatus2      |= BIT(2);
+  if (flagMaintenanceNeeded) engineStatus2   |= BIT(3);
+  if (flagEngineCommError) engineStatus2     |= BIT(4);
+  if (flagSubThrottle) engineStatus2         |= BIT(5);
+  if (flagNeutralStartProtect) engineStatus2 |= BIT(6);
+  if (flagEngineShuttingDown) engineStatus2  |= BIT(7);
   N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
   N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
 
@@ -286,7 +310,86 @@ bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2
   
   return true;
 }
+
+//*****************************************************************************
+// Binary status
                      
+//*****************************************************************************
+tN2kOnOff N2kGetStatusOnBinaryStatus(tN2kBinaryStatus BankStatus, uint8_t ItemIndex) {
+	ItemIndex--;
+	if (ItemIndex>27) return N2kOnOff_Unavailable;
+	
+	return (tN2kOnOff)((BankStatus >> (2*ItemIndex)) & 0x03);
+}
+
+//*****************************************************************************
+void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStatus, uint8_t ItemIndex) {
+	ItemIndex--;
+	if (ItemIndex>27) return;
+	
+  tN2kBinaryStatus Mask = ~(3 << (2*ItemIndex));
+  
+	BankStatus = (BankStatus & Mask) | (ItemStatus << (2*ItemIndex));
+}
+
+//*****************************************************************************
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus) {
+    N2kMsg.SetPGN(127501L);
+    N2kMsg.Priority=6;
+	BankStatus = (BankStatus << 8) | DeviceBankInstance;
+	N2kMsg.AddUInt64(BankStatus);
+}
+
+//*****************************************************************************
+// Binary status report
+void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
+                      ,tN2kOnOff Status1
+                      ,tN2kOnOff Status2
+                      ,tN2kOnOff Status3
+                      ,tN2kOnOff Status4
+                    ) {
+  tN2kBinaryStatus BankStatus;
+    
+    N2kResetBinaryStatus(BankStatus);
+	BankStatus = (BankStatus << 2) | Status4;
+	BankStatus = (BankStatus << 2) | Status3;
+	BankStatus = (BankStatus << 2) | Status2;
+	BankStatus = (BankStatus << 2) | Status1;
+	SetN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
+                      ,tN2kOnOff &Status1
+                      ,tN2kOnOff &Status2
+                      ,tN2kOnOff &Status3
+                      ,tN2kOnOff &Status4
+                    ) {
+  if (N2kMsg.PGN!=127501L) return false;
+  
+  int Index=0;
+  DeviceBankInstance=N2kMsg.GetByte(Index);
+  unsigned char b=N2kMsg.GetByte(Index);
+  Status1=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status2=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status3=(tN2kOnOff)(b & 0x03); 
+  b>>=2; Status4=(tN2kOnOff)(b & 0x03); 
+
+  return true;
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus) {
+  if (N2kMsg.PGN!=127501L) return false;
+  
+  int Index=0;
+  BankStatus=N2kMsg.GetUInt64(Index);
+  DeviceBankInstance = BankStatus & 0xff;
+  BankStatus>>=8;
+  
+  return true;
+}
+
 //*****************************************************************************
 // Fluid level
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
@@ -488,6 +591,14 @@ void SetN2kPGN129025(tN2kMsg &N2kMsg, double Latitude, double Longitude) {
     N2kMsg.Add4ByteDouble(Longitude,1e-7);
 }
 
+bool ParseN2kPGN129025(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude) {
+	if (N2kMsg.PGN!=129025L) return false;
+
+	int Index = 0;
+	Latitude=N2kMsg.Get4ByteDouble(1e-7, Index);
+	Longitude=N2kMsg.Get4ByteDouble(1e-7, Index);
+	return true;
+}
 //*****************************************************************************
 // COG SOG rapid
 // COG should be in radians
@@ -510,8 +621,8 @@ bool ParseN2kPGN129026(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kHeadingRef
   
   SID=N2kMsg.GetByte(Index);
   b=N2kMsg.GetByte(Index); ref=(tN2kHeadingReference)( b & 0x03 );
-  COG=N2kMsg.Get2ByteDouble(0.0001,Index);
-  SOG=N2kMsg.Get2ByteDouble(0.01,Index);
+  COG=N2kMsg.Get2ByteUDouble(0.0001,Index);
+  SOG=N2kMsg.Get2ByteUDouble(0.01,Index);
 
   return true;
 }
@@ -582,8 +693,41 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   return true;
 }
 
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP)
+{
+    N2kMsg.SetPGN(129539L);
+    N2kMsg.Priority = 6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(((DesiredMode & 0x07) << 5) | ((ActualMode & 0x07) << 2));
+    N2kMsg.Add2ByteDouble(HDOP, 0.01);
+    N2kMsg.Add2ByteDouble(VDOP, 0.01);
+    N2kMsg.Add2ByteDouble(TDOP, 0.01);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP)
+{
+    if(N2kMsg.PGN != 129539)
+        return false;
+
+    unsigned char modes;
+    int Index = 0;
+
+    SID = N2kMsg.GetByte(Index);
+    modes = N2kMsg.GetByte(Index);
+    DesiredMode = (tN2kGNSSDOPmode)((modes >> 5) & 0x07);
+    ActualMode = (tN2kGNSSDOPmode)(modes & 0x07);
+    HDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    VDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    TDOP = N2kMsg.Get2ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // AIS position report (class A 129038)
+// Latitude and Longitude in degrees (1e7)
+// COG and Heading in radians (1e4)
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
                         double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)
@@ -702,6 +846,20 @@ void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bo
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
+    if(N2kMsg.PGN != 129283L)
+        return false;
+
+    int Index = 0;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    c = N2kMsg.GetByte(Index);
+    XTEMode = (tN2kXTEMode)(c & 0x0F);
+    NavigationTerminated = c & 0x40;
+    XTE = N2kMsg.Get4ByteDouble(0.01, Index);
+    return true;
+}
+
 //*****************************************************************************
 // Navigation info
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
@@ -723,6 +881,36 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
     N2kMsg.Add4ByteDouble(DestinationLatitude,1e-07);
     N2kMsg.Add4ByteDouble(DestinationLongitude,1e-07);
     N2kMsg.Add2ByteDouble(WaypointClosingVelocity,0.01);
+}
+
+bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
+                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+
+    if(N2kMsg.PGN != 129284L)
+      return false;
+
+    int Index;
+    unsigned char c;
+    SID = N2kMsg.GetByte(Index);
+    DistanceToWaypoint = N2kMsg.Get4ByteUDouble(0.01, Index);
+    c = N2kMsg.GetByte(Index);
+    BearingReference     = c & 0x01 ? N2khr_magnetic : N2khr_true;
+    PerpendicularCrossed = c & 0x04;
+    ArrivalCircleEntered = c & 0x10;
+    CalculationType      = c & 0x40 ? N2kdct_RhumbLine : N2kdct_GreatCircle;
+    ETATime = N2kMsg.Get4ByteUDouble(0.0001, Index);
+    ETADate = N2kMsg.Get2ByteUInt(Index);
+    BearingOriginToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    BearingPositionToDestinationWaypoint = N2kMsg.Get2ByteUDouble(0.0001, Index);
+    OriginWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationWaypointNumber = N2kMsg.Get4ByteUInt(Index);
+    DestinationLatitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    DestinationLongitude = N2kMsg.Get4ByteDouble(1e-07, Index);
+    WaypointClosingVelocity = N2kMsg.Get2ByteDouble(0.01, Index);
+    return true;
 }
 
 //*****************************************************************************
@@ -1014,6 +1202,20 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInst
     N2kMsg.Add2ByteUDouble(Temperature,0.01);
     N2kMsg.Add2ByteDouble(Humidity,0.004);
     N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
+}
+
+bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
+                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure) {
+    if (N2kMsg.PGN!=130311L) return false;
+    unsigned char vb;
+    int Index=0;
+    SID=N2kMsg.GetByte(Index);
+    vb=N2kMsg.GetByte(Index); TempInstance=(tN2kTempSource)(vb & 0x3f); HumidityInstance=(tN2kHumiditySource)(vb>>6 & 0x03);
+    Temperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+    Humidity=N2kMsg.Get2ByteDouble(0.004,Index);
+    AtmosphericPressure=N2kMsg.Get2ByteUDouble(100,Index);
+    
+    return true;
 }
 
 //*****************************************************************************
