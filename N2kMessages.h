@@ -163,7 +163,7 @@ enum tN2kSpeedWaterReferenceType {
                           };
 
 enum tN2kRudderDirectionOrder {
-                            N2kRDO_NoDirectioOrder=0,
+                            N2kRDO_NoDirectionOrder=0,
                             N2kRDO_MoveToStarboard=1,
                             N2kRDO_MoveToPort=2
                           };
@@ -318,11 +318,26 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA);
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA);
 
 inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA) {
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA) {
   SetN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
+}
+
+bool ParseN2kPGN127245(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder);
+
+inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
+  return ParseN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
+}
+                     
+inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition) {
+  tN2kRudderDirectionOrder RudderDirectionOrder;
+  double AngleOrder;
+  unsigned char Instance;
+  return ParseN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
 }
                      
 //*****************************************************************************

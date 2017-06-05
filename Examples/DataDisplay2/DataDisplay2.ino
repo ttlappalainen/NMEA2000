@@ -37,10 +37,12 @@ void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
 void Heading(const tN2kMsg &N2kMsg);
+void Rudder(const tN2kMsg &N2kMsg);
 void Pressure(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
+  {127245L,&Rudder },
   {127250L,&Heading},
   {127257L,&Attitude},
   {127488L,&EngineRapid},
@@ -99,6 +101,23 @@ void SystemTime(const tN2kMsg &N2kMsg) {
       PrintLabelValWithConversionCheckUnDef("  days since 1.1.1970: ",SystemDate,0,true);
       PrintLabelValWithConversionCheckUnDef("  seconds since midnight: ",SystemTime,0,true);
                         OutputStream->print("  time source: "); PrintN2kEnumType(TimeSource,OutputStream);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void Rudder(const tN2kMsg &N2kMsg) {
+    unsigned char Instance;
+    tN2kRudderDirectionOrder RudderDirectionOrder;
+    double RudderPosition;
+    double AngleOrder;
+    
+    if (ParseN2kRudder(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder) ) {
+      PrintLabelValWithConversionCheckUnDef("Rudder: ",Instance,0,true);
+      PrintLabelValWithConversionCheckUnDef("  position (deg): ",RudderPosition,&RadToDeg,true);
+                        OutputStream->print("  direction order: "); PrintN2kEnumType(RudderDirectionOrder,OutputStream);
+      PrintLabelValWithConversionCheckUnDef("  angle order (deg): ",AngleOrder,&RadToDeg,true);
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
@@ -391,6 +410,7 @@ void WaterDepth(const tN2kMsg &N2kMsg) {
     }
 }
 
+//*****************************************************************************
 void printLLNumber(Stream *OutputStream, unsigned long long n, uint8_t base=10)
 {
   unsigned char buf[16 * sizeof(long)]; // Assumes 8-bit chars.

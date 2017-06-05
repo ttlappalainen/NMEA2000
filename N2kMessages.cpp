@@ -66,6 +66,18 @@ void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Insta
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN127245(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
+  if (N2kMsg.PGN!=127245L) return false;
+
+  int Index=0;
+  Instance=N2kMsg.GetByte(Index);
+  RudderDirectionOrder=(tN2kRudderDirectionOrder)(N2kMsg.GetByte(Index)&0x7);
+  AngleOrder=N2kMsg.Get2ByteDouble(0.0001,Index);
+  RudderPosition=N2kMsg.Get2ByteDouble(0.0001,Index);
+  return true;
+}
+
 //*****************************************************************************
 // Vessel Heading
 // Angles should be in radians

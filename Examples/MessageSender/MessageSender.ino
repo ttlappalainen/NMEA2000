@@ -120,6 +120,9 @@ void SendN2kSlowData() {
     SetN2kPressure(N2kMsg,0,2,N2kps_Atmospheric,mBarToPascal(1024));
     NMEA2000.SendMsg(N2kMsg);
 
+    SetN2kRudder(N2kMsg,DegToRad(5),1,N2kRDO_MoveToStarboard,DegToRad(-5));
+    NMEA2000.SendMsg(N2kMsg);
+
     tN2kBinaryStatus SwitchBoard;
     N2kResetBinaryStatus(SwitchBoard);
     N2kSetStatusBinaryOnStatus(SwitchBoard,N2kOnOff_On,7);
