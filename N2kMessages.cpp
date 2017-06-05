@@ -1261,7 +1261,7 @@ void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureI
 }
 
 bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
-                       tN2kPressureSource &PressureSource, double ActualPressure) {
+                       tN2kPressureSource &PressureSource, double &ActualPressure) {
   if (N2kMsg.PGN != 130314L) return false;
   int Index = 0;
   SID=N2kMsg.GetByte(Index);

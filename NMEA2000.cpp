@@ -839,7 +839,8 @@ bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
 void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev) {
     switch (RequestedPGN) {
       case 60928L: /*ISO Address Claim*/  // Someone is asking others to claim their addresses
-        SendIsoAddressClaim(N2kMsg.Source,iDev);
+        // I tracked traffic of my devices and noticed that they respond with broadcast address instead of caller address.
+        SendIsoAddressClaim(0xff,iDev);
         break;
       case 126464L:
         HandlePGNListRequest(N2kMsg.Source,iDev);
@@ -912,7 +913,6 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
 
 //*****************************************************************************
 void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
-  return;
   //Serial.print(millis()); Serial.print(" Commanded address:"); Serial.println(N2kMsg.Destination);
   int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
     if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing

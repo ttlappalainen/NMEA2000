@@ -37,6 +37,7 @@ void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
 void Heading(const tN2kMsg &N2kMsg);
+void Pressure(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
@@ -54,6 +55,7 @@ tNMEA2000Handler NMEA2000Handlers[]={
   {129029L,&GNSS},
   {130310L,&OutsideEnvironmental},
   {130312L,&Temperature},
+  {130314L,&Pressure},
   {130316L,&TemperatureExt},
   {0,0}
 };
@@ -279,6 +281,21 @@ void Temperature(const tN2kMsg &N2kMsg) {
                         OutputStream->print("Temperature source: "); PrintN2kEnumType(TempSource,OutputStream,false);
       PrintLabelValWithConversionCheckUnDef(", actual temperature: ",ActualTemperature,&KelvinToC);
       PrintLabelValWithConversionCheckUnDef(", set temperature: ",SetTemperature,&KelvinToC,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void Pressure(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    unsigned char Instance;
+    tN2kPressureSource PressureSource;
+    double ActualPressure;
+    
+    if ( ParseN2kPressure(N2kMsg,SID,Instance,PressureSource,ActualPressure) ) {
+                        OutputStream->print("Pressure source: "); PrintN2kEnumType(PressureSource,OutputStream,false);
+      PrintLabelValWithConversionCheckUnDef(", pressure: ",ActualPressure,&PascalTomBar,true);
     } else {
       OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
     }
