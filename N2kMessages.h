@@ -121,6 +121,14 @@ enum tN2kHumiditySource {
                             N2khs_Undef=1
                           };
 
+enum tN2kPressureSource {
+                            N2kps_Atmospheric = 0,
+                            N2kps_Water = 1,
+                            N2kps_Steam = 2,
+                            N2kps_CompressedAir = 3,
+                            N2kps_Hydraulic = 4
+                          };
+
 enum tN2kTimeSource {
                             N2ktimes_GPS=0,
                             N2ktimes_GLONASS=1,
@@ -1268,6 +1276,30 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
                      double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130312(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
+
+//*****************************************************************************
+// Pressure
+// Pressures should be in Pascals
+// Input:
+//  - SID                   Sequence ID.
+//  - PressureInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - PressureSource            see tN2kPressureSource
+//  - Pressure              Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double Pressure);
+inline void SetN2kPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                           tN2kPressureSource PressureSource, double Pressure) {
+  SetN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
+}
+bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double Pressure);
+inline bool ParseN2kPressure(tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double &Pressure) {
+  ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
+}
+
 
 //*****************************************************************************
 // Temperature

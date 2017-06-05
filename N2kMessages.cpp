@@ -1247,6 +1247,30 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 }
 
 //*****************************************************************************
+// Actual Pressure
+// Pressure should be in Pascals
+void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double ActualPressure) {
+  N2kMsg.SetPGN(130314L);
+  N2kMsg.Priority = 6;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte((unsigned char) PressureInstance);
+  N2kMsg.AddByte((unsigned char) PressureSource);
+  N2kMsg.Add4ByteUDouble(ActualPressure,10000);
+}
+
+bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double ActualPressure) {
+  if (N2kMsg.PGN != 130314L) return false;
+  int Index = 0;
+  SID=N2kMsg.GetByte(Index);
+  PressureInstance=N2kMsg.GetByte(Index);
+  PressureSource=(tN2kPressureSource)N2kMsg.GetByte(Index);
+  ActualPressure=N2kMsg.Get4ByteUDouble(10000, Index);
+  return true;
+}
+
+//*****************************************************************************
 // Temperature extended range
 // Temperatures should be in Kelvins
 void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
