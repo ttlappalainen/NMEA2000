@@ -43,8 +43,9 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
-05.06.2017 
-- Added PGN 130314 by sarlandie.
+05.06.2017
+ 
+- Added PGN 130314 by sarfata.
 
 - Added PGN 127245 rudder parser
 
