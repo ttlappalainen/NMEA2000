@@ -1295,9 +1295,9 @@ inline void SetN2kPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char Pre
 }
 bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
                        tN2kPressureSource &PressureSource, double Pressure);
-inline bool ParseN2kPressure(tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
                        tN2kPressureSource &PressureSource, double &Pressure) {
-  ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
+  return ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
 }
 
 
