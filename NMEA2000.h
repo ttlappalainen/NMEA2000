@@ -372,7 +372,7 @@ public:
                               uint8_t _SystemInstance=0xff,
                               int iDev=0
                               );
-    const tDeviceInformation GetDeviceInformation(int iDev) { if (iDev<0 || iDev>=DeviceCount) return tDeviceInformation(); return DeviceInformation[iDev]; }
+    const tDeviceInformation GetDeviceInformation(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return tDeviceInformation(); return DeviceInformation[iDev]; }
 
     // ToDo:
     // If your device has several functions, it should have own bus address for each.
@@ -434,7 +434,7 @@ public:
 #endif
     // Read address for current device.
     // Multidevice support is under construction.
-    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return DeviceInformation[DeviceIndex].N2kSource; return DeviceInformation[DeviceCount-1].N2kSource; }
+    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return DeviceInformation[DeviceIndex].N2kSource; return DeviceInformation[0].N2kSource; }
 
     // You can check has this device changed its address. If yes, it is mandatory to
     // save changed address to e.g. EEPROM and use that on next start.
