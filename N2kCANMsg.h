@@ -29,7 +29,7 @@ class tN2kCANMsg
 {
 public:
   tN2kCANMsg()
-  : Ready(false),FreeMsg(true),SystemMessage(false) {
+  : Ready(false),FreeMsg(true),SystemMessage(false), KnownMessage(false), TPRequireCTS(false), TPMaxPackets(0) {
 	  N2kMsg.Clear();
   }
   tN2kMsg N2kMsg;
@@ -37,11 +37,13 @@ public:
   bool FreeMsg; // Msg is free for fill up
   bool SystemMessage;
   bool KnownMessage;
-  unsigned char LastFrame; // Last received frame on fast packets
+  bool TPRequireCTS;
+  unsigned char TPMaxPackets; // =0 not TP message. >0 number of packets can be received.
+  unsigned char LastFrame; // Last received frame sequence number on fast packets or multi packet
   unsigned char CopiedLen;
   
 public:
-  void FreeMessage() {FreeMsg=true; SystemMessage=false; N2kMsg.Clear(); }  
+  void FreeMessage() {FreeMsg=true; Ready=false; SystemMessage=false; TPMaxPackets=0; TPRequireCTS=false; N2kMsg.Clear(); N2kMsg.Source=0; }  
 };
 
 #endif

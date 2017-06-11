@@ -1297,9 +1297,9 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
 // Pressures should be in Pascals
 // Input:
 //  - SID                   Sequence ID.
-//  - PressureInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
-//  - PressureSource            see tN2kPressureSource
-//  - Pressure              Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+//  - PressureInstance      This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - PressureSource        see tN2kPressureSource
+//  - Pressure              Pressure in Pascals. Use function mBarToPascal, if you like to use mBar
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
@@ -1315,6 +1315,22 @@ inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
   return ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
 }
 
+//*****************************************************************************
+// Set pressure
+// Pressures should be in Pascals
+// Input:
+//  - SID                       Sequence ID.
+//  - PressureInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - PressureSource            see tN2kPressureSource
+//  - Set pressure              Set pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double SetPressure);
+inline void SetN2kSetPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                           tN2kPressureSource PressureSource, double SetPressure) {
+  SetN2kPGN130315(N2kMsg, SID, PressureInstance, PressureSource, SetPressure);
+}
 
 //*****************************************************************************
 // Temperature
