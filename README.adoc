@@ -8,7 +8,7 @@ NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
 
 Library tries to fullfill NMEA 2000 mandatory functions and behaviour, so it looks a bit complex inside. With default
  settings it requires about 23 kB rom and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega, Due or
-Teensy 3.2 boards. Arduino Uno board has too little memory for full functionality. See memory requirements later.
+Teensy 3.2 boards. Arduino Uno board has too little memory for full functionality. See "Memory requirements" later.
 
 To use Arduino Due board internal CAN you will also need NMEA2000_due library and
 due_can library, which you can download from  https://github.com/collin80/due_can
@@ -44,6 +44,7 @@ I also thank for anybody who has extended library with new PGNs or processor sup
 
 == Changes ==
 02.06.2017 Added NMEA 2000 mandatory features. Some bug fixes. 
+
 - !NOTE compatibility change. PROGMEM configuration information did not work and actually wasted RAM.
   You should define each configuration information string alone as PROGMEM and call changed SetProgmemConfigurationInformation.
   See sample BatteryMonitor
