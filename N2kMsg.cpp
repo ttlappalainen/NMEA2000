@@ -212,6 +212,13 @@ uint16_t tN2kMsg::Get2ByteUInt(int &Index, uint16_t def) const {
 }
 
 //*****************************************************************************
+uint32_t tN2kMsg::Get3ByteUInt(int &Index, uint32_t def) const {
+  if (Index+3<=DataLen) {
+    return GetBuf3ByteUInt(Index,Data);
+  } else return def;
+}
+
+//*****************************************************************************
 uint32_t tN2kMsg::Get4ByteUInt(int &Index, uint32_t def) const {
   if (Index+4<=DataLen) {
     return GetBuf4ByteUInt(Index,Data);
@@ -435,6 +442,11 @@ int16_t GetBuf2ByteInt(int &index, const unsigned char *buf) {
 //*****************************************************************************
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf) {
   return GetBuf<uint16_t>(2, index, buf);
+}
+
+//*****************************************************************************
+uint32_t GetBuf3ByteUInt(int &index, const unsigned char *buf) {
+  return GetBuf<uint32_t>(3, index, buf);
 }
 
 //*****************************************************************************

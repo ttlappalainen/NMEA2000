@@ -66,6 +66,18 @@ void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Insta
     N2kMsg.AddByte(0xff); // Reserved
 }
 
+bool ParseN2kPGN127245(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
+  if (N2kMsg.PGN!=127245L) return false;
+
+  int Index=0;
+  Instance=N2kMsg.GetByte(Index);
+  RudderDirectionOrder=(tN2kRudderDirectionOrder)(N2kMsg.GetByte(Index)&0x7);
+  AngleOrder=N2kMsg.Get2ByteDouble(0.0001,Index);
+  RudderPosition=N2kMsg.Get2ByteDouble(0.0001,Index);
+  return true;
+}
+
 //*****************************************************************************
 // Vessel Heading
 // Angles should be in radians
@@ -1244,6 +1256,45 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   SetTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
   
   return true;
+}
+
+//*****************************************************************************
+// Actual Pressure
+// Pressure should be in Pascals
+void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double ActualPressure) {
+  N2kMsg.SetPGN(130314L);
+  N2kMsg.Priority = 6;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte((unsigned char) PressureInstance);
+  N2kMsg.AddByte((unsigned char) PressureSource);
+  N2kMsg.Add4ByteUDouble(ActualPressure,0.1);
+  N2kMsg.AddByte(0xff); // reserved
+}
+
+bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double &ActualPressure) {
+  if (N2kMsg.PGN != 130314L) return false;
+  int Index = 0;
+  SID=N2kMsg.GetByte(Index);
+  PressureInstance=N2kMsg.GetByte(Index);
+  PressureSource=(tN2kPressureSource)N2kMsg.GetByte(Index);
+  ActualPressure=N2kMsg.Get4ByteUDouble(0.1, Index);
+  return true;
+}
+
+//*****************************************************************************
+// Set Pressure
+// Pressure should be in Pascals
+void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double SetPressure) {
+  N2kMsg.SetPGN(130315L);
+  N2kMsg.Priority = 6;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte((unsigned char) PressureInstance);
+  N2kMsg.AddByte((unsigned char) PressureSource);
+  N2kMsg.Add4ByteUDouble(SetPressure,0.1);
+  N2kMsg.AddByte(0xff); // reserved
 }
 
 //*****************************************************************************

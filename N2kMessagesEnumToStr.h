@@ -88,4 +88,11 @@ MakeN2kEnumTypeToStrFunc(tN2kTransmissionGear,tN2kTransmissionGearStrs)
 const char* tN2kOnOffStrs[] = { "0", "1", "err", "NA" };
 MakeN2kEnumTypeToStrFunc(tN2kOnOff,tN2kOnOffStrs)
 
+const char* tN2kPressureStrs[] = { "atmospheric", "water", "steam", "compressed air", "Hydraulic" };
+MakeN2kEnumTypeToStrFunc(tN2kPressureSource,tN2kPressureStrs)
+
+const char* tN2kRudderDirectionOrderStrs[] = { "no direction order", "move to starboard", "move to port" };
+MakeN2kEnumTypeToStrFunc(tN2kRudderDirectionOrder,tN2kRudderDirectionOrderStrs)
+
+
 #endif

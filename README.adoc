@@ -1,9 +1,14 @@
-= NMEA2000 library for Arduino =
+= NMEA2000 library for C++ =
 
-Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards
+Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards. These board types has been tested, but library may work
+also in other systems.
 
 Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
 NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
+
+Library tries to fullfill NMEA 2000 mandatory functions and behaviour, so it looks a bit complex inside. With default
+ settings it requires about 23 kB rom and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega, Due or
+Teensy 3.2 boards. Arduino Uno board has too little memory for full functionality. See "Memory requirements" later.
 
 To use Arduino Due board internal CAN you will also need NMEA2000_due library and
 due_can library, which you can download from  https://github.com/collin80/due_can
@@ -38,6 +43,42 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+02.06.2017 Added NMEA 2000 mandatory features. Some bug fixes. 
+
+- !NOTE compatibility change. PROGMEM configuration information did not work and actually wasted RAM.
+  You should define each configuration information string alone as PROGMEM and call changed SetProgmemConfigurationInformation.
+  See sample BatteryMonitor
+
+- Due to new mandatory features library requires more RAM and program memory. It is possible to squeeze requirements
+with compiler options. See more info on NMEA2000_CompilerDefns.h.
+  
+- Added new class tN2kGroupFunctionHandler (N2kGroupFunction.h/.cpp) for NMEA 2000 group function (PGN 126208) handling.
+Group function can be used to e.g. to set "temperature instance" or "set temperature" fields on PGN 130316. 
+
+- Added automatic Heartbeat, which is mandatory for certified NMEA 2000 devices. If you do not want it to be sent, 
+you have to set heartbeat interval to 0. Added also function SetHeartbeatInterval, GetHeartbeatInterval and SendHeartbeat.
+
+- Added group function handling for PGN 60928 (ISO Address) and PGN 126993 (Heartbeat). Handlers can be found on
+N2kGroupFunctionDefaultHandlers module.
+
+- Added functions ReadResetDeviceInformationChanged, SetDeviceInformationInstances, GetDeviceInformation for checking, setting and reading
+device instance changes. See more info on document.
+
+- Added ISO Multi-packet handling. Changed logic on SetN2kCANBufMsg due this.
+
+05.06.2017
+ 
+- Added PGN 130314 by sarfata.
+
+- Added PGN 127245 rudder parser
+
+- Fixed Device Information, last bit must be set to 1
+
+- Fixed response to ISO Address Claim request. Seems that all new devices respond allways with broadcast instead of caller address.
+
+28.05.2017 Changed default NMEA2000 variable definition in NMEA2000_CAN.h to reference. So now it is possible to 
+refer it in other modules with definition: extern tNMEA2000 &NMEA2000;
+
 08.04.2017 Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.
 
 09.03.2017 Added PGN 129539 support and PGN 129283, 129284 parsers by denravonska.
@@ -203,6 +244,29 @@ include one file NMEA2000_CAN.h, which automatically selects right CAN library a
 different hw. Currently supported CAN libraries are mcp_can, due_can and teensy.
 Note! NMEA2000_CAN.h is now used on examples TemperatureMonitor and WindMonitor!
 
+== Memory requirements ==
+
+I have tried to measure memory used by library, but it is not so simple, since there are some automated operations. 
+With version 11.06.2017 I got results:
+
+- Approximate ROM 26.9 kB
+- Approximate RAM  3.4 kB
+
+This is with simple TemperatureMonitor example. This can be squeezed by setting:
+
+-  NMEA2000.SetN2kCANMsgBufSize(2); +
+  NMEA2000.SetN2kCANSendFrameBufSize(15); +
+inside setup() before NMEA2000.Open(); +
+
+- Defining ProductInformation to PROGMEM as in BatteryMonitor example.
+
+- Disabling all extra features. See NMEA2000_CompilerDefns.h
+
+- Disable interrupt receiving.
+
+With those setting you can go down to appr. 19 kB ROM and 1.9 kB RAM. So for 2 kB devices like Arduino Uno, there is not much
+for your own code.
+
 == Hardware setup ==
 
 To use Arduino NMEA2000 library you will need either
@@ -285,6 +349,22 @@ For use with Atmel AVR processors internal CAN controller +
 #include <avr_can.h>            // https://github.com/thomasonw/avr_can +
 #include <NMEA2000_avr.h>       // https://github.com/thomasonw/NMEA2000_avr +
 tNMEA2000_avr NMEA2000;
+
+== References ==
+- https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+List of NMEA 2000 registrated companies
+
+- http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf +
+Device class and function codes
+
+- http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf +
+ISO address claim
+
+- https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+Group function PGN 126208 handling
+
+- https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf +
+Heartbeat PGN 126993
 
 == License ==
 

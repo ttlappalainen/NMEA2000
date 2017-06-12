@@ -75,30 +75,30 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Use Arduino Due internal CAN with due_can library
 #include <due_can.h>         // https://github.com/collin80/due_can
 #include <NMEA2000_due.h>
-tNMEA2000_due NMEA2000;
+tNMEA2000 &NMEA2000=*(new tNMEA2000_due());
 
 #elif USE_N2K_CAN == USE_N2K_TEENSY_CAN
 // Use Teensy 3.1&3.2 board internal CAN FlexCAN library
 #include <FlexCAN.h>
 #include <NMEA2000_teensy.h>    // https://github.com/sarfata/NMEA2000_teensy
-tNMEA2000_teensy NMEA2000;
+tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy());
 
 #elif USE_N2K_CAN == USE_N2K_AVR_CAN
 // Use Atmel AVR internal CAN controller with avr_can library
 #include <avr_can.h>            // https://github.com/thomasonw/avr_can
 #include <NMEA2000_avr.h>       // https://github.com/thomasonw/NMEA2000_avr
-tNMEA2000_avr NMEA2000;
+tNMEA2000 &NMEA2000=*(new tNMEA2000_avr());
 
 #elif USE_N2K_CAN == USE_N2K_SOCKET_CAN
 // Use socketCAN devices
 #include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
-tNMEA2000_SocketCAN NMEA2000;
+tNMEA2000 &NMEA2000=*(new tNMEA2000_SocketCAN());
 tSocketStream serStream;
 
 #elif USE_N2K_CAN == USE_N2K_MBED_CAN
 // Use MBED devices
 #include <NMEA2000_mbed.h>       // https://github.com/thomasonw/NMEA2000_mbed
-tNMEA2000_mbed NMEA2000;
+tNMEA2000 &NMEA2000=*(new tNMEA2000_mbed());
 tmbedStream serStream;
 
 #else  // Use USE_N2K_MCP_CAN
@@ -137,9 +137,10 @@ tmbedStream serStream;
 #define MCP_CAN_CLOCK_SET MCP_16MHz
 #endif
 
-tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN,MCP_CAN_RX_BUFFER_SIZE);
+tNMEA2000 &NMEA2000=*(new tNMEA2000_mcp(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN_INT_PIN,MCP_CAN_RX_BUFFER_SIZE));
 
 #endif
+
 
 #endif
 

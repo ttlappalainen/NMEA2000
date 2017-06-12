@@ -121,6 +121,14 @@ enum tN2kHumiditySource {
                             N2khs_Undef=1
                           };
 
+enum tN2kPressureSource {
+                            N2kps_Atmospheric = 0,
+                            N2kps_Water = 1,
+                            N2kps_Steam = 2,
+                            N2kps_CompressedAir = 3,
+                            N2kps_Hydraulic = 4
+                          };
+
 enum tN2kTimeSource {
                             N2ktimes_GPS=0,
                             N2ktimes_GLONASS=1,
@@ -155,7 +163,7 @@ enum tN2kSpeedWaterReferenceType {
                           };
 
 enum tN2kRudderDirectionOrder {
-                            N2kRDO_NoDirectioOrder=0,
+                            N2kRDO_NoDirectionOrder=0,
                             N2kRDO_MoveToStarboard=1,
                             N2kRDO_MoveToPort=2
                           };
@@ -310,11 +318,26 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA);
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA);
 
 inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0, 
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectioOrder, double AngleOrder=N2kDoubleNA) {
+                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA) {
   SetN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
+}
+
+bool ParseN2kPGN127245(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder);
+
+inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance, 
+                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
+  return ParseN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
+}
+                     
+inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition) {
+  tN2kRudderDirectionOrder RudderDirectionOrder;
+  double AngleOrder;
+  unsigned char Instance;
+  return ParseN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
 }
                      
 //*****************************************************************************
@@ -1267,6 +1290,46 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
                      double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130312(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
+}
+
+//*****************************************************************************
+// Pressure
+// Pressures should be in Pascals
+// Input:
+//  - SID                   Sequence ID.
+//  - PressureInstance      This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - PressureSource        see tN2kPressureSource
+//  - Pressure              Pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double Pressure);
+inline void SetN2kPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                           tN2kPressureSource PressureSource, double Pressure) {
+  SetN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
+}
+bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double &Pressure);
+inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
+                       tN2kPressureSource &PressureSource, double &Pressure) {
+  return ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
+}
+
+//*****************************************************************************
+// Set pressure
+// Pressures should be in Pascals
+// Input:
+//  - SID                       Sequence ID.
+//  - PressureInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
+//  - PressureSource            see tN2kPressureSource
+//  - Set pressure              Set pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                     tN2kPressureSource PressureSource, double SetPressure);
+inline void SetN2kSetPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
+                           tN2kPressureSource PressureSource, double SetPressure) {
+  SetN2kPGN130315(N2kMsg, SID, PressureInstance, PressureSource, SetPressure);
 }
 
 //*****************************************************************************
