@@ -43,7 +43,17 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
-02.06.2017 Added NMEA 2000 mandatory features. Some bug fixes. 
+13.06.2017 NOTE! Some compatibility changes.
+
+- !NOTE compatibility change. tProductInformation has been moved inside tNMEA2000 class. If you have defined tProductInformation
+to PROGMEM as in example BatteryMonitor, you need to change definition const tProductInformation... to const tNMEA2000::tProductInformation... 
+See example BatteryMonitor.
+
+- Multi device support should work now. So you can show several devices on bus with single hw. See example MultiDevice.
+
+- !NOTE compatibility change. tDeviceInformation has been moved inside tNMEA2000 class. This was used only internally until 11.06.2017 release. 
+ 
+11.06.2017 Added NMEA 2000 mandatory features. Some bug fixes. 
 
 - !NOTE compatibility change. PROGMEM configuration information did not work and actually wasted RAM.
   You should define each configuration information string alone as PROGMEM and call changed SetProgmemConfigurationInformation.

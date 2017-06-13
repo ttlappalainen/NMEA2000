@@ -147,7 +147,7 @@ const unsigned long DefFastPacketMessages[] PROGMEM = {
                                       130074L, // Waypoint list
                                       0};
 
-const tProductInformation DefProductInformation PROGMEM = {
+const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        1300,               // N2kVersion
                                        666,                // ProductCode
                                        "Arduino N2k->PC",  //N2kModelID
@@ -190,11 +190,9 @@ void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
   if (str) SetCharBuf(str,MaxLen,buf);
 }
 
- //*****************************************************************************
+//*****************************************************************************
 tNMEA2000::tNMEA2000() {
 
-  TransmitMessages=0;
-  ReceiveMessages=0;
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
   pGroupFunctionHandlers=0;
 #endif
@@ -212,16 +210,9 @@ tNMEA2000::tNMEA2000() {
   MsgHandler=0;
   ISORqstHandler=0;
 
-  DeviceInformation[0].N2kSource=0;
   DeviceReady=false;
-  AddressClaimStarted=0;
   AddressChanged=false;
   DeviceInformationChanged=false;
-#if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
-  HeartbeatInterval=60000;
-  DefaultHeartbeatInterval=HeartbeatInterval;
-  NextHeartbeatSentTime=0;
-#endif  
   dbMode=dm_None;
   N2kMode=N2km_ListenOnly;
   ForwardType=fwdt_Actisense;
@@ -229,26 +220,52 @@ tNMEA2000::tNMEA2000() {
   EnableForward();
   SetForwardSystemMessages();
   SetForwardOwnMessages();
-  LocalProductInformation=0;
-  ProductInformation=&DefProductInformation;
   LocalConfigurationInformationData=0;
   SetProgmemConfigurationInformation(DefManufacturerInformation, 
                                      DefInstallationDescription1,
                                      DefInstallationDescription2);
-  SetDeviceInformation(1, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
-                       130, // PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-                       25, // Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-                       2046,  // Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
-                       4  // Marine
-                       );
+  Devices=0;
   DeviceCount=1;
 }
 
 //*****************************************************************************
-void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation) {
-  ProductInformation=_ProductInformation;
-  if (ProductInformation==0) ProductInformation=LocalProductInformation;
-  if (ProductInformation==0) ProductInformation=&DefProductInformation;
+void tNMEA2000::SetDeviceCount(const uint8_t _DeviceCount) {
+  // Note that we can set this only before any initialization. Limit count to 10.
+  if ( Devices==0 && _DeviceCount>=1 && _DeviceCount<10 ) DeviceCount=_DeviceCount;
+}
+
+//*****************************************************************************
+void tNMEA2000::InitDevices() {
+  if ( Devices==0 ) {
+    Devices=new tDevice[DeviceCount];
+    MaxCANSendFrames*=DeviceCount; // We need bigger buffer for sending all information
+//    for (int i=0; i<DeviceCount; i++) Devices[i].tDevice();
+    // We set default device information here.
+    Devices[0].LocalProductInformation=0;
+    Devices[0].ProductInformation=&DefProductInformation;
+    for ( int i=0; i<DeviceCount; i++) { // Initialize all devices with some value
+      SetDeviceInformation(1+i, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
+                           130, // PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                           25, // Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                           2046,  // Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
+                           4,  // Marine
+                           i
+                          );
+      if ( i>0 ) {
+        Devices[i].LocalProductInformation=0;
+        Devices[i].ProductInformation=0;
+      }
+    }
+  }
+}
+
+//*****************************************************************************
+void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation, int iDev) {
+  if ( !IsValidDevice(iDev) ) return;                             
+  InitDevices();
+  Devices[iDev].ProductInformation=_ProductInformation;
+  if (Devices[iDev].ProductInformation==0) Devices[iDev].ProductInformation=Devices[iDev].LocalProductInformation;
+  if (Devices[iDev].ProductInformation==0) Devices[iDev].ProductInformation=&DefProductInformation;
 }
 
 //*****************************************************************************
@@ -259,19 +276,22 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
                                       const char *_ModelVersion,
                                       unsigned char _LoadEquivalency,
                                       unsigned short _N2kVersion,
-                                      unsigned char _SertificationLevel) {
-   if (LocalProductInformation==0) {
-     LocalProductInformation=new tProductInformation();
-   }
-   ProductInformation=LocalProductInformation;
-   LocalProductInformation->N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:1300);
-   LocalProductInformation->ProductCode=_ProductCode;
-   ClearSetCharBuf(_ModelID,sizeof(LocalProductInformation->N2kModelID),LocalProductInformation->N2kModelID);
-   ClearSetCharBuf(_SwCode,sizeof(LocalProductInformation->N2kSwCode),LocalProductInformation->N2kSwCode);
-   ClearSetCharBuf(_ModelVersion,sizeof(LocalProductInformation->N2kModelVersion),LocalProductInformation->N2kModelVersion);
-   ClearSetCharBuf(_ModelSerialCode,sizeof(LocalProductInformation->N2kModelSerialCode),LocalProductInformation->N2kModelSerialCode);
-   LocalProductInformation->SertificationLevel=(_SertificationLevel!=0xff?_SertificationLevel:1);
-   LocalProductInformation->LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
+                                      unsigned char _SertificationLevel,
+                                      int iDev) {
+  if ( !IsValidDevice(iDev) ) return;                             
+  InitDevices();
+  if (Devices[iDev].LocalProductInformation==0) {
+    Devices[iDev].LocalProductInformation=new tProductInformation();
+  }
+  Devices[iDev].ProductInformation=Devices[iDev].LocalProductInformation;
+  Devices[iDev].LocalProductInformation->N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:1300);
+  Devices[iDev].LocalProductInformation->ProductCode=_ProductCode;
+  ClearSetCharBuf(_ModelID,sizeof(Devices[iDev].LocalProductInformation->N2kModelID),Devices[iDev].LocalProductInformation->N2kModelID);
+  ClearSetCharBuf(_SwCode,sizeof(Devices[iDev].LocalProductInformation->N2kSwCode),Devices[iDev].LocalProductInformation->N2kSwCode);
+  ClearSetCharBuf(_ModelVersion,sizeof(Devices[iDev].LocalProductInformation->N2kModelVersion),Devices[iDev].LocalProductInformation->N2kModelVersion);
+  ClearSetCharBuf(_ModelSerialCode,sizeof(Devices[iDev].LocalProductInformation->N2kModelSerialCode),Devices[iDev].LocalProductInformation->N2kModelSerialCode);
+  Devices[iDev].LocalProductInformation->SertificationLevel=(_SertificationLevel!=0xff?_SertificationLevel:1);
+  Devices[iDev].LocalProductInformation->LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
 }
 
 //*****************************************************************************
@@ -326,13 +346,16 @@ void tNMEA2000::SetDeviceInformation(unsigned long _UniqueNumber,
                                      unsigned char _DeviceFunction,
                                      unsigned char _DeviceClass,
                                      uint16_t _ManufacturerCode,
-                                     unsigned char _IndustryGroup
+                                     unsigned char _IndustryGroup,
+                                     int iDev
                                      ) {
-   if (_ManufacturerCode!=0xffff) DeviceInformation[0].SetManufacturerCode(_ManufacturerCode);
-   if (_UniqueNumber!=0xffffffff) DeviceInformation[0].SetUniqueNumber(_UniqueNumber);
-   if (_DeviceFunction!=0xff) DeviceInformation[0].SetDeviceFunction(_DeviceFunction);
-   if (_DeviceClass!=0xff) DeviceInformation[0].SetDeviceClass(_DeviceClass);
-   if (_IndustryGroup!=0xff) DeviceInformation[0].SetIndustryGroup(_IndustryGroup);
+   if ( !IsValidDevice(iDev) ) return;                             
+   InitDevices();
+   if (_ManufacturerCode!=0xffff) Devices[iDev].DeviceInformation.SetManufacturerCode(_ManufacturerCode);
+   if (_UniqueNumber!=0xffffffff) Devices[iDev].DeviceInformation.SetUniqueNumber(_UniqueNumber);
+   if (_DeviceFunction!=0xff) Devices[iDev].DeviceInformation.SetDeviceFunction(_DeviceFunction);
+   if (_DeviceClass!=0xff) Devices[iDev].DeviceInformation.SetDeviceClass(_DeviceClass);
+   if (_IndustryGroup!=0xff) Devices[iDev].DeviceInformation.SetIndustryGroup(_IndustryGroup);
 }
 
 //*****************************************************************************
@@ -342,8 +365,9 @@ void tNMEA2000::SetDeviceInformationInstances(
                               uint8_t _SystemInstance,
                               int iDev
                               ) {
-   if ( iDev<0 or iDev>DeviceCount ) return;                             
+   if ( !IsValidDevice(iDev) ) return;                             
                                 
+   InitDevices();
    uint8_t DeviceInstance=0;
    
    if (_DeviceInstanceLower!=0xff ) {
@@ -353,22 +377,18 @@ void tNMEA2000::SetDeviceInformationInstances(
     DeviceInstance=( ((_DeviceInstanceUpper&0x1f)<<3) | DeviceInstance );
    }
 
-   if ( DeviceInformation[iDev].GetDeviceInstance()!=DeviceInstance) {
-     DeviceInformation[iDev].SetDeviceInstance(DeviceInstance);
+   if ( Devices[iDev].DeviceInformation.GetDeviceInstance()!=DeviceInstance) {
+     Devices[iDev].DeviceInformation.SetDeviceInstance(DeviceInstance);
      DeviceInformationChanged=true;
    }
    
-   if (_SystemInstance!=0xff && DeviceInformation[iDev].GetSystemInstance()!=_SystemInstance) {
-    DeviceInformation[iDev].SetSystemInstance(_SystemInstance);
+   if (_SystemInstance!=0xff && Devices[iDev].DeviceInformation.GetSystemInstance()!=_SystemInstance) {
+    Devices[iDev].DeviceInformation.SetSystemInstance(_SystemInstance);
     DeviceInformationChanged=true;
    }
    
    // Due to device information change, wee need to reclaim our address.
-   if ( DeviceInformationChanged ) {
-      AddressClaimStarted=0;
-      SendIsoAddressClaim(0xff,iDev);
-      AddressClaimStarted=millis();
-   }
+   if ( DeviceInformationChanged ) StartAddressClaim(iDev);
 }
 
 //*****************************************************************************
@@ -394,19 +414,24 @@ void tNMEA2000::ExtendFastPacketMessages(const unsigned long *_FastPacketMessage
 }
 
 //*****************************************************************************
-void tNMEA2000::ExtendTransmitMessages(const unsigned long *_Messages) {
-  TransmitMessages=_Messages;
+void tNMEA2000::ExtendTransmitMessages(const unsigned long *_Messages, int iDev) {
+  if ( !IsValidDevice(iDev) ) return;                             
+  InitDevices();
+  Devices[iDev].TransmitMessages=_Messages;
 }
 
 //*****************************************************************************
-void tNMEA2000::ExtendReceiveMessages(const unsigned long *_Messages) {
-  ReceiveMessages=_Messages;
+void tNMEA2000::ExtendReceiveMessages(const unsigned long *_Messages, int iDev) {
+  if ( !IsValidDevice(iDev) ) return;                             
+  InitDevices();
+  Devices[iDev].ReceiveMessages=_Messages;
 }
 
 //*****************************************************************************
 void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
+  InitDevices();
   N2kMode=_N2kMode;
-  DeviceInformation[0].N2kSource=_N2kSource;
+  for (int i=0; i<DeviceCount; i++) Devices[i].N2kSource=_N2kSource+i;
   AddressChanged=false;
 }
 
@@ -414,6 +439,7 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
 bool tNMEA2000::Open() {
   
   if (!DeviceReady) {
+    InitDevices();
     if ( N2kCANMsgBuf==0 ) {
       if ( MaxN2kCANMsgs==0 ) MaxN2kCANMsgs=5;
       N2kCANMsgBuf = new tN2kCANMsg[MaxN2kCANMsgs];
@@ -439,12 +465,7 @@ bool tNMEA2000::Open() {
     }
 
     delay(200);
-    if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
-      AddressClaimStarted=0;
-      if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) ForwardStream->println(F("Start address claim"));
-      SendIsoAddressClaim(0xff,0);
-      AddressClaimStarted=millis();
-    }
+    for (int i=0; i<DeviceCount; i++) StartAddressClaim(i);
   }
 
   return DeviceReady;
@@ -512,32 +533,39 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
 //*****************************************************************************
-void tNMEA2000::SetHeartbeatInterval(unsigned long interval, bool SetAsDefault) {
+void tNMEA2000::SetHeartbeatInterval(unsigned long interval, bool SetAsDefault, int iDev) {
   if (interval==0xffffffff) return; // Do not change
-  if (interval==0xfffffffe) { // restore defult
-    HeartbeatInterval=DefaultHeartbeatInterval;
-  } else {
-    if ( interval>MaxHeartbeatInterval ) interval=MaxHeartbeatInterval;
-    if ( interval<1000 ) interval=0;
-  
-    HeartbeatInterval=interval;
+  InitDevices();
+  for (int i=(iDev<0?0:iDev); i<DeviceCount && (iDev<0?true:i<iDev+1); i++) {
+    if (interval==0xfffffffe) { // restore default
+      Devices[i].HeartbeatInterval=Devices[i].DefaultHeartbeatInterval;
+    } else {
+      if ( interval>MaxHeartbeatInterval ) interval=MaxHeartbeatInterval;
+      if ( interval<1000 ) interval=0;
+    
+      Devices[i].HeartbeatInterval=interval;
+    }
+    
+    if (SetAsDefault) Devices[i].DefaultHeartbeatInterval=Devices[i].HeartbeatInterval;
+    Devices[i].NextHeartbeatSentTime=(millis()/Devices[i].HeartbeatInterval+1)*Devices[i].HeartbeatInterval;
   }
-  
-  if (SetAsDefault) DefaultHeartbeatInterval=HeartbeatInterval;
-  NextHeartbeatSentTime=(millis()/HeartbeatInterval+1)*HeartbeatInterval;
 }
 
 //*****************************************************************************
 void tNMEA2000::SendHeartbeat(bool force) {
-  if ( AddressClaimStarted>0 || !IsActiveNode() ) return;
+  if ( !IsActiveNode() ) return;
   
-  if ( force ) NextHeartbeatSentTime=0;
-  if ( force || ( HeartbeatInterval>0 && NextHeartbeatSentTime<millis() ) ) {
-    tN2kMsg N2kMsg;
-    if ( NextHeartbeatSentTime==0 ) { NextHeartbeatSentTime=millis(); }
-    NextHeartbeatSentTime+=HeartbeatInterval;
-    SetHeartbeat(N2kMsg,HeartbeatInterval,0);
-    SendMsg(N2kMsg);
+  for (int iDev=0; iDev<DeviceCount; iDev++) {
+    if ( !IsAddressClaimStarted(iDev) ) {
+      if ( force ) Devices[iDev].NextHeartbeatSentTime=0;
+      if ( Devices[iDev].HeartbeatInterval>0 && Devices[iDev].NextHeartbeatSentTime<millis() ) {
+        tN2kMsg N2kMsg;
+        if ( Devices[iDev].NextHeartbeatSentTime==0 ) { Devices[iDev].NextHeartbeatSentTime=millis(); }
+        Devices[iDev].NextHeartbeatSentTime+=Devices[iDev].HeartbeatInterval;
+        SetHeartbeat(N2kMsg,Devices[iDev].HeartbeatInterval,0);
+        SendMsg(N2kMsg,iDev);
+      }
+    }
   }
 }
 #endif
@@ -559,8 +587,8 @@ tNMEA2000::tCANSendFrame *tNMEA2000::GetNextFreeCANSendFrame() {
 //*****************************************************************************
 void tNMEA2000::SendPendingInformation() {
   for (int i=0; i<DeviceCount; i++ ) {
-    if ( DeviceInformation[i].QueryPendingProductInformation() && SendProductInformation(i) ) DeviceInformation[i].ClearPendingProductInformation();
-    if ( DeviceInformation[i].QueryPendingConfigurationInformation() && SendConfigurationInformation(i) ) DeviceInformation[i].ClearPendingConfigurationInformation();
+    if ( Devices[i].QueryPendingProductInformation() && SendProductInformation(i) ) Devices[i].ClearPendingProductInformation();
+    if ( Devices[i].QueryPendingConfigurationInformation() && SendConfigurationInformation(i) ) Devices[i].ClearPendingConfigurationInformation();
   }
 }
 
@@ -568,13 +596,14 @@ void tNMEA2000::SendPendingInformation() {
 // Sends message to N2k bus
 //
 bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
-//void tNMEA2000::SendMsg(unsigned long priority, unsigned long PGN, unsigned long Source, unsigned long Destination, INT8U len, const INT8U *pData) {
+  if ( dbMode==dm_None && !Open() ) return false;
+  
   static int SendOrder=0;
   bool result=false;
 
   if ( DeviceIndex>=DeviceCount) return result;
   N2kMsg.CheckDestination();
-  if (DeviceIndex>=0) N2kMsg.ForceSource(DeviceInformation[DeviceIndex].N2kSource);
+  if (DeviceIndex>=0) { N2kMsg.ForceSource(Devices[DeviceIndex].N2kSource); } else { DeviceIndex=0; }
 
   if (N2kMsg.Source>253) return false; // CAN bus address range is 0-253.
 
@@ -588,15 +617,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
     case dm_None:
 //      ForwardStream->print("Send PGN:"); ForwardStream->println(N2kMsg.PGN);
 //      ForwardStream->print("Can ID:"); ForwardStream->println(canId);
-      if (!Open()) return false;  // Can not do much
-
-      if ( AddressClaimStarted!=0 ) {
-        if ( AddressClaimStarted+N2kAddressClaimTimeout>millis()) {
-          return false; // Do not send during address claiming
-        } else {
-          AddressClaimStarted=0;
-        }
-      }
+      if ( IsAddressClaimStarted(DeviceIndex) ) return false;
 
       if (N2kMsg.DataLen<=8 && !IsFastPacket(N2kMsg.PGN) ) { // We can send single frame
           // PrintBuf(ForwardStream,N2kMsg.DataLen, N2kMsg.Data,true);
@@ -979,7 +1000,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
    int i;
 
      if ( Source<=253 ) {
-       for (i=0; i<DeviceCount && DeviceInformation[i].N2kSource!=Source; i++);
+       for (i=0; i<DeviceCount && Devices[i].N2kSource!=Source; i++);
        if (i<DeviceCount) result=i;
      }
 
@@ -1019,10 +1040,10 @@ void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex) 
   if (Destination==0xff && DeviceIndex==-1) DeviceIndex=0;
 
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
-  tN2kMsg RespondMsg(DeviceInformation[DeviceIndex].N2kSource);
+  tN2kMsg RespondMsg(Devices[DeviceIndex].N2kSource);
 
     RespondMsg.Destination=Destination;
-    SetN2kISOAddressClaim(RespondMsg,DeviceInformation[DeviceIndex].GetName());
+    SetN2kISOAddressClaim(RespondMsg,Devices[DeviceIndex].DeviceInformation.GetName());
     SendMsg(RespondMsg,DeviceIndex);
 }
 
@@ -1036,9 +1057,9 @@ template <typename T> void PROGMEM_readAnything (const T * sce, T& dest)
 void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex) {
   if (Destination==0xff && DeviceIndex==-1) DeviceIndex=0;
 
-  if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
+  if ( !IsValidDevice(DeviceIndex) ) return;
   
-  tN2kMsg RespondMsg(DeviceInformation[DeviceIndex].N2kSource);
+  tN2kMsg RespondMsg(Devices[DeviceIndex].N2kSource);
   unsigned long PGN;
   
     // First sent transmit messages
@@ -1050,8 +1071,8 @@ void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex)
     for (int i=0; (PGN=pgm_read_dword(&DefTransmitMessages[i]))!=0; i++) {
       RespondMsg.Add3ByteInt(PGN);
     }
-    if (TransmitMessages!=0) {
-      for (int i=0; (PGN=pgm_read_dword(&TransmitMessages[i]))!=0; i++) {
+    if (Devices[DeviceIndex].TransmitMessages!=0) {
+      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].TransmitMessages[i]))!=0; i++) {
         RespondMsg.Add3ByteInt(PGN);
       }
     }
@@ -1065,8 +1086,8 @@ void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex)
     for (int i=0; (PGN=pgm_read_dword(&DefReceiveMessages[i]))!=0; i++) {
       RespondMsg.Add3ByteInt(PGN);
     }
-    if (ReceiveMessages!=0) {
-      for (int i=0; (PGN=pgm_read_dword(&ReceiveMessages[i]))!=0; i++) {
+    if (Devices[DeviceIndex].ReceiveMessages!=0) {
+      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].ReceiveMessages[i]))!=0; i++) {
         RespondMsg.Add3ByteInt(PGN);
       }
     }
@@ -1074,7 +1095,7 @@ void tNMEA2000::HandlePGNListRequest(unsigned char Destination, int DeviceIndex)
 }
    
 //*****************************************************************************
-void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tProductInformation *ProductInformation) {
+void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tNMEA2000::tProductInformation *ProductInformation, char *OptionalSerialCode=0) {
   int i;
 
     N2kMsg.SetPGN(126996L);
@@ -1087,30 +1108,38 @@ void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tProductInformation *ProductI
     for (; i<Max_N2kSwCode_len; i++ ) { N2kMsg.AddByte(0); }
     for (i=0; i<Max_N2kModelVersion_len && pgm_read_byte(&ProductInformation->N2kModelVersion[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelVersion[i])); }
     for (; i<Max_N2kModelVersion_len; i++ ) { N2kMsg.AddByte(0); }
-    for (i=0; i<Max_N2kModelSerialCode_len && pgm_read_byte(&ProductInformation->N2kModelSerialCode[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelSerialCode[i])); }
+    if (OptionalSerialCode) {
+      for (i=0; i<Max_N2kModelSerialCode_len && OptionalSerialCode[i]; i++ ) { N2kMsg.AddByte(OptionalSerialCode[i]); }
+    } else {
+      for (i=0; i<Max_N2kModelSerialCode_len && pgm_read_byte(&ProductInformation->N2kModelSerialCode[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelSerialCode[i])); }
+    }
     for (; i<Max_N2kModelSerialCode_len; i++ ) { N2kMsg.AddByte(0); }
     N2kMsg.AddByte(pgm_read_byte(&ProductInformation->SertificationLevel));
     N2kMsg.AddByte(pgm_read_byte(&ProductInformation->LoadEquivalency));
 }
 
 //*****************************************************************************
-bool tNMEA2000::SendProductInformation(int DeviceIndex) {
-  if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return false;
-  tN2kMsg RespondMsg(DeviceInformation[DeviceIndex].N2kSource);
-
-    if ( ProductInformation==LocalProductInformation ) {
-      SetN2kProductInformation(RespondMsg,ProductInformation->N2kVersion,
-                                          ProductInformation->ProductCode,
-                                          ProductInformation->N2kModelID,
-                                          ProductInformation->N2kSwCode,
-                                          ProductInformation->N2kModelVersion,
-                                          ProductInformation->N2kModelSerialCode,
-                                          ProductInformation->SertificationLevel,
-                                          ProductInformation->LoadEquivalency);
+bool tNMEA2000::SendProductInformation(int iDev) {
+  if ( !IsValidDevice(iDev) ) return false;
+  tN2kMsg RespondMsg(Devices[iDev].N2kSource);
+  int iPIDev=iDev;
+  
+    if ( Devices[iPIDev].ProductInformation==0 ) iPIDev=0; // Use first device product information
+    if ( Devices[iPIDev].ProductInformation==0 ) return false; // Can not do anything.
+    
+    if ( Devices[iPIDev].ProductInformation==Devices[iPIDev].LocalProductInformation ) {
+      SetN2kProductInformation(RespondMsg,Devices[iPIDev].ProductInformation->N2kVersion,
+                                          Devices[iPIDev].ProductInformation->ProductCode,
+                                          Devices[iPIDev].ProductInformation->N2kModelID,
+                                          Devices[iPIDev].ProductInformation->N2kSwCode,
+                                          Devices[iPIDev].ProductInformation->N2kModelVersion,
+                                          Devices[iPIDev].ProductInformation->N2kModelSerialCode,
+                                          Devices[iPIDev].ProductInformation->SertificationLevel,
+                                          Devices[iPIDev].ProductInformation->LoadEquivalency);
     } else {
-      SetN2kPGN126996Progmem(RespondMsg,ProductInformation);
+      SetN2kPGN126996Progmem(RespondMsg,Devices[iPIDev].ProductInformation);
     }
-    return SendMsg(RespondMsg,DeviceIndex);
+    return SendMsg(RespondMsg,iDev);
 }
 
 //*****************************************************************************
@@ -1156,8 +1185,8 @@ void SetN2kPGN126998Progmem(tN2kMsg &N2kMsg, const tNMEA2000::tConfigurationInfo
 
 //*****************************************************************************
 bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
-  if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return false;
-  tN2kMsg RespondMsg(DeviceInformation[DeviceIndex].N2kSource);
+  if ( !IsValidDevice(DeviceIndex) ) return false;
+  tN2kMsg RespondMsg(Devices[DeviceIndex].N2kSource);
 
     if ( ConfigurationInformation.ManufacturerInformation!=0 ||
          ConfigurationInformation.InstallationDescription1!=0 ||
@@ -1189,14 +1218,14 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
         break;
       case 126996L: /* Product information */
         // If query was for us, try to respond immediately
-        if ( ( N2kMsg.Destination!=DeviceInformation[iDev].N2kSource ) || !SendProductInformation(iDev) ) {
-          DeviceInformation[iDev].SetPendingProductInformation();
+        if ( ( N2kMsg.Destination!=Devices[iDev].N2kSource ) || !SendProductInformation(iDev) ) {
+          Devices[iDev].SetPendingProductInformation();
         }
         break;
       case 126998L: /* Configuration information */
         // If query was for us, try to respond immediately
-        if ( ( N2kMsg.Destination!=DeviceInformation[iDev].N2kSource ) || !SendConfigurationInformation(iDev) ) {
-          DeviceInformation[iDev].SetPendingPendingConfigurationInformation();
+        if ( ( N2kMsg.Destination!=Devices[iDev].N2kSource ) || !SendConfigurationInformation(iDev) ) {
+          Devices[iDev].SetPendingPendingConfigurationInformation();
         }
         break;
       default:
@@ -1265,6 +1294,31 @@ void tNMEA2000::HandleGroupFunction(const tN2kMsg &N2kMsg) {
 #endif
 
 //*****************************************************************************
+void tNMEA2000::StartAddressClaim(int iDev) {
+    if ((DeviceReady || dbMode!=dm_None) && (N2kMode!=N2km_ListenOnly) && (N2kMode!=N2km_SendOnly) && (N2kMode!=N2km_ListenAndSend) ) { // Start address claim automatically
+      Devices[iDev].AddressClaimStarted=0;
+      if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) {
+        ForwardStream->print(F("Start address claim for device "));
+        ForwardStream->println(iDev);
+      }
+      SendIsoAddressClaim(0xff,iDev);
+      Devices[iDev].AddressClaimStarted=millis();
+    }
+}
+
+//*****************************************************************************
+bool tNMEA2000::IsAddressClaimStarted(int iDev) {
+  // Reset address claim after timeout
+  if ( Devices[iDev].AddressClaimStarted!=0 ) {
+    if ( Devices[iDev].AddressClaimStarted+N2kAddressClaimTimeout<millis()) {
+      Devices[iDev].AddressClaimStarted=0;
+    }
+  }
+  
+  return (Devices[iDev].AddressClaimStarted!=0);
+}
+
+//*****************************************************************************
 void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
   int iDev=FindSourceDeviceIndex(N2kMsg.Source);
   if ( iDev==-1 ) return; // if the address is not same as we have, we do nothing
@@ -1273,21 +1327,19 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
 
     CallerName=(uint64_t *)(N2kMsg.Data);
 
-    if (DeviceInformation[iDev].GetName()<*CallerName) { // We can keep our address, so just reclaim it
+    if (Devices[iDev].DeviceInformation.GetName()<*CallerName) { // We can keep our address, so just reclaim it
       SendIsoAddressClaim(0xff,iDev);
     } else { // we have to try an other address
-      if (DeviceInformation[iDev].GetName()==*CallerName) {
+      if (Devices[iDev].DeviceInformation.GetName()==*CallerName) {
         // If the name is same, then the first instance will get claim and change its address.
         // This should not happen, if user takes care of setting unique ID for device information.
         // If he does not there is no problem with this class, but e.g. Garmin gets crazy.
         // Try to solve situation by changing our device instance.
-        DeviceInformation[iDev].SetDeviceInstance(DeviceInformation[iDev].GetDeviceInstance()+1);
+        Devices[iDev].DeviceInformation.SetDeviceInstance(Devices[iDev].DeviceInformation.GetDeviceInstance()+1);
       }
       GetNextAddress(iDev);
       AddressChanged=true;
-      AddressClaimStarted=0;
-      SendIsoAddressClaim(0xff,iDev);
-      AddressClaimStarted=millis();
+      StartAddressClaim(iDev);
     }
 }
 
@@ -1307,13 +1359,11 @@ void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
     CommandedName=(uint64_t *)(N2kMsg.Data);
     NewAddress=N2kMsg.Data[8];
     
-    if (DeviceInformation[iDev].GetName() == *CommandedName && 
-        DeviceInformation[iDev].N2kSource!=NewAddress) { // We have been commanded to set our address
-      DeviceInformation[iDev].N2kSource=NewAddress;
+    if (Devices[iDev].DeviceInformation.GetName() == *CommandedName && 
+        Devices[iDev].N2kSource!=NewAddress) { // We have been commanded to set our address
+      Devices[iDev].N2kSource=NewAddress;
+      StartAddressClaim(iDev);
       AddressChanged=true;
-      AddressClaimStarted=0;
-      SendIsoAddressClaim(0xff,iDev);
-      AddressClaimStarted=millis();
     }
 }
 
@@ -1339,11 +1389,11 @@ void tNMEA2000::GetNextAddress(int DeviceIndex) {
   // Currently simply add address
   // Note that 253 is the last source. We do not send data if address is higher than that.
   do {
-    if (DeviceInformation[DeviceIndex].N2kSource<255) DeviceInformation[DeviceIndex].N2kSource++;
+    if (Devices[DeviceIndex].N2kSource<255) Devices[DeviceIndex].N2kSource++;
 
     // Check that we do not have same on our list
     for (int i=0; i<DeviceCount && !FoundSame; i++) {
-      if (i!=DeviceIndex) FoundSame=(DeviceInformation[DeviceIndex].N2kSource==DeviceInformation[i].N2kSource);
+      if (i!=DeviceIndex) FoundSame=(Devices[DeviceIndex].N2kSource==Devices[i].N2kSource);
     }
   } while (FoundSame);
 }

@@ -10,15 +10,15 @@
 
 #include <Arduino.h>
 //#define N2k_CAN_INT_PIN 21
-#include <NMEA2000_CAN.h>       // This will automatically choose right CAN library and create suitable NMEA2000 object
-#include <N2kMessages.h>
+#include "NMEA2000_CAN.h"       // This will automatically choose right CAN library and create suitable NMEA2000 object
+#include "N2kMessages.h"
 
 // List here messages your device will transmit.
 const unsigned long TransmitMessages[] PROGMEM={127506L,127508L,127513L,0};
 
 // ---  Example of using PROGMEM to hold Product ID.  However, doing this will prevent any updating of
 //      these details outside of recompiling the program.
-const tProductInformation BatteryMonitorProductInformation PROGMEM={
+const tNMEA2000::tProductInformation BatteryMonitorProductInformation PROGMEM={
                                        1300,                        // N2kVersion
                                        100,                         // Manufacturer's product code
                                        "Simple battery monitor",    // Manufacturer's Model ID

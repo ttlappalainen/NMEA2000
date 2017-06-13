@@ -58,7 +58,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
     int i;
     int Index;
     uint8_t field;
-    tDeviceInformation DI=pNMEA2000->GetDeviceInformation(iDev);
+    tNMEA2000::tDeviceInformation DI=pNMEA2000->GetDeviceInformation(iDev);
     tN2kMsg N2kRMsg;
     tN2kGroupFunctionParameterErrorCode FieldErrorCode;
     bool FoundInvalidField=false;
@@ -193,7 +193,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleCommand(const tN2kMsg &N2kMsg, u
     }
     
     pNMEA2000->SendMsg(N2kRMsg,iDev);
-    pNMEA2000->SetDeviceInformationInstances(DILower,DIUpper,SI);
+    pNMEA2000->SetDeviceInformationInstances(DILower,DIUpper,SI,iDev);
     
     return true;
 }  
@@ -208,7 +208,7 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
   if ( NumberOfParameterPairs==0 ) { // According to doc, there should not be any parameter pairs defined
-    pNMEA2000->SetHeartbeatInterval(TransmissionInterval,false);
+    pNMEA2000->SetHeartbeatInterval(TransmissionInterval,false,iDev);
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,PGN,N2kgfPGNec_Acknowledge,N2kgfTPec_Acknowledge);
     return true;
   } else {
