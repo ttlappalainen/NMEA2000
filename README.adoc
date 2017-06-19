@@ -21,8 +21,9 @@ but these improvements has not been implemented to Seeed-Studio.
 
 To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551 CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
 [NMEA2000_teensy library](https://github.com/sarfata/NMEA2000_teensy) contributed by [Thomas Sarlandie](https://twitter.com/sarfata/) 
-and the [FlexCAN library](https://github.com/teachop/FlexCAN_Library). FlexCan library is already included in 
-[Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension.
+and the [FlexCAN library](https://github.com/ttlappalainen/FlexCAN_Library). FlexCan library is already included in 
+[Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension. In order to use my fork, you have to remove FlexCAN library from
+"C:\Program Files (x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN"
 
 To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library, 
 which you can download from https://github.com/thomasonw/avr_can
@@ -43,6 +44,11 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+19.06.2017 Changes due to different revisions of FlexCAN library for Teeansy boards. NOTE! You must update NMEA2000_Teensy library.+
++
+I also forked and developed FlexCAN library from collin80 and also send pull request for him. Until updated there my fork has more features
+for use with NMEA2000 library.
+
 13.06.2017 NOTE! Some compatibility changes.
 
 - !NOTE compatibility change. tProductInformation has been moved inside tNMEA2000 class. If you have defined tProductInformation
