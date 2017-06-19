@@ -243,6 +243,7 @@ protected:
     uint16_t MaxCANSendFrames;
     uint16_t CANSendFrameBufferWrite;
     uint16_t CANSendFrameBufferRead;
+    uint16_t MaxCANReceiveFrames;
 
     // Handler callbacks
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
@@ -253,10 +254,13 @@ protected:
 
 protected:
     // Virtual functions for different interfaces. Currently there are own classes
-    // for Arduino due internal CAN (NMEA2000_due) and external MCP2515 SPI CAN bus controller (NMEA2000_mcp)
+    // for Arduino due internal CAN (NMEA2000_due), external MCP2515 SPI CAN bus controller (NMEA2000_mcp),
+    // Teensy FlexCAN (NMEA2000_Teensy), NMEA2000_avr for AVR, NMEA2000_mbed for MBED and NMEA2000_socketCAN for e.g. RPi.
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
     virtual bool CANOpen()=0;
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
+    // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for driver.
+    virtual void InitCANFrameBuffers();
 
 protected:
     bool SendFrames(); // Sends pending frames
@@ -324,12 +328,18 @@ public:
     // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
     // you can set buffer size smaller like 3 or 2 by calling this before open.
     void SetN2kCANMsgBufSize(const uint8_t _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
+    
     // When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data
     // This depends of your hw and device source. Device source has effect due to priority of getting sending slot. If your data is
     // critical, use buffer size, which is large enough (default 40 frames).
     // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
     // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
-    void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
+    // You must call this before Open();
+    virtual void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
+
+    // Some CAN drivers allows interrupted frame buffering. You can set buffer size with this function.
+    // You must call this once before Open();
+    virtual void SetN2kCANReceiveFrameBufSize(const uint16_t _MaxCANReceiveFrames) { if (CANSendFrameBuf==0) MaxCANReceiveFrames=_MaxCANReceiveFrames; }
 
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.

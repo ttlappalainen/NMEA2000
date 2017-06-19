@@ -48,8 +48,8 @@ void N2kPrintFreeMemory(const char *Source) {
 #define MaxHeartbeatInterval 655320UL
 
 // I do not know what standard says about max field length, but according to tests NMEAReader crashed with
-// lenght >=90
-#define Max_conf_info_field_len 80
+// lenght >=90. Some device was reported not to work string length over 70.
+#define Max_conf_info_field_len 70
 
 #define TP_CM 60416L /* Multi packet connection management, TP.CM */
 #define TP_DT 60160L /* Multi packet data transfer, TP.DT */
@@ -133,6 +133,7 @@ const unsigned long DefSingleFrameMessages[] PROGMEM = {
 const unsigned long DefFastPacketMessages[] PROGMEM = {
                                       126996L, /* Product information */
                                       126998L, /* Configuration information */
+                                      127237L, /* Heading/Track control */
                                       127489L, /* Engine parameters dynamic */
                                       127506L, /* DC Detailed status */
                                       128275L, /* Distance log */
@@ -141,6 +142,7 @@ const unsigned long DefFastPacketMessages[] PROGMEM = {
                                       129039L, /*AIS Class B Position Report*/
                                       129284L, // Navigation info
                                       129285L, // Waypoint list
+                                      129540L, /* GNSS Sats in View */
                                       129794L, /*AIS Class A Static data*/
                                       129809L, /*AIS Class B Static Data, Part A*/
                                       129810L, /*AIS Class B Static Data Part B*/
@@ -205,6 +207,7 @@ tNMEA2000::tNMEA2000() {
   MaxN2kCANMsgs=0;
 
   MaxCANSendFrames=40;
+  MaxCANReceiveFrames=0; // Use driver default
   CANSendFrameBuf=0;
 
   MsgHandler=0;
@@ -436,10 +439,23 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
 }
 
 //*****************************************************************************
+void tNMEA2000::InitCANFrameBuffers() {
+    if ( CANSendFrameBuf==0 ) {
+      CANSendFrameBuf = new tCANSendFrame[MaxCANSendFrames];
+      CANSendFrameBufferWrite=0;
+      CANSendFrameBufferRead=0;
+    }
+    
+    // Receive buffer has sense only interrupt with handling.
+}
+
+//*****************************************************************************
 bool tNMEA2000::Open() {
   
   if (!DeviceReady) {
+    InitCANFrameBuffers();
     InitDevices();
+    
     if ( N2kCANMsgBuf==0 ) {
       if ( MaxN2kCANMsgs==0 ) MaxN2kCANMsgs=5;
       N2kCANMsgBuf = new tN2kCANMsg[MaxN2kCANMsgs];
@@ -451,12 +467,6 @@ bool tNMEA2000::Open() {
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126993(this)); // Heartbeat handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandler(this,0)); // Default handler at last
 #endif
-    }
-
-    if ( CANSendFrameBuf==0 ) {
-      CANSendFrameBuf = new tCANSendFrame[MaxCANSendFrames];
-      CANSendFrameBufferWrite=0;
-      CANSendFrameBufferRead=0;
     }
 
     DeviceReady = (dbMode!=dm_None) || CANOpen();
@@ -510,6 +520,7 @@ bool tNMEA2000::SendFrames()
     temp = (CANSendFrameBufferRead + 1) % MaxCANSendFrames;
     if ( CANSendFrame(CANSendFrameBuf[temp].id, CANSendFrameBuf[temp].len, CANSendFrameBuf[temp].buf, CANSendFrameBuf[temp].wait_sent) ) {
       CANSendFrameBufferRead=temp;
+      // ForwardStream->print("Frame unbuffered "); ForwardStream->println(CANSendFrameBuf[temp].id);
     } else return false;
   }
 
@@ -521,11 +532,15 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
 
   if ( !SendFrames() || !CANSendFrame(id,len,buf,wait_sent) ) { // If we can not sent frame immediately, add it to buffer
     tCANSendFrame *Frame=GetNextFreeCANSendFrame();
-    if ( Frame==0 ) return false;
+    if ( Frame==0 ) {
+      // ForwardStream->print("Frame failed "); ForwardStream->println(id);
+      return false;
+    }
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
     for (int i=0; i<len && i<8; i++) Frame->buf[i]=buf[i];
+     ForwardStream->print("Frame buffered "); ForwardStream->println(id);
   }
 
   return true;
@@ -953,14 +968,17 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
           for (MsgIndex=0; 
                MsgIndex<MaxN2kCANMsgs && !(N2kCANMsgBuf[MsgIndex].N2kMsg.PGN==PGN && N2kCANMsgBuf[MsgIndex].N2kMsg.Source==Source);
                MsgIndex++);
-          if (MsgIndex<MaxN2kCANMsgs) { // we found start start for this message, so add data to it.
+          if (MsgIndex<MaxN2kCANMsgs) { // we found start for this message, so add data to it.
             if (N2kCANMsgBuf[MsgIndex].LastFrame+1 == buf[0]) { // Right frame is coming
               N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],1,len,buf);
             } else { // We have lost frame, so free this
+              //Serial.print(millis()); Serial.print(", Lost frame ");  Serial.print(N2kCANMsgBuf[MsgIndex].LastFrame); Serial.print("/");  Serial.print(buf[0]); Serial.print(", source ");  Serial.print(Source); Serial.print(" for: "); Serial.println(PGN);
               N2kCANMsgBuf[MsgIndex].FreeMessage();
               MsgIndex=MaxN2kCANMsgs;
             }
+          } else {  // Orphan frame
+              //Serial.print(millis()); Serial.print(", Orphan frame "); Serial.print(buf[0]); Serial.print(", source ");  Serial.print(Source); Serial.print(" for: "); Serial.println(PGN);
           }
         } else { // Handle first frame
           FindFreeCANMsgIndex(PGN,Source,MsgIndex);
@@ -996,15 +1014,13 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
 
 //*****************************************************************************
  int tNMEA2000::FindSourceDeviceIndex(unsigned char Source) {
-   int result=-1;
-   int i;
+   int i=DeviceCount;
 
      if ( Source<=253 ) {
        for (i=0; i<DeviceCount && Devices[i].N2kSource!=Source; i++);
-       if (i<DeviceCount) result=i;
      }
 
-     return result;
+     return (i<DeviceCount?i:-1);
  }
 
 //*****************************************************************************
@@ -1139,7 +1155,13 @@ bool tNMEA2000::SendProductInformation(int iDev) {
     } else {
       SetN2kPGN126996Progmem(RespondMsg,Devices[iPIDev].ProductInformation);
     }
-    return SendMsg(RespondMsg,iDev);
+    if (SendMsg(RespondMsg,iDev) ) {
+      Devices[iDev].ClearPendingProductInformation();
+      return true;
+    }
+    
+    Devices[iDev].SetPendingProductInformation();
+    return false;
 }
 
 //*****************************************************************************
@@ -1385,12 +1407,12 @@ bool tNMEA2000::ReadResetDeviceInformationChanged() {
 
 //*****************************************************************************
 void tNMEA2000::GetNextAddress(int DeviceIndex) {
-  bool FoundSame=false;
+  bool FoundSame;
   // Currently simply add address
   // Note that 253 is the last source. We do not send data if address is higher than that.
   do {
-    if (Devices[DeviceIndex].N2kSource<255) Devices[DeviceIndex].N2kSource++;
-
+    if (Devices[DeviceIndex].N2kSource<254) Devices[DeviceIndex].N2kSource++;
+    FoundSame=false;
     // Check that we do not have same on our list
     for (int i=0; i<DeviceCount && !FoundSame; i++) {
       if (i!=DeviceIndex) FoundSame=(Devices[DeviceIndex].N2kSource==Devices[i].N2kSource);
@@ -1509,9 +1531,7 @@ void SetN2kPGN59392(tN2kMsg &N2kMsg, unsigned char Control, unsigned char GroupF
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
-    N2kMsg.AddByte(PGN & 0xff); PGN>>=8;
-    N2kMsg.AddByte(PGN & 0xff); PGN>>=8;
-    N2kMsg.AddByte(PGN & 0xff); PGN>>=8;
+    N2kMsg.Add3ByteInt(PGN);
 }
 
 //*****************************************************************************
