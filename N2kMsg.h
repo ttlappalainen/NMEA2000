@@ -119,7 +119,7 @@ public:
   uint16_t Get2ByteUInt(int &Index, uint16_t def=0xffff) const;
   uint32_t Get3ByteUInt(int &Index, uint32_t def=0xffffffff) const;
   uint32_t Get4ByteUInt(int &Index, uint32_t def=0xffffffff) const;
-  uint64_t GetUInt64(int &Index, uint64_t def=0xffffffffffffffff) const;
+  uint64_t GetUInt64(int &Index, uint64_t def=0xffffffffffffffffULL) const;
   double Get1ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get1ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get2ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
