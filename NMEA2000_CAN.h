@@ -81,6 +81,9 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_due());
 // Use Teensy 3.1&3.2 board internal CAN FlexCAN library
 #include <FlexCAN.h>
 #include <NMEA2000_teensy.h>    // https://github.com/sarfata/NMEA2000_teensy
+#ifndef NMEA2000_TEENSY_VER
+#error Update NMEA2000_Teensy for the latest version!
+#endif
 tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy());
 
 #elif USE_N2K_CAN == USE_N2K_AVR_CAN

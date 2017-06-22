@@ -585,7 +585,7 @@ tN2kOnOff N2kGetStatusOnBinaryStatus(tN2kBinaryStatus BankStatus, uint8_t ItemIn
 
 //*****************************************************************************
 // Reset all single binary status values to not available
-inline void N2kResetBinaryStatus(tN2kBinaryStatus &BankStatus) { BankStatus=0xffffffffffffffff; }
+inline void N2kResetBinaryStatus(tN2kBinaryStatus &BankStatus) { BankStatus=0xffffffffffffffffULL; }
 
 //*****************************************************************************
 // Set single status to full binary bank status.

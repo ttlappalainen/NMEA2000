@@ -62,6 +62,9 @@ class N2kStream {
 
    // Print string and newline to stream.
    size_t println(const char *str);
+
+   // Print value and newline to stream.
+   size_t println(int val, uint8_t radix = 10);
 };
 #endif
 
