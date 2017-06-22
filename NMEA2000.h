@@ -83,7 +83,7 @@ protected:
   typedef union {
     uint64_t Name;
     struct {
-      unsigned long UnicNumberAndManCode; // ManufacturerCode 11 bits , UniqueNumber 21 bits
+      uint32_t UnicNumberAndManCode; // ManufacturerCode 11 bits , UniqueNumber 21 bits
       unsigned char DeviceInstance;
       unsigned char DeviceFunction;
       unsigned char DeviceClass;
@@ -101,8 +101,8 @@ protected:
 
 public:
   tDeviceInformation() { DeviceInformation.Name=0; }
-  void SetUniqueNumber(unsigned long _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
-  unsigned long GetUniqueNumber() { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
+  void SetUniqueNumber(uint32_t _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
+  uint32_t GetUniqueNumber() { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
   void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
   uint16_t GetManufacturerCode() { return DeviceInformation.UnicNumberAndManCode>>21; }
   void SetDeviceInstance(unsigned char _DeviceInstance) { DeviceInformation.DeviceInstance=_DeviceInstance; }
@@ -182,11 +182,11 @@ protected:
       NextHeartbeatSentTime=60000;
 #endif
     }
-    void SetPendingProductInformation() { PendingProductInformation=millis()+N2kSource*8; }
+    void SetPendingProductInformation() { PendingProductInformation=millis()+187+N2kSource*8; } // Use strange increment to avoid synchronize
     void ClearPendingProductInformation() { PendingProductInformation=0; }
     bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
 
-    void SetPendingPendingConfigurationInformation() { PendingConfigurationInformation=millis()+N2kSource*10; }
+    void SetPendingPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
     void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
     bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
   };
@@ -259,7 +259,8 @@ protected:
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
     virtual bool CANOpen()=0;
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
-    // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for driver.
+    // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for the driver 
+    // and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. 
     virtual void InitCANFrameBuffers();
 
 protected:
@@ -273,6 +274,7 @@ protected:
 
 protected:
     void InitDevices();
+    bool IsInitialized() { return (Devices!=0); } 
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uint8_t &MsgIndex);
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
     bool IsFastPacket(unsigned long PGN);
@@ -326,7 +328,7 @@ public:
     void SetDeviceCount(const uint8_t _DeviceCount);
 
     // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
-    // you can set buffer size smaller like 3 or 2 by calling this before open.
+    // you can set buffer size smaller like 3 or 2 by calling this before Open().
     void SetN2kCANMsgBufSize(const uint8_t _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
     
     // When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data
@@ -334,12 +336,12 @@ public:
     // critical, use buffer size, which is large enough (default 40 frames).
     // So e.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames.
     // If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.
-    // You must call this before Open();
-    virtual void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if (CANSendFrameBuf==0) { MaxCANSendFrames=_MaxCANSendFrames; }; }
+    // If you use this function, call it once before Open() and before any device related function like SetProductInformation.
+    virtual void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if ( !IsInitialized() ) { MaxCANSendFrames=_MaxCANSendFrames; }; }
 
-    // Some CAN drivers allows interrupted frame buffering. You can set buffer size with this function.
-    // You must call this once before Open();
-    virtual void SetN2kCANReceiveFrameBufSize(const uint16_t _MaxCANReceiveFrames) { if (CANSendFrameBuf==0) MaxCANReceiveFrames=_MaxCANReceiveFrames; }
+    // Some CAN drivers allows interrupted receive frame buffering. You can set receive buffer size with this function.
+    // If you use this function, call it once before Open();
+    virtual void SetN2kCANReceiveFrameBufSize(const uint16_t _MaxCANReceiveFrames) { if ( !IsInitialized() ) MaxCANReceiveFrames=_MaxCANReceiveFrames; }
 
     // Define your product information. Defaults will be set on initialization.
     // For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.
@@ -382,7 +384,7 @@ public:
     void ExtendSingleFrameMessages(const unsigned long *_SingleFrameMessages);
     void ExtendFastPacketMessages (const unsigned long *_FastPacketMessages);
     // Define information about PGNs, what your system can handle.  Pointers must be in PROGMEM
-    // As default for request to PGN list library responds with default messages it handles intenally.
+    // As default for request to PGN list library responds with default messages it handles internally.
     // With these messages you can extent that list. See example TemperatureMonitor
     void ExtendTransmitMessages(const unsigned long *_SingleFrameMessages, int iDev=0);
     void ExtendReceiveMessages(const unsigned long *_FastPacketMessages, int iDev=0);

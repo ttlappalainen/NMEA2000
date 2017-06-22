@@ -6,7 +6,7 @@ also in other systems.
 Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
 NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
 
-Library tries to fullfill NMEA 2000 mandatory functions and behaviour, so it looks a bit complex inside. With default
+Library tries to fulfil NMEA 2000 mandatory functions and behaviour, so it looks a bit complex inside. With default
  settings it requires about 23 kB rom and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega, Due or
 Teensy 3.2 boards. Arduino Uno board has too little memory for full functionality. See "Memory requirements" later.
 
@@ -44,8 +44,18 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
-19.06.2017 Changes due to different revisions of FlexCAN library for Teeansy boards. NOTE! You must update NMEA2000_Teensy library.+
-+
+22.06.2017 Fixes and cosmetic changes
+
+- Crashed, if ForwardStream was not defined. I accidentaly forgot to comment some debug code.
+
+- Definition of tDeviceInformation changed to fixed sized data so that compiler can not mix them.
+
+- Added debug definitions to avoid first bug.
+
+- Some cosmetic changes and tests.
+
+19.06.2017 Changes due to different revisions of FlexCAN library for Teeansy boards. NOTE! You must update NMEA2000_Teensy library. +
+ +
 I also forked and developed FlexCAN library from collin80 and also send pull request for him. Until updated there my fork has more features
 for use with NMEA2000 library.
 
