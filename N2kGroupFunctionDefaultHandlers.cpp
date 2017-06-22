@@ -77,7 +77,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
         field=N2kMsg.GetByte(Index);
         switch (field) {
           case N2kPGN60928_UniqueNumber_field: 
-            MatchRequestField(N2kMsg.Get4ByteUInt(Index),DI.GetUniqueNumber(),(uint32_t)0x001fffff,MatchFilter,FieldErrorCode);
+            MatchRequestField(N2kMsg.Get4ByteUInt(Index),(uint32_t)DI.GetUniqueNumber(),(uint32_t)0x001fffff,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN60928_ManufacturerCode_field: 
             MatchRequestField(N2kMsg.Get2ByteUInt(Index),DI.GetManufacturerCode(),(uint16_t)0x07ff,MatchFilter,FieldErrorCode);
