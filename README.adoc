@@ -44,6 +44,12 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+25.06.2017 Fix and cosmetic changes
+
+- ForwardStream initialization was accidentaly deleted
+
+- Clean code and more debug options.
+
 22.06.2017 Fixes and cosmetic changes
 
 - Crashed, if ForwardStream was not defined. I accidentaly forgot to comment some debug code.

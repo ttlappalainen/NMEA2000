@@ -186,7 +186,7 @@ protected:
     void ClearPendingProductInformation() { PendingProductInformation=0; }
     bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
 
-    void SetPendingPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
+    void SetPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
     void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
     bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
   };
@@ -274,7 +274,7 @@ protected:
 
 protected:
     void InitDevices();
-    bool IsInitialized() { return (Devices!=0); } 
+    bool IsInitialized() { return (N2kCANMsgBuf!=0); } 
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uint8_t &MsgIndex);
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
     bool IsFastPacket(unsigned long PGN);

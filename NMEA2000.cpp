@@ -31,17 +31,26 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define DebugStream Serial
 
-// #define NMEA2000_FRAME_DEBUG
+// #define NMEA2000_FRAME_IN_DEBUG
+// #define NMEA2000_FRAME_OUT_DEBUG
 // #define NMEA2000_MSG_DEBUG
 // #define NMEA2000_BUF_DEBUG
 // #define NMEA2000_DEBUG
 
-#if defined(NMEA2000_FRAME_DEBUG)
-# define N2kFrameDbg(fmt, args...)     DebugStream.print (fmt , ## args)
-# define N2kFrameDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+#if defined(NMEA2000_FRAME_IN_DEBUG)
+# define N2kFrameInDbg(fmt, args...)     DebugStream.print (fmt , ## args)
+# define N2kFrameInDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
 #else
-# define N2kFrameDbg(fmt, args...)
-# define N2kFrameDbgln(fmt, args...)
+# define N2kFrameInDbg(fmt, args...)
+# define N2kFrameInDbgln(fmt, args...)
+#endif
+
+#if defined(NMEA2000_FRAME_OUT_DEBUG)
+# define N2kFrameOutDbg(fmt, args...)     DebugStream.print (fmt , ## args)
+# define N2kFrameOutDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+#else
+# define N2kFrameOutDbg(fmt, args...)
+# define N2kFrameOutDbgln(fmt, args...)
 #endif
 
 #if defined(NMEA2000_MSG_DEBUG)
@@ -235,6 +244,7 @@ tNMEA2000::tNMEA2000() {
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
   pGroupFunctionHandlers=0;
 #endif
+  ForwardStream=0;
 
   SingleFrameMessages[0]=DefSingleFrameMessages;
   FastPacketMessages[0]=DefFastPacketMessages;
@@ -277,6 +287,7 @@ void tNMEA2000::SetDeviceCount(const uint8_t _DeviceCount) {
 //*****************************************************************************
 void tNMEA2000::InitDevices() {
   if ( Devices==0 ) {
+    N2kDbgln("Init devices");
     Devices=new tDevice[DeviceCount];
     MaxCANSendFrames*=DeviceCount; // We need bigger buffer for sending all information
 //    for (int i=0; i<DeviceCount; i++) Devices[i].tDevice();
@@ -479,6 +490,7 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
 void tNMEA2000::InitCANFrameBuffers() {
     if ( CANSendFrameBuf==0 && !IsInitialized() ) {
       if ( MaxCANSendFrames>0 ) CANSendFrameBuf = new tCANSendFrame[MaxCANSendFrames];
+      N2kDbg("Initialize frame buffer. Size: "); N2kDbg(MaxCANSendFrames); N2kDbg(", address:"); N2kDbgln((uint32_t)CANSendFrameBuf);
       CANSendFrameBufferWrite=0;
       CANSendFrameBufferRead=0;
     }
@@ -559,7 +571,7 @@ bool tNMEA2000::SendFrames()
     temp = (CANSendFrameBufferRead + 1) % MaxCANSendFrames;
     if ( CANSendFrame(CANSendFrameBuf[temp].id, CANSendFrameBuf[temp].len, CANSendFrameBuf[temp].buf, CANSendFrameBuf[temp].wait_sent) ) {
       CANSendFrameBufferRead=temp;
-      N2kFrameDbg("Frame unbuffered "); N2kFrameDbgln(CANSendFrameBuf[temp].id);
+      N2kFrameOutDbg("Frame unbuffered "); N2kFrameOutDbgln(CANSendFrameBuf[temp].id);
     } else return false;
   }
 
@@ -572,14 +584,14 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
   if ( !SendFrames() || !CANSendFrame(id,len,buf,wait_sent) ) { // If we can not sent frame immediately, add it to buffer
     tCANSendFrame *Frame=GetNextFreeCANSendFrame();
     if ( Frame==0 ) {
-      N2kFrameDbg("Frame failed "); N2kFrameDbgln(id);
+      N2kFrameOutDbg("Frame failed "); N2kFrameOutDbgln(id);
       return false;
     }
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
     for (int i=0; i<len && i<8; i++) Frame->buf[i]=buf[i];
-    N2kFrameDbg("Frame buffered "); N2kFrameDbgln(id);
+    N2kFrameOutDbg("Frame buffered "); N2kFrameOutDbgln(id);
   }
 
   return true;
@@ -641,8 +653,8 @@ tNMEA2000::tCANSendFrame *tNMEA2000::GetNextFreeCANSendFrame() {
 //*****************************************************************************
 void tNMEA2000::SendPendingInformation() {
   for (int i=0; i<DeviceCount; i++ ) {
-    if ( Devices[i].QueryPendingProductInformation() && SendProductInformation(i) ) Devices[i].ClearPendingProductInformation();
-    if ( Devices[i].QueryPendingConfigurationInformation() && SendConfigurationInformation(i) ) Devices[i].ClearPendingConfigurationInformation();
+    if ( Devices[i].QueryPendingProductInformation() ) SendProductInformation(i);
+    if ( Devices[i].QueryPendingConfigurationInformation() ) SendConfigurationInformation(i);
   }
 }
 
@@ -1003,7 +1015,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
       KnownMessage=CheckKnownMessage(PGN,SystemMessage,FastPacket);
       if ( KnownMessage || !HandleOnlyKnownMessages() ) {
         if (FastPacket && !IsFastPacketFirstFrame(buf[0]) ) { // Not first frame
-        N2kFrameDbg("New frame="); N2kFrameDbg(PGN); N2kFrameDbg(" frame="); N2kFrameDbg(buf[0],HEX); N2kFrameDbgln();
+        N2kFrameInDbg("New frame="); N2kFrameInDbg(PGN); N2kFrameInDbg(" frame="); N2kFrameInDbg(buf[0],HEX); N2kFrameInDbgln();
           // Find previous slot for this PGN
           for (MsgIndex=0;
                MsgIndex<MaxN2kCANMsgs && !(N2kCANMsgBuf[MsgIndex].N2kMsg.PGN==PGN && N2kCANMsgBuf[MsgIndex].N2kMsg.Source==Source);
@@ -1013,14 +1025,14 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
               N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],1,len,buf);
             } else { // We have lost frame, so free this
-              N2kFrameDbg(millis()); N2kFrameDbg(", Lost frame ");  N2kFrameDbg(N2kCANMsgBuf[MsgIndex].LastFrame); N2kFrameDbg("/");  N2kFrameDbg(buf[0]); 
-              N2kFrameDbg(", source ");  N2kFrameDbg(Source); N2kFrameDbg(" for: "); N2kFrameDbgln(PGN);
+              N2kFrameInDbg(millis()); N2kFrameInDbg(", Lost frame ");  N2kFrameInDbg(N2kCANMsgBuf[MsgIndex].LastFrame); N2kFrameInDbg("/");  N2kFrameInDbg(buf[0]); 
+              N2kFrameInDbg(", source ");  N2kFrameInDbg(Source); N2kFrameInDbg(" for: "); N2kFrameInDbgln(PGN);
               N2kCANMsgBuf[MsgIndex].FreeMessage();
               MsgIndex=MaxN2kCANMsgs;
             }
           } else {  // Orphan frame
-              N2kFrameDbg(millis()); N2kFrameDbg(", Orphan frame "); N2kFrameDbg(buf[0]); N2kFrameDbg(", source ");  
-              N2kFrameDbg(Source); N2kFrameDbg(" for: "); N2kFrameDbgln(PGN);
+              N2kFrameInDbg(millis()); N2kFrameInDbg(", Orphan frame "); N2kFrameInDbg(buf[0]); N2kFrameInDbg(", source ");  
+              N2kFrameInDbg(Source); N2kFrameInDbg(" for: "); N2kFrameInDbgln(PGN);
           }
         } else { // Handle first frame
           FindFreeCANMsgIndex(PGN,Source,MsgIndex);
@@ -1032,12 +1044,12 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
             N2kCANMsgBuf[MsgIndex].CopiedLen=0;
             if (FastPacket) {
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],2,len,buf);
-              N2kFrameDbg("First frame="); N2kFrameDbg(PGN);  N2kFrameDbgln();
+              N2kFrameInDbg("First frame="); N2kFrameInDbg(PGN);  N2kFrameInDbgln();
               N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
               N2kCANMsgBuf[MsgIndex].N2kMsg.DataLen=buf[1];
             } else {
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],0,len,buf);
-              N2kFrameDbg("Single frame="); N2kFrameDbg(PGN); N2kFrameDbgln();
+              N2kFrameInDbg("Single frame="); N2kFrameInDbg(PGN); N2kFrameInDbgln();
               N2kCANMsgBuf[MsgIndex].LastFrame=0;
               N2kCANMsgBuf[MsgIndex].N2kMsg.DataLen=len;
             }
@@ -1266,7 +1278,14 @@ bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
     } else { // No information provided, so respond not available
       SetN2kPGNISOAcknowledgement(RespondMsg,1,0xff,126998L);
     }
-    return SendMsg(RespondMsg,DeviceIndex);
+
+    if (SendMsg(RespondMsg,DeviceIndex) ) {
+      Devices[DeviceIndex].ClearPendingConfigurationInformation();
+      return true;
+    }
+
+    Devices[DeviceIndex].SetPendingConfigurationInformation();
+    return false;
 }
 
 //*****************************************************************************
@@ -1281,15 +1300,15 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
         HandlePGNListRequest(N2kMsg.Source,iDev);
         break;
       case 126996L: /* Product information */
-        // If query was for us, try to respond immediately
-        if ( ( N2kMsg.Destination!=Devices[iDev].N2kSource ) || !SendProductInformation(iDev) ) {
-          Devices[iDev].SetPendingProductInformation();
+        // If query was for us, try to respond 
+        if ( ( N2kMsg.Destination==Devices[iDev].N2kSource ) ) {
+          SendProductInformation(iDev);
         }
         break;
       case 126998L: /* Configuration information */
-        // If query was for us, try to respond immediately
-        if ( ( N2kMsg.Destination!=Devices[iDev].N2kSource ) || !SendConfigurationInformation(iDev) ) {
-          Devices[iDev].SetPendingPendingConfigurationInformation();
+        // If query was for us, try to respond 
+        if ( ( N2kMsg.Destination==Devices[iDev].N2kSource )  ) {
+          SendConfigurationInformation(iDev);
         }
         break;
       default:
