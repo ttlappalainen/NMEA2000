@@ -44,6 +44,15 @@ Actisense message format handling I have learned from OpenSkipper project.
 I also thank for anybody who has extended library with new PGNs or processor support.
 
 == Changes ==
+26.06.2017 Example updates
+
+- ActisenseListenerSender can be used to listen and send data to NMEA 2000 bus. This is almost same as TeensyActisenseListenerSender,
+but read and forward ports can be chosen with #define.
+
+- ActisenseListener uses now SetN2kCANReceiveFrameBufSize.
+
+- Removed FromPCToN2k. ActisenseListenerSender replaces this.
+
 25.06.2017 Fix and cosmetic changes
 
 - ForwardStream initialization was accidentaly deleted
