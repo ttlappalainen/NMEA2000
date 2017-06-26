@@ -3,14 +3,17 @@
 // enable interrupt by defining pin you have used for MCP2515 interrupt pin. See below
 // definition #define N2k_CAN_INT_PIN 20
 
-//#define N2k_CAN_INT_PIN 21
+#define N2k_CAN_INT_PIN 21
 #include <Arduino.h>
 #include <NMEA2000_CAN.h>
 
 void setup() {
   Serial.begin(115200);
+  NMEA2000.SetN2kCANMsgBufSize(8);
+  NMEA2000.SetN2kCANReceiveFrameBufSize(100);
   NMEA2000.SetForwardStream(&Serial);  // PC output on due native port
-//  NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text
+  // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text
+  // NMEA2000.EnableForward(false);                      // Disable all msg forwarding to USB (=Serial)
   NMEA2000.Open();
 }
 
