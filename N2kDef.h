@@ -58,7 +58,9 @@ extern uint32_t millis();
 class __FlashStringHelper;
 #define F(str) (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
 #else
+#ifndef F
 #define F(str) str
+#endif
 #endif
 
 #endif
