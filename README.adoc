@@ -1,31 +1,37 @@
 = NMEA2000 library for C++ =
 
-Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards. These board types has been tested, but library may work
-also in other systems.
+Object oriented NMEA2000 library for Arduino, MBED and Rasberry type Boards.
+These board types has been tested, but library may work also in other systems.
 
-Library gives you easy way to make different kind of NMEA2000 bus devices like NMEA2000->PC interface (like Actisense NGT1),
-NMEA0183->NMEA2000 converter, sensor (e.g. temperature, wind) node.
+Library gives you easy way to make different kind of NMEA2000 bus devices like
+NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 converter,
+sensor (e.g. temperature, wind) node.
 
-Library tries to fulfil NMEA 2000 mandatory functions and behaviour, so it looks a bit complex inside. With default
- settings it requires about 23 kB rom and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega, Due or
-Teensy 3.2 boards. Arduino Uno board has too little memory for full functionality. See "Memory requirements" later.
+Library tries to fulfil NMEA 2000 mandatory functions and behaviour, so it
+looks a bit complex inside. With default settings it requires about 23 kB rom
+and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega,
+Due or Teensy 3.2 boards. Arduino Uno board has too little memory for full
+functionality. See "Memory requirements" later.
 
-To use Arduino Due board internal CAN you will also need NMEA2000_due library and
-due_can library, which you can download from  https://github.com/collin80/due_can
+To use Arduino Due board internal CAN you will also need NMEA2000_due library
+and due_can library, which you can download from
+https://github.com/collin80/due_can
 
-To use Arduino boards with MCP2515 CAN bus controller, you will also need NMEA2000_mcp library
-and mcp_can library. Use mcp_can library found on https://github.com/ttlappalainen/CAN_BUS_Shield, which 
-is developed version of mcp_can library. This allows also to use 8MHz clock and has been tested with Maple Mini.
-mcp_can library can be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield, 
-but these improvements has not been implemented to Seeed-Studio.
+To use Arduino boards with MCP2515 CAN bus controller, you will also need
+NMEA2000_mcp library and mcp_can library. Use mcp_can library found on
+https://github.com/ttlappalainen/CAN_BUS_Shield, which is developed version of
+mcp_can library. This allows also to use 8MHz clock and has been tested with
+Maple Mini.  mcp_can library can be originally found on
+https://github.com/Seeed-Studio/CAN_BUS_Shield, but these improvements has not
+been implemented to Seeed-Studio.
 
 To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551 CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
-[NMEA2000_teensy library](https://github.com/sarfata/NMEA2000_teensy) contributed by [Thomas Sarlandie](https://twitter.com/sarfata/) 
-and the [FlexCAN library](https://github.com/ttlappalainen/FlexCAN_Library). FlexCan library is already included in 
+[NMEA2000_teensy library](https://github.com/sarfata/NMEA2000_teensy) contributed by [Thomas Sarlandie](https://twitter.com/sarfata/)
+and the [FlexCAN library](https://github.com/ttlappalainen/FlexCAN_Library). FlexCan library is already included in
 [Teensyduino]https://www.pjrc.com/teensy/teensyduino.html extension. In order to use my fork, you have to remove FlexCAN library from
 "C:\Program Files (x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN"
 
-To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library, 
+To use avr processors internal CAN you need also NMEA2000_avr library and avr_can library,
 which you can download from https://github.com/thomasonw/avr_can
 
 To use MBED boards you need also NMEA2000_mbed library and other related libraries. See origin for MBED port
@@ -34,14 +40,17 @@ on https://github.com/thomasonw/NMEA2000_mbed
 To use Rasberry boards you need also NMEA2000_socketCAN library and other related libraries. See origin for Rasberry port
 on https://github.com/thomasonw/NMEA2000_socketCAN
 
-= Thanks =
-I thank Kees Verruijt for his excellent CanBoat project and Dr Andrew Mason for OpenSkipper project.
-I originally started to learn NMEA 2000 via OpenSkipper project, which development I continued. 
-PGN library on OpenSkipper and so on this library is mostly based on Kees work. Also it appeared that 
-some code parts are probably originally from CanBoat even I have found them from other sources.
-Actisense message format handling I have learned from OpenSkipper project.
+== Thanks ==
+I thank Kees Verruijt for his excellent CanBoat project and Dr Andrew Mason for
+OpenSkipper project.  I originally started to learn NMEA 2000 via OpenSkipper
+project, which development I continued.  PGN library on OpenSkipper and so on
+this library is mostly based on Kees work. Also it appeared that some code
+parts are probably originally from CanBoat even I have found them from other
+sources.  Actisense message format handling I have learned from OpenSkipper
+project.
 
-I also thank for anybody who has extended library with new PGNs or processor support.
+I also thank for anybody who has extended library with new PGNs or processor
+support.
 
 == Changes ==
 26.06.2017 Example updates
@@ -77,14 +86,14 @@ for use with NMEA2000 library.
 13.06.2017 NOTE! Some compatibility changes.
 
 - !NOTE compatibility change. tProductInformation has been moved inside tNMEA2000 class. If you have defined tProductInformation
-to PROGMEM as in example BatteryMonitor, you need to change definition const tProductInformation... to const tNMEA2000::tProductInformation... 
+to PROGMEM as in example BatteryMonitor, you need to change definition const tProductInformation... to const tNMEA2000::tProductInformation...
 See example BatteryMonitor.
 
 - Multi device support should work now. So you can show several devices on bus with single hw. See example MultiDevice.
 
-- !NOTE compatibility change. tDeviceInformation has been moved inside tNMEA2000 class. This was used only internally until 11.06.2017 release. 
- 
-11.06.2017 Added NMEA 2000 mandatory features. Some bug fixes. 
+- !NOTE compatibility change. tDeviceInformation has been moved inside tNMEA2000 class. This was used only internally until 11.06.2017 release.
+
+11.06.2017 Added NMEA 2000 mandatory features. Some bug fixes.
 
 - !NOTE compatibility change. PROGMEM configuration information did not work and actually wasted RAM.
   You should define each configuration information string alone as PROGMEM and call changed SetProgmemConfigurationInformation.
@@ -92,11 +101,11 @@ See example BatteryMonitor.
 
 - Due to new mandatory features library requires more RAM and program memory. It is possible to squeeze requirements
 with compiler options. See more info on NMEA2000_CompilerDefns.h.
-  
-- Added new class tN2kGroupFunctionHandler (N2kGroupFunction.h/.cpp) for NMEA 2000 group function (PGN 126208) handling.
-Group function can be used to e.g. to set "temperature instance" or "set temperature" fields on PGN 130316. 
 
-- Added automatic Heartbeat, which is mandatory for certified NMEA 2000 devices. If you do not want it to be sent, 
+- Added new class tN2kGroupFunctionHandler (N2kGroupFunction.h/.cpp) for NMEA 2000 group function (PGN 126208) handling.
+Group function can be used to e.g. to set "temperature instance" or "set temperature" fields on PGN 130316.
+
+- Added automatic Heartbeat, which is mandatory for certified NMEA 2000 devices. If you do not want it to be sent,
 you have to set heartbeat interval to 0. Added also function SetHeartbeatInterval, GetHeartbeatInterval and SendHeartbeat.
 
 - Added group function handling for PGN 60928 (ISO Address) and PGN 126993 (Heartbeat). Handlers can be found on
@@ -108,7 +117,7 @@ device instance changes. See more info on document.
 - Added ISO Multi-packet handling. Changed logic on SetN2kCANBufMsg due this.
 
 05.06.2017
- 
+
 - Added PGN 130314 by sarfata.
 
 - Added PGN 127245 rudder parser
@@ -117,7 +126,7 @@ device instance changes. See more info on document.
 
 - Fixed response to ISO Address Claim request. Seems that all new devices respond allways with broadcast instead of caller address.
 
-28.05.2017 Changed default NMEA2000 variable definition in NMEA2000_CAN.h to reference. So now it is possible to 
+28.05.2017 Changed default NMEA2000 variable definition in NMEA2000_CAN.h to reference. So now it is possible to
 refer it in other modules with definition: extern tNMEA2000 &NMEA2000;
 
 08.04.2017 Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.
@@ -136,7 +145,7 @@ refer it in other modules with definition: extern tNMEA2000 &NMEA2000;
 
 01.01.2017 Document and some example fixes to match library portability changes.
 
-20.12.2016 Added support for PGN 126464L, PGN List (Transmit and Receive). Library will automatically respond to this message. 
+20.12.2016 Added support for PGN 126464L, PGN List (Transmit and Receive). Library will automatically respond to this message.
 You need only add message lists and call to methods ExtendTransmitMessages and/or ExtendReceiveMessages. See e.g. example
 TemperatureMonitor.
 
@@ -162,7 +171,7 @@ changes under https://github.com/ttlappalainen/NMEA2000/pull/35
 
 19.09.2016 Lot of testing behind - hopefully works now better.
 
-- NOTE! New method SetN2kCANSendFrameBufSize. Added buffer for frames to be sent. This takes more RAM and may be critical for low RAM systems. 
+- NOTE! New method SetN2kCANSendFrameBufSize. Added buffer for frames to be sent. This takes more RAM and may be critical for low RAM systems.
 
 - If frame sending fails, system now buffers frames to be sent automatically and tries to resend them on next call for ParseMessages.
 With this feature it solved my problem that time to time my MFD could not receive important GNSS or SOG/GOG messages and informed error.
@@ -171,14 +180,14 @@ With this feature it solved my problem that time to time my MFD could not receiv
 enough incoming messages (ParseMessages), you still may loose the request itself. This is specially the case if you system spends some time reading
 sensors like 1-wire system. Even with 1-wire asynchronous read, it may spend 10 ms interrupts disabled. Within 10 ms there may be about 30 messages on bus.
 
-- New methods SetConfigurationInformation and SetProgmemConfigurationInformation. System can now also handle Configuration Information ISO request to 
+- New methods SetConfigurationInformation and SetProgmemConfigurationInformation. System can now also handle Configuration Information ISO request to
 (PGN 126998). Default configuration information is saved to PROGMEM.
 
 - NOTE! Reload also NMEA2000_due!
 
 17.09.2016 Temporary fix for problem to respond product information ISO request.
 
-12.09.2016 Thanks for people (usauerbrey, OzOns), who noted below problems 
+12.09.2016 Thanks for people (usauerbrey, OzOns), who noted below problems
 
 - NOTE! If you are using NMEA2000_can, remember to update that too!
 
@@ -193,11 +202,11 @@ sensors like 1-wire system. Even with 1-wire asynchronous read, it may spend 10 
 - NOTE! On PGN 130310 and PGN 130311 description says that "Atmospheric pressure in Pascals. Use function mBarToPascal". There was scaling
   error and now they works like description. After update you have to provide value on Pascals and really use mBarToPascal, if you have your
   value in mBar.
-  
-- NOTE! Added SetHandleOnlyKnownMessages(). If you have called SetForwardOnlyKnownMessages(true), library did not handle unknown messages. After 
+
+- NOTE! Added SetHandleOnlyKnownMessages(). If you have called SetForwardOnlyKnownMessages(true), library did not handle unknown messages. After
   update, this effects only message forwarding - as it should have been. So call also SetHandleOnlyKnownMessages(true), if you want to disable
   any handling for unknown messages.
-  
+
 - NMEA 2000 Library reference update.
 
 - Added ExtendSingleFrameMessages and ExtendFastPacketMessages. With these one can own list of known messages
@@ -211,15 +220,15 @@ sensors like 1-wire system. Even with 1-wire asynchronous read, it may spend 10 
 
 Added example TeensyActisenseListenerSender. Example contains code, schematics and document.
 
-19.07.2016 Fixed discrete status on engine dynamic parameters (PGN 127489), thanks Jason. 
+19.07.2016 Fixed discrete status on engine dynamic parameters (PGN 127489), thanks Jason.
 
 Added new PGN 127257, vessel attitude. Only sending has been tested with NMEA Reader
 
 12.07.2016 Added to API -- Optional message lists by thomasonw
 
-25.06.2016 Corrected Battery Current in ParseN2kPGN127508 by thomasonw. 
+25.06.2016 Corrected Battery Current in ParseN2kPGN127508 by thomasonw.
 
-23.03.2016 Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk. 
+23.03.2016 Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk.
 
 13.03.2016 Fix of using PROGMEM. Now also product information defined to PROGMEM works right.
 
@@ -227,7 +236,7 @@ Added new PGN 127257, vessel attitude. Only sending has been tested with NMEA Re
 
 13.03.2016 More memory optimization - thanks for thomasonw. Constant message strings has been marked with F(...) moving them to flash instead of RAM.
 
-Note also that there is new funtion void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation); So one can save memory by 
+Note also that there is new funtion void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation); So one can save memory by
 defining product information to flash by using syntax: +
   const tProductInformation BatteryMonitorProductInformation PROGMEM={ +
   1300,               // N2kVersion +
@@ -245,30 +254,30 @@ buffer size smaller.
 
 08.03.2016 AVR CAN support by thomasonw.
 
-02.02.2016 NOTE! Updates, which effects backward compatibility. See list below. 
+02.02.2016 NOTE! Updates, which effects backward compatibility. See list below.
 
 - PGN 127489, SetN2kPGN127489 EngineOilTemp and EngineCoolantTemp is in Kelvins as in other temperature functions. So add for call to this
   function CToKelvin(...)
-  
+
 - Some function names withing N2kMessages have been changed. Change function names listed below! +
     SetN2kPGNSystemTime -> SetN2kSystemTime +
     ParseN2kPGNSystemTime -> ParseN2kSystemTime +
     SetN2kPGNTrueHeading -> SetN2kTrueHeading +
     SetN2kPGNMagneticHeading -> SetN2kMagneticHeading
-    
+
 - Variable types has been changed on some functions in N2kMessages. So when you get an compiler error about functions in N2kMessages, check
   carefully all parameter definitions for function from N2kMessages.h.
-  
+
 - If you do not have value for some parameter for functions in N2kMessages, use related N2kxxxxNA constant defined in N2kMsg.h. So e.g. if you only have
   wind speed, call +
   SetN2kWindSpeed(N2kMsg, 1, ReadWindSpeed(),N2kDoubleNA,N2kWind_Apprent);
-  
+
 - If you are reading values from N2k bus, you can now check does some value exist by using function N2kIsNA.
   So if you e.g. call +
   ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure); +
   then check pressure value with +
   if ( !N2kIsNA(AtmosphericPressure) ) { // It is available, so we can show it!
-  
+
 - Added reference document to the documents, which hopefully helps to get started.
 
 23.01.2016 Added PGN 127493 support. NMEA2000_mcp has now interrupt support. Some other fixes.
@@ -276,7 +285,7 @@ buffer size smaller.
 23.01.2016 Added some comments to samples and several new message readers. Also added support for 130316 extended temperature.
 Added new include N2kMessagesEnumToStr.h for translating library enums to clear text. This is now just for preliminary
 so I may changes texts in coming future.
-Added also new examples DataDisplay2.ini and MessageSender.ino. They are extended versions of DataDisplay.ino and 
+Added also new examples DataDisplay2.ini and MessageSender.ino. They are extended versions of DataDisplay.ino and
 TemperatureMonitor.ino.
 
 05.12.2015 Added NMEA2000_CAN.h and some fixes. Library has been originally developed with Arduino Software 1.6.5
@@ -287,7 +296,7 @@ Note! NMEA2000_CAN.h is now used on examples TemperatureMonitor and WindMonitor!
 
 == Memory requirements ==
 
-I have tried to measure memory used by library, but it is not so simple, since there are some automated operations. 
+I have tried to measure memory used by library, but it is not so simple, since there are some automated operations.
 With version 11.06.2017 I got results:
 
 - Approximate ROM 26.9 kB
@@ -339,7 +348,7 @@ and using libraries. When your Arduino environment is ready,
 
 - Download either NMEA2000_due, NMEA2000_mcp or NMEA2000_teensy (https://github.com/sarfata/NMEA2000_teensy) library zip depending you hw.
 
-- Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/ttlappalainen/CAN_BUS_Shield) 
+- Download either due_can (https://github.com/collin80/due_can) or mcp_can (https://github.com/ttlappalainen/CAN_BUS_Shield)
 library zip depending you hw or install Teensyduino for Teensy 3.1/3.2 or 3.5/3.6 boards.
 
 - Install all libraries (Add .ZIP library).
