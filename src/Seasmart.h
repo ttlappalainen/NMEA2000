@@ -31,6 +31,8 @@
  * Converts a tN2kMsg into a $PCDIN NMEA sentence, following the Seasmart
  * specification.  The buffer must be at least (30 + 2*msg.DataLen) bytes long.
  *
+ * Reference: http://www.seasmart.net/pdf/SeaSmart_HTTP_Protocol_RevG_043012.pdf
+ *
  * If the buffer is not long enough, this function returns 0 and does not do
  * anything.
  *
@@ -43,6 +45,8 @@ size_t N2kToSeasmart(const tN2kMsg &msg, uint32_t timestamp, char *buffer, size_
 /**
  * Converts a null terminated $PCDIN NMEA sentence into a tN2kMsg and updates
  * timestamp with the timestamp of the sentence.
+ *
+ * Reference: http://www.seasmart.net/pdf/SeaSmart_HTTP_Protocol_RevG_043012.pdf
  *
  * The NMEA \r\n terminator is not required.
  *
