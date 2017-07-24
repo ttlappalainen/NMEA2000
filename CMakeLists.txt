@@ -27,6 +27,7 @@ add_compile_options(
   -Wall
   -Werror
   -std=c++11
+  -g
 )
 
 enable_testing()

@@ -27,7 +27,28 @@
 
 #include <N2kMsg.h>
 
-size_t N2kToSeasmart(const tN2kMsg &msg, unsigned long timestamp, char *buffer, size_t size);
-bool SeasmartToN2k(const char *buffer, unsigned long &timestamp, tN2kMsg &msg);
+/**
+ * Converts a tN2kMsg into a $PCDIN NMEA sentence, following the Seasmart
+ * specification.  The buffer must be at least (30 + 2*msg.DataLen) bytes long.
+ *
+ * If the buffer is not long enough, this function returns 0 and does not do
+ * anything.
+ *
+ * If the buffer is long enough, this function returns the number of bytes
+ * written including the terminating \0 (but this function does not add the
+ * NMEA separator \r\n).
+ */
+size_t N2kToSeasmart(const tN2kMsg &msg, uint32_t timestamp, char *buffer, size_t size);
+
+/**
+ * Converts a null terminated $PCDIN NMEA sentence into a tN2kMsg and updates
+ * timestamp with the timestamp of the sentence.
+ *
+ * The NMEA \r\n terminator is not required.
+ *
+ * Returns true if it succeeded.
+ * Returns false if an error occured.
+ */
+bool SeasmartToN2k(const char *buffer, uint32_t &timestamp, tN2kMsg &msg);
 
 #endif

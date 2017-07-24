@@ -26,6 +26,7 @@
 #include <N2kMsg.h>
 #include <N2kMessages.h>
 #include <Seasmart.h>
+#include <string>
 #include <string.h>
 
 TEST_CASE("SEASMART EXPORT", "[seasmart]") {
@@ -44,19 +45,62 @@ TEST_CASE("SEASMART EXPORT", "[seasmart]") {
 
   SECTION("export to large buffer") {
     char buffer[512];
-    const char *expectedResult = "$PCDIN,01F119,00000000,0F,2AAF00D1067414FF*59\r\n";
+    const char *expectedResult = "$PCDIN,01F119,00000000,0F,2AAF00D1067414FF*59";
     REQUIRE( N2kToSeasmart(msg, 0, buffer, sizeof(buffer)) == strlen(expectedResult) );
-    REQUIRE( buffer == expectedResult );
+    REQUIRE( std::string(buffer) == expectedResult );
   }
 
-  SECTION("export to too small buffer") {
+  SECTION("export to buffer that is exactly the right size") {
+    char buffer[30 + 2*8];
+    const char *expectedResult = "$PCDIN,01F119,00000000,0F,2AAF00D1067414FF*59";
+    REQUIRE( N2kToSeasmart(msg, 0, buffer, sizeof(buffer)) == strlen(expectedResult) );
+    REQUIRE( std::string(buffer) == expectedResult );
+  }
+
+  SECTION("export to buffer that is too small") {
     char buffer[10];
 
-    REQUIRE( N2kToSeasmart(msg, 0, buffer, sizeof(buffer)) == sizeof(buffer) );
-    REQUIRE( buffer[sizeof(buffer) - 1] == '\0' );
+    REQUIRE( N2kToSeasmart(msg, 0, buffer, sizeof(buffer)) == 0 );
   }
 }
 
 TEST_CASE("SEASMART IMPORT") {
-  REQUIRE(false);
+  tN2kMsg msg;
+  uint32_t timestamp = 1337;
+
+  SECTION("read valid message") {
+    const char *message = "$PCDIN,01F119,00000000,0F,2AAF00D1067414FF*59";
+
+    REQUIRE( SeasmartToN2k(message, timestamp, msg) );
+    REQUIRE( msg.PGN == 127257L );
+    int index = 0;
+    REQUIRE( msg.GetByte(index) == 42 );
+    REQUIRE( msg.Get2ByteDouble(0.0001, index) == Approx(DegToRad(1)).margin(0.0001) );
+    REQUIRE( msg.Get2ByteDouble(0.0001, index) == Approx(DegToRad(10)).margin(0.0001) );
+    REQUIRE( msg.Get2ByteDouble(0.0001, index) == Approx(DegToRad(30)).margin(0.0001) );
+    REQUIRE( msg.GetByte(index) == 0xFF );
+    REQUIRE( timestamp == 0);
+
+    // Note: Seasmart format does not include priority!
+    //REQUIRE( msg.Priority == 2 );
+  }
+
+  SECTION("read valid message with lower case hexadecimal") {
+    const char *message = "$PCDIN,01f119,00000000,0f,2aaf00d1067414ff*59";
+
+    REQUIRE( SeasmartToN2k(message, timestamp, msg) );
+    REQUIRE( msg.PGN == 127257L );
+  }
+
+  SECTION("read message with invalid checksum") {
+    const char *message = "$PCDIN,01F119,00000000,0F,2AAF00D1067414FF*99";
+
+    REQUIRE( !SeasmartToN2k(message, timestamp, msg) );
+  }
+
+  SECTION("read message with empty string") {
+    const char *message = "";
+
+    REQUIRE( !SeasmartToN2k(message, timestamp, msg) );
+  }
 }
