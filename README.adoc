@@ -493,6 +493,14 @@ For use with Atmel AVR processors internal CAN controller
 
 - https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf[Heartbeat PGN 126993]
 
+== Running Tests ==
+
+To run the unit tests, you must have `cmake` installed:
+
+    cmake .
+    cmake --build .
+    ctest .
+
 == License ==
 
 Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
