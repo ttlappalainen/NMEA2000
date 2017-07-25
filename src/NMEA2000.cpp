@@ -1300,24 +1300,25 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
         HandlePGNListRequest(N2kMsg.Source,iDev);
         break;
       case 126996L: /* Product information */
-        // If query was for us, try to respond 
-        if ( ( N2kMsg.Destination==Devices[iDev].N2kSource ) ) {
-          SendProductInformation(iDev);
-        }
+        SendProductInformation(iDev);
         break;
       case 126998L: /* Configuration information */
-        // If query was for us, try to respond 
-        if ( ( N2kMsg.Destination==Devices[iDev].N2kSource )  ) {
-          SendConfigurationInformation(iDev);
-        }
+        SendConfigurationInformation(iDev);
         break;
       default:
-         if (ISORqstHandler!=0 )                                                  /* User has estableshed a handler */
-            if (ISORqstHandler(RequestedPGN,N2kMsg.Source,iDev))  return;         /* If it handled the request, we are done */
+        /* If user has established a handler */
+        if (ISORqstHandler!=0) {
+          /* and if it handled the request, we are done */
+          if (ISORqstHandler(RequestedPGN,N2kMsg.Source,iDev)) {
+            return;
+          }
+        }
 
-       tN2kMsg   N2kMsgR;
-        SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);       // No user handler, or there was one and it retured FALSE.  Send NAK
-        N2kMsgR.Destination  = N2kMsg.Source;                             // Direct the response to original requester.
+        tN2kMsg   N2kMsgR;
+        // No user handler, or there was one and it retured FALSE.  Send NAK
+        SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);
+        // Direct the response to original requester.
+        N2kMsgR.Destination  = N2kMsg.Source;
         SendMsg(N2kMsgR,iDev);
     }
 }
