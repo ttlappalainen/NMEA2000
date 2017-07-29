@@ -61,6 +61,20 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+29.07.2017
+
+- Fixed setting device instances on N2kGroupFunctionDefaultHandlers
+
+- Fixed wind PGN 130306 output with reserved field.
+
+- New abstract class tNEMA2000:tMsgHandler and functions AttachMsgHandler/DetachMsgHandler. With these you can have multiple 
+  handlers. It also allow PGN specific handlers. See how it has been used on example DeviceAnalyzer. Other simple example
+  is under construction.
+  
+- New class tN2kDeviceList. See more on library reference and on example DeviceAnalyzer.
+
+- Improved message type checking. This will be done for every message, so speed in important. For Arduino Mega average test time
+  was dropped from about 90 us to 9 us and for Teensy from 3.5 us to 0.9 us.
 
 26.06.2017 Example updates
 
@@ -492,14 +506,6 @@ For use with Atmel AVR processors internal CAN controller
 - https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf[Group function PGN 126208 handling]
 
 - https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf[Heartbeat PGN 126993]
-
-== Running Tests ==
-
-To run the unit tests, you must have `cmake` installed:
-
-    cmake .
-    cmake --build .
-    ctest .
 
 == License ==
 

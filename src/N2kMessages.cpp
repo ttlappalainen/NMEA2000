@@ -1162,8 +1162,8 @@ void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, doubl
     N2kMsg.Add2ByteUDouble(WindSpeed,0.01);
     N2kMsg.Add2ByteUDouble(WindAngle,0.0001);
     N2kMsg.AddByte((unsigned char)WindReference);
-    //N2kMsg.AddByte(0xff); // Reserved
-    //N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
 }
 
 bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSpeed, double &WindAngle, tN2kWindReference &WindReference) {

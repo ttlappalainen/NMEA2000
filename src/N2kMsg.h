@@ -131,6 +131,7 @@ public:
   double Get4ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get8ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   bool GetStr(char *StrBuf, int Length, int &Index) const;
+  bool GetStr(int StrBufSize, char *StrBuf, int Length, unsigned char nulChar, int &Index) const;
 
   bool Set2ByteUInt(uint16_t v, int &Index);
 

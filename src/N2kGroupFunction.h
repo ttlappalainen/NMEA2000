@@ -144,7 +144,7 @@ class tN2kGroupFunctionHandler {
                                tN2kGroupFunctionTransmissionOrPriorityErrorCode &TransmissionOrPriorityErrorCode,
                                uint8_t &NumberOfParameterPairs);
 
-    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned long PGN, 
+    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN, 
                                          tN2kGroupFunctionPGNErrorCode PGNErrorCode=N2kgfPGNec_Acknowledge,
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode=N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
                                          uint8_t NumberOfParameterPairs=0);

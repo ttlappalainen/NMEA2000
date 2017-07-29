@@ -140,60 +140,81 @@ const unsigned long DefReceiveMessages[] PROGMEM = {
                                        126208L, /* NMEA Request/Command/Acknowledge group function */
 #endif
                                        0};
-const unsigned long SingleFrameSystemMessages[] PROGMEM = {
-                                        59392L, /* ISO Acknowledgement */
-                                         TP_DT, /* Multi packet data transfer, TP.DT */
-                                         TP_CM, /* Multi packet connection management, TP.CM */
-                                        59904L, /* ISO Request */
-                                        60928L, /* ISO Address Claim */
-                                       0};
-const unsigned long FastPacketSystemMessages[] PROGMEM = {
-                                        65240L, /* Commanded Address*/
-                                       126208L, /* NMEA Request/Command/Acknowledge group function */
-                                       126464L, /* PGN List (Transmit and Receive) */
-                                       0};
-const unsigned long DefSingleFrameMessages[] PROGMEM = {
-                                       126992L, // System date/time
-                                       127245L, // Rudder
-                                       127250L, // Vessel Heading
-                                       127251L, // Rate of Turn
-                                       127257L, // Attitude
-                                       127488L, // Engine parameters rapid
-                                       127493L, // Transmission parameters, dynamic
-                                       127501L, // Binary status report
-                                       127505L, // Fluid level
-                                       127508L, // Battery Status
-                                       127513L, // Battery Configuration Status
-                                       128259L, // Boat speed
-                                       128267L, // Water depth
-                                       129025L, // Lat/lon rapid
-                                       129026L, // COG SOG rapid
-                                       129283L, // Cross Track Error
-                                       130306L, // Wind Speed
-                                       130310L, // Outside Environmental parameters
-                                       130311L, // Environmental parameters
-                                       130312L, // Temperature
-                                       130314L, // Pressure
-                                       130316L, // Temperature extended range
-                                       0};
-const unsigned long DefFastPacketMessages[] PROGMEM = {
-                                      126996L, /* Product information */
-                                      126998L, /* Configuration information */
-                                      127237L, /* Heading/Track control */
-                                      127489L, /* Engine parameters dynamic */
-                                      127506L, /* DC Detailed status */
-                                      128275L, /* Distance log */
-                                      129029L, /* GNSS Position Data */
-                                      129038L, /*AIS Class A Position Report*/
-                                      129039L, /*AIS Class B Position Report*/
-                                      129284L, // Navigation info
-                                      129285L, // Waypoint list
-                                      129540L, /* GNSS Sats in View */
-                                      129794L, /*AIS Class A Static data*/
-                                      129809L, /*AIS Class B Static Data, Part A*/
-                                      129810L, /*AIS Class B Static Data Part B*/
-                                      130074L, // Waypoint list
-                                      0};
+                                       
+bool IsSingleFrameSystemMessage(unsigned long PGN) {
+                                  switch (PGN) {
+                                      case  59392L: /* ISO Acknowledgement */
+                                      case   TP_DT: /* Multi packet data transfer, TP.DT */
+                                      case   TP_CM: /* Multi packet connection management, TP.CM */
+                                      case  59904L: /* ISO Request */
+                                      case  60928L: /* ISO Address Claim */
+                                      return true;
+                                  }
+                                  return false;
+}
+
+bool IsFastPacketSystemMessage(unsigned long PGN) {
+                                  switch (PGN) {
+                                      case  65240L: /* Commanded Address*/
+                                      case 126208L: /* NMEA Request/Command/Acknowledge group function */
+                                      return true;
+                                  }
+                                  return false;
+}
+
+bool IsDefaultSingleFrameMessage(unsigned long PGN) {
+                                  switch (PGN) {
+                                      case 126992L: // System date/time
+                                      case 126993L: /* Heartbeat */
+                                      case 127245L: // Rudder
+                                      case 127250L: // Vessel Heading
+                                      case 127251L: // Rate of Turn
+                                      case 127257L: // Attitude
+                                      case 127488L: // Engine parameters rapid
+                                      case 127493L: // Transmission parameters: dynamic
+                                      case 127501L: // Binary status report
+                                      case 127505L: // Fluid level
+                                      case 127508L: // Battery Status
+                                      case 127513L: // Battery Configuration Status
+                                      case 128259L: // Boat speed
+                                      case 128267L: // Water depth
+                                      case 129025L: // Lat/lon rapid
+                                      case 129026L: // COG SOG rapid
+                                      case 129283L: // Cross Track Error
+                                      case 130306L: // Wind Speed
+                                      case 130310L: // Outside Environmental parameters
+                                      case 130311L: // Environmental parameters
+                                      case 130312L: // Temperature
+                                      case 130314L: // Pressure
+                                      case 130316L: // Temperature extended range
+                                      return true;
+                                  }
+                                  return false;
+}
+
+bool IsDefaultFastPacketMessage(unsigned long PGN) {
+                                  switch (PGN) {
+                                      case 126464L: /* PGN List (Transmit and Receive) */
+                                      case 126996L: /* Product information */
+                                      case 126998L: /* Configuration information */
+                                      case 127237L: /* Heading/Track control */
+                                      case 127489L: /* Engine parameters dynamic */
+                                      case 127506L: /* DC Detailed status */
+                                      case 128275L: /* Distance log */
+                                      case 129029L: /* GNSS Position Data */
+                                      case 129038L: /*AIS Class A Position Report*/
+                                      case 129039L: /*AIS Class B Position Report*/
+                                      case 129284L: // Navigation info
+                                      case 129285L: // Waypoint list
+                                      case 129540L: /* GNSS Sats in View */
+                                      case 129794L: /*AIS Class A Static data*/
+                                      case 129809L: /*AIS Class B Static Data: Part A*/
+                                      case 129810L: /*AIS Class B Static Data Part B*/
+                                      case 130074L: // Waypoint list
+                                      return true;
+                                  }
+                                  return false;
+}
 
 const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        1300,               // N2kVersion
@@ -217,23 +238,23 @@ const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation = 
                                       };
 */
 //*****************************************************************************
-void ClearCharBuf(int MaxLen, char *buf) {
+void tNMEA2000::ClearCharBuf(int MaxLen, char *buf) {
   if ( buf==0 ) return;
   int i=0;
   for (; i<MaxLen; i++) buf[i]=0;
 }
 
 //*****************************************************************************
-void SetCharBuf(const char *str, int MaxLen, char *buf) {
+void tNMEA2000::SetCharBuf(const char *str, int MaxLen, char *buf) {
   if ( str==0 || buf==0 || MaxLen<=0 ) return;
   int i=0;
   for (; i<MaxLen-1 && str[i]!=0; i++) buf[i]=str[i];
   for (; i<MaxLen; i++) buf[i]=0;
-  buf[MaxLen-1]=0; // Force null ternimation
+  buf[MaxLen-1]=0; // Force null termination
 }
 
 //*****************************************************************************
-void ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
+void tNMEA2000::ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
   ClearCharBuf(MaxLen,buf);
   if (str) SetCharBuf(str,MaxLen,buf);
 }
@@ -246,9 +267,7 @@ tNMEA2000::tNMEA2000() {
 #endif
   ForwardStream=0;
 
-  SingleFrameMessages[0]=DefSingleFrameMessages;
-  FastPacketMessages[0]=DefFastPacketMessages;
-  for (int i=1; i<N2kMessageGroups; i++) {SingleFrameMessages[i]=0; FastPacketMessages[i]=0;}
+  for (int i=0; i<N2kMessageGroups; i++) {SingleFrameMessages[i]=0; FastPacketMessages[i]=0;}
 
   N2kCANMsgBuf=0;
   MaxN2kCANMsgs=0;
@@ -258,6 +277,7 @@ tNMEA2000::tNMEA2000() {
   CANSendFrameBuf=0;
 
   MsgHandler=0;
+  MsgHandlers=0;
   ISORqstHandler=0;
 
   DeviceReady=false;
@@ -288,7 +308,7 @@ void tNMEA2000::SetDeviceCount(const uint8_t _DeviceCount) {
 void tNMEA2000::InitDevices() {
   if ( Devices==0 ) {
     N2kDbgln("Init devices");
-    Devices=new tDevice[DeviceCount];
+    Devices=new tInternalDevice[DeviceCount];
     MaxCANSendFrames*=DeviceCount; // We need bigger buffer for sending all information
 //    for (int i=0; i<DeviceCount; i++) Devices[i].tDevice();
     // We set default device information here.
@@ -335,14 +355,7 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
     Devices[iDev].LocalProductInformation=new tProductInformation();
   }
   Devices[iDev].ProductInformation=Devices[iDev].LocalProductInformation;
-  Devices[iDev].LocalProductInformation->N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:1300);
-  Devices[iDev].LocalProductInformation->ProductCode=_ProductCode;
-  ClearSetCharBuf(_ModelID,sizeof(Devices[iDev].LocalProductInformation->N2kModelID),Devices[iDev].LocalProductInformation->N2kModelID);
-  ClearSetCharBuf(_SwCode,sizeof(Devices[iDev].LocalProductInformation->N2kSwCode),Devices[iDev].LocalProductInformation->N2kSwCode);
-  ClearSetCharBuf(_ModelVersion,sizeof(Devices[iDev].LocalProductInformation->N2kModelVersion),Devices[iDev].LocalProductInformation->N2kModelVersion);
-  ClearSetCharBuf(_ModelSerialCode,sizeof(Devices[iDev].LocalProductInformation->N2kModelSerialCode),Devices[iDev].LocalProductInformation->N2kModelSerialCode);
-  Devices[iDev].LocalProductInformation->SertificationLevel=(_SertificationLevel!=0xff?_SertificationLevel:1);
-  Devices[iDev].LocalProductInformation->LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
+  Devices[iDev].LocalProductInformation->Set(_ModelSerialCode,_ProductCode,_ModelID,_SwCode,_ModelVersion,_LoadEquivalency,_N2kVersion,_SertificationLevel);
 }
 
 //*****************************************************************************
@@ -445,13 +458,11 @@ void tNMEA2000::SetDeviceInformationInstances(
 //*****************************************************************************
 void tNMEA2000::SetSingleFrameMessages(const unsigned long *_SingleFrameMessages) {
   SingleFrameMessages[0]=_SingleFrameMessages;
-  if (SingleFrameMessages[0]==0) SingleFrameMessages[0]=DefSingleFrameMessages;
 }
 
 //*****************************************************************************
 void tNMEA2000::SetFastPacketMessages(const unsigned long *_FastPacketMessages) {
   FastPacketMessages[0]=_FastPacketMessages;
-  if (FastPacketMessages[0]==0) FastPacketMessages[0]=DefFastPacketMessages;
 }
 
 //*****************************************************************************
@@ -750,12 +761,9 @@ void tNMEA2000::SetDebugMode(tDebugMode _dbMode) {
 
 //*****************************************************************************
 bool tNMEA2000::IsFastPacket(unsigned long PGN) {
+  
+  if ( IsFastPacketSystemMessage(PGN) || ( FastPacketMessages[0]==0 && IsDefaultFastPacketMessage(PGN) ) ) return true;
   int i;
-
-    for (i=0; pgm_read_dword(&FastPacketSystemMessages[i])!=PGN && pgm_read_dword(&FastPacketSystemMessages[i])!=0; i++);
-    if (pgm_read_dword(&FastPacketSystemMessages[i])==PGN) {
-      return true;
-    }
 
     for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
       if (FastPacketMessages[igroup]!=0) {
@@ -774,22 +782,20 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
   int i;
 //    return true;
     FastPacket=false;
-    if ( PGN==0 ) { SystemMessage=false; return false; }  // Unknown
+    SystemMessage=false;
+    if ( PGN==0 ) { return false; }  // Unknown
 
-    // First check system messages
-    SystemMessage=true;
-
-    for (i=0; pgm_read_dword(&SingleFrameSystemMessages[i])!=PGN && pgm_read_dword(&SingleFrameSystemMessages[i])!=0; i++);
-    if (pgm_read_dword(&SingleFrameSystemMessages[i])==PGN) return true;
-
-    for (i=0; pgm_read_dword(&FastPacketSystemMessages[i])!=PGN && pgm_read_dword(&FastPacketSystemMessages[i])!=0; i++);
-    if (pgm_read_dword(&FastPacketSystemMessages[i])==PGN) {
-      FastPacket=true;
+    // Check other messages
+    if ( SingleFrameMessages[0]==0 && IsDefaultSingleFrameMessage(PGN) ) return true;
+    if ( FastPacketMessages[0]==0 && (FastPacket=IsDefaultFastPacketMessage(PGN)) ) return true;
+    
+    // Check system messages
+    if ( IsSingleFrameSystemMessage(PGN) || (FastPacket=IsFastPacketSystemMessage(PGN)) ) {
+      SystemMessage=true;
       return true;
     }
-
-    // It was not system message, so check other messages
-    SystemMessage=false;
+      
+    // Check user defined messages
     for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
       if (SingleFrameMessages[igroup]!=0) {
         for (i=0; pgm_read_dword(&SingleFrameMessages[igroup][i])!=PGN && pgm_read_dword(&SingleFrameMessages[igroup][i])!=0; i++);
@@ -1407,14 +1413,13 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
   int iDev=FindSourceDeviceIndex(N2kMsg.Source);
   if ( iDev==-1 ) return; // if the address is not same as we have, we do nothing
 
-  uint64_t *CallerName;
+  int Index=0;
+  uint64_t CallerName=N2kMsg.GetUInt64(Index);
 
-    CallerName=(uint64_t *)(N2kMsg.Data);
-
-    if (Devices[iDev].DeviceInformation.GetName()<*CallerName) { // We can keep our address, so just reclaim it
+    if (Devices[iDev].DeviceInformation.GetName()<CallerName) { // We can keep our address, so just reclaim it
       SendIsoAddressClaim(0xff,iDev);
     } else { // we have to try an other address
-      if (Devices[iDev].DeviceInformation.GetName()==*CallerName) {
+      if (Devices[iDev].DeviceInformation.GetName()==CallerName) {
         // If the name is same, then the first instance will get claim and change its address.
         // This should not happen, if user takes care of setting unique ID for device information.
         // If he does not there is no problem with this class, but e.g. Garmin gets crazy.
@@ -1428,26 +1433,32 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
 }
 
 //*****************************************************************************
+void tNMEA2000::HandleCommandedAddress(uint64_t CommandedName, unsigned char NewAddress, int iDev) {
+  if (Devices[iDev].DeviceInformation.GetName() == CommandedName &&
+      Devices[iDev].N2kSource!=NewAddress) { // We have been commanded to set our address
+    Devices[iDev].N2kSource=NewAddress;
+    StartAddressClaim(iDev);
+    AddressChanged=true;
+  }
+}
+
+//*****************************************************************************
 void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
   N2kMsgDbg(millis()); N2kMsgDbg(" Commanded address:"); N2kMsgDbgln(N2kMsg.Destination);
+
+  if ( N2kMsg.PGN!=65240L || N2kMsg.DataLen!=9 ) return;
+
   int iDev=FindSourceDeviceIndex(N2kMsg.Destination);
-    if ( N2kMsg.Destination!=0xff && iDev==-1) return; // if destination is not for us, we do nothing
+    if ( !tNMEA2000::IsBroadcast(N2kMsg.Destination) && iDev==-1) return; // if destination is not for us, we do nothing
 
-    if ( iDev==-1 ) iDev=0; // Should be handled for all, but no support yet.
+  int Index=0;
+  uint64_t CommandedName=N2kMsg.GetUInt64(Index);
+  unsigned char NewAddress=N2kMsg.GetByte(Index);
 
-  uint64_t *CommandedName;
-  unsigned char NewAddress;
-
-    if ( N2kMsg.DataLen!=9 ) return;
-
-    CommandedName=(uint64_t *)(N2kMsg.Data);
-    NewAddress=N2kMsg.Data[8];
-
-    if (Devices[iDev].DeviceInformation.GetName() == *CommandedName &&
-        Devices[iDev].N2kSource!=NewAddress) { // We have been commanded to set our address
-      Devices[iDev].N2kSource=NewAddress;
-      StartAddressClaim(iDev);
-      AddressChanged=true;
+    if ( iDev==-1 ) {
+      for (iDev=0; iDev<DeviceCount; iDev++) HandleCommandedAddress(CommandedName,NewAddress,iDev);
+    } else {
+      HandleCommandedAddress(CommandedName,NewAddress,iDev);
     }
 }
 
@@ -1543,7 +1554,7 @@ void tNMEA2000::ParseMessages() {
             ForwardMessage(N2kCANMsgBuf[MsgIndex]);
           }
 //          N2kCANMsgBuf[MsgIndex].N2kMsg.Print(Serial);
-          if ( MsgHandler!=0 ) MsgHandler(N2kCANMsgBuf[MsgIndex].N2kMsg);
+          RunMessageHandlers(N2kCANMsgBuf[MsgIndex].N2kMsg);
           N2kCANMsgBuf[MsgIndex].FreeMessage();
           N2kMsgDbg(MsgIndex); N2kMsgDbgln();
         }
@@ -1555,8 +1566,57 @@ void tNMEA2000::ParseMessages() {
 }
 
 //*****************************************************************************
+void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
+  if ( MsgHandler!=0 ) MsgHandler(N2kMsg);
+  
+  tMsgHandler *MsgHandler=MsgHandlers;
+  // Loop through all pgn handlers
+  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()==0; MsgHandler=MsgHandler->pNext) MsgHandler->HandleMsg(N2kMsg); 
+  // Loop through specific pgn handlers
+  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()>=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
+    if ( MsgHandler->GetPGN()==N2kMsg.PGN ) MsgHandler->HandleMsg(N2kMsg); 
+  }
+}
+
+//*****************************************************************************
 void tNMEA2000::SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg)) {
   MsgHandler=_MsgHandler;
+}
+
+//*****************************************************************************
+void tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler) {
+  if ( _MsgHandler==0 ) return;
+  
+  if ( _MsgHandler->pNMEA2000==this ) return; // Already attached
+  
+  DetachMsgHandler(_MsgHandler);
+  
+  if ( MsgHandlers==0 ) {
+    MsgHandlers=_MsgHandler;
+  } else {
+    tMsgHandler *MsgHandler=MsgHandlers;
+    for ( ; MsgHandler->pNext!=0 && MsgHandler->GetPGN()>_MsgHandler->GetPGN(); MsgHandler=MsgHandler->pNext );
+    _MsgHandler->pNext=MsgHandler->pNext;
+    MsgHandler->pNext=_MsgHandler;
+  }
+  
+  _MsgHandler->pNMEA2000=this;
+}
+
+//*****************************************************************************
+void tNMEA2000::DetachMsgHandler(tMsgHandler *_MsgHandler) {
+  if ( _MsgHandler==0 || _MsgHandler->pNMEA2000==0 ) return;
+  
+  tMsgHandler *MsgHandler=_MsgHandler->pNMEA2000->MsgHandlers;
+  
+  if ( MsgHandler==_MsgHandler ) { // Is this at first
+    _MsgHandler->pNMEA2000->MsgHandlers=MsgHandler->pNext;
+  } else {
+    for ( ; MsgHandler!=0 && MsgHandler->pNext!=_MsgHandler; MsgHandler=MsgHandler->pNext );
+    if ( MsgHandler!=0 ) MsgHandler->pNext=_MsgHandler->pNext;
+  }
+  _MsgHandler->pNext=0;
+  _MsgHandler->pNMEA2000=0;
 }
 
 //*****************************************************************************
@@ -1602,7 +1662,7 @@ void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int Manufacture
                    unsigned char DeviceFunction, unsigned char DeviceClass,
                    unsigned char DeviceInstance, unsigned char SystemInstance, unsigned char IndustryGroup
                    ) {
-    N2kMsg.SetPGN(60928L);
+    N2kMsg.SetPGN(N2kPGNIsoAddressClaim);
     N2kMsg.Priority=6;
 
     N2kMsg.Add4ByteUInt((UniqueNumber&0x1FFFFF) | ((unsigned long)(ManufacturerCode&0x7ff))<<21);
@@ -1615,7 +1675,7 @@ void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int Manufacture
 //*****************************************************************************
 // ISO Address Claim
 void SetN2kPGN60928(tN2kMsg &N2kMsg, uint64_t Name) {
-    N2kMsg.SetPGN(60928L);
+    N2kMsg.SetPGN(N2kPGNIsoAddressClaim);
     N2kMsg.Priority=6;
 
     N2kMsg.AddUInt64(Name);
@@ -1628,16 +1688,35 @@ void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int Prod
                      const char *ModelVersion, const char *ModelSerialCode,
                      unsigned char SertificationLevel, unsigned char LoadEquivalency) {
 
-    N2kMsg.SetPGN(126996L);
+    N2kMsg.SetPGN(N2kPGNProductInformation);
     N2kMsg.Priority=6;
-    N2kMsg.Add2ByteInt(N2kVersion);
-    N2kMsg.Add2ByteInt(ProductCode);
+    N2kMsg.Add2ByteUInt(N2kVersion);
+    N2kMsg.Add2ByteUInt(ProductCode);
     N2kMsg.AddStr(ModelID, Max_N2kModelID_len);
     N2kMsg.AddStr(SwCode, Max_N2kSwCode_len);
     N2kMsg.AddStr(ModelVersion, Max_N2kModelVersion_len);
     N2kMsg.AddStr(ModelSerialCode, Max_N2kModelSerialCode_len);
     N2kMsg.AddByte(SertificationLevel);
     N2kMsg.AddByte(LoadEquivalency);
+}
+
+bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsigned short &ProductCode,
+                     int ModelIDSize, char *ModelID, int SwCodeSize, char *SwCode,
+                     int ModelVersionSize, char *ModelVersion, int ModelSerialCodeSize, char *ModelSerialCode,
+                     unsigned char &SertificationLevel, unsigned char &LoadEquivalency) {
+  if (N2kMsg.PGN!=N2kPGNProductInformation) return false;
+
+  int Index=0;
+  N2kVersion=N2kMsg.Get2ByteUInt(Index);
+  ProductCode=N2kMsg.Get2ByteUInt(Index);
+  N2kMsg.GetStr(ModelIDSize,ModelID,Max_N2kModelID_len,0xff,Index);
+  N2kMsg.GetStr(SwCodeSize,SwCode,Max_N2kSwCode_len,0xff,Index);
+  N2kMsg.GetStr(ModelVersionSize,ModelVersion,Max_N2kModelVersion_len,0xff,Index);
+  N2kMsg.GetStr(ModelSerialCodeSize,ModelSerialCode,Max_N2kModelSerialCode_len,0xff,Index);
+  SertificationLevel=N2kMsg.GetByte(Index);
+  LoadEquivalency=N2kMsg.GetByte(Index);
+  
+  return true;
 }
 
 //*****************************************************************************
@@ -1666,7 +1745,7 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
     if (TotalLen+InstDesc2Len>MaxLen) InstDesc2Len=MaxLen-TotalLen;
     TotalLen+=InstDesc2Len;
 
-    N2kMsg.SetPGN(126998L);
+    N2kMsg.SetPGN(N2kPGNConfigurationInformation);
     N2kMsg.Priority=6;
     // InstallationDescription1
     N2kMsg.AddByte(InstDesc1Len+2);
@@ -1680,6 +1759,31 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
     N2kMsg.AddByte(ManInfoLen+2);
     N2kMsg.AddByte(0x01);
     for (i=0; i<ManInfoLen; i++) N2kMsg.AddByte(ManufacturerInformation[i]);
+}
+
+bool ReadN2kVarString(const tN2kMsg& N2kMsg, uint16_t &BufSize, char *Buf, int &Index) {
+  int Len=N2kMsg.GetByte(Index)-2;
+  uint8_t Type=N2kMsg.GetByte(Index);
+  if ( Type!=0x01 ) { BufSize=0; return false; }
+  if ( Buf!=0 ) {
+    N2kMsg.GetStr(BufSize,Buf,Len,0xff,Index);
+  } else { 
+    Index+=Len; // Just pass this string
+  }
+  BufSize=Len; 
+  return true;
+}
+
+bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
+                       uint16_t &ManufacturerInformationSize, char *ManufacturerInformation,
+                       uint16_t &InstallationDescription1Size, char *InstallationDescription1,
+                       uint16_t &InstallationDescription2Size, char *InstallationDescription2) {
+  if (N2kMsg.PGN!=N2kPGNConfigurationInformation) return false;
+
+  int Index=0;
+  return ( ReadN2kVarString(N2kMsg,InstallationDescription1Size,InstallationDescription1,Index) &&
+           ReadN2kVarString(N2kMsg,InstallationDescription2Size,InstallationDescription2,Index) &&
+           ReadN2kVarString(N2kMsg,ManufacturerInformationSize,ManufacturerInformation,Index) );
 }
 
 //*****************************************************************************

@@ -315,6 +315,33 @@ bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
 }
 
 //*****************************************************************************
+bool tN2kMsg::GetStr(int StrBufSize, char *StrBuf, int Length, unsigned char nulChar, int &Index) const {
+  unsigned char vb;
+  bool nullReached = false;
+  StrBuf[0] = '\0';
+  if (Index+Length<=DataLen) {
+    int i;
+    for (i=0; i<Length && i<StrBufSize-1; i++) {
+      vb = GetByte(Index);
+      if (! nullReached) {
+        if (vb == 0x00 || vb == nulChar ) {
+          nullReached = true; // either null or '@' (AIS null character)
+          StrBuf[i] = '\0';
+        } else {
+          StrBuf[i] = vb;
+        }
+      } else {
+        StrBuf[i] = '\0';
+      }
+    }
+    StrBuf[i] = '\0';
+    for (;i<Length;i++) GetByte(Index);  // Stopped by buffer size, so read out bytes from message
+    for (;i<StrBufSize;i++) StrBuf[i] = '\0';  // Stopped by length, fill buffer with 0
+    return true;
+  } else return false;
+}
+
+//*****************************************************************************
 bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
   if (Index+2<=DataLen) {
     SetBuf2ByteUInt(v,Index,Data);
@@ -664,8 +691,10 @@ void tN2kMsg::SendInActisenseFormat(N2kStream *port) const {
   ActisenseMsgBuf[msgIdx++] = Escape;
   ActisenseMsgBuf[msgIdx++] = EndOfText;
 
-  port->write(ActisenseMsgBuf,msgIdx);
-  //  Serial.print("Actisense data:");
-  //  PrintBuf(msgIdx,ActisenseMsgBuf);
-  //  Serial.print("\r\n");
+//  if ( port->availableForWrite()>msgIdx ) {  // 16.7.2017 did not work yet
+    port->write(ActisenseMsgBuf,msgIdx);
+//  }
+    //Serial.print("Actisense data:");
+    //PrintBuf(msgIdx,ActisenseMsgBuf);
+    //Serial.print("\r\n");
 }

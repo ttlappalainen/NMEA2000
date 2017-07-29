@@ -244,12 +244,13 @@ bool tN2kGroupFunctionHandler::ParseAcknowledgeParams(const tN2kMsg &N2kMsg,
 }
 
 //*****************************************************************************
-void tN2kGroupFunctionHandler::SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned long PGN, 
+void tN2kGroupFunctionHandler::SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN, 
                                          tN2kGroupFunctionPGNErrorCode PGNErrorCode,
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs) {
 	N2kMsg.SetPGN(126208L);
 	N2kMsg.Priority=7;
+  N2kMsg.Destination=Destination;
 	N2kMsg.AddByte(N2kgfc_Acknowledge);
   N2kMsg.Add3ByteInt(PGN);
   N2kMsg.AddByte(PGNErrorCode | TransmissionOrPriorityErrorCode<<4);
@@ -277,11 +278,10 @@ void tN2kGroupFunctionHandler::SendAcknowledge(tNMEA2000 *pNMEA2000, unsigned ch
   tN2kMsg N2kRMsg;
   
     // As default we respond with not supported.
-    SetStartAcknowledge(N2kRMsg,PGN,
+    SetStartAcknowledge(N2kRMsg,Destination,PGN,
                         PGNErrorCode,
                         TransmissionOrPriorityErrorCode,
                         NumberOfParameterPairs);
-    N2kRMsg.Destination  = Destination;
     for (uint8_t ParamIndex=0; ParamIndex<NumberOfParameterPairs;ParamIndex++) {
       AddAcknowledgeParameter(N2kRMsg,ParamIndex,ParameterErrorCodeForAll);
     }
