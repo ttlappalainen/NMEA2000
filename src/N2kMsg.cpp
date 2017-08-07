@@ -37,7 +37,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // NMEA2000 uses little endian for binary data. Swap the endian if we are
 // running on a big endian machine. There is no reliable, portable compile
 // check for this so each compiler has to be added manually.
-#if defined(__GNUC__)
+#if defined(__GNUC__) && defined (__BYTE_ORDER__)
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define HOST_IS_BIG_ENDIAN
 #endif

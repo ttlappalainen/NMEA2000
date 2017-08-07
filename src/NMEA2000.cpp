@@ -787,10 +787,10 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
 
     // Check other messages
     if ( SingleFrameMessages[0]==0 && IsDefaultSingleFrameMessage(PGN) ) return true;
-    if ( FastPacketMessages[0]==0 && (FastPacket=IsDefaultFastPacketMessage(PGN)) ) return true;
+    if ( FastPacketMessages[0]==0 && (FastPacket=IsDefaultFastPacketMessage(PGN))==true ) return true;
     
     // Check system messages
-    if ( IsSingleFrameSystemMessage(PGN) || (FastPacket=IsFastPacketSystemMessage(PGN)) ) {
+    if ( IsSingleFrameSystemMessage(PGN) || (FastPacket=IsFastPacketSystemMessage(PGN))==true ) {
       SystemMessage=true;
       return true;
     }

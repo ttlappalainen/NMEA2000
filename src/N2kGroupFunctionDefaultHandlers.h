@@ -38,12 +38,12 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // For requirements for handling Group function request for PGN 60928
 class tN2kGroupFunctionHandlerForPGN60928 : public tN2kGroupFunctionHandler {
   protected:
-    bool HandleRequest(const tN2kMsg &N2kMsg, 
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
                                uint32_t TransmissionInterval, 
                                uint16_t TransmissionIntervalOffset, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev);
-    bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
+    virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
   public:
     tN2kGroupFunctionHandlerForPGN60928(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,60928L) {}
 };
@@ -54,7 +54,7 @@ class tN2kGroupFunctionHandlerForPGN60928 : public tN2kGroupFunctionHandler {
 // Heartbeat settings
 class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {
   protected:
-    bool HandleRequest(const tN2kMsg &N2kMsg, 
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
                                uint32_t TransmissionInterval, 
                                uint16_t TransmissionIntervalOffset, 
                                uint8_t  NumberOfParameterPairs,
