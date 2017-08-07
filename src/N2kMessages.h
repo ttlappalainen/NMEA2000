@@ -1242,26 +1242,26 @@ inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsign
 // Pressure has to be in pascal. Use function mBarToPascal, if you like to use mBar
 // Input:
 //  - SID                   Sequence ID. 
-//  - TempInstance          see tN2kTempSource
+//  - TempSource            see tN2kTempSource
 //  - Temperature           Temperature in °K. Use function CToKelvin, if you want to use °C.
-//  - HumidityInstance      see tN2kHumiditySource.
+//  - HumiditySource        see tN2kHumiditySource.
 //  - Humidity              Humidity in %
 //  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
-                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
+void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSource, double Temperature,
+                     tN2kHumiditySource HumiditySource=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
 
-inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
-                     tN2kHumiditySource HumidityInstance=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
-  SetN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
+inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSource, double Temperature,
+                     tN2kHumiditySource HumiditySource=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
+  SetN2kPGN130311(N2kMsg,SID,TempSource,Temperature,HumiditySource,Humidity,AtmosphericPressure);
 }
 
-bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
-                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure);
-inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
-                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure) {
-  return ParseN2kPGN130311(N2kMsg,SID,TempInstance,Temperature,HumidityInstance,Humidity,AtmosphericPressure);
+bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempSource, double &Temperature,
+                     tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure);
+inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempSource, double &Temperature,
+                     tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure) {
+  return ParseN2kPGN130311(N2kMsg,SID,TempSource,Temperature,HumiditySource,Humidity,AtmosphericPressure);
 }
 
 //*****************************************************************************

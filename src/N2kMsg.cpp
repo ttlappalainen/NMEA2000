@@ -378,9 +378,9 @@ int16_t byteswap(int16_t val)
 template<>
 uint32_t byteswap(uint32_t val) {
   return ((val << 24)) |
-      ((val << 8)  & 0xff00000000ULL) |
-      ((val >> 8)  & 0xff000000ULL) |
-      ((val >> 24) & 0xff0000ULL);
+         ((val << 8)  & 0xff0000UL) |
+         ((val >> 8)  & 0xff00UL) |
+         ((val >> 24));
 }
 
 template<>

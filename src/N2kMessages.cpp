@@ -1206,24 +1206,24 @@ bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterT
                      
 //*****************************************************************************
 // Environmental parameters
-void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempInstance, double Temperature,
-                     tN2kHumiditySource HumidityInstance, double Humidity, double AtmosphericPressure) {
+void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSource, double Temperature,
+                     tN2kHumiditySource HumiditySource, double Humidity, double AtmosphericPressure) {
     N2kMsg.SetPGN(130311L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.AddByte(((HumidityInstance) & 0x03)<<6 | (TempInstance & 0x3f));
+    N2kMsg.AddByte(((HumiditySource) & 0x03)<<6 | (TempSource & 0x3f));
     N2kMsg.Add2ByteUDouble(Temperature,0.01);
     N2kMsg.Add2ByteDouble(Humidity,0.004);
     N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
 }
 
-bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempInstance, double &Temperature,
-                     tN2kHumiditySource &HumidityInstance, double &Humidity, double &AtmosphericPressure) {
+bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempSource, double &Temperature,
+                     tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure) {
     if (N2kMsg.PGN!=130311L) return false;
     unsigned char vb;
     int Index=0;
     SID=N2kMsg.GetByte(Index);
-    vb=N2kMsg.GetByte(Index); TempInstance=(tN2kTempSource)(vb & 0x3f); HumidityInstance=(tN2kHumiditySource)(vb>>6 & 0x03);
+    vb=N2kMsg.GetByte(Index); TempSource=(tN2kTempSource)(vb & 0x3f); HumiditySource=(tN2kHumiditySource)(vb>>6 & 0x03);
     Temperature=N2kMsg.Get2ByteUDouble(0.01,Index);
     Humidity=N2kMsg.Get2ByteDouble(0.004,Index);
     AtmosphericPressure=N2kMsg.Get2ByteUDouble(100,Index);
