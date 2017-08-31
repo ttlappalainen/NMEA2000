@@ -285,9 +285,9 @@ void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
   if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
   
 //  unsigned long t1=micros();
-  uint16_t ManISize;
-  uint16_t InstDesc1Size;
-  uint16_t InstDesc2Size;
+  size_t ManISize;
+  size_t InstDesc1Size;
+  size_t InstDesc2Size;
 
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
   
@@ -359,7 +359,7 @@ tN2kDeviceList::tInternalDevice::~tInternalDevice() {
 }
 
 //*****************************************************************************
-char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(uint16_t &_ManISize, uint16_t &_InstDesc1Size, uint16_t &_InstDesc2Size) {
+char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size) {
   if ( _ManISize>0 ) _ManISize++; // Reserve '/0' terminator
   if ( _InstDesc1Size>0 ) _InstDesc1Size++; // Reserve '/0' terminator
   if ( _InstDesc2Size>0 ) _InstDesc2Size++; // Reserve '/0' terminator

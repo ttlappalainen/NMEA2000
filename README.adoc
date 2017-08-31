@@ -61,6 +61,16 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+31.08.2017
+
+- Support for changing configuration information fields InstallationDescription1 and InstallationDescription2 on runtime e.g. with NMEA Reader.
+Meaning of those fields is define their "installation description". So if you have two engine monitor devices, you can set e.g. InstallationDescription1 field to 
+"Port engine" for one and "Starboard engine" for other. So it is not necessary to hardcode those setting. Of coarse your code must support
+parameter saving to e.g. EEPROM as with other parameters (see ReadResetInstallationDescriptionChanged, ReadResetAddressChanged and ReadResetDeviceInformationChanged).
+I have example under construction for handling parameter changes.
+
+- Changed some indexes to size_t. This may effect compatibility, if you have used those functions.
+
 31.07.2017
 
 - New versions of NMEA2000_due and due_can (see. https://github.com/ttlappalainen/due_can)

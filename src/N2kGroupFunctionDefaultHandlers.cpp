@@ -32,8 +32,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define N2kPGN60928_Reserved_field 6
 #define N2kPGN60928_DeviceClass_field 7
 #define N2kPGN60928_SystemInstance_field 8
-#define N2kPGN60928_InsdustryGroup_field 9
+#define N2kPGN60928_IndustryGroup_field 9
 #define N2kPGN60928_ISOSelfConfigurable_field 10
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
 template <typename T> void MatchRequestField(T FieldVal, T MatchVal, T Mask, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
 {
@@ -101,7 +103,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
           case N2kPGN60928_SystemInstance_field: 
             MatchRequestField(N2kMsg.GetByte(Index),DI.GetSystemInstance(),(uint8_t)0x0f,MatchFilter,FieldErrorCode);
             break;
-          case N2kPGN60928_InsdustryGroup_field: 
+          case N2kPGN60928_IndustryGroup_field: 
             MatchRequestField(N2kMsg.GetByte(Index),DI.GetIndustryGroup(),(uint8_t)0x07,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN60928_ISOSelfConfigurable_field: 
@@ -198,6 +200,67 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleCommand(const tN2kMsg &N2kMsg, u
     return true;
 }  
 
+//*****************************************************************************
+// Command group function for 126998 can be used to set installation description 1 and 2 fields
+bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev) {
+  int i;
+  int Index;
+  uint8_t field;
+  bool HasInvalidField=false;
+  size_t InstallationDescriptionSize;
+  char InstallationDescription[Max_N2kConfigurationInfoField_len];
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=N2kgfTPec_Acknowledge;
+  tN2kMsg N2kRMsg;
+  
+    if (PrioritySetting!=8) pec=N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+    StartParseCommandPairParameters(N2kMsg,Index);
+    // Next read new field values
+    for (i=0; i<NumberOfParameterPairs; i++) {
+      field=N2kMsg.GetByte(Index);
+      switch (field) {
+        case 1: // Installation description 1
+          InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
+          N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
+          pNMEA2000->SetInstallationDescription1(InstallationDescription);
+          break;
+        case 2:  // Installation description 2
+          InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
+          N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
+          pNMEA2000->SetInstallationDescription2(InstallationDescription);
+          break;
+        default: 
+          HasInvalidField=true;
+      }
+    }
+    
+    // Now build response
+    SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                        N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                        pec,
+                        (HasInvalidField?NumberOfParameterPairs:0));
+    
+    if ( HasInvalidField ) {
+    // If there were invalid field, we respond all fields
+      StartParseCommandPairParameters(N2kMsg,Index);
+      for (i=0; i<NumberOfParameterPairs; i++) {
+        field=N2kMsg.GetByte(Index);
+        switch (field) {
+          case 1: 
+          case 2: 
+            AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
+            break;
+          default: 
+            AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_InvalidRequestOrCommandParameterField);
+        }
+      }
+    }
+    
+    pNMEA2000->SendMsg(N2kRMsg,iDev);
+    //pNMEA2000->SetDeviceInformationInstances(DILower,DIUpper,SI,iDev);
+    
+    return true;
+}
+
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
 //*****************************************************************************
 // See document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf for
@@ -219,5 +282,7 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
     return true;
   }
 }
+#endif
+
 #endif
 

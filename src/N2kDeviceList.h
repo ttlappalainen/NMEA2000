@@ -103,7 +103,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
         const char * GetInstallationDescription1() const { return InstallationDescription1; }
         const char * GetInstallationDescription2() const { return InstallationDescription2; }
         
-        char * InitConfigurationInformation(uint16_t &_ManISize, uint16_t &_InstDesc1Size, uint16_t &_InstDesc2Size);
+        char * InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size);
         char * GetManufacturerInformation() { return ManufacturerInformation; }
         char * GetInstallationDescription1() { return InstallationDescription1; }
         char * GetInstallationDescription2() { return InstallationDescription2; }

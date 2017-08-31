@@ -33,6 +33,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "NMEA2000_CompilerDefns.h"
 #include "N2kGroupFunction.h"
 
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+
 //*****************************************************************************
 // See document http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf
 // For requirements for handling Group function request for PGN 60928
@@ -46,6 +48,15 @@ class tN2kGroupFunctionHandlerForPGN60928 : public tN2kGroupFunctionHandler {
     virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
   public:
     tN2kGroupFunctionHandlerForPGN60928(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,60928L) {}
+};
+
+//*****************************************************************************
+// This is not mandatory, but prefered
+class tN2kGroupFunctionHandlerForPGN126998 : public tN2kGroupFunctionHandler {
+  protected:
+    virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
+  public:
+    tN2kGroupFunctionHandlerForPGN126998(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126998L) {}
 };
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
@@ -64,4 +75,5 @@ class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {
 };
 #endif
 
+#endif
 #endif

@@ -186,8 +186,8 @@ void tN2kMsg::AddByte(unsigned char v) {
 }
 
 //*****************************************************************************
-void tN2kMsg::AddStr(const char *str, int len) {
-  SetBufStr(str,len,DataLen,Data);
+void tN2kMsg::AddStr(const char *str, int len, bool UsePgm) {
+  SetBufStr(str,len,DataLen,Data,UsePgm);
 }
 
 //*****************************************************************************
@@ -289,12 +289,12 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
-bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
+bool tN2kMsg::GetStr(char *StrBuf, size_t Length, int &Index) const {
   unsigned char vb;
   bool nullReached = false;
   StrBuf[0] = '\0';
-  if (Index+Length<=DataLen) {
-    for (int i=0; i<Length; i++) {
+  if ((size_t)Index+Length<=(size_t)DataLen) {
+    for (size_t i=0; i<Length; i++) {
       vb = GetByte(Index);
       if (! nullReached) {
         if (vb == 0x00 || vb == '@') {
@@ -315,12 +315,16 @@ bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
 }
 
 //*****************************************************************************
-bool tN2kMsg::GetStr(int StrBufSize, char *StrBuf, int Length, unsigned char nulChar, int &Index) const {
+bool tN2kMsg::GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &Index) const {
   unsigned char vb;
   bool nullReached = false;
+  if ( StrBufSize==0 || StrBuf==0 ) {
+    Index+=Length;
+    return true;
+  }
   StrBuf[0] = '\0';
-  if (Index+Length<=DataLen) {
-    int i;
+  if ((size_t)Index+Length<=(size_t)DataLen) {
+    size_t i;
     for (i=0; i<Length && i<StrBufSize-1; i++) {
       vb = GetByte(Index);
       if (! nullReached) {
@@ -339,6 +343,20 @@ bool tN2kMsg::GetStr(int StrBufSize, char *StrBuf, int Length, unsigned char nul
     for (;i<StrBufSize;i++) StrBuf[i] = '\0';  // Stopped by length, fill buffer with 0
     return true;
   } else return false;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
+  size_t Len=GetByte(Index)-2;
+  uint8_t Type=GetByte(Index);
+  if ( Type!=0x01 ) { StrBufSize=0; return false; }
+  if ( StrBuf!=0 ) {
+    GetStr(StrBufSize,StrBuf,Len,0xff,Index);
+  } else { 
+    Index+=Len; // Just pass this string
+  }
+  StrBufSize=Len; 
+  return true;
 }
 
 //*****************************************************************************
@@ -600,10 +618,16 @@ void SetBufUInt64(uint64_t v, int &index, unsigned char *buf) {
 }
 
 //*****************************************************************************
-void SetBufStr(const char *str, int len, int &index, unsigned char *buf) {
+void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm) {
   int i=0;
-  for (; i<len && str[i]!=0; i++, index++) {
-    buf[index]=str[i];
+  if ( UsePgm ) { 
+    for (; i<len && str[i]!=0; i++, index++) {
+      buf[index]=pgm_read_byte(&(str[i]));
+    }
+  } else {
+    for (; i<len && str[i]!=0; i++, index++) {
+      buf[index]=str[i];
+    }
   }
   for (; i<len; i++, index++) {
     buf[index]=0;

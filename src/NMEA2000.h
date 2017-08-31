@@ -64,15 +64,20 @@ address anymore. See also method ReadResetAddressChanged().
 #define Max_N2kModelVersion_len 32
 #define Max_N2kModelSerialCode_len 32
 
+// I do not know what standard says about max field length, but according to tests NMEAReader crashed with
+// lenght >=90. Some device was reported not to work string length over 70.
+#define Max_N2kConfigurationInfoField_len 71  // 70 + '/0'
+
+
 #define Max_N2kMsgBuf_Time 100
 #define N2kMessageGroups 2
 
 class tNMEA2000
 {
 public:
-  static void ClearCharBuf(int MaxLen, char *buf); 
-  static void SetCharBuf(const char *str, int MaxLen, char *buf);
-  static void ClearSetCharBuf(const char *str, int MaxLen, char *buf);
+  static void ClearCharBuf(size_t MaxLen, char *buf); 
+  static void SetCharBuf(const char *str, size_t MaxLen, char *buf);
+  static void ClearSetCharBuf(const char *str, size_t MaxLen, char *buf);
 
   struct tProductInformation {
       unsigned short N2kVersion;
@@ -420,6 +425,10 @@ protected:
     void SendTPCM_EndAck(unsigned long PGN, unsigned char Destination, unsigned char Source, uint16_t nBytes, unsigned char nPackets);
     void SendTPCM_Abort(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char AbortCode);
 #endif
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    void CopyProgmemConfigurationInformationToLocal();
+    bool InstallationDescriptionChanged;
+#endif
 public:
     tNMEA2000();
     
@@ -463,9 +472,10 @@ public:
     // tProductInformation to RAM.
     void SetProductInformation(const tProductInformation *_ProductInformation, int iDev=0);
 
-    // Configuration information is just some extra information about device and manufacturer. Some
+    // Configuration information is just some extra information about device installation and manufacturer. Some
     // MFD shows it, some does not. NMEA Reader can show configuration information.
-    // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
+    // InstallationDescription1 and InstallationDescription2 can be changed as default during runtime
+    // by NMEA 2000 group function commands. That can be done e.g. with NMEA Reader.    // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
     void SetConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
                                      const char *InstallationDescription2=0);
@@ -474,6 +484,14 @@ public:
     void SetProgmemConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
                                      const char *InstallationDescription2=0);
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    void SetInstallationDescription1(const char *InstallationDescription1);
+    void SetInstallationDescription2(const char *InstallationDescription2);
+    void GetInstallationDescription1(char *buf, size_t max_len);
+    void GetInstallationDescription2(char *buf, size_t max_len);
+    bool ReadResetInstallationDescriptionChanged();
+#endif
 
     // Call these if you wish to override the default message packets supported.  Pointers must be in PROGMEM
     void SetSingleFrameMessages(const unsigned long *_SingleFrameMessages);
@@ -648,22 +666,25 @@ bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsign
 void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
-                     const char *InstallationDescription2=0);
+                     const char *InstallationDescription2=0,
+                     bool UsePgm=false);
 
 inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
-                     const char *InstallationDescription2=0) {
+                     const char *InstallationDescription2=0,
+                     bool UsePgm=false) {
   SetN2kPGN126998(N2kMsg,
                   ManufacturerInformation,
                   InstallationDescription1,
-                  InstallationDescription2);
+                  InstallationDescription2,
+                  UsePgm);
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
-                       uint16_t &ManufacturerInformationSize, char *ManufacturerInformation,
-                       uint16_t &InstallationDescription1Size, char *InstallationDescription1,
-                       uint16_t &InstallationDescription2Size, char *InstallationDescription2);
+                       size_t &ManufacturerInformationSize, char *ManufacturerInformation,
+                       size_t &InstallationDescription1Size, char *InstallationDescription1,
+                       size_t &InstallationDescription2Size, char *InstallationDescription2);
 
 //*****************************************************************************
 // ISO request
