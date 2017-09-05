@@ -93,10 +93,6 @@ void N2kPrintFreeMemory(const char *Source) {
 
 #define MaxHeartbeatInterval 655320UL
 
-// I do not know what standard says about max field length, but according to tests NMEAReader crashed with
-// lenght >=90. Some device was reported not to work string length over 70.
-#define Max_conf_info_field_len 70
-
 #define TP_CM 60416L /* Multi packet connection management, TP.CM */
 #define TP_DT 60160L /* Multi packet data transfer, TP.DT */
 #define TP_CM_BAM    32
@@ -238,23 +234,24 @@ const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation = 
                                       };
 */
 //*****************************************************************************
-void tNMEA2000::ClearCharBuf(int MaxLen, char *buf) {
+void tNMEA2000::ClearCharBuf(size_t MaxLen, char *buf) {
   if ( buf==0 ) return;
-  int i=0;
+  size_t i=0;
   for (; i<MaxLen; i++) buf[i]=0;
 }
 
 //*****************************************************************************
-void tNMEA2000::SetCharBuf(const char *str, int MaxLen, char *buf) {
-  if ( str==0 || buf==0 || MaxLen<=0 ) return;
-  int i=0;
+void tNMEA2000::SetCharBuf(const char *str, size_t MaxLen, char *buf) {
+  if ( buf==0 || MaxLen==0 ) return; // nothing to do for 0 buffer
+  if ( str==0 ) { buf[0]=0; return; }
+  size_t i=0;
   for (; i<MaxLen-1 && str[i]!=0; i++) buf[i]=str[i];
   for (; i<MaxLen; i++) buf[i]=0;
   buf[MaxLen-1]=0; // Force null termination
 }
 
 //*****************************************************************************
-void tNMEA2000::ClearSetCharBuf(const char *str, int MaxLen, char *buf) {
+void tNMEA2000::ClearSetCharBuf(const char *str, size_t MaxLen, char *buf) {
   ClearCharBuf(MaxLen,buf);
   if (str) SetCharBuf(str,MaxLen,buf);
 }
@@ -264,6 +261,9 @@ tNMEA2000::tNMEA2000() {
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
   pGroupFunctionHandlers=0;
+#endif
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+  InstallationDescriptionChanged=false;
 #endif
   ForwardStream=0;
 
@@ -365,23 +365,24 @@ void tNMEA2000::SetConfigurationInformation(const char *ManufacturerInformation,
   if ( LocalConfigurationInformationData!=0 ) free(LocalConfigurationInformationData); // This happens on second call, which is not good.
   LocalConfigurationInformationData=0;
 
-  int ManInfoLen=(ManufacturerInformation?strlen(ManufacturerInformation)+1:0);
-  int InstDesc1Len=(InstallationDescription1?strlen(InstallationDescription1)+1:0);
-  int InstDesc2Len=(InstallationDescription2?strlen(InstallationDescription2)+1:0);
+  size_t ManInfoLen=(ManufacturerInformation?strlen(ManufacturerInformation)+1:0);
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+  size_t InstDesc1Len=Max_N2kConfigurationInfoField_len;
+  size_t InstDesc2Len=Max_N2kConfigurationInfoField_len;
+#else
+  size_t InstDesc1Len=(InstallationDescription1?strlen(InstallationDescription1)+1:0);
+  size_t InstDesc2Len=(InstallationDescription2?strlen(InstallationDescription2)+1:0);
+#endif
 
-  if ( ManInfoLen>Max_conf_info_field_len ) ManInfoLen=Max_conf_info_field_len;
-  if ( InstDesc1Len>Max_conf_info_field_len ) InstDesc1Len=Max_conf_info_field_len;
-  if ( InstDesc2Len>Max_conf_info_field_len ) InstDesc2Len=Max_conf_info_field_len;
+  if ( ManInfoLen>Max_N2kConfigurationInfoField_len ) ManInfoLen=Max_N2kConfigurationInfoField_len;
+  if ( InstDesc1Len>Max_N2kConfigurationInfoField_len ) InstDesc1Len=Max_N2kConfigurationInfoField_len;
+  if ( InstDesc2Len>Max_N2kConfigurationInfoField_len ) InstDesc2Len=Max_N2kConfigurationInfoField_len;
 
-  int TotalSize=ManInfoLen+InstDesc1Len+InstDesc2Len;
+  size_t TotalSize=ManInfoLen+InstDesc1Len+InstDesc2Len;
   void *mem=(TotalSize>0?malloc(TotalSize):0);
 
   LocalConfigurationInformationData=(char*)mem;
   char *Info=LocalConfigurationInformationData;
-
-  SetCharBuf(ManufacturerInformation,ManInfoLen,Info);
-  ConfigurationInformation.ManufacturerInformation=(ManufacturerInformation?Info:0);
-  Info+=ManInfoLen;
 
   SetCharBuf(InstallationDescription1,InstDesc1Len,Info);
   ConfigurationInformation.InstallationDescription1=(InstallationDescription1?Info:0);
@@ -389,21 +390,97 @@ void tNMEA2000::SetConfigurationInformation(const char *ManufacturerInformation,
 
   SetCharBuf(InstallationDescription2,InstDesc2Len,Info);
   ConfigurationInformation.InstallationDescription2=(InstallationDescription2?Info:0);
+  Info+=InstDesc2Len;
 
+  SetCharBuf(ManufacturerInformation,ManInfoLen,Info);
+  ConfigurationInformation.ManufacturerInformation=(ManufacturerInformation?Info:0);
 }
 
 //*****************************************************************************
 void tNMEA2000::SetProgmemConfigurationInformation(const char *ManufacturerInformation,
                                             const char *InstallationDescription1,
                                             const char *InstallationDescription2) {
-//void tNMEA2000::SetProgmemConfigurationInformation(const tProgmemConfigurationInformation *_ConfigurationInformation) {
-//  ConfigurationInformation=_ConfigurationInformatManufacturerInformationion;
   if ( LocalConfigurationInformationData!=0 ) free(LocalConfigurationInformationData); // This happens on second call, which is not good.
   LocalConfigurationInformationData=0;
   ConfigurationInformation.ManufacturerInformation=ManufacturerInformation;
   ConfigurationInformation.InstallationDescription1=InstallationDescription1;
   ConfigurationInformation.InstallationDescription2=InstallationDescription2;
 }
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+
+//*****************************************************************************
+void CopyProgmemString(const char *str, size_t MaxLen, char *buf) {
+  if ( buf==0 || MaxLen==0 ) return; // nothing to do for 0 buffer
+  if ( str==0 ) { buf[0]=0; return; }
+  size_t i=0;
+  char c;
+  for (; i<MaxLen-1 && (c=pgm_read_byte(&(str[i])))!=0; i++) buf[i]=c;
+  for (; i<MaxLen; i++) buf[i]=0;
+  buf[MaxLen-1]=0; // Force null termination
+}
+
+//*****************************************************************************
+void tNMEA2000::CopyProgmemConfigurationInformationToLocal() {
+  if ( LocalConfigurationInformationData==0 ) {
+    char Buf[Max_N2kConfigurationInfoField_len];
+    const char *ID1=ConfigurationInformation.InstallationDescription1;
+    const char *ID2=ConfigurationInformation.InstallationDescription2;
+    CopyProgmemString(ConfigurationInformation.ManufacturerInformation,Max_N2kConfigurationInfoField_len,Buf);
+    SetConfigurationInformation(Buf);
+    CopyProgmemString(ID1,Max_N2kConfigurationInfoField_len,Buf);
+    SetInstallationDescription1(Buf);
+    CopyProgmemString(ID2,Max_N2kConfigurationInfoField_len,Buf);
+    SetInstallationDescription2(Buf);
+  }
+}
+
+//*****************************************************************************
+void tNMEA2000::SetInstallationDescription1(const char *InstallationDescription1) {
+  CopyProgmemConfigurationInformationToLocal();
+  // Get pointer to local InstallationDescription1, which is after 
+  char *Info=LocalConfigurationInformationData;
+  SetCharBuf(InstallationDescription1,Max_N2kConfigurationInfoField_len,Info);
+  ConfigurationInformation.InstallationDescription1=(InstallationDescription1?Info:0);
+  InstallationDescriptionChanged=true;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetInstallationDescription2(const char *InstallationDescription2) {
+  CopyProgmemConfigurationInformationToLocal();
+  char *Info=LocalConfigurationInformationData+Max_N2kConfigurationInfoField_len;
+  SetCharBuf(InstallationDescription2,Max_N2kConfigurationInfoField_len,Info);
+  ConfigurationInformation.InstallationDescription2=(InstallationDescription2?Info:0);
+  InstallationDescriptionChanged=true;
+}
+
+//*****************************************************************************
+void tNMEA2000::GetInstallationDescription1(char *buf, size_t max_len) {
+  if ( LocalConfigurationInformationData!=0 ) {
+    SetCharBuf(ConfigurationInformation.InstallationDescription1,max_len,buf);
+  } else {
+    CopyProgmemString(ConfigurationInformation.InstallationDescription1,max_len,buf);
+  }
+}
+
+//*****************************************************************************
+void tNMEA2000::GetInstallationDescription2(char *buf, size_t max_len) {
+  if ( LocalConfigurationInformationData!=0 ) {
+    SetCharBuf(ConfigurationInformation.InstallationDescription2,max_len,buf);
+  } else {
+    CopyProgmemString(ConfigurationInformation.InstallationDescription2,max_len,buf);
+  }
+}
+
+//*****************************************************************************
+bool tNMEA2000::ReadResetInstallationDescriptionChanged() {
+  bool result=InstallationDescriptionChanged;
+  
+  InstallationDescriptionChanged=false;
+  return result;
+}
+
+#endif
 
 //*****************************************************************************
 void tNMEA2000::SetDeviceInformation(unsigned long _UniqueNumber,
@@ -525,6 +602,7 @@ bool tNMEA2000::Open() {
       // On first open try add also default group function handlers
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN60928(this)); // NAME handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126993(this)); // Heartbeat handler
+      AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126998(this)); // Configuration information handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandler(this,0)); // Default handler at last
 #endif
     }
@@ -1225,47 +1303,6 @@ bool tNMEA2000::SendProductInformation(int iDev) {
 }
 
 //*****************************************************************************
-int ProgmemStrLen(const char *str) {
-  int len;
-    if (str==0) return 0;
-    for (len=0; pgm_read_byte(&(str[len]))!=0; len++ );
-    return len;
-}
-
-//*****************************************************************************
-void SetN2kPGN126998Progmem(tN2kMsg &N2kMsg, const tNMEA2000::tConfigurationInformation &ConfigurationInformation) {
-  int i;
-  int TotalLen;
-  int MaxLen=tN2kMsg::MaxDataLen-6; // Each field has 2 extra bytes
-  int ManInfoLen=ProgmemStrLen(ConfigurationInformation.ManufacturerInformation);
-  int InstDesc1Len=ProgmemStrLen(ConfigurationInformation.InstallationDescription1);
-  int InstDesc2Len=ProgmemStrLen(ConfigurationInformation.InstallationDescription2);
-
-    TotalLen=0;
-    if (TotalLen+ManInfoLen>MaxLen) ManInfoLen=MaxLen-TotalLen;
-    TotalLen+=ManInfoLen;
-    if (TotalLen+InstDesc1Len>MaxLen) InstDesc1Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc1Len;
-    if (TotalLen+InstDesc2Len>MaxLen) InstDesc2Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc2Len;
-
-    N2kMsg.SetPGN(126998L);
-    N2kMsg.Priority=6;
-    // InstallationDescription1
-    N2kMsg.AddByte(InstDesc1Len+2);
-    N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc1Len; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation.InstallationDescription1[i])));
-    // InstallationDescription2
-    N2kMsg.AddByte(InstDesc2Len+2);
-    N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc2Len; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation.InstallationDescription2[i])));
-    // ManufacturerInformation
-    N2kMsg.AddByte(ManInfoLen+2);
-    N2kMsg.AddByte(0x01);
-    for (i=0; i<ManInfoLen; i++) N2kMsg.AddByte(pgm_read_byte(&(ConfigurationInformation.ManufacturerInformation[i])));
-}
-
-//*****************************************************************************
 bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
   if ( !IsValidDevice(DeviceIndex) ) return false;
   tN2kMsg RespondMsg(Devices[DeviceIndex].N2kSource);
@@ -1273,14 +1310,11 @@ bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
     if ( ConfigurationInformation.ManufacturerInformation!=0 ||
          ConfigurationInformation.InstallationDescription1!=0 ||
          ConfigurationInformation.InstallationDescription2!=0 ) {
-      if ( LocalConfigurationInformationData!=0 ) {
         SetN2kConfigurationInformation(RespondMsg,
                                        ConfigurationInformation.ManufacturerInformation,
                                        ConfigurationInformation.InstallationDescription1,
-                                       ConfigurationInformation.InstallationDescription2);
-      } else {
-        SetN2kPGN126998Progmem(RespondMsg,ConfigurationInformation);
-      }
+                                       ConfigurationInformation.InstallationDescription2,
+                                       LocalConfigurationInformationData==0);
     } else { // No information provided, so respond not available
       SetN2kPGNISOAcknowledgement(RespondMsg,1,0xff,126998L);
     }
@@ -1720,23 +1754,46 @@ bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsign
 }
 
 //*****************************************************************************
+size_t ProgmemStrLen(const char *str) {
+  size_t len;
+    if (str==0) return 0;
+    for (len=0; pgm_read_byte(&(str[len]))!=0; len++ );
+    return len;
+}
+
+//*****************************************************************************
+size_t StrLen(const char *str) {
+    if (str==0) return 0;
+    return strlen(str);
+}
+
+//*****************************************************************************
 // Configuration information
 void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1,
-                     const char *InstallationDescription2) {
+                     const char *InstallationDescription2,
+                     bool UsePgm) {
+  size_t TotalLen;
+  size_t MaxLen=tN2kMsg::MaxDataLen-6; // Each field has 2 extra bytes
+  size_t ManInfoLen;
+  size_t InstDesc1Len;
+  size_t InstDesc2Len;
+  
+    if ( UsePgm ) {
+      ManInfoLen=ProgmemStrLen(ManufacturerInformation);
+      InstDesc1Len=ProgmemStrLen(InstallationDescription1);
+      InstDesc2Len=ProgmemStrLen(InstallationDescription2);
+    } else {
+      ManInfoLen=StrLen(ManufacturerInformation);
+      InstDesc1Len=StrLen(InstallationDescription1);
+      InstDesc2Len=StrLen(InstallationDescription2);
+    }
 
-  int i;
-  int TotalLen;
-  int MaxLen=tN2kMsg::MaxDataLen-6; // Each field has 2 extra bytes
-  int ManInfoLen=(ManufacturerInformation?strlen(ManufacturerInformation):0);
-  int InstDesc1Len=(InstallationDescription1?strlen(InstallationDescription1):0);
-  int InstDesc2Len=(InstallationDescription2?strlen(InstallationDescription2):0);
-
-    if ( ManInfoLen>Max_conf_info_field_len ) ManInfoLen=Max_conf_info_field_len;
-    if ( InstDesc1Len>Max_conf_info_field_len ) InstDesc1Len=Max_conf_info_field_len;
-    if ( InstDesc2Len>Max_conf_info_field_len ) InstDesc2Len=Max_conf_info_field_len;
-
+    if ( ManInfoLen>Max_N2kConfigurationInfoField_len ) ManInfoLen=Max_N2kConfigurationInfoField_len;
+    if ( InstDesc1Len>Max_N2kConfigurationInfoField_len ) InstDesc1Len=Max_N2kConfigurationInfoField_len;
+    if ( InstDesc2Len>Max_N2kConfigurationInfoField_len ) InstDesc2Len=Max_N2kConfigurationInfoField_len;
+  
     TotalLen=0;
     if (TotalLen+ManInfoLen>MaxLen) ManInfoLen=MaxLen-TotalLen;
     TotalLen+=ManInfoLen;
@@ -1750,40 +1807,28 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
     // InstallationDescription1
     N2kMsg.AddByte(InstDesc1Len+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc1Len; i++) N2kMsg.AddByte(InstallationDescription1[i]);
+    N2kMsg.AddStr(InstallationDescription1,InstDesc1Len,UsePgm);
+    
     // InstallationDescription2
     N2kMsg.AddByte(InstDesc2Len+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<InstDesc2Len; i++) N2kMsg.AddByte(InstallationDescription2[i]);
+    N2kMsg.AddStr(InstallationDescription2,InstDesc2Len,UsePgm);
     // ManufacturerInformation
     N2kMsg.AddByte(ManInfoLen+2);
     N2kMsg.AddByte(0x01);
-    for (i=0; i<ManInfoLen; i++) N2kMsg.AddByte(ManufacturerInformation[i]);
-}
-
-bool ReadN2kVarString(const tN2kMsg& N2kMsg, uint16_t &BufSize, char *Buf, int &Index) {
-  int Len=N2kMsg.GetByte(Index)-2;
-  uint8_t Type=N2kMsg.GetByte(Index);
-  if ( Type!=0x01 ) { BufSize=0; return false; }
-  if ( Buf!=0 ) {
-    N2kMsg.GetStr(BufSize,Buf,Len,0xff,Index);
-  } else { 
-    Index+=Len; // Just pass this string
-  }
-  BufSize=Len; 
-  return true;
+    N2kMsg.AddStr(ManufacturerInformation,ManInfoLen,UsePgm);
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
-                       uint16_t &ManufacturerInformationSize, char *ManufacturerInformation,
-                       uint16_t &InstallationDescription1Size, char *InstallationDescription1,
-                       uint16_t &InstallationDescription2Size, char *InstallationDescription2) {
+                       size_t &ManufacturerInformationSize, char *ManufacturerInformation,
+                       size_t &InstallationDescription1Size, char *InstallationDescription1,
+                       size_t &InstallationDescription2Size, char *InstallationDescription2) {
   if (N2kMsg.PGN!=N2kPGNConfigurationInformation) return false;
 
   int Index=0;
-  return ( ReadN2kVarString(N2kMsg,InstallationDescription1Size,InstallationDescription1,Index) &&
-           ReadN2kVarString(N2kMsg,InstallationDescription2Size,InstallationDescription2,Index) &&
-           ReadN2kVarString(N2kMsg,ManufacturerInformationSize,ManufacturerInformation,Index) );
+  return ( N2kMsg.GetVarStr(InstallationDescription1Size,InstallationDescription1,Index) &&
+           N2kMsg.GetVarStr(InstallationDescription2Size,InstallationDescription2,Index) &&
+           N2kMsg.GetVarStr(ManufacturerInformationSize,ManufacturerInformation,Index) );
 }
 
 //*****************************************************************************
