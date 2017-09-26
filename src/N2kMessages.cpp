@@ -543,7 +543,7 @@ bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterR
 
   SID=N2kMsg.GetByte(Index);
   WaterRefereced=N2kMsg.Get2ByteUDouble(0.01,Index);
-  GroundReferenced=N2kMsg.Get2ByteDouble(0.01,Index);
+  GroundReferenced=N2kMsg.Get2ByteUDouble(0.01,Index);
   SWRT=(tN2kSpeedWaterReferenceType)(N2kMsg.GetByte(Index)&0x0F);
 
   return true;
@@ -1261,7 +1261,7 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 
 //*****************************************************************************
 // Humidity
-// Humiity should be in percent
+// Humidity should be in percent
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
                      tN2kHumiditySource HumiditySource, double ActualHumidity) {
   N2kMsg.SetPGN(130313L);

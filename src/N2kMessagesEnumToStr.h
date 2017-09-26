@@ -94,5 +94,7 @@ MakeN2kEnumTypeToStrFunc(tN2kPressureSource,tN2kPressureStrs)
 const char* tN2kRudderDirectionOrderStrs[] = { "no direction order", "move to starboard", "move to port" };
 MakeN2kEnumTypeToStrFunc(tN2kRudderDirectionOrder,tN2kRudderDirectionOrderStrs)
 
+const char* tN2kSpeedWaterReferenceTypeStrs[] = {"Paddle wheel","Pitot tube","Doppler","Correlation (ultra sound)","Electro Magnetic"};
+MakeN2kEnumTypeToStrFunc(tN2kSpeedWaterReferenceType,tN2kSpeedWaterReferenceTypeStrs);
 
 #endif
