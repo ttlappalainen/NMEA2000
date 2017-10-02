@@ -788,18 +788,24 @@ inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double 
 //                          to indicate that they are measured at same time.
 //  - DepthBelowTransducer  Depth below transducer in meters
 //  - Offset                Distance in meters between transducer and surface (positive) or transducer and keel (negative)
+//  - Range                 Measuring range
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset);
+void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset, double Range=N2kDoubleNA);
 
-inline void SetN2kWaterDepth(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset) {
-  SetN2kPGN128267(N2kMsg,SID,DepthBelowTransducer,Offset);
+inline void SetN2kWaterDepth(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset, double Range=N2kDoubleNA) {
+  SetN2kPGN128267(N2kMsg,SID,DepthBelowTransducer,Offset,Range);
 }
 
-bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset);
+bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset, double &Range);
 
 inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset) {
-  return ParseN2kPGN128267(N2kMsg, SID, DepthBelowTransducer, Offset);
+  double Range;
+  return ParseN2kPGN128267(N2kMsg, SID, DepthBelowTransducer, Offset, Range);
+}
+
+inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset, double &Range) {
+  return ParseN2kPGN128267(N2kMsg, SID, DepthBelowTransducer, Offset, Range);
 }
 
 //*****************************************************************************

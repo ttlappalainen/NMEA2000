@@ -551,22 +551,23 @@ bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterR
 
 //*****************************************************************************
 // Water depth
-void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset) {
+void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset, double Range) {
     N2kMsg.SetPGN(128267L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
     N2kMsg.Add4ByteUDouble(DepthBelowTransducer,0.01);
     N2kMsg.Add2ByteDouble(Offset,0.001);
-    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.Add1ByteUDouble(Range,10);
 }
 
-bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset) {
+bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthBelowTransducer, double &Offset, double &Range) {
   if (N2kMsg.PGN!=128267L) return false;
 
   int Index=0;
   SID=N2kMsg.GetByte(Index);
   DepthBelowTransducer=N2kMsg.Get4ByteUDouble(0.01,Index);
   Offset=N2kMsg.Get2ByteDouble(0.001,Index);
+  Range=N2kMsg.Get1ByteUDouble(10,Index);
 
   return true;
 }

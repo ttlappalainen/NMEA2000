@@ -61,6 +61,28 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+02.10.2017
+
+- Added range parameter for depth PGN 128267. 
+
+- Added millis() time stamp to N2kMsg clear text Print.
+
+- Now responces also Group Function request for PGN lists PGN 126464
+
+- Now responces also Group Function request for Product Information PGN 126996
+
+- Now responces also Group Function request for Configuration Information PGN 126998
+
+- Fix: spelling Sertification -> Certification
+
+- Fix: on changing SystemInstance reseted DeviceInstance
+
+- Fix: "Group function" responces according to tests with certified Airmar DST800
+
+- Fix: Address claiming could go up to 253 and did not went to "cannot claim". Now, if address cannot be claimed, goes to "cannot claim state" and prevents all message output except ISO address claim.
+
+- Fix: fast packet response for less than 7 data bytes caused two frames.
+
 26.09.2017
 
 - Fixed PGN 128259 parser SOG data type. 

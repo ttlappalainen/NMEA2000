@@ -650,6 +650,7 @@ void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bo
 //*****************************************************************************
 void tN2kMsg::Print(N2kStream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
+  port->print(millis()); port->print(F(" : "));
   port->print(F("Pri:")); port->print(Priority);
   port->print(F(" PGN:")); port->print(PGN);
   port->print(F(" Source:")); port->print(Source);

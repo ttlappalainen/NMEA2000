@@ -71,6 +71,8 @@ address anymore. See also method ReadResetAddressChanged().
 
 #define Max_N2kMsgBuf_Time 100
 #define N2kMessageGroups 2
+#define N2kMaxCanBusAddress 251
+#define N2kNullCanBusAddress 254
 
 class tNMEA2000
 {
@@ -87,7 +89,7 @@ public:
       char N2kSwCode[Max_N2kSwCode_len+1];
       char N2kModelVersion[Max_N2kModelVersion_len+1];
       char N2kModelSerialCode[Max_N2kModelSerialCode_len+1];
-      unsigned char SertificationLevel;
+      unsigned char CertificationLevel;
       unsigned char LoadEquivalency;
 
       void Set(const char *_ModelSerialCode, // Default="". Max 32 chars. Manufacturer's Model serial code
@@ -96,16 +98,16 @@ public:
                const char *_SwCode=0, // Default="". Max 40 chars. Manufacturer's software version code
                const char *_ModelVersion=0, // Default="". Max 24 chars. Manufacturer's Model version
                unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
-               unsigned short _N2kVersion=0xffff, // Default=1300
-               unsigned char _SertificationLevel=0xff // Default=1
+               unsigned short _N2kVersion=0xffff, // Default=2101
+               unsigned char _CertificationLevel=0xff // Default=0
               ) {
-        N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:1300);
+        N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:2101);
         ProductCode=_ProductCode;
         ClearSetCharBuf(_ModelID,sizeof(N2kModelID),N2kModelID);
         ClearSetCharBuf(_SwCode,sizeof(N2kSwCode),N2kSwCode);
         ClearSetCharBuf(_ModelVersion,sizeof(N2kModelVersion),N2kModelVersion);
         ClearSetCharBuf(_ModelSerialCode,sizeof(N2kModelSerialCode),N2kModelSerialCode);
-        SertificationLevel=(_SertificationLevel!=0xff?_SertificationLevel:1);
+        CertificationLevel=(_CertificationLevel!=0xff?_CertificationLevel:0);
         LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
       }
       
@@ -149,7 +151,7 @@ public:
     void SetDeviceClass(unsigned char _DeviceClass) { DeviceInformation.DeviceClass=((_DeviceClass&0x7f)<<1); }
     unsigned char GetDeviceClass() const { return DeviceInformation.DeviceClass>>1; }
     void SetIndustryGroup(unsigned char _IndustryGroup) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0x0f) | (_IndustryGroup<<4) | 0x80; }
-    unsigned char GetIndustryGroup() const { return DeviceInformation.IndustryGroupAndSystemInstance>>4; }
+    unsigned char GetIndustryGroup() const { return (DeviceInformation.IndustryGroupAndSystemInstance>>4) & 0x07; }
     void SetSystemInstance(unsigned char _SystemInstance) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0xf0) | (_SystemInstance&0x0f); }
     unsigned char GetSystemInstance() const { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
 
@@ -191,7 +193,7 @@ public:
       virtual const char * GetSwCode() const=0;
       virtual const char * GetModelVersion() const=0;
       virtual const char * GetModelSerialCode() const=0;
-      virtual unsigned short GetSertificationLevel() const=0;
+      virtual unsigned short GetCertificationLevel() const=0;
       virtual unsigned short GetLoadEquivalency() const=0;
       
       // Configuration information
@@ -363,6 +365,9 @@ protected:
     // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for the driver 
     // and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. 
     virtual void InitCANFrameBuffers();
+#if defined(DEBUG_NMEA2000_ISR)
+    virtual void TestISR() {;}
+#endif
 
 protected:
     bool SendFrames(); // Sends pending frames
@@ -378,12 +383,11 @@ protected:
     bool IsInitialized() { return (N2kCANMsgBuf!=0); } 
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uint8_t &MsgIndex);
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
-    bool IsFastPacket(unsigned long PGN);
+    bool IsFastPacket(const tN2kMsg &N2kMsg);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
     bool HandleReceivedSystemMessage(int MsgIndex);
     void ForwardMessage(const tN2kMsg &N2kMsg);
     void ForwardMessage(const tN2kCANMsg &N2kCanMsg);
-    void HandlePGNListRequest(unsigned char Destination, int DeviceIndex);
     void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
     void HandleISORequest(const tN2kMsg &N2kMsg);
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
@@ -395,7 +399,7 @@ protected:
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
     void HandleCommandedAddress(uint64_t CommandedName, unsigned char NewAddress, int iDev);
     void HandleCommandedAddress(const tN2kMsg &N2kMsg);
-    void GetNextAddress(int DeviceIndex);
+    void GetNextAddress(int DeviceIndex, bool RestartAtAnd=false);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
 
@@ -413,7 +417,7 @@ protected:
               FindSourceDeviceIndex(Destination)>=0); 
     }
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
-    bool IsValidDevice(int iDev) { return (iDev>=0 && iDev<DeviceCount ); }
+    bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
 
     
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)    
@@ -463,8 +467,8 @@ public:
                                const char *_SwCode=0, // Default="1.0.0.0". Max 40 chars. Manufacturer's software version code
                                const char *_ModelVersion=0, // Default="1.0.0". Max 24 chars. Manufacturer's Model version
                                unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
-                               unsigned short _N2kVersion=0xffff, // Default=1300
-                               unsigned char _SertificationLevel=0xff, // Default=1
+                               unsigned short _N2kVersion=0xffff, // Default=2101
+                               unsigned char _CertificationLevel=0xff, // Default=1
                                int iDev=0
                                );
     // Call this if you want to save RAM and you have defined tProductInformation to PROGMEM as in example BatteryMonitor.ino
@@ -486,10 +490,21 @@ public:
                                      const char *InstallationDescription2=0);
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    bool IsTxPGN(unsigned long PGN, int iDev=0);
+    const tNMEA2000::tProductInformation * GetProductInformation(int iDev, bool &IsProgMem) const;
+    unsigned short GetN2kVersion(int iDev=0) const;
+    unsigned short GetProductCode(int iDev=0) const;
+    void GetModelID(char *buf, size_t max_len, int iDev=0) const;
+    void GetSwCode(char *buf, size_t max_len, int iDev=0) const;
+    void GetModelVersion(char *buf, size_t max_len, int iDev=0) const;
+    void GetModelSerialCode(char *buf, size_t max_len, int iDev=0) const;
+    unsigned char GetCertificationLevel(int iDev=0) const;
+    unsigned char GetLoadEquivalency(int iDev=0) const;
     void SetInstallationDescription1(const char *InstallationDescription1);
     void SetInstallationDescription2(const char *InstallationDescription2);
     void GetInstallationDescription1(char *buf, size_t max_len);
     void GetInstallationDescription2(char *buf, size_t max_len);
+    void GetManufacturerInformation(char *buf, size_t max_len);
     bool ReadResetInstallationDescriptionChanged();
 #endif
 
@@ -529,6 +544,8 @@ public:
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
     bool SendProductInformation(int DeviceIndex=0);
     bool SendConfigurationInformation(int DeviceIndex=0);
+    void SendTxPGNList(unsigned char Destination, int DeviceIndex);
+    void SendRxPGNList(unsigned char Destination, int DeviceIndex);
 	
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
     // According to document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf
@@ -645,21 +662,21 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, uint64_t Name) {
 void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
                      const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
-                     unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1);
+                     unsigned char CertificationLevel=1, unsigned char LoadEquivalency=1);
 
 inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
                      const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
-                     unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1) {
+                     unsigned char CertificationLevel=1, unsigned char LoadEquivalency=1) {
   SetN2kPGN126996(N2kMsg,N2kVersion,ProductCode,
                   ModelID,SwCode,ModelVersion,ModelSerialCode,
-                  SertificationLevel,LoadEquivalency);
+                  CertificationLevel,LoadEquivalency);
 }
 
 bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsigned short &ProductCode,
                      int ModelIDSize, char *ModelID, int SwCodeSize, char *SwCode,
                      int ModelVersionSize, char *, int ModelSerialCodeSize, char *ModelSerialCode,
-                     unsigned char &SertificationLevel, unsigned char &LoadEquivalency);
+                     unsigned char &CertificationLevel, unsigned char &LoadEquivalency);
 
 //*****************************************************************************
 // Configuration information

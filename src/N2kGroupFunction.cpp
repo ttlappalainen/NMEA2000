@@ -52,8 +52,12 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
     case N2kgfc_Command:
       uint8_t PrioritySetting;
       
-        if (ParseCommandParams(N2kMsg,PrioritySetting,NumberOfParameterPairs)) {
-          handled=HandleCommand(N2kMsg,PrioritySetting,NumberOfParameterPairs,iDev);
+        if ( tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
+          handled=true;  // We can mark this handled, since command is not allowed to broadcast.
+        } else {
+          if (ParseCommandParams(N2kMsg,PrioritySetting,NumberOfParameterPairs)) {
+            handled=HandleCommand(N2kMsg,PrioritySetting,NumberOfParameterPairs,iDev);
+          }
         }
       break;
     case N2kgfc_Acknowledge:
@@ -86,10 +90,15 @@ bool tN2kGroupFunctionHandler::HandleRequest(const tN2kMsg &N2kMsg,
                                int iDev) {
   
     // As default we respond with not supported.
+    bool IsTxPGN=pNMEA2000->IsTxPGN(GetPGNForGroupFunction(N2kMsg),iDev);
+    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_RequestOrCommandNotSupported:N2kgfPGNec_PGNNotSupported);
+    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
+    tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
+    
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
-                    N2kgfPGNec_RequestOrCommandNotSupported,
-                    N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
-                    NumberOfParameterPairs, N2kgfpec_RequestOrCommandNotSupported);
+                    PGNec,
+                    TORec,
+                    NumberOfParameterPairs, PARec);
                     
     return true;  
 }
@@ -98,10 +107,15 @@ bool tN2kGroupFunctionHandler::HandleRequest(const tN2kMsg &N2kMsg,
 bool tN2kGroupFunctionHandler::HandleCommand(const tN2kMsg &N2kMsg, uint8_t /*PrioritySetting*/, uint8_t  NumberOfParameterPairs, int iDev) {
 
     // As default we respond with not supported.
+    bool IsTxPGN=pNMEA2000->IsTxPGN(GetPGNForGroupFunction(N2kMsg),iDev);
+    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_RequestOrCommandNotSupported:N2kgfPGNec_PGNNotSupported);
+    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
+    tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
+
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
-                    N2kgfPGNec_RequestOrCommandNotSupported,
-                    N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
-                    NumberOfParameterPairs, N2kgfpec_RequestOrCommandNotSupported);
+                    PGNec,
+                    TORec,
+                    NumberOfParameterPairs, PARec);
                     
     return true;  
 }
@@ -128,7 +142,7 @@ bool tN2kGroupFunctionHandler::HandleReadFields(const tN2kMsg &N2kMsg,
     // As default we respond with not supported.
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
                     N2kgfPGNec_ReadOrWriteNotSupported,
-                    N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
+                    N2kgfTPec_Acknowledge,
                     NumberOfParameterPairs, N2kgfpec_ReadOrWriteIsNotSupported);
     return true;
 }
@@ -150,7 +164,7 @@ bool tN2kGroupFunctionHandler::HandleWriteFields(const tN2kMsg &N2kMsg,
     // As default we respond with not supported.
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
                     N2kgfPGNec_ReadOrWriteNotSupported,
-                    N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
+                    N2kgfTPec_Acknowledge,
                     NumberOfParameterPairs, N2kgfpec_ReadOrWriteIsNotSupported);
                     
     return true;
@@ -249,7 +263,7 @@ void tN2kGroupFunctionHandler::SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned cha
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs) {
 	N2kMsg.SetPGN(126208L);
-	N2kMsg.Priority=7;
+	N2kMsg.Priority=3;
   N2kMsg.Destination=Destination;
 	N2kMsg.AddByte(N2kgfc_Acknowledge);
   N2kMsg.Add3ByteInt(PGN);

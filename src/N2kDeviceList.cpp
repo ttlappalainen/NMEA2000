@@ -266,10 +266,10 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
        ParseN2kPGN126996(N2kMsg,ProdI.N2kVersion,ProdI.ProductCode,
                          sizeof(ProdI.N2kModelID),ProdI.N2kModelID,sizeof(ProdI.N2kSwCode),ProdI.N2kSwCode,
                          sizeof(ProdI.N2kModelVersion),ProdI.N2kModelVersion,sizeof(ProdI.N2kModelSerialCode),ProdI.N2kModelSerialCode,
-                         ProdI.SertificationLevel,ProdI.LoadEquivalency) ) {
+                         ProdI.CertificationLevel,ProdI.LoadEquivalency) ) {
     if ( !pDevice->IsSameProductInformation(ProdI) ) {
       pDevice->SetProductInformation(ProdI.N2kModelSerialCode,ProdI.ProductCode,ProdI.N2kModelID,ProdI.N2kSwCode,ProdI.N2kModelVersion,
-                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.SertificationLevel);  
+                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.CertificationLevel);  
       ListUpdated=true;                                     
     }
   }

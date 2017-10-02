@@ -51,12 +51,16 @@ class tN2kGroupFunctionHandlerForPGN60928 : public tN2kGroupFunctionHandler {
 };
 
 //*****************************************************************************
-// This is not mandatory, but prefered
-class tN2kGroupFunctionHandlerForPGN126998 : public tN2kGroupFunctionHandler {
+// This is mandatory.
+class tN2kGroupFunctionHandlerForPGN126464 : public tN2kGroupFunctionHandler {
   protected:
-    virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t TransmissionIntervalOffset, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev);
   public:
-    tN2kGroupFunctionHandlerForPGN126998(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126998L) {}
+    tN2kGroupFunctionHandlerForPGN126464(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126464L) {}
 };
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
@@ -74,6 +78,33 @@ class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {
     tN2kGroupFunctionHandlerForPGN126993(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126993L) {}
 };
 #endif
+
+//*****************************************************************************
+// This is not mandatory, but prefered
+class tN2kGroupFunctionHandlerForPGN126996 : public tN2kGroupFunctionHandler {
+  protected:
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t TransmissionIntervalOffset, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev);
+  public:
+    tN2kGroupFunctionHandlerForPGN126996(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126996L) {}
+};
+
+//*****************************************************************************
+// This is not mandatory, but prefered
+class tN2kGroupFunctionHandlerForPGN126998 : public tN2kGroupFunctionHandler {
+  protected:
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t TransmissionIntervalOffset, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev);
+    virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
+  public:
+    tN2kGroupFunctionHandlerForPGN126998(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126998L) {}
+};
 
 #endif
 #endif
