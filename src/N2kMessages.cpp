@@ -31,7 +31,7 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
     N2kMsg.SetPGN(126992L);
     N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
-    N2kMsg.AddByte(TimeSource);
+    N2kMsg.AddByte((TimeSource & 0x0f) | 0xf0);
     N2kMsg.Add2ByteInt(SystemDate);
     N2kMsg.Add4ByteUDouble(SystemTime,0.0001);
 }
@@ -44,7 +44,7 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
   int Index=0;
 
   SID=N2kMsg.GetByte(Index);
-  TimeSource=(tN2kTimeSource)(N2kMsg.GetByte(Index));
+  TimeSource=(tN2kTimeSource)(N2kMsg.GetByte(Index) & 0x0f);
   SystemDate=N2kMsg.Get2ByteUInt(Index);
   SystemTime=N2kMsg.Get4ByteDouble(0.0001,Index);
 

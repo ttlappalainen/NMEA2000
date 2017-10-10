@@ -61,6 +61,11 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+10.10.2017
+- Fix: PGN 126992 TimeSource handling.
+
+- Fix: Added missing wind reference type.
+
 02.10.2017
 
 - Added range parameter for depth PGN 128267. 

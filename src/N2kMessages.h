@@ -151,7 +151,8 @@ enum tN2kWindReference {
                             N2kWind_True_North=0,
                             N2kWind_Magnetic=1,
                             N2kWind_Apprent=2,
-                            N2kWind_True_boat=3
+                            N2kWind_True_boat=3,
+                            N2kWind_True_water=4
                           };
 
 enum tN2kSpeedWaterReferenceType {
