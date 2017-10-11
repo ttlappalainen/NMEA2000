@@ -24,6 +24,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "N2kGroupFunctionDefaultHandlers.h"
 #include "NMEA2000.h"
 
+#include <algorithm>
+
 #define N2kPGN60928_UniqueNumber_field 1
 #define N2kPGN60928_ManufacturerCode_field 2
 #define N2kPGN60928_DeviceInstanceLower_field 3
@@ -294,7 +296,7 @@ bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg,
     uint8_t field;
     tN2kGroupFunctionParameterErrorCode FieldErrorCode;
     bool FoundInvalidField=false;
-    size_t strSize=max(Max_N2kModelID_len+1,max(Max_N2kSwCode_len+1,max(Max_N2kModelVersion_len+1,Max_N2kModelSerialCode_len+1)));
+    size_t strSize=std::max(Max_N2kModelID_len+1, std::max(Max_N2kSwCode_len+1, std::max(Max_N2kModelVersion_len+1, Max_N2kModelSerialCode_len+1)));
     char Query[strSize];
     char CurVal[strSize];
     

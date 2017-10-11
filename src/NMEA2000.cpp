@@ -28,6 +28,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 #include <string.h>
 #include <stdlib.h>
+#include <algorithm>
 
 #define DebugStream Serial
 
@@ -839,7 +840,7 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
       N2kFrameOutDbg("Frame failed "); N2kFrameOutDbgln(id);
       return false;
     }
-    len=max(len,8);
+    len=std::max(int(len), 8);
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
@@ -1086,7 +1087,7 @@ void tNMEA2000::FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uin
 
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
 
-unsigned char TPCtsPackets(unsigned char nPackets) { return max(1,min(nPackets,TP_MAX_FRAMES)); }
+unsigned char TPCtsPackets(unsigned char nPackets) { return std::max(1, std::min(int(nPackets), TP_MAX_FRAMES)); }
 
 //*****************************************************************************
 void tNMEA2000::SendTPCM_CTS(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char nPackets, unsigned char NextPacketNumber) {
