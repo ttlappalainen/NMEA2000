@@ -61,6 +61,11 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+12.10.2017
+- Added PGN validity check to the SendMsg()
+
+- Changed max/min -> own Max/Min. max/min defines does not exist on other systems and Arduino does not have std <Algorithm> for all boards.
+
 10.10.2017
 - Fix: PGN 126992 TimeSource handling.
 

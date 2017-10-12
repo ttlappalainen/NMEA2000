@@ -807,6 +807,7 @@ unsigned long N2ktoCanID(unsigned char priority, unsigned long PGN, unsigned lon
   unsigned char PF = (unsigned char) (PGN >> 8);
 
   if (PF < 240) {  // PDU1 format
+     if ( (PGN & 0xff) != 0 ) return 0;  // for PDU1 format PGN lowest byte has to be 0 for the destination.
      return ( ((unsigned long)(priority & 0x7))<<26 | PGN<<8 | ((unsigned long)Destination)<<8 | (unsigned long)Source);
   } else { // PDU2 format
      return ( ((unsigned long)(priority & 0x7))<<26 | PGN<<8 | (unsigned long)Source);
@@ -839,7 +840,7 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
       N2kFrameOutDbg("Frame failed "); N2kFrameOutDbgln(id);
       return false;
     }
-    len=max(len,8);
+    len=Max<unsigned char>(len,8);
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
@@ -927,7 +928,12 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
   if ( N2kMsg.Source>N2kMaxCanBusAddress && N2kMsg.PGN!=N2kPGNIsoAddressClaim ) return false; // CAN bus address range is 0-251. Anyway allow ISO address claim mgs.
 
   unsigned long canId=N2ktoCanID(N2kMsg.Priority,N2kMsg.PGN,N2kMsg.Source, N2kMsg.Destination);
-
+  
+  if ( canId==0 ) { // PGN validity - N2ktoCanID returns 0 for invalid PGN
+//    if (ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) { ForwardStream->print(F("Invalid PGN ")); ForwardStream->println(N2kMsg.PGN); }
+    return false;
+  }
+  
   if (N2kMode==N2km_ListenOnly) return false; // Do not send anything on listen only mode
 
   if (N2kMsg.PGN==0) return false;
@@ -1086,7 +1092,7 @@ void tNMEA2000::FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uin
 
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
 
-unsigned char TPCtsPackets(unsigned char nPackets) { return max(1,min(nPackets,TP_MAX_FRAMES)); }
+unsigned char TPCtsPackets(unsigned char nPackets) { return tNMEA2000::Max<unsigned char>(1,tNMEA2000::Min<unsigned char>(nPackets,TP_MAX_FRAMES)); }
 
 //*****************************************************************************
 void tNMEA2000::SendTPCM_CTS(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char nPackets, unsigned char NextPacketNumber) {

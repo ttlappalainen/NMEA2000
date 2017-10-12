@@ -63,6 +63,8 @@ address anymore. See also method ReadResetAddressChanged().
 #define Max_N2kSwCode_len 32
 #define Max_N2kModelVersion_len 32
 #define Max_N2kModelSerialCode_len 32
+// Define length of longest info string above + 1 termination char
+#define Max_N2kProductInfoStrLen 33
 
 // I do not know what standard says about max field length, but according to tests NMEAReader crashed with
 // lenght >=90. Some device was reported not to work string length over 70.
@@ -80,6 +82,9 @@ public:
   static void ClearCharBuf(size_t MaxLen, char *buf); 
   static void SetCharBuf(const char *str, size_t MaxLen, char *buf);
   static void ClearSetCharBuf(const char *str, size_t MaxLen, char *buf);
+  // max and min are not available on all systems, so use own definition.
+  template <typename T> static T Max(T a, T b) { return (a>b?a:b); }
+  template <typename T> static T Min(T a, T b) { return (a<b?a:b); }
 
   struct tProductInformation {
       unsigned short N2kVersion;
