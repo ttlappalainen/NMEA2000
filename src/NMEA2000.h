@@ -83,8 +83,8 @@ public:
   static void SetCharBuf(const char *str, size_t MaxLen, char *buf);
   static void ClearSetCharBuf(const char *str, size_t MaxLen, char *buf);
   // max and min are not available on all systems, so use own definition.
-  template <typename T> static T Max(T a, T b) { return (a>b?a:b); }
-  template <typename T> static T Min(T a, T b) { return (a<b?a:b); }
+  template <typename T> static T N2kMax(T a, T b) { return (a>b?a:b); }
+  template <typename T> static T N2kMin(T a, T b) { return (a<b?a:b); }
 
   struct tProductInformation {
       unsigned short N2kVersion;

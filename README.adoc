@@ -61,6 +61,14 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+14.10.2017
+- Changed tActisenseReader class to handle also Actisense N2k request message types. This type will be used
+  by applications, which sends data through NGT-1.
+  
+- Updated related examples ActisenseListener and ActisenseListenerSender.
+
+- Renamed Min/Max to N2kMin/N2kMax, since Due code had definitions for Min/Max
+
 12.10.2017
 - Added PGN validity check to the SendMsg()
 

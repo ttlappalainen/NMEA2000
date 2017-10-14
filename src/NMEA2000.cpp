@@ -840,7 +840,7 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
       N2kFrameOutDbg("Frame failed "); N2kFrameOutDbgln(id);
       return false;
     }
-    len=Max<unsigned char>(len,8);
+    len=N2kMax<unsigned char>(len,8);
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
@@ -1092,7 +1092,7 @@ void tNMEA2000::FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uin
 
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
 
-unsigned char TPCtsPackets(unsigned char nPackets) { return tNMEA2000::Max<unsigned char>(1,tNMEA2000::Min<unsigned char>(nPackets,TP_MAX_FRAMES)); }
+unsigned char TPCtsPackets(unsigned char nPackets) { return tNMEA2000::N2kMax<unsigned char>(1,tNMEA2000::N2kMin<unsigned char>(nPackets,TP_MAX_FRAMES)); }
 
 //*****************************************************************************
 void tNMEA2000::SendTPCM_CTS(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char nPackets, unsigned char NextPacketNumber) {
