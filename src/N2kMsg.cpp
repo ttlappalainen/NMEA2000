@@ -187,7 +187,7 @@ void tN2kMsg::AddByte(unsigned char v) {
 
 //*****************************************************************************
 void tN2kMsg::AddStr(const char *str, int len, bool UsePgm) {
-  SetBufStr(str,len,DataLen,Data,UsePgm);
+  SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
 }
 
 //*****************************************************************************
@@ -618,7 +618,7 @@ void SetBufUInt64(uint64_t v, int &index, unsigned char *buf) {
 }
 
 //*****************************************************************************
-void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm) {
+void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm, unsigned char fillChar) {
   int i=0;
   if ( UsePgm ) { 
     for (; i<len && str[i]!=0; i++, index++) {
@@ -630,7 +630,7 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool Us
     }
   }
   for (; i<len; i++, index++) {
-    buf[index]=0;
+    buf[index]=fillChar;
   }
 }
 

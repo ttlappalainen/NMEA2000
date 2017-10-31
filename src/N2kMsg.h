@@ -63,7 +63,7 @@ void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf);
 void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf);
 void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf);
 void SetBufUInt64(uint64_t v, int &index, unsigned char *buf);
-void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm=false);
+void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm=false, unsigned char fillChar=0x0);
 
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);

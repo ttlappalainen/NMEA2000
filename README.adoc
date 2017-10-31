@@ -60,8 +60,16 @@ project.
 I also thank for anybody who has extended library with new PGNs or processor
 support.
 
+
 == Changes ==
+31.10.2017
+
+- Fix: fill unused chars on fastpacket messages with 0xff
+
+- Fix: fill unused chars on message fixed sized strings with 0xff. One sample is e.g. PGN 126996, Product Information.
+
 14.10.2017
+
 - Changed tActisenseReader class to handle also Actisense N2k request message types. This type will be used
   by applications, which sends data through NGT-1.
   
@@ -70,11 +78,13 @@ support.
 - Renamed Min/Max to N2kMin/N2kMax, since Due code had definitions for Min/Max
 
 12.10.2017
+
 - Added PGN validity check to the SendMsg()
 
 - Changed max/min -> own Max/Min. max/min defines does not exist on other systems and Arduino does not have std <Algorithm> for all boards.
 
 10.10.2017
+
 - Fix: PGN 126992 TimeSource handling.
 
 - Fix: Added missing wind reference type.

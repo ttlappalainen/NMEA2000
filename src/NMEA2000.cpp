@@ -973,7 +973,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
                      cur++;
                  }
                  for (; j<8; j++) {
-                     temp[j]=0;
+                     temp[j]=0xff;
                  }
             }
             // delay(3);
