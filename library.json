@@ -1,7 +1,7 @@
 {
-  "name": "NMEA2000",
-  "keywords": "communication, bus, boat, marine",
-  "description": "Simplyfies making devices for NMEA2000 bus.",
+  "name": "NMEA2000-library",
+  "keywords": "nmea, 2000, nmea 2000, communication, bus, boat, marine",
+  "description": "NMEA 2000 library for building compatible devices for NMEA 2000 bus.",
   "repository":
   {
     "type": "git",
@@ -15,6 +15,6 @@
     "maintainer": true
   },
   "version": "1.1.141",
-  "frameworks": "arduino",
+  "frameworks": "*",
   "platforms": "*"
 }
