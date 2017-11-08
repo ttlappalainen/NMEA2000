@@ -266,10 +266,10 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
        ParseN2kPGN126996(N2kMsg,ProdI.N2kVersion,ProdI.ProductCode,
                          sizeof(ProdI.N2kModelID),ProdI.N2kModelID,sizeof(ProdI.N2kSwCode),ProdI.N2kSwCode,
                          sizeof(ProdI.N2kModelVersion),ProdI.N2kModelVersion,sizeof(ProdI.N2kModelSerialCode),ProdI.N2kModelSerialCode,
-                         ProdI.SertificationLevel,ProdI.LoadEquivalency) ) {
+                         ProdI.CertificationLevel,ProdI.LoadEquivalency) ) {
     if ( !pDevice->IsSameProductInformation(ProdI) ) {
       pDevice->SetProductInformation(ProdI.N2kModelSerialCode,ProdI.ProductCode,ProdI.N2kModelID,ProdI.N2kSwCode,ProdI.N2kModelVersion,
-                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.SertificationLevel);  
+                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.CertificationLevel);  
       ListUpdated=true;                                     
     }
   }
@@ -285,9 +285,9 @@ void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
   if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
   
 //  unsigned long t1=micros();
-  uint16_t ManISize;
-  uint16_t InstDesc1Size;
-  uint16_t InstDesc2Size;
+  size_t ManISize;
+  size_t InstDesc1Size;
+  size_t InstDesc2Size;
 
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
   
@@ -359,7 +359,7 @@ tN2kDeviceList::tInternalDevice::~tInternalDevice() {
 }
 
 //*****************************************************************************
-char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(uint16_t &_ManISize, uint16_t &_InstDesc1Size, uint16_t &_InstDesc2Size) {
+char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size) {
   if ( _ManISize>0 ) _ManISize++; // Reserve '/0' terminator
   if ( _InstDesc1Size>0 ) _InstDesc1Size++; // Reserve '/0' terminator
   if ( _InstDesc2Size>0 ) _InstDesc2Size++; // Reserve '/0' terminator

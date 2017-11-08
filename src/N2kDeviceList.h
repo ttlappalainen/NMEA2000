@@ -82,9 +82,9 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
                                    const char *_ModelVersion=0, // Default="". Max 24 chars. Manufacturer's Model version
                                    unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
                                    unsigned short _N2kVersion=0xffff, // Default=1300
-                                   unsigned char _SertificationLevel=0xff // Default=1
+                                   unsigned char _CertificationLevel=0xff // Default=1
                                   ) {
-          ProdI.Set(_ModelSerialCode,_ProductCode,_ModelID,_SwCode,_ModelVersion,_LoadEquivalency,_N2kVersion,_SertificationLevel);
+          ProdI.Set(_ModelSerialCode,_ProductCode,_ModelID,_SwCode,_ModelVersion,_LoadEquivalency,_N2kVersion,_CertificationLevel);
           ProdILoaded=true;
         }
         bool HasProductInformation() const { return ProdILoaded; }    
@@ -94,7 +94,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
         const char * GetSwCode() const { return ProdI.N2kSwCode; }
         const char * GetModelVersion() const { return ProdI.N2kModelVersion; }
         const char * GetModelSerialCode() const { return ProdI.N2kModelSerialCode; }
-        unsigned short GetSertificationLevel() const { return ProdI.SertificationLevel; }
+        unsigned short GetCertificationLevel() const { return ProdI.CertificationLevel; }
         unsigned short GetLoadEquivalency() const { return ProdI.LoadEquivalency; }
         
         // Configuration information
@@ -103,7 +103,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
         const char * GetInstallationDescription1() const { return InstallationDescription1; }
         const char * GetInstallationDescription2() const { return InstallationDescription2; }
         
-        char * InitConfigurationInformation(uint16_t &_ManISize, uint16_t &_InstDesc1Size, uint16_t &_InstDesc2Size);
+        char * InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size);
         char * GetManufacturerInformation() { return ManufacturerInformation; }
         char * GetInstallationDescription1() { return InstallationDescription1; }
         char * GetInstallationDescription2() { return InstallationDescription2; }

@@ -11,7 +11,6 @@
 #include <Arduino.h>
 //#include <Time.h>  // 
 #define N2k_CAN_INT_PIN 21
-#define MCP_CAN_RX_BUFFER_SIZE 100
 #include <NMEA2000_CAN.h>
 #include <N2kMessages.h>
 #include <N2kMessagesEnumToStr.h>
@@ -22,9 +21,11 @@ typedef struct {
 } tNMEA2000Handler;
 
 void SystemTime(const tN2kMsg &N2kMsg);
+void Rudder(const tN2kMsg &N2kMsg);
 void EngineRapid(const tN2kMsg &N2kMsg);
 void EngineDynamicParameters(const tN2kMsg &N2kMsg);
 void TransmissionParameters(const tN2kMsg &N2kMsg);
+void Speed(const tN2kMsg &N2kMsg);
 void WaterDepth(const tN2kMsg &N2kMsg);
 void BinaryStatus(const tN2kMsg &N2kMsg);
 void FluidLevel(const tN2kMsg &N2kMsg);
@@ -37,7 +38,6 @@ void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
 void Heading(const tN2kMsg &N2kMsg);
-void Rudder(const tN2kMsg &N2kMsg);
 void Pressure(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
@@ -52,6 +52,7 @@ tNMEA2000Handler NMEA2000Handlers[]={
   {127505L,&FluidLevel},
   {127506L,&DCStatus},
   {127513L,&BatteryConfigurationStatus},
+  {128259L,&Speed},
   {128267L,&WaterDepth},
   {129026L,&COGSOG},
   {129029L,&GNSS},
@@ -69,13 +70,14 @@ void setup() {
   OutputStream=&Serial;
 //   while (!Serial) 
    
+//  NMEA2000.SetN2kCANReceiveFrameBufSize(50);
   // Do not forward bus messages at all
   NMEA2000.SetForwardType(tNMEA2000::fwdt_Text);
   NMEA2000.SetForwardStream(OutputStream);
   // Set false below, if you do not want to see messages parsed to HEX withing library
   NMEA2000.EnableForward(false);
   NMEA2000.SetMsgHandler(HandleNMEA2000Msg);
-  NMEA2000.SetN2kCANMsgBufSize(2);
+//  NMEA2000.SetN2kCANMsgBufSize(2);
   NMEA2000.Open();
   OutputStream->print("Running...");
 }
@@ -388,6 +390,22 @@ void DCStatus(const tN2kMsg &N2kMsg) {
 }
 
 //*****************************************************************************
+void Speed(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    double SOW;
+    double SOG;
+    tN2kSpeedWaterReferenceType SWRT;
+
+    if (ParseN2kBoatSpeed(N2kMsg,SID,SOW,SOG,SWRT) ) {
+      OutputStream->print("Boat speed:");
+      PrintLabelValWithConversionCheckUnDef(" SOW:",N2kIsNA(SOW)?SOW:msToKnots(SOW));
+      PrintLabelValWithConversionCheckUnDef(", SOG:",N2kIsNA(SOG)?SOG:msToKnots(SOG));
+      OutputStream->print(", ");
+      PrintN2kEnumType(SWRT,OutputStream,true);
+    }
+}
+
+//*****************************************************************************
 void WaterDepth(const tN2kMsg &N2kMsg) {
     unsigned char SID;
     double DepthBelowTransducer;
@@ -403,7 +421,7 @@ void WaterDepth(const tN2kMsg &N2kMsg) {
         } else {
           OutputStream->print("Depth below keel:");
         }
-        if ( N2kIsNA(DepthBelowTransducer) ) { 
+        if ( !N2kIsNA(DepthBelowTransducer) ) { 
           OutputStream->println(DepthBelowTransducer+Offset); 
         } else {  OutputStream->println(" not available"); }
       }

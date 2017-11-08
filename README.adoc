@@ -15,15 +15,15 @@ functionality. See "Memory requirements" later.
 
 To use Arduino Due board internal CAN you will also need NMEA2000_due library
 and due_can library, which you can download from
-https://github.com/collin80/due_can
+https://github.com/ttlappalainen/due_can
 
 To use Arduino boards with MCP2515 CAN bus controller, you will also need
 NMEA2000_mcp library and mcp_can library. Use mcp_can library found on
 https://github.com/ttlappalainen/CAN_BUS_Shield, which is developed version of
-mcp_can library. This allows also to use 8MHz clock and has been tested with
+original mcp_can library. This allows also to use 8MHz clock and has been tested with
 Maple Mini.  mcp_can library can be originally found on
-https://github.com/Seeed-Studio/CAN_BUS_Shield, but these improvements has not
-been implemented to Seeed-Studio.
+https://github.com/Seeed-Studio/CAN_BUS_Shield, but check library status has all improvements
+been implemented to Seeed-Studio. At least 18.09.2017 it was up to date. 
 
 To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551
 CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
@@ -60,7 +60,77 @@ project.
 I also thank for anybody who has extended library with new PGNs or processor
 support.
 
+
 == Changes ==
+31.10.2017
+
+- Fix: fill unused chars on fastpacket messages with 0xff
+
+- Fix: fill unused chars on message fixed sized strings with 0xff. One sample is e.g. PGN 126996, Product Information.
+
+14.10.2017
+
+- Changed tActisenseReader class to handle also Actisense N2k request message types. This type will be used
+  by applications, which sends data through NGT-1.
+  
+- Updated related examples ActisenseListener and ActisenseListenerSender.
+
+- Renamed Min/Max to N2kMin/N2kMax, since Due code had definitions for Min/Max
+
+12.10.2017
+
+- Added PGN validity check to the SendMsg()
+
+- Changed max/min -> own Max/Min. max/min defines does not exist on other systems and Arduino does not have std <Algorithm> for all boards.
+
+10.10.2017
+
+- Fix: PGN 126992 TimeSource handling.
+
+- Fix: Added missing wind reference type.
+
+02.10.2017
+
+- Added range parameter for depth PGN 128267. 
+
+- Added millis() time stamp to N2kMsg clear text Print.
+
+- Now responces also Group Function request for PGN lists PGN 126464
+
+- Now responces also Group Function request for Product Information PGN 126996
+
+- Now responces also Group Function request for Configuration Information PGN 126998
+
+- Fix: spelling Sertification -> Certification
+
+- Fix: on changing SystemInstance reseted DeviceInstance
+
+- Fix: "Group function" responces according to tests with certified Airmar DST800
+
+- Fix: Address claiming could go up to 253 and did not went to "cannot claim". Now, if address cannot be claimed, goes to "cannot claim state" and prevents all message output except ISO address claim.
+
+- Fix: fast packet response for less than 7 data bytes caused two frames.
+
+26.09.2017
+
+- Fixed PGN 128259 parser SOG data type. 
+
+- DataDisplay2 example update.
+
+31.08.2017
+
+- Support for changing configuration information fields InstallationDescription1 and InstallationDescription2 on runtime e.g. with NMEA Reader.
+Meaning of those fields is define their "installation description". So if you have two engine monitor devices, you can set e.g. InstallationDescription1 field to 
+"Port engine" for one and "Starboard engine" for other. So it is not necessary to hardcode those setting. Of coarse your code must support
+parameter saving to e.g. EEPROM as with other parameters (see ReadResetInstallationDescriptionChanged, ReadResetAddressChanged and ReadResetDeviceInformationChanged).
+I have example under construction for handling parameter changes.
+
+- Changed some indexes to size_t. This may effect compatibility, if you have used those functions.
+
+31.07.2017
+
+- New versions of NMEA2000_due and due_can (see. https://github.com/ttlappalainen/due_can)
+
 29.07.2017
 
 - Fixed setting device instances on N2kGroupFunctionDefaultHandlers
@@ -385,9 +455,11 @@ there are some automated operations.  With version 11.06.2017 I got results:
 This is with simple TemperatureMonitor example. This can be squeezed by
 setting:
 
--    NMEA2000.SetN2kCANMsgBufSize(2);
-     NMEA2000.SetN2kCANSendFrameBufSize(15);
-  inside setup() before NMEA2000.Open();
+- Add below to setup() before NMEA2000.Open();
+....
+  NMEA2000.SetN2kCANMsgBufSize(2);
+  NMEA2000.SetN2kCANSendFrameBufSize(15);
+....
 
 - Defining ProductInformation to PROGMEM as in BatteryMonitor example.
 
@@ -434,7 +506,7 @@ ready,
 
 - Download either NMEA2000_due, NMEA2000_mcp or https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy] library zip depending you hw.
 
-- Download either https://github.com/collin80/due_can[due_can] or
+- Download either https://github.com/ttlappalainen/due_can[due_can] or
   https://github.com/ttlappalainen/CAN_BUS_Shield[mcp_can] library zip
   depending you hw or install Teensyduino for Teensy 3.1/3.2 or 3.5/3.6 boards.
 
@@ -468,14 +540,15 @@ For use board with MCP2515 SPI can bus tranceiver and mcp_can library
   #include <SPI.h>
   #include <mcp_can.h> // https://github.com/ttlappalainen/CAN_BUS_Shield
   #include <NMEA2000_mcp.h>
+  #define N2k_CAN_INT_PIN 21 // Pin, where interrupt line has been connected
   #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
-  tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN);
+  tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN,MCP_16MHz,N2k_CAN_INT_PIN);
 
 For use with Arduino due and due_can library
 
   #include <N2kMsg.h>
   #include <NMEA2000.h>
-  #include <due_can.h>  // https://github.com/collin80/due_can
+  #include <due_can.h>  // https://github.com/ttlappalainen/due_can
   #include <NMEA2000_due.h>
   tNMEA2000_due NMEA2000;
 

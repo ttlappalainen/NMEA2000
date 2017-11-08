@@ -37,8 +37,10 @@ public:
   bool FreeMsg; // Msg is free for fill up
   bool SystemMessage;
   bool KnownMessage;
-  bool TPRequireCTS;
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+  unsigned char TPRequireCTS; // =0 no, n=after each n frames
   unsigned char TPMaxPackets; // =0 not TP message. >0 number of packets can be received.
+#endif
   unsigned char LastFrame; // Last received frame sequence number on fast packets or multi packet
   unsigned char CopiedLen;
   
