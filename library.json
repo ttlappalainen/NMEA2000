@@ -1,0 +1,20 @@
+{
+  "name": "NMEA2000",
+  "keywords": "communication, bus, boat, marine",
+  "description": "Simplyfies making devices for NMEA2000 bus.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/ttlappalainen/NMEA2000.git"
+  },
+  "authors":
+  {
+    "name": "Timo Lappalainen",
+    "email": " ",
+    "url": "Kave Oy <www.kave.fi>",
+    "maintainer": true
+  },
+  "version": "1.1.141",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
