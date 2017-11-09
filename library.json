@@ -1,6 +1,6 @@
 {
   "name": "NMEA2000-library",
-  "keywords": "nmea, 2000, nmea 2000, communication, bus, boat, marine",
+  "keywords": "nmea 2000, nmea, 2000, communication, bus, boat, marine",
   "description": "NMEA 2000 library for building compatible devices for NMEA 2000 bus.",
   "repository":
   {
@@ -14,7 +14,7 @@
     "url": "Kave Oy <www.kave.fi>",
     "maintainer": true
   },
-  "version": "1.1.141",
+  "version": "4.3.1",
   "license": "MIT",
   "frameworks": "*",
   "platforms": "*"

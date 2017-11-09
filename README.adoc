@@ -62,6 +62,10 @@ support.
 
 
 == Changes ==
+09.11.2017
+
+- Added library.json, thanks for ronzeiller.
+
 31.10.2017
 
 - Fix: fill unused chars on fastpacket messages with 0xff
