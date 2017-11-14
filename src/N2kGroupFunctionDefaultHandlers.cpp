@@ -59,7 +59,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
-  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=(TransmissionInterval==0xFFFFFFFF?N2kgfTPec_Acknowledge:N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
   bool MatchFilter=true;
   tN2kMsg N2kRMsg;
     
@@ -199,7 +199,7 @@ bool tN2kGroupFunctionHandlerForPGN126464::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
-  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=(TransmissionInterval==0xFFFFFFFF?N2kgfTPec_Acknowledge:N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
   bool MatchFilter=true;
   uint8_t RespondTxRx=0xff;
   tN2kMsg N2kRMsg;
@@ -277,7 +277,7 @@ bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
-  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=(TransmissionInterval==0xFFFFFFFF?N2kgfTPec_Acknowledge:N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
   bool MatchFilter=true;
   tN2kMsg N2kRMsg;
     
@@ -374,7 +374,7 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
-  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=(TransmissionInterval==0xFFFFFFFF?N2kgfTPec_Acknowledge:N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
   bool MatchFilter=true;
   tN2kMsg N2kRMsg;
   
