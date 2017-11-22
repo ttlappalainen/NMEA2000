@@ -40,6 +40,7 @@ void setup() {
   // I originally had problem to use same Serial stream for reading and sending.
   // It worked for a while, but then stopped. Later it started to work.
   ActisenseReader.SetReadStream(ReadStream);
+  ActisenseReader.SetDefaultSource(75);
   ActisenseReader.SetMsgHandler(HandleStreamN2kMsg); 
 }
 

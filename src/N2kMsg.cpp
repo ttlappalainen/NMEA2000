@@ -37,7 +37,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // NMEA2000 uses little endian for binary data. Swap the endian if we are
 // running on a big endian machine. There is no reliable, portable compile
 // check for this so each compiler has to be added manually.
-#if defined(__GNUC__)
+#if defined(__GNUC__) && defined (__BYTE_ORDER__)
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #define HOST_IS_BIG_ENDIAN
 #endif
@@ -186,8 +186,8 @@ void tN2kMsg::AddByte(unsigned char v) {
 }
 
 //*****************************************************************************
-void tN2kMsg::AddStr(const char *str, int len) {
-  SetBufStr(str,len,DataLen,Data);
+void tN2kMsg::AddStr(const char *str, int len, bool UsePgm) {
+  SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
 }
 
 //*****************************************************************************
@@ -289,12 +289,12 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
-bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
+bool tN2kMsg::GetStr(char *StrBuf, size_t Length, int &Index) const {
   unsigned char vb;
   bool nullReached = false;
   StrBuf[0] = '\0';
-  if (Index+Length<=DataLen) {
-    for (int i=0; i<Length; i++) {
+  if ((size_t)Index+Length<=(size_t)DataLen) {
+    for (size_t i=0; i<Length; i++) {
       vb = GetByte(Index);
       if (! nullReached) {
         if (vb == 0x00 || vb == '@') {
@@ -312,6 +312,51 @@ bool tN2kMsg::GetStr(char *StrBuf, int Length, int &Index) const {
     }
     return true;
   } else return false;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &Index) const {
+  unsigned char vb;
+  bool nullReached = false;
+  if ( StrBufSize==0 || StrBuf==0 ) {
+    Index+=Length;
+    return true;
+  }
+  StrBuf[0] = '\0';
+  if ((size_t)Index+Length<=(size_t)DataLen) {
+    size_t i;
+    for (i=0; i<Length && i<StrBufSize-1; i++) {
+      vb = GetByte(Index);
+      if (! nullReached) {
+        if (vb == 0x00 || vb == nulChar ) {
+          nullReached = true; // either null or '@' (AIS null character)
+          StrBuf[i] = '\0';
+        } else {
+          StrBuf[i] = vb;
+        }
+      } else {
+        StrBuf[i] = '\0';
+      }
+    }
+    StrBuf[i] = '\0';
+    for (;i<Length;i++) GetByte(Index);  // Stopped by buffer size, so read out bytes from message
+    for (;i<StrBufSize;i++) StrBuf[i] = '\0';  // Stopped by length, fill buffer with 0
+    return true;
+  } else return false;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
+  size_t Len=GetByte(Index)-2;
+  uint8_t Type=GetByte(Index);
+  if ( Type!=0x01 ) { StrBufSize=0; return false; }
+  if ( StrBuf!=0 ) {
+    GetStr(StrBufSize,StrBuf,Len,0xff,Index);
+  } else { 
+    Index+=Len; // Just pass this string
+  }
+  StrBufSize=Len; 
+  return true;
 }
 
 //*****************************************************************************
@@ -351,9 +396,9 @@ int16_t byteswap(int16_t val)
 template<>
 uint32_t byteswap(uint32_t val) {
   return ((val << 24)) |
-      ((val << 8)  & 0xff00000000ULL) |
-      ((val >> 8)  & 0xff000000ULL) |
-      ((val >> 24) & 0xff0000ULL);
+         ((val << 8)  & 0xff0000UL) |
+         ((val >> 8)  & 0xff00UL) |
+         ((val >> 24));
 }
 
 template<>
@@ -573,13 +618,19 @@ void SetBufUInt64(uint64_t v, int &index, unsigned char *buf) {
 }
 
 //*****************************************************************************
-void SetBufStr(const char *str, int len, int &index, unsigned char *buf) {
+void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm, unsigned char fillChar) {
   int i=0;
-  for (; i<len && str[i]!=0; i++, index++) {
-    buf[index]=str[i];
+  if ( UsePgm ) { 
+    for (; i<len && str[i]!=0; i++, index++) {
+      buf[index]=pgm_read_byte(&(str[i]));
+    }
+  } else {
+    for (; i<len && str[i]!=0; i++, index++) {
+      buf[index]=str[i];
+    }
   }
   for (; i<len; i++, index++) {
-    buf[index]=0;
+    buf[index]=fillChar;
   }
 }
 
@@ -599,6 +650,7 @@ void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bo
 //*****************************************************************************
 void tN2kMsg::Print(N2kStream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
+  port->print(millis()); port->print(F(" : "));
   port->print(F("Pri:")); port->print(Priority);
   port->print(F(" PGN:")); port->print(PGN);
   port->print(F(" Source:")); port->print(Source);
@@ -664,8 +716,10 @@ void tN2kMsg::SendInActisenseFormat(N2kStream *port) const {
   ActisenseMsgBuf[msgIdx++] = Escape;
   ActisenseMsgBuf[msgIdx++] = EndOfText;
 
-  port->write(ActisenseMsgBuf,msgIdx);
-  //  Serial.print("Actisense data:");
-  //  PrintBuf(msgIdx,ActisenseMsgBuf);
-  //  Serial.print("\r\n");
+//  if ( port->availableForWrite()>msgIdx ) {  // 16.7.2017 did not work yet
+    port->write(ActisenseMsgBuf,msgIdx);
+//  }
+    //Serial.print("Actisense data:");
+    //PrintBuf(msgIdx,ActisenseMsgBuf);
+    //Serial.print("\r\n");
 }

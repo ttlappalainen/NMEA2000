@@ -38,7 +38,9 @@ const uint16_t N2kUInt16NA=0xffff;
 const int16_t  N2kInt16NA=0x7fff;
 const uint32_t N2kUInt32NA=0xffffffff;
 const int32_t  N2kInt32NA=0x7fffffff;
+#ifndef BIT
 #define BIT(n) (1 << n)
+#endif
 
 inline bool N2kIsNA(double v) { return v==N2kDoubleNA; }
 inline bool N2kIsNA(uint8_t v) { return v==N2kUInt8NA; }
@@ -61,7 +63,7 @@ void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf);
 void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf);
 void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf);
 void SetBufUInt64(uint64_t v, int &index, unsigned char *buf);
-void SetBufStr(const char *str, int len, int &index, unsigned char *buf);
+void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm=false, unsigned char fillChar=0x0);
 
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);
@@ -112,7 +114,7 @@ public:
   void Add4ByteUInt(uint32_t v);
   void AddUInt64(uint64_t v);
   void AddByte(unsigned char v);
-  void AddStr(const char *str, int len);
+  void AddStr(const char *str, int len, bool UsePgm=false);
 
   unsigned char GetByte(int &Index) const;
   int16_t Get2ByteInt(int &Index, int16_t def=0x7fff) const;
@@ -128,7 +130,9 @@ public:
   double Get4ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get4ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get8ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
-  bool GetStr(char *StrBuf, int Length, int &Index) const;
+  bool GetStr(char *StrBuf, size_t Length, int &Index) const;
+  bool GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &Index) const;
+  bool GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const;
 
   bool Set2ByteUInt(uint16_t v, int &Index);
 

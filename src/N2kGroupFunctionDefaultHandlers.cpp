@@ -21,6 +21,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#include <string.h>
 #include "N2kGroupFunctionDefaultHandlers.h"
 #include "NMEA2000.h"
 
@@ -32,8 +33,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define N2kPGN60928_Reserved_field 6
 #define N2kPGN60928_DeviceClass_field 7
 #define N2kPGN60928_SystemInstance_field 8
-#define N2kPGN60928_InsdustryGroup_field 9
+#define N2kPGN60928_IndustryGroup_field 9
 #define N2kPGN60928_ISOSelfConfigurable_field 10
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
 template <typename T> void MatchRequestField(T FieldVal, T MatchVal, T Mask, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
 {
@@ -41,6 +44,12 @@ template <typename T> void MatchRequestField(T FieldVal, T MatchVal, T Mask, boo
     ErrorCode=N2kgfpec_RequestOrCommandParameterOutOfRange;
     Match=false;
   } else ErrorCode=N2kgfpec_Acknowledge;
+}
+
+void MatchRequestField(const char * FieldVal, const char * MatchVal, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
+{
+  Match=(strcmp(FieldVal,MatchVal)==0);
+  ErrorCode = ( Match ? N2kgfpec_Acknowledge : N2kgfpec_RequestOrCommandParameterOutOfRange );
 }
 
 //*****************************************************************************
@@ -51,24 +60,24 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
-  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=(TransmissionInterval==0xFFFFFFFF?N2kgfTPec_Acknowledge:N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
   bool MatchFilter=true;
+  tN2kMsg N2kRMsg;
+    
+  // Start to build response
+  SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                      N2kgfPGNec_Acknowledge,  // Allways acknoledge for mandatory PGN
+                      pec,
+                      NumberOfParameterPairs);
+  N2kRMsg.Destination=N2kMsg.Source;
   
   if ( NumberOfParameterPairs>0 ) { // We need to filter accroding to fiels
     int i;
     int Index;
     uint8_t field;
     tNMEA2000::tDeviceInformation DI=pNMEA2000->GetDeviceInformation(iDev);
-    tN2kMsg N2kRMsg;
     tN2kGroupFunctionParameterErrorCode FieldErrorCode;
     bool FoundInvalidField=false;
-    
-    // Start to build response
-    SetStartAcknowledge(N2kRMsg,PGN,
-                        N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
-                        pec,
-                        NumberOfParameterPairs);
-    N2kRMsg.Destination=N2kMsg.Source;
     
     StartParseRequestPairParameters(N2kMsg,Index);
     // Next read new field values. Note that if message is not broadcast, we need to parse all fields allways.
@@ -101,7 +110,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
           case N2kPGN60928_SystemInstance_field: 
             MatchRequestField(N2kMsg.GetByte(Index),DI.GetSystemInstance(),(uint8_t)0x0f,MatchFilter,FieldErrorCode);
             break;
-          case N2kPGN60928_InsdustryGroup_field: 
+          case N2kPGN60928_IndustryGroup_field: 
             MatchRequestField(N2kMsg.GetByte(Index),DI.GetIndustryGroup(),(uint8_t)0x07,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN60928_ISOSelfConfigurable_field: 
@@ -120,11 +129,11 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
       }
       AddAcknowledgeParameter(N2kRMsg,i,FieldErrorCode);
     }
+  }
 
-    // Send Acknowledge, if request was not broadcast and it did not match   
-    if (!MatchFilter && !tNMEA2000::IsBroadcast(N2kMsg.Destination)) { 
-      pNMEA2000->SendMsg(N2kRMsg,iDev); 
-    }
+  // Send Acknowledge, if request was not broadcast and it did not match   
+  if ( (!MatchFilter || pec!=N2kgfTPec_Acknowledge) && !tNMEA2000::IsBroadcast(N2kMsg.Destination)) { 
+    pNMEA2000->SendMsg(N2kRMsg,iDev); 
   }
   
   if (MatchFilter) {
@@ -145,15 +154,21 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleCommand(const tN2kMsg &N2kMsg, u
   uint8_t DILower=0xff;
   uint8_t DIUpper=0xff;
   uint8_t SI=0xff;
-  bool HasInvalidField=false;
   tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=N2kgfTPec_Acknowledge;
+  tN2kGroupFunctionParameterErrorCode PARec;
   tN2kMsg N2kRMsg;
+  
+    SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                        N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                        pec,
+                        NumberOfParameterPairs);
   
     if (PrioritySetting!=8) pec=N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
     StartParseCommandPairParameters(N2kMsg,Index);
     // Next read new field values
     for (i=0; i<NumberOfParameterPairs; i++) {
       field=N2kMsg.GetByte(Index);
+      PARec=N2kgfpec_Acknowledge;
       switch (field) {
         case N2kPGN60928_DeviceInstanceLower_field: 
           DILower=N2kMsg.GetByte(Index) & 0x7;
@@ -165,31 +180,10 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleCommand(const tN2kMsg &N2kMsg, u
           SI=N2kMsg.GetByte(Index) & 0x0f;
           break;
         default: 
-          HasInvalidField=true;
+          PARec=N2kgfpec_InvalidRequestOrCommandParameterField;
       }
-    }
-    
-    // Now build response
-    SetStartAcknowledge(N2kRMsg,PGN,
-                        N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
-                        pec,
-                        (HasInvalidField?NumberOfParameterPairs:0));
-    
-    if ( HasInvalidField ) {
-    // If there were invalid field, we respond all fields
-      StartParseCommandPairParameters(N2kMsg,Index);
-      for (i=0; i<NumberOfParameterPairs; i++) {
-        field=N2kMsg.GetByte(Index);
-        switch (field) {
-          case N2kPGN60928_DeviceInstanceLower_field: 
-          case N2kPGN60928_DeviceInstanceUpper_field: 
-          case N2kPGN60928_SystemInstance_field: 
-            AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
-            break;
-          default: 
-            AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_InvalidRequestOrCommandParameterField);
-        }
-      }
+      
+      AddAcknowledgeParameter(N2kRMsg,i,PARec);
     }
     
     pNMEA2000->SendMsg(N2kRMsg,iDev);
@@ -197,6 +191,305 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleCommand(const tN2kMsg &N2kMsg, u
     
     return true;
 }  
+
+//*****************************************************************************
+// See document http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf
+// For requirements for handling Group function request for PGN 60928
+bool tN2kGroupFunctionHandlerForPGN126464::HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t /*TransmissionIntervalOffset*/, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev) {
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+  bool MatchFilter=true;
+  uint8_t RespondTxRx=0xff;
+  tN2kMsg N2kRMsg;
+    
+  // Start to build response
+  SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                      N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                      pec,
+                      NumberOfParameterPairs);
+  N2kRMsg.Destination=N2kMsg.Source;
+  
+  if ( NumberOfParameterPairs>0 ) { // We need to filter accroding to fiels
+    int i;
+    int Index;
+    uint8_t field;
+    tN2kGroupFunctionParameterErrorCode FieldErrorCode;
+    bool FoundInvalidField=false;
+    
+    StartParseRequestPairParameters(N2kMsg,Index);
+    // Next read new field values. Note that if message is not broadcast, we need to parse all fields allways.
+    for (i=0; i<NumberOfParameterPairs && (MatchFilter || !tNMEA2000::IsBroadcast(N2kMsg.Destination)); i++) {
+      if ( !FoundInvalidField) {
+        field=N2kMsg.GetByte(Index);
+        switch (field) {
+          case 1: // Selection of Tx or Rx
+            RespondTxRx=N2kMsg.GetByte(Index);
+            if ( RespondTxRx==N2kpgnl_transmit || RespondTxRx==N2kpgnl_receive ) {
+              FieldErrorCode=N2kgfpec_Acknowledge;
+            } else {
+              FieldErrorCode=N2kgfpec_RequestOrCommandParameterOutOfRange;
+              MatchFilter=false;
+            }
+            break;
+          default:
+            FieldErrorCode=N2kgfpec_InvalidRequestOrCommandParameterField;
+            MatchFilter=false;
+            FoundInvalidField=true;
+        }
+      } else {
+        // If there is any invalid field, we can not parse others, since we do not
+        // know right data length. So fo rest of the fields we can only send response below.
+        FieldErrorCode=N2kgfpec_TemporarilyUnableToComply;
+      }
+      AddAcknowledgeParameter(N2kRMsg,i,FieldErrorCode);
+    }
+  }
+
+  // Send Acknowledge, if request was not broadcast and it did not match   
+  if ( (!MatchFilter || pec!=N2kgfTPec_Acknowledge) && !tNMEA2000::IsBroadcast(N2kMsg.Destination)) { 
+    pNMEA2000->SendMsg(N2kRMsg,iDev); 
+  }
+  
+  if (MatchFilter) {
+    if ( (RespondTxRx==N2kpgnl_transmit) || (RespondTxRx==0xff) ) pNMEA2000->SendTxPGNList(N2kMsg.Source,iDev);
+    if ( (RespondTxRx==N2kpgnl_receive) || (RespondTxRx==0xff) ) pNMEA2000->SendRxPGNList(N2kMsg.Source,iDev);
+  }
+  
+  return true;
+}
+
+#define N2kPGN126996_NMEA2000DatabaseVersion_field 1
+#define N2kPGN126996_NMEAManufacturersProductCode_field 2
+#define N2kPGN126996_ManufacturersModelID_field 3
+#define N2kPGN126996_ManufacturersSoftwareVersionCode_field 4
+#define N2kPGN126996_ManufacturersModelVersion_field 5
+#define N2kPGN126996_ManufacturersModelSerialCode_field 6
+#define N2kPGN126996_NMEA2000CertificationLevel_field 7
+#define N2kPGN126996_LoadEquivalency_field 8
+
+//*****************************************************************************
+// See document http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf
+// For requirements for handling Group function request for PGN 60928
+bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t /*TransmissionIntervalOffset*/, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev) {
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+  bool MatchFilter=true;
+  tN2kMsg N2kRMsg;
+    
+  // Start to build response
+  SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                      N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                      pec,
+                      NumberOfParameterPairs);
+  N2kRMsg.Destination=N2kMsg.Source;
+  
+  if ( NumberOfParameterPairs>0 ) { // We need to filter accroding to fiels
+    int i;
+    int Index;
+    uint8_t field;
+    tN2kGroupFunctionParameterErrorCode FieldErrorCode;
+    bool FoundInvalidField=false;
+    size_t strSize=Max_N2kProductInfoStrLen;
+    char Query[strSize];
+    char CurVal[strSize];
+    
+    StartParseRequestPairParameters(N2kMsg,Index);
+    // Next read new field values. Note that if message is not broadcast, we need to parse all fields allways.
+    for (i=0; i<NumberOfParameterPairs && (MatchFilter || !tNMEA2000::IsBroadcast(N2kMsg.Destination)); i++) {
+      if ( !FoundInvalidField) {
+        field=N2kMsg.GetByte(Index);
+        switch (field) {
+          case N2kPGN126996_NMEA2000DatabaseVersion_field:
+            MatchRequestField(N2kMsg.Get2ByteUInt(Index),(uint16_t)pNMEA2000->GetN2kVersion(iDev),(uint16_t)0xffff,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_NMEAManufacturersProductCode_field: 
+            MatchRequestField(N2kMsg.Get2ByteUInt(Index),(uint16_t)pNMEA2000->GetProductCode(iDev),(uint16_t)0xffff,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_ManufacturersModelID_field:
+            N2kMsg.GetStr(strSize,Query,Max_N2kModelID_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal,strSize,iDev);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_ManufacturersSoftwareVersionCode_field: 
+            N2kMsg.GetStr(strSize,Query,Max_N2kSwCode_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal,strSize,iDev);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_ManufacturersModelVersion_field: 
+            N2kMsg.GetStr(strSize,Query,Max_N2kModelVersion_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal,strSize,iDev);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_ManufacturersModelSerialCode_field: 
+            N2kMsg.GetStr(strSize,Query,Max_N2kModelSerialCode_len,0xff,Index);
+            pNMEA2000->GetModelID(CurVal,strSize,iDev);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_NMEA2000CertificationLevel_field: 
+            MatchRequestField(N2kMsg.GetByte(Index),(uint8_t)pNMEA2000->GetCertificationLevel(iDev),(uint8_t)0xff,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126996_LoadEquivalency_field: 
+            MatchRequestField(N2kMsg.GetByte(Index),(uint8_t)pNMEA2000->GetLoadEquivalency(iDev),(uint8_t)0xff,MatchFilter,FieldErrorCode);
+            break;
+          default:
+            FieldErrorCode=N2kgfpec_InvalidRequestOrCommandParameterField;
+            MatchFilter=false;
+            FoundInvalidField=true;
+        }
+      } else {
+        // If there is any invalid field, we can not parse others, since we do not
+        // know right data length. So fo rest of the fields we can only send response below.
+        FieldErrorCode=N2kgfpec_TemporarilyUnableToComply;
+      }
+      AddAcknowledgeParameter(N2kRMsg,i,FieldErrorCode);
+    }
+  }
+
+  // Send Acknowledge, if request was not broadcast and it did not match   
+  if ( (!MatchFilter || pec!=N2kgfTPec_Acknowledge) && !tNMEA2000::IsBroadcast(N2kMsg.Destination)) { 
+    pNMEA2000->SendMsg(N2kRMsg,iDev); 
+  }
+  
+  if (MatchFilter) {
+    pNMEA2000->SendProductInformation(iDev);
+  }
+  
+  return true;
+}
+
+#define N2kPGN126998_InstallationDescription1_field 1
+#define N2kPGN126998_InstallationDescription2_field 2
+#define N2kPGN126998_ManufacturerInformation_field 3
+
+//*****************************************************************************
+// See document http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf
+// For requirements for handling Group function request for PGN 60928
+bool tN2kGroupFunctionHandlerForPGN126998::HandleRequest(const tN2kMsg &N2kMsg, 
+                               uint32_t TransmissionInterval, 
+                               uint16_t /*TransmissionIntervalOffset*/, 
+                               uint8_t  NumberOfParameterPairs,
+                               int iDev) {
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+  bool MatchFilter=true;
+  tN2kMsg N2kRMsg;
+  
+  // Start to build response
+  SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                      N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                      pec,
+                      NumberOfParameterPairs);
+  N2kRMsg.Destination=N2kMsg.Source;
+    
+  if ( NumberOfParameterPairs>0 ) { // We need to filter accroding to fiels
+    int i;
+    int Index;
+    uint8_t field;
+    tN2kGroupFunctionParameterErrorCode FieldErrorCode;
+    bool FoundInvalidField=false;
+    char Query[Max_N2kConfigurationInfoField_len];
+    char CurVal[Max_N2kConfigurationInfoField_len];
+    size_t QueryStrSize;
+   
+    StartParseRequestPairParameters(N2kMsg,Index);
+    // Next read new field values. Note that if message is not broadcast, we need to parse all fields allways.
+    for (i=0; i<NumberOfParameterPairs && (MatchFilter || !tNMEA2000::IsBroadcast(N2kMsg.Destination)); i++) {
+      if ( !FoundInvalidField) {
+        field=N2kMsg.GetByte(Index);
+        switch (field) {
+          case N2kPGN126998_InstallationDescription1_field:
+            QueryStrSize=Max_N2kConfigurationInfoField_len;
+            N2kMsg.GetVarStr(QueryStrSize,Query,Index);
+            pNMEA2000->GetInstallationDescription1(CurVal,Max_N2kConfigurationInfoField_len);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126998_InstallationDescription2_field: 
+            QueryStrSize=Max_N2kConfigurationInfoField_len;
+            N2kMsg.GetVarStr(QueryStrSize,Query,Index);
+            pNMEA2000->GetInstallationDescription2(CurVal,Max_N2kConfigurationInfoField_len);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          case N2kPGN126998_ManufacturerInformation_field: 
+            QueryStrSize=Max_N2kConfigurationInfoField_len;
+            N2kMsg.GetVarStr(QueryStrSize,Query,Index);
+            pNMEA2000->GetManufacturerInformation(CurVal,Max_N2kConfigurationInfoField_len);
+            MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
+            break;
+          default:
+            FieldErrorCode=N2kgfpec_InvalidRequestOrCommandParameterField;
+            MatchFilter=false;
+            FoundInvalidField=true;
+        }
+      } else {
+        // If there is any invalid field, we can not parse others, since we do not
+        // know right data length. So fo rest of the fields we can only send response below.
+        FieldErrorCode=N2kgfpec_TemporarilyUnableToComply;
+      }
+      AddAcknowledgeParameter(N2kRMsg,i,FieldErrorCode);
+    }
+
+  }
+
+  // Send Acknowledge, if request was not broadcast and it did not match   
+  if ( (!MatchFilter || pec!=N2kgfTPec_Acknowledge) && !tNMEA2000::IsBroadcast(N2kMsg.Destination)) { 
+    pNMEA2000->SendMsg(N2kRMsg,iDev); 
+  }
+    
+  if (MatchFilter) {
+    pNMEA2000->SendConfigurationInformation(iDev);
+  }
+  
+  return true;
+}
+
+//*****************************************************************************
+// Command group function for 126998 can be used to set installation description 1 and 2 fields
+bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev) {
+  int i;
+  int Index;
+  uint8_t field;
+  size_t InstallationDescriptionSize;
+  char InstallationDescription[Max_N2kConfigurationInfoField_len];
+  tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=N2kgfTPec_Acknowledge;
+  tN2kMsg N2kRMsg;
+  
+    SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
+                        N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
+                        pec,
+                        NumberOfParameterPairs);
+                        
+    if (PrioritySetting!=8) pec=N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+    StartParseCommandPairParameters(N2kMsg,Index);
+    // Next read new field values
+    for (i=0; i<NumberOfParameterPairs; i++) {
+      field=N2kMsg.GetByte(Index);
+      switch (field) {
+        case 1: // Installation description 1
+          InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
+          N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
+          pNMEA2000->SetInstallationDescription1(InstallationDescription);
+          AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
+          break;
+        case 2:  // Installation description 2
+          InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
+          N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
+          pNMEA2000->SetInstallationDescription2(InstallationDescription);
+          AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
+          break;
+        default: 
+          AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_InvalidRequestOrCommandParameterField);
+      }
+    }
+    
+    pNMEA2000->SendMsg(N2kRMsg,iDev);
+    
+    return true;
+}
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
 //*****************************************************************************
@@ -219,5 +512,7 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
     return true;
   }
 }
+#endif
+
 #endif
 

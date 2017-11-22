@@ -53,73 +53,180 @@ address anymore. See also method ReadResetAddressChanged().
 #include "N2kGroupFunction.h"
 #endif
 
-// Documenta says for leghts 33,40,24,32, but then values
+#define N2kPGNIsoAddressClaim 60928L
+#define N2kPGNProductInformation 126996L
+#define N2kPGNConfigurationInformation 126998L
+
+// Document says for leghts 33,40,24,32, but then values
 // has not been translated right on devices.
 #define Max_N2kModelID_len 32
 #define Max_N2kSwCode_len 32
 #define Max_N2kModelVersion_len 32
 #define Max_N2kModelSerialCode_len 32
+// Define length of longest info string above + 1 termination char
+#define Max_N2kProductInfoStrLen 33
+
+// I do not know what standard says about max field length, but according to tests NMEAReader crashed with
+// lenght >=90. Some device was reported not to work string length over 70.
+#define Max_N2kConfigurationInfoField_len 71  // 70 + '/0'
+
 
 #define Max_N2kMsgBuf_Time 100
 #define N2kMessageGroups 2
+#define N2kMaxCanBusAddress 251
+#define N2kNullCanBusAddress 254
 
 class tNMEA2000
 {
 public:
-struct tProductInformation {
-    unsigned short N2kVersion;
-    unsigned short ProductCode;
-    // Note that we reserve one extra char for null termination
-    char N2kModelID[Max_N2kModelID_len+1];
-    char N2kSwCode[Max_N2kSwCode_len+1];
-    char N2kModelVersion[Max_N2kModelVersion_len+1];
-    char N2kModelSerialCode[Max_N2kModelSerialCode_len+1];
-    unsigned char SertificationLevel;
-    unsigned char LoadEquivalency;
-};
+  static void ClearCharBuf(size_t MaxLen, char *buf); 
+  static void SetCharBuf(const char *str, size_t MaxLen, char *buf);
+  static void ClearSetCharBuf(const char *str, size_t MaxLen, char *buf);
+  // max and min are not available on all systems, so use own definition.
+  template <typename T> static T N2kMax(T a, T b) { return (a>b?a:b); }
+  template <typename T> static T N2kMin(T a, T b) { return (a<b?a:b); }
 
-class tDeviceInformation {
-protected:
-  typedef union {
-    uint64_t Name;
-    struct {
-      uint32_t UnicNumberAndManCode; // ManufacturerCode 11 bits , UniqueNumber 21 bits
-      unsigned char DeviceInstance;
-      unsigned char DeviceFunction;
-      unsigned char DeviceClass;
-    // I found document: http://www.novatel.com/assets/Documents/Bulletins/apn050.pdf it says about next fields:
-    // The System Instance Field can be utilized to facilitate multiple NMEA 2000 networks on these larger marine platforms. 
-    // NMEA 2000 devices behind a bridge, router, gateway, or as part of some network segment could all indicate this by use 
-    // and application of the System Instance Field.
-    // DeviceInstance and SystemInstance fields can be now changed by function SetDeviceInformationInstances or
-    // by NMEA 2000 group function. Group function handling is build in the library.
-      unsigned char IndustryGroupAndSystemInstance; // 4 bits each
-    };
-  } tUnionDeviceInformation;
+  struct tProductInformation {
+      unsigned short N2kVersion;
+      unsigned short ProductCode;
+      // Note that we reserve one extra char for null termination
+      char N2kModelID[Max_N2kModelID_len+1];
+      char N2kSwCode[Max_N2kSwCode_len+1];
+      char N2kModelVersion[Max_N2kModelVersion_len+1];
+      char N2kModelSerialCode[Max_N2kModelSerialCode_len+1];
+      unsigned char CertificationLevel;
+      unsigned char LoadEquivalency;
 
-  tUnionDeviceInformation DeviceInformation;
+      void Set(const char *_ModelSerialCode, // Default="". Max 32 chars. Manufacturer's Model serial code
+               unsigned short _ProductCode=0xffff,  // Default=666. Manufacturer's product code
+               const char *_ModelID=0, // Default="". Max 33 chars. Manufacturer's  Model ID
+               const char *_SwCode=0, // Default="". Max 40 chars. Manufacturer's software version code
+               const char *_ModelVersion=0, // Default="". Max 24 chars. Manufacturer's Model version
+               unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
+               unsigned short _N2kVersion=0xffff, // Default=2101
+               unsigned char _CertificationLevel=0xff // Default=0
+              ) {
+        N2kVersion=(_N2kVersion!=0xffff?_N2kVersion:2101);
+        ProductCode=_ProductCode;
+        ClearSetCharBuf(_ModelID,sizeof(N2kModelID),N2kModelID);
+        ClearSetCharBuf(_SwCode,sizeof(N2kSwCode),N2kSwCode);
+        ClearSetCharBuf(_ModelVersion,sizeof(N2kModelVersion),N2kModelVersion);
+        ClearSetCharBuf(_ModelSerialCode,sizeof(N2kModelSerialCode),N2kModelSerialCode);
+        CertificationLevel=(_CertificationLevel!=0xff?_CertificationLevel:0);
+        LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
+      }
 
-public:
-  tDeviceInformation() { DeviceInformation.Name=0; }
-  void SetUniqueNumber(uint32_t _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
-  uint32_t GetUniqueNumber() { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
-  void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
-  uint16_t GetManufacturerCode() { return DeviceInformation.UnicNumberAndManCode>>21; }
-  void SetDeviceInstance(unsigned char _DeviceInstance) { DeviceInformation.DeviceInstance=_DeviceInstance; }
-  unsigned char GetDeviceInstance() { return DeviceInformation.DeviceInstance; }
-  unsigned char GetDeviceInstanceLower() { return DeviceInformation.DeviceInstance & 0x07; }
-  unsigned char GetDeviceInstanceUpper() { return (DeviceInformation.DeviceInstance>>3) & 0x1f; }
-  void SetDeviceFunction(unsigned char _DeviceFunction) { DeviceInformation.DeviceFunction=_DeviceFunction; }
-  unsigned char GetDeviceFunction() { return DeviceInformation.DeviceFunction; }
-  void SetDeviceClass(unsigned char _DeviceClass) { DeviceInformation.DeviceClass=((_DeviceClass&0x7f)<<1); }
-  unsigned char GetDeviceClass() { return DeviceInformation.DeviceClass>>1; }
-  void SetIndustryGroup(unsigned char _IndustryGroup) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0x0f) | (_IndustryGroup<<4) | 0x80; }
-  unsigned char GetIndustryGroup() { return DeviceInformation.IndustryGroupAndSystemInstance>>4; }
-  void SetSystemInstance(unsigned char _SystemInstance) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0xf0) | (_SystemInstance&0x0f); }
-  unsigned char GetSystemInstance() { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
+      void Clear();
+      bool IsSame(const tProductInformation &Other);
+  };
 
-  uint64_t GetName()  { return DeviceInformation.Name; }
-};
+  class tDeviceInformation {
+  protected:
+    typedef union {
+      uint64_t Name;
+      struct {
+        uint32_t UnicNumberAndManCode; // ManufacturerCode 11 bits , UniqueNumber 21 bits
+        unsigned char DeviceInstance;
+        unsigned char DeviceFunction;
+        unsigned char DeviceClass;
+      // I found document: http://www.novatel.com/assets/Documents/Bulletins/apn050.pdf it says about next fields:
+      // The System Instance Field can be utilized to facilitate multiple NMEA 2000 networks on these larger marine platforms. 
+      // NMEA 2000 devices behind a bridge, router, gateway, or as part of some network segment could all indicate this by use 
+      // and application of the System Instance Field.
+      // DeviceInstance and SystemInstance fields can be now changed by function SetDeviceInformationInstances or
+      // by NMEA 2000 group function. Group function handling is build in the library.
+        unsigned char IndustryGroupAndSystemInstance; // 4 bits each
+      };
+    } tUnionDeviceInformation;
+
+    tUnionDeviceInformation DeviceInformation;
+
+  public:
+    tDeviceInformation() { DeviceInformation.Name=0; }
+    void SetUniqueNumber(uint32_t _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
+    uint32_t GetUniqueNumber() const { return DeviceInformation.UnicNumberAndManCode&0x1fffff; }
+    void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
+    uint16_t GetManufacturerCode() const { return DeviceInformation.UnicNumberAndManCode>>21; }
+    void SetDeviceInstance(unsigned char _DeviceInstance) { DeviceInformation.DeviceInstance=_DeviceInstance; }
+    unsigned char GetDeviceInstance() const { return DeviceInformation.DeviceInstance; }
+    unsigned char GetDeviceInstanceLower() const { return DeviceInformation.DeviceInstance & 0x07; }
+    unsigned char GetDeviceInstanceUpper() const { return (DeviceInformation.DeviceInstance>>3) & 0x1f; }
+    void SetDeviceFunction(unsigned char _DeviceFunction) { DeviceInformation.DeviceFunction=_DeviceFunction; }
+    unsigned char GetDeviceFunction() const { return DeviceInformation.DeviceFunction; }
+    void SetDeviceClass(unsigned char _DeviceClass) { DeviceInformation.DeviceClass=((_DeviceClass&0x7f)<<1); }
+    unsigned char GetDeviceClass() const { return DeviceInformation.DeviceClass>>1; }
+    void SetIndustryGroup(unsigned char _IndustryGroup) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0x0f) | (_IndustryGroup<<4) | 0x80; }
+    unsigned char GetIndustryGroup() const { return (DeviceInformation.IndustryGroupAndSystemInstance>>4) & 0x07; }
+    void SetSystemInstance(unsigned char _SystemInstance) { DeviceInformation.IndustryGroupAndSystemInstance=(DeviceInformation.IndustryGroupAndSystemInstance&0xf0) | (_SystemInstance&0x0f); }
+    unsigned char GetSystemInstance() const { return DeviceInformation.IndustryGroupAndSystemInstance&0x0f; }
+
+    uint64_t GetName() const { return DeviceInformation.Name; }
+    void SetName(uint64_t _Name) { DeviceInformation.Name=_Name; }
+    inline bool IsSame(uint64_t Other) { return GetName()==Other; }
+  };
+
+  class tDevice {
+    protected:
+      uint8_t Source;
+      unsigned long CreateTime;
+      tDeviceInformation DevI;
+      
+    public:
+      tDevice(uint64_t _Name, uint8_t _Source=255) { Source=_Source; DevI.SetName(_Name); CreateTime=millis(); }
+      virtual ~tDevice() {;}
+      uint8_t GetSource() const { return Source; }
+
+      unsigned long GetCreateTime() const { return CreateTime; }
+      
+      // Device information
+      inline uint64_t GetName() const { return DevI.GetName(); }
+      inline bool IsSame(uint64_t Other) { return DevI.IsSame(Other); }
+      inline uint32_t GetUniqueNumber() const { return DevI.GetUniqueNumber(); }
+      inline uint16_t GetManufacturerCode() const { return DevI.GetManufacturerCode(); }
+      inline unsigned char GetDeviceInstance() const { return DevI.GetDeviceInstance(); }
+      inline unsigned char GetDeviceInstanceLower() const { return DevI.GetDeviceInstanceLower(); }
+      inline unsigned char GetDeviceInstanceUpper() const { return DevI.GetDeviceInstanceUpper(); }
+      inline unsigned char GetDeviceFunction() const { return DevI.GetDeviceFunction(); }
+      inline unsigned char GetDeviceClass() const { return DevI.GetDeviceClass(); }
+      inline unsigned char GetIndustryGroup() const { return DevI.GetIndustryGroup(); }
+      inline unsigned char GetSystemInstance() const { return DevI.GetSystemInstance(); }
+      
+      // Product information
+      virtual unsigned short GetN2kVersion() const=0;
+      virtual unsigned short GetProductCode() const=0;
+      virtual const char * GetModelID() const=0;
+      virtual const char * GetSwCode() const=0;
+      virtual const char * GetModelVersion() const=0;
+      virtual const char * GetModelSerialCode() const=0;
+      virtual unsigned short GetCertificationLevel() const=0;
+      virtual unsigned short GetLoadEquivalency() const=0;
+      
+      // Configuration information
+      virtual const char * GetManufacturerInformation() const { return 0; }
+      virtual const char * GetInstallationDescription1() const { return 0; }
+      virtual const char * GetInstallationDescription2() const { return 0; }
+      
+      virtual const unsigned long * GetTransmitPGNs() const { return 0; }
+      virtual const unsigned long * GetReceivePGNs() const { return 0; }
+  };
+
+  class tMsgHandler {
+    private:
+      friend class tNMEA2000;
+      tMsgHandler *pNext;
+      tNMEA2000 *pNMEA2000;
+    protected:
+      unsigned long PGN;
+      virtual void HandleMsg(const tN2kMsg &N2kMsg)=0;
+      tNMEA2000 *GetNMEA2000() { return pNMEA2000; }
+    public:
+      tMsgHandler(unsigned long _PGN=0, tNMEA2000 *_pNMEA2000=0) { 
+        PGN=_PGN; pNext=0; pNMEA2000=0; 
+        if ( _pNMEA2000!=0 ) _pNMEA2000->AttachMsgHandler(this);
+      }
+      virtual ~tMsgHandler() { if ( pNMEA2000!=0 ) pNMEA2000->DetachMsgHandler(this); }
+      inline unsigned long GetPGN() const { return PGN; }
+  };
 
 public:
   // Type how to forward messages in listen mode
@@ -149,7 +256,7 @@ public:
   };
   
 protected:
-  class tDevice {
+  class tInternalDevice {
   public:
     uint8_t N2kSource;
     tDeviceInformation DeviceInformation;
@@ -171,7 +278,7 @@ protected:
 
 
   public:
-    tDevice() { 
+    tInternalDevice() { 
       N2kSource=0;
       ProductInformation=0; LocalProductInformation=0; ManufacturerSerialCode=0;
       PendingProductInformation=0; PendingConfigurationInformation=0; AddressClaimStarted=0;
@@ -205,13 +312,14 @@ protected:
     tForwardType ForwardType; // Default fwdt_Actisense.
     unsigned int ForwardMode; // Default all messages - also system and own.
     N2kStream *ForwardStream;
+    tMsgHandler *MsgHandlers;
 
     bool DeviceReady;
     bool AddressChanged;
     bool DeviceInformationChanged;
 	
     // Device information
-    tDevice *Devices;
+    tInternalDevice *Devices;
     int DeviceCount;
 //    unsigned long N2kSource[Max_N2kDevices];
 
@@ -262,6 +370,9 @@ protected:
     // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for the driver 
     // and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. 
     virtual void InitCANFrameBuffers();
+#if defined(DEBUG_NMEA2000_ISR)
+    virtual void TestISR() {;}
+#endif
 
 protected:
     bool SendFrames(); // Sends pending frames
@@ -277,12 +388,11 @@ protected:
     bool IsInitialized() { return (N2kCANMsgBuf!=0); } 
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uint8_t &MsgIndex);
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
-    bool IsFastPacket(unsigned long PGN);
+    bool IsFastPacket(const tN2kMsg &N2kMsg);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
     bool HandleReceivedSystemMessage(int MsgIndex);
     void ForwardMessage(const tN2kMsg &N2kMsg);
     void ForwardMessage(const tN2kCANMsg &N2kCanMsg);
-    void HandlePGNListRequest(unsigned char Destination, int DeviceIndex);
     void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
     void HandleISORequest(const tN2kMsg &N2kMsg);
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
@@ -292,8 +402,9 @@ protected:
     void StartAddressClaim(int iDev);
     bool IsAddressClaimStarted(int iDev);
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
+    void HandleCommandedAddress(uint64_t CommandedName, unsigned char NewAddress, int iDev);
     void HandleCommandedAddress(const tN2kMsg &N2kMsg);
-    void GetNextAddress(int DeviceIndex);
+    void GetNextAddress(int DeviceIndex, bool RestartAtAnd=false);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
 
@@ -303,13 +414,15 @@ protected:
     bool ForwardOwnMessages() const { return ((ForwardMode&FwdModeBit_OwnMessages)>0); }
     bool HandleOnlyKnownMessages() const { return ((ForwardMode&HandleModeBit_OnlyKnownMessages)>0); }
     
+    void RunMessageHandlers(const tN2kMsg &N2kMsg);
+    
     bool HandleReceivedMessage(unsigned char Destination) { 
       return (/* HandleMessagesToAnyDestination() */ true || 
               tNMEA2000::IsBroadcast(Destination) || 
               FindSourceDeviceIndex(Destination)>=0); 
     }
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
-    bool IsValidDevice(int iDev) { return (iDev>=0 && iDev<DeviceCount ); }
+    bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
 
     
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)    
@@ -320,6 +433,10 @@ protected:
     void SendTPCM_CTS(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char nPackets, unsigned char NextPacketNumber);
     void SendTPCM_EndAck(unsigned long PGN, unsigned char Destination, unsigned char Source, uint16_t nBytes, unsigned char nPackets);
     void SendTPCM_Abort(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char AbortCode);
+#endif
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    void CopyProgmemConfigurationInformationToLocal();
+    bool InstallationDescriptionChanged;
 #endif
 public:
     tNMEA2000();
@@ -355,8 +472,8 @@ public:
                                const char *_SwCode=0, // Default="1.0.0.0". Max 40 chars. Manufacturer's software version code
                                const char *_ModelVersion=0, // Default="1.0.0". Max 24 chars. Manufacturer's Model version
                                unsigned char _LoadEquivalency=0xff,  // Default=1. x * 50 mA
-                               unsigned short _N2kVersion=0xffff, // Default=1300
-                               unsigned char _SertificationLevel=0xff, // Default=1
+                               unsigned short _N2kVersion=0xffff, // Default=2101
+                               unsigned char _CertificationLevel=0xff, // Default=1
                                int iDev=0
                                );
     // Call this if you want to save RAM and you have defined tProductInformation to PROGMEM as in example BatteryMonitor.ino
@@ -364,9 +481,10 @@ public:
     // tProductInformation to RAM.
     void SetProductInformation(const tProductInformation *_ProductInformation, int iDev=0);
 
-    // Configuration information is just some extra information about device and manufacturer. Some
+    // Configuration information is just some extra information about device installation and manufacturer. Some
     // MFD shows it, some does not. NMEA Reader can show configuration information.
-    // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
+    // InstallationDescription1 and InstallationDescription2 can be changed as default during runtime
+    // by NMEA 2000 group function commands. That can be done e.g. with NMEA Reader.    // You can disable configuration information by calling SetProgmemConfigurationInformation(0);
     void SetConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
                                      const char *InstallationDescription2=0);
@@ -375,6 +493,25 @@ public:
     void SetProgmemConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
                                      const char *InstallationDescription2=0);
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    bool IsTxPGN(unsigned long PGN, int iDev=0);
+    const tNMEA2000::tProductInformation * GetProductInformation(int iDev, bool &IsProgMem) const;
+    unsigned short GetN2kVersion(int iDev=0) const;
+    unsigned short GetProductCode(int iDev=0) const;
+    void GetModelID(char *buf, size_t max_len, int iDev=0) const;
+    void GetSwCode(char *buf, size_t max_len, int iDev=0) const;
+    void GetModelVersion(char *buf, size_t max_len, int iDev=0) const;
+    void GetModelSerialCode(char *buf, size_t max_len, int iDev=0) const;
+    unsigned char GetCertificationLevel(int iDev=0) const;
+    unsigned char GetLoadEquivalency(int iDev=0) const;
+    void SetInstallationDescription1(const char *InstallationDescription1);
+    void SetInstallationDescription2(const char *InstallationDescription2);
+    void GetInstallationDescription1(char *buf, size_t max_len);
+    void GetInstallationDescription2(char *buf, size_t max_len);
+    void GetManufacturerInformation(char *buf, size_t max_len);
+    bool ReadResetInstallationDescriptionChanged();
+#endif
 
     // Call these if you wish to override the default message packets supported.  Pointers must be in PROGMEM
     void SetSingleFrameMessages(const unsigned long *_SingleFrameMessages);
@@ -408,20 +545,12 @@ public:
                               );
     const tDeviceInformation GetDeviceInformation(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return tDeviceInformation(); return Devices[iDev].DeviceInformation; }
 
-    // ToDo:
-    // If your device has several functions, it should have own bus address for each.
-    // Note that there is also in class 25 function code 132, which e.g. Alba Combi uses and it sends several different
-    // type of data. So I am not sure yet how important it is to use own addresses.
-    // Returns Device index to be used on SendMsg. -1, if no more devices can be allocated.
-    //int AddDeviceFunction(unsigned char _DeviceFunction,
-    //                       unsigned char _DeviceClass,
-    //                       unsigned long _N2kSource=0xff
-    //                       );
-
     // Class handles automatically address claiming and tell to the bus about itself.
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
     bool SendProductInformation(int DeviceIndex=0);
     bool SendConfigurationInformation(int DeviceIndex=0);
+    void SendTxPGNList(unsigned char Destination, int DeviceIndex);
+    void SendRxPGNList(unsigned char Destination, int DeviceIndex);
 	
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
     // According to document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf
@@ -461,7 +590,9 @@ public:
     void ParseMessages();
 
     // Set the message handler for incoming N2kMessages.
-    void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Normal messages
+    void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Old style - callback function pointer
+    void AttachMsgHandler(tMsgHandler *_MsgHandler);
+    void DetachMsgHandler(tMsgHandler *_MsgHandler);
     void SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex));           // ISORequest messages
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     void AddGroupFunctionHandler(tN2kGroupFunctionHandler *pGroupFunctionHandler);
@@ -536,34 +667,46 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, uint64_t Name) {
 void SetN2kPGN126996(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
                      const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
-                     unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1);
+                     unsigned char CertificationLevel=1, unsigned char LoadEquivalency=1);
 
 inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, unsigned int ProductCode,
                      const char *ModelID, const char *SwCode,
                      const char *ModelVersion, const char *ModelSerialCode,
-                     unsigned char SertificationLevel=1, unsigned char LoadEquivalency=1) {
+                     unsigned char CertificationLevel=1, unsigned char LoadEquivalency=1) {
   SetN2kPGN126996(N2kMsg,N2kVersion,ProductCode,
                   ModelID,SwCode,ModelVersion,ModelSerialCode,
-                  SertificationLevel,LoadEquivalency);
+                  CertificationLevel,LoadEquivalency);
 }
+
+bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsigned short &ProductCode,
+                     int ModelIDSize, char *ModelID, int SwCodeSize, char *SwCode,
+                     int ModelVersionSize, char *, int ModelSerialCodeSize, char *ModelSerialCode,
+                     unsigned char &CertificationLevel, unsigned char &LoadEquivalency);
 
 //*****************************************************************************
 // Configuration information
 void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
-                     const char *InstallationDescription2=0);
+                     const char *InstallationDescription2=0,
+                     bool UsePgm=false);
 
 inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1=0,
-                     const char *InstallationDescription2=0) {
+                     const char *InstallationDescription2=0,
+                     bool UsePgm=false) {
   SetN2kPGN126998(N2kMsg,
                   ManufacturerInformation,
                   InstallationDescription1,
-                  InstallationDescription2);
+                  InstallationDescription2,
+                  UsePgm);
 }
 
+bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
+                       size_t &ManufacturerInformationSize, char *ManufacturerInformation,
+                       size_t &InstallationDescription1Size, char *InstallationDescription1,
+                       size_t &InstallationDescription2Size, char *InstallationDescription2);
 
 //*****************************************************************************
 // ISO request
