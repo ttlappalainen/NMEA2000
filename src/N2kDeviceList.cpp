@@ -22,6 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+#include <stdlib.h>
 #include "N2kDeviceList.h"
 
 //#define N2kDeviceList_HANDLE_IN_DEBUG 1

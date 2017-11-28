@@ -235,6 +235,15 @@ const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation = 
                                        DefInstallationDescription2
                                       };
 */
+
+void tNMEA2000::tProductInformation::Clear() {
+  memset(this,0,sizeof(tProductInformation));
+}
+
+bool tNMEA2000::tProductInformation::IsSame(const tProductInformation &Other) {
+  return memcmp(this,&Other,sizeof(tProductInformation))==0;
+}
+
 //*****************************************************************************
 void tNMEA2000::ClearCharBuf(size_t MaxLen, char *buf) {
   if ( buf==0 ) return;

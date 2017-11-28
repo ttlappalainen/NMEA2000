@@ -115,9 +115,9 @@ public:
         CertificationLevel=(_CertificationLevel!=0xff?_CertificationLevel:0);
         LoadEquivalency=(_LoadEquivalency!=0xff?_LoadEquivalency:1);
       }
-      
-      void Clear() { memset(this,0,sizeof(tProductInformation)); }
-      bool IsSame(const tProductInformation &Other) { return memcmp(this,&Other,sizeof(tProductInformation))==0; }
+
+      void Clear();
+      bool IsSame(const tProductInformation &Other);
   };
 
   class tDeviceInformation {
