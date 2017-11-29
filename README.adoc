@@ -62,6 +62,12 @@ support.
 
 
 == Changes ==
+29.11.2017
+
+- Added PGN 128000 Leeway to N2kMessages.h/.cpp
+
+- Fix: Spelling WaterRefereced -> WaterReferenced on N2kMessages.h/.cpp
+
 27.11.2017
 
 - Fix some build errors due to missing include statements (did not affect Arduino, only other platforms)

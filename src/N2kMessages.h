@@ -761,25 +761,45 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
 }
 
 //*****************************************************************************
+// Leeway
+// Input:
+//  - SID            Sequence ID field
+//  - Leeway         Nautical Leeway Angle, which is defined as the angle between the vessel’s heading (direction to which the
+//                   vessel’s bow points) and its course (direction of its motion (track) through the water)
+// Output:
+//  - N2kMsg         NMEA2000 message ready to be send.
+void SetN2kPGN128000(tN2kMsg &N2kMsg, unsigned char SID, double Leeway);
+
+inline void SetN2kLeeway(tN2kMsg &N2kMsg, unsigned char SID, double Leeway) {
+  SetN2kPGN128000(N2kMsg,SID,Leeway);
+}
+
+bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway);
+
+inline bool ParseN2kLeeway(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway) {
+  return ParseN2kPGN128000(N2kMsg, SID, Leeway);
+}
+
+//*****************************************************************************
 // Boat speed
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and wind at same time, you can set same SID for different messages
 //                          to indicate that they are measured at same time.
-//  - WaterRefereced        Speed over water in m/s
+//  - WaterReferenced        Speed over water in m/s
 //  - GroundReferenced      Ground referenced speed in m/s
 //  - SWRT                  Type of transducer. See definition for tN2kSpeedWaterReferenceType
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
 
-inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
-  SetN2kPGN128259(N2kMsg,SID,WaterRefereced,GroundReferenced,SWRT);
+inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
+  SetN2kPGN128259(N2kMsg,SID,WaterReferenced,GroundReferenced,SWRT);
 }
 
-bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT);
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterReferenced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT);
 
-inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
-  return ParseN2kPGN128259(N2kMsg, SID, WaterRefereced, GroundReferenced, SWRT);
+inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterReferenced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+  return ParseN2kPGN128259(N2kMsg, SID, WaterReferenced, GroundReferenced, SWRT);
 }
 
 //*****************************************************************************

@@ -524,25 +524,50 @@ bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBa
 }
 
 //*****************************************************************************
+// Leeway
+void SetN2kPGN128000(tN2kMsg &N2kMsg, unsigned char SID, double Leeway) {
+    N2kMsg.SetPGN(128000L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte(SID);
+    N2kMsg.Add2ByteDouble(Leeway,0.0001);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway) {
+  if (N2kMsg.PGN!=128000L) return false;
+
+  int Index=0;
+
+  SID=N2kMsg.GetByte(Index);
+  Leeway=N2kMsg.Get2ByteDouble(0.0001,Index);
+
+  return true;
+}
+
+//*****************************************************************************
 // Boat speed
-void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced, tN2kSpeedWaterReferenceType SWRT) {
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced, tN2kSpeedWaterReferenceType SWRT) {
     N2kMsg.SetPGN(128259L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteUDouble(WaterRefereced,0.01);
+    N2kMsg.Add2ByteUDouble(WaterReferenced,0.01);
     N2kMsg.Add2ByteUDouble(GroundReferenced,0.01);
     N2kMsg.AddByte(SWRT);
     N2kMsg.AddByte(0xff); // Reserved
     N2kMsg.AddByte(0xff); // Reserved
 }
 
-bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterReferenced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
   if (N2kMsg.PGN!=128259L) return false;
 
   int Index=0;
 
   SID=N2kMsg.GetByte(Index);
-  WaterRefereced=N2kMsg.Get2ByteUDouble(0.01,Index);
+  WaterReferenced=N2kMsg.Get2ByteUDouble(0.01,Index);
   GroundReferenced=N2kMsg.Get2ByteUDouble(0.01,Index);
   SWRT=(tN2kSpeedWaterReferenceType)(N2kMsg.GetByte(Index)&0x0F);
 
