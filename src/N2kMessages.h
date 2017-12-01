@@ -148,10 +148,18 @@ enum tN2kFluidType {
                           };
 
 enum tN2kWindReference {
+  // Details found on page 12 of https://www.rocktheboatmarinestereo.com/specs/MSNRX200I.pdf
+                            // Theoretical Wind (ground referenced, referenced to True North; calculated using COG/SOG)
                             N2kWind_True_North=0,
+                            // Theoretical Wind (ground referenced, referenced to Magnetic North; calculated using COG/SOG)
                             N2kWind_Magnetic=1,
+                            // Apparent Wind (relative to the vessel centerline)
+                            N2kWind_Apparent=2,
+                            // Deprecated - We had the typo in older version of the library
                             N2kWind_Apprent=2,
+                            // Theoretical (Calculated to Centerline of the vessel, referenced to ground; calculated using COG/SOG)
                             N2kWind_True_boat=3,
+                            // Theoretical (Calculated to Centerline of the vessel, referenced to water; calculated using Heading/Speed through Water)
                             N2kWind_True_water=4
                           };
 
