@@ -228,18 +228,13 @@ const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
 const char DefManufacturerInformation [] PROGMEM = "NMEA2000 library, https://github.com/ttlappalainen/NMEA2000";
 const char DefInstallationDescription1 [] PROGMEM = "";
 const char DefInstallationDescription2 [] PROGMEM = "";
-/*
-const tNMEA2000::tProgmemConfigurationInformation DefConfigurationInformation = {
-                                       DefManufacturerInformation,
-                                       DefInstallationDescription1,
-                                       DefInstallationDescription2
-                                      };
-*/
 
+//*****************************************************************************
 void tNMEA2000::tProductInformation::Clear() {
   memset(this,0,sizeof(tProductInformation));
 }
 
+//*****************************************************************************
 bool tNMEA2000::tProductInformation::IsSame(const tProductInformation &Other) {
   return memcmp(this,&Other,sizeof(tProductInformation))==0;
 }
@@ -1644,16 +1639,17 @@ void tNMEA2000::HandleISOAddressClaim(const tN2kMsg &N2kMsg) {
     if (Devices[iDev].DeviceInformation.GetName()<CallerName) { // We can keep our address, so just reclaim it
       SendIsoAddressClaim(0xff,iDev);
     } else { // we have to try an other address
-      if (Devices[iDev].DeviceInformation.GetName()==CallerName) {
+      if ( Devices[iDev].DeviceInformation.GetName()==CallerName && IsAddressClaimStarted(iDev) ) {
         // If the name is same, then the first instance will get claim and change its address.
         // This should not happen, if user takes care of setting unique ID for device information.
         // If he does not there is no problem with this class, but e.g. Garmin gets crazy.
         // Try to solve situation by changing our device instance.
         Devices[iDev].DeviceInformation.SetDeviceInstance(Devices[iDev].DeviceInformation.GetDeviceInstance()+1);
         DeviceInformationChanged=true;
+      } else {
+        GetNextAddress(iDev);
+        AddressChanged=true;
       }
-      GetNextAddress(iDev);
-      AddressChanged=true;
       StartAddressClaim(iDev);
     }
 }
@@ -1812,7 +1808,7 @@ void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
   // Loop through all pgn handlers
   for ( ;MsgHandler!=0 && MsgHandler->GetPGN()==0; MsgHandler=MsgHandler->pNext) MsgHandler->HandleMsg(N2kMsg); 
   // Loop through specific pgn handlers
-  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()>=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
+  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()<=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
     if ( MsgHandler->GetPGN()==N2kMsg.PGN ) MsgHandler->HandleMsg(N2kMsg); 
   }
 }
@@ -1834,9 +1830,14 @@ void tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler) {
     MsgHandlers=_MsgHandler;
   } else {
     tMsgHandler *MsgHandler=MsgHandlers;
-    for ( ; MsgHandler->pNext!=0 && MsgHandler->GetPGN()>_MsgHandler->GetPGN(); MsgHandler=MsgHandler->pNext );
-    _MsgHandler->pNext=MsgHandler->pNext;
-    MsgHandler->pNext=_MsgHandler;
+    if ( MsgHandler->GetPGN()>_MsgHandler->GetPGN() ) { // Add to first
+      _MsgHandler->pNext=MsgHandler;
+      MsgHandlers=_MsgHandler;
+    } else {
+      for ( ; MsgHandler->pNext!=0 && MsgHandler->pNext->GetPGN()<_MsgHandler->GetPGN(); MsgHandler=MsgHandler->pNext );
+      _MsgHandler->pNext=MsgHandler->pNext;
+      MsgHandler->pNext=_MsgHandler;
+    }
   }
   
   _MsgHandler->pNMEA2000=this;

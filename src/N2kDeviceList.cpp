@@ -25,7 +25,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include "N2kDeviceList.h"
 
-//#define N2kDeviceList_HANDLE_IN_DEBUG 1
+//#define N2kDeviceList_HANDLE_IN_DEBUG
 
 #if defined(N2kDeviceList_HANDLE_IN_DEBUG)
 #define DebugStream Serial
@@ -37,7 +37,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 //*****************************************************************************
-tN2kDeviceList::tN2kDeviceList(tNMEA2000 *_pNMEA2000) : tNMEA2000::tMsgHandler(0,_pNMEA2000) { 
+tN2kDeviceList::tN2kDeviceList(tNMEA2000 *_pNMEA2000) : tNMEA2000::tMsgHandler(0,_pNMEA2000) {
   for (uint8_t i=0; i<N2kMaxBusDevices; i++) Sources[i]=0;
   MaxDevices=0;
   ListUpdated=false;
@@ -47,25 +47,38 @@ tN2kDeviceList::tN2kDeviceList(tNMEA2000 *_pNMEA2000) : tNMEA2000::tMsgHandler(0
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceBySource(uint8_t Source) const {
   if ( Source>N2kMaxBusDevices ) return 0;
-  
+
   return Sources[Source];
 }
 
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceByName(uint64_t Name) const {
   tInternalDevice *result=0;
-  
+
     for (uint8_t i=0; i<MaxDevices && result==0; i++) {
       if ( Sources[i]!=0 && Sources[i]->IsSame(Name) ) result=Sources[i];
     }
-    
+
+    return result;
+}
+
+//*****************************************************************************
+tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceByIDs(uint16_t ManufacturerCode, uint32_t UniqueNumber) const {
+  tInternalDevice *result=0;
+
+    for (uint8_t i=0; i<MaxDevices && result==0; i++) {
+      if ( Sources[i]!=0 &&
+           Sources[i]->GetManufacturerCode()==ManufacturerCode &&
+           Sources[i]->GetUniqueNumber()==UniqueNumber ) result=Sources[i];
+    }
+
     return result;
 }
 
 //*****************************************************************************
 bool tN2kDeviceList::RequestProductInformation(uint8_t Source) {
   tN2kMsg N2kMsg;
-    
+
     SetN2kPGNISORequest(N2kMsg,Source,N2kPGNProductInformation);
     return GetNMEA2000()->SendMsg(N2kMsg);
 }
@@ -73,7 +86,7 @@ bool tN2kDeviceList::RequestProductInformation(uint8_t Source) {
 //*****************************************************************************
 bool tN2kDeviceList::RequestConfigurationInformation(uint8_t Source) {
   tN2kMsg N2kMsg;
-    
+
     SetN2kPGNISORequest(N2kMsg,Source,N2kPGNConfigurationInformation);
     return GetNMEA2000()->SendMsg(N2kMsg);
 }
@@ -81,7 +94,7 @@ bool tN2kDeviceList::RequestConfigurationInformation(uint8_t Source) {
 //*****************************************************************************
 bool tN2kDeviceList::RequestSupportedPGNList(uint8_t Source) {
   tN2kMsg N2kMsg;
-    
+
     SetN2kPGNISORequest(N2kMsg,Source,126464L);
     return GetNMEA2000()->SendMsg(N2kMsg);
 }
@@ -89,7 +102,7 @@ bool tN2kDeviceList::RequestSupportedPGNList(uint8_t Source) {
 //*****************************************************************************
 bool tN2kDeviceList::RequestIsoAddressClaim(uint8_t Source) {
   tN2kMsg N2kMsg;
-    
+
     SetN2kPGNISORequest(N2kMsg,Source,N2kPGNIsoAddressClaim);
     return GetNMEA2000()->SendMsg(N2kMsg);
 }
@@ -118,13 +131,13 @@ void tN2kDeviceList::HandleMsg(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
   if ( N2kMsg.Source>=N2kMaxBusDevices ) return;
-  
+
 //  N2kHandleInDbg(millis()); N2kHandleInDbg(" PGN: "); N2kHandleInDbgln(N2kMsg.PGN);
-  
+
   if ( !HasPendingRequests ) return;
-  
+
   HasPendingRequests=false;
-  
+
   // Require name for every device.
   if ( Sources[N2kMsg.Source]->ShouldRequestName() && RequestIsoAddressClaim(N2kMsg.Source) ) {
     Sources[N2kMsg.Source]->SetNameRequested();
@@ -166,7 +179,7 @@ void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
     }
   }
   if ( HasPendingRequests ) return;
-  
+
   // Finally query supported PGN lists
   for ( int i=0; i<MaxDevices; i++) {
     if ( Sources[i]!=0 ) {
@@ -183,7 +196,7 @@ void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
       }
     }
   }
-}  
+}
 
 //*****************************************************************************
 void tN2kDeviceList::AddDevice(uint8_t Source){
@@ -196,7 +209,7 @@ void tN2kDeviceList::AddDevice(uint8_t Source){
 //*****************************************************************************
 void tN2kDeviceList::SaveDevice(tInternalDevice *pDevice, uint8_t Source) {
   if ( Source>=N2kMaxBusDevices ) return;
-  
+
   pDevice->SetSource(Source);
   Sources[Source]=pDevice;
   if ( Source>=MaxDevices ) MaxDevices=Source+1;
@@ -205,20 +218,28 @@ void tN2kDeviceList::SaveDevice(tInternalDevice *pDevice, uint8_t Source) {
 //*****************************************************************************
 void tN2kDeviceList::HandleIsoAddressClaim(const tN2kMsg &N2kMsg) {
   if ( N2kMsg.PGN!=N2kPGNIsoAddressClaim ) return;
-  
+
   int Index=0;
   uint64_t CallerName=N2kMsg.GetUInt64(Index);
-  tInternalDevice *pDevice;
+  tInternalDevice *pDevice=0;
+
   // First check do we already have recorded caller
   if ( N2kMsg.Source<N2kMaxBusDevices && Sources[N2kMsg.Source]!=0 ) {
     pDevice=Sources[N2kMsg.Source];
     N2kHandleInDbg("ISO address claim. Caller:"); N2kHandleInDbg((uint32_t)CallerName); N2kHandleInDbg(", uniq:" ); N2kHandleInDbgln(pDevice->GetUniqueNumber());
-    if ( pDevice->GetName()==0 ) {
-      pDevice->SetDeviceInformation(CallerName); // Device reservation made by HandleMsg
-      ListUpdated=true;
-      N2kHandleInDbg("Saving name for source:"); N2kHandleInDbgln(N2kMsg.Source);
-    }
-    if (!pDevice->IsSame(CallerName) ) { // exists, but name does not match. So device on this source position has claimed address and this has taken its place
+    if ( pDevice->GetName()==0 ) {  // Device reservation made by HandleMsg, Name has not set yet
+      tInternalDevice *pDevice2=LocalFindDeviceByName(CallerName); // Find does this actually exist with other source
+      if ( pDevice2!=0 ) { // We have already seen that message on other address, so move it here
+        delete pDevice;
+        Sources[pDevice2->GetSource()]=0;
+        SaveDevice(pDevice2,N2kMsg.Source);
+        pDevice=pDevice2;
+      } else {
+        pDevice->SetDeviceInformation(CallerName);
+        ListUpdated=true;
+        N2kHandleInDbg("Saving name for source:"); N2kHandleInDbgln(N2kMsg.Source);
+      }
+    } else if (!pDevice->IsSame(CallerName) ) { // exists, but name does not match. So device on this source position has claimed address and this has taken its place
       // Just move old device to some empty place
       uint8_t i;
       for (i=0; i<N2kMaxBusDevices && Sources[i]!=0; i++);
@@ -227,28 +248,32 @@ void tN2kDeviceList::HandleIsoAddressClaim(const tN2kMsg &N2kMsg) {
         SaveDevice(pDevice,i);
         RequestIsoAddressClaim(0xff);  // Request addresses for all nodes.
       } else { // If not, we just delete device, since we can not do much with it. This would be extremely unexpected.
-        delete pDevice; 
+        delete pDevice;
       }
       Sources[N2kMsg.Source]=0;
-    } else { // We have device on list on its place.
+      pDevice=0;
+    } else { // Name is caller -> we have device on list on its place.
       return;
     }
-  } 
-  
-  // New or changed source
-  pDevice=LocalFindDeviceByName(CallerName);
-  if ( pDevice!=0 ) { // Address changed, simply move device to new place.
-    Sources[pDevice->GetSource()]=0;
-    SaveDevice(pDevice,N2kMsg.Source);
-  } else { // New device
-    pDevice=new tInternalDevice(CallerName);
-    SaveDevice(pDevice,N2kMsg.Source);
   }
-  
+
+  if ( pDevice==0 ) {
+    // New or changed source
+    pDevice=LocalFindDeviceByName(CallerName);
+    if ( pDevice!=0 ) { // Address changed, simply move device to new place.
+      Sources[pDevice->GetSource()]=0;
+      SaveDevice(pDevice,N2kMsg.Source);
+      N2kHandleInDbg("Source updated: "); N2kHandleInDbgln(pDevice->GetSource());
+    } else { // New device
+      pDevice=new tInternalDevice(CallerName);
+      SaveDevice(pDevice,N2kMsg.Source);
+    }
+  }
+
   // In any address change, we request information again.
   pDevice->ClearProductInformationLoaded();
   HasPendingRequests=true;
-  
+
   ListUpdated=true;
 }
 
@@ -256,13 +281,13 @@ void tN2kDeviceList::HandleIsoAddressClaim(const tN2kMsg &N2kMsg) {
 void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
   tNMEA2000::tProductInformation ProdI;
 //  unsigned long t1=micros();
-  
+
   if ( N2kMsg.Source>=N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
-  
+
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
 
   N2kHandleInDbg(" Handle product information for source: "); N2kHandleInDbgln(N2kMsg.Source);
-  
+
   if ( !pDevice->HasProductInformation() &&
        ParseN2kPGN126996(N2kMsg,ProdI.N2kVersion,ProdI.ProductCode,
                          sizeof(ProdI.N2kModelID),ProdI.N2kModelID,sizeof(ProdI.N2kSwCode),ProdI.N2kSwCode,
@@ -270,8 +295,8 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
                          ProdI.CertificationLevel,ProdI.LoadEquivalency) ) {
     if ( !pDevice->IsSameProductInformation(ProdI) ) {
       pDevice->SetProductInformation(ProdI.N2kModelSerialCode,ProdI.ProductCode,ProdI.N2kModelID,ProdI.N2kSwCode,ProdI.N2kModelVersion,
-                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.CertificationLevel);  
-      ListUpdated=true;                                     
+                                     ProdI.LoadEquivalency,ProdI.N2kVersion,ProdI.CertificationLevel);
+      ListUpdated=true;
     }
   }
 
@@ -282,18 +307,18 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
 
 //*****************************************************************************
 void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
-  
+
   if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
-  
+
 //  unsigned long t1=micros();
   size_t ManISize;
   size_t InstDesc1Size;
   size_t InstDesc2Size;
 
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
-  
+
   N2kHandleInDbg(" Handle configuration information for source: "); N2kHandleInDbgln(N2kMsg.Source);
-  
+
   if ( ParseN2kPGN126998(N2kMsg,ManISize,0,InstDesc1Size,0,InstDesc2Size,0) ) { // First query required size
     pDevice->InitConfigurationInformation(ManISize,InstDesc1Size,InstDesc2Size);
     int TotalSize=ManISize+InstDesc1Size+InstDesc2Size;
@@ -303,7 +328,7 @@ void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
                         InstDesc1Size,pDevice->GetInstallationDescription1(),
                         InstDesc2Size,pDevice->GetInstallationDescription2());
     }
-    ListUpdated=true;                                     
+    ListUpdated=true;
   }
 
 //  unsigned long t2=micros();
@@ -315,14 +340,14 @@ void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
 void tN2kDeviceList::HandleSupportedPGNList(const tN2kMsg &N2kMsg) {
 
   if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
-  
+
   int Index=0;
   tN2kPGNList N2kPGNList=(tN2kPGNList)N2kMsg.GetByte(Index);
   uint8_t PGNCount=(N2kMsg.DataLen-Index)/3;
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
   unsigned long * PGNList=0;
   uint8_t iPGN;
-  
+
   switch (N2kPGNList) {
     case N2kpgnl_transmit:
       PGNList=pDevice->InitTransmitPGNs(PGNCount);
@@ -335,19 +360,19 @@ void tN2kDeviceList::HandleSupportedPGNList(const tN2kMsg &N2kMsg) {
     for (iPGN=0; iPGN<PGNCount; iPGN++) { PGNList[iPGN]=N2kMsg.Get3ByteUInt(Index); }
     PGNList[iPGN]=0;
   }
-  
+
   ListUpdated=true;
 }
 
 // tN2kDeviceList
 
 //*****************************************************************************
-tN2kDeviceList::tInternalDevice::tInternalDevice(uint64_t _Name, uint8_t _Source) : tNMEA2000::tDevice(_Name,_Source) { 
-  ProdI.Clear(); ProdILoaded=false; ConfILoaded=false; 
-  ConfI=0; ConfISize=0; ManufacturerInformation=0; InstallationDescription1=0; InstallationDescription2=0; 
+tN2kDeviceList::tInternalDevice::tInternalDevice(uint64_t _Name, uint8_t _Source) : tNMEA2000::tDevice(_Name,_Source) {
+  ProdI.Clear(); ProdILoaded=false; ConfILoaded=false;
+  ConfI=0; ConfISize=0; ManufacturerInformation=0; InstallationDescription1=0; InstallationDescription2=0;
   TransmitPGNsSize=0; TransmitPGNs=0; ReceivePGNsSize=0; ReceivePGNs=0;
-  nNameRequested=0; 
-  ClearProductInformationLoaded(); 
+  nNameRequested=0;
+  ClearProductInformationLoaded();
   ClearConfigurationInformationLoaded();
   ClearPGNListLoaded();
 }
@@ -389,17 +414,17 @@ char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(size_t &_Ma
 }
 
 //*****************************************************************************
-unsigned long * tN2kDeviceList::tInternalDevice::InitTransmitPGNs(uint8_t count) { 
+unsigned long * tN2kDeviceList::tInternalDevice::InitTransmitPGNs(uint8_t count) {
   if (TransmitPGNs!=0 && TransmitPGNsSize<count ) { free(TransmitPGNs); TransmitPGNs=0; TransmitPGNsSize=0; } // Free old reservation
   if (TransmitPGNs==0) { TransmitPGNs=(unsigned long *)malloc((count+1)*sizeof(unsigned long)); TransmitPGNsSize=count; }
-  if (TransmitPGNs!=0) TransmitPGNs[0]=0; 
-  return TransmitPGNs; 
+  if (TransmitPGNs!=0) TransmitPGNs[0]=0;
+  return TransmitPGNs;
 }
 
 //*****************************************************************************
-unsigned long * tN2kDeviceList::tInternalDevice::InitReceivePGNs(uint8_t count) { 
+unsigned long * tN2kDeviceList::tInternalDevice::InitReceivePGNs(uint8_t count) {
   if (ReceivePGNs!=0 && ReceivePGNsSize<count ) { free(ReceivePGNs); ReceivePGNs=0; ReceivePGNsSize=0; } // Free old reservation
   if (ReceivePGNs==0) { ReceivePGNs=(unsigned long *)malloc((count+1)*sizeof(unsigned long)); ReceivePGNsSize=count; }
-  if (ReceivePGNs!=0) ReceivePGNs[0]=0; 
-  return ReceivePGNs; 
+  if (ReceivePGNs!=0) ReceivePGNs[0]=0;
+  return ReceivePGNs;
 }

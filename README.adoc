@@ -62,6 +62,22 @@ support.
 
 
 == Changes ==
+02.12.2017
+
+- Changes effect only use of tN2kDeviceList and AttachMsgHandler callbacks.
+
+- Added FindDeviceByIDs to tN2kDeviceList
+
+- Fix: Devicelist did not handle right, if device changed its address higher.
+
+- Fix: PNG message handler order problem on tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler);
+
+- Fix: If there was NMEA2000 library device with same name, they handshaked both addresses to null.
+  The problem still appears, if both devices will be started at same time. I need to add some
+  random start delay
+  
+- Cleaned spaces from end of lines on updated code.
+
 29.11.2017
 
 - Added PGN 128000 Leeway to N2kMessages.h/.cpp
