@@ -1,7 +1,7 @@
 /*
 N2kMsg.cpp
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -73,6 +73,9 @@ void tN2kMsg::Init(unsigned char _Priority, unsigned long _PGN, unsigned char _S
   SetPGN(_PGN);
   Source=_Source;
   Destination=_Destination;
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+  TPMessage=false;
+#endif
 }
 
 //*****************************************************************************

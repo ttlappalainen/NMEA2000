@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _N2kGroupFunction_H_
 #define _N2kGroupFunction_H_
 
+#include "NMEA2000_CompilerDefns.h"
 #include "N2kMsg.h"
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
 enum tN2kGroupFunctionCode {
                             N2kgfc_Request=0,
@@ -41,7 +44,7 @@ enum tN2kGroupFunctionCode {
 enum tN2kGroupFunctionPGNErrorCode {
                             N2kgfPGNec_Acknowledge=0,
                             N2kgfPGNec_PGNNotSupported=1,
-                            N2kgfPGNec_PGNTemporarilyAvailable=2,
+                            N2kgfPGNec_PGNTemporarilyNotAvailable=2,
                             N2kgfPGNec_AccessDenied=3,
                             N2kgfPGNec_RequestOrCommandNotSupported=4,
                             N2kgfPGNec_DefinerTagNotSupported=5,
@@ -171,6 +174,7 @@ class tN2kGroupFunctionHandler {
                                    
 };
                           
-                          
+#endif    
+    
 #endif
 

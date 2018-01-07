@@ -1,7 +1,7 @@
 /* 
 N2kMsg.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -91,7 +91,13 @@ public:
   int DataLen;
   unsigned char Data[MaxDataLen];
   unsigned long MsgTime;
-
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+protected:
+  bool TPMessage;
+public:
+  void SetIsTPMessage(bool tp=true) { TPMessage=tp; }
+  bool IsTPMessage() const { return TPMessage; }
+#endif
 public:
   tN2kMsg(unsigned char _Source=15);
   void SetPGN(unsigned long _PGN);

@@ -1,7 +1,7 @@
 /*
 NMEA2000.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -267,9 +267,18 @@ protected:
     unsigned long PendingProductInformation;
     unsigned long PendingConfigurationInformation;
     unsigned long AddressClaimStarted;
+    uint8_t AddressClaimEndSource;
     // Transmit and receive PGNs
     const unsigned long *TransmitMessages;
     const unsigned long *ReceiveMessages;
+    // Fast packet PGNs sequence counters
+    size_t MaxPGNSequenceCounters;
+    unsigned long *PGNSequenceCounters;
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+      tN2kMsg PendingTPMsg;
+      unsigned long NextDTSendTime; // Time, when next data packet can be send on TP broadcast
+      uint8_t NextDTSequence;
+#endif
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
     unsigned long HeartbeatInterval;
     unsigned long DefaultHeartbeatInterval;
@@ -281,8 +290,15 @@ protected:
     tInternalDevice() { 
       N2kSource=0;
       ProductInformation=0; LocalProductInformation=0; ManufacturerSerialCode=0;
-      PendingProductInformation=0; PendingConfigurationInformation=0; AddressClaimStarted=0;
+      PendingProductInformation=0; PendingConfigurationInformation=0; 
+      AddressClaimStarted=0; AddressClaimEndSource=N2kMaxCanBusAddress; //GetNextAddressFromBeginning=true;
       TransmitMessages=0; ReceiveMessages=0;
+      MaxPGNSequenceCounters=0; PGNSequenceCounters=0;
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+      NextDTSendTime=0;
+      NextDTSequence=0;
+#endif
+
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
       HeartbeatInterval=60000;
       DefaultHeartbeatInterval=60000;
@@ -296,6 +312,10 @@ protected:
     void SetPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
     void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
     bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
+    void UpdateAddressClaimEndSource() { 
+      AddressClaimEndSource=N2kSource; 
+      if ( AddressClaimEndSource>0 ) { AddressClaimEndSource--; } else { AddressClaimEndSource=N2kMaxCanBusAddress; }
+    }
   };
 
 protected:
@@ -386,8 +406,13 @@ protected:
 protected:
     void InitDevices();
     bool IsInitialized() { return (N2kCANMsgBuf!=0); } 
-    void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uint8_t &MsgIndex);
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, unsigned char Destination, bool TPMsg, uint8_t &MsgIndex);
+#else    
+    void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, unsigned char Destination, uint8_t &MsgIndex);
+#endif
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
+    bool IsFastPacketPGN(unsigned long PGN);
     bool IsFastPacket(const tN2kMsg &N2kMsg);
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
     bool HandleReceivedSystemMessage(int MsgIndex);
@@ -407,6 +432,8 @@ protected:
     void GetNextAddress(int DeviceIndex, bool RestartAtAnd=false);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
+    int GetSequenceCounter(unsigned long PGN, int iDev);
+    size_t GetFastPacketTxPGNCount(int iDev);
 
     bool ForwardEnabled() const { return ((ForwardMode&FwdModeBit_EnableForward)>0 && (N2kMode!=N2km_SendOnly)); }
     bool ForwardSystemMessages() const { return ((ForwardMode&FwdModeBit_SystemMessages)>0); }
@@ -423,16 +450,30 @@ protected:
     }
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
     bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
+    bool IsReadyToSend() const {
+      return ( (DeviceReady || dbMode!=dm_None) && 
+               (N2kMode!=N2km_ListenOnly) && 
+               (N2kMode!=N2km_SendOnly) && 
+               (N2kMode!=N2km_ListenAndSend) 
+             );
+    }
 
     
-#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)    
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     // Transport protocol handlers
     bool TestHandleTPMessage(unsigned long PGN, unsigned char Source, unsigned char Destination, 
                              unsigned char len, unsigned char *buf,
                              uint8_t &MsgIndex);
-    void SendTPCM_CTS(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char nPackets, unsigned char NextPacketNumber);
-    void SendTPCM_EndAck(unsigned long PGN, unsigned char Destination, unsigned char Source, uint16_t nBytes, unsigned char nPackets);
-    void SendTPCM_Abort(unsigned long PGN, unsigned char Destination, unsigned char Source, unsigned char AbortCode);
+    bool SendTPCM_BAM(int iDev);
+    bool SendTPCM_RTS(int iDev);
+    void SendTPCM_CTS(unsigned long PGN, unsigned char Destination, int iDev, unsigned char nPackets, unsigned char NextPacketNumber);
+    void SendTPCM_EndAck(unsigned long PGN, unsigned char Destination, int iDev, uint16_t nBytes, unsigned char nPackets);
+    void SendTPCM_Abort(unsigned long PGN, unsigned char Destination, int iDev, unsigned char AbortCode);
+    bool SendTPDT(int iDev);
+    bool HasAllTPDTSent(int iDev);
+    bool StartSendTPMessage(const tN2kMsg& msg, int iDev);
+    void EndSendTPMessage(int iDev);
+    void SendPendingTPMessages();
 #endif
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     void CopyProgmemConfigurationInformationToLocal();
@@ -547,10 +588,17 @@ public:
 
     // Class handles automatically address claiming and tell to the bus about itself.
     void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
-    bool SendProductInformation(int DeviceIndex=0);
-    bool SendConfigurationInformation(int DeviceIndex=0);
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    bool SendProductInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
+    bool SendConfigurationInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
+    void SendTxPGNList(unsigned char Destination, int DeviceIndex, bool UseTP=false);
+    void SendRxPGNList(unsigned char Destination, int DeviceIndex, bool UseTP=false);
+#else
     void SendTxPGNList(unsigned char Destination, int DeviceIndex);
     void SendRxPGNList(unsigned char Destination, int DeviceIndex);
+#endif
+    bool SendProductInformation(int DeviceIndex=0);
+    bool SendConfigurationInformation(int DeviceIndex=0);
 	
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
     // According to document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf
@@ -562,6 +610,8 @@ public:
     // Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found should changed value be saved
     // for next startup or not.
     unsigned long GetHeartbeatInterval(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 60000; return Devices[iDev].HeartbeatInterval; }
+    // Send heartbeat for specific device.
+    void SendHeartbeat(int iDev);
     // Library will automatically send heartbeat, if interval is >0. You can also manually send it any time or force sent, if interval=0;
     void SendHeartbeat(bool force=false);
 #endif

@@ -62,6 +62,26 @@ support.
 
 
 == Changes ==
+07.01.2018
+
+- Fix: Fast packet sequence counter must be related to PGN.
+
+- Fix: TP message priorities.
+
+- Fix: On SetDeviceInformationInstances we need to send ISO address claim, not start adress claim.
+
+- Fix: Do not respond any queries during address claim.
+
+- Fix: Fixed some messages default priority.
+
+- Fix: Responce to Complex Group Function requests.
+
+- Fix: Now compiles with different compiler definitions defined on NMEA2000_CompilerDefns.h
+
+- Added: Support for sending messages by using Transport Protocol. This is mandatory for NMEA 2000
+
+- Updated: License to 2018
+
 02.12.2017
 
 - Changes effect only use of tN2kDeviceList and AttachMsgHandler callbacks.
@@ -616,7 +636,7 @@ For use with Atmel AVR processors internal CAN controller
 
 == License ==
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

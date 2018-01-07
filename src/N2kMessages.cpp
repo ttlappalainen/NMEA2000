@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -552,7 +552,7 @@ bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway
 // Boat speed
 void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced, tN2kSpeedWaterReferenceType SWRT) {
     N2kMsg.SetPGN(128259L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteUDouble(WaterReferenced,0.01);
     N2kMsg.Add2ByteUDouble(GroundReferenced,0.01);
@@ -578,7 +578,7 @@ bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterR
 // Water depth
 void SetN2kPGN128267(tN2kMsg &N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset, double Range) {
     N2kMsg.SetPGN(128267L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.Add4ByteUDouble(DepthBelowTransducer,0.01);
     N2kMsg.Add2ByteDouble(Offset,0.001);
@@ -1209,7 +1209,7 @@ bool ParseN2kPGN130306(const tN2kMsg &N2kMsg, unsigned char &SID, double &WindSp
 void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
                      double OutsideAmbientAirTemperature, double AtmosphericPressure) {
     N2kMsg.SetPGN(130310L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=5;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteUDouble(WaterTemperature,0.01);
     N2kMsg.Add2ByteUDouble(OutsideAmbientAirTemperature,0.01);
@@ -1235,7 +1235,7 @@ bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterT
 void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSource, double Temperature,
                      tN2kHumiditySource HumiditySource, double Humidity, double AtmosphericPressure) {
     N2kMsg.SetPGN(130311L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=5;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(((HumiditySource) & 0x03)<<6 | (TempSource & 0x3f));
     N2kMsg.Add2ByteUDouble(Temperature,0.01);
@@ -1263,7 +1263,7 @@ bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource
 void SetN2kPGN130312(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
                      double ActualTemperature, double SetTemperature) {
     N2kMsg.SetPGN(130312L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=5;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((unsigned char)TempInstance);
     N2kMsg.AddByte((unsigned char)TempSource);
@@ -1291,7 +1291,7 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
                      tN2kHumiditySource HumiditySource, double ActualHumidity) {
   N2kMsg.SetPGN(130313L);
-  N2kMsg.Priority = 6;
+  N2kMsg.Priority = 5;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) HumidityInstance);
   N2kMsg.AddByte((unsigned char) HumiditySource);
@@ -1316,7 +1316,7 @@ bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
                      tN2kPressureSource PressureSource, double ActualPressure) {
   N2kMsg.SetPGN(130314L);
-  N2kMsg.Priority = 6;
+  N2kMsg.Priority = 5;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) PressureInstance);
   N2kMsg.AddByte((unsigned char) PressureSource);
@@ -1355,7 +1355,7 @@ void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureI
 void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
                      double ActualTemperature, double SetTemperature) {
     N2kMsg.SetPGN(130316L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=5;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((unsigned char)TempInstance);
     N2kMsg.AddByte((unsigned char)TempSource);

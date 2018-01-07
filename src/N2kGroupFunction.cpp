@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.cpp
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -21,10 +21,10 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-
 #include "N2kGroupFunction.h"
 #include "NMEA2000.h"
 
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
 //*****************************************************************************
 tN2kGroupFunctionHandler::tN2kGroupFunctionHandler(tNMEA2000 *_pNMEA2000, unsigned long _PGN)  {
@@ -111,34 +111,47 @@ tN2kGroupFunctionTransmissionOrPriorityErrorCode tN2kGroupFunctionHandler::GetRe
 
 //*****************************************************************************
 bool tN2kGroupFunctionHandler::HandleRequest(const tN2kMsg &N2kMsg, 
-                               uint32_t /*TransmissionInterval*/, 
+                               uint32_t TransmissionInterval, 
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
   
     // As default we respond with not supported.
     bool IsTxPGN=pNMEA2000->IsTxPGN(GetPGNForGroupFunction(N2kMsg),iDev);
-    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_RequestOrCommandNotSupported:N2kgfPGNec_PGNNotSupported);
-    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
+    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_PGNTemporarilyNotAvailable:N2kgfPGNec_PGNNotSupported);
     tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
     
-    SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
-                    PGNec,
-                    TORec,
-                    NumberOfParameterPairs, PARec);
+    if ( PGNec==N2kgfPGNec_PGNNotSupported ) TORec=N2kgfTPec_Acknowledge; // Allways acknoledge for unknown PGN.
+    if ( PGNec==N2kgfPGNec_PGNTemporarilyNotAvailable ) {
+      if ( TORec==N2kgfTPec_TransmitIntervalOrPriorityNotSupported ) { // Acknowledge PGN for known PGN but for invalid priority
+        PGNec=N2kgfPGNec_Acknowledge;
+      } else {
+        TORec=N2kgfTPec_Acknowledge; //N2kgfTPec_RequestNotSupported;
+      }
+    }
+    
+    if ( !tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
+      SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
+                      PGNec,
+                      TORec,
+                      NumberOfParameterPairs, PARec);
+    }
                     
     return true;  
 }
 
 //*****************************************************************************
-bool tN2kGroupFunctionHandler::HandleCommand(const tN2kMsg &N2kMsg, uint8_t /*PrioritySetting*/, uint8_t  NumberOfParameterPairs, int iDev) {
+bool tN2kGroupFunctionHandler::HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t  NumberOfParameterPairs, int iDev) {
 
     // As default we respond with not supported.
     bool IsTxPGN=pNMEA2000->IsTxPGN(GetPGNForGroupFunction(N2kMsg),iDev);
-    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_RequestOrCommandNotSupported:N2kgfPGNec_PGNNotSupported);
+    tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_Acknowledge:N2kgfPGNec_PGNNotSupported);
     tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
     tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
 
+		if (PrioritySetting != 0x08 || PrioritySetting != 0x0f || PrioritySetting != 0x09) TORec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+    
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
                     PGNec,
                     TORec,
@@ -350,3 +363,5 @@ void tN2kGroupFunctionHandler::SendAcknowledge(tNMEA2000 *pNMEA2000, unsigned ch
     }
     pNMEA2000->SendMsg(N2kRMsg,iDev);
 }
+
+#endif

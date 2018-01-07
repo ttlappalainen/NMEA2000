@@ -1,7 +1,7 @@
 /* 
 N2kCANMsg.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,11 @@ class tN2kCANMsg
 {
 public:
   tN2kCANMsg()
-  : Ready(false),FreeMsg(true),SystemMessage(false), KnownMessage(false), TPRequireCTS(false), TPMaxPackets(0) {
+    : Ready(false),FreeMsg(true),SystemMessage(false), KnownMessage(false) 
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+      ,TPRequireCTS(false), TPMaxPackets(0) 
+#endif
+    {
 	  N2kMsg.Clear();
   }
   tN2kMsg N2kMsg;
@@ -45,7 +49,13 @@ public:
   unsigned char CopiedLen;
   
 public:
-  void FreeMessage() {FreeMsg=true; Ready=false; SystemMessage=false; TPMaxPackets=0; TPRequireCTS=false; N2kMsg.Clear(); N2kMsg.Source=0; }  
+  void FreeMessage() { 
+    FreeMsg=true; Ready=false; SystemMessage=false; 
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    TPMaxPackets=0; TPRequireCTS=false; 
+#endif
+    N2kMsg.Clear(); N2kMsg.Source=0; 
+  }  
 };
 
 #endif

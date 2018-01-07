@@ -1,7 +1,7 @@
 /*
 N2kGroupFunctionDefaultHandlers.cpp
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -254,8 +254,15 @@ bool tN2kGroupFunctionHandlerForPGN126464::HandleRequest(const tN2kMsg &N2kMsg,
   }
   
   if (MatchFilter) {
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    unsigned char dest=N2kMsg.Source;
+    if ( N2kMsg.IsTPMessage() && tNMEA2000::IsBroadcast(N2kMsg.Destination) ) dest=N2kMsg.Destination;
+    if ( (RespondTxRx==N2kpgnl_transmit) || (RespondTxRx==0xff) ) pNMEA2000->SendTxPGNList(dest,iDev,N2kMsg.IsTPMessage());
+    if ( (RespondTxRx==N2kpgnl_receive) || (RespondTxRx==0xff) ) pNMEA2000->SendRxPGNList(dest,iDev,N2kMsg.IsTPMessage());
+#else
     if ( (RespondTxRx==N2kpgnl_transmit) || (RespondTxRx==0xff) ) pNMEA2000->SendTxPGNList(N2kMsg.Source,iDev);
     if ( (RespondTxRx==N2kpgnl_receive) || (RespondTxRx==0xff) ) pNMEA2000->SendRxPGNList(N2kMsg.Source,iDev);
+#endif  
   }
   
   return true;
@@ -357,7 +364,13 @@ bool tN2kGroupFunctionHandlerForPGN126996::HandleRequest(const tN2kMsg &N2kMsg,
   }
   
   if (MatchFilter) {
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    unsigned char dest=N2kMsg.Source;
+    if ( N2kMsg.IsTPMessage() && tNMEA2000::IsBroadcast(N2kMsg.Destination) ) dest=N2kMsg.Destination;
+    pNMEA2000->SendProductInformation(dest,iDev,N2kMsg.IsTPMessage());
+#else
     pNMEA2000->SendProductInformation(iDev);
+#endif  
   }
   
   return true;
@@ -441,7 +454,13 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleRequest(const tN2kMsg &N2kMsg,
   }
     
   if (MatchFilter) {
+#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+    unsigned char dest=N2kMsg.Source;
+    if ( N2kMsg.IsTPMessage() && tNMEA2000::IsBroadcast(N2kMsg.Destination) ) dest=N2kMsg.Destination;
+    pNMEA2000->SendConfigurationInformation(dest,iDev,N2kMsg.IsTPMessage());
+#else
     pNMEA2000->SendConfigurationInformation(iDev);
+#endif  
   }
   
   return true;
@@ -458,12 +477,13 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, 
   tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=N2kgfTPec_Acknowledge;
   tN2kMsg N2kRMsg;
   
+ 		if (PrioritySetting != 0x08 || PrioritySetting != 0x0f || PrioritySetting != 0x09) pec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+
     SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
                         N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?
                         pec,
                         NumberOfParameterPairs);
                         
-    if (PrioritySetting!=8) pec=N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
     StartParseCommandPairParameters(N2kMsg,Index);
     // Next read new field values
     for (i=0; i<NumberOfParameterPairs; i++) {
@@ -500,17 +520,26 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
                                uint16_t /*TransmissionIntervalOffset*/, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
+	tN2kGroupFunctionTransmissionOrPriorityErrorCode pec = GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+	if (TransmissionInterval > 1000 && TransmissionInterval < 120000) pec = N2kgfTPec_Acknowledge;
   if ( NumberOfParameterPairs==0 ) { // According to doc, there should not be any parameter pairs defined
-    pNMEA2000->SetHeartbeatInterval(TransmissionInterval,false,iDev);
-    SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,PGN,N2kgfPGNec_Acknowledge,N2kgfTPec_Acknowledge);
-    return true;
+    if ( pec==N2kgfTPec_Acknowledge ) {
+      pNMEA2000->SetHeartbeatInterval(TransmissionInterval,false,iDev);
+      pNMEA2000->SendHeartbeat(iDev);
+    } else {
+			if (!tNMEA2000::IsBroadcast(N2kMsg.Destination)) {
+				SendAcknowledge(pNMEA2000, N2kMsg.Source, iDev, PGN, N2kgfPGNec_Acknowledge, pec);
+			}
+    }
   } else {
-    SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,PGN,
-                    N2kgfPGNec_Acknowledge,
-                    N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
-                    NumberOfParameterPairs, N2kgfpec_RequestOrCommandNotSupported);
-    return true;
+    if ( !tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
+      SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,PGN,
+                      N2kgfPGNec_Acknowledge,
+                      N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
+                      NumberOfParameterPairs, N2kgfpec_RequestOrCommandNotSupported);
+    }
   }
+  return true;
 }
 #endif
 
