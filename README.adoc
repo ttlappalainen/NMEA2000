@@ -578,7 +578,9 @@ ready,
 
 So you are ready to play with your own device. Check also the
 `NMEA2000\Examples\ActisenseListener`, which reads all data from NEMA2000 bus and
-sends it to PC.
+sends it to PC. `NMEA2000/Examples/ArduinoGateway` allows you to mimic Actisense
+NGT-1 and connect e.g. a Raspberry Pi running Signal-K to the NMEA2000 bus with
+an Arduino or Teensy.
 
 == Using Arduino Software older than 1.6.6 ==
 
