@@ -931,7 +931,7 @@ bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& Distan
     if(N2kMsg.PGN != 129284L)
       return false;
 
-    int Index;
+    int Index=0;
     unsigned char c;
     SID = N2kMsg.GetByte(Index);
     DistanceToWaypoint = N2kMsg.Get4ByteUDouble(0.01, Index);
