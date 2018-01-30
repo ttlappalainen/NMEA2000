@@ -1428,15 +1428,15 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
 
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN130576(tN2kMsg &N2kMsg, unsigned char PortTrimTab, unsigned char StbdTrimTab);
+void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab);
 
-inline void SetN2kTrimTab(tN2kMsg &N2kMsg, unsigned char PortTrimTab, unsigned char StbdTrimTab){
+inline void SetN2kTrimTab(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab){
                      
   SetN2kPGN130576(N2kMsg,PortTrimTab, StbdTrimTab);
 }
 
-bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, unsigned char &PortTrimTab, unsigned char &StbdTrimTab);
-inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, unsigned char &PortTrimTab, unsigned char &StbdTrimTab) {
+bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab);
+inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
   return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
 }
 

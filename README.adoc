@@ -62,6 +62,9 @@ support.
 
 
 == Changes ==
+29.01.2018
+- Added PGN130576 Small Craft Status / Trim Tab Position definition.
+
 15.01.2018
 
 - Fix: ParseN2kPGN129284, Index was not initialized to 0, which caused unpredictable read.
