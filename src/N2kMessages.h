@@ -1418,4 +1418,29 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
   return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
 
+
+//*****************************************************************************
+// Small Craft Status (Trim Tab Position)
+// Trim tab position is a percentage 0 to 100% where 0 is fully retracted and 100 is fully extended
+// Input:
+//  - PortTrimTab           Port trim tab position
+//  - StbdTrimTab           Starboard trim tab position
+
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab);
+
+inline void SetN2kTrimTab(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab){
+                     
+  SetN2kPGN130576(N2kMsg,PortTrimTab, StbdTrimTab);
+}
+
+bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab);
+inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
+  return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
+}
+
+
+
+
 #endif

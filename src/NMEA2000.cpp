@@ -185,6 +185,7 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 130312L: // Temperature
                                       case 130314L: // Pressure
                                       case 130316L: // Temperature extended range
+                                      case 130576L: // Small Craft Status (Trim Tab position)
                                       return true;
                                   }
                                   return false;
