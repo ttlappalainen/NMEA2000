@@ -63,7 +63,7 @@ support.
 
 == Changes ==
 29.01.2018
-- Added PGN130576 Small Craft Status / Trim Tab Position definition.
+- Added: PGN130576 Small Craft Status / Trim Tab Position definition by Nicholas Agro
 
 15.01.2018
 

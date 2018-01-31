@@ -1384,7 +1384,7 @@ void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab) {
     N2kMsg.Priority=6;
     N2kMsg.AddByte(PortTrimTab);
     N2kMsg.AddByte(StbdTrimTab);
-    N2kMsg.Add2ByteUInt(0xffff); N2kMsg.Add4ByteUInt(0xffffffff);// Reserved. Using 6 bytes as shown in messages from Garmin GBT10
+    N2kMsg.AddByte(0xFF);;// Reserved.
 }
 
 bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {

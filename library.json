@@ -9,12 +9,12 @@
   },
   "authors":
   {
-    "name": "Timo Lappalainen,Nicholas Agro",
+    "name": "Timo Lappalainen",
     "email": " ",
     "url": "Kave Oy <www.kave.fi>",
     "maintainer": true
   },
-  "version": "4.4.1",
+  "version": "4.4.2",
   "license": "MIT",
   "frameworks": "*",
   "platforms": "*"
