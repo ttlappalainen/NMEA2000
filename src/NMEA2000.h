@@ -341,7 +341,6 @@ protected:
     // Device information
     tInternalDevice *Devices;
     int DeviceCount;
-//    unsigned long N2kSource[Max_N2kDevices];
 
     // Configuration information
     char *LocalConfigurationInformationData;
@@ -620,7 +619,11 @@ public:
     // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure.
     // You have to call ParseMessages() periodically to handle these procedures.
     // If you know your system, define source something other address you allready have on your bus.
-    void SetMode(tN2kMode _N2kMode, unsigned long _N2kSource=15);
+    void SetMode(tN2kMode _N2kMode);
+
+    // Kept for backward compatibility. Will SetN2kSource on all devices, starting
+    // with _Addr and then incrementally.
+    void SetMode(tN2kMode _N2kMode, unsigned char _Addr);
 
     // Set type how messages will be forwarded in listen mode. Defult is fwdt_Actisense
     void SetForwardType(tForwardType fwdType) { ForwardType=fwdType; }
@@ -649,7 +652,8 @@ public:
 #endif
     // Read address for current device.
     // Multidevice support is under construction.
-    unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return Devices[DeviceIndex].N2kSource; return Devices[0].N2kSource; }
+    unsigned char GetN2kSource(int _iDev=0) const { return Devices[IsValidDevice(_iDev) ? _iDev : 0].N2kSource; }
+    void SetN2kSource(unsigned char _iAddr, int _iDev=0);
 
     // You can check has this device changed its address. If yes, it is mandatory to
     // save changed address to e.g. EEPROM and use that on next start.

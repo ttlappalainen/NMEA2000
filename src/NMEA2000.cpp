@@ -330,6 +330,7 @@ void tNMEA2000::InitDevices() {
     Devices[0].LocalProductInformation=0;
     Devices[0].ProductInformation=&DefProductInformation;
     for ( int i=0; i<DeviceCount; i++) { // Initialize all devices with some value
+      Devices[i].N2kSource = 15 + i; // aribitrary but sensible default source addresses
       SetDeviceInformation(1+i, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
                            130, // PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
                            25, // Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
@@ -786,14 +787,25 @@ void tNMEA2000::ExtendReceiveMessages(const unsigned long *_Messages, int iDev) 
 }
 
 //*****************************************************************************
-void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
+void tNMEA2000::SetMode(tN2kMode _N2kMode) {
   InitDevices();
   N2kMode=_N2kMode;
-  for (int i=0; i<DeviceCount; i++) {
-    Devices[i].N2kSource=_N2kSource+i;
-    Devices[i].UpdateAddressClaimEndSource();
+}
+
+void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned char _Addr) {
+  SetMode(_N2kMode);
+  for (int i = 0; i < DeviceCount; ++i) {
+    SetN2kSource(_Addr + i, i);
   }
-  AddressChanged=false;
+}
+
+void tNMEA2000::SetN2kSource(unsigned char _iAddr, int _iDev) {
+  if ( !IsValidDevice(_iDev) ) return;
+  bool addressChangedSaved = AddressChanged;
+  InitDevices();
+  Devices[_iDev].N2kSource= _iAddr;
+  Devices[_iDev].UpdateAddressClaimEndSource();
+  AddressChanged=addressChangedSaved;
 }
 
 //*****************************************************************************
@@ -1988,7 +2000,6 @@ void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 bool tNMEA2000::ReadResetAddressChanged() {
   bool result=AddressChanged;
-
   AddressChanged=false;
   return result;
 }
