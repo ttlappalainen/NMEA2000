@@ -1,7 +1,7 @@
 /*
 N2kMessagesEnumToStr.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -94,5 +94,7 @@ MakeN2kEnumTypeToStrFunc(tN2kPressureSource,tN2kPressureStrs)
 const char* tN2kRudderDirectionOrderStrs[] = { "no direction order", "move to starboard", "move to port" };
 MakeN2kEnumTypeToStrFunc(tN2kRudderDirectionOrder,tN2kRudderDirectionOrderStrs)
 
+const char* tN2kSpeedWaterReferenceTypeStrs[] = {"Paddle wheel","Pitot tube","Doppler","Correlation (ultra sound)","Electro Magnetic"};
+MakeN2kEnumTypeToStrFunc(tN2kSpeedWaterReferenceType,tN2kSpeedWaterReferenceTypeStrs);
 
 #endif

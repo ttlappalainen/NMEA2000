@@ -1,7 +1,7 @@
 /*
 ActisenseReader.cpp
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -28,6 +28,7 @@ This is class for reading Actisense format messages from given stream.
 
 //*****************************************************************************
 tActisenseReader::tActisenseReader() {
+  DefaultSource=65;
   ReadStream=0;
   ClearBuffer();
 }
@@ -54,7 +55,8 @@ bool tActisenseReader::AddByteToBuffer(char NewByte) {
 #define Escape 0x10
 #define StartOfText 0x02
 #define EndOfText 0x03
-#define MsgTypeN2k 0x93
+#define MsgTypeN2kData 0x93
+#define MsgTypeN2kRequest 0x94
 
 //*****************************************************************************
 bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
@@ -69,18 +71,26 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
    if ( CheckSum!=MsgBuf[MsgWritePos-1] ) {
      return false; // Checksum does not match
    }
-   if (MsgBuf[12]>tN2kMsg::MaxDataLen) {
+
+   int i=2;
+   N2kMsg.Priority=MsgBuf[i++];
+   N2kMsg.PGN=GetBuf3ByteUInt(i,MsgBuf);
+   N2kMsg.Destination=MsgBuf[i++];
+   if ( MsgBuf[0]==MsgTypeN2kData ) {
+     N2kMsg.Source=MsgBuf[i++];
+     N2kMsg.MsgTime=GetBuf4ByteUInt(i,MsgBuf);
+   } else {
+     N2kMsg.Source=DefaultSource;
+     N2kMsg.MsgTime=millis();
+   }
+   N2kMsg.DataLen=MsgBuf[i++];
+
+   if ( N2kMsg.DataLen>tN2kMsg::MaxDataLen ) {
+     N2kMsg.Clear();
      return false; // Too long data
    }
 
-   N2kMsg.Priority=MsgBuf[2];
-   N2kMsg.PGN=(unsigned long)(MsgBuf[3]) | (unsigned long)(MsgBuf[4])<<8  | (unsigned long)(MsgBuf[5])<<16;
-   N2kMsg.Destination=MsgBuf[6];
-   N2kMsg.Source=MsgBuf[7];
-   // N2kMsg.MsgTime=*((unsigned long *)(&(MsgBuf[8])));  // this causes warning: dereferencing type-punned pointer will break strict-aliasing rules
-   memcpy(&(N2kMsg.MsgTime), &(MsgBuf[8]), 4);
-   N2kMsg.DataLen=MsgBuf[12];
-   for (int i=13, j=0; i<MsgWritePos-1; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
+   for (int j=0; i<MsgWritePos-1; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
 
    return true;
 }
@@ -89,6 +99,8 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
 // Read Actisense formatted NMEA2000 message from stream
 // Actisense Format:
 // <10><02><93><length (1)><priority (1)><PGN (3)><destination (1)><source (1)><time (4)><len (1)><data (len)><CRC (1)><10><03>
+// or
+// <10><02><94><length (1)><priority (1)><PGN (3)><destination (1)><len (1)><data (len)><CRC (1)><10><03>
 bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg) {
   bool result=false;
 
@@ -107,7 +119,8 @@ bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg) {
               break;
             case EndOfText: // Message ready
               switch (MsgBuf[0]) {
-                case MsgTypeN2k:
+                case MsgTypeN2kData:
+                case MsgTypeN2kRequest:
                   result=CheckMessage(N2kMsg);
                   break;
                 default:

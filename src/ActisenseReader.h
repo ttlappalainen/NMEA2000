@@ -1,7 +1,7 @@
 /*
 ActisenseReader.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -44,6 +44,7 @@ protected:
     // Buffer for incoming messages from stream
     unsigned char MsgBuf[MAX_STREAM_MSG_BUF_LEN];
     int MsgWritePos;
+    unsigned char DefaultSource;
 
 protected:
     N2kStream* ReadStream;
@@ -61,6 +62,10 @@ public:
     // open stream first, so e.g. for SerialUSB call begin first.
     void SetReadStream(N2kStream* _stream) { ReadStream=_stream; }
 
+    // If you use application, which sends data by using Actisense data request type, source
+    // set by this function will be set as source. Default=65;
+    void SetDefaultSource(unsigned char source) { DefaultSource=source; }
+    
     // You can either call this or ParseMessages periodically.
     bool GetMessageFromStream(tN2kMsg &N2kMsg);
 

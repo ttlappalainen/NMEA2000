@@ -1,10 +1,7 @@
-// Demo: NMEA2000 library. Bus listener and sender. 
+// Demo: NMEA2000 library. Actisense NGT-1 compatible gateway. 
 //   Sends all bus data to serial in Actisense format.
-//   Send all data received from serial in Actisense format to the N2kBus.
-//   Use this e.g. with NMEA Simulator (see. http://www.kave.fi/Apps/index.html) to send simulated data to the bus.
-//   I have plans to add receiving functionality and data forwarding to NMEA Simulator. Meanwhile you can define
-//   other stream to different port so that you can send data with NMEA Simulator and listen it on other port with 
-//   Actisense NMEA Reader.
+//   Send all data received from serial in Actisense format to the N2kBus, setting
+//   data source to the gateway itself.
 
 #define N2k_CAN_INT_PIN 21
 #include <Arduino.h>
@@ -27,14 +24,24 @@ void setup() {
   // Define buffers big enough
   NMEA2000.SetN2kCANSendFrameBufSize(150);
   NMEA2000.SetN2kCANReceiveFrameBufSize(150);
+  NMEA2000.SetProductInformation("00000001", // Manufacturer's Model serial code
+                                 100, // Manufacturer's product code
+                                 "Arduino Gateway",  // Manufacturer's Model ID
+                                 "1.0.0.2 (2018-01-10)",  // Manufacturer's Software version code
+                                 "1.0.0.0 (2017-01-06)" // Manufacturer's Model version
+                                 );
+  NMEA2000.SetDeviceInformation(1, // Unique number. Use e.g. Serial number.
+                                130, // Device function=Analog to NMEA 2000 Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                                25, // Device class=Inter/Intranetwork Device. See codes on  http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                                2046 // Just choosen free from code list on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf                               
+                               );
   
   if (ReadStream!=ForwardStream) READ_STREAM.begin(115200);
   FORWARD_STREAM.begin(115200);
   NMEA2000.SetForwardStream(ForwardStream); 
-  NMEA2000.SetMode(tNMEA2000::N2km_ListenAndSend);
+  NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode);
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show bus data in clear text
   if (ReadStream==ForwardStream) NMEA2000.SetForwardOwnMessages(false); // If streams are same, do not echo own messages.
-  // NMEA2000.EnableForward(false);
   NMEA2000.Open();
 
   // I originally had problem to use same Serial stream for reading and sending.
@@ -46,7 +53,7 @@ void setup() {
 
 void HandleStreamN2kMsg(const tN2kMsg &N2kMsg) {
   // N2kMsg.Print(&Serial);
-  NMEA2000.SendMsg(N2kMsg,-1);
+  NMEA2000.SendMsg(N2kMsg);
 }
 
 void loop() {

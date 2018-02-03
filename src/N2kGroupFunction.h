@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _N2kGroupFunction_H_
 #define _N2kGroupFunction_H_
 
+#include "NMEA2000_CompilerDefns.h"
 #include "N2kMsg.h"
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
 enum tN2kGroupFunctionCode {
                             N2kgfc_Request=0,
@@ -41,7 +44,7 @@ enum tN2kGroupFunctionCode {
 enum tN2kGroupFunctionPGNErrorCode {
                             N2kgfPGNec_Acknowledge=0,
                             N2kgfPGNec_PGNNotSupported=1,
-                            N2kgfPGNec_PGNTemporarilyAvailable=2,
+                            N2kgfPGNec_PGNTemporarilyNotAvailable=2,
                             N2kgfPGNec_AccessDenied=3,
                             N2kgfPGNec_RequestOrCommandNotSupported=4,
                             N2kgfPGNec_DefinerTagNotSupported=5,
@@ -78,6 +81,10 @@ class tN2kGroupFunctionHandler {
     tNMEA2000 *pNMEA2000;
     
   protected:
+    // This is default handler for Complex Request transmission interval setting. Overwrite it, if your PGN will support
+    // changing interval.
+    virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval);
+    
     virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
                                uint32_t TransmissionInterval, 
                                uint16_t TransmissionIntervalOffset, 
@@ -144,22 +151,30 @@ class tN2kGroupFunctionHandler {
                                tN2kGroupFunctionTransmissionOrPriorityErrorCode &TransmissionOrPriorityErrorCode,
                                uint8_t &NumberOfParameterPairs);
 
-    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned long PGN, 
-                                         tN2kGroupFunctionPGNErrorCode PGNErrorCode=N2kgfPGNec_Acknowledge,
-                                         tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode=N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
+    static bool ParseReadOrWriteParams(const tN2kMsg &N2kMsg, 
+                               uint16_t &ManufacturerCode,
+                               uint8_t &IndustryGroup,
+                               uint8_t &UniqueID,
+                               uint8_t &NumberOfSelectionPairs,
+                               uint8_t &NumberOfParameterPairs);
+
+    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN, 
+                                         tN2kGroupFunctionPGNErrorCode PGNErrorCode,
+                                         tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs=0);
     static void AddAcknowledgeParameter(tN2kMsg &N2kMsg, 
                                          uint8_t ParameterPairIndex, 
                                          tN2kGroupFunctionParameterErrorCode ErrorCode=N2kgfpec_ReadOrWriteIsNotSupported);
 
     static void SendAcknowledge(tNMEA2000 *pNMEA2000, unsigned char Destination, int iDev, unsigned long PGN, 
-                                         tN2kGroupFunctionPGNErrorCode PGNErrorCode=N2kgfPGNec_Acknowledge,
-                                         tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode=N2kgfTPec_TransmitIntervalOrPriorityNotSupported,
+                                         tN2kGroupFunctionPGNErrorCode PGNErrorCode,
+                                         tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs=0,
                                          tN2kGroupFunctionParameterErrorCode ParameterErrorCodeForAll=N2kgfpec_Acknowledge);
                                    
 };
                           
-                          
+#endif    
+    
 #endif
 

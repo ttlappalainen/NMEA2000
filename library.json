@@ -1,0 +1,21 @@
+{
+  "name": "NMEA2000-library",
+  "keywords": "nmea 2000, nmea, 2000, communication, bus, boat, marine",
+  "description": "NMEA 2000 library for building compatible devices for NMEA 2000 bus.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/ttlappalainen/NMEA2000.git"
+  },
+  "authors":
+  {
+    "name": "Timo Lappalainen",
+    "email": " ",
+    "url": "Kave Oy <www.kave.fi>",
+    "maintainer": true
+  },
+  "version": "4.4.2",
+  "license": "MIT",
+  "frameworks": "*",
+  "platforms": "*"
+}

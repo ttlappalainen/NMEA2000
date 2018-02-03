@@ -1,7 +1,7 @@
 /*
 N2kDef.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -41,10 +41,13 @@ extern uint32_t millis();
 
 // Declare PROGMEM macros to nothing on non-AVR targets.
 #if !defined(__AVR__) && !defined(ARDUINO)
+// ESP8266 provides it's own definition - Do not override it.
+#if !defined(ARDUINO_ARCH_ESP8266)
 #define PROGMEM
 #define pgm_read_byte(var)  *var
 #define pgm_read_word(var)  *var
 #define pgm_read_dword(var) *var
+#endif
 #endif
 
 // Definition for the F(str) macro. On Arduinos use what the framework
@@ -58,7 +61,9 @@ extern uint32_t millis();
 class __FlashStringHelper;
 #define F(str) (reinterpret_cast<const __FlashStringHelper*>(PSTR(str)))
 #else
+#ifndef F
 #define F(str) str
+#endif
 #endif
 
 #endif
