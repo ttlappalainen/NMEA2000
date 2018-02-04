@@ -792,6 +792,7 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode) {
   N2kMode=_N2kMode;
 }
 
+//*****************************************************************************
 void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned char _Addr) {
   SetMode(_N2kMode);
   for (int i = 0; i < DeviceCount; ++i) {
@@ -799,13 +800,13 @@ void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned char _Addr) {
   }
 }
 
+//*****************************************************************************
 void tNMEA2000::SetN2kSource(unsigned char _iAddr, int _iDev) {
+  InitDevices();
   if ( !IsValidDevice(_iDev) ) return;
-  bool addressChangedSaved = AddressChanged;
   InitDevices();
   Devices[_iDev].N2kSource= _iAddr;
   Devices[_iDev].UpdateAddressClaimEndSource();
-  AddressChanged=addressChangedSaved;
 }
 
 //*****************************************************************************
