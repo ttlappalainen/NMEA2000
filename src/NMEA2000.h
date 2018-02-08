@@ -650,6 +650,10 @@ public:
     // Read address for current device.
     // Multidevice support is under construction.
     unsigned char GetN2kSource(int DeviceIndex=0) const { if (DeviceIndex>=0 && DeviceIndex<DeviceCount) return Devices[DeviceIndex].N2kSource; return Devices[0].N2kSource; }
+    // Set source for the given device. Has to be called:
+    // - after SetMode
+    // - before Open
+    void SetN2kSource(unsigned char _iAddr, int _iDev=0);
 
     // You can check has this device changed its address. If yes, it is mandatory to
     // save changed address to e.g. EEPROM and use that on next start.
