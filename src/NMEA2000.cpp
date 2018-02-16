@@ -1987,7 +1987,7 @@ void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
 
 //*****************************************************************************
 void tNMEA2000::SetN2kSource(unsigned char _iAddr, int _iDev) {
-  if ( !IsValidDevice(_iDev) || !IsInitialized() ) return;
+  if ( !IsValidDevice(_iDev) || IsInitialized() ) return;
   InitDevices();
   Devices[_iDev].N2kSource= _iAddr;
   Devices[_iDev].UpdateAddressClaimEndSource();
