@@ -958,6 +958,26 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
 }
 
 //*****************************************************************************
+// Date,Time & Local offset  ( see also PGN 126992 )
+// Input:
+//  - DaysSince1970         Days since 1.1.1970. You can find sample how to convert e.g. NMEA0183 date info to this on my NMEA0183 library on
+//                          NMEA0183Messages.cpp on function NMEA0183ParseRMC_nc
+//  - Time                  Seconds since midnight
+//  - Local offset          Local offset in minutes
+void SetN2kPGN129033(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset);
+
+inline void SetN2kLocalOffset(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset) {
+  SetN2kPGN129033(N2kMsg,DaysSince1970,SecondsSinceMidnight,LocalOffset);
+}
+
+bool ParseN2kPGN129033(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, int16_t &LocalOffset);
+
+inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, int16_t &LocalOffset) {
+  return ParseN2kPGN129033(N2kMsg,DaysSince1970,SecondsSinceMidnight,LocalOffset);
+}
+
+
+//*****************************************************************************
 // GNSS DOP data
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages

@@ -32,7 +32,7 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
     N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((TimeSource & 0x0f) | 0xf0);
-    N2kMsg.Add2ByteInt(SystemDate);
+    N2kMsg.Add2ByteUInt(SystemDate);
     N2kMsg.Add4ByteUDouble(SystemTime,0.0001);
 }
 
@@ -602,7 +602,7 @@ bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthB
 void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
     N2kMsg.SetPGN(128275L);
     N2kMsg.Priority=6;
-    N2kMsg.Add2ByteInt(DaysSince1970);
+    N2kMsg.Add2ByteUInt(DaysSince1970);
     N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
     N2kMsg.Add4ByteUInt(Log);
     N2kMsg.Add4ByteUInt(TripLog);
@@ -680,7 +680,7 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970,
     N2kMsg.SetPGN(129029L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add2ByteInt(DaysSince1970);
+    N2kMsg.Add2ByteUInt(DaysSince1970);
     N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
     N2kMsg.Add8ByteDouble(Latitude,1e-16);
     N2kMsg.Add8ByteDouble(Longitude,1e-16);
@@ -732,6 +732,29 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   return true;
 }
 
+//*****************************************************************************
+// Date,Time & Local offset
+void SetN2kPGN129033(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset) {
+    N2kMsg.SetPGN(129033L);
+    N2kMsg.Priority=6;
+    N2kMsg.Add2ByteUInt(DaysSince1970);
+    N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
+    N2kMsg.Add2ByteInt(LocalOffset);
+}
+
+bool ParseN2kPGN129033(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, int16_t &LocalOffset) {
+    if ( N2kMsg.PGN != 129033L ) return false;
+
+    int Index = 0;
+
+    DaysSince1970 = N2kMsg.Get2ByteUInt(Index);
+    SecondsSinceMidnight = N2kMsg.Get4ByteUDouble(0.0001, Index);
+    LocalOffset = N2kMsg.Get2ByteInt(Index);
+    return true;
+}
+
+//*****************************************************************************
+// GNSS DOP data
 void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
                      double HDOP, double VDOP, double TDOP)
 {
@@ -747,7 +770,7 @@ void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode Desired
 bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
                        double& HDOP, double& VDOP, double& TDOP)
 {
-    if(N2kMsg.PGN != 129539)
+    if(N2kMsg.PGN != 129539L)
         return false;
 
     unsigned char modes;

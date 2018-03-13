@@ -62,6 +62,18 @@ support.
 
 
 == Changes ==
+13.03.2018
+
+- Added: PGN129033 Local offset
+
+23.02.2018
+
+- Port config ability for SockeCAN by Al Thomason
+
+16.02.2018
+
+- SetN2kSource for other devices by jpilet
+
 29.01.2018
 
 - Added: PGN130576 Small Craft Status / Trim Tab Position definition by Nicholas Agro
