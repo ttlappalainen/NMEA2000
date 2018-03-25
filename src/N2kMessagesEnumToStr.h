@@ -97,4 +97,7 @@ MakeN2kEnumTypeToStrFunc(tN2kRudderDirectionOrder,tN2kRudderDirectionOrderStrs)
 const char* tN2kSpeedWaterReferenceTypeStrs[] = {"Paddle wheel","Pitot tube","Doppler","Correlation (ultra sound)","Electro Magnetic"};
 MakeN2kEnumTypeToStrFunc(tN2kSpeedWaterReferenceType,tN2kSpeedWaterReferenceTypeStrs);
 
+const char* tN2kMagneticVariationStrs[] = { "Manual","Automatic Chart","Automatic Table","Automatic Calculation","WMM 2000","WMM 2005","WMM 2010","WMM 2015","WMM 2020" };
+MakeN2kEnumTypeToStrFunc(tN2kMagneticVariation, tN2kSpeedWaterReferenceTypeStrs);
+
 #endif
