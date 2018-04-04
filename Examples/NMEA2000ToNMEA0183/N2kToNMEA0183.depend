@@ -1,0 +1,235 @@
+# depslib dependency file v1.0
+1522754128 source:/home/pi/Source/N2kToNMEA0183/main.cpp
+	"N2kDataToNMEA0183.h"
+	<NMEA2000_CAN.h>
+	"NMEA0183LinuxStream.h"
+	<fcntl.h>
+	<unistd.h>
+	<sys/ioctl.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/NMEA2000_CAN.h
+	"N2kMsg.h"
+	"NMEA2000.h"
+	<due_can.h>
+	<NMEA2000_due.h>
+	<FlexCAN.h>
+	<NMEA2000_teensy.h>
+	<avr_can.h>
+	<NMEA2000_avr.h>
+	<NMEA2000_SocketCAN.h>
+	<NMEA2000_mbed.h>
+	<MapleIntCompatibility.h>
+	<SPI.h>
+	<mcp_can.h>
+	<NMEA2000_mcp.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kMsg.h
+	"N2kStream.h"
+	"N2kDef.h"
+	<stdint.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kStream.h
+	"N2kDef.h"
+	<stdint.h>
+	<stddef.h>
+	<Arduino.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kDef.h
+	<stdint.h>
+	<WString.h>
+	<avr/pgmspace.h>
+
+1522727389 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/NMEA2000.h
+	"NMEA2000_CompilerDefns.h"
+	"N2kStream.h"
+	"N2kMsg.h"
+	"N2kCANMsg.h"
+	"N2kGroupFunction.h"
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/NMEA2000_CompilerDefns.h
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kCANMsg.h
+	<N2kMsg.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kGroupFunction.h
+	"NMEA2000_CompilerDefns.h"
+	"N2kMsg.h"
+
+1522326179 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000_socketCAN/NMEA2000_SocketCAN.h
+	<stdio.h>
+	<NMEA2000.h>
+	<N2kMsg.h>
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kGroupFunction.cpp
+	"N2kGroupFunction.h"
+	"NMEA2000.h"
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kGroupFunctionDefaultHandlers.cpp
+	<string.h>
+	"N2kGroupFunctionDefaultHandlers.h"
+	"NMEA2000.h"
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kGroupFunctionDefaultHandlers.h
+	"NMEA2000_CompilerDefns.h"
+	"N2kGroupFunction.h"
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kMessages.cpp
+	"N2kMessages.h"
+	<string.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kMessages.h
+	"N2kMsg.h"
+	<stdint.h>
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kMsg.cpp
+	"N2kMsg.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kStream.cpp
+	"N2kStream.h"
+	<string.h>
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/NMEA2000.cpp
+	"NMEA2000.h"
+	"N2kDef.h"
+	"N2kGroupFunctionDefaultHandlers.h"
+	<string.h>
+	<stdlib.h>
+	<MemoryFree.h>
+
+1522756390 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000_socketCAN/NMEA2000_SocketCAN.cpp
+	"NMEA2000_SocketCAN.h"
+	<stdio.h>
+	<iostream>
+	<time.h>
+	<unistd.h>
+	<string.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<sys/select.h>
+	<net/if.h>
+	<linux/can.h>
+	<linux/can/raw.h>
+
+1522389138 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183.cpp
+	<cstdio>
+	"NMEA0183.h"
+
+1522388641 /home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183.h
+	<stdint.h>
+	"NMEA0183Stream.h"
+	"NMEA0183Msg.h"
+
+1522753698 /home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Stream.h
+	<stdint.h>
+	<stddef.h>
+	<Arduino.h>
+
+1522685986 /home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Msg.h
+	<string.h>
+	<time.h>
+	"NMEA0183Stream.h"
+
+1522729863 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Messages.cpp
+	"NMEA0183Messages.h"
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+
+1522729488 /home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Messages.h
+	<stdio.h>
+	<time.h>
+	<NMEA0183Msg.h>
+
+1522686520 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Msg.cpp
+	<math.h>
+	<cstdio>
+	"NMEA0183Msg.h"
+
+1522387949 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183Stream.cpp
+	"NMEA0183Stream.h"
+	<string.h>
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/ActisenseReader.cpp
+	"ActisenseReader.h"
+	<string.h>
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/ActisenseReader.h
+	"N2kMsg.h"
+	"N2kStream.h"
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kDeviceList.cpp
+	<stdlib.h>
+	"N2kDeviceList.h"
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/N2kDeviceList.h
+	"NMEA2000.h"
+
+1522205565 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/Seasmart.cpp
+	<string.h>
+	<ctype.h>
+	<stdlib.h>
+	"Seasmart.h"
+
+1522205565 /home/pi/Source/N2kToNMEA0183/lib/NMEA2000/src/Seasmart.h
+	<N2kMsg.h>
+
+1522394255 source:/home/pi/Source/N2kToNMEA0183/NMEA0183Handlers.cpp
+	<N2kMsg.h>
+	<NMEA2000.h>
+	<N2kMessages.h>
+	<NMEA0183Messages.h>
+	"NMEA0183Handlers.h"
+
+1522394224 /home/pi/Source/N2kToNMEA0183/NMEA0183Handlers.h
+	"NMEA0183Stream.h"
+	<time.h>
+	<NMEA0183.h>
+	<NMEA0183Msg.h>
+	<NMEA2000.h>
+	"BoatData.h"
+
+1502774567 /home/pi/Source/N2kToNMEA0183/BoatData.h
+
+1522396367 /home/pi/Source/N2kToNMEA0183/N2kHandlers/N2kPosDataToNMEA0183.h
+	<NMEA0183.h>
+	<NMEA2000.h>
+
+1522402341 source:/home/pi/Source/N2kToNMEA0183/N2kHandlers/N2kPosDataToNMEA0183.cpp
+	"N2kPosDataToNMEA0183.h"
+	<N2kMessages.h>
+	<NMEA0183Messages.h>
+
+1522755984 source:/home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183LinuxStream.cpp
+	<iostream>
+	<unistd.h>
+	<string.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<sys/select.h>
+	"NMEA0183LinuxStream.h"
+
+1522399039 /home/pi/Source/N2kToNMEA0183/lib/NMEA0183/NMEA0183LinuxStream.h
+	"NMEA0183Stream.h"
+
+1522728192 /home/pi/Source/N2kToNMEA0183/N2kDataToNMEA0183.h
+	<NMEA0183.h>
+	<NMEA2000.h>
+
+1522729787 source:/home/pi/Source/N2kToNMEA0183/N2kDataToNMEA0183.cpp
+	"N2kDataToNMEA0183.h"
+	<N2kMessages.h>
+	<NMEA0183Messages.h>
+
+1522768566 source:/home/pi/Source/N2kToNMEA0183/BoardSerialNumber.cpp
+	"BoardSerialNumber.h"
+	<fcntl.h>
+	<unistd.h>
+	<sys/ioctl.h>
+
+1522768549 /home/pi/Source/N2kToNMEA0183/BoardSerialNumber.h
+	<stdint.h>
+

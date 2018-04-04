@@ -43,8 +43,9 @@ To use MBED boards you need also NMEA2000_mbed library and other related
 libraries. See origin for MBED port on
 https://github.com/thomasonw/NMEA2000_mbed
 
-To use Rasberry boards you need also NMEA2000_socketCAN library and other
-related libraries. See origin for Rasberry port on
+To use Raspberry boards you need also NMEA2000_socketCAN library, which you can 
+download from https://github.com/ttlappalainen/NMEA2000_socketCAN
+NMEA2000_socketCAN has been originally forked from
 https://github.com/thomasonw/NMEA2000_socketCAN
 
 == Thanks ==
@@ -62,6 +63,16 @@ support.
 
 
 == Changes ==
+04.04.2018
+
+- Fix: NextHeartbeatSentTime initial value.
+
+- Added: New example NMEA2000ToNMEA0183. This has been tested on RPi3B, Arduino DUE, Arduino Mega, Teensy.
+
+26.03.2018
+
+- Added: Strings for Magnetic Variation enum by mrbubble62
+
 13.03.2018
 
 - Added: PGN129033 Local offset

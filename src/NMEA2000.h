@@ -302,7 +302,7 @@ protected:
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
       HeartbeatInterval=60000;
       DefaultHeartbeatInterval=60000;
-      NextHeartbeatSentTime=60000;
+      NextHeartbeatSentTime=0;
 #endif
     }
     void SetPendingProductInformation() { PendingProductInformation=millis()+187+N2kSource*8; } // Use strange increment to avoid synchronize
