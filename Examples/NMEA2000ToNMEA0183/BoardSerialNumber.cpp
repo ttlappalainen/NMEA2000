@@ -132,6 +132,12 @@ uint32_t GetBoardSerialNumber() {
   return SerialNumber;
 }
 
+#elif defined(ARDUINO_ARCH_ESP32)
+uint32_t GetBoardSerialNumber() {
+    uint8_t chipid[6];
+    esp_efuse_mac_get_default(chipid);
+    return chipid[0] + (chipid[1]<<8) + (chipid[2]<<16) + (chipid[3]<<24);
+}
 #else
 uint32_t GetBoardSerialNumber() {
   return 0;

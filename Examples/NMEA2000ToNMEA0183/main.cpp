@@ -7,7 +7,7 @@
    The example is designed for sending N2k data to OpenCPN on RPi with PiCAN2.
    It can be used also on PC with some Arduino/Teensy board to provide
    NMEA0183 (and also NMEA2000) data to PC. Example has been tested on
-   RPi3B, Arduino DUE, Arduino Mega and Teensy.
+   RPi3B, ESP32, Arduino DUE, Arduino Mega and Teensy.
 
  To use this example you need install also:
    - NMEA2000 library
@@ -32,7 +32,7 @@
 #define N2kForward_Stream_Speed 115200
 #if defined(__SAM3X8E__)  // Arduino DUE
 #define N2kForward_Stream SerialUSB
-#else
+#elif !defined(ARDUINO_ARCH_ESP32)
 #define N2kForward_Stream Serial1
 #endif
 #else
@@ -91,7 +91,7 @@ void setup() {
 
   char SnoStr[33];
   uint32_t SerialNumber=GetSerialNumber();
-  snprintf(SnoStr,32,"%lu",SerialNumber);
+  snprintf(SnoStr,32,"%lu",(long unsigned int)SerialNumber);
 
   NMEA2000.SetProductInformation(SnoStr, // Manufacturer's Model serial code
                                  120, // Manufacturer's product code

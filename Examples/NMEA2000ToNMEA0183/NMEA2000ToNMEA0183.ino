@@ -7,7 +7,7 @@
    The example is designed for sending N2k data to OpenCPN on RPi with PiCAN2.
    It can be used also on PC with some Arduino/Teensy board to provide
    NMEA0183 (and also NMEA2000) data to PC. Example has been tested on
-   RPi3B, Arduino DUE, Arduino Mega and Teensy.
+   RPi3B, ESP32, Arduino DUE, Arduino Mega and Teensy.
 
  To use this example you need install also:
    - NMEA2000 library
