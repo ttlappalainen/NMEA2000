@@ -54,7 +54,7 @@ uint32_t GetSerialNumber() {
 }
 
 tNMEA0183 NMEA0183_Out;
-tN2kPosInfoToNMEA0183 N2kPosInfoToNMEA0183(&NMEA2000, &NMEA0183_Out);
+tN2kDataToNMEA0183 N2kDataToNMEA0183(&NMEA2000, &NMEA0183_Out);
 
 // Set the information for other bus devices, which messages we support
 const unsigned long TransmitMessages[] PROGMEM={0};
@@ -112,7 +112,7 @@ void setup() {
 
   NMEA2000.ExtendTransmitMessages(TransmitMessages);
   NMEA2000.ExtendReceiveMessages(ReceiveMessages);
-  NMEA2000.AttachMsgHandler(&N2kPosInfoToNMEA0183);
+  NMEA2000.AttachMsgHandler(&N2kDataToNMEA0183);
 
   NMEA2000.Open();
 
@@ -121,10 +121,24 @@ void setup() {
   NMEA0183_Out.Open();
 }
 
+#if defined(__linux__)||defined(__linux)||defined(linux)
+#include <unistd.h>
+#endif
+
+// *****************************************************************************
+// This is preliminary definition. For RPi we need to build some
+// event system to minimize cpu usage.
+void WaitForEvent(unsigned long /*MaxTime*/) {
+#if defined(__linux__)||defined(__linux)||defined(linux)
+  usleep(100);
+#endif
+}
+
 // *****************************************************************************
 void loop() {
+  WaitForEvent(0);
   NMEA2000.ParseMessages();
-  N2kPosInfoToNMEA0183.Update();
+  N2kDataToNMEA0183.Update();
 
   // We need to clear output streams input data to avoid them to get stuck.
   FlushStreamInput(NMEA0183_Out_Stream);
