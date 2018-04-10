@@ -118,7 +118,7 @@ enum tN2kTempSource {
 enum tN2kHumiditySource {
                             N2khs_InsideHumidity=0,
                             N2khs_OutsideHumidity=1,
-                            N2khs_Undef=1
+                            N2khs_Undef=0xff
                           };
 
 enum tN2kPressureSource {
@@ -1358,16 +1358,29 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double Humidity);
+                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA);
 inline void SetN2kHumidity(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double Humidity) {
-  SetN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, Humidity);
+                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA) {
+  SetN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity,SetHumidity);
 }
+
 bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &Humidity);
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity);
+
 inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &Humidity) {
-  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, Humidity);
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity) {
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
+}
+
+inline bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+  double SetHumidity;                      
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
+}
+                       
+inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity);
 }
 
 //*****************************************************************************

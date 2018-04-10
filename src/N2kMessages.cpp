@@ -1312,24 +1312,26 @@ bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 // Humidity
 // Humidity should be in percent
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double ActualHumidity) {
+                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity) {
   N2kMsg.SetPGN(130313L);
   N2kMsg.Priority = 5;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) HumidityInstance);
   N2kMsg.AddByte((unsigned char) HumiditySource);
-  N2kMsg.Add4ByteUDouble(ActualHumidity, 0.004);
+  N2kMsg.Add2ByteDouble(ActualHumidity, 0.004);
+  N2kMsg.Add2ByteDouble(SetHumidity, 0.004);
   N2kMsg.AddByte(0xff); // reserved
 }
 
 bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity) {
   if (N2kMsg.PGN != 130313L) return false;
   int Index = 0;
   SID=N2kMsg.GetByte(Index);
   HumidityInstance=N2kMsg.GetByte(Index);
   HumiditySource=(tN2kHumiditySource)N2kMsg.GetByte(Index);
-  ActualHumidity=N2kMsg.Get4ByteUDouble(0.004, Index);
+  ActualHumidity=N2kMsg.Get2ByteDouble(0.004, Index);
+  SetHumidity=N2kMsg.Get2ByteDouble(0.004, Index);
   return true;
 }
 

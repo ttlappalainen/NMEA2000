@@ -71,6 +71,10 @@ support.
 
 
 == Changes ==
+10.04.2018
+
+- Fix: Handling of humidity PGN 130313.
+
 06.04.2018
 
 - Added: Support for ESP32. See also NMEA2000_esp32
