@@ -14,7 +14,7 @@
    Example has been tested on ESP32.
    
    Currently you need to define you WiFi settings on the beginning
-   of .ino.
+   of .ino. The plan is to add WiFiManager style configuration.
 
  To use this example you need install also:
  
