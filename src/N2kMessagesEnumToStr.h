@@ -64,7 +64,7 @@ const char* tN2kGNSSmethodStrs[] = { "no GNSS", "GNSS fix", "DGNSS", "precise GN
 MakeN2kEnumTypeToStrFunc(tN2kGNSSmethod,tN2kGNSSmethodStrs)
 
 const char* tN2kTempSourceStrs[] = { "sea", "outside", "inside", "engine room", "main cabin", "live well", "bait well", "refridgeration",
-                                     "heating system", "dew point", "apparent wind chill", "theoretical wind chill", "heat index", "freezer"};
+                                     "heating system", "dew point", "apparent wind chill", "theoretical wind chill", "heat index", "freezer", "exhaust gas"};
 MakeN2kEnumTypeToStrFunc(tN2kTempSource,tN2kTempSourceStrs)
 
 const char* tN2kBatTypeStrs[] = { "flooded", "gel", "AGM"};
