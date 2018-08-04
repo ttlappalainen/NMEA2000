@@ -620,7 +620,7 @@ public:
     // Note that other than N2km_ListenOnly modes will automatically start initialization and address claim procedure.
     // You have to call ParseMessages() periodically to handle these procedures.
     // If you know your system, define source something other address you allready have on your bus.
-    void SetMode(tN2kMode _N2kMode, unsigned long _N2kSource=15);
+    void SetMode(tN2kMode _N2kMode, uint8_t _N2kSource=15);
 
     // Set type how messages will be forwarded in listen mode. Defult is fwdt_Actisense
     void SetForwardType(tForwardType fwdType) { ForwardType=fwdType; }

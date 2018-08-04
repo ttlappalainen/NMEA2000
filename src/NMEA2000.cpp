@@ -786,7 +786,7 @@ void tNMEA2000::ExtendReceiveMessages(const unsigned long *_Messages, int iDev) 
 }
 
 //*****************************************************************************
-void tNMEA2000::SetMode(tN2kMode _N2kMode, unsigned long _N2kSource) {
+void tNMEA2000::SetMode(tN2kMode _N2kMode, uint8_t _N2kSource) {
   InitDevices();
   N2kMode=_N2kMode;
   for (int i=0; i<DeviceCount; i++) {
