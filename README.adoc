@@ -71,6 +71,18 @@ support.
 
 
 == Changes ==
+04.08.2018
+
+- Fix: NMEA2000.h/NMEA2000.cpp, just in parameter N2kSource type change by mrbubble62
+
+18.07.2018
+
+- Added: N2kMessagesEnumToStr.h "exhaust gas" string for temperature sources by mrbubble62.
+
+09.05.2018
+
+- Fix: NMEA2000_CAN.h, make ESP32 work with ESP-IDF framework, by Sarfata
+
 10.04.2018
 
 - Fix: Handling of humidity PGN 130313.
