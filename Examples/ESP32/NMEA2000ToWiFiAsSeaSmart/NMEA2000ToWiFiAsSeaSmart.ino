@@ -3,14 +3,14 @@
 // The code has been tested with ESP32.
 
 #include <NMEA2000_CAN.h>
-#include <SeaSmart.h>
+#include <Seasmart.h>
 #include <WiFi.h>
 #include <nvs.h>
 #include <nvs_flash.h>
-#include <Memory>
+#include <memory>
 #include "N2kDataToNMEA0183.h"
 #include "BoardSerialNumber.h"
-#include "list.h"
+#include "List.h"
 
 // Define your default settings here
 const char* ssid     = "Guest";
