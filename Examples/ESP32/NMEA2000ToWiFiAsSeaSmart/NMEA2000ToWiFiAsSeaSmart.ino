@@ -32,7 +32,15 @@ tN2kDataToNMEA0183 tN2kDataToNMEA0183(&NMEA2000, 0);
 
 // Set the information for other bus devices, which messages we support
 const unsigned long TransmitMessages[] PROGMEM={0};
-const unsigned long ReceiveMessages[] PROGMEM={/*126992L,*/127250L,127258L,128259UL,128267UL,129025UL,129026L,129029L,0};
+const unsigned long ReceiveMessages[] PROGMEM={/*126992L,*/ // System time
+                                              127250L, // Heading
+                                              127258L, // Magnetic variation
+                                              128259UL,// Boat speed
+                                              128267UL,// Depth
+                                              129025UL,// Position
+                                              129026L, // COG and SOG
+                                              129029L, // GNSS
+                                              0};
 
 // Forward declarations
 void LedOn(unsigned long OnTime);
