@@ -40,6 +40,7 @@ const unsigned long ReceiveMessages[] PROGMEM={/*126992L,*/ // System time
                                               129025UL,// Position
                                               129026L, // COG and SOG
                                               129029L, // GNSS
+                                              130306L, // Wind
                                               0};
 
 // Forward declarations

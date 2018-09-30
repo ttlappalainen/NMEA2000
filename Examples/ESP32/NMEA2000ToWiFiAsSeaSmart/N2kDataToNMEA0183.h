@@ -38,10 +38,13 @@ protected:
   double Heading;
   double COG;
   double SOG;
+  double WindSpeed;
+  double WindAngle;
   unsigned long LastHeadingTime;
   unsigned long LastCOGSOGTime;
   unsigned long LastPositionTime;
   unsigned long LastPosSend;
+  unsigned long LastWindTime;
   uint16_t DaysSince1970;
   double SecondsSinceMidnight;
   unsigned long NextRMCSend;
@@ -57,6 +60,7 @@ protected:
   void HandlePosition(const tN2kMsg &N2kMsg); // 129025
   void HandleCOGSOG(const tN2kMsg &N2kMsg); // 129026
   void HandleGNSS(const tN2kMsg &N2kMsg); // 129029
+  void HandleWind(const tN2kMsg &N2kMsg); // 130306
   void SetNextRMCSend() { NextRMCSend=millis()+RMCPeriod; }
   void SendRMC();
   void SendMessage(const tNMEA0183Msg &NMEA0183Msg);
@@ -73,6 +77,7 @@ public:
     LastHeadingTime=0;
     LastCOGSOGTime=0;
     LastPositionTime=0;
+    LastWindTime=0;
   }
   void HandleMsg(const tN2kMsg &N2kMsg);
   void SetSendNMEA0183MessageCallback(tSendNMEA0183MessageCallback _SendNMEA0183MessageCallback) {
