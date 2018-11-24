@@ -24,6 +24,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "N2kDataToNMEA0183.h"
 #include <N2kMessages.h>
 #include <NMEA0183Messages.h>
+#include <math.h>
+
+
+const double radToDeg=180.0/M_PI;
 
 //*****************************************************************************
 void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
@@ -35,6 +39,7 @@ void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
     case 129025UL: HandlePosition(N2kMsg);
     case 129026UL: HandleCOGSOG(N2kMsg);
     case 129029UL: HandleGNSS(N2kMsg);
+    case 130306UL: HandleWind(N2kMsg);
   }
 }
 
@@ -44,6 +49,7 @@ void tN2kDataToNMEA0183::Update() {
   if ( LastHeadingTime+2000<millis() ) Heading=N2kDoubleNA;
   if ( LastCOGSOGTime+2000<millis() ) { COG=N2kDoubleNA; SOG=N2kDoubleNA; }
   if ( LastPositionTime+4000<millis() ) { Latitude=N2kDoubleNA; Longitude=N2kDoubleNA; }
+  if ( LastWindTime+2000<millis() ) { WindSpeed=N2kDoubleNA; WindAngle=N2kDoubleNA; }
 }
 
 //*****************************************************************************
@@ -159,6 +165,23 @@ double AgeOfCorrection;
                     nSatellites,HDOP,PDOP,GeoidalSeparation,
                     nReferenceStations,ReferenceStationType,ReferenceSationID,AgeOfCorrection) ) {
     LastPositionTime=millis();
+  }
+}
+
+//*****************************************************************************
+void tN2kDataToNMEA0183::HandleWind(const tN2kMsg &N2kMsg) {
+unsigned char SID;
+tN2kWindReference WindReference;
+tNMEA0183WindReference NMEA0183Reference=NMEA0183Wind_True;
+
+  if ( ParseN2kWindSpeed(N2kMsg,SID,WindSpeed,WindAngle,WindReference) ) {
+    tNMEA0183Msg NMEA0183Msg;
+    LastWindTime=millis();
+    if ( WindReference==N2kWind_Apparent ) NMEA0183Reference=NMEA0183Wind_Apparent;
+
+    if ( NMEA0183SetMWV(NMEA0183Msg, WindAngle*radToDeg, NMEA0183Reference , WindSpeed) ) {
+      SendMessage(NMEA0183Msg);
+    }
   }
 }
 
