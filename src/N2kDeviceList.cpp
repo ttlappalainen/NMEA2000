@@ -1,7 +1,7 @@
 /*
 N2kDeviceList.cpp
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -46,7 +46,7 @@ tN2kDeviceList::tN2kDeviceList(tNMEA2000 *_pNMEA2000) : tNMEA2000::tMsgHandler(0
 
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceBySource(uint8_t Source) const {
-  if ( Source>N2kMaxBusDevices ) return 0;
+  if ( Source>=N2kMaxBusDevices ) return 0;
 
   return Sources[Source];
 }
@@ -66,10 +66,12 @@ tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceByName(uint64_t
 tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceByIDs(uint16_t ManufacturerCode, uint32_t UniqueNumber) const {
   tInternalDevice *result=0;
 
+    if ( ManufacturerCode==N2kUInt16NA && UniqueNumber==N2kUInt32NA ) return result;
+
     for (uint8_t i=0; i<MaxDevices && result==0; i++) {
       if ( Sources[i]!=0 &&
-           Sources[i]->GetManufacturerCode()==ManufacturerCode &&
-           Sources[i]->GetUniqueNumber()==UniqueNumber ) result=Sources[i];
+           (ManufacturerCode==N2kUInt16NA || Sources[i]->GetManufacturerCode()==ManufacturerCode) &&
+           (UniqueNumber==N2kUInt32NA || Sources[i]->GetUniqueNumber()==UniqueNumber) ) result=Sources[i];
     }
 
     return result;
@@ -109,6 +111,8 @@ bool tN2kDeviceList::RequestIsoAddressClaim(uint8_t Source) {
 
 //*****************************************************************************
 void tN2kDeviceList::HandleMsg(const tN2kMsg &N2kMsg) {
+  if ( N2kMsg.Source>=N2kMaxBusDevices ) return;
+
   if ( Sources[N2kMsg.Source]==0 ) {
     switch ( N2kMsg.PGN ) {
       case N2kPGNIsoAddressClaim:break; // fall to default handler
@@ -126,6 +130,8 @@ void tN2kDeviceList::HandleMsg(const tN2kMsg &N2kMsg) {
     case 126464L: HandleSupportedPGNList(N2kMsg); break;
     default: HandleOther(N2kMsg);
   }
+
+  if ( Sources[N2kMsg.Source]!=0 ) Sources[N2kMsg.Source]->LastMessageTime=millis();
 }
 
 //*****************************************************************************
@@ -308,7 +314,7 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
 
-  if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
+  if ( N2kMsg.Source>=N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
 
 //  unsigned long t1=micros();
   size_t ManISize;
@@ -339,7 +345,7 @@ void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 void tN2kDeviceList::HandleSupportedPGNList(const tN2kMsg &N2kMsg) {
 
-  if ( N2kMsg.Source>N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
+  if ( N2kMsg.Source>=N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
 
   int Index=0;
   tN2kPGNList N2kPGNList=(tN2kPGNList)N2kMsg.GetByte(Index);

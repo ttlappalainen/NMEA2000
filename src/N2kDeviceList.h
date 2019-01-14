@@ -1,7 +1,7 @@
 /*
 N2kDeviceList.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -64,6 +64,8 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
         uint8_t nConfIRequested; // How many times we have requested.
         unsigned long PGNsRequested; // Time for last request
         uint8_t nPGNsRequested; // How many times we have requested.
+
+        unsigned long LastMessageTime;
 
       public:
         tInternalDevice(uint64_t _Name, uint8_t _Source=255);
@@ -168,6 +170,12 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
     // Return device by it's bus source address. If there is no device with given
     // source, function returns nul.
     const tNMEA2000::tDevice * FindDeviceBySource(uint8_t Source) const { return LocalFindDeviceBySource(Source); }
+
+    // Return device last message time in millis.
+    unsigned long GetDeviceLastMessageTime(uint8_t Source) const {
+      tN2kDeviceList::tInternalDevice *dev=LocalFindDeviceBySource(Source);
+      return ( dev!=0?dev->LastMessageTime:0 );
+    }
 
     // Return device by it's name. Device name is complete device information data, which is unique
     // for all registered devices and should be unique for own made devices on own bus. Name

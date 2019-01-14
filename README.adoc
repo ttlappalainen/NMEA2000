@@ -71,6 +71,12 @@ support.
 
 
 == Changes ==
+14.01.2019
+
+- Fix: Device list handler fix. Some tools may use source 254 and that was checked wrong.
+
+- Fix: Message priorities.
+
 04.08.2018
 
 - Fix: NMEA2000.h/NMEA2000.cpp, just in parameter N2kSource type change by mrbubble62

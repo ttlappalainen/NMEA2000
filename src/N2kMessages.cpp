@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -138,7 +138,7 @@ bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOf
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127257(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll) {
     N2kMsg.SetPGN(127257L);
-    N2kMsg.Priority=2;
+    N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteDouble(Yaw,0.0001);
     N2kMsg.Add2ByteDouble(Pitch,0.0001);
@@ -162,7 +162,7 @@ bool ParseN2kPGN127257(const tN2kMsg &N2kMsg, unsigned char &SID, double &Yaw, d
 // Magnetic variation
 void SetN2kPGN127258(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation Source, uint16_t DaysSince1970, double Variation) {
   N2kMsg.SetPGN(127258L);
-  N2kMsg.Priority=3;
+  N2kMsg.Priority=6;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte(Source & 0x0f);
   N2kMsg.Add2ByteUInt(DaysSince1970);
@@ -186,7 +186,7 @@ bool ParseN2kPGN127258(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVa
 void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed,
                      double EngineBoostPressure, int8_t EngineTiltTrim) {
     N2kMsg.SetPGN(127488L);
-    N2kMsg.Priority=3;
+    N2kMsg.Priority=2;
     N2kMsg.AddByte(EngineInstance);
     N2kMsg.Add2ByteDouble(EngineSpeed,0.25);
     N2kMsg.Add2ByteUDouble(EngineBoostPressure, 100);
@@ -219,7 +219,7 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
                        bool flagEgrSystem, bool flagTPS, bool flagEmergencyStopMode, bool flagWarning1, bool flagWarning2, bool flagPowerReduction,
                        bool flagMaintenanceNeeded, bool flagEngineCommError, bool flagSubThrottle, bool flagNeutralStartProtect, bool flagEngineShuttingDown) {
     N2kMsg.SetPGN(127489L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=2;
 
   N2kMsg.AddByte(EngineInstance);
   N2kMsg.Add2ByteUDouble(EngineOilPress, 100);
@@ -299,7 +299,7 @@ bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, dou
 void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear,
                      double OilPressure, double OilTemperature, unsigned char DiscreteStatus1) {
   N2kMsg.SetPGN(127493L);
-  N2kMsg.Priority=6;
+  N2kMsg.Priority=2;
   N2kMsg.AddByte(EngineInstance);
   N2kMsg.AddByte((TransmissionGear & 0x03) | 0xfc );
   N2kMsg.Add2ByteUDouble(OilPressure, 100);
@@ -347,7 +347,7 @@ void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStat
 //*****************************************************************************
 void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus) {
     N2kMsg.SetPGN(127501L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
 	BankStatus = (BankStatus << 8) | DeviceBankInstance;
 	N2kMsg.AddUInt64(BankStatus);
 }
@@ -625,7 +625,7 @@ bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &S
 // Lat long rapid
 void SetN2kPGN129025(tN2kMsg &N2kMsg, double Latitude, double Longitude) {
     N2kMsg.SetPGN(129025L);
-    N2kMsg.Priority=3;
+    N2kMsg.Priority=2;
     N2kMsg.Add4ByteDouble(Latitude,1e-7);
     N2kMsg.Add4ByteDouble(Longitude,1e-7);
 }
@@ -644,7 +644,7 @@ bool ParseN2kPGN129025(const tN2kMsg &N2kMsg, double &Latitude, double &Longitud
 // SOG should be in m/s
 void SetN2kPGN129026(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingReference ref, double COG, double SOG) {
     N2kMsg.SetPGN(129026L);
-    N2kMsg.Priority=3;
+    N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte( (((unsigned char)(ref)) & 0x03) | 0xfc );
     N2kMsg.Add2ByteUDouble(COG,0.0001); //0.0057295779513082332);
@@ -678,7 +678,7 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970,
 
 
     N2kMsg.SetPGN(129029L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteUInt(DaysSince1970);
     N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
@@ -736,7 +736,7 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 // Date,Time & Local offset
 void SetN2kPGN129033(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset) {
     N2kMsg.SetPGN(129033L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
     N2kMsg.Add2ByteUInt(DaysSince1970);
     N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
     N2kMsg.Add2ByteInt(LocalOffset);
@@ -795,7 +795,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
                         double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus)
 {
     N2kMsg.SetPGN(129038L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=4;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteDouble(Longitude, 1e-07);
@@ -847,7 +847,7 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
                         bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State)
 {
     N2kMsg.SetPGN(129039L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=4;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteDouble(Longitude, 1e-07);
@@ -900,7 +900,7 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 // Cross Track Error
 void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
     N2kMsg.SetPGN(129283L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte((char)XTEMode | (NavigationTerminated?0x40:0));
     N2kMsg.Add4ByteDouble(XTE,0.01);
@@ -930,7 +930,7 @@ void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoi
                       uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber,
                       double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
     N2kMsg.SetPGN(129284L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=3;
     N2kMsg.AddByte(SID);
     N2kMsg.Add4ByteUDouble(DistanceToWaypoint,0.01);
     N2kMsg.AddByte((char)BearingReference | (PerpendicularCrossed?0x04:0) | (ArrivalCircleEntered?0x10:0)  | (CalculationType==N2kdct_RhumbLine?0x40:0));
@@ -1161,7 +1161,7 @@ bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 // Waypoint list
 void SetN2kPGN130074(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database) {
     N2kMsg.SetPGN(130074L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=7;
     N2kMsg.Add2ByteUInt(Start);
     N2kMsg.Add2ByteUInt(0); // set number of items to 0 initially
     N2kMsg.Add2ByteUInt(NumWaypoints);
@@ -1207,7 +1207,7 @@ bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
 // Wind Speed
 void SetN2kPGN130306(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference) {
     N2kMsg.SetPGN(130306L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
     N2kMsg.Add2ByteUDouble(WindSpeed,0.01);
     N2kMsg.Add2ByteUDouble(WindAngle,0.0001);
@@ -1366,7 +1366,7 @@ bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
                      tN2kPressureSource PressureSource, double SetPressure) {
   N2kMsg.SetPGN(130315L);
-  N2kMsg.Priority = 6;
+  N2kMsg.Priority = 5;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) PressureInstance);
   N2kMsg.AddByte((unsigned char) PressureSource);
@@ -1406,23 +1406,18 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 // Trim tab position is a percentage 0 to 100% where 0 is fully retracted and 100 is fully extended
 void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab) {
     N2kMsg.SetPGN(130576L);
-    N2kMsg.Priority=6;
+    N2kMsg.Priority=2;
     N2kMsg.AddByte(PortTrimTab);
     N2kMsg.AddByte(StbdTrimTab);
     N2kMsg.AddByte(0xFF);;// Reserved.
 }
 
 bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
-                     
+
   if (N2kMsg.PGN!=130576L) return false;
   int Index=0;
   PortTrimTab=N2kMsg.GetByte(Index);
   StbdTrimTab=N2kMsg.GetByte(Index);
-  
+
   return true;
 }
-
-
-
-
-
