@@ -370,7 +370,16 @@ void tN2kDeviceList::HandleSupportedPGNList(const tN2kMsg &N2kMsg) {
   ListUpdated=true;
 }
 
-// tN2kDeviceList
+//*****************************************************************************
+uint8_t tN2kDeviceList::Count() const {
+  uint8_t ret=0;
+
+  for ( size_t i=0; i<MaxDevices; i++ ) if ( Sources[i]!=0 ) ret++;
+
+  return ret;
+}
+
+// tN2kDeviceList::tInternalDevice
 
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice::tInternalDevice(uint64_t _Name, uint8_t _Source) : tNMEA2000::tDevice(_Name,_Source) {

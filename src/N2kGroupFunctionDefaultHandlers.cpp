@@ -138,7 +138,8 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
 
   if (MatchFilter) {
     // SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,PGN,N2kgfPGNec_Acknowledge,pec); // It was not clear should we also respond with acknowledge
-    pNMEA2000->SendIsoAddressClaim(0xff,iDev);
+    // Send delayed so that ack will be sent first.
+    pNMEA2000->SendIsoAddressClaim(0xff,iDev,2);
   }
 
   return true;

@@ -71,6 +71,14 @@ support.
 
 
 == Changes ==
+03.03.2019
+
+- Added: Charger status PGN 127507.
+
+- Added: Possibility to delay ISO address claim. Due to some devices CAN priority, it was sent too fast.
+
+- Added: Count for tDeviceList
+
 14.01.2019
 
 - Fix: Device list handler fix. Some tools may use source 254 and that was checked wrong.
@@ -710,7 +718,7 @@ For use with Atmel AVR processors internal CAN controller
 
 == License ==
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

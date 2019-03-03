@@ -1,7 +1,7 @@
 /*
 N2kMessages.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -168,7 +168,9 @@ enum tN2kSpeedWaterReferenceType {
                             N2kSWRT_Pitot_tube=1,
                             N2kSWRT_Doppler_log=2,
                             N2kSWRT_Ultra_Sound=3,
-                            N2kSWRT_Electro_magnetic=4
+                            N2kSWRT_Electro_magnetic=4,
+                            N2kSWRT_Error=254,
+                            N2kSWRT_Unavailable=255
                           };
 
 enum tN2kRudderDirectionOrder {
@@ -291,6 +293,28 @@ enum tN2kOnOff  {
                             N2kOnOff_Unavailable=3 // Unavailable
                           };
 
+enum tN2kChargeState  {
+                            N2kCS_Not_Charging=0,
+                            N2kCS_Bulk=1,
+                            N2kCS_Absorption=2,
+                            N2kCS_Overcharge=3,
+                            N2kCS_Equalise=4,
+                            N2kCS_Float=5,
+                            N2kCS_No_Float=6,
+                            N2kCS_Constant_VI=7,
+                            N2kCS_Disabled=8,
+                            N2kCS_Fault=9,
+                            N2kCS_Unavailable=15
+                          };
+                          
+enum tN2kChargerMode {
+                            N2kCM_Standalone=0,
+                            N2kCM_Primary=1,
+                            N2kCM_Secondary=2,
+                            N2kCM_Echo=3,
+                            N2kCM_Unavailable=15
+                          };
+  
 
 //*****************************************************************************
 // System date/time
@@ -705,6 +729,35 @@ inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
   return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
 }
 
+//*****************************************************************************
+// Charger Status
+// Input:
+//  - Instance                     ChargerInstance.
+//  - BatteryInstance              BatteryInstance.
+//  - Operating State              see. tN2kChargeState
+//  - Charger Mode                 see. tN2kChargerMode
+//  - Charger Enable/Disable       boolean
+//  - Equalization Pending         boolean
+//  - Equalization Time Remaining  double seconds
+//  
+void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+                     tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA);
+
+inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+                     tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
+ SetN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+}
+
+bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining);
+inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
+ return ParseN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+}
 
 //*****************************************************************************
 // Battery Status

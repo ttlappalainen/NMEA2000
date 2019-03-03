@@ -190,6 +190,9 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
     // Device list will be automatically updated. In stable system list should be ready and stable in few seconds. If you add device on the fly,
     // list will be updated as soon as it start to send data to the bus.
     bool ReadResetIsListUpdated() { if ( ListUpdated ) { ListUpdated=false; return true; } else { return false; } }
+
+    // Return count of found Devices
+    uint8_t Count() const;
 };
 
 #endif

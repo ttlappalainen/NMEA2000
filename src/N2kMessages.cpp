@@ -461,6 +461,48 @@ bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 }
 
 //*****************************************************************************
+// Charger Status
+// Input:
+//  - Instance                     ChargerInstance.
+//  - BatteryInstance              BatteryInstance.
+//  - Operating State              see. tN2kChargeState
+//  - Charger Mode                 see. tN2kChargerMode
+//  - Charger Enable/Disable       boolean
+//  - Equalization Pending         boolean
+//  - Equalization Time Remaining  double seconds
+//  
+void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode,
+                     tN2kOnOff Enabled, tN2kOnOff EqualizationPending, double EqualizationTimeRemaining) {
+    N2kMsg.SetPGN(127507UL);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(Instance);
+    N2kMsg.AddByte(BatteryInstance);
+    N2kMsg.AddByte((ChargerMode & 0x0f)<<4 | (ChargeState & 0x0f));
+    N2kMsg.AddByte(0x0f<<4 | (EqualizationPending & 0x03) << 2 | (Enabled & 0x03));
+    N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,1);
+}
+
+bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
+  if (N2kMsg.PGN!=127507UL) return false;
+  int Index=0;
+  Instance=N2kMsg.GetByte(Index);
+  BatteryInstance=N2kMsg.GetByte(Index);
+  unsigned char v;
+  v=N2kMsg.GetByte(Index);
+  ChargeState=(tN2kChargeState)(v&0x0f);
+  ChargerMode=(tN2kChargerMode)((v>>4)&0x0f);
+  v=N2kMsg.GetByte(Index);
+  Enabled=(tN2kOnOff)(v&0x03);
+  EqualizationPending=(tN2kOnOff)((v>>2)&0x03);
+  EqualizationTimeRemaining=N2kMsg.Get2ByteUDouble(60,Index);
+
+  return true;
+}
+
+//*****************************************************************************
 // Battery Status
 // Temperatures should be in Kelvins
 void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent,

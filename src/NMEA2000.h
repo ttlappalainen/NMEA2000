@@ -79,7 +79,7 @@ address anymore. See also method ReadResetAddressChanged().
 class tNMEA2000
 {
 public:
-  static void ClearCharBuf(size_t MaxLen, char *buf); 
+  static void ClearCharBuf(size_t MaxLen, char *buf);
   static void SetCharBuf(const char *str, size_t MaxLen, char *buf);
   static void ClearSetCharBuf(const char *str, size_t MaxLen, char *buf);
   // max and min are not available on all systems, so use own definition.
@@ -130,8 +130,8 @@ public:
         unsigned char DeviceFunction;
         unsigned char DeviceClass;
       // I found document: http://www.novatel.com/assets/Documents/Bulletins/apn050.pdf it says about next fields:
-      // The System Instance Field can be utilized to facilitate multiple NMEA 2000 networks on these larger marine platforms. 
-      // NMEA 2000 devices behind a bridge, router, gateway, or as part of some network segment could all indicate this by use 
+      // The System Instance Field can be utilized to facilitate multiple NMEA 2000 networks on these larger marine platforms.
+      // NMEA 2000 devices behind a bridge, router, gateway, or as part of some network segment could all indicate this by use
       // and application of the System Instance Field.
       // DeviceInstance and SystemInstance fields can be now changed by function SetDeviceInformationInstances or
       // by NMEA 2000 group function. Group function handling is build in the library.
@@ -170,14 +170,14 @@ public:
       uint8_t Source;
       unsigned long CreateTime;
       tDeviceInformation DevI;
-      
+
     public:
       tDevice(uint64_t _Name, uint8_t _Source=255) { Source=_Source; DevI.SetName(_Name); CreateTime=millis(); }
       virtual ~tDevice() {;}
       uint8_t GetSource() const { return Source; }
 
       unsigned long GetCreateTime() const { return CreateTime; }
-      
+
       // Device information
       inline uint64_t GetName() const { return DevI.GetName(); }
       inline bool IsSame(uint64_t Other) { return DevI.IsSame(Other); }
@@ -190,7 +190,7 @@ public:
       inline unsigned char GetDeviceClass() const { return DevI.GetDeviceClass(); }
       inline unsigned char GetIndustryGroup() const { return DevI.GetIndustryGroup(); }
       inline unsigned char GetSystemInstance() const { return DevI.GetSystemInstance(); }
-      
+
       // Product information
       virtual unsigned short GetN2kVersion() const=0;
       virtual unsigned short GetProductCode() const=0;
@@ -200,12 +200,12 @@ public:
       virtual const char * GetModelSerialCode() const=0;
       virtual unsigned short GetCertificationLevel() const=0;
       virtual unsigned short GetLoadEquivalency() const=0;
-      
+
       // Configuration information
       virtual const char * GetManufacturerInformation() const { return 0; }
       virtual const char * GetInstallationDescription1() const { return 0; }
       virtual const char * GetInstallationDescription2() const { return 0; }
-      
+
       virtual const unsigned long * GetTransmitPGNs() const { return 0; }
       virtual const unsigned long * GetReceivePGNs() const { return 0; }
   };
@@ -220,8 +220,8 @@ public:
       virtual void HandleMsg(const tN2kMsg &N2kMsg)=0;
       tNMEA2000 *GetNMEA2000() { return pNMEA2000; }
     public:
-      tMsgHandler(unsigned long _PGN=0, tNMEA2000 *_pNMEA2000=0) { 
-        PGN=_PGN; pNext=0; pNMEA2000=0; 
+      tMsgHandler(unsigned long _PGN=0, tNMEA2000 *_pNMEA2000=0) {
+        PGN=_PGN; pNext=0; pNMEA2000=0;
         if ( _pNMEA2000!=0 ) _pNMEA2000->AttachMsgHandler(this);
       }
       virtual ~tMsgHandler() { if ( pNMEA2000!=0 ) pNMEA2000->DetachMsgHandler(this); }
@@ -254,7 +254,7 @@ public:
       const char *InstallationDescription1;
       const char *InstallationDescription2;
   };
-  
+
 protected:
   class tInternalDevice {
   public:
@@ -264,6 +264,7 @@ protected:
     const tProductInformation *ProductInformation;
     tProductInformation *LocalProductInformation;
     char *ManufacturerSerialCode;
+    unsigned long PendingIsoAddressClaim;
     unsigned long PendingProductInformation;
     unsigned long PendingConfigurationInformation;
     unsigned long AddressClaimStarted;
@@ -279,7 +280,7 @@ protected:
       unsigned long NextDTSendTime; // Time, when next data packet can be send on TP broadcast
       uint8_t NextDTSequence;
 #endif
-#if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
+#if !defined(N2K_NO_HEARTBEAT_SUPPORT)
     unsigned long HeartbeatInterval;
     unsigned long DefaultHeartbeatInterval;
     unsigned long NextHeartbeatSentTime;
@@ -287,10 +288,10 @@ protected:
 
 
   public:
-    tInternalDevice() { 
+    tInternalDevice() {
       N2kSource=0;
       ProductInformation=0; LocalProductInformation=0; ManufacturerSerialCode=0;
-      PendingProductInformation=0; PendingConfigurationInformation=0; 
+      PendingIsoAddressClaim=0; PendingProductInformation=0; PendingConfigurationInformation=0;
       AddressClaimStarted=0; AddressClaimEndSource=N2kMaxCanBusAddress; //GetNextAddressFromBeginning=true;
       TransmitMessages=0; ReceiveMessages=0;
       MaxPGNSequenceCounters=0; PGNSequenceCounters=0;
@@ -299,12 +300,16 @@ protected:
       NextDTSequence=0;
 #endif
 
-#if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
+#if !defined(N2K_NO_HEARTBEAT_SUPPORT)
       HeartbeatInterval=60000;
       DefaultHeartbeatInterval=60000;
       NextHeartbeatSentTime=0;
 #endif
     }
+    void SetPendingIsoAddressClaim(unsigned long FromNow=2) { PendingIsoAddressClaim=millis()+FromNow; }
+    bool QueryPendingIsoAddressClaim() { return (PendingIsoAddressClaim?PendingIsoAddressClaim<millis():false); }
+    void ClearPendingIsoAddressClaim() { PendingIsoAddressClaim=0; }
+
     void SetPendingProductInformation() { PendingProductInformation=millis()+187+N2kSource*8; } // Use strange increment to avoid synchronize
     void ClearPendingProductInformation() { PendingProductInformation=0; }
     bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
@@ -312,8 +317,8 @@ protected:
     void SetPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
     void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
     bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
-    void UpdateAddressClaimEndSource() { 
-      AddressClaimEndSource=N2kSource; 
+    void UpdateAddressClaimEndSource() {
+      AddressClaimEndSource=N2kSource;
       if ( AddressClaimEndSource>0 ) { AddressClaimEndSource--; } else { AddressClaimEndSource=N2kMaxCanBusAddress; }
     }
   };
@@ -337,7 +342,7 @@ protected:
     bool DeviceReady;
     bool AddressChanged;
     bool DeviceInformationChanged;
-	
+
     // Device information
     tInternalDevice *Devices;
     int DeviceCount;
@@ -349,7 +354,7 @@ protected:
 
     const unsigned long *SingleFrameMessages[N2kMessageGroups];
     const unsigned long *FastPacketMessages[N2kMessageGroups];
-    
+
     class tCANSendFrame
     {
     public:
@@ -387,8 +392,8 @@ protected:
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
     virtual bool CANOpen()=0;
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
-    // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for the driver 
-    // and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. 
+    // This will be called on Open() before any other initialization. Inherit this, if buffers can be set for the driver
+    // and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp.
     virtual void InitCANFrameBuffers();
 #if defined(DEBUG_NMEA2000_ISR)
     virtual void TestISR() {;}
@@ -405,10 +410,10 @@ protected:
 
 protected:
     void InitDevices();
-    bool IsInitialized() { return (N2kCANMsgBuf!=0); } 
+    bool IsInitialized() { return (N2kCANMsgBuf!=0); }
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, unsigned char Destination, bool TPMsg, uint8_t &MsgIndex);
-#else    
+#else
     void FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, unsigned char Destination, uint8_t &MsgIndex);
 #endif
     uint8_t SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsigned char *buf);
@@ -440,28 +445,28 @@ protected:
     bool ForwardOnlyKnownMessages() const { return ((ForwardMode&FwdModeBit_OnlyKnownMessages)>0); }
     bool ForwardOwnMessages() const { return ((ForwardMode&FwdModeBit_OwnMessages)>0); }
     bool HandleOnlyKnownMessages() const { return ((ForwardMode&HandleModeBit_OnlyKnownMessages)>0); }
-    
+
     void RunMessageHandlers(const tN2kMsg &N2kMsg);
-    
-    bool HandleReceivedMessage(unsigned char Destination) { 
-      return (/* HandleMessagesToAnyDestination() */ true || 
-              tNMEA2000::IsBroadcast(Destination) || 
-              FindSourceDeviceIndex(Destination)>=0); 
+
+    bool HandleReceivedMessage(unsigned char Destination) {
+      return (/* HandleMessagesToAnyDestination() */ true ||
+              tNMEA2000::IsBroadcast(Destination) ||
+              FindSourceDeviceIndex(Destination)>=0);
     }
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
     bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
     bool IsReadyToSend() const {
-      return ( (DeviceReady || dbMode!=dm_None) && 
-               (N2kMode!=N2km_ListenOnly) && 
-               (N2kMode!=N2km_SendOnly) && 
-               (N2kMode!=N2km_ListenAndSend) 
+      return ( (DeviceReady || dbMode!=dm_None) &&
+               (N2kMode!=N2km_ListenOnly) &&
+               (N2kMode!=N2km_SendOnly) &&
+               (N2kMode!=N2km_ListenAndSend)
              );
     }
 
-    
+
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     // Transport protocol handlers
-    bool TestHandleTPMessage(unsigned long PGN, unsigned char Source, unsigned char Destination, 
+    bool TestHandleTPMessage(unsigned long PGN, unsigned char Source, unsigned char Destination,
                              unsigned char len, unsigned char *buf,
                              uint8_t &MsgIndex);
     bool SendTPCM_BAM(int iDev);
@@ -481,14 +486,14 @@ protected:
 #endif
 public:
     tNMEA2000();
-    
+
     // Your device can show multiple devices on the bus. If you define more than on device, call this before any other setting.
     void SetDeviceCount(const uint8_t _DeviceCount);
 
     // As default there are reservation for 5 messages. If it is not critical to handle all fast packet messages like with N2km_NodeOnly
     // you can set buffer size smaller like 3 or 2 by calling this before Open().
     void SetN2kCANMsgBufSize(const uint8_t _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
-    
+
     // When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data
     // This depends of your hw and device source. Device source has effect due to priority of getting sending slot. If your data is
     // critical, use buffer size, which is large enough (default 40 frames).
@@ -587,7 +592,7 @@ public:
     const tDeviceInformation GetDeviceInformation(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return tDeviceInformation(); return Devices[iDev].DeviceInformation; }
 
     // Class handles automatically address claiming and tell to the bus about itself.
-    void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0);
+    void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0, unsigned long delay=0);
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     bool SendProductInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
     bool SendConfigurationInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
@@ -599,8 +604,8 @@ public:
 #endif
     bool SendProductInformation(int DeviceIndex=0);
     bool SendConfigurationInformation(int DeviceIndex=0);
-	
-#if !defined(N2K_NO_HEARTBEAT_SUPPORT)    
+
+#if !defined(N2K_NO_HEARTBEAT_SUPPORT)
     // According to document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf
     // all NMEA devices shall transmit heartbeat PGN 126993.
     // With this function you can set transmission interval in ms (range 1000-655320 ms, default 60000). Set <1000 to disable it.
