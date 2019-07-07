@@ -31,11 +31,20 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define DebugStream Serial
 
+// #define NMEA2000_FRAME_ERROR_DEBUG
 // #define NMEA2000_FRAME_IN_DEBUG
 // #define NMEA2000_FRAME_OUT_DEBUG
 // #define NMEA2000_MSG_DEBUG
 // #define NMEA2000_BUF_DEBUG
 // #define NMEA2000_DEBUG
+
+#if defined(NMEA2000_FRAME_ERROR_DEBUG)
+# define N2kFrameErrDbg(fmt, args...)     DebugStream.print (fmt , ## args)
+# define N2kFrameErrDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+#else
+# define N2kFrameErrDbg(fmt, args...)
+# define N2kFrameErrDbgln(fmt, args...)
+#endif
 
 #if defined(NMEA2000_FRAME_IN_DEBUG)
 # define N2kFrameInDbg(fmt, args...)     DebugStream.print (fmt , ## args)
@@ -162,30 +171,30 @@ bool IsFastPacketSystemMessage(unsigned long PGN) {
 
 bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                   switch (PGN) {
-                                      case 126992L: // System date/time
-                                      case 126993L: // Heartbeat
-                                      case 127245L: // Rudder
-                                      case 127250L: // Vessel Heading
-                                      case 127251L: // Rate of Turn
-                                      case 127257L: // Attitude
-                                      case 127488L: // Engine parameters rapid
-                                      case 127493L: // Transmission parameters: dynamic
-                                      case 127501L: // Binary status report
-                                      case 127505L: // Fluid level
-                                      case 127508L: // Battery Status
-                                      case 127513L: // Battery Configuration Status
-                                      case 128259L: // Boat speed
-                                      case 128267L: // Water depth
-                                      case 129025L: // Lat/lon rapid
-                                      case 129026L: // COG SOG rapid
-                                      case 129283L: // Cross Track Error
-                                      case 130306L: // Wind Speed
-                                      case 130310L: // Outside Environmental parameters
-                                      case 130311L: // Environmental parameters
-                                      case 130312L: // Temperature
-                                      case 130314L: // Pressure
-                                      case 130316L: // Temperature extended range
-                                      case 130576L: // Small Craft Status (Trim Tab position)
+                                      case 126992L: // System date/time, pri=3, period=1000
+                                      case 126993L: // Heartbeat, pri=7, period=60000
+                                      case 127245L: // Rudder, pri=2, period=100
+                                      case 127250L: // Vessel Heading, pri=2, period=100
+                                      case 127251L: // Rate of Turn, pri=2, period=100
+                                      case 127257L: // Attitude, pri=3, period=1000
+                                      case 127488L: // Engine parameters rapid, rapid Update, pri=2, period=100
+                                      case 127493L: // Transmission parameters: dynamic, pri=2, period=100
+                                      case 127501L: // Binary status report, pri=3, period=NA
+                                      case 127505L: // Fluid level, pri=6, period=2500
+                                      case 127508L: // Battery Status, pri=6, period=1500
+                                      case 127513L: // Battery Configuration Status, pri=6, period=NA
+                                      case 128259L: // Boat speed, pri=2, period=1000
+                                      case 128267L: // Water depth, pri=3, period=1000
+                                      case 129025L: // Lat/lon rapid, pri=2, period=100
+                                      case 129026L: // COG SOG rapid, pri=2, period=250
+                                      case 129283L: // Cross Track Error, pri=3, period=1000
+                                      case 130306L: // Wind Speed, pri=2, period=100
+                                      case 130310L: // Outside Environmental parameters, pri=5, period=500
+                                      case 130311L: // Environmental parameters, pri=5, period=500
+                                      case 130312L: // Temperature, pri=2, period=2000
+                                      case 130314L: // Pressure, pri=2, period=2000
+                                      case 130316L: // Temperature extended range, pri=2, period=NA
+                                      case 130576L: // Small Craft Status (Trim Tab position), pri=2, period=NA
                                       return true;
                                   }
                                   return false;
@@ -194,7 +203,7 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
 bool IsMandatoryFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case 126464L: // PGN List (Transmit and Receive), pri=6, period=NA
-                                      case 126996L: // Product information, pri=6, period=NA */
+                                      case 126996L: // Product information, pri=6, period=NA
                                       case 126998L: // Configuration information, pri=6, period=NA
                                       return true;
                                   }
@@ -205,8 +214,19 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case 127237L: // Heading/Track control, pri=2, period=250
                                       case 127489L: // Engine parameters dynamic, pri=2, period=500
+                                      case 127496L: // Trip fuel consumption, vessel, pri=5, period=1000
+                                      case 127497L: // Trip fuel consumption, engine, pri=5, period=1000
+                                      case 127498L: // Engine parameters static, pri=5, period=NA
+                                      case 127503L: // AC Input Status, pri=6, period=1500
+                                      case 127504L: // AC Output Status, pri=6, period=1500
                                       case 127506L: // DC Detailed status, pri=6, period=1500
                                       case 127507L: // Charger status, pri=6, period=1500
+                                      case 127509L: // Inverter status, pri=6, period=1500
+                                      case 127510L: // Charger configuration status, pri=6, period=NA
+                                      case 127511L: // Inverter Configuration Status, pri=6, period=NA
+                                      case 127512L: // AGS configuration status, pri=6, period=NA
+                                      case 127513L: // Battery configuration status, pri=6, period=NA
+                                      case 127514L: // AGS Status, pri=6, period=1500
                                       case 128275L: // Distance log, pri=6, period=1000
                                       case 129029L: // GNSS Position Data, pri=3, period=1000
                                       case 129038L: // AIS Class A Position Report, pri=4, period=NA
@@ -1542,14 +1562,14 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
               N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],1,len,buf);
             } else { // We have lost frame, so free this
-              N2kFrameInDbg(millis()); N2kFrameInDbg(", Lost frame ");  N2kFrameInDbg(N2kCANMsgBuf[MsgIndex].LastFrame); N2kFrameInDbg("/");  N2kFrameInDbg(buf[0]);
-              N2kFrameInDbg(", source ");  N2kFrameInDbg(Source); N2kFrameInDbg(" for: "); N2kFrameInDbgln(PGN);
+              N2kFrameErrDbg(millis()); N2kFrameErrDbg(", Lost frame ");  N2kFrameErrDbg(N2kCANMsgBuf[MsgIndex].LastFrame); N2kFrameErrDbg("/");  N2kFrameErrDbg(buf[0]);
+              N2kFrameErrDbg(", source ");  N2kFrameErrDbg(Source); N2kFrameErrDbg(" for: "); N2kFrameErrDbgln(PGN);
               N2kCANMsgBuf[MsgIndex].FreeMessage();
               MsgIndex=MaxN2kCANMsgs;
             }
           } else {  // Orphan frame
-              N2kFrameInDbg(millis()); N2kFrameInDbg(", Orphan frame "); N2kFrameInDbg(buf[0]); N2kFrameInDbg(", source ");
-              N2kFrameInDbg(Source); N2kFrameInDbg(" for: "); N2kFrameInDbgln(PGN);
+              N2kFrameErrDbg(millis()); N2kFrameErrDbg(", Orphan frame "); N2kFrameErrDbg(buf[0]); N2kFrameErrDbg(", source ");
+              N2kFrameErrDbg(Source); N2kFrameErrDbg(" for: "); N2kFrameErrDbgln(PGN);
           }
         } else { // Handle first frame
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)

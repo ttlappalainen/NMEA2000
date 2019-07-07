@@ -306,7 +306,7 @@ enum tN2kChargeState  {
                             N2kCS_Fault=9,
                             N2kCS_Unavailable=15
                           };
-                          
+
 enum tN2kChargerMode {
                             N2kCM_Standalone=0,
                             N2kCM_Primary=1,
@@ -314,7 +314,7 @@ enum tN2kChargerMode {
                             N2kCM_Echo=3,
                             N2kCM_Unavailable=15
                           };
-  
+
 
 //*****************************************************************************
 // System date/time
@@ -608,6 +608,35 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   return ret;
 }
 
+//*****************************************************************************
+// Trip Parameters, Engine
+// Input:
+//  - EngineInstance           Engine instance.
+//  - TripFuelUsed             in litres
+//  - FuelRateAverage          in litres/hour
+//  - FuelRateEconomy          in litres/hour
+//  - InstantaneousFuelEconomy in litres/hour
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127497(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
+                     double FuelRateAverage,
+                     double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA);
+
+inline void SetN2kEngineTripParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
+                     double FuelRateAverage,
+                     double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA) {
+  SetN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy,InstantaneousFuelEconomy);
+}
+
+bool ParseN2kPGN127497(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
+                     double &FuelRateAverage,
+                     double &FuelRateEconomy, double &InstantaneousFuelEconomy);
+inline bool ParseN2kEngineTripParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
+                     double &FuelRateAverage,
+                     double &FuelRateEconomy, double &InstantaneousFuelEconomy) {
+  return ParseN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy, InstantaneousFuelEconomy);
+}
+
 typedef uint64_t tN2kBinaryStatus;
 
 //*****************************************************************************
@@ -739,21 +768,21 @@ inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
 //  - Charger Enable/Disable       boolean
 //  - Equalization Pending         boolean
 //  - Equalization Time Remaining  double seconds
-//  
-void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+//
+void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
                      tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
                      tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA);
 
-inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
                      tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
                      tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
  SetN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
 }
 
-bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
                      tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
                      tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining);
-inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
                      tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
                      tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
  return ParseN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
@@ -1427,10 +1456,10 @@ inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
 
 inline bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
                        tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
-  double SetHumidity;                      
+  double SetHumidity;
   return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
 }
-                       
+
 inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
                        tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
   return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity);
@@ -1517,7 +1546,7 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
 void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab);
 
 inline void SetN2kTrimTab(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab){
-                     
+
   SetN2kPGN130576(N2kMsg,PortTrimTab, StbdTrimTab);
 }
 

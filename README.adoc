@@ -71,6 +71,14 @@ support.
 
 
 == Changes ==
+07.07.2019
+
+- Added: Trip fuel consumption, engine PGN 127497.
+
+- Added: More PGN:s to default fast packet list.
+
+- Updated: Examples MessageSender and DataDisplay2, which can be used for testing messages.
+
 03.03.2019
 
 - Added: Charger status PGN 127507.

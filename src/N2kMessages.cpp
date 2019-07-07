@@ -324,6 +324,36 @@ bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2
 }
 
 //*****************************************************************************
+// Trip Parameters, Engine
+void SetN2kPGN127497(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
+                     double FuelRateAverage,
+                     double FuelRateEconomy, double InstantaneousFuelEconomy) {
+  N2kMsg.SetPGN(127497L);
+  N2kMsg.Priority=2;
+  N2kMsg.AddByte(EngineInstance);
+  N2kMsg.Add2ByteUDouble(TripFuelUsed,1);
+  N2kMsg.Add2ByteDouble(FuelRateAverage, 0.1);
+  N2kMsg.Add2ByteDouble(FuelRateEconomy, 0.1);
+  N2kMsg.Add2ByteDouble(InstantaneousFuelEconomy, 0.1);
+}
+
+bool ParseN2kPGN127497(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
+                     double &FuelRateAverage,
+                     double &FuelRateEconomy, double &InstantaneousFuelEconomy) {
+  if (N2kMsg.PGN!=127497L) return false;
+
+  int Index=0;
+
+  EngineInstance=N2kMsg.GetByte(Index);
+  TripFuelUsed=N2kMsg.Get2ByteUDouble(1,Index);
+  FuelRateAverage=N2kMsg.Get2ByteDouble(0.1,Index);
+  FuelRateEconomy=N2kMsg.Get2ByteDouble(0.1,Index);
+  InstantaneousFuelEconomy=N2kMsg.Get2ByteDouble(0.1,Index);
+
+  return true;
+}
+
+//*****************************************************************************
 // Binary status
 
 //*****************************************************************************
@@ -470,8 +500,8 @@ bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 //  - Charger Enable/Disable       boolean
 //  - Equalization Pending         boolean
 //  - Equalization Time Remaining  double seconds
-//  
-void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance, 
+//
+void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
                      tN2kChargeState ChargeState, tN2kChargerMode ChargerMode,
                      tN2kOnOff Enabled, tN2kOnOff EqualizationPending, double EqualizationTimeRemaining) {
     N2kMsg.SetPGN(127507UL);
@@ -483,7 +513,7 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
     N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,1);
 }
 
-bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance, 
+bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
                      tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
                      tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
   if (N2kMsg.PGN!=127507UL) return false;
