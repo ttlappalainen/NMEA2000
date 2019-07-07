@@ -73,6 +73,10 @@ support.
 == Changes ==
 07.07.2019
 
+- Fixed: PGN 127513 was accidently defined also as single frame message.
+
+07.07.2019
+
 - Added: Trip fuel consumption, engine PGN 127497.
 
 - Added: More PGN:s to default fast packet list.

@@ -182,7 +182,6 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 127501L: // Binary status report, pri=3, period=NA
                                       case 127505L: // Fluid level, pri=6, period=2500
                                       case 127508L: // Battery Status, pri=6, period=1500
-                                      case 127513L: // Battery Configuration Status, pri=6, period=NA
                                       case 128259L: // Boat speed, pri=2, period=1000
                                       case 128267L: // Water depth, pri=3, period=1000
                                       case 129025L: // Lat/lon rapid, pri=2, period=100
