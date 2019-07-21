@@ -1556,6 +1556,28 @@ inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &
 }
 
 
+//*****************************************************************************
+// Raymarine Instrument Backlight setting
+// Input:
+//  - InstrumentGroup
+//  - GroupBrightness
+
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+
+void SetN2kPGN126720(tN2kMsg &N2kMsg, int8_t InstrumentGroup, int8_t GroupBrightness);
+
+inline void SetN2kInstrumentBacklight(tN2kMsg &N2kMsg, int8_t InstrumentGroup, int8_t GroupBrightness){
+  SetN2kPGN126720(N2kMsg, InstrumentGroup, GroupBrightness);
+}
+
+bool ParseN2kPGN126720(const tN2kMsg &N2kMsg, int8_t &InstrumentGroup, int8_t &GroupBrightness);
+
+inline bool ParseN2kInstrumentBacklight(const tN2kMsg &N2kMsg, int8_t &InstrumentGroup, int8_t &GroupBrightness) {
+  return ParseN2kPGN126720(N2kMsg, InstrumentGroup, GroupBrightness);
+}
+
+
 
 
 #endif

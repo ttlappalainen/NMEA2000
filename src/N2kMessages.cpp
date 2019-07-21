@@ -24,6 +24,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "N2kMessages.h"
 #include <string.h>
 
+int BacklightMsgIndex = 0;
+
 //*****************************************************************************
 // System time
 void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
@@ -1490,6 +1492,65 @@ bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdT
   int Index=0;
   PortTrimTab=N2kMsg.GetByte(Index);
   StbdTrimTab=N2kMsg.GetByte(Index);
+
+  return true;
+}
+
+//*****************************************************************************
+// Raymarine Instrument Backlight setting
+// Call set and send twice, the first time the group gets selected, the second time the brightness is sent
+void SetN2kPGN126720(tN2kMsg &N2kMsg, int8_t InstrumentGroup, int8_t GroupBrightness) {
+
+    if ((BacklightMsgIndex & 1) == 0) {
+      // 00	09	3B	9F	8C	0C	XX	01    Select group
+      N2kMsg.SetPGN(126720L);
+      N2kMsg.Priority=6;
+      N2kMsg.AddByte(BacklightMsgIndex);
+      N2kMsg.AddByte(0x09);
+      N2kMsg.AddByte(0x3B);
+      N2kMsg.AddByte(0x9F);
+      N2kMsg.AddByte(0x8C);
+      N2kMsg.AddByte(0x0C);
+      N2kMsg.AddByte(InstrumentGroup);
+      N2kMsg.AddByte(0x01);
+    } else {
+      // 01	00	XX	00	FF	FF	FF	FF    Set brightness
+      N2kMsg.SetPGN(126720L);
+      N2kMsg.Priority=6;
+      N2kMsg.AddByte(BacklightMsgIndex);
+      N2kMsg.AddByte(0x00);
+      N2kMsg.AddByte(GroupBrightness);
+      N2kMsg.AddByte(0x00);
+      N2kMsg.AddByte(0xFF);
+      N2kMsg.AddByte(0xFF);
+      N2kMsg.AddByte(0xFF);
+      N2kMsg.AddByte(0xFF);
+      BacklightMsgIndex += 32;
+    }
+    BacklightMsgIndex ^= 1;
+    if (BacklightMsgIndex > 225) {
+      BacklightMsgIndex = 0;
+    }
+}
+
+bool ParseN2kPGN126720(const tN2kMsg &N2kMsg, int8_t &InstrumentGroup, int8_t &GroupBrightness) {
+  // 00	09	3B	9F	8C	0C	XX	01    Select group
+  // 01	00	XX	00	FF	FF	FF	FF    Set brightness
+  if (N2kMsg.PGN!=126720L) return false;
+  int Index=0;
+  int receivedBacklightMsgIndex=N2kMsg.GetByte(Index);
+  if ((receivedBacklightMsgIndex & 1) == 0) {
+    Index=6;
+    InstrumentGroup=N2kMsg.GetByte(Index);
+  } else if ((receivedBacklightMsgIndex & 1) == 1) {
+    Index=2;
+    GroupBrightness=N2kMsg.GetByte(Index);
+  }
+
+  receivedBacklightMsgIndex &= ~1;
+  if (receivedBacklightMsgIndex == BacklightMsgIndex || (receivedBacklightMsgIndex + 32) == BacklightMsgIndex) { // I have no clue whether this is necessary but better safe than sorry
+    BacklightMsgIndex = BacklightMsgIndex > 161 ? 0 : BacklightMsgIndex + 64;
+  }
 
   return true;
 }
