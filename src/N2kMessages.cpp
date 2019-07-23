@@ -24,7 +24,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "N2kMessages.h"
 #include <string.h>
 
-int BacklightMsgIndex = 0;
+uint8_t BacklightMsgIndex = 0;
 
 //*****************************************************************************
 // System time
@@ -1513,6 +1513,7 @@ void SetN2kPGN126720(tN2kMsg &N2kMsg, int8_t InstrumentGroup, int8_t GroupBright
       N2kMsg.AddByte(0x0C);
       N2kMsg.AddByte(InstrumentGroup);
       N2kMsg.AddByte(0x01);
+      BacklightMsgIndex += 1;
     } else {
       // 01	00	XX	00	FF	FF	FF	FF    Set brightness
       N2kMsg.SetPGN(126720L);
@@ -1525,11 +1526,7 @@ void SetN2kPGN126720(tN2kMsg &N2kMsg, int8_t InstrumentGroup, int8_t GroupBright
       N2kMsg.AddByte(0xFF);
       N2kMsg.AddByte(0xFF);
       N2kMsg.AddByte(0xFF);
-      BacklightMsgIndex += 32;
-    }
-    BacklightMsgIndex ^= 1;
-    if (BacklightMsgIndex > 225) {
-      BacklightMsgIndex = 0;
+      BacklightMsgIndex += 31;
     }
 }
 
@@ -1538,7 +1535,7 @@ bool ParseN2kPGN126720(const tN2kMsg &N2kMsg, int8_t &InstrumentGroup, int8_t &G
   // 01	00	XX	00	FF	FF	FF	FF    Set brightness
   if (N2kMsg.PGN!=126720L) return false;
   int Index=0;
-  int receivedBacklightMsgIndex=N2kMsg.GetByte(Index);
+  uint8_t receivedBacklightMsgIndex=N2kMsg.GetByte(Index);
   if ((receivedBacklightMsgIndex & 1) == 0) {
     Index=6;
     InstrumentGroup=N2kMsg.GetByte(Index);
@@ -1548,9 +1545,8 @@ bool ParseN2kPGN126720(const tN2kMsg &N2kMsg, int8_t &InstrumentGroup, int8_t &G
   }
 
   receivedBacklightMsgIndex &= ~1;
-  if (receivedBacklightMsgIndex == BacklightMsgIndex || (receivedBacklightMsgIndex + 32) == BacklightMsgIndex) { // I have no clue whether this is necessary but better safe than sorry
-    BacklightMsgIndex = BacklightMsgIndex > 161 ? 0 : BacklightMsgIndex + 64;
-  }
+  // I have no clue whether this is necessary but better safe than sorry
+  BacklightMsgIndex += (receivedBacklightMsgIndex == BacklightMsgIndex || (receivedBacklightMsgIndex + 32) == BacklightMsgIndex) ? 64 : 0;
 
   return true;
 }
