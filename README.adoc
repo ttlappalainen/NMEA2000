@@ -71,6 +71,15 @@ support.
 
 
 == Changes ==
+17.10.2019
+
+- Fixed Rate of turn (PGN 127251) and AIS position report ROT (PGN 129038) value multiplier.
+
+- Separated N2k enums to own file N2kTypes.h
+
+- Fixed PGNs 127251, 127258, 130576 length for sending by padding with reserved. Some devices refuces
+  to listen message, if length is wrong.
+
 07.07.2019
 
 - Fixed: PGN 127513 was accidently defined also as single frame message.

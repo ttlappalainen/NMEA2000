@@ -1,7 +1,7 @@
 /* 
 N2kMsg.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -91,6 +91,8 @@ public:
   int DataLen;
   unsigned char Data[MaxDataLen];
   unsigned long MsgTime;
+protected:
+  void ResetData();
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
 protected:
   bool TPMessage;
@@ -99,12 +101,12 @@ public:
   bool IsTPMessage() const { return TPMessage; }
 #endif
 public:
-  tN2kMsg(unsigned char _Source=15);
+  tN2kMsg(unsigned char _Source=15, unsigned char _Priority=6, unsigned long _PGN=0, int _DataLen=0);
   void SetPGN(unsigned long _PGN);
   void ForceSource(unsigned char _Source) const { Source=_Source; }
   void CheckDestination() const { if ( (PGN & 0xff)!=0 ) Destination=0xff; } // We can send to specified destination only for PGN:s low byte=0 
   void Init(unsigned char _Priority, unsigned long _PGN, unsigned char _Source, unsigned char _Destination=0xff);
-  void Clear();
+  virtual void Clear();
   bool IsValid() const { return (PGN!=0 && DataLen>0); }
   void Add8ByteDouble(double v, double precision, double UndefVal=N2kDoubleNA);
   void Add4ByteDouble(double v, double precision, double UndefVal=N2kDoubleNA);

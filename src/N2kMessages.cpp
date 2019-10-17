@@ -112,7 +112,9 @@ void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
     N2kMsg.SetPGN(127251L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteUDouble(RateOfTurn,((1e-3/32.0) * 0.0001));
+    N2kMsg.Add4ByteUDouble(RateOfTurn,3.125E-08); //1e-6/32.0 
+    N2kMsg.AddByte(0xff);
+    N2kMsg.Add2ByteUInt(0xffff);
 }
 
 bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
@@ -121,7 +123,7 @@ bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOf
   int Index=0;
 
   SID=N2kMsg.GetByte(Index);
-  RateOfTurn=N2kMsg.Get4ByteDouble(((1e-3/32.0) * 0.0001),Index);
+  RateOfTurn=N2kMsg.Get4ByteDouble(3.125E-08,Index); //1e-6/32.0
 
   return true;
 }
@@ -167,6 +169,7 @@ void SetN2kPGN127258(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagneticVariation S
   N2kMsg.AddByte(Source & 0x0f);
   N2kMsg.Add2ByteUInt(DaysSince1970);
   N2kMsg.Add2ByteDouble(Variation, 0.0001);
+  N2kMsg.Add2ByteUInt(0xffff);
 }
 
 bool ParseN2kPGN127258(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kMagneticVariation &Source, uint16_t &DaysSince1970, double &Variation) {
@@ -879,7 +882,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte(0xff);
     N2kMsg.AddByte(0xff); // AIS transceiver information (5 bits)
     N2kMsg.Add2ByteUDouble(Heading, 1e-04);
-    N2kMsg.Add2ByteDouble(ROT, ((1e-3/32.0) * 0.0001));
+    N2kMsg.Add2ByteDouble(ROT, 3.125E-05); // 1e-3/32.0
     N2kMsg.AddByte(0xF0 | (NavStatus & 0x0f));
     N2kMsg.AddByte(0xff); // Reserved
 }
@@ -904,7 +907,7 @@ bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     vb=N2kMsg.GetByte(Index);
     vb=N2kMsg.GetByte(Index); // AIS transceiver information (5 bits)
     Heading=N2kMsg.Get2ByteUDouble(1e-04, Index);
-    ROT=N2kMsg.Get2ByteDouble(((1e-3/32.0) * 0.0001), Index);
+    ROT=N2kMsg.Get2ByteDouble(3.125E-05, Index); // 1e-3/32.0
     vb=N2kMsg.GetByte(Index); NavStatus=(tN2kAISNavStatus)(vb & 0x0f);
     vb=N2kMsg.GetByte(Index); // Reserved
 
@@ -1481,7 +1484,8 @@ void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab) {
     N2kMsg.Priority=2;
     N2kMsg.AddByte(PortTrimTab);
     N2kMsg.AddByte(StbdTrimTab);
-    N2kMsg.AddByte(0xFF);;// Reserved.
+    N2kMsg.Add2ByteUInt(0xFFFF); // Reserved.
+    N2kMsg.Add4ByteUInt(0xFFFFFFFF); // Reserved.
 }
 
 bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {

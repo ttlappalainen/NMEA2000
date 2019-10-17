@@ -1,7 +1,7 @@
 /*
 N2kMsg.cpp
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -55,14 +55,17 @@ double round(double val) {
 #endif
 
 //*****************************************************************************
-tN2kMsg::tN2kMsg(unsigned char _Source) {
-  Init(6,0,_Source,255);
+tN2kMsg::tN2kMsg(unsigned char _Source, unsigned char _Priority, unsigned long _PGN, int _DataLen) {
+  Init(_Priority,_PGN,_Source,255);
+  if ( _DataLen>0 && _DataLen<MaxDataLen ) DataLen=_DataLen;
+  ResetData();
+  if ( PGN!=0 ) MsgTime=millis();
 }
 
 //*****************************************************************************
 void tN2kMsg::SetPGN(unsigned long _PGN) {
   Clear();
-  PGN=_PGN;
+  if ( PGN==0 ) PGN=_PGN;
   MsgTime=millis();
 }
 
@@ -76,6 +79,13 @@ void tN2kMsg::Init(unsigned char _Priority, unsigned long _PGN, unsigned char _S
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
   TPMessage=false;
 #endif
+}
+
+//*****************************************************************************
+void tN2kMsg::ResetData() {
+  if ( DataLen>0 ) {
+    memset(Data,0xff,DataLen);
+  }
 }
 
 //*****************************************************************************
