@@ -243,6 +243,10 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   return false;
 }
 
+bool IsProprietaryFastPacketMessage(unsigned long PGN) {
+  return ( PGN==126720L ) || ( 130816L<=PGN && PGN<=131071L );
+}
+
 const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        2101,               // N2kVersion
                                        666,                // ProductCode
@@ -1114,7 +1118,8 @@ void tNMEA2000::SetDebugMode(tDebugMode _dbMode) {
 //*****************************************************************************
 bool tNMEA2000::IsFastPacketPGN(unsigned long PGN) {
   if ( IsFastPacketSystemMessage(PGN) || IsMandatoryFastPacketMessage(PGN) ||
-       ( FastPacketMessages[0]==0 && IsDefaultFastPacketMessage(PGN) ) ) return true;
+       ( FastPacketMessages[0]==0 && IsDefaultFastPacketMessage(PGN) ) ||
+       IsProprietaryFastPacketMessage(PGN) ) return true;
   int i;
 
     for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
@@ -1171,6 +1176,8 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
       }
     }
 
+    FastPacket=IsProprietaryFastPacketMessage(PGN);
+    
     return false;
 }
 
@@ -1747,17 +1754,17 @@ void SetN2kPGN126996Progmem(tN2kMsg &N2kMsg, const tNMEA2000::tProductInformatio
     N2kMsg.Add2ByteInt(pgm_read_word(&ProductInformation->N2kVersion));
     N2kMsg.Add2ByteInt(pgm_read_word(&ProductInformation->ProductCode));
     for (i=0; i<Max_N2kModelID_len && pgm_read_byte(&ProductInformation->N2kModelID[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelID[i])); }
-    for (; i<Max_N2kModelID_len; i++ ) { N2kMsg.AddByte(0); }
+    for (; i<Max_N2kModelID_len; i++ ) { N2kMsg.AddByte(0xff); }
     for (i=0; i<Max_N2kSwCode_len && pgm_read_byte(&ProductInformation->N2kSwCode[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kSwCode[i])); }
-    for (; i<Max_N2kSwCode_len; i++ ) { N2kMsg.AddByte(0); }
+    for (; i<Max_N2kSwCode_len; i++ ) { N2kMsg.AddByte(0xff); }
     for (i=0; i<Max_N2kModelVersion_len && pgm_read_byte(&ProductInformation->N2kModelVersion[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelVersion[i])); }
-    for (; i<Max_N2kModelVersion_len; i++ ) { N2kMsg.AddByte(0); }
+    for (; i<Max_N2kModelVersion_len; i++ ) { N2kMsg.AddByte(0xff); }
     if (OptionalSerialCode) {
       for (i=0; i<Max_N2kModelSerialCode_len && OptionalSerialCode[i]; i++ ) { N2kMsg.AddByte(OptionalSerialCode[i]); }
     } else {
       for (i=0; i<Max_N2kModelSerialCode_len && pgm_read_byte(&ProductInformation->N2kModelSerialCode[i]); i++ ) { N2kMsg.AddByte(pgm_read_byte(&ProductInformation->N2kModelSerialCode[i])); }
     }
-    for (; i<Max_N2kModelSerialCode_len; i++ ) { N2kMsg.AddByte(0); }
+    for (; i<Max_N2kModelSerialCode_len; i++ ) { N2kMsg.AddByte(0xff); }
     N2kMsg.AddByte(pgm_read_byte(&ProductInformation->CertificationLevel));
     N2kMsg.AddByte(pgm_read_byte(&ProductInformation->LoadEquivalency));
 }
