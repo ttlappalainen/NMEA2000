@@ -32,14 +32,14 @@ const double radToDeg=180.0/M_PI;
 //*****************************************************************************
 void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
   switch (N2kMsg.PGN) {
-    case 127250UL: HandleHeading(N2kMsg);
-    case 127258UL: HandleVariation(N2kMsg);
-    case 128259UL: HandleBoatSpeed(N2kMsg);
-    case 128267UL: HandleDepth(N2kMsg);
-    case 129025UL: HandlePosition(N2kMsg);
-    case 129026UL: HandleCOGSOG(N2kMsg);
-    case 129029UL: HandleGNSS(N2kMsg);
-    case 130306UL: HandleWind(N2kMsg);
+    case 127250UL: HandleHeading(N2kMsg); break;
+    case 127258UL: HandleVariation(N2kMsg); break;
+    case 128259UL: HandleBoatSpeed(N2kMsg); break;
+    case 128267UL: HandleDepth(N2kMsg); break;
+    case 129025UL: HandlePosition(N2kMsg); break;
+    case 129026UL: HandleCOGSOG(N2kMsg); break;
+    case 129029UL: HandleGNSS(N2kMsg); break;
+    case 130306UL: HandleWind(N2kMsg); break;
   }
 }
 
