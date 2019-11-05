@@ -1,7 +1,7 @@
 /*
 N2kMessagesEnumToStr.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -64,7 +64,7 @@ const char* tN2kGNSSmethodStrs[] = { "no GNSS", "GNSS fix", "DGNSS", "precise GN
 MakeN2kEnumTypeToStrFunc(tN2kGNSSmethod,tN2kGNSSmethodStrs)
 
 const char* tN2kTempSourceStrs[] = { "sea", "outside", "inside", "engine room", "main cabin", "live well", "bait well", "refridgeration",
-                                     "heating system", "dew point", "apparent wind chill", "theoretical wind chill", "heat index", "freezer"};
+                                     "heating system", "dew point", "apparent wind chill", "theoretical wind chill", "heat index", "freezer", "exhaust gas"};
 MakeN2kEnumTypeToStrFunc(tN2kTempSource,tN2kTempSourceStrs)
 
 const char* tN2kBatTypeStrs[] = { "flooded", "gel", "AGM"};
@@ -91,10 +91,16 @@ MakeN2kEnumTypeToStrFunc(tN2kOnOff,tN2kOnOffStrs)
 const char* tN2kPressureStrs[] = { "atmospheric", "water", "steam", "compressed air", "Hydraulic" };
 MakeN2kEnumTypeToStrFunc(tN2kPressureSource,tN2kPressureStrs)
 
+const char* tN2kHumidityStrs[] = { "inside", "outside" };
+MakeN2kEnumTypeToStrFunc(tN2kHumiditySource,tN2kHumidityStrs)
+
 const char* tN2kRudderDirectionOrderStrs[] = { "no direction order", "move to starboard", "move to port" };
 MakeN2kEnumTypeToStrFunc(tN2kRudderDirectionOrder,tN2kRudderDirectionOrderStrs)
 
 const char* tN2kSpeedWaterReferenceTypeStrs[] = {"Paddle wheel","Pitot tube","Doppler","Correlation (ultra sound)","Electro Magnetic"};
 MakeN2kEnumTypeToStrFunc(tN2kSpeedWaterReferenceType,tN2kSpeedWaterReferenceTypeStrs);
+
+const char* tN2kMagneticVariationStrs[] = { "Manual","Automatic Chart","Automatic Table","Automatic Calculation","WMM 2000","WMM 2005","WMM 2010","WMM 2015","WMM 2020" };
+MakeN2kEnumTypeToStrFunc(tN2kMagneticVariation, tN2kSpeedWaterReferenceTypeStrs);
 
 #endif

@@ -4,7 +4,7 @@
 
 // Note! If you use this on Arduino Mega, I prefer to also connect interrupt line
 // for MCP2515 and define N2k_CAN_INT_PIN to related line. E.g. MessageSender
-// sends so many meaages that Meaga can not handle them. If you only use
+// sends so many messages that Mega can not handle them. If you only use
 // received messages internally without slow operations, then youmay survive
 // without interrupt.
 
@@ -25,6 +25,7 @@ void Rudder(const tN2kMsg &N2kMsg);
 void EngineRapid(const tN2kMsg &N2kMsg);
 void EngineDynamicParameters(const tN2kMsg &N2kMsg);
 void TransmissionParameters(const tN2kMsg &N2kMsg);
+void TripFuelConsumption(const tN2kMsg &N2kMsg);
 void Speed(const tN2kMsg &N2kMsg);
 void WaterDepth(const tN2kMsg &N2kMsg);
 void BinaryStatus(const tN2kMsg &N2kMsg);
@@ -36,8 +37,10 @@ void DCStatus(const tN2kMsg &N2kMsg);
 void BatteryConfigurationStatus(const tN2kMsg &N2kMsg);
 void COGSOG(const tN2kMsg &N2kMsg);
 void GNSS(const tN2kMsg &N2kMsg);
+void LocalOffset(const tN2kMsg &N2kMsg);
 void Attitude(const tN2kMsg &N2kMsg);
 void Heading(const tN2kMsg &N2kMsg);
+void Humidity(const tN2kMsg &N2kMsg);
 void Pressure(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
@@ -48,6 +51,7 @@ tNMEA2000Handler NMEA2000Handlers[]={
   {127488L,&EngineRapid},
   {127489L,&EngineDynamicParameters},
   {127493L,&TransmissionParameters},
+  {127497L,&TripFuelConsumption},
   {127501L,&BinaryStatus},
   {127505L,&FluidLevel},
   {127506L,&DCStatus},
@@ -56,8 +60,10 @@ tNMEA2000Handler NMEA2000Handlers[]={
   {128267L,&WaterDepth},
   {129026L,&COGSOG},
   {129029L,&GNSS},
+  {129033L,&LocalOffset},
   {130310L,&OutsideEnvironmental},
   {130312L,&Temperature},
+  {130313L,&Humidity},
   {130314L,&Pressure},
   {130316L,&TemperatureExt},
   {0,0}
@@ -66,7 +72,7 @@ tNMEA2000Handler NMEA2000Handlers[]={
 Stream *OutputStream;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(115200); delay(500);
   OutputStream=&Serial;
 //   while (!Serial) 
    
@@ -196,6 +202,25 @@ void TransmissionParameters(const tN2kMsg &N2kMsg) {
 }
 
 //*****************************************************************************
+void TripFuelConsumption(const tN2kMsg &N2kMsg) {
+    unsigned char EngineInstance;
+    double TripFuelUsed;
+    double FuelRateAverage; 
+    double FuelRateEconomy; 
+    double InstantaneousFuelEconomy; 
+    
+    if (ParseN2kEngineTripParameters(N2kMsg,EngineInstance, TripFuelUsed, FuelRateAverage, FuelRateEconomy, InstantaneousFuelEconomy) ) {
+      PrintLabelValWithConversionCheckUnDef("Trip fuel consumption: ",EngineInstance,0,true);
+      PrintLabelValWithConversionCheckUnDef("  fuel used (l): ",TripFuelUsed,0,true);
+      PrintLabelValWithConversionCheckUnDef("  average fuel rate (l/h): ",FuelRateAverage,0,true);
+      PrintLabelValWithConversionCheckUnDef("  economy fuel rate (l/h): ",FuelRateEconomy,0,true);
+      PrintLabelValWithConversionCheckUnDef("  instantaneous fuel economy (l/h): ",InstantaneousFuelEconomy,0,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
 void Heading(const tN2kMsg &N2kMsg) {
     unsigned char SID;
     tN2kHeadingReference HeadingReference;
@@ -275,6 +300,22 @@ void GNSS(const tN2kMsg &N2kMsg) {
 }
 
 //*****************************************************************************
+void LocalOffset(const tN2kMsg &N2kMsg) {
+    uint16_t SystemDate;
+    double SystemTime;
+    int16_t Offset;
+    
+    if (ParseN2kLocalOffset(N2kMsg,SystemDate,SystemTime,Offset) ) {
+                      OutputStream->println("Date,time and local offset: ");
+      PrintLabelValWithConversionCheckUnDef("  days since 1.1.1970: ",SystemDate,0,true);
+      PrintLabelValWithConversionCheckUnDef("  seconds since midnight: ",SystemTime,0,true);
+      PrintLabelValWithConversionCheckUnDef("  local offset (min): ",Offset,0,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
 void OutsideEnvironmental(const tN2kMsg &N2kMsg) {
     unsigned char SID;
     double WaterTemperature;
@@ -302,6 +343,22 @@ void Temperature(const tN2kMsg &N2kMsg) {
                         OutputStream->print("Temperature source: "); PrintN2kEnumType(TempSource,OutputStream,false);
       PrintLabelValWithConversionCheckUnDef(", actual temperature: ",ActualTemperature,&KelvinToC);
       PrintLabelValWithConversionCheckUnDef(", set temperature: ",SetTemperature,&KelvinToC,true);
+    } else {
+      OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
+    }
+}
+
+//*****************************************************************************
+void Humidity(const tN2kMsg &N2kMsg) {
+    unsigned char SID;
+    unsigned char Instance;
+    tN2kHumiditySource HumiditySource;
+    double ActualHumidity,SetHumidity;
+    
+    if ( ParseN2kHumidity(N2kMsg,SID,Instance,HumiditySource,ActualHumidity,SetHumidity) ) {
+                        OutputStream->print("Humidity source: "); PrintN2kEnumType(HumiditySource,OutputStream,false);
+      PrintLabelValWithConversionCheckUnDef(", humidity: ",ActualHumidity,0,false);
+      PrintLabelValWithConversionCheckUnDef(", set humidity: ",SetHumidity,0,true);
     } else {
       OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
     }
@@ -412,9 +469,13 @@ void WaterDepth(const tN2kMsg &N2kMsg) {
     double Offset;
 
     if (ParseN2kWaterDepth(N2kMsg,SID,DepthBelowTransducer,Offset) ) {
-      if ( N2kIsNA(Offset) ) {
+      if ( N2kIsNA(Offset) || Offset == 0 ) {
         PrintLabelValWithConversionCheckUnDef("Depth below transducer",DepthBelowTransducer);
-        OutputStream->println(", offset not available");
+        if ( N2kIsNA(Offset) ) {
+          OutputStream->println(", offset not available");
+        } else {
+          OutputStream->println(", offset=0");
+        }
       } else {
         if (Offset>0) {
           OutputStream->print("Water depth:");

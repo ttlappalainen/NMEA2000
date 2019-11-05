@@ -7,18 +7,19 @@ Library gives you easy way to make different kind of NMEA2000 bus devices like
 NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 converter,
 sensor (e.g. temperature, wind) node.
 
-Library tries to fulfil NMEA 2000 mandatory functions and behaviour, so it
+Library tries to fulfill NMEA 2000 mandatory functions and behaviour, so it
 looks a bit complex inside. With default settings it requires about 23 kB rom
 and 3.3kB RAM in normal operation. So I prefer to use at least Arduino Mega,
 Due or Teensy 3.2 boards. Arduino Uno board has too little memory for full
 functionality. See "Memory requirements" later.
 
-To use Arduino Due board internal CAN you will also need NMEA2000_due library
+To use Arduino Due board internal CAN you will also need 
+https://github.com/ttlappalainen/NMEA2000_due[NMEA2000_due] library
 and due_can library, which you can download from
 https://github.com/ttlappalainen/due_can
 
 To use Arduino boards with MCP2515 CAN bus controller, you will also need
-NMEA2000_mcp library and mcp_can library. Use mcp_can library found on
+https://github.com/ttlappalainen/NMEA2000_mcp[NMEA2000_mcp] library and mcp_can library. Use mcp_can library found on
 https://github.com/ttlappalainen/CAN_BUS_Shield, which is developed version of
 original mcp_can library. This allows also to use 8MHz clock and has been tested with
 Maple Mini.  mcp_can library can be originally found on
@@ -27,25 +28,33 @@ been implemented to Seeed-Studio. At least 18.09.2017 it was up to date.
 
 To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551
 CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
-https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy library] contributed
-by (https://twitter.com/sarfata/[Thomas Sarlandie] and the
-(https://github.com/ttlappalainen/FlexCAN_Library[FlexCAN library]. FlexCan
+https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy] library contributed
+by (https://twitter.com/sarfata/[Thomas Sarlandie]) and the
+https://github.com/ttlappalainen/FlexCAN_Library[FlexCAN library]. FlexCan
 library is already included in
 https://www.pjrc.com/teensy/teensyduino.html[Teensyduino] extension. In order
 to use my fork, you have to remove FlexCAN library from `C:\Program Files
 (x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN`
 
-To use avr processors internal CAN you need also NMEA2000_avr library and
+To use avr processors internal CAN you need also 
+https://github.com/thomasonw/NMEA2000_avr[NMEA2000_avr] library and
 avr_can library, which you can download from
 https://github.com/thomasonw/avr_can
 
-To use MBED boards you need also NMEA2000_mbed library and other related
+To use MBED boards you need also 
+https://github.com/thomasonw/NMEA2000_mbed[NMEA2000_mbed] library and other related
 libraries. See origin for MBED port on
 https://github.com/thomasonw/NMEA2000_mbed
 
-To use Rasberry boards you need also NMEA2000_socketCAN library and other
-related libraries. See origin for Rasberry port on
+To use Raspberry boards you need also 
+https://github.com/ttlappalainen/NMEA2000_socketCAN[NMEA2000_socketCAN] library.
+NMEA2000_socketCAN has been originally forked from
 https://github.com/thomasonw/NMEA2000_socketCAN
+
+To use ESP32 boards you need also https://github.com/ttlappalainen/NMEA2000_esp32[NMEA2000_esp32] library, which you can 
+download from https://github.com/ttlappalainen/NMEA2000_esp32 . ESP32
+CAN driver by Thomas Barth has been implemented inside NMEA2000_esp32
+so you do not need other drivers for that.
 
 == Thanks ==
 
@@ -62,6 +71,156 @@ support.
 
 
 == Changes ==
+20.10.2019
+- Added support for Maretron proprietary PGNs 130823,65286, 65287. See N2kMaretron.h.
+  Thanks to Vassilis Bourdakis.
+  
+- Added proprietary fast packet message test as default. So now proprietary fast packet
+  messages will be automatically parsed right without need to use ExtendFastPacketMessages
+  
+- Fixed strings on product information. Unused characters will be filled with 0xff.
+
+17.10.2019
+
+- Fixed Rate of turn (PGN 127251) and AIS position report ROT (PGN 129038) value multiplier.
+
+- Separated N2k enums to own file N2kTypes.h
+
+- Fixed PGNs 127251, 127258, 130576 length for sending by padding with reserved. Some devices refuces
+  to listen message, if length is wrong.
+
+07.07.2019
+
+- Fixed: PGN 127513 was accidently defined also as single frame message.
+
+07.07.2019
+
+- Added: Trip fuel consumption, engine PGN 127497.
+
+- Added: More PGN:s to default fast packet list.
+
+- Updated: Examples MessageSender and DataDisplay2, which can be used for testing messages.
+
+03.03.2019
+
+- Added: Charger status PGN 127507.
+
+- Added: Possibility to delay ISO address claim. Due to some devices CAN priority, it was sent too fast.
+
+- Added: Count for tDeviceList
+
+14.01.2019
+
+- Fix: Device list handler fix. Some tools may use source 254 and that was checked wrong.
+
+- Fix: Message priorities.
+
+04.08.2018
+
+- Fix: NMEA2000.h/NMEA2000.cpp, just in parameter N2kSource type change by mrbubble62
+
+18.07.2018
+
+- Added: N2kMessagesEnumToStr.h "exhaust gas" string for temperature sources by mrbubble62.
+
+09.05.2018
+
+- Fix: NMEA2000_CAN.h, make ESP32 work with ESP-IDF framework, by Sarfata
+
+10.04.2018
+
+- Fix: Handling of humidity PGN 130313.
+
+06.04.2018
+
+- Added: Support for ESP32. See also NMEA2000_esp32
+
+- Fix: Changed some names to avoid conflicts with some stupid define macros on some environments.
+
+04.04.2018
+
+- Fix: NextHeartbeatSentTime initial value.
+
+- Added: New example NMEA2000ToNMEA0183. This has been tested on RPi3B, Arduino DUE, Arduino Mega, Teensy.
+
+26.03.2018
+
+- Added: Strings for Magnetic Variation enum by mrbubble62
+
+13.03.2018
+
+- Added: PGN129033 Local offset
+
+23.02.2018
+
+- Port config ability for SockeCAN by Al Thomason
+
+16.02.2018
+
+- SetN2kSource for other devices by jpilet
+
+29.01.2018
+
+- Added: PGN130576 Small Craft Status / Trim Tab Position definition by Nicholas Agro
+
+15.01.2018
+
+- Fix: ParseN2kPGN129284, Index was not initialized to 0, which caused unpredictable read.
+
+07.01.2018
+
+- Fix: Fast packet sequence counter must be related to PGN.
+
+- Fix: TP message priorities.
+
+- Fix: On SetDeviceInformationInstances we need to send ISO address claim, not start adress claim.
+
+- Fix: Do not respond any queries during address claim.
+
+- Fix: Fixed some messages default priority.
+
+- Fix: Responce to Complex Group Function requests.
+
+- Fix: Now compiles with different compiler definitions defined on NMEA2000_CompilerDefns.h
+
+- Added: Support for sending messages by using Transport Protocol. This is mandatory for NMEA 2000
+
+- Updated: License to 2018
+
+02.12.2017
+
+- Changes effect only use of tN2kDeviceList and AttachMsgHandler callbacks.
+
+- Added FindDeviceByIDs to tN2kDeviceList
+
+- Fix: Devicelist did not handle right, if device changed its address higher.
+
+- Fix: PNG message handler order problem on tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler);
+
+- Fix: If there was NMEA2000 library device with same name, they handshaked both addresses to null.
+  The problem still appears, if both devices will be started at same time. I need to add some
+  random start delay
+  
+- Cleaned spaces from end of lines on updated code.
+
+29.11.2017
+
+- Added PGN 128000 Leeway to N2kMessages.h/.cpp
+
+- Fix: Spelling WaterRefereced -> WaterReferenced on N2kMessages.h/.cpp
+
+27.11.2017
+
+- Fix some build errors due to missing include statements (did not affect Arduino, only other platforms)
+
+14.11.2017
+
+- Fix: Default responces to Complex Group Function.
+
+09.11.2017
+
+- Added library.json, thanks for ronzeiller.
+
 31.10.2017
 
 - Fix: fill unused chars on fastpacket messages with 0xff
@@ -486,13 +645,16 @@ To use Arduino NMEA2000 library you will need either
   only few euros, if you are handy and used to use soldering device.
 
 - Teensy 3.1/3.2 or 3.5/3.6 board with a MCP2562 or MCP2551 CAN-bus transeiver
-  transeiver (or similar, see FlexCAN documentation).
+  transeiver (or similar, see FlexCAN documentation). Note that Teensy 3.6 is
+  3.3 V only so with 3.6 you can use MCP2562 or some other 3.3V tranceiver.
+  
+- EPS32 with MCP2562 tranceiver.
 
 Library has been also used with Maple Mini board, which is much cheaper than
 arduino.
 
-If you using Arduino for transfering all messages to PC, I'll prefere Due
-version, since it is more powerful.  I Also prefere it, if you use handle
+If you using Arduino for transfering all messages to PC, I'll prefere Teensy
+boards, since they more powerful and draws less current.  I Also prefere those, if you handle
 messages (like GNSS) containing 8 byte double values. Arduino Mega has only 4
 byte double, so you may loose some accuracy.
 
@@ -507,8 +669,10 @@ ready,
 - Download either NMEA2000_due, NMEA2000_mcp or https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy] library zip depending you hw.
 
 - Download either https://github.com/ttlappalainen/due_can[due_can] or
-  https://github.com/ttlappalainen/CAN_BUS_Shield[mcp_can] library zip
-  depending you hw or install Teensyduino for Teensy 3.1/3.2 or 3.5/3.6 boards.
+  https://github.com/ttlappalainen/CAN_BUS_Shield[mcp_can] or
+  https://github.com/ttlappalainen/FlexCAN_Library[FlexCAN_Library] library zip
+  depending you hw. For Teensy boards you need to install also Teensyduino.
+  Note that on installing Teensyduino you should not install FleCAN with it.
 
 - Install all libraries (Add .ZIP library).
 
@@ -524,7 +688,9 @@ ready,
 
 So you are ready to play with your own device. Check also the
 `NMEA2000\Examples\ActisenseListener`, which reads all data from NEMA2000 bus and
-sends it to PC.
+sends it to PC. `NMEA2000/Examples/ArduinoGateway` allows you to mimic Actisense
+NGT-1 and connect e.g. a Raspberry Pi running Signal-K to the NMEA2000 bus with
+an Arduino or Teensy.
 
 == Using Arduino Software older than 1.6.6 ==
 
@@ -582,7 +748,7 @@ For use with Atmel AVR processors internal CAN controller
 
 == License ==
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

@@ -1,0 +1,27 @@
+= NMEA2000 -> SeaSmart/NMEA0183 WiFi converter =
+
+ NMEA0183/NMEA2000 library. NMEA2000 -> NMEA0183
+ 
+   Reads messages from NMEA2000 and converts them to SeaSmart
+   format and some also to NMEA0183 format and acts as server
+   on WiFi network.
+
+   The example is designed for sending N2k data to WiFi in NMEA0183
+   and SeaSmart format. You can use this with OpenCPN and various 
+   mobile app, which can connect to TCP server and read NMEA0183
+   or SeaSmart formatted data.
+   
+   Example has been tested on ESP32.
+   
+   Currently you need to define you WiFi settings on the beginning
+   of .ino. The plan is to add WiFiManager style configuration.
+
+ To use this example you need install also:
+ 
+   - NMEA2000 library
+   
+   - NMEA0183 library
+   
+   - Related CAN libraries.
+
+   - ESP32 environment installed

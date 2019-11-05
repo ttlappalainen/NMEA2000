@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="lib/NMEA0183/NMEA0183Stream.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1629" topLine="32" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183Messages.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4532" topLine="146" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/NMEA2000_CAN.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2534" topLine="48" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183Msg.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5177" topLine="165" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/N2kStream.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/N2kDef.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1479" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3257" topLine="108" />
+		</Cursor>
+	</File>
+	<File name="NMEA0183Handlers.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="488" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4182" topLine="120" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183Messages.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5126" topLine="144" />
+		</Cursor>
+	</File>
+	<File name="N2kDataToNMEA0183.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="465" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183Msg.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="989" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183LinuxStream.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1340" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/N2kMsg.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1307" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000_socketCAN/NMEA2000_SocketCAN.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1398" topLine="25" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA0183/NMEA0183LinuxStream.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1420" topLine="14" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/NMEA2000.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14801" topLine="281" />
+		</Cursor>
+	</File>
+	<File name="N2kDataToNMEA0183.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2829" topLine="72" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/N2kMessages.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="28313" topLine="288" />
+		</Cursor>
+	</File>
+	<File name="lib/NMEA2000/src/NMEA2000.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="40737" topLine="936" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>

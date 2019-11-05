@@ -1,5 +1,5 @@
-/* 
-N2kCANMsg.h
+/*
+BoardSerialNumber.cpp
 
 Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
@@ -21,41 +21,10 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef _tN2kCANMsg_H_
-#define _tN2kCANMsg_H_
-#include <N2kMsg.h>
+#ifndef _BOARD_SERIAL_NUMBER_H_
+#define _BOARD_SERIAL_NUMBER_H_
+#include <stdint.h>
 
-class tN2kCANMsg
-{
-public:
-  tN2kCANMsg()
-    : Ready(false),FreeMsg(true),SystemMessage(false), KnownMessage(false) 
-#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-      ,TPRequireCTS(false), TPMaxPackets(0) 
-#endif
-    {
-	  N2kMsg.Clear();
-  }
-  tN2kMsg N2kMsg;
-  bool Ready;  // Ready for handling
-  bool FreeMsg; // Msg is free for fill up
-  bool SystemMessage;
-  bool KnownMessage;
-#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-  unsigned char TPRequireCTS; // =0 no, n=after each n frames
-  unsigned char TPMaxPackets; // =0 not TP message. >0 number of packets can be received.
-#endif
-  unsigned char LastFrame; // Last received frame sequence number on fast packets or multi packet
-  unsigned char CopiedLen;
-  
-public:
-  void FreeMessage() { 
-    FreeMsg=true; Ready=false; SystemMessage=false; 
-#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-    TPMaxPackets=0; TPRequireCTS=false; 
-#endif
-    N2kMsg.Clear(); N2kMsg.Source=0; 
-  }  
-};
+uint32_t GetBoardSerialNumber();
 
 #endif

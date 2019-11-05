@@ -1,7 +1,7 @@
 /*
 NMEA2000_CAN.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -23,20 +23,26 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   Just include this <NMEA2000_CAN.h> to your project and it will
   automatically select suitable CAN library according to board
   selected on Arduino development environment. You can still force
-  library by adding one of next defines before including library:
+  library by adding one of next defines before including NMEA2000_CAN.h:
   #define USE_N2K_CAN 1  // for use with SPI and MCP2515 can bus controller
   #define USE_N2K_CAN 2  // for use with due based CAN
   #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2 boards
   #define USE_N2K_CAN 4  // for use with avr boards
   #define USE_N2K_CAN 5  // for use with socketCAN (linux, etc) systems
   #define USE_N2K_CAN 6  // for use with MBED (ARM) systems
+  #define USE_N2K_CAN 7  // for use with ESP32
 
   There are also library specific defines:
   mcp_can:
     #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
     #define N2k_CAN_INT_PIN 21 // Use interrupt  and it is connected to pin 21
     #define USE_MCP_CAN_CLOCK_SET 8  // possible values 8 for 8Mhz and 16 for 16 Mhz clock
-  */
+    
+  esp32:
+    #define ESP32_CAN_TX_PIN GPIO_NUM_16
+    #define ESP32_CAN_RX_PIN GPIO_NUM_4
+    
+*/
 
 
 #ifndef _NMEA2000_CAN_H_
@@ -51,6 +57,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_AVR_CAN 4
 #define USE_N2K_SOCKET_CAN 5
 #define USE_N2K_MBED_CAN 6
+#define USE_N2K_ESP32_CAN 7
 
 
 // Select right CAN according to prosessor
@@ -66,6 +73,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_CAN USE_N2K_AVR_CAN
 #elif defined(__linux__)||defined(__linux)||defined(linux)
 #define USE_N2K_CAN USE_N2K_SOCKET_CAN
+#elif defined(ARDUINO_ARCH_ESP32) || defined(ESP32)
+#define USE_N2K_CAN USE_N2K_ESP32_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
@@ -94,8 +103,11 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_avr());
 
 #elif USE_N2K_CAN == USE_N2K_SOCKET_CAN
 // Use socketCAN devices
+#ifndef SOCKET_CAN_PORT
+  #define SOCKET_CAN_PORT NULL
+  #endif
 #include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
-tNMEA2000 &NMEA2000=*(new tNMEA2000_SocketCAN());
+tNMEA2000 &NMEA2000=*(new tNMEA2000_SocketCAN(SOCKET_CAN_PORT));
 tSocketStream serStream;
 
 #elif USE_N2K_CAN == USE_N2K_MBED_CAN
@@ -103,6 +115,10 @@ tSocketStream serStream;
 #include <NMEA2000_mbed.h>       // https://github.com/thomasonw/NMEA2000_mbed
 tNMEA2000 &NMEA2000=*(new tNMEA2000_mbed());
 tmbedStream serStream;
+
+#elif USE_N2K_CAN == USE_N2K_ESP32_CAN
+#include <NMEA2000_esp32.h>       // https://github.com/ttlappalainen/NMEA2000_esp32
+tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
@@ -116,7 +132,7 @@ tmbedStream serStream;
 #endif
 
 #include <SPI.h>
-#include <mcp_can.h> // https://github.com/peppeve/CAN_BUS_Shield
+#include <mcp_can.h> // https://github.com/ttlappalainen/CAN_BUS_Shield
 
 #if !defined(N2k_CAN_INT_PIN)
 #define N2k_CAN_INT_PIN 0xff   // No interrupt.

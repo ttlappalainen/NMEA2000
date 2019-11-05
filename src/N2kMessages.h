@@ -1,7 +1,7 @@
 /*
 N2kMessages.h
 
-Copyright (c) 2015-2017 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -37,252 +37,24 @@ NMEA2000.h
 #define _N2kMessages_H_
 
 #include "N2kMsg.h"
+#include "N2kTypes.h"
 #include <stdint.h>
 
-inline double RadToDeg(double v) { return v*180.0/3.1415926535897932384626433832795; }
-inline double DegToRad(double v) { return v/180.0*3.1415926535897932384626433832795; }
-inline double CToKelvin(double v) { return v+273.15; }
-inline double KelvinToC(double v) { return v-273.15; }
-inline double FToKelvin(double v) { return (v-32)*5.0/9.0+273.15; }
-inline double KelvinToF(double v) { return (v-273.15)*9.0/5.0+32; }
-inline double mBarToPascal(double v) { return v*100; }
-inline double PascalTomBar(double v) { return v/100; }
-inline double hPAToPascal(double v) { return v*100; }
-inline double PascalTohPA(double v) { return v/100; }
-inline double AhToCoulomb(double v) { return v*3600; }
-inline double CoulombToAh(double v) { return v/3600; }
-inline double hToSeconds(double v) { return v*3600; }
-inline double SecondsToh(double v) { return v/3600; }
-inline double msToKnots(double v) { return v*3600/1852.0; }
-
-enum tN2kHeadingReference {
-                            N2khr_true=0,
-                            N2khr_magnetic=1
-                          };
-enum tN2kDistanceCalculationType {
-                            N2kdct_GreatCircle=0,
-                            N2kdct_RhumbLine=1
-                          };
-enum tN2kXTEMode  {
-                            N2kxtem_Autonomous=0,
-                            N2kxtem_Differential=1,
-                            N2kxtem_Estimated=2,
-                            N2kxtem_Simulator=3,
-                            N2kxtem_Manual=4
-                          };
-enum tN2kGNSStype {
-                            N2kGNSSt_GPS=0,
-                            N2kGNSSt_GLONASS=1,
-                            N2kGNSSt_GPSGLONASS=2,
-                            N2kGNSSt_GPSSBASWAAS=3,
-                            N2kGNSSt_GPSSBASWAASGLONASS=4,
-                            N2kGNSSt_Chayka=5,
-                            N2kGNSSt_integrated=6,
-                            N2kGNSSt_surveyed=7,
-                            N2kGNSSt_Galileo=8
-                          };
-enum tN2kGNSSmethod {
-                            N2kGNSSm_noGNSS=0,
-                            N2kGNSSm_GNSSfix=1,
-                            N2kGNSSm_DGNSS=2,
-                            N2kGNSSm_PreciseGNSS=3
-                          };
-
-enum tN2kGNSSDOPmode {
-                            N2kGNSSdm_1D,
-                            N2kGNSSdm_2D,
-                            N2kGNSSdm_3D,
-                            N2kGNSSdm_Auto,
-                            N2kGNSSdm_Reserved,
-                            N2kGNSSdm_Error,
-                          };
-
-enum tN2kTempSource {
-                            N2kts_SeaTemperature=0,
-                            N2kts_OutsideTemperature=1,
-                            N2kts_InsideTemperature=2,
-                            N2kts_EngineRoomTemperature=3,
-                            N2kts_MainCabinTemperature=4,
-                            N2kts_LiveWellTemperature=5,
-                            N2kts_BaitWellTemperature=6,
-                            N2kts_RefridgerationTemperature=7,
-                            N2kts_HeatingSystemTemperature=8,
-                            N2kts_DewPointTemperature=9,
-                            N2kts_ApparentWindChillTemperature=10,
-                            N2kts_TheoreticalWindChillTemperature=11,
-                            N2kts_HeatIndexTemperature=12,
-                            N2kts_FreezerTemperature=13,
-                            N2kts_ExhaustGasTemperature=14
-                          };
-
-enum tN2kHumiditySource {
-                            N2khs_InsideHumidity=0,
-                            N2khs_OutsideHumidity=1,
-                            N2khs_Undef=1
-                          };
-
-enum tN2kPressureSource {
-                            N2kps_Atmospheric = 0,
-                            N2kps_Water = 1,
-                            N2kps_Steam = 2,
-                            N2kps_CompressedAir = 3,
-                            N2kps_Hydraulic = 4
-                          };
-
-enum tN2kTimeSource {
-                            N2ktimes_GPS=0,
-                            N2ktimes_GLONASS=1,
-                            N2ktimes_RadioStation=2,
-                            N2ktimes_LocalCesiumClock=3,
-                            N2ktimes_LocalRubidiumClock=4,
-                            N2ktimes_LocalCrystalClock=5
-                          };
-
-enum tN2kFluidType {
-                            N2kft_Fuel=0,
-                            N2kft_Water=1,
-                            N2kft_GrayWater=2,
-                            N2kft_LiveWell=3,
-                            N2kft_Oil=4,
-                            N2kft_BlackWater=5
-                          };
-
-enum tN2kWindReference {
-                            N2kWind_True_North=0,
-                            N2kWind_Magnetic=1,
-                            N2kWind_Apprent=2,
-                            N2kWind_True_boat=3,
-                            N2kWind_True_water=4
-                          };
-
-enum tN2kSpeedWaterReferenceType {
-                            N2kSWRT_Paddle_wheel=0,
-                            N2kSWRT_Pitot_tube=1,
-                            N2kSWRT_Doppler_log=2,
-                            N2kSWRT_Ultra_Sound=3,
-                            N2kSWRT_Electro_magnetic=4
-                          };
-
-enum tN2kRudderDirectionOrder {
-                            N2kRDO_NoDirectionOrder=0,
-                            N2kRDO_MoveToStarboard=1,
-                            N2kRDO_MoveToPort=2
-                          };
-
-enum tN2kDCType {
-                            N2kDCt_Battery=0,
-                            N2kDCt_Alternator=1,
-                            N2kDCt_Converter=2,
-                            N2kDCt_SolarCell=3,
-                            N2kDCt_WindGenerator=4
-                          };
-
-enum tN2kBatType  {
-                            N2kDCbt_Flooded=0,
-                            N2kDCbt_Gel=1,
-                            N2kDCbt_AGM=2
-                          };
-
-enum tN2kBatEqSupport  {
-                            N2kDCES_No=0,  // No, Off, Disabled
-                            N2kDCES_Yes=1, // Yes, On, Enabled
-                            N2kDCES_Error=2, // Error
-                            N2kDCES_Unavailable=3 // Unavailable
-                          };
-
-enum tN2kBatChem {
-                            N2kDCbc_LeadAcid=0,
-                            N2kDCbc_LiIon=1,
-                            N2kDCbc_NiCad=2,
-                            N2kDCbc_NiMh=3
-                          };
-
-enum tN2kBatNomVolt {
-                            N2kDCbnv_6v=0,
-                            N2kDCbnv_12v=1,
-                            N2kDCbnv_24v=2,
-                            N2kDCbnv_32v=3,
-                            N2kDCbnv_62v=4,
-                            N2kDCbnv_42v=5,
-                            N2kDCbnv_48v=6
-                          };
-
-enum tN2kTransmissionGear {
-                            N2kTG_Forward=0,
-                            N2kTG_Neutral=1,
-                            N2kTG_Reverse=2,
-                            N2kTG_Unknown=3,
-                          };
-
-enum tN2kAISRepeat {
-                            N2kaisr_Initial=0,
-                            N2kaisr_First=1,
-                            N2kaisr_Second=2,
-                            N2kaisr_Final=3,
-                          };
-
-enum tN2kAISVersion {
-                            N2kaisv_ITU_R_M_1371_1=0,
-                            N2kaisv_ITU_R_M_1371_3=1,
-                          };
-
-enum tN2kAISTranceiverInfo {
-                            N2kaisti_Channel_A_VDL_reception=0,
-                            N2kaisti_Channel_B_VDL_reception=1,
-                            N2kaisti_Channel_A_VDL_transmission=2,
-                            N2kaisti_Channel_B_VDL_transmission=3,
-                            N2kaisti_Own_information_not_broadcast=4,
-                            N2kaisti_Reserved=5
-                          };
-
-enum tN2kAISNavStatus {
-                            N2kaisns_Under_Way_Motoring=0,
-                            N2kaisns_At_Anchor=1,
-                            N2kaisns_Not_Under_Command=2,
-                            N2kaisns_Restricted_Manoeuverability=3,
-                            N2kaisns_Constrained_By_Draught=4,
-                            N2kaisns_Moored=5,
-                            N2kaisns_Aground=6,
-                            N2kaisns_Fishing=7,
-                            N2kaisns_Under_Way_Sailing=8,
-                            N2kaisns_Hazardous_Material_High_Speed=9,
-                            N2kaisns_Hazardous_Material_Wing_In_Ground=10,
-                            N2kaisns_AIS_SART=14,
-                          };
-
-enum tN2kAISDTE {
-                            N2kaisdte_Ready=0,
-                            N2kaisdte_NotReady=1,
-                          };
-
-enum tN2kAISUnit {
-                            N2kaisunit_ClassB_SOTDMA=0,
-                            N2kaisunit_ClassB_CS=1,
-                          };
-
-enum tN2kAISMode {
-                            N2kaismode_Autonomous=0,
-                            N2kaismode_Assigned=1,
-                          };
-enum tN2kMagneticVariation {
-                            N2kmagvar_Manual=0,
-                            N2kmagvar_Chart=1,
-                            N2kmagvar_Table=2,
-                            N2kmagvar_Calc=3,
-                            N2kmagvar_WMM2000=4,
-                            N2kmagvar_WMM2005=5,
-                            N2kmagvar_WMM2010=6,
-                            N2kmagvar_WMM2015=7,
-                            N2kmagvar_WMM2020=8,
-                          };
-
-enum tN2kOnOff  {
-                            N2kOnOff_Off=0,  // No, Off, Disabled
-                            N2kOnOff_On=1, // Yes, On, Enabled
-                            N2kOnOff_Error=2, // Error
-                            N2kOnOff_Unavailable=3 // Unavailable
-                          };
-
+inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795; }
+inline double DegToRad(double v) { return N2kIsNA(v)?v:v/180.0*3.1415926535897932384626433832795; }
+inline double CToKelvin(double v) { return N2kIsNA(v)?v:v+273.15; }
+inline double KelvinToC(double v) { return N2kIsNA(v)?v:v-273.15; }
+inline double FToKelvin(double v) { return N2kIsNA(v)?v:(v-32)*5.0/9.0+273.15; }
+inline double KelvinToF(double v) { return N2kIsNA(v)?v:(v-273.15)*9.0/5.0+32; }
+inline double mBarToPascal(double v) { return N2kIsNA(v)?v:v*100; }
+inline double PascalTomBar(double v) { return N2kIsNA(v)?v:v/100; }
+inline double hPAToPascal(double v) { return N2kIsNA(v)?v:v*100; }
+inline double PascalTohPA(double v) { return N2kIsNA(v)?v:v/100; }
+inline double AhToCoulomb(double v) { return N2kIsNA(v)?v:v*3600; }
+inline double CoulombToAh(double v) { return N2kIsNA(v)?v:v/3600; }
+inline double hToSeconds(double v) { return N2kIsNA(v)?v:v*3600; }
+inline double SecondsToh(double v) { return N2kIsNA(v)?v:v/3600; }
+inline double msToKnots(double v) { return N2kIsNA(v)?v:v*3600/1852.0; }
 
 //*****************************************************************************
 // System date/time
@@ -576,6 +348,35 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
   return ret;
 }
 
+//*****************************************************************************
+// Trip Parameters, Engine
+// Input:
+//  - EngineInstance           Engine instance.
+//  - TripFuelUsed             in litres
+//  - FuelRateAverage          in litres/hour
+//  - FuelRateEconomy          in litres/hour
+//  - InstantaneousFuelEconomy in litres/hour
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127497(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
+                     double FuelRateAverage,
+                     double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA);
+
+inline void SetN2kEngineTripParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
+                     double FuelRateAverage,
+                     double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA) {
+  SetN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy,InstantaneousFuelEconomy);
+}
+
+bool ParseN2kPGN127497(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
+                     double &FuelRateAverage,
+                     double &FuelRateEconomy, double &InstantaneousFuelEconomy);
+inline bool ParseN2kEngineTripParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
+                     double &FuelRateAverage,
+                     double &FuelRateEconomy, double &InstantaneousFuelEconomy) {
+  return ParseN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy, InstantaneousFuelEconomy);
+}
+
 typedef uint64_t tN2kBinaryStatus;
 
 //*****************************************************************************
@@ -697,6 +498,35 @@ inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
   return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
 }
 
+//*****************************************************************************
+// Charger Status
+// Input:
+//  - Instance                     ChargerInstance.
+//  - BatteryInstance              BatteryInstance.
+//  - Operating State              see. tN2kChargeState
+//  - Charger Mode                 see. tN2kChargerMode
+//  - Charger Enable/Disable       boolean
+//  - Equalization Pending         boolean
+//  - Equalization Time Remaining  double seconds
+//
+void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
+                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+                     tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA);
+
+inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
+                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+                     tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
+ SetN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+}
+
+bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
+                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining);
+inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
+                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
+ return ParseN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+}
 
 //*****************************************************************************
 // Battery Status
@@ -761,25 +591,45 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
 }
 
 //*****************************************************************************
+// Leeway
+// Input:
+//  - SID            Sequence ID field
+//  - Leeway         Nautical Leeway Angle, which is defined as the angle between the vessel’s heading (direction to which the
+//                   vessel’s bow points) and its course (direction of its motion (track) through the water)
+// Output:
+//  - N2kMsg         NMEA2000 message ready to be send.
+void SetN2kPGN128000(tN2kMsg &N2kMsg, unsigned char SID, double Leeway);
+
+inline void SetN2kLeeway(tN2kMsg &N2kMsg, unsigned char SID, double Leeway) {
+  SetN2kPGN128000(N2kMsg,SID,Leeway);
+}
+
+bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway);
+
+inline bool ParseN2kLeeway(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway) {
+  return ParseN2kPGN128000(N2kMsg, SID, Leeway);
+}
+
+//*****************************************************************************
 // Boat speed
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and wind at same time, you can set same SID for different messages
 //                          to indicate that they are measured at same time.
-//  - WaterRefereced        Speed over water in m/s
+//  - WaterReferenced        Speed over water in m/s
 //  - GroundReferenced      Ground referenced speed in m/s
 //  - SWRT                  Type of transducer. See definition for tN2kSpeedWaterReferenceType
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
+void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel);
 
-inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefereced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
-  SetN2kPGN128259(N2kMsg,SID,WaterRefereced,GroundReferenced,SWRT);
+inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced=N2kDoubleNA, tN2kSpeedWaterReferenceType SWRT=N2kSWRT_Paddle_wheel) {
+  SetN2kPGN128259(N2kMsg,SID,WaterReferenced,GroundReferenced,SWRT);
 }
 
-bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT);
+bool ParseN2kPGN128259(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterReferenced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT);
 
-inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterRefereced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
-  return ParseN2kPGN128259(N2kMsg, SID, WaterRefereced, GroundReferenced, SWRT);
+inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterReferenced, double &GroundReferenced, tN2kSpeedWaterReferenceType &SWRT) {
+  return ParseN2kPGN128259(N2kMsg, SID, WaterReferenced, GroundReferenced, SWRT);
 }
 
 //*****************************************************************************
@@ -928,6 +778,26 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
                      AgeOfCorrection
                      );
 }
+
+//*****************************************************************************
+// Date,Time & Local offset  ( see also PGN 126992 )
+// Input:
+//  - DaysSince1970         Days since 1.1.1970. You can find sample how to convert e.g. NMEA0183 date info to this on my NMEA0183 library on
+//                          NMEA0183Messages.cpp on function NMEA0183ParseRMC_nc
+//  - Time                  Seconds since midnight
+//  - Local offset          Local offset in minutes
+void SetN2kPGN129033(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset);
+
+inline void SetN2kLocalOffset(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset) {
+  SetN2kPGN129033(N2kMsg,DaysSince1970,SecondsSinceMidnight,LocalOffset);
+}
+
+bool ParseN2kPGN129033(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, int16_t &LocalOffset);
+
+inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, int16_t &LocalOffset) {
+  return ParseN2kPGN129033(N2kMsg,DaysSince1970,SecondsSinceMidnight,LocalOffset);
+}
+
 
 //*****************************************************************************
 // GNSS DOP data
@@ -1310,16 +1180,29 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double Humidity);
+                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA);
 inline void SetN2kHumidity(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double Humidity) {
-  SetN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, Humidity);
+                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA) {
+  SetN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity,SetHumidity);
 }
+
 bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &Humidity);
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity);
+
 inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &Humidity) {
-  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, Humidity);
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity) {
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
+}
+
+inline bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+  double SetHumidity;
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
+}
+
+inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
+                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+  return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity);
 }
 
 //*****************************************************************************
@@ -1389,5 +1272,30 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
                      double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
+
+
+//*****************************************************************************
+// Small Craft Status (Trim Tab Position)
+// Trim tab position is a percentage 0 to 100% where 0 is fully retracted and 100 is fully extended
+// Input:
+//  - PortTrimTab           Port trim tab position
+//  - StbdTrimTab           Starboard trim tab position
+
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab);
+
+inline void SetN2kTrimTab(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab){
+
+  SetN2kPGN130576(N2kMsg,PortTrimTab, StbdTrimTab);
+}
+
+bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab);
+inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
+  return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
+}
+
+
+
 
 #endif

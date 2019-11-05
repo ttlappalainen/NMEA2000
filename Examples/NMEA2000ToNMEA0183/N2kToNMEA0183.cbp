@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="N2kToNMEA0183" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/N2kToNMEA0183" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="/home/pi/Source/N2kToNMEA0183/lib/NMEA2000_socketCAN" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/N2kToNMEA0183" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DTARGET_LINUX_ARM" />
+			<Add directory="lib/NMEA2000_socketCAN" />
+			<Add directory="lib/NMEA2000/src" />
+			<Add directory="lib/NMEA0183" />
+		</Compiler>
+		<Unit filename="BoardSerialNumber.cpp" />
+		<Unit filename="BoardSerialNumber.h" />
+		<Unit filename="N2kDataToNMEA0183.cpp" />
+		<Unit filename="N2kDataToNMEA0183.h" />
+		<Unit filename="NMEA0183Handlers.h" />
+		<Unit filename="lib/NMEA0183/NMEA0183.cpp" />
+		<Unit filename="lib/NMEA0183/NMEA0183.h" />
+		<Unit filename="lib/NMEA0183/NMEA0183LinuxStream.cpp" />
+		<Unit filename="lib/NMEA0183/NMEA0183LinuxStream.h" />
+		<Unit filename="lib/NMEA0183/NMEA0183Messages.cpp" />
+		<Unit filename="lib/NMEA0183/NMEA0183Messages.h" />
+		<Unit filename="lib/NMEA0183/NMEA0183Msg.cpp" />
+		<Unit filename="lib/NMEA0183/NMEA0183Msg.h" />
+		<Unit filename="lib/NMEA0183/NMEA0183Stream.cpp" />
+		<Unit filename="lib/NMEA0183/NMEA0183Stream.h" />
+		<Unit filename="lib/NMEA2000/src/ActisenseReader.cpp" />
+		<Unit filename="lib/NMEA2000/src/ActisenseReader.h" />
+		<Unit filename="lib/NMEA2000/src/N2kCANMsg.h" />
+		<Unit filename="lib/NMEA2000/src/N2kDef.h" />
+		<Unit filename="lib/NMEA2000/src/N2kDeviceList.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kDeviceList.h" />
+		<Unit filename="lib/NMEA2000/src/N2kGroupFunction.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kGroupFunction.h" />
+		<Unit filename="lib/NMEA2000/src/N2kGroupFunctionDefaultHandlers.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kGroupFunctionDefaultHandlers.h" />
+		<Unit filename="lib/NMEA2000/src/N2kMessages.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kMessages.h" />
+		<Unit filename="lib/NMEA2000/src/N2kMessagesEnumToStr.h" />
+		<Unit filename="lib/NMEA2000/src/N2kMsg.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kMsg.h" />
+		<Unit filename="lib/NMEA2000/src/N2kStream.cpp" />
+		<Unit filename="lib/NMEA2000/src/N2kStream.h" />
+		<Unit filename="lib/NMEA2000/src/NMEA2000.cpp" />
+		<Unit filename="lib/NMEA2000/src/NMEA2000.h" />
+		<Unit filename="lib/NMEA2000/src/NMEA2000_CAN.h" />
+		<Unit filename="lib/NMEA2000/src/NMEA2000_CompilerDefns.h" />
+		<Unit filename="lib/NMEA2000/src/Seasmart.cpp" />
+		<Unit filename="lib/NMEA2000/src/Seasmart.h" />
+		<Unit filename="lib/NMEA2000_socketCAN/NMEA2000_SocketCAN.cpp" />
+		<Unit filename="lib/NMEA2000_socketCAN/NMEA2000_SocketCAN.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
