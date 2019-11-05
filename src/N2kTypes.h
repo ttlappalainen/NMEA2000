@@ -43,12 +43,12 @@ enum tN2kXTEMode  {
                             N2kxtem_Simulator=3,
                             N2kxtem_Manual=4
                           };
-enum tN2kGNSStype {
-                            N2kGNSSt_GPS=0,
-                            N2kGNSSt_GLONASS=1,
-                            N2kGNSSt_GPSGLONASS=2,
-                            N2kGNSSt_GPSSBASWAAS=3,
-                            N2kGNSSt_GPSSBASWAASGLONASS=4,
+enum tN2kGNSStype {         
+                            N2kGNSSt_undefined=0
+                            N2kGNSSt_GPS=1,
+                            N2kGNSSt_GLONASS=2,
+                            N2kGNSSt_GPSGLONASS=3,
+                            N2kGNSSt_LORAN_C=4,
                             N2kGNSSt_Chayka=5,
                             N2kGNSSt_integrated=6,
                             N2kGNSSt_surveyed=7,
