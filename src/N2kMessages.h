@@ -480,22 +480,23 @@ inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, t
 //  - DCType                Defines type of DC source. See definition of tN2kDCType
 //  - StateOfCharge         % of charge
 //  - StateOfHealth         % of heath
-//  - TimeRemaining         Time remaining in minutes
+//  - TimeRemaining         Time remaining in seconds
 //  - RippleVoltage         DC output voltage ripple in V
+//  - Capacity              Battery capacity in coulombs
 void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage);
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity);
 
 inline void SetN2kDCStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage) {
-  SetN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity) {
+  SetN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage,Capacity);
 }
 
 bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
-                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage);
+                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity);
 
 inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
-                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage) {
-  return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage);
+                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity) {
+  return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage, Capacity);
 }
 
 //*****************************************************************************
@@ -534,7 +535,7 @@ inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsi
 //  - BatteryInstance       BatteryInstance.
 //  - BatteryVoltage        Battery voltage in V
 //  - BatteryCurrent        Current in A
-//  - BatteryTemperature    Battery temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - BatteryTemperature    Battery temperature in K. Use function CToKelvin, if you want to use °C.
 //  - SID                   Sequence ID.
 void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=N2kDoubleNA,
                      double BatteryTemperature=N2kDoubleNA, unsigned char SID=1);
@@ -1092,8 +1093,8 @@ inline bool ParseN2kWindSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double 
 // Outside Environmental parameters
 // Input:
 //  - SID                   Sequence ID.
-//  - WaterTemperature      Water temperature in °K. Use function CToKelvin, if you want to use °C.
-//  - OutsideAmbientAirTemperature      Outside ambient temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - WaterTemperature      Water temperature in K. Use function CToKelvin, if you want to use °C.
+//  - OutsideAmbientAirTemperature      Outside ambient temperature in K. Use function CToKelvin, if you want to use °C.
 //  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
@@ -1120,7 +1121,7 @@ inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsign
 // Input:
 //  - SID                   Sequence ID.
 //  - TempSource            see tN2kTempSource
-//  - Temperature           Temperature in °K. Use function CToKelvin, if you want to use °C.
+//  - Temperature           Temperature in K. Use function CToKelvin, if you want to use °C.
 //  - HumiditySource        see tN2kHumiditySource.
 //  - Humidity              Humidity in %
 //  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
@@ -1148,8 +1149,8 @@ inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char
 //  - SID                   Sequence ID.
 //  - TempInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
 //  - TempSource            see tN2kTempSource
-//  - ActualTemperature     Temperature in °K. Use function CToKelvin, if you want to use °C.
-//  - SetTemperature        Set temperature in °K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
+//  - ActualTemperature     Temperature in K. Use function CToKelvin, if you want to use °C.
+//  - SetTemperature        Set temperature in K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
 //                          which can be controlled like cabin, freezer, refridgeration temperature. God can use value for this for
 //                          outside and sea temperature values.
 // Output:
@@ -1252,8 +1253,8 @@ inline void SetN2kSetPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char 
 //  - SID                   Sequence ID.
 //  - TempInstance          This should be unic at least on one device. May be best to have it unic over all devices sending this PGN.
 //  - TempSource            see tN2kTempSource
-//  - ActualTemperature     Temperature in °K. Use function CToKelvin, if you want to use °C.
-//  - SetTemperature        Set temperature in °K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
+//  - ActualTemperature     Temperature in K. Use function CToKelvin, if you want to use °C.
+//  - SetTemperature        Set temperature in K. Use function CToKelvin, if you want to use °C. This is meaningfull for temperatures,
 //                          which can be controlled like cabin, freezer, refridgeration temperature. God can use value for this for
 //                          outside and sea temperature values.
 // Output:

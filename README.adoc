@@ -71,6 +71,17 @@ support.
 
 
 == Changes ==
+28.01.2019
+- NOTE! Compatibility change! PGN 127506 TimeRemaining should have been in seconds as it is SI unit.
+  If you have used that on your code, provide value in seconds. Parse function also return in seconds now.
+  
+- Added Capacity parameter to PGN 127506. I did not made overwrite function without due to above change. 
+  So it hopefully wakes you up about the changes.
+  
+- Fixed MaretronProprietary test on N2kMaretron.cpp
+
+- Some comment fixes.
+
 20.10.2019
 - Added support for Maretron proprietary PGNs 130823,65286, 65287. See N2kMaretron.h.
   Thanks to Vassilis Bourdakis.

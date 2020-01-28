@@ -51,7 +51,7 @@ bool ParseN2kMaretronPGN130823(const tN2kMsg &N2kMsg, unsigned char &SID, unsign
                      double &ActualTemperature, double &SetTemperature) {
   if (N2kMsg.PGN!=130823L) return false;
   int Index=0;
-  if (N2kMsg.Get2ByteInt(Index)!=MaretronProprietary ) return false;
+  if (N2kMsg.Get2ByteUInt(Index)!=MaretronProprietary ) return false;
   SID=N2kMsg.GetByte(Index);
   TempInstance=N2kMsg.GetByte(Index);
   TempSource=(tN2kTempSource)(N2kMsg.GetByte(Index));
@@ -78,7 +78,7 @@ bool ParseN2kMaretronPGN65286(const tN2kMsg &N2kMsg, unsigned char &SID, unsigne
                      double &FluidFlowRate) {
   if (N2kMsg.PGN!=65286L) return false;
   int Index=0;
-  if (N2kMsg.Get2ByteInt(Index)!=MaretronProprietary ) return false;
+  if (N2kMsg.Get2ByteUInt(Index)!=MaretronProprietary ) return false;
   SID=N2kMsg.GetByte(Index);
   FlowRateInstance=N2kMsg.GetByte(Index);
   FluidType=(tN2kFluidType)(N2kMsg.GetByte(Index));

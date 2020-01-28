@@ -465,7 +465,7 @@ bool ParseN2kPGN127505(const tN2kMsg &N2kMsg, unsigned char &Instance, tN2kFluid
 // DC Detailed Status
 //
 void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     uint8_t StateOfCharge, uint8_t StateOfHealth, double TimeRemaining, double RippleVoltage) {
+                     uint8_t StateOfCharge, uint8_t StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity) {
     N2kMsg.SetPGN(127506L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte(SID);
@@ -473,13 +473,14 @@ void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstanc
     N2kMsg.AddByte((unsigned char)DCType);
     N2kMsg.AddByte(StateOfCharge);
     N2kMsg.AddByte(StateOfHealth);
-    N2kMsg.Add2ByteUDouble(TimeRemaining,1.0);
+    N2kMsg.Add2ByteUDouble(TimeRemaining,60);
     N2kMsg.Add2ByteUDouble(RippleVoltage,0.001);
+    N2kMsg.Add2ByteUDouble(Capacity,3600);
 }
 
 //*****************************************************************************
 bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
-                     uint8_t &StateOfCharge, uint8_t &StateOfHealth, double &TimeRemaining, double &RippleVoltage){
+                     uint8_t &StateOfCharge, uint8_t &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity){
   if (N2kMsg.PGN!=127506L) return false;
   int Index=0;
   SID=N2kMsg.GetByte(Index);
@@ -487,8 +488,9 @@ bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   DCType=(tN2kDCType)(N2kMsg.GetByte(Index));
   StateOfCharge=N2kMsg.GetByte(Index);
   StateOfHealth=N2kMsg.GetByte(Index);
-  TimeRemaining=N2kMsg.Get2ByteUDouble(1.0,Index);
+  TimeRemaining=N2kMsg.Get2ByteUDouble(60,Index);
   RippleVoltage=N2kMsg.Get2ByteUDouble(0.001,Index);
+  Capacity=N2kMsg.Get2ByteUDouble(3600,Index);
 
   return true;
 }
