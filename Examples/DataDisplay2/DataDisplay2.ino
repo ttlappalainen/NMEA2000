@@ -71,6 +71,8 @@ tNMEA2000Handler NMEA2000Handlers[]={
 
 Stream *OutputStream;
 
+void HandleNMEA2000Msg(const tN2kMsg &N2kMsg);
+
 void setup() {
   Serial.begin(115200); delay(500);
   OutputStream=&Serial;
@@ -432,8 +434,9 @@ void DCStatus(const tN2kMsg &N2kMsg) {
     unsigned char StateOfHealth;
     double TimeRemaining;
     double RippleVoltage;
-    
-    if (ParseN2kDCStatus(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage) ) {
+    double Capacity;
+
+    if (ParseN2kDCStatus(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage,Capacity) ) {
       OutputStream->print("DC instance: ");
       OutputStream->println(DCInstance);
       OutputStream->print("  - type: "); PrintN2kEnumType(DCType,OutputStream);
@@ -616,4 +619,3 @@ void loop()
 { 
   NMEA2000.ParseMessages();
 }
-
