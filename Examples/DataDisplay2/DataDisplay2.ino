@@ -444,6 +444,7 @@ void DCStatus(const tN2kMsg &N2kMsg) {
       OutputStream->print("  - state of health (%): "); OutputStream->println(StateOfHealth);
       OutputStream->print("  - time remaining (h): "); OutputStream->println(TimeRemaining/60);
       OutputStream->print("  - ripple voltage: "); OutputStream->println(RippleVoltage);
+      OutputStream->print("  - capacity: "); OutputStream->println(Capacity);
     } else {
       OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
     }
