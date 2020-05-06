@@ -847,7 +847,6 @@ bool tNMEA2000::Open() {
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
       // On first open try add also default group function handlers
-      AddGroupFunctionHandler(new tN2kGroupFunctionHandler(this, 0));         // Default handler first so it remains last on list
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN60928(this)); // NAME handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126464(this)); // Rx/Tx list handler
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
@@ -855,6 +854,7 @@ bool tNMEA2000::Open() {
 #endif
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126996(this)); // Product information
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126998(this)); // Configuration information handler
+      AddGroupFunctionHandler(new tN2kGroupFunctionHandler(this, 0));          // Default handler always last on list
 #endif
     }
 
@@ -2222,11 +2222,21 @@ void tNMEA2000::SetISORqstHandler(bool(*ISORequestHandler)(unsigned long Request
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 //*****************************************************************************
 void tNMEA2000::AddGroupFunctionHandler(tN2kGroupFunctionHandler *pGroupFunctionHandler) {
-    if (pGroupFunctionHandler != 0)
-    {
-        // Add to the start of the list
-        pGroupFunctionHandler->pNext = pGroupFunctionHandlers;
+    if (pGroupFunctionHandler == 0) return;
+    // Add to the end on the list but before the default handler if it is installed.
+    if (pGroupFunctionHandlers == 0) { // If there is none set, put it to first
         pGroupFunctionHandlers = pGroupFunctionHandler;
+    } else {
+        tN2kGroupFunctionHandler* pLastGroupFunctionHandler;
+        // find last
+        for (pLastGroupFunctionHandler = pGroupFunctionHandlers;
+            pLastGroupFunctionHandler->pNext != 0 && pLastGroupFunctionHandler->pNext->PGN != 0;
+            pLastGroupFunctionHandler = pLastGroupFunctionHandler->pNext);
+        // Insert the new handler before the default handler if the default handler is present.
+        if (pLastGroupFunctionHandler->pNext != 0 && pLastGroupFunctionHandler->pNext->PGN == 0)
+            pGroupFunctionHandler->pNext = pLastGroupFunctionHandler->pNext;
+        // Add the new handler to the list.
+        pLastGroupFunctionHandler->pNext = pGroupFunctionHandler;
     }
 }
 #endif
