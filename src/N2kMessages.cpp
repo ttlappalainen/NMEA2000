@@ -1477,6 +1477,108 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 
   return true;
 }
+//*****************************************************************************
+// Watermaker Input Setting and Status
+// This PGN may be requested or used to command and configure a number of 
+// Watermaker controls.
+// Input:
+//  - WatermakerStatus              The watermaker operating status.
+//  - ProductionStartStop           Command to start/stop production or indicate Production state
+//  - RinseStartStop                Command to start/stop rinse/flush or indicate Rinse/Flush state.
+//  - LowPressurePumpStatus         Command to start/stop lo press pump or indicate lo press pump status
+//  - HighPressurePumpStatus        Command to start/stop hi press pump or indicate hi press pump status
+//  - EmergencyStop                 Command to Emergency Stop or indicate Emergency Stop state
+//  - ProductSolenoidValveStatus    Product solenoid valve status
+//  - FlushModeStatus               Flush mode status
+//  - SalinityStatus                Salinity status
+//  - FeedPressureStatus            Pressure status
+//  - OilChangeIndicatorStatus      Oil Change indicator status
+//  - FilterStatus                  Filter  Status
+//  - SystemStatus                  System Status
+//  - Salinity                      Product water salinity 0-65535 ppm
+//  - ProductWaterTemperature       Product water temperature 0-655.32 deg K
+//  - PreFilterPressure             Pre-Filter pressure 0-6,553,200 Pa Resolution 100 Pa
+//  - PostFilterPressure            Post-Filter pressure 0-6,553,200 Pa Resolution 100 Pa
+//  - FeedPressure                  Feed Pressure +/- 32,764 Kpa
+//  - SystemHighPressure            System High Pressure 0-65,532,000 Pa
+//  - ProductWaterFlow              Product water flow +/- 3.2764 cu-m/hr
+//  - BrineWaterFlow                Product water flow +/- 3.2764 cu-m/hr
+//  - RunTime                       0-4.295x10E+9 s   Resolution: 1 sec
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130567(tN2kMsg& N2kMsg, tN2kWatermakerStatus WatermakerStatus, tN2kOnOff ProductionStartStop, tN2kOnOff RinseStartStop,
+    tN2kOnOff LowPressurePumpStatus, tN2kOnOff HighPressurePumpStatus, tN2kOnOff EmergencyStop,
+    tN2kOkWarnError ProductSolenoidValveStatus, tN2kOnOff FlushModeStatus, tN2kOkWarnError SalinityStatus, tN2kOkWarnError FeedPressureStatus,
+    tN2kOkWarnError OilChangeIndicatorStatus, tN2kOkWarnError FilterStatus, tN2kOkWarnError SystemStatus, uint16_t Salinity,
+    double ProductWaterTemperature, double PreFilterPressure, double PostFilterPressure, double FeedPressure,
+    double SystemHighPressure, double ProductWaterFlow, double BrineWaterFlow, uint32_t RunTime)
+{
+    N2kMsg.SetPGN(130567L);
+    N2kMsg.Priority = 2;
+    N2kMsg.AddByte((WatermakerStatus & 0x3f) << 2 | 
+                   (ProductionStartStop & 0x02));
+    N2kMsg.AddByte((RinseStartStop & 0x02) << 6 | 
+                   (LowPressurePumpStatus & 0x02) << 4 | 
+                   (HighPressurePumpStatus & 0x02) << 2 | 
+                   (EmergencyStop & 0x02));
+    N2kMsg.AddByte((ProductSolenoidValveStatus & 0x02) << 6 |
+                   (FlushModeStatus & 0x02) << 4 |
+                   (SalinityStatus & 0x02) << 2 |
+                   (FeedPressureStatus & 0x02));
+    N2kMsg.AddByte((OilChangeIndicatorStatus & 0x02) << 6 |
+                   (FilterStatus & 0x02) << 4 |
+                   (SystemStatus & 0x02) << 2 |
+                   (0x03));
+    N2kMsg.Add2ByteUInt(Salinity);
+    N2kMsg.Add2ByteDouble(ProductWaterTemperature, 0.01);
+    N2kMsg.Add2ByteUDouble(PreFilterPressure, 100);
+    N2kMsg.Add2ByteUDouble(PostFilterPressure, 100);
+    N2kMsg.Add2ByteDouble(FeedPressure, 1000);
+    N2kMsg.Add2ByteUDouble(SystemHighPressure, 1000);
+    N2kMsg.Add2ByteDouble(ProductWaterFlow, 1);
+    N2kMsg.Add2ByteDouble(BrineWaterFlow, 1);
+    N2kMsg.Add4ByteUInt(RunTime);
+}
+
+
+bool ParseN2kPGN130567(const tN2kMsg& N2kMsg, tN2kWatermakerStatus& WatermakerStatus, tN2kOnOff& ProductionStartStop, tN2kOnOff& RinseStartStop,
+    tN2kOnOff& LowPressurePumpStatus, tN2kOnOff& HighPressurePumpStatus, tN2kOnOff& EmergencyStop,
+    tN2kOkWarnError& ProductSolenoidValveStatus, tN2kOnOff& FlushModeStatus, tN2kOkWarnError& SalinityStatus, tN2kOkWarnError& FeedPressureStatus,
+    tN2kOkWarnError& OilChangeIndicatorStatus, tN2kOkWarnError& FilterStatus, tN2kOkWarnError& SystemStatus, uint16_t& Salinity,
+    double& ProductWaterTemperature, double& PreFilterPressure, double& PostFilterPressure, double& FeedPressure,
+    double& SystemHighPressure, double& ProductWaterFlow, double& BrineWaterFlow, uint32_t& RunTime)
+{
+
+    if (N2kMsg.PGN != 130567L) return false;
+    int Index = 0;
+    unsigned char b = N2kMsg.GetByte(Index);
+    WatermakerStatus = (b >> 2) & 0x3f;
+    ProductionStartStop = b & 0x02;
+    b = N2kMsg.GetByte(Index);
+    RinseStartStop = (b >> 6) & 0x02;
+    LowPressurePumpStatus = (b >> 4) & 0x02;
+    HighPressurePumpStatus = (b >> 2) & 0x02;
+    EmergencyStop = (b & 0x02);
+    b = N2kMsg.GetByte(Index);
+    ProductSolenoidValveStatus = (b >> 6) & 0x02;
+    FlushModeStatus = (b >> 4) & 0x02;
+    SalinityStatus = (b >> 2) & 0x02;
+    FeedPressureStatus = (b & 0x02);
+    b = N2kMsg.GetByte(Index);
+    OilChangeIndicatorStatus = (b >> 6) & 0x02;
+    FilterStatus = (b >> 4) & 0x02;
+    SystemStatus = (b >> 2) & 0x02;
+    ProductWaterTemperature = N2kMsg.Get2ByteDouble(0.01, Index);
+    PreFilterPressure = N2kMsg.Get2ByteUDouble(100, Index);
+    PostFilterPressure = N2kMsg.Get2ByteUDouble(100, Index);
+    FeedPressure = N2kMsg.Get2ByteDouble(1000, Index);
+    SystemHighPressure = N2kMsg.Get2ByteUDouble(1000, Index);
+    ProductWaterFlow = N2kMsg.Get2ByteDouble(.01, Index);
+    BrineWaterFlow = N2kMsg.Get2ByteDouble(.01, Index);
+    RunTime = N2kMsg.Get4ByteUInt(Index);
+
+    return true;
+}
 
 //*****************************************************************************
 // Trim Tab Position

@@ -55,6 +55,8 @@ inline double CoulombToAh(double v) { return N2kIsNA(v)?v:v/3600; }
 inline double hToSeconds(double v) { return N2kIsNA(v)?v:v*3600; }
 inline double SecondsToh(double v) { return N2kIsNA(v)?v:v/3600; }
 inline double msToKnots(double v) { return N2kIsNA(v)?v:v*3600/1852.0; }
+inline double PsiToPa(double v) { return N2kIsNA(v)?v:v*6894.76; }
+inline double PaToPsi(double v) { return N2kIsNA(v)?v:v/6894.76; }
 
 //*****************************************************************************
 // System date/time
@@ -1272,6 +1274,77 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
                      double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
+}
+
+//*****************************************************************************
+// Watermaker Input Setting and Status
+// This PGN may be requested or used to command and configure a number of 
+// Watermaker controls.
+// Input:
+//  - WatermakerStatus              The watermaker operating status.
+//  - ProductionStartStop           Command to start/stop production or indicate Production state
+//  - RinseStartStop                Command to start/stop rinse/flush or indicate Rinse/Flush state.
+//  - LowPressurePumpStatus         Command to start/stop lo press pump or indicate lo press pump status
+//  - HighPressurePumpStatus        Command to start/stop hi press pump or indicate hi press pump status
+//  - EmergencyStop                 Command to Emergency Stop or indicate Emergency Stop state
+//  - ProductSolenoidValveStatus    Product solenoid valve status
+//  - FlushModeStatus               Flush mode status
+//  - SalinityStatus                Salinity status
+//  - FeedPressureStatus            Pressure status
+//  - OilChangeIndicatorStatus      Oil Change indicator status
+//  - FilterStatus                  Filter  Status
+//  - SystemStatus                  System Status
+//  - Salinity                      Product water salinity 0-65535 ppm
+//  - ProductWaterTemperature       Product water temperature 0-655.32 deg K
+//  - PreFilterPressure             Pre-Filter pressure 0-6,553,200 Pa
+//  - PostFilterPressure            Post-Filter pressure 0-6,553,200 Pa
+//  - FeedPressure                  Feed Pressure +/- 32,764,000 Pa
+//  - SystemHighPressure            System High Pressure 0-65,532,000 Pa
+//  - ProductWaterFlow              Product water flow +/- 3276.4 liters/hr
+//  - BrineWaterFlow                Product water flow +/- 3276.4 liters/hr
+//  - RunTime                       0-4.295x10E+9 s   Resolution: 1 sec
+
+
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN130567(tN2kMsg& N2kMsg, tN2kWatermakerStatus WatermakerStatus, tN2kOnOff ProductionStartStop, tN2kOnOff RinseStartStop,
+                    tN2kOnOff LowPressurePumpStatus, tN2kOnOff HighPressurePumpStatus, tN2kOnOff EmergencyStop,
+                    tN2kOkWarnError ProductSolenoidValveStatus, tN2kOnOff FlushModeStatus, tN2kOkWarnError SalinityStatus, tN2kOkWarnError FeedPressureStatus,
+                    tN2kOkWarnError OilChangeIndicatorStatus, tN2kOkWarnError FilterStatus, tN2kOkWarnError SystemStatus, uint16_t Salinity,
+                    double ProductWaterTemperature, double PreFilterPressure, double PostFilterPressure, double FeedPressure,
+                    double SystemHighPressure, double ProductWaterFlow, double BrineWaterFlow, uint32_t RunTime);
+
+inline void SetN2kWatermakerStatus(tN2kMsg& N2kMsg, tN2kWatermakerStatus WatermakerStatus, tN2kOnOff ProductionStartStop, tN2kOnOff RinseStartStop,
+                    tN2kOnOff LowPressurePumpStatus, tN2kOnOff HighPressurePumpStatus, tN2kOnOff EmergencyStop, tN2kOkWarnError ProductSolenoidValveStatus,
+                    tN2kOnOff FlushModeStatus, tN2kOkWarnError SalinityStatus, tN2kOkWarnError FeedPressureStatus, tN2kOkWarnError OilChangeIndicatorStatus,
+                    tN2kOkWarnError FilterStatus, tN2kOkWarnError SystemStatus, uint16_t Salinity, double ProductWaterTemperature, double PreFilterPressure,
+                    double PostFilterPressure, double FeedPressure, double SystemHighPressure, double ProductWaterFlow, double BrineWaterFlow,
+                    uint32_t RunTime)
+{
+    SetN2kPGN130567(N2kMsg, WatermakerStatus, ProductionStartStop, RinseStartStop, LowPressurePumpStatus, HighPressurePumpStatus,
+        EmergencyStop, ProductSolenoidValveStatus, FlushModeStatus, SalinityStatus, FeedPressureStatus, OilChangeIndicatorStatus,
+        FilterStatus, SystemStatus, Salinity, ProductWaterTemperature, PreFilterPressure, PostFilterPressure, FeedPressure,
+        SystemHighPressure, ProductWaterFlow, BrineWaterFlow, RunTime);
+}
+
+bool ParseN2kPGN130567(const tN2kMsg& N2kMsg, tN2kWatermakerStatus& WatermakerStatus, tN2kOnOff& ProductionStartStop, tN2kOnOff& RinseStartStop,
+    tN2kOnOff& LowPressurePumpStatus, tN2kOnOff& HighPressurePumpStatus, tN2kOnOff& EmergencyStop,
+    tN2kOkWarnError& ProductSolenoidValveStatus, tN2kOnOff& FlushModeStatus, tN2kOkWarnError& SalinityStatus, tN2kOkWarnError& FeedPressureStatus,
+    tN2kOkWarnError& OilChangeIndicatorStatus, tN2kOkWarnError& FilterStatus, tN2kOkWarnError& SystemStatus, uint16_t& Salinity,
+    double& ProductWaterTemperature, double& PreFilterPressure, double& PostFilterPressure, double& FeedPressure,
+    double& SystemHighPressure, double& ProductWaterFlow, double& BrineWaterFlow, uint32_t& RunTime);
+
+inline bool ParseN2kWatermakerStatus(const tN2kMsg& N2kMsg, tN2kWatermakerStatus& WatermakerStatus, tN2kOnOff& ProductionStartStop, tN2kOnOff& RinseStartStop,
+    tN2kOnOff& LowPressurePumpStatus, tN2kOnOff& HighPressurePumpStatus, tN2kOnOff& EmergencyStop,
+    tN2kOkWarnError& ProductSolenoidValveStatus, tN2kOnOff& FlushModeStatus, tN2kOkWarnError& SalinityStatus, tN2kOkWarnError& FeedPressureStatus,
+    tN2kOkWarnError& OilChangeIndicatorStatus, tN2kOkWarnError& FilterStatus, tN2kOkWarnError& SystemStatus, uint16_t& Salinity,
+    double& ProductWaterTemperature, double& PreFilterPressure, double& PostFilterPressure, double& FeedPressure,
+    double& SystemHighPressure, double& ProductWaterFlow, double& BrineWaterFlow, uint32_t& RunTime) {
+
+    return ParseN2kPGN130567(N2kMsg, WatermakerStatus, ProductionStartStop, RinseStartStop, LowPressurePumpStatus, HighPressurePumpStatus,
+        EmergencyStop, ProductSolenoidValveStatus, FlushModeStatus, SalinityStatus, FeedPressureStatus, OilChangeIndicatorStatus,
+        FilterStatus, SystemStatus, Salinity, ProductWaterTemperature, PreFilterPressure, PostFilterPressure, FeedPressure,
+        SystemHighPressure, ProductWaterFlow, BrineWaterFlow, RunTime);
 }
 
 
