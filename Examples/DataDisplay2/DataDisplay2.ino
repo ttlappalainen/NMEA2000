@@ -577,6 +577,15 @@ void FluidLevel(const tN2kMsg &N2kMsg) {
         case N2kft_BlackWater:
           OutputStream->print("Black water level :");
           break;
+        case N2kft_FuelGasoline:
+          OutputStream->print("Gasoline level :");
+          break;
+        case N2kft_Error:
+          OutputStream->print("Error level :");
+          break;
+        case N2kft_Unavailable:
+          OutputStream->print("Unknown level :");
+          break;
       }
       OutputStream->print(Level); OutputStream->print("%"); 
       OutputStream->print(" ("); OutputStream->print(Capacity*Level/100); OutputStream->print("l)");

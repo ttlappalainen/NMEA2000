@@ -104,7 +104,7 @@ bool ParseN2kMaretronPGN65287(const tN2kMsg &N2kMsg, unsigned char &SID, unsigne
                      double &TripVolume) {
   if (N2kMsg.PGN!=65287L) return false;
   int Index=0;
-  if (N2kMsg.Get2ByteInt(Index)!=MaretronProprietary ) return false;
+  if (N2kMsg.Get2ByteUInt(Index)!=MaretronProprietary ) return false;
   SID=N2kMsg.GetByte(Index);
   VolumeInstance=N2kMsg.GetByte(Index);
   FluidType=(tN2kFluidType)(N2kMsg.GetByte(Index));
