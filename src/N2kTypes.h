@@ -317,5 +317,25 @@ enum tN2kTurnMode {
                             N2kTM_Unavailable=7
                           };
 
+enum tN2kWatermakerStatus {
+                            N2kWS_Stopped=0,
+                            N2kWS_Starting=1,
+                            N2kWS_Running=2,
+                            N2kWS_Stopping=3,
+                            N2kWS_Flushing=4,
+                            N2kWS_Rinsing=5,
+                            N2kWS_Initiating=6,
+                            N2kWS_Manual_Mode=7,
+                            N2kWS_Error=62,
+                            N2kWS_Unavailable=63
+};
+
+enum tN2kOkWarnError {
+                            N2kOWE_Ok=0,
+                            N2kOWE_Warning=1,
+                            N2kOWE_Error=2,
+                            N2kOWE_Unavailable=3
+};
+
 #endif
 
