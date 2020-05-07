@@ -1,7 +1,7 @@
 /*
 NMEA2000.cpp
 
-Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -190,10 +190,11 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 130306L: // Wind Speed, pri=2, period=100
                                       case 130310L: // Outside Environmental parameters, pri=5, period=500
                                       case 130311L: // Environmental parameters, pri=5, period=500
-                                      case 130312L: // Temperature, pri=2, period=2000
-                                      case 130314L: // Pressure, pri=2, period=2000
-                                      case 130316L: // Temperature extended range, pri=2, period=NA
-                                      case 130576L: // Small Craft Status (Trim Tab position), pri=2, period=NA
+                                      case 130312L: // Temperature, pri=5, period=2000
+                                      case 130313L: // Humidity, pri=5, period=2000
+                                      case 130314L: // Pressure, pri=5, period=2000
+                                      case 130316L: // Temperature extended range, pri=5, period=NA
+                                      case 130576L: // Small Craft Status (Trim Tab position), pri=2, period=200
                                       return true;
                                   }
                                   return false;
@@ -238,6 +239,7 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 129809L: // AIS Class B Static Data: Part A, pri=6, period=NA
                                       case 129810L: // AIS Class B Static Data Part B, pri=6, period=NA
                                       case 130074L: // Waypoint list, pri=7, period=NA
+                                      case 130567L: // Watermaker Input Setting and Status, pri=6, period=2500
                                       return true;
                                   }
                                   return false;
