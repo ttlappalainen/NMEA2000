@@ -71,6 +71,8 @@ tNMEA2000Handler NMEA2000Handlers[]={
 
 Stream *OutputStream;
 
+void HandleNMEA2000Msg(const tN2kMsg &N2kMsg);
+
 void setup() {
   Serial.begin(115200); delay(500);
   OutputStream=&Serial;
@@ -432,8 +434,9 @@ void DCStatus(const tN2kMsg &N2kMsg) {
     unsigned char StateOfHealth;
     double TimeRemaining;
     double RippleVoltage;
-    
-    if (ParseN2kDCStatus(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage) ) {
+    double Capacity;
+
+    if (ParseN2kDCStatus(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage,Capacity) ) {
       OutputStream->print("DC instance: ");
       OutputStream->println(DCInstance);
       OutputStream->print("  - type: "); PrintN2kEnumType(DCType,OutputStream);
@@ -441,6 +444,7 @@ void DCStatus(const tN2kMsg &N2kMsg) {
       OutputStream->print("  - state of health (%): "); OutputStream->println(StateOfHealth);
       OutputStream->print("  - time remaining (h): "); OutputStream->println(TimeRemaining/60);
       OutputStream->print("  - ripple voltage: "); OutputStream->println(RippleVoltage);
+      OutputStream->print("  - capacity: "); OutputStream->println(Capacity);
     } else {
       OutputStream->print("Failed to parse PGN: ");  OutputStream->println(N2kMsg.PGN);
     }
@@ -616,4 +620,3 @@ void loop()
 { 
   NMEA2000.ParseMessages();
 }
-
