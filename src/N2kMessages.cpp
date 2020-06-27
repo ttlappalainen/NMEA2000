@@ -1422,7 +1422,7 @@ void SetN2kPGN130314(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureI
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) PressureInstance);
   N2kMsg.AddByte((unsigned char) PressureSource);
-  N2kMsg.Add4ByteUDouble(ActualPressure,0.1);
+  N2kMsg.Add4ByteDouble(ActualPressure,0.1);
   N2kMsg.AddByte(0xff); // reserved
 }
 
@@ -1433,7 +1433,7 @@ bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   SID=N2kMsg.GetByte(Index);
   PressureInstance=N2kMsg.GetByte(Index);
   PressureSource=(tN2kPressureSource)N2kMsg.GetByte(Index);
-  ActualPressure=N2kMsg.Get4ByteUDouble(0.1, Index);
+  ActualPressure=N2kMsg.Get4ByteDouble(0.1, Index);
   return true;
 }
 
@@ -1447,7 +1447,7 @@ void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureI
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte((unsigned char) PressureInstance);
   N2kMsg.AddByte((unsigned char) PressureSource);
-  N2kMsg.Add4ByteUDouble(SetPressure,0.1);
+  N2kMsg.Add4ByteDouble(SetPressure,0.1);
   N2kMsg.AddByte(0xff); // reserved
 }
 

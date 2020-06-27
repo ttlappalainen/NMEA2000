@@ -1,7 +1,7 @@
 /*
 N2kMessagesEnumToStr.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -88,7 +88,7 @@ MakeN2kEnumTypeToStrFunc(tN2kTransmissionGear,tN2kTransmissionGearStrs)
 const char* tN2kOnOffStrs[] = { "0", "1", "err", "NA" };
 MakeN2kEnumTypeToStrFunc(tN2kOnOff,tN2kOnOffStrs)
 
-const char* tN2kPressureStrs[] = { "atmospheric", "water", "steam", "compressed air", "Hydraulic" };
+const char* tN2kPressureStrs[] = { "atmospheric", "water", "steam", "compressed air", "hydraulic", "filter", "altimete setting", "oil", "fuel" };
 MakeN2kEnumTypeToStrFunc(tN2kPressureSource,tN2kPressureStrs)
 
 const char* tN2kHumidityStrs[] = { "inside", "outside" };

@@ -1,7 +1,7 @@
 /*
 N2kTypes.h
 
-Copyright (c) 2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2019-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -105,7 +105,14 @@ enum tN2kPressureSource {
                             N2kps_Water = 1,
                             N2kps_Steam = 2,
                             N2kps_CompressedAir = 3,
-                            N2kps_Hydraulic = 4
+                            N2kps_Hydraulic = 4,
+                            N2kps_Filter = 5,
+                            N2kps_AltimeterSetting = 6,
+                            N2kps_Oil = 7,
+                            N2kps_Fuel = 8,
+                            N2kps_Reserved = 253,
+                            N2kps_Error = 254,
+                            N2kps_Unavailable = 255
                           };
 
 enum tN2kTimeSource {
