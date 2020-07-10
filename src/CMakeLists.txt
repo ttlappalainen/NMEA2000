@@ -21,12 +21,12 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
+file(GLOB all_cpp
+    "*.cpp"
+)
 
 add_library(nmea2000
-  N2kMsg.cpp
-  N2kStream.cpp
-  N2kMessages.cpp
-  Seasmart.cpp
+  ${all_cpp}
 )
 
 target_include_directories(nmea2000
