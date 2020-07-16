@@ -75,12 +75,19 @@ support.
 == Changes ==
 16.07.2020
 - Fixed setting buffered frame length to min instead of max length on NMEA2000.cpp SendFrame
+
 - Added NMEA2000::IsProprietaryMessage
+
 - Fixed AddGroupFunctionHandler to allow to add handlers after Open
+
 - Added RemoveGroupFunctionHandler to allow dynamically remove handlers on runtime.
+
 - Added proprietary message handling to N2kGroupFunction.cpp
+
 - Improved N2kDeviceList HandleMsg to see devices, which has been off.
+
 - Added FindDeviceByProduct to N2kDeviceList
+
 - Extented list of fast packet messages to all known fast packet messages. This also leads to situation that all
   fast packet messages are known messages and may effect to setting SetHandleOnlyKnownMessages behaviour. To limit
   known messages, one should have provided list with SetFastPacketMessages.
