@@ -1,7 +1,7 @@
 /*
 N2kDeviceList.h
 
-Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -156,6 +156,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
     tN2kDeviceList::tInternalDevice * LocalFindDeviceBySource(uint8_t Source) const;
     tN2kDeviceList::tInternalDevice * LocalFindDeviceByName(uint64_t Name) const;
     tN2kDeviceList::tInternalDevice * LocalFindDeviceByIDs(uint16_t ManufacturerCode, uint32_t UniqueNumber) const;
+    tN2kDeviceList::tInternalDevice * LocalFindDeviceByProduct(uint16_t ManufacturerCode, uint16_t ProductCode, uint8_t Source=0xff) const;
     bool RequestProductInformation(uint8_t Source);
     bool RequestConfigurationInformation(uint8_t Source);
     bool RequestSupportedPGNList(uint8_t Source);
@@ -185,6 +186,11 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
 
     // Return device by manufacturer identification. Each device should have manufacturer id and unique ID.
     const tNMEA2000::tDevice * FindDeviceByIDs(uint16_t ManufacturerCode, uint32_t UniqueNumber) const { return LocalFindDeviceByIDs(ManufacturerCode, UniqueNumber); }
+
+    // Return device by manufacturer product code. Each device should have product code given by NMEA2000 organization.
+    // Search with source = 0xff finds first device. To find all devices with given manufacturer product code,
+    // repeat search with found device source until device will not be found.
+    const tNMEA2000::tDevice * FindDeviceByProduct(uint16_t ManufacturerCode, uint16_t ProductCode, uint8_t Source=0xff) const { return LocalFindDeviceByProduct(ManufacturerCode, ProductCode, Source); }
 
     // Check has list updated.
     // Device list will be automatically updated. In stable system list should be ready and stable in few seconds. If you add device on the fly,

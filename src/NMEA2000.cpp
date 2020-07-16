@@ -212,6 +212,13 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
 
 bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
+                                      case 126983L: // Alert, pri=2, period=1000
+                                      case 126984L: // Alert Response, pri=2, period=NA
+                                      case 126985L: // Alert Text, pri=2, period=10000
+                                      case 126986L: // Alert Configuration, pri=2, period=NA
+                                      case 126987L: // Alert Threshold, pri=2, period=NA
+                                      case 126988L: // Alert Value, pri=2, period=10000
+                                      case 127233L: // Alert Value, pri=3, period=NA
                                       case 127237L: // Heading/Track control, pri=2, period=250
                                       case 127489L: // Engine parameters dynamic, pri=2, period=500
                                       case 127496L: // Trip fuel consumption, vessel, pri=5, period=1000
@@ -228,18 +235,73 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 127513L: // Battery configuration status, pri=6, period=NA
                                       case 127514L: // AGS Status, pri=6, period=1500
                                       case 128275L: // Distance log, pri=6, period=1000
+                                      case 128520L: // Tracked Target Data, pri=2, period=1000
                                       case 129029L: // GNSS Position Data, pri=3, period=1000
                                       case 129038L: // AIS Class A Position Report, pri=4, period=NA
                                       case 129039L: // AIS Class B Position Report, pri=4, period=NA
+                                      case 129040L: // AIS Class B Extended Position Report, pri=4, period=NA
+                                      case 129041L: // AIS Aids to Navigation (AtoN) Report, pri=4, period=NA
+                                      case 129044L: // Datum, pri=6, period=10000
+                                      case 129045L: // User Datum Settings, pri=6, period=NA
                                       case 129284L: // Navigation info, pri=3, period=1000
                                       case 129285L: // Waypoint list, pri=3, period=NA
+                                      case 129301L: // Time to/from Mark, pri=3, period=1000
+                                      case 129302L: // Bearing and Distance between two Marks, pri=6, period=NA
+                                      case 129538L: // GNSS Control Status, pri=6, period=NA
                                       case 129540L: // GNSS Sats in View, pri=6, period=1000
+                                      case 129541L: // GPS Almanac Data, pri=6, period=NA
+                                      case 129542L: // GNSS Pseudorange Noise Statistics, pri=6, period=1000
+                                      case 129545L: // GNSS RAIM Output, pri=6, period=NA
+                                      case 129547L: // GNSS Pseudorange Error Statistics, pri=6, period=NA
+                                      case 129549L: // DGNSS Corrections, pri=6, period=NA
+                                      case 129551L: // GNSS Differential Correction Receiver Signal, pri=6, period=NA
+                                      case 129556L: // GLONASS Almanac Data, pri=6, period=NA
+                                      case 129792L: // AIS DGNSS Broadcast Binary Message, pri=6, period=NA
+                                      case 129793L: // AIS UTC and Date Report, pri=7, period=NA
                                       case 129794L: // AIS Class A Static data, pri=6, period=NA
+                                      case 129795L: // AIS Addressed Binary Message, pri=5, period=NA
+                                      case 129796L: // AIS Acknowledge, pri=7, period=NA
+                                      case 129797L: // AIS Binary Broadcast Message, pri=5, period=NA
+                                      case 129798L: // AIS SAR Aircraft Position Report, pri=4, period=NA
+                                      case 129799L: // Radio Frequency/Mode/Power, pri=3, period=NA
+                                      case 129800L: // AIS UTC/Date Inquiry, pri=7, period=NA
+                                      case 129801L: // AIS Addressed Safety Related Message, pri=5, period=NA
                                       case 129802L: // AIS Safety Related Broadcast Message, pri=5, period=NA
+                                      case 129803L: // AIS Interrogation PGN, pri=7, period=NA
+                                      case 129804L: // AIS Assignment Mode Command, pri=7, period=NA
+                                      case 129805L: // AIS Data Link Management Message, pri=7, period=NA
+                                      case 129806L: // AIS Channel Management, pri=7, period=NA
+                                      case 129807L: // AIS Group Assignment, pri=7, period=NA
+                                      case 129808L: // DSC Call Information, pri=8, period=NA
                                       case 129809L: // AIS Class B Static Data: Part A, pri=6, period=NA
                                       case 129810L: // AIS Class B Static Data Part B, pri=6, period=NA
-                                      case 130074L: // Waypoint list, pri=7, period=NA
+                                      case 129811L: // AIS Single Slot Binary Message, pri=5, period=NA
+                                      case 129812L: // AIS Multi Slot Binary Message, pri=5, period=NA
+                                      case 129813L: // AIS Long-Range Broadcast Message, pri=5, period=NA
+                                      case 130052L: // Loran-C TD Data, pri=3, period=1000
+                                      case 130053L: // Loran-C Range Data, pri=3, period=1000
+                                      case 130054L: // Loran-C Signal Data, pri=3, period=1000
+                                      case 130060L: // Label, pri=7, period=NA
+                                      case 130061L: // Channel Source Configuration, pri=7, period=NA
+                                      case 130064L: // Route and WP Service - Database List, pri=7, period=NA
+                                      case 130065L: // Route and WP Service - Route List, pri=7, period=NA
+                                      case 130066L: // Route and WP Service - Route/WP-List Attributes, pri=7, period=NA
+                                      case 130067L: // Route and WP Service - Route - WP Name & Position, pri=7, period=NA
+                                      case 130068L: // Route and WP Service - Route - WP Name, pri=7, period=NA
+                                      case 130069L: // Route and WP Service - XTE Limit & Navigation Method, pri=7, period=NA
+                                      case 130070L: // Route and WP Service - WP Comment, pri=7, period=NA
+                                      case 130071L: // Route and WP Service - Route Comment, pri=7, period=NA
+                                      case 130072L: // Route and WP Service - Database Comment, pri=7, period=NA
+                                      case 130073L: // Route and WP Service - Radius of Turn, pri=7, period=NA
+                                      case 130074L: // Route and WP Service - WP List - WP Name & Position, pri=7, period=NA
+                                      case 130320L: // Tide Station Data, pri=6, period=1000
+                                      case 130321L: // Salinity Station Data, pri=6, period=1000
+                                      case 130322L: // Current Station Data, pri=6, period=1000
+                                      case 130323L: // Meteorological Station Data, pri=6, period=1000
+                                      case 130324L: // Moored Buoy Station Data, pri=6, period=1000
                                       case 130567L: // Watermaker Input Setting and Status, pri=6, period=2500
+                                      case 130577L: // Direction Data PGN, pri=3, period=1000
+                                      case 130578L: // Vessel Speed Components, pri=2, period=250
                                       return true;
                                   }
                                   return false;
@@ -247,6 +309,10 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
 
 bool IsProprietaryFastPacketMessage(unsigned long PGN) {
   return ( PGN==126720L ) || ( 130816L<=PGN && PGN<=131071L );
+}
+
+bool tNMEA2000::IsProprietaryMessage(unsigned long PGN) {
+  return IsProprietaryFastPacketMessage(PGN) || ( PGN==61184L ) || ( 65280L<=PGN && PGN<=65535L );
 }
 
 const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
@@ -933,7 +999,7 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
       N2kFrameOutDbg("Frame failed "); N2kFrameOutDbgln(id);
       return false;
     }
-    len=N2kMax<unsigned char>(len,8);
+    len=N2kMin<unsigned char>(len,8);
     Frame->id=id;
     Frame->len=len;
     Frame->wait_sent=wait_sent;
@@ -1122,6 +1188,7 @@ bool tNMEA2000::IsFastPacketPGN(unsigned long PGN) {
   if ( IsFastPacketSystemMessage(PGN) || IsMandatoryFastPacketMessage(PGN) ||
        ( FastPacketMessages[0]==0 && IsDefaultFastPacketMessage(PGN) ) ||
        IsProprietaryFastPacketMessage(PGN) ) return true;
+
   int i;
 
     for (unsigned char igroup=0; (igroup<N2kMessageGroups); igroup++)  {
@@ -2223,18 +2290,42 @@ void tNMEA2000::SetISORqstHandler(bool(*ISORequestHandler)(unsigned long Request
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 //*****************************************************************************
+void tNMEA2000::RemoveGroupFunctionHandler(tN2kGroupFunctionHandler *pGroupFunctionHandler) {
+  if (pGroupFunctionHandler==0 || pGroupFunctionHandlers==0 ) return;
+
+  tN2kGroupFunctionHandler* pPrevGroupFunctionHandler=pGroupFunctionHandlers;
+  // Handle, if first
+  if ( pPrevGroupFunctionHandler==pGroupFunctionHandler ) {
+    pGroupFunctionHandlers=pPrevGroupFunctionHandler->pNext;
+  } else {
+    for ( ;pPrevGroupFunctionHandler!=0 && pPrevGroupFunctionHandler->pNext!=pGroupFunctionHandler;
+      pPrevGroupFunctionHandler = pPrevGroupFunctionHandler->pNext);
+    if ( pPrevGroupFunctionHandler!=0 && pPrevGroupFunctionHandler->pNext==pGroupFunctionHandler ) {
+      pPrevGroupFunctionHandler->pNext=pGroupFunctionHandler->pNext;
+    }
+  }
+  pGroupFunctionHandler->pNext=0;
+}
+
+//*****************************************************************************
 void tNMEA2000::AddGroupFunctionHandler(tN2kGroupFunctionHandler *pGroupFunctionHandler) {
   if (pGroupFunctionHandler==0) return;
+  RemoveGroupFunctionHandler(pGroupFunctionHandler);
   // Add to the end on the list
   if ( pGroupFunctionHandlers==0 ) { // If there is none set, put it to first
     pGroupFunctionHandlers=pGroupFunctionHandler;
   } else {
-    tN2kGroupFunctionHandler *pLastGroupFunctionHandler;
+    tN2kGroupFunctionHandler* pLastGroupFunctionHandler;
     // find last
-    for ( pLastGroupFunctionHandler=pGroupFunctionHandlers;
-          pLastGroupFunctionHandler->pNext!=0;
-          pLastGroupFunctionHandler=pLastGroupFunctionHandler->pNext);
-    pLastGroupFunctionHandler->pNext=pGroupFunctionHandler;
+    for (pLastGroupFunctionHandler = pGroupFunctionHandlers;
+      pLastGroupFunctionHandler->pNext != 0 && pLastGroupFunctionHandler->pNext->PGN != 0;
+      pLastGroupFunctionHandler = pLastGroupFunctionHandler->pNext);
+    // Insert the new handler before the default handler if the default handler is present.
+    if ( pLastGroupFunctionHandler->pNext != 0 && pLastGroupFunctionHandler->pNext->PGN == 0 ) {
+      pGroupFunctionHandler->pNext = pLastGroupFunctionHandler->pNext;
+    }
+    // Add the new handler to the list.
+    pLastGroupFunctionHandler->pNext = pGroupFunctionHandler;
   }
 }
 #endif

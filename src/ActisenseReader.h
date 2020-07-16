@@ -1,7 +1,7 @@
 /*
 ActisenseReader.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -67,12 +67,15 @@ public:
     void SetDefaultSource(unsigned char source) { DefaultSource=source; }
     
     // You can either call this or ParseMessages periodically.
-    bool GetMessageFromStream(tN2kMsg &N2kMsg);
+    bool GetMessageFromStream(tN2kMsg &N2kMsg, bool ReadOut=true);
 
+    bool IsStart(char ch);
     // Set message handler with SetMsgHandler and then call this periodically or use GetMessageFromStream
     void ParseMessages();
     // Set message handler to be used in ParseMessages, when message has been received.
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg)) { MsgHandler=_MsgHandler; }
+
+    bool Handling() const { return MsgIsComing || EscapeReceived || StartOfTextReceived; }
 };
 
 #endif

@@ -1,7 +1,7 @@
 /*
 N2kMsg.cpp
 
-Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -93,6 +93,15 @@ void tN2kMsg::Clear() {
   PGN=0;
   DataLen=0;
   MsgTime=0;
+}
+
+//*****************************************************************************
+void tN2kMsg::AddFloat(float v, float UndefVal) {
+  if (v!=UndefVal) {
+    SetBufFloat(v,DataLen,Data);
+  } else {
+    SetBuf4ByteUInt(N2kInt32NA,DataLen,Data);
+  }
 }
 
 //*****************************************************************************
@@ -204,6 +213,26 @@ void tN2kMsg::AddStr(const char *str, int len, bool UsePgm) {
 }
 
 //*****************************************************************************
+void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
+  int len=(str!=0?strlen(str):0);
+  AddByte(len+2);
+  AddByte(1);
+  if ( len>0 ) SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
+}
+
+//*****************************************************************************
+void tN2kMsg::AddBuf(const void *buf, size_t bufLen) {
+  if ( DataLen<MaxDataLen ) {
+    if ( DataLen+bufLen>MaxDataLen ) bufLen=MaxDataLen-DataLen;
+  } else bufLen=0;
+
+  if ( bufLen>0 ) {
+    memcpy(Data+DataLen,buf,bufLen);
+    DataLen+=bufLen;
+  }
+}
+
+//*****************************************************************************
 unsigned char tN2kMsg::GetByte(int &Index) const {
   if (Index<DataLen) {
     return Data[Index++];
@@ -302,6 +331,13 @@ double tN2kMsg::Get8ByteDouble(double precision, int &Index, double def) const {
 }
 
 //*****************************************************************************
+float  tN2kMsg::GetFloat(int &Index, float def) const {
+  if (Index+4<=DataLen) {
+    return GetBufFloat(Index,Data,def);
+  } else return def;
+}
+
+//*****************************************************************************
 bool tN2kMsg::GetStr(char *StrBuf, size_t Length, int &Index) const {
   unsigned char vb;
   bool nullReached = false;
@@ -365,11 +401,28 @@ bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
   if ( Type!=0x01 ) { StrBufSize=0; return false; }
   if ( StrBuf!=0 ) {
     GetStr(StrBufSize,StrBuf,Len,0xff,Index);
-  } else { 
+  } else {
     Index+=Len; // Just pass this string
   }
-  StrBufSize=Len; 
+  StrBufSize=Len;
   return true;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetBuf(void *buf, size_t Length, int &Index) const {
+  bool ret=true;
+
+  if ((size_t)Index+Length<=(size_t)DataLen) {
+    if ( buf!=0 ) {
+      memcpy(buf,Data+Index,Length);
+    } else {
+      Index+=Length; // Just pass this string
+    }
+  } else {
+    Index=DataLen;
+    ret=false;
+  }
+  return ret;
 }
 
 //*****************************************************************************
@@ -440,10 +493,10 @@ int64_t byteswap(int64_t val) {
 template<typename T>
 T GetBuf(size_t len, int& index, const unsigned char* buf) {
   T v{0};
-  
+
   // This could be improved by casting the buffer to a pointer of T and
-  // doing a direct copy. That is, if unaligned data access is allowed.  
-  memcpy(&v, &buf[index], len);  
+  // doing a direct copy. That is, if unaligned data access is allowed.
+  memcpy(&v, &buf[index], len);
   index += len;
 
 #if defined(HOST_IS_BIG_ENDIAN)
@@ -459,19 +512,50 @@ void SetBuf(T v, size_t len, int& index, unsigned char* buf) {
 #if defined(HOST_IS_BIG_ENDIAN)
   v = byteswap(v);
 #endif
-  
+
   // This could be improved by casting the buffer to a pointer of T and
-  // doing a direct copy. That is, if unaligned data access is allowed. 
+  // doing a direct copy. That is, if unaligned data access is allowed.
   memcpy(&buf[index], &v, len);
   index += len;
 }
 
 //*****************************************************************************
+void SetBufDouble(double v, int &index, unsigned char *buf) {
+  if ( sizeof(double)==8 && !N2kIsNA(v) ) {
+    int64_t iv;
+    memcpy(&iv,&v,8);
+    SetBuf(iv, 8, index, buf);
+  } else {  // on AVR double=float
+    SetBuf((int64_t)N2kInt64NA,8,index,buf);
+  }
+}
+
+//*****************************************************************************
+void SetBufFloat(float v, int &index, unsigned char *buf) {
+  int32_t iv;
+  if ( !N2kIsNA(v) ) {
+    memcpy(&iv,&v,4);
+  } else {
+    iv=N2kInt32NA;
+  }
+  SetBuf(iv, 4, index, buf);
+}
+
+//*****************************************************************************
 void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  double fp=precision*1e6;
-  int64_t fpll=1/fp;
-  int64_t vll=v*1e6;
-  vll*=fpll;
+  int64_t vll;
+  if ( !N2kIsNA(v) ) {
+    if ( sizeof(double)<8 ) {
+      double fp=precision*1e6;
+      int64_t fpll=1/fp;
+      vll=v*1e6L;
+      vll*=fpll;
+    } else {
+      vll=v/precision;
+    }
+  } else {
+    vll=N2kInt64NA;
+  }
   SetBuf(vll, 8, index, buf);
 }
 
@@ -558,6 +642,33 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
 }
 
 //*****************************************************************************
+double GetBufDouble(int &index, const unsigned char *buf, double def) {
+  int64_t vl = GetBuf<int64_t>(8, index, buf);
+  double ret;
+   // On avr double==float, so we test it also. Currently no handling for avr.
+  if ( sizeof(double)==8 && !N2kIsNA(vl) ) {
+    memcpy(&ret,&vl,8);
+    if ( isnan(ret) ) ret=def;
+  } else {
+    ret=def;
+  }
+  return ret;
+}
+
+//*****************************************************************************
+float GetBufFloat(int &index, const unsigned char *buf, float def) {
+  int32_t vl = GetBuf<int32_t>(4, index, buf);
+  float ret;
+  if ( !N2kIsNA(vl) ) {
+    memcpy(&ret,&vl,8);
+    if ( isnan(ret) ) ret=def;
+  } else { // On avr double==float
+    ret=def;
+  }
+  return ret;
+}
+
+//*****************************************************************************
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   int32_t vl = GetBuf<int32_t>(3, index, buf);
   if (vl==0x007fffff) return def;
@@ -633,7 +744,7 @@ void SetBufUInt64(uint64_t v, int &index, unsigned char *buf) {
 //*****************************************************************************
 void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm, unsigned char fillChar) {
   int i=0;
-  if ( UsePgm ) { 
+  if ( UsePgm ) {
     for (; i<len && str[i]!=0; i++, index++) {
       buf[index]=pgm_read_byte(&(str[i]));
     }

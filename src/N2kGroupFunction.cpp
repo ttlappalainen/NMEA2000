@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.cpp
 
-Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +31,7 @@ tN2kGroupFunctionHandler::tN2kGroupFunctionHandler(tNMEA2000 *_pNMEA2000, unsign
   pNext=0;
   pNMEA2000=_pNMEA2000;
   PGN=_PGN;
+  Proprietary=tNMEA2000::IsProprietaryMessage(PGN);
 }
 
 //*****************************************************************************
@@ -76,7 +77,7 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
         if ( tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
           handled=true;  // We can mark this handled, since read is not allowed to broadcast.
         } else {
-          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs)) {
+          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary)) {
             handled=HandleReadFields(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,iDev);
           }
         }
@@ -88,7 +89,7 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
         if ( tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
           handled=true;  // We can mark this handled, since write is not allowed to broadcast.
         } else {
-          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs)) {
+          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary)) {
             handled=HandleWriteFields(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,iDev);
           }
         }
@@ -305,21 +306,89 @@ bool tN2kGroupFunctionHandler::ParseAcknowledgeParams(const tN2kMsg &N2kMsg,
 }
 
 //*****************************************************************************
+bool tN2kGroupFunctionHandler::StartParseReadOrWriteParameters(const tN2kMsg &N2kMsg, bool Proprietary, int &Index) {
+  Index=N2kgf_OffsetToParams;
+  if ( Proprietary ) {
+    Index+=5;
+  } else {
+    Index+=3;
+  }
+
+  return true;
+}
+
+//*****************************************************************************
 bool tN2kGroupFunctionHandler::ParseReadOrWriteParams(const tN2kMsg &N2kMsg,
                                uint16_t &ManufacturerCode,
                                uint8_t &IndustryGroup,
                                uint8_t &UniqueID,
                                uint8_t &NumberOfSelectionPairs,
-                               uint8_t &NumberOfParameterPairs) {
+                               uint8_t &NumberOfParameterPairs,
+                               bool Proprietary) {
   if (N2kMsg.PGN!=126208L) return false;
   int Index=N2kgf_OffsetToParams;
   ManufacturerCode=0xffff; // We need here information is PGN proprietary or not
   IndustryGroup=0xff;
+  if ( Proprietary ) {
+    uint16_t ProprietaryInfo=N2kMsg.Get2ByteUInt(Index);
+    ManufacturerCode=ProprietaryInfo & 0x07ff;
+    IndustryGroup=(ProprietaryInfo>>13) &0x07;
+  }
   UniqueID=N2kMsg.GetByte(Index);
   NumberOfSelectionPairs=N2kMsg.GetByte(Index);
   NumberOfParameterPairs=N2kMsg.GetByte(Index);
 
   return true;
+}
+
+//*****************************************************************************
+void SetStartReadOrWriteReply(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN, tN2kGroupFunctionCode cmd,
+                           uint16_t ManufacturerCode,
+                           uint8_t IndustryGroup,
+                           uint8_t UniqueID,
+                           uint8_t NumberOfSelectionPairs,
+                           uint8_t NumberOfParameterPairs,
+                           bool Proprietary) {
+  N2kMsg.SetPGN(126208L);
+	N2kMsg.Priority=3;
+  N2kMsg.Destination=Destination;
+  N2kMsg.AddByte(cmd);
+  N2kMsg.Add3ByteInt(PGN);
+  if ( Proprietary ) {
+    uint16_t ProprietaryInfo = IndustryGroup<<13 | 0x1800 | (ManufacturerCode & 0x07ff);
+    N2kMsg.Add2ByteUInt(ProprietaryInfo);
+  }
+  N2kMsg.AddByte(UniqueID);
+  N2kMsg.AddByte(NumberOfSelectionPairs);
+  N2kMsg.AddByte(NumberOfParameterPairs);
+}
+
+//*****************************************************************************
+void tN2kGroupFunctionHandler::SetStartReadReply(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN,
+                           uint16_t ManufacturerCode,
+                           uint8_t IndustryGroup,
+                           uint8_t UniqueID,
+                           uint8_t NumberOfSelectionPairs,
+                           uint8_t NumberOfParameterPairs,
+                           bool Proprietary) {
+
+  SetStartReadOrWriteReply(N2kMsg,Destination,PGN,N2kgfc_ReadReply,
+      ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary
+    );
+}
+
+//*****************************************************************************
+void tN2kGroupFunctionHandler::SetStartWriteReply(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN,
+                           uint16_t ManufacturerCode,
+                           uint8_t IndustryGroup,
+                           uint8_t UniqueID,
+                           uint8_t NumberOfSelectionPairs,
+                           uint8_t NumberOfParameterPairs,
+                           bool Proprietary) {
+
+  SetStartReadOrWriteReply(N2kMsg,Destination,PGN,N2kgfc_WriteReply,
+      ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary
+    );
 }
 
 //*****************************************************************************
@@ -334,6 +403,16 @@ void tN2kGroupFunctionHandler::SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned cha
   N2kMsg.Add3ByteInt(PGN);
   N2kMsg.AddByte(PGNErrorCode | TransmissionOrPriorityErrorCode<<4);
   N2kMsg.AddByte(NumberOfParameterPairs);
+}
+
+#define ErrorcodeIndex 4
+
+//*****************************************************************************
+void tN2kGroupFunctionHandler::ChangePNGErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunctionPGNErrorCode PGNErrorCode) {
+  int Index=ErrorcodeIndex;
+  uint8_t ec=N2kMsg.GetByte(Index);
+  ec = (ec & 0xf0) | PGNErrorCode;
+  N2kMsg.Data[ErrorcodeIndex]=ec;
 }
 
 //*****************************************************************************

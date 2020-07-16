@@ -1,7 +1,7 @@
-/* 
+/*
 N2kMsg.h
 
-Copyright (c) 2015-2019 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -32,24 +32,33 @@ Definition for NMEA2000 message class used in my NMEA2000 libraries.
 #include <stdint.h>
 
 const double   N2kDoubleNA=-1e9;
+const float    N2kFloatNA=-1e9;
 const uint8_t  N2kUInt8NA=0xff;
 const int8_t   N2kInt8NA=0x7f;
 const uint16_t N2kUInt16NA=0xffff;
 const int16_t  N2kInt16NA=0x7fff;
 const uint32_t N2kUInt32NA=0xffffffff;
 const int32_t  N2kInt32NA=0x7fffffff;
+const uint64_t N2kUInt64NA=0xffffffffffffffffLL;
+const int64_t  N2kInt64NA=0x7fffffffffffffffLL;
+
 #ifndef BIT
 #define BIT(n) (1 << n)
 #endif
 
 inline bool N2kIsNA(double v) { return v==N2kDoubleNA; }
+inline bool N2kIsNA(float v) { return v==N2kFloatNA; }
 inline bool N2kIsNA(uint8_t v) { return v==N2kUInt8NA; }
 inline bool N2kIsNA(int8_t v) { return v==N2kInt8NA; }
 inline bool N2kIsNA(uint16_t v) { return v==N2kUInt16NA; }
 inline bool N2kIsNA(int16_t v) { return v==N2kInt16NA; }
 inline bool N2kIsNA(uint32_t v) { return v==N2kUInt32NA; }
 inline bool N2kIsNA(int32_t v) { return v==N2kInt32NA; }
+inline bool N2kIsNA(uint64_t v) { return v==N2kUInt64NA; }
+inline bool N2kIsNA(int64_t v) { return v==N2kInt64NA; }
 
+void SetBufFloat(float v, int &index, unsigned char *buf);
+void SetBufDouble(double v, int &index, unsigned char *buf);
 void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *buf);
 void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *buf);
 void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *buf);
@@ -78,7 +87,8 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
-
+double GetBufDouble(int &index, const unsigned char *buf, double def=0);
+float GetBufFloat(int &index, const unsigned char *buf, float def=0);
 
 class tN2kMsg
 {
@@ -104,10 +114,15 @@ public:
   tN2kMsg(unsigned char _Source=15, unsigned char _Priority=6, unsigned long _PGN=0, int _DataLen=0);
   void SetPGN(unsigned long _PGN);
   void ForceSource(unsigned char _Source) const { Source=_Source; }
-  void CheckDestination() const { if ( (PGN & 0xff)!=0 ) Destination=0xff; } // We can send to specified destination only for PGN:s low byte=0 
+  void CheckDestination() const { if ( (PGN & 0xff)!=0 ) Destination=0xff; } // We can send to specified destination only for PGN:s low byte=0
   void Init(unsigned char _Priority, unsigned long _PGN, unsigned char _Source, unsigned char _Destination=0xff);
   virtual void Clear();
   bool IsValid() const { return (PGN!=0 && DataLen>0); }
+
+  int GetRemainingDataLength(int Index) const { return DataLen>Index?DataLen-Index:0; }
+  int GetAvailableDataLength() const { return MaxDataLen-DataLen; }
+
+  void AddFloat(float v, float UndefVal=N2kFloatNA);
   void Add8ByteDouble(double v, double precision, double UndefVal=N2kDoubleNA);
   void Add4ByteDouble(double v, double precision, double UndefVal=N2kDoubleNA);
   void Add4ByteUDouble(double v, double precision, double UndefVal=N2kDoubleNA);
@@ -123,6 +138,8 @@ public:
   void AddUInt64(uint64_t v);
   void AddByte(unsigned char v);
   void AddStr(const char *str, int len, bool UsePgm=false);
+  void AddVarStr(const char *str, bool UsePgm=false);
+  void AddBuf(const void *buf, size_t bufLen);
 
   unsigned char GetByte(int &Index) const;
   int16_t Get2ByteInt(int &Index, int16_t def=0x7fff) const;
@@ -138,9 +155,11 @@ public:
   double Get4ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get4ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
   double Get8ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
+  float  GetFloat(int &Index, float def=N2kFloatNA) const;
   bool GetStr(char *StrBuf, size_t Length, int &Index) const;
   bool GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &Index) const;
   bool GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const;
+  bool GetBuf(void *buf, size_t Length, int &Index) const;
 
   bool Set2ByteUInt(uint16_t v, int &Index);
 

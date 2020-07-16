@@ -38,20 +38,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
-template <typename T> void MatchRequestField(T FieldVal, T MatchVal, T Mask, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
-{
-  if ( (FieldVal&Mask)!=MatchVal ) {
-    ErrorCode=N2kgfpec_RequestOrCommandParameterOutOfRange;
-    Match=false;
-  } else ErrorCode=N2kgfpec_Acknowledge;
-}
-
-void MatchRequestField(const char * FieldVal, const char * MatchVal, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
-{
-  Match=(strcmp(FieldVal,MatchVal)==0);
-  ErrorCode = ( Match ? N2kgfpec_Acknowledge : N2kgfpec_RequestOrCommandParameterOutOfRange );
-}
-
 //*****************************************************************************
 // See document http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf
 // For requirements for handling Group function request for PGN 60928

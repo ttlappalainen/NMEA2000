@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -72,38 +72,54 @@ enum tN2kGroupFunctionParameterErrorCode {
 class tNMEA2000;
 
 class tN2kGroupFunctionHandler {
+  public:
+    template <typename T> void MatchRequestField(T FieldVal, T MatchVal, T Mask, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
+    {
+      if ( (FieldVal&Mask)!=MatchVal ) {
+        ErrorCode=N2kgfpec_RequestOrCommandParameterOutOfRange;
+        Match=false;
+      } else ErrorCode=N2kgfpec_Acknowledge;
+    }
+
+    void MatchRequestField(const char * FieldVal, const char * MatchVal, bool &Match, tN2kGroupFunctionParameterErrorCode &ErrorCode)
+    {
+      Match&=(strcmp(FieldVal,MatchVal)==0);
+      ErrorCode = ( Match ? N2kgfpec_Acknowledge : N2kgfpec_RequestOrCommandParameterOutOfRange );
+    }
+
   private:
     tN2kGroupFunctionHandler *pNext;
     friend class tNMEA2000;
 
   protected:
     unsigned long PGN;
+    bool Proprietary;
     tNMEA2000 *pNMEA2000;
-    
+
   protected:
     // This is default handler for Complex Request transmission interval setting. Overwrite it, if your PGN will support
     // changing interval.
     virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval);
-    
-    virtual bool HandleRequest(const tN2kMsg &N2kMsg, 
-                               uint32_t TransmissionInterval, 
-                               uint16_t TransmissionIntervalOffset, 
+
+    virtual bool HandleRequest(const tN2kMsg &N2kMsg,
+                               uint32_t TransmissionInterval,
+                               uint16_t TransmissionIntervalOffset,
                                uint8_t  NumberOfParameterPairs,
                                int iDev);
-                               
+
     virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
-    
+
     // This function handles Acknowledge group function, whis is response for Request, Command, ReadFields or WriteFields
     // group function. So you need to override this, if your device will send one of those commands.
-    virtual bool HandleAcknowledge(const tN2kMsg &N2kMsg, 
+    virtual bool HandleAcknowledge(const tN2kMsg &N2kMsg,
                                    tN2kGroupFunctionPGNErrorCode PGNErrorCode,
                                    tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                    uint8_t NumberOfParameterPairs,
                                    int iDev);
-                                   
+
     virtual bool HandleReadFields(const tN2kMsg &N2kMsg,
                                   uint16_t ManufacturerCode, // This will be set to 0xffff for non-propprietary PNGs
-                                  uint8_t IndustryGroup, // This will be set to 0xff for non-propprietary PNGs 
+                                  uint8_t IndustryGroup, // This will be set to 0xff for non-propprietary PNGs
                                   uint8_t UniqueID,
                                   uint8_t NumberOfSelectionPairs,
                                   uint8_t NumberOfParameterPairs,
@@ -112,69 +128,88 @@ class tN2kGroupFunctionHandler {
     virtual bool HandleReadFieldsReply(const tN2kMsg &N2kMsg,int iDev);
     virtual bool HandleWriteFields(const tN2kMsg &N2kMsg,
                                   uint16_t ManufacturerCode, // This will be set to 0xffff for non-propprietary PNGs
-                                  uint8_t IndustryGroup, // This will be set to 0xff for non-propprietary PNGs 
+                                  uint8_t IndustryGroup, // This will be set to 0xff for non-propprietary PNGs
                                   uint8_t UniqueID,
                                   uint8_t NumberOfSelectionPairs,
                                   uint8_t NumberOfParameterPairs,
                                   int iDev);
     // Under construction
     virtual bool HandleWriteFieldsReply(const tN2kMsg &N2kMsg,int iDev);
-    
+
   public:
     tN2kGroupFunctionHandler(tNMEA2000 *_pNMEA2000, unsigned long _PGN);
-    
+
     virtual bool Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCode GroupFunctionCode, unsigned long PGNForGroupFunction, int iDev);
-    
+
     // Static functions
     static unsigned long GetPGNForGroupFunction(const tN2kMsg &N2kMsg);
 
     // Parse group function code and PGN for it
-    static bool Parse(const tN2kMsg &N2kMsg, 
-                            tN2kGroupFunctionCode &GroupFunctionCode, 
+    static bool Parse(const tN2kMsg &N2kMsg,
+                            tN2kGroupFunctionCode &GroupFunctionCode,
                             unsigned long &PGNForGroupFunction);
 
-    static bool ParseRequestParams(const tN2kMsg &N2kMsg, 
-                               uint32_t &TransmissionInterval, 
-                               uint16_t &TransmissionIntervalOffset, 
+    static bool ParseRequestParams(const tN2kMsg &N2kMsg,
+                               uint32_t &TransmissionInterval,
+                               uint16_t &TransmissionIntervalOffset,
                                uint8_t  &NumberOfParameterPairs);
-                               
+
     static bool StartParseRequestPairParameters(const tN2kMsg &N2kMsg, int &Index);
 
-    static bool ParseCommandParams(const tN2kMsg &N2kMsg, 
+    static bool ParseCommandParams(const tN2kMsg &N2kMsg,
                                uint8_t &PrioritySetting,
                                uint8_t &NumberOfParameterPairs);
 
     static bool StartParseCommandPairParameters(const tN2kMsg &N2kMsg, int &Index);
-    
-    static bool ParseAcknowledgeParams(const tN2kMsg &N2kMsg, 
+
+    static bool ParseAcknowledgeParams(const tN2kMsg &N2kMsg,
                                tN2kGroupFunctionPGNErrorCode &PGNErrorCode,
                                tN2kGroupFunctionTransmissionOrPriorityErrorCode &TransmissionOrPriorityErrorCode,
                                uint8_t &NumberOfParameterPairs);
 
-    static bool ParseReadOrWriteParams(const tN2kMsg &N2kMsg, 
+    static bool StartParseReadOrWriteParameters(const tN2kMsg &N2kMsg, bool Proprietary, int &Index);
+
+    static bool ParseReadOrWriteParams(const tN2kMsg &N2kMsg,
                                uint16_t &ManufacturerCode,
                                uint8_t &IndustryGroup,
                                uint8_t &UniqueID,
                                uint8_t &NumberOfSelectionPairs,
-                               uint8_t &NumberOfParameterPairs);
+                               uint8_t &NumberOfParameterPairs,
+                               bool Proprietary=false);
 
-    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN, 
+    static void SetStartReadReply(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN,
+                               uint16_t ManufacturerCode,
+                               uint8_t IndustryGroup,
+                               uint8_t UniqueID,
+                               uint8_t NumberOfSelectionPairs,
+                               uint8_t NumberOfParameterPairs,
+                               bool Proprietary);
+
+    static void SetStartWriteReply(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN,
+                               uint16_t ManufacturerCode,
+                               uint8_t IndustryGroup,
+                               uint8_t UniqueID,
+                               uint8_t NumberOfSelectionPairs,
+                               uint8_t NumberOfParameterPairs,
+                               bool Proprietary);
+
+    static void SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned char Destination, unsigned long PGN,
                                          tN2kGroupFunctionPGNErrorCode PGNErrorCode,
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs=0);
-    static void AddAcknowledgeParameter(tN2kMsg &N2kMsg, 
-                                         uint8_t ParameterPairIndex, 
+    static void ChangePNGErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunctionPGNErrorCode PGNErrorCode);
+    static void AddAcknowledgeParameter(tN2kMsg &N2kMsg,
+                                         uint8_t ParameterPairIndex,
                                          tN2kGroupFunctionParameterErrorCode ErrorCode=N2kgfpec_ReadOrWriteIsNotSupported);
 
-    static void SendAcknowledge(tNMEA2000 *pNMEA2000, unsigned char Destination, int iDev, unsigned long PGN, 
+    static void SendAcknowledge(tNMEA2000 *pNMEA2000, unsigned char Destination, int iDev, unsigned long PGN,
                                          tN2kGroupFunctionPGNErrorCode PGNErrorCode,
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs=0,
                                          tN2kGroupFunctionParameterErrorCode ParameterErrorCodeForAll=N2kgfpec_Acknowledge);
-                                   
+
 };
-                          
-#endif    
-    
+
 #endif
 
+#endif
