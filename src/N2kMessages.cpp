@@ -1499,3 +1499,165 @@ bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdT
 
   return true;
 }
+
+//*****************************************************************************
+// Anchor Windlass Control Status (PGN 128776)
+//
+void SetN2kPGN128776(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD484 WindlassDirectionControl,
+  tN2kDD002 AnchorDockingControl,
+  tN2kDD488 SpeedControlType,
+  unsigned char SpeedControl,
+  tN2kDD002 PowerEnable,
+  tN2kDD002 MechanicalLock,
+  tN2kDD002 DeckAndAnchorWash,
+  tN2kDD002 AnchorLight,
+  unsigned int CommandTimeout, // Resolution milliseconds
+  tN2kDD478 WindlassControlEvents
+){
+  N2kMsg.SetPGN(128776L);
+  N2kMsg.Priority=2;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte(WindlassIdentifier);
+  N2kMsg.AddByte((unsigned char) (((WindlassDirectionControl << 6) & 0xC0) | ((AnchorDockingControl << 4) & 0x30) | ((SpeedControlType << 2) & 0x0C) | 0x03));
+  N2kMsg.AddByte(SpeedControl);
+  N2kMsg.AddByte((unsigned char) (((PowerEnable << 6) & 0xC0) | ((MechanicalLock << 4) & 0x30) | ((DeckAndAnchorWash << 2) & 0x0C) | (AnchorLight & 0x03)));
+  N2kMsg.AddByte((unsigned char) ((CommandTimeout / 5) & 0xFF)); // Resolution 5ms
+  N2kMsg.AddByte((unsigned char) (((WindlassControlEvents << 4) & 0xF0) | 0x0F));
+}
+
+bool ParseN2kPGN128776(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD484 &WindlassDirectionControl,
+  tN2kDD002 &AnchorDockingControl,
+  tN2kDD488 &SpeedControlType,
+  unsigned char &SpeedControl,
+  tN2kDD002 &PowerEnable,
+  tN2kDD002 &MechanicalLock,
+  tN2kDD002 &DeckAndAnchorWash,
+  tN2kDD002 &AnchorLight,
+  unsigned int &CommandTimeout, // Resolution milliseconds
+  tN2kDD478 &WindlassControlEvents
+) {
+  if (N2kMsg.PGN!=128776L) return false;
+  int Index = 0;
+  unsigned char field;
+  SID = N2kMsg.GetByte(Index);
+  WindlassIdentifier = N2kMsg.GetByte(Index);
+  field = N2kMsg.GetByte(Index);
+  WindlassDirectionControl = (tN2kDD484) ((field & 0xC0) >> 6);
+  AnchorDockingControl = (tN2kDD002) ((field & 0x30) >> 4);
+  SpeedControlType = (tN2kDD488) ((field & 0x0C) >> 2);
+  SpeedControl = N2kMsg.GetByte(Index);
+  field = N2kMsg.GetByte(Index);
+  PowerEnable = (tN2kDD002) ((field & 0xC0) >> 6);
+  MechanicalLock = (tN2kDD002) ((field & 0x30) >> 4);
+  DeckAndAnchorWash = (tN2kDD002) ((field & 0x0C) >> 2);
+  AnchorLight = (tN2kDD002) (field & 0x03);
+  CommandTimeout = (N2kMsg.GetByte(Index) * 5);
+  field = N2kMsg.GetByte(Index);
+  WindlassControlEvents = (tN2kDD478) ((field & 0xF0) >> 4); 
+  return true;
+}
+
+
+//*****************************************************************************
+// Anchor Windlass Operating Status (PGN 128777)
+// 
+void SetN2kPGN128777(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD480 WindlassMotionStatus,
+  tN2kDD481 RodeTypeStatus,
+  double RodeCounterValue, // Distance in metres
+  double WindlassLineSpeed, // Speed in metres per second
+  tN2kDD482 AnchorDockingStatus,
+  tN2kDD483 WindlassOperatingEvents
+){
+  N2kMsg.SetPGN(128777L);
+  N2kMsg.Priority=2;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte(WindlassIdentifier);
+  N2kMsg.AddByte((unsigned char) (((WindlassMotionStatus << 6) & 0xC0) | ((RodeTypeStatus << 4) & 0x30) | 0x0F));
+  N2kMsg.Add2ByteUInt((unsigned int) (RodeCounterValue * 10));
+  N2kMsg.Add2ByteUInt((unsigned int) (WindlassLineSpeed * 100));
+  N2kMsg.AddByte((unsigned char) (((AnchorDockingStatus << 6) & 0xC0) | (WindlassOperatingEvents & 0x3F)));
+}
+
+bool ParseN2kPGN128777(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD480 &WindlassMotionStatus,
+  tN2kDD481 &RodeTypeStatus,
+  double &RodeCounterValue, // Distance in metres
+  double &WindlassLineSpeed, // Speed in metres per second
+  tN2kDD482 &AnchorDockingStatus,
+  tN2kDD483 &WindlassOperatingEvents
+){
+  if (N2kMsg.PGN!=128777L) return false;
+  int Index = 0;
+  unsigned char field;
+  SID = N2kMsg.GetByte(Index);
+  WindlassIdentifier = N2kMsg.GetByte(Index);
+  field = N2kMsg.GetByte(Index);
+  WindlassMotionStatus = (tN2kDD480) ((field & 0xC0) >> 6);
+  RodeTypeStatus = (tN2kDD481) ((field & 0x30) >> 4);
+  RodeCounterValue = (((double) N2kMsg.Get2ByteUInt(Index)) / 10.0);
+  WindlassLineSpeed = (((double) N2kMsg.Get2ByteUInt(Index)) / 100.0);
+  field = N2kMsg.GetByte(Index);
+  AnchorDockingStatus = (tN2kDD482) ((field & 0xC0) >> 6);
+  WindlassOperatingEvents = (tN2kDD483) (field & 0x3F);
+  return true;
+}
+
+
+//*****************************************************************************
+// Anchor Windlass Monitoring Status (PGN 128778)
+//
+void SetN2kPGN128778(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD477 WindlassMonitoringEvents,
+  double ControllerVoltage, // in Volts
+  double MotorCurrent, // in Amperes
+  unsigned int TotalMotorTime // in minutes
+){
+  N2kMsg.SetPGN(128778L);
+  N2kMsg.Priority=2;
+  N2kMsg.AddByte(SID);
+  N2kMsg.AddByte(WindlassIdentifier);
+  N2kMsg.AddByte((unsigned char) (WindlassMonitoringEvents & 0xFF));
+  N2kMsg.AddByte((unsigned char) (((unsigned int) (ControllerVoltage / 0.02)) & 0xFF));
+  N2kMsg.AddByte((unsigned char) (((unsigned int) MotorCurrent) & 0xFF));
+  N2kMsg.Add2ByteUInt(TotalMotorTime);
+  N2kMsg.AddByte(0xFF);
+}
+
+bool ParseN2kPGN128778(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD477 &WindlassMonitoringEvents,
+  double &ControllerVoltage, // in Volts
+  double &MotorCurrent, // in Amperes
+  unsigned int &TotalMotorTime // in minutes
+) {
+  if (N2kMsg.PGN!=128778L) return false;
+  int Index = 0;
+  SID = N2kMsg.GetByte(Index);
+  WindlassIdentifier = N2kMsg.GetByte(Index);
+  WindlassMonitoringEvents = (tN2kDD477) N2kMsg.GetByte(Index);
+  ControllerVoltage = (((double) N2kMsg.GetByte(Index)) / 5.0);
+  MotorCurrent = (double) N2kMsg.GetByte(Index);
+  TotalMotorTime = N2kMsg.Get2ByteUInt(Index);
+  return true;
+}
+
