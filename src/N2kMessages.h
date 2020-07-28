@@ -1296,7 +1296,89 @@ inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &
   return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
 }
 
+//*****************************************************************************
+// Anchor Windlass Control Status (PGN 128776)
+//
+void SetN2kPGN128776(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD484 WindlassDirectionControl,
+  tN2kDD002 AnchorDockingControl,
+  tN2kDD488 SpeedControlType,
+  unsigned char SpeedControl,
+  tN2kDD002 PowerEnable,
+  tN2kDD002 MechanicalLock,
+  tN2kDD002 DeckAndAnchorWash,
+  tN2kDD002 AnchorLight,
+  double CommandTimeout,
+  tN2kDD478 WindlassControlEvents
+);
 
+bool ParseN2kPGN128776(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD484 &WindlassDirectionControl,
+  tN2kDD002 &AnchorDockingControl,
+  tN2kDD488 &SpeedControlType,
+  unsigned char &SpeedControl,
+  tN2kDD002 &PowerEnable,
+  tN2kDD002 &MechanicalLock,
+  tN2kDD002 &DeckAndAnchorWash,
+  tN2kDD002 &AnchorLight,
+  unsigned int &CommandTimeout, // Resolution milliseconds
+  tN2kDD478 &WindlassControlEvents
+);
 
+//*****************************************************************************
+// Anchor Windlass Operating Status (PGN 128777)
+// 
+void SetN2kPGN128777(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD480 WindlassMotionStatus,
+  tN2kDD481 RodeTypeStatus,
+  double RodeCounterValue,
+  double WindlassLineSpeed,
+  tN2kDD482 AnchorDockingStatus,
+  tN2kDD483 WindlassOperatingEvents
+);
+
+bool ParseN2kPGN128777(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD480 &WindlassMotionStatus,
+  tN2kDD481 &RodeTypeStatus,
+  double &RodeCounterValue, // Distance in metres
+  double &WindlassLineSpeed, // Speed in metres per second
+  tN2kDD482 &AnchorDockingStatus,
+  tN2kDD483 &WindlassOperatingEvents
+);
+
+//*****************************************************************************
+// Anchor Windlass Monitoring Status (PGN 128778)
+//
+void SetN2kPGN128778(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kDD477 WindlassMonitoringEvents,
+  double ControllerVoltage,
+  double MotorCurrent,
+  unsigned int TotalMotorTime
+);
+
+bool ParseN2kPGN128778(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kDD477 &WindlassMonitoringEvents,
+  double &ControllerVoltage, // in Volts
+  double &MotorCurrent, // in Amperes
+  unsigned int &TotalMotorTime // in minutes
+);
 
 #endif
