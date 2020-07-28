@@ -324,5 +324,114 @@ enum tN2kTurnMode {
                             N2kTM_Unavailable=7
                           };
 
+// DD002 - Generic Status Pair
+//                
+enum tN2kDD002 {
+                            N2kDD002_No=0,             // [ No, Off, Disabled, Reset, "0" ]
+                            N2kDD002_Yes=1,              // [ Yes, On, Enabled, Set, "1" ]
+                            N2kDD002_Error=2,           // Error
+                            N2kDD002_Unavailable=3,
+                            N2kDD002_Off=N2kDD002_No,
+                            N2kDD002_Disabled=N2kDD002_No,
+                            N2kDD002_Reset=N2kDD002_No,
+                            N2kDD002_0=N2kDD002_No,
+                            N2kDD002_On=N2kDD002_Yes,
+                            N2kDD002_Enabled=N2kDD002_Yes,
+                            N2kDD002_Set=N2kDD002_Yes,
+                            N2kDD002_1=N2kDD002_Yes,
+                            N2kDD002_Unknown=N2kDD002_Unavailable      // [ Unavailable, Unknown ]
+                          };
+                          
+enum tN2kGenericStatusPair {
+                            N2kGenericStatusPair_No=0,             // [ No, Off, Disabled, Reset, "0" ]
+                            N2kGenericStatusPair_Yes=1,              // [ Yes, On, Enabled, Set, "1" ]
+                            N2kGenericStatusPair_Error=2,           // Error
+                            N2kGenericStatusPair_Unavailable=3,
+                            N2kGenericStatusPair_Off=N2kGenericStatusPair_No,
+                            N2kGenericStatusPair_Disabled=N2kGenericStatusPair_No,
+                            N2kGenericStatusPair_Reset=N2kGenericStatusPair_No,
+                            N2kGenericStatusPair_0=N2kGenericStatusPair_No,
+                            N2kGenericStatusPair_On=N2kGenericStatusPair_Yes,
+                            N2kGenericStatusPair_Enabled=N2kGenericStatusPair_Yes,
+                            N2kGenericStatusPair_Set=N2kGenericStatusPair_Yes,
+                            N2kGenericStatusPair_1=N2kGenericStatusPair_Yes,
+                            N2kGenericStatusPair_Unknown=N2kGenericStatusPair_Unavailable      // [ Unavailable, Unknown ]
+                          };
+                          
+// DD477 - Windlass Monitoring Events
+//
+enum tN2kDD477 {
+                            N2kDD477_NoErrorsPresent=0,
+                            N2kDD477_ControllerUnderVoltageCutout=1,
+                            N2kDD477_ControllerOverCurrentCutout=2,
+                            N2kDD477_ControllerOverTemperatureCutout=4,
+                            N2kDD477_ManufacturerDefines=8
+                          };
+
+// DD478 - Windlass Control Events
+//
+enum tN2kDD478 {
+                            N2kDD478_NoErrorsPresent=0,
+                            N2kDD478_AnotherDeviceControllingWindlass=1,
+                            N2kDD478_Reserved=14
+                          };
+                          
+// DD480 - Windlass Motion States
+//                          
+enum tN2kDD480 {
+                            N2kDD480_WindlassStopped=0,
+                            N2kDD480_DeploymentOccurring=1,
+                            N2kDD480_RetrievalOccurring=2,
+                            N2kDD480_Unavailable=3
+                          };
+
+//  DD481 - Rode Type States
+//            
+enum tN2kDD481 {
+                            N2kDD481_ChainPresentlyDetected=0,
+                            N2kDD481_RopePresentlyDetected=1,
+                            N2kDD481_Error=2,
+                            N2kDD481_Unavailable=3
+                          };
+
+// DD482 - Anchor Docking States
+//
+enum tN2kDD482 {
+                            N2kDD482_NotDocked=0,
+                            N2kDD482_FullyDocked=1,
+                            N2kDD482_Error=2,
+                            N2kDD482_DataNotAvailable=3
+                          };
+                
+// DD483 - Windlass Operating Events
+//                          
+enum tN2kDD483 {
+                            N2kDD483_NoErrorsOrEventsPresent=0,
+                            N2kDD483_SystemError=1,
+                            N2kDD483_SensorError=2,
+                            N2kDD483_NoWindlassMotionDetected=4,
+                            N2kDD483_RetrievalDockingDistanceReached=8,
+                            N2kDD483_EndOfRodeReached=16,
+                            N2kDD483_Reserved=32
+                          };
+                            
+// DD484 - Windlass Direction Control
+//            
+enum tN2kDD484 {
+                            N2kDD484_Off=0,             // Status only / cannot command
+                            N2kDD484_Down=1,
+                            N2kDD484_Up=2,
+                            N2kDD484_Reserved=3
+                          };
+
+// DD488 - Speed Type
+//          
+enum tN2kDD488 {
+                            N2kDD488_SingleSpeed=0,
+                            N2kDD488_DualSpeed=1,
+                            N2kDD488_ProportionalSpeed=2,
+                            N2kDD488_DataNotAvailable=3
+                          };
+
 #endif
 
