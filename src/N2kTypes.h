@@ -23,8 +23,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 NMEA2000 type definitions.
 */
 
+
 #ifndef _N2kTypes_H_
 #define _N2kTypes_H_
+
+#include "NMEA2000StdTypes.h"
 
 enum tN2kHeadingReference {
                             N2khr_true=0,
@@ -324,173 +327,75 @@ enum tN2kTurnMode {
                             N2kTM_Unavailable=7
                           };
 
-// DD002 - Generic Status Pair
-//                
-enum tN2kDD002 {
-                            N2kDD002_No=0,             // [ No, Off, Disabled, Reset, "0" ]
-                            N2kDD002_Yes=1,              // [ Yes, On, Enabled, Set, "1" ]
-                            N2kDD002_Error=2,           // Error
-                            N2kDD002_Unavailable=3,
-                            N2kDD002_Off=N2kDD002_No,
-                            N2kDD002_Disabled=N2kDD002_No,
-                            N2kDD002_Reset=N2kDD002_No,
-                            N2kDD002_0=N2kDD002_No,
-                            N2kDD002_On=N2kDD002_Yes,
-                            N2kDD002_Enabled=N2kDD002_Yes,
-                            N2kDD002_Set=N2kDD002_Yes,
-                            N2kDD002_1=N2kDD002_Yes,
-                            N2kDD002_Unknown=N2kDD002_Unavailable      // [ Unavailable, Unknown ]
-                          };
+//*****************************************************************************
+// Aliases for N2K standard types.
+//*****************************************************************************
+
+using tN2kGenericStatusPair = tN2kDD002;
+                            // N2kDD002_No=0
+                            // N2kDD002_Yes=1
+                            // N2kDD002_Error=2
+                            // N2kDD002_Unavailable=3
+                            // N2kDD002_Off=N2kDD002_No
+                            // N2kDD002_Disabled=N2kDD002_No
+                            // N2kDD002_Reset=N2kDD002_No
+                            // N2kDD002_0=N2kDD002_No
+                            // N2kDD002_On=N2kDD002_Yes
+                            // N2kDD002_Enabled=N2kDD002_Yes
+                            // N2kDD002_Set=N2kDD002_Yes
+                            // N2kDD002_1=N2kDD002_Yes
+                            // N2kDD002_Unknown=N2kDD002_Unavailable
                           
-enum tN2kGenericStatusPair {
-                            N2kGenericStatusPair_No=0,             // [ No, Off, Disabled, Reset, "0" ]
-                            N2kGenericStatusPair_Yes=1,              // [ Yes, On, Enabled, Set, "1" ]
-                            N2kGenericStatusPair_Error=2,           // Error
-                            N2kGenericStatusPair_Unavailable=3,
-                            N2kGenericStatusPair_Off=N2kGenericStatusPair_No,
-                            N2kGenericStatusPair_Disabled=N2kGenericStatusPair_No,
-                            N2kGenericStatusPair_Reset=N2kGenericStatusPair_No,
-                            N2kGenericStatusPair_0=N2kGenericStatusPair_No,
-                            N2kGenericStatusPair_On=N2kGenericStatusPair_Yes,
-                            N2kGenericStatusPair_Enabled=N2kGenericStatusPair_Yes,
-                            N2kGenericStatusPair_Set=N2kGenericStatusPair_Yes,
-                            N2kGenericStatusPair_1=N2kGenericStatusPair_Yes,
-                            N2kGenericStatusPair_Unknown=N2kGenericStatusPair_Unavailable      // [ Unavailable, Unknown ]
-                          };
+using tN2kWindlassMonitoringEvents = tN2kDD477;
+                            // N2kDD477_NoErrorsPresent=0
+                            // N2kDD477_ControllerUnderVoltageCutout=1
+                            // N2kDD477_ControllerOverCurrentCutout=2
+                            // N2kDD477_ControllerOverTemperatureCutout=4
+                            // N2kDD477_ManufacturerDefined=8
+
+using tN2kWindlassControlEvents = tN2kDD478;
+                            // N2kDD478_NoErrorsPresent=0
+                            // N2kDD478_AnotherDeviceControllingWindlass=1
+                            // N2kDD478_Reserved=14
                           
-// DD477 - Windlass Monitoring Events
-//
-enum tN2kDD477 {
-                            N2kDD477_NoErrorsPresent=0,
-                            N2kDD477_ControllerUnderVoltageCutout=1,
-                            N2kDD477_ControllerOverCurrentCutout=2,
-                            N2kDD477_ControllerOverTemperatureCutout=4,
-                            N2kDD477_ManufacturerDefined=8
-                          };
+using tN2kWindlassMotionStates = tN2kDD480;
+                            // N2kDD480_WindlassStopped=0
+                            // N2kDD480_DeploymentOccurring=1
+                            // N2kDD480_RetrievalOccurring=2
+                            // N2kDD480_Unavailable=3
 
-enum tN2kWindlassMonitoringEvents {
-                            N2kWindlassMonitoringEvents_NoErrorsPresent=0,
-                            N2kWindlassMonitoringEvents_ControllerUnderVoltageCutout=1,
-                            N2kWindlassMonitoringEvents_ControllerOverCurrentCutout=2,
-                            N2kWindlassMonitoringEvents_ControllerOverTemperatureCutout=4,
-                            N2kWindlassMonitoringEvents_ManufacturerDefined=8
-                          };
+using tN2kRodeTypeState = tN2kDD481;
+                            // N2kDD481_ChainPresentlyDetected=0
+                            // N2kDD481_RopePresentlyDetected=1
+                            // N2kDD481_Error=2
+                            // N2kDD481_Unavailable=3
 
-// DD478 - Windlass Control Events
-//
-enum tN2kDD478 {
-                            N2kDD478_NoErrorsPresent=0,
-                            N2kDD478_AnotherDeviceControllingWindlass=1,
-                            N2kDD478_Reserved=14
-                          };
-                          
-enum tN2kWindlassControlEvents {
-                            N2kWindlassControlEvents_NoErrorsPresent=0,
-                            N2kWindlassControlEvents_AnotherDeviceControllingWindlass=1,
-                            N2kWindlassControlEvents_Reserved=14
-                          };
+using tN2kAnchorDockingStates = tN2kDD482;
+                            // N2kDD482_NotDocked=0
+                            // N2kDD482_FullyDocked=1
+                            // N2kDD482_Error=2
+                            // N2kDD482_DataNotAvailable=3
 
-// DD480 - Windlass Motion States
-//                          
-enum tN2kDD480 {
-                            N2kDD480_WindlassStopped=0,
-                            N2kDD480_DeploymentOccurring=1,
-                            N2kDD480_RetrievalOccurring=2,
-                            N2kDD480_Unavailable=3
-                          };
+using tN2kWindlassOperatingEvents = tN2kDD483;
+                            // N2kDD483_NoErrorsOrEventsPresent=0
+                            // N2kDD483_SystemError=1
+                            // N2kDD483_SensorError=2
+                            // N2kDD483_NoWindlassMotionDetected=4
+                            // N2kDD483_RetrievalDockingDistanceReached=8
+                            // N2kDD483_EndOfRodeReached=16
+                            // N2kDD483_Reserved=32
 
-enum tN2kWindlassMotionStates {
-                            N2kWindlassMotionStates_WindlassStopped=0,
-                            N2kWindlassMotionStates_DeploymentOccurring=1,
-                            N2kWindlassMotionStates_RetrievalOccurring=2,
-                            N2kWindlassMotionStates_Unavailable=3
-                          };
+using tN2kWindlassDirectionControl = tN2kDD484;
+                            // N2kDD484_Off=0
+                            // N2kDD484_Down=1
+                            // N2kDD484_Up=2
+                            // N2kDD484_Reserved=3
 
-//  DD481 - Rode Type States
-//            
-enum tN2kDD481 {
-                            N2kDD481_ChainPresentlyDetected=0,
-                            N2kDD481_RopePresentlyDetected=1,
-                            N2kDD481_Error=2,
-                            N2kDD481_Unavailable=3
-                          };
-
-enum tN2kRodeTypeStates {
-                            N2kRodeTypeStates_ChainPresentlyDetected=0,
-                            N2kRodeTypeStates_RopePresentlyDetected=1,
-                            N2kRodeTypeStates_Error=2,
-                            N2kRodeTypeStates_Unavailable=3
-                          };
-
-// DD482 - Anchor Docking States
-//
-enum tN2kDD482 {
-                            N2kDD482_NotDocked=0,
-                            N2kDD482_FullyDocked=1,
-                            N2kDD482_Error=2,
-                            N2kDD482_DataNotAvailable=3
-                          };
-
-enum tN2kAnchorDockingStates {
-                            N2kAnchorDockingStates_NotDocked=0,
-                            N2kAnchorDockingStates_FullyDocked=1,
-                            N2kAnchorDockingStates_Error=2,
-                            N2kAnchorDockingStates_DataNotAvailable=3
-                          };
-                
-// DD483 - Windlass Operating Events
-//                          
-enum tN2kDD483 {
-                            N2kDD483_NoErrorsOrEventsPresent=0,
-                            N2kDD483_SystemError=1,
-                            N2kDD483_SensorError=2,
-                            N2kDD483_NoWindlassMotionDetected=4,
-                            N2kDD483_RetrievalDockingDistanceReached=8,
-                            N2kDD483_EndOfRodeReached=16,
-                            N2kDD483_Reserved=32
-                          };
-
-enum tN2kWindlassOperatingEvents {
-                            N2kWindlassOperatingEvents_NoErrorsOrEventsPresent=0,
-                            N2kWindlassOperatingEvents_SystemError=1,
-                            N2kWindlassOperatingEvents_SensorError=2,
-                            N2kWindlassOperatingEvents_NoWindlassMotionDetected=4,
-                            N2kWindlassOperatingEvents_RetrievalDockingDistanceReached=8,
-                            N2kWindlassOperatingEvents_EndOfRodeReached=16,
-                            N2kWindlassOperatingEvents_Reserved=32
-                          };
-                            
-// DD484 - Windlass Direction Control
-//            
-enum tN2kDD484 {
-                            N2kDD484_Off=0,             // Status only / cannot command
-                            N2kDD484_Down=1,
-                            N2kDD484_Up=2,
-                            N2kDD484_Reserved=3
-                          };
-
-enum tN2kWindlassDirectionControl {
-                            N2kWindlassDirectionControl_Off=0,             // Status only / cannot command
-                            N2kWindlassDirectionControl_Down=1,
-                            N2kWindlassDirectionControl_Up=2,
-                            N2kWindlassDirectionControl_Reserved=3
-                          };
-
-// DD488 - Speed Type
-//          
-enum tN2kDD488 {
-                            N2kDD488_SingleSpeed=0,
-                            N2kDD488_DualSpeed=1,
-                            N2kDD488_ProportionalSpeed=2,
-                            N2kDD488_DataNotAvailable=3
-                          };
-
-enum tN2kSpeedType {
-                            N2kSpeedType_SingleSpeed=0,
-                            N2kSpeedType_DualSpeed=1,
-                            N2kSpeedType_ProportionalSpeed=2,
-                            N2kSpeedType_DataNotAvailable=3
-                          };
+using tN2kSpeedType = tN2kDD488;
+                            // N2kDD488_SingleSpeed=0
+                            // N2kDD488_DualSpeed=1
+                            // N2kDD488_ProportionalSpeed=2
+                            // N2kDD488_DataNotAvailable=3
 
 #endif
 
