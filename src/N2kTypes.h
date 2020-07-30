@@ -364,7 +364,7 @@ using tN2kWindlassMotionStates = tN2kDD480;
                             // N2kDD480_RetrievalOccurring=2
                             // N2kDD480_Unavailable=3
 
-using tN2kRodeTypeState = tN2kDD481;
+using tN2kRodeTypeStates = tN2kDD481;
                             // N2kDD481_ChainPresentlyDetected=0
                             // N2kDD481_RopePresentlyDetected=1
                             // N2kDD481_Error=2
