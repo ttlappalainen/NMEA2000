@@ -346,25 +346,13 @@ using tN2kGenericStatusPair = tN2kDD002;
                             // N2kDD002_1=N2kDD002_Yes
                             // N2kDD002_Unknown=N2kDD002_Unavailable
                           
-using tN2kWindlassMonitoringEvents = tN2kDD477;
-                            // N2kDD477_NoErrorsPresent=0
-                            // N2kDD477_ControllerUnderVoltageCutout=1
-                            // N2kDD477_ControllerOverCurrentCutout=2
-                            // N2kDD477_ControllerOverTemperatureCutout=4
-                            // N2kDD477_ManufacturerDefined=8
-
-using tN2kWindlassControlEvents = tN2kDD478;
-                            // N2kDD478_NoErrorsPresent=0
-                            // N2kDD478_AnotherDeviceControllingWindlass=1
-                            // N2kDD478_Reserved=14
-                          
 using tN2kWindlassMotionStates = tN2kDD480;
                             // N2kDD480_WindlassStopped=0
                             // N2kDD480_DeploymentOccurring=1
                             // N2kDD480_RetrievalOccurring=2
                             // N2kDD480_Unavailable=3
 
-using tN2kRodeTypeState = tN2kDD481;
+using tN2kRodeTypeStates = tN2kDD481;
                             // N2kDD481_ChainPresentlyDetected=0
                             // N2kDD481_RopePresentlyDetected=1
                             // N2kDD481_Error=2
@@ -375,15 +363,6 @@ using tN2kAnchorDockingStates = tN2kDD482;
                             // N2kDD482_FullyDocked=1
                             // N2kDD482_Error=2
                             // N2kDD482_DataNotAvailable=3
-
-using tN2kWindlassOperatingEvents = tN2kDD483;
-                            // N2kDD483_NoErrorsOrEventsPresent=0
-                            // N2kDD483_SystemError=1
-                            // N2kDD483_SensorError=2
-                            // N2kDD483_NoWindlassMotionDetected=4
-                            // N2kDD483_RetrievalDockingDistanceReached=8
-                            // N2kDD483_EndOfRodeReached=16
-                            // N2kDD483_Reserved=32
 
 using tN2kWindlassDirectionControl = tN2kDD484;
                             // N2kDD484_Off=0
