@@ -1343,7 +1343,7 @@ void SetN2kPGN128777(
   double RodeCounterValue,
   double WindlassLineSpeed,
   tN2kDD482 AnchorDockingStatus,
-  tN2kDD483 WindlassOperatingEvents
+  tN2kWindlassOperatingEvents WindlassOperatingEvents
 );
 
 bool ParseN2kPGN128777(
