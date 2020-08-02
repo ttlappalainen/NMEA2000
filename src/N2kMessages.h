@@ -1338,10 +1338,10 @@ void SetN2kPGN128777(
   tN2kMsg &N2kMsg,
   unsigned char SID,
   unsigned char WindlassIdentifier,
-  tN2kWindlassMotionStates WindlassMotionStatus,
-  tN2kRodeTypeStates RodeTypeStatus,
   double RodeCounterValue,
   double WindlassLineSpeed,
+  tN2kWindlassMotionStates WindlassMotionStatus,
+  tN2kRodeTypeStates RodeTypeStatus,
   tN2kDD482 AnchorDockingStatus,
   tN2kWindlassOperatingEvents WindlassOperatingEvents
 );
@@ -1350,10 +1350,10 @@ bool ParseN2kPGN128777(
   const tN2kMsg &N2kMsg,
   unsigned char &SID,
   unsigned char &WindlassIdentifier,
-  tN2kWindlassMotionStates &WindlassMotionStatus,
-  tN2kRodeTypeStates &RodeTypeStatus,
   double &RodeCounterValue, // Distance in metres
   double &WindlassLineSpeed, // Speed in metres per second
+  tN2kWindlassMotionStates &WindlassMotionStatus,
+  tN2kRodeTypeStates &RodeTypeStatus,
   tN2kAnchorDockingStates &AnchorDockingStatus,
   tN2kWindlassOperatingEvents &WindlassOperatingEvents
 );

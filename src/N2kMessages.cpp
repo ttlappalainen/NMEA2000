@@ -1635,10 +1635,10 @@ void SetN2kPGN128778(
   tN2kMsg &N2kMsg,
   unsigned char SID,
   unsigned char WindlassIdentifier,
+  const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents(),
   double ControllerVoltage = 0.0,
   double MotorCurrent = 0.0,
-  unsigned long TotalMotorTime = 0L,
-  const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents()
+  unsigned long TotalMotorTime = 0L
 ){
   N2kMsg.SetPGN(128778L);
   N2kMsg.Priority=2;
@@ -1659,10 +1659,10 @@ bool ParseN2kPGN128778(
   const tN2kMsg &N2kMsg,
   unsigned char &SID,
   unsigned char &WindlassIdentifier,
+  tN2kWindlassMonitoringEvents &WindlassMonitoringEvents,
   double &ControllerVoltage,
   double &MotorCurrent,
-  unsigned long &TotalMotorTime,
-  tN2kWindlassMonitoringEvents &WindlassMonitoringEvents
+  unsigned long &TotalMotorTime
 ) {
   if (N2kMsg.PGN!=128778L) return false;
   int Index = 0;
