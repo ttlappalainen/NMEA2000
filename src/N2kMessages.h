@@ -682,6 +682,123 @@ inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
 }
 
 //*****************************************************************************
+// PGN128776 - Anchor Windlass Control Status
+//
+// Eg: SetN2kPGN128776(N2kMsg, SID, WindlassIdentifier, WindlassDirectionControl, SpeedControl);
+// -- SID - message sequence id - use to tie together windlass status msgs
+// -- WindlassIdentifier - instance of the windlass being reported
+// -- WindlassDirectionControl - see tN2kDD484
+// -- SpeedControl - Single speed 0=off, 1-100=on; Dual speed: 0=off, 1-49=slow, 50-100=fast; Proporional speed: 0=off, 1-100=speed
+// -- SpeedControlType (optional) - see tN2kDD488
+// -- AnchorDockingControl (optional) - see tN2kDD002
+// -- PowerEnable (optional) - see tN2kDD002
+// -- MechanicalLock (optional) - see tN2kDD002
+// -- DeckAndAnchorWash (optional) - see tN2kDD002
+// -- AnchorLight (optional) - see tN2kDD002
+// -- CommandTimeout (optional) - range 0.25 ... 1.26 seconds
+// -- WindlassControlEvents (optional) - see tN2kDD478
+
+void SetN2kPGN128776(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  tN2kWindlassDirectionControl WindlassDirectionControl,
+  unsigned char SpeedControl,
+  tN2kSpeedType SpeedControlType = N2kDD488_DataNotAvailable,
+  tN2kGenericStatusPair AnchorDockingControl = N2kDD002_Unavailable,
+  tN2kGenericStatusPair PowerEnable = N2kDD002_Unavailable,
+  tN2kGenericStatusPair MechanicalLock = N2kDD002_Unavailable,
+  tN2kGenericStatusPair DeckAndAnchorWash = N2kDD002_Unavailable,
+  tN2kGenericStatusPair AnchorLight = N2kDD002_Unavailable,
+  double CommandTimeout = 0.25,
+  const tN2kWindlassControlEvents &WindlassControlEvents = tN2kWindlassControlEvents()
+);
+
+bool ParseN2kPGN128776(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  tN2kWindlassDirectionControl &WindlassDirectionControl,
+  unsigned char &SpeedControl,
+  tN2kSpeedType &SpeedControlType,
+  tN2kGenericStatusPair &AnchorDockingControl,
+  tN2kGenericStatusPair &PowerEnable,
+  tN2kGenericStatusPair &MechanicalLock,
+  tN2kGenericStatusPair &DeckAndAnchorWash,
+  tN2kGenericStatusPair &AnchorLight,
+  double &CommandTimeout,
+  tN2kWindlassControlEvents &WindlassControlEvents
+);
+
+//*****************************************************************************
+// PGN128777 - Anchor Windlass Operating Status
+//
+// Eg: SetN2kPGN128777(N2kMsg, SID, WindlassIdentifier, RodeCounterValue, WindlassLineSpeed);
+// -- SID - message sequence id - use to tie together windlass status msgs
+// -- WindlassIdentifier - instance of the windlass being reported
+// -- RodeCounterValue - amount of rode deployed in metres
+// -- WindlassLineSpeed (optional) - deployment speed in metres per second
+// -- WindlassMotionStatus (optional) - see tN2kDD480
+// -- RodeTypeStatus (optional) - see tN2kDD481
+// -- AnchorDockingStatus (optional) - see tN2kDD482
+// -- WindlassOperatingEvents (optional) -- see tN2kDD483
+
+void SetN2kPGN128777(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  double RodeCounterValue,
+  double WindlassLineSpeed = N2kDoubleNA,
+  tN2kWindlassMotionStates WindlassMotionStatus = N2kDD480_Unavailable,
+  tN2kRodeTypeStates RodeTypeStatus = N2kDD481_Unavailable,
+  tN2kDD482 AnchorDockingStatus = N2kDD482_DataNotAvailable,
+  const tN2kWindlassOperatingEvents &WindlassOperatingEvents = tN2kWindlassOperatingEvents()
+);
+
+bool ParseN2kPGN128777(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  double &RodeCounterValue,
+  double &WindlassLineSpeed,
+  tN2kWindlassMotionStates &WindlassMotionStatus,
+  tN2kRodeTypeStates &RodeTypeStatus,
+  tN2kAnchorDockingStates &AnchorDockingStatus,
+  tN2kWindlassOperatingEvents &WindlassOperatingEvents
+);
+
+//*****************************************************************************
+// PGN128778 - Anchor Windlass Monitoring Status
+//
+// Eg: SetN2kPGN128778(N2kMsg, SID, WindlassIdentifier, TotalMotorTime);
+// -- SID - message sequence id - use to tie together windlass status msgs
+// -- WindlassIdentifier - instance of the windlass being reported
+// -- TotalMotorTime - total run time of the motor in seconds
+// -- ControllerVoltage (optional) - voltage in Volts
+// -- MotorCurrent (optional) - current in Amperes
+// -- WindlassMonitoringEvents (optional) - see tN2kDD477
+
+void SetN2kPGN128778(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char WindlassIdentifier,
+  unsigned long TotalMotorTime,
+  double ControllerVoltage = N2kDoubleNA,
+  double MotorCurrent = N2kDoubleNA,
+  const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents()
+);
+
+bool ParseN2kPGN128778(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &WindlassIdentifier,
+  unsigned long &TotalMotorTime,
+  double &ControllerVoltage,
+  double &MotorCurrent,
+  tN2kWindlassMonitoringEvents &WindlassMonitoringEvents
+);
+
+//*****************************************************************************
 // Lat/lon rapid
 // Input:
 //  - Latitude               Latitude in degrees
@@ -1295,90 +1412,5 @@ bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdT
 inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
   return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
 }
-
-//*****************************************************************************
-// Anchor Windlass Control Status (PGN 128776)
-//
-void SetN2kPGN128776(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  tN2kWindlassDirectionControl WindlassDirectionControl,
-  tN2kGenericStatusPair AnchorDockingControl,
-  tN2kSpeedType SpeedControlType,
-  unsigned char SpeedControl,
-  tN2kGenericStatusPair PowerEnable,
-  tN2kGenericStatusPair MechanicalLock,
-  tN2kGenericStatusPair DeckAndAnchorWash,
-  tN2kGenericStatusPair AnchorLight,
-  double CommandTimeout,
-  tN2kWindlassControlEvents WindlassControlEvents
-);
-
-bool ParseN2kPGN128776(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  tN2kWindlassDirectionControl &WindlassDirectionControl,
-  tN2kGenericStatusPair &AnchorDockingControl,
-  tN2kSpeedType &SpeedControlType,
-  unsigned char &SpeedControl,
-  tN2kGenericStatusPair &PowerEnable,
-  tN2kGenericStatusPair &MechanicalLock,
-  tN2kGenericStatusPair &DeckAndAnchorWash,
-  tN2kGenericStatusPair &AnchorLight,
-  double &CommandTimeout,
-  tN2kWindlassControlEvents &WindlassControlEvents
-);
-
-//*****************************************************************************
-// Anchor Windlass Operating Status (PGN 128777)
-// 
-void SetN2kPGN128777(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  double RodeCounterValue,
-  double WindlassLineSpeed,
-  tN2kWindlassMotionStates WindlassMotionStatus,
-  tN2kRodeTypeStates RodeTypeStatus,
-  tN2kDD482 AnchorDockingStatus,
-  tN2kWindlassOperatingEvents WindlassOperatingEvents
-);
-
-bool ParseN2kPGN128777(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  double &RodeCounterValue, // Distance in metres
-  double &WindlassLineSpeed, // Speed in metres per second
-  tN2kWindlassMotionStates &WindlassMotionStatus,
-  tN2kRodeTypeStates &RodeTypeStatus,
-  tN2kAnchorDockingStates &AnchorDockingStatus,
-  tN2kWindlassOperatingEvents &WindlassOperatingEvents
-);
-
-//*****************************************************************************
-// Anchor Windlass Monitoring Status (PGN 128778)
-//
-void SetN2kPGN128778(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  tN2kWindlassMonitoringEvents WindlassMonitoringEvents,
-  double ControllerVoltage,
-  double MotorCurrent,
-  unsigned long TotalMotorTime
-);
-
-bool ParseN2kPGN128778(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  tN2kWindlassMonitoringEvents &WindlassMonitoringEvents,
-  double &ControllerVoltage,
-  double &MotorCurrent,
-  unsigned long &TotalMotorTime
-);
 
 #endif
