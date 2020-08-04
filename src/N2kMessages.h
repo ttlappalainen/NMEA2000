@@ -687,16 +687,16 @@ inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
 // Eg: SetN2kPGN128776(N2kMsg, SID, WindlassIdentifier, WindlassDirectionControl, SpeedControl);
 // -- SID - message sequence id - use to tie together windlass status msgs
 // -- WindlassIdentifier - instance of the windlass being reported
-// -- WindlassDirectionControl - see tN2kDD484
+// -- WindlassDirectionControl - see tN2kWindlassDirectionControl
 // -- SpeedControl - Single speed 0=off, 1-100=on; Dual speed: 0=off, 1-49=slow, 50-100=fast; Proporional speed: 0=off, 1-100=speed
-// -- SpeedControlType (optional) - see tN2kDD488
-// -- AnchorDockingControl (optional) - see tN2kDD002
-// -- PowerEnable (optional) - see tN2kDD002
-// -- MechanicalLock (optional) - see tN2kDD002
-// -- DeckAndAnchorWash (optional) - see tN2kDD002
-// -- AnchorLight (optional) - see tN2kDD002
+// -- SpeedControlType (optional) - see tN2kSpeedType
+// -- AnchorDockingControl (optional) - see tN2kGenericStatusPair
+// -- PowerEnable (optional) - see tN2kDGenericStatusPair
+// -- MechanicalLock (optional) - see tN2kDGenericStatusPair
+// -- DeckAndAnchorWash (optional) - see tN2kDGenericStatusPair
+// -- AnchorLight (optional) - see tN2kDGenericStatusPair
 // -- CommandTimeout (optional) - range 0.25 ... 1.26 seconds
-// -- WindlassControlEvents (optional) - see tN2kDD478
+// -- WindlassControlEvents (optional) - see tN2kWindlassControlEvents
 
 void SetN2kPGN128776(
   tN2kMsg &N2kMsg,
@@ -710,7 +710,7 @@ void SetN2kPGN128776(
   tN2kGenericStatusPair MechanicalLock = N2kDD002_Unavailable,
   tN2kGenericStatusPair DeckAndAnchorWash = N2kDD002_Unavailable,
   tN2kGenericStatusPair AnchorLight = N2kDD002_Unavailable,
-  double CommandTimeout = 0.25,
+  double CommandTimeout = 0.4,
   const tN2kWindlassControlEvents &WindlassControlEvents = tN2kWindlassControlEvents()
 );
 
@@ -738,10 +738,10 @@ bool ParseN2kPGN128776(
 // -- WindlassIdentifier - instance of the windlass being reported
 // -- RodeCounterValue - amount of rode deployed in metres
 // -- WindlassLineSpeed (optional) - deployment speed in metres per second
-// -- WindlassMotionStatus (optional) - see tN2kDD480
-// -- RodeTypeStatus (optional) - see tN2kDD481
-// -- AnchorDockingStatus (optional) - see tN2kDD482
-// -- WindlassOperatingEvents (optional) -- see tN2kDD483
+// -- WindlassMotionStatus (optional) - see tN2kWindlassMotionStates
+// -- RodeTypeStatus (optional) - see tN2kRodeTypeStates
+// -- AnchorDockingStatus (optional) - see tN2kAnchorDockingStates
+// -- WindlassOperatingEvents (optional) -- see tN2kWindlassOperatingEvents
 
 void SetN2kPGN128777(
   tN2kMsg &N2kMsg,
@@ -776,13 +776,13 @@ bool ParseN2kPGN128777(
 // -- TotalMotorTime - total run time of the motor in seconds
 // -- ControllerVoltage (optional) - voltage in Volts
 // -- MotorCurrent (optional) - current in Amperes
-// -- WindlassMonitoringEvents (optional) - see tN2kDD477
+// -- WindlassMonitoringEvents (optional) - see tN2kWindlassMonitoringEvents
 
 void SetN2kPGN128778(
   tN2kMsg &N2kMsg,
   unsigned char SID,
   unsigned char WindlassIdentifier,
-  unsigned long TotalMotorTime,
+  double TotalMotorTime,
   double ControllerVoltage = N2kDoubleNA,
   double MotorCurrent = N2kDoubleNA,
   const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents()
@@ -792,7 +792,7 @@ bool ParseN2kPGN128778(
   const tN2kMsg &N2kMsg,
   unsigned char &SID,
   unsigned char &WindlassIdentifier,
-  unsigned long &TotalMotorTime,
+  double &TotalMotorTime,
   double &ControllerVoltage,
   double &MotorCurrent,
   tN2kWindlassMonitoringEvents &WindlassMonitoringEvents

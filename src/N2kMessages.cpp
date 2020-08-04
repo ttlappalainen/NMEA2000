@@ -726,9 +726,7 @@ void SetN2kPGN128776(
   N2kMsg.AddByte(SpeedControl);
   N2kMsg.AddByte((unsigned char) (((AnchorLight & 0x03) << 6) | ((DeckAndAnchorWash & 0x03) << 4) | ((MechanicalLock & 0x03) << 2) | (PowerEnable & 0x03)));
   N2kMsg.Add1ByteUDouble(CommandTimeout, 0.005);
-  unsigned char wce = 0x00;
-  if (WindlassControlEvents.AnotherDeviceControllingWindlass) wce |= 0x01;
-  N2kMsg.AddByte(wce);
+  N2kMsg.AddByte(WindlassControlEvents.Events);
 }
 
 bool ParseN2kPGN128776(
@@ -762,8 +760,7 @@ bool ParseN2kPGN128776(
   DeckAndAnchorWash = (tN2kGenericStatusPair) ((field >> 4) & 0x03);
   AnchorLight = (tN2kGenericStatusPair) ((field >> 6) & 0x03);
   CommandTimeout = N2kMsg.Get1ByteUDouble(0.005, Index);
-  field = N2kMsg.GetByte(Index);
-  WindlassControlEvents.AnotherDeviceControllingWindlass = (field & 0x01)?true:false; 
+  WindlassControlEvents.SetEvents(N2kMsg.GetByte(Index));
   return true;
 }
 
@@ -789,13 +786,7 @@ void SetN2kPGN128777(
   N2kMsg.AddByte((unsigned char) (0xF0 | ((RodeTypeStatus & 0x03) << 2) | (WindlassMotionStatus & 0x03)));
   N2kMsg.Add2ByteUDouble(RodeCounterValue, 0.1);
   N2kMsg.Add2ByteUDouble(WindlassLineSpeed, 0.01);
-  unsigned char woe = 0x00;
-  if (WindlassOperatingEvents.SystemError) woe |= 0x01;
-  if (WindlassOperatingEvents.SensorError) woe |= 0x02;
-  if (WindlassOperatingEvents.NoWindlassMotionDetected) woe |= 0x04;
-  if (WindlassOperatingEvents.RetrievalDockingDistanceReached) woe |= 0x08;
-  if (WindlassOperatingEvents.EndOfRodeReached) woe |= 0x10;
-  N2kMsg.AddByte((woe << 2) | (AnchorDockingStatus & 0x03));
+  N2kMsg.AddByte((WindlassOperatingEvents.Events << 2) | (AnchorDockingStatus & 0x03));
 }
 
 bool ParseN2kPGN128777(
@@ -815,17 +806,13 @@ bool ParseN2kPGN128777(
   SID = N2kMsg.GetByte(Index);
   WindlassIdentifier = N2kMsg.GetByte(Index);
   field = N2kMsg.GetByte(Index);
-  WindlassMotionStatus = (tN2kWindlassMotionStates) ((field >> 6) & 0x03);
-  RodeTypeStatus = (tN2kRodeTypeStates) ((field >> 4) & 0x03);
+  WindlassMotionStatus = (tN2kWindlassMotionStates) (field & 0x03);
+  RodeTypeStatus = (tN2kRodeTypeStates) ((field >> 2) & 0x03);
   RodeCounterValue = N2kMsg.Get2ByteUDouble(0.1, Index);
   WindlassLineSpeed = N2kMsg.Get2ByteUDouble(0.01, Index);
   field = N2kMsg.GetByte(Index);
   AnchorDockingStatus = (tN2kAnchorDockingStates) (field & 0x03);
-  WindlassOperatingEvents.SystemError = ((field >> 2) & 0x01)?true:false;
-  WindlassOperatingEvents.SensorError = ((field >> 2) & 0x02)?true:false;
-  WindlassOperatingEvents.NoWindlassMotionDetected = ((field >> 2) & 0x04)?true:false;
-  WindlassOperatingEvents.RetrievalDockingDistanceReached = ((field >> 2) & 0x08)?true:false;
-  WindlassOperatingEvents.EndOfRodeReached = ((field >> 2) & 0x10)?true:false;
+  WindlassOperatingEvents.SetEvents(field >> 2);
   return true;
 }
 
@@ -846,12 +833,8 @@ void SetN2kPGN128778(
   N2kMsg.Priority=2;
   N2kMsg.AddByte(SID);
   N2kMsg.AddByte(WindlassIdentifier);
-  unsigned char wme = 0x00;
-  if (WindlassMonitoringEvents.ControllerUnderVoltageCutout) wme |= 0x01;
-  if (WindlassMonitoringEvents.ControllerOverCurrentCutout) wme |= 0x02;
-  if (WindlassMonitoringEvents.ControllerOverTemperatureCutout) wme |= 0x04;
-  N2kMsg.AddByte(wme);
-  N2kMsg.Add1ByteUDouble(ControllerVoltage, 0.02);
+  N2kMsg.AddByte(WindlassMonitoringEvents.Events);
+  N2kMsg.Add1ByteUDouble(ControllerVoltage, 0.2);
   N2kMsg.Add1ByteUDouble(MotorCurrent, 1.0);
   N2kMsg.Add2ByteUDouble(TotalMotorTime, 60.0);
   N2kMsg.AddByte(0xFF);
@@ -870,10 +853,7 @@ bool ParseN2kPGN128778(
   int Index = 0;
   SID = N2kMsg.GetByte(Index);
   WindlassIdentifier = N2kMsg.GetByte(Index);
-  unsigned char wme = N2kMsg.GetByte(Index);
-  WindlassMonitoringEvents.ControllerUnderVoltageCutout = (wme & 0x01)?true:false;
-  WindlassMonitoringEvents.ControllerOverCurrentCutout = (wme & 0x02)?true:false;
-  WindlassMonitoringEvents.ControllerOverTemperatureCutout = (wme & 0x04)?true:false;
+  WindlassMonitoringEvents.SetEvents(N2kMsg.GetByte(Index));
   ControllerVoltage = N2kMsg.Get1ByteUDouble(0.2, Index);
   MotorCurrent = N2kMsg.Get1ByteUDouble(1.0, Index);
   TotalMotorTime = N2kMsg.Get2ByteUDouble(60.0, Index);

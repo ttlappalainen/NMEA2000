@@ -332,6 +332,7 @@ enum tN2kTurnMode {
 //*****************************************************************************
 
 using tN2kGenericStatusPair = tN2kDD002;
+			    // Enum type members:
                             // N2kDD002_No=0
                             // N2kDD002_Yes=1
                             // N2kDD002_Error=2
@@ -346,37 +347,56 @@ using tN2kGenericStatusPair = tN2kDD002;
                             // N2kDD002_1=N2kDD002_Yes
                             // N2kDD002_Unknown=N2kDD002_Unavailable                         
 
-using tN2kWindlassMonitoringEvents = tN2kDD477; 
+using tN2kWindlassMonitoringEvents = tN2kDD477;
+			    // Union type with fields:
+                            // .Event.ControllerUnderVoltageCutout = 0 | 1
+                            // .Event.ControllerOverCurrentCutout = 0 | 1
+                            // .Event.ControllerOverTemperatureCutout = 0 | 1
+ 
                        
 using tN2kWindlassControlEvents = tN2kDD478;
+			    // Union type with field:
+                            // .Event.AnotherDeviceControllingWindlass = 0 | 1
+
 
 using tN2kWindlassMotionStates = tN2kDD480;
+			    // Enum type members:
                             // N2kDD480_WindlassStopped=0
                             // N2kDD480_DeploymentOccurring=1
                             // N2kDD480_RetrievalOccurring=2
                             // N2kDD480_Unavailable=3
 
 using tN2kRodeTypeStates = tN2kDD481;
+			    // Enum type members:
                             // N2kDD481_ChainPresentlyDetected=0
                             // N2kDD481_RopePresentlyDetected=1
                             // N2kDD481_Error=2
                             // N2kDD481_Unavailable=3
 
 using tN2kAnchorDockingStates = tN2kDD482;
+			    // Enum type members:
                             // N2kDD482_NotDocked=0
                             // N2kDD482_FullyDocked=1
                             // N2kDD482_Error=2
                             // N2kDD482_DataNotAvailable=3
 
 using tN2kWindlassOperatingEvents = tN2kDD483;
+			    // Union type with fields:
+                            // .Event.SystemError =  0 | 1
+                            // .Event.SensorError = 0 | 1
+                            // .Event.NoWindlassMotionDetected = 0 | 1
+                            // .Event.RetrievalDockingDistanceReached = 0 | 1
+                            // .Event.EndOfRodeReached = 0 | 1
 
 using tN2kWindlassDirectionControl = tN2kDD484;
+			    // Enum type members:
                             // N2kDD484_Off=0
                             // N2kDD484_Down=1
                             // N2kDD484_Up=2
                             // N2kDD484_Reserved=3
 
 using tN2kSpeedType = tN2kDD488;
+			    // Enum type members:
                             // N2kDD488_SingleSpeed=0
                             // N2kDD488_DualSpeed=1
                             // N2kDD488_ProportionalSpeed=2
