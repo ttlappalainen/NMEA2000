@@ -59,20 +59,26 @@ enum tN2kDD002 {
                           
 // DD477 - Windlass Monitoring Events
 //
-enum tN2kDD477 {
-                            N2kDD477_NoErrorsPresent=0,
-                            N2kDD477_ControllerUnderVoltageCutout=1,
-                            N2kDD477_ControllerOverCurrentCutout=2,
-                            N2kDD477_ControllerOverTemperatureCutout=4,
-                            N2kDD477_ManufacturerDefined=8
+union tN2kDD477 {
+			    unsigned char Events;
+                            struct {
+                            	unsigned char ControllerUnderVoltageCutout:1;
+                            	unsigned char ControllerOverCurrentCutout:1;
+                            	unsigned char ControllerOverTemperatureCutout:1;
+			    } Event;
+                            tN2kDD477(): Events(0) {};
+			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
                           };
 
 // DD478 - Windlass Control Events
 //
-enum tN2kDD478 {
-                            N2kDD478_NoErrorsPresent=0,
-                            N2kDD478_AnotherDeviceControllingWindlass=1,
-                            N2kDD478_Reserved=14
+union tN2kDD478 {
+			    unsigned char Events;
+                            struct {
+				unsigned char AnotherDeviceControllingWindlass:1;
+			    } Event;
+                            tN2kDD478(): Events(0) {};
+			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
                           };
                           
 // DD480 - Windlass Motion States
@@ -103,16 +109,19 @@ enum tN2kDD482 {
                           };
 
 // DD483 - Windlass Operating Events
-//                          
-enum tN2kDD483 {
-                            N2kDD483_NoErrorsOrEventsPresent=0,
-                            N2kDD483_SystemError=1,
-                            N2kDD483_SensorError=2,
-                            N2kDD483_NoWindlassMotionDetected=4,
-                            N2kDD483_RetrievalDockingDistanceReached=8,
-                            N2kDD483_EndOfRodeReached=16,
-                            N2kDD483_Reserved=32
-                          };
+//
+union tN2kDD483 {
+			    unsigned char Events;
+                            struct {
+				unsigned char SystemError:1;
+                            	unsigned char SensorError:1;
+                            	unsigned char NoWindlassMotionDetected:1;
+                            	unsigned char RetrievalDockingDistanceReached:1;
+                            	unsigned char EndOfRodeReached:1;
+			    } Event;
+                            tN2kDD483(): Events(0) {};
+			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x1F); }
+                          };                         
 
 // DD484 - Windlass Direction Control
 //            
