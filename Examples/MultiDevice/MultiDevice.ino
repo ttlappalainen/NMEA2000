@@ -115,11 +115,10 @@ void SendN2kBattery() {
     Updated=millis();
     SetN2kDCBatStatus(N2kMsg,1,13.87,5.12,35.12,1);
     NMEA2000.SendMsg(N2kMsg,DEV_BAT);
-    SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Battery,56,92,38500,0.012);
+    SetN2kDCStatus(N2kMsg,1,1,N2kDCt_Battery,56,92,38500,0.012, AhToCoulomb(420));
 //    NMEA2000.SendMsg(N2kMsg,DEV_BAT);
     SetN2kBatConf(N2kMsg,1,N2kDCbt_Gel,N2kDCES_Yes,N2kDCbnv_12v,N2kDCbc_LeadAcid,AhToCoulomb(420),53,1.251,75);
 //    NMEA2000.SendMsg(N2kMsg,DEV_BAT);
     // Serial.print(millis()); Serial.println(", Battery send ready");
   }
 }
-
