@@ -26,6 +26,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _N2kGroupFunction_H_
 #define _N2kGroupFunction_H_
 
+#include <cstring>
 #include "NMEA2000_CompilerDefns.h"
 #include "N2kMsg.h"
 

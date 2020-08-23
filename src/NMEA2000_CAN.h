@@ -1,7 +1,7 @@
 /*
 NMEA2000_CAN.h
 
-Copyright (c) 2015-2018 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -26,11 +26,12 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   library by adding one of next defines before including NMEA2000_CAN.h:
   #define USE_N2K_CAN 1  // for use with SPI and MCP2515 can bus controller
   #define USE_N2K_CAN 2  // for use with due based CAN
-  #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2 boards
+  #define USE_N2K_CAN 3  // for use with Teensy 3.1/3.2/3.5/3.6 boards
   #define USE_N2K_CAN 4  // for use with avr boards
   #define USE_N2K_CAN 5  // for use with socketCAN (linux, etc) systems
   #define USE_N2K_CAN 6  // for use with MBED (ARM) systems
   #define USE_N2K_CAN 7  // for use with ESP32
+  #define USE_N2K_CAN 8  // for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards
 
   There are also library specific defines:
   mcp_can:
@@ -42,6 +43,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     #define ESP32_CAN_TX_PIN GPIO_NUM_16
     #define ESP32_CAN_RX_PIN GPIO_NUM_4
     
+  Teensyx:
+    #define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN2 // select CAN bus 2
+    #define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // Force NMEA2000_TEENSYX also for Teensy 3.x boards
 */
 
 
@@ -58,6 +62,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_SOCKET_CAN 5
 #define USE_N2K_MBED_CAN 6
 #define USE_N2K_ESP32_CAN 7
+#define USE_N2K_TEENSYX_CAN 8
 
 
 // Select right CAN according to prosessor
@@ -66,8 +71,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_CAN USE_N2K_MBED_CAN
 #elif defined(__SAM3X8E__)
 #define USE_N2K_CAN USE_N2K_DUE_CAN
-#elif defined(__MK20DX256__)||defined(__ATMEGA32U4__) || defined(__MK64FX512__) || defined (__MK66FX1M0__)
+#elif defined(__ATMEGA32U4__)
 #define USE_N2K_CAN USE_N2K_TEENSY_CAN
+#elif defined(__MK20DX256__) || defined(__MK64FX512__) || defined (__MK66FX1M0__)
+#ifndef USE_NMEA2000_TEENSYX_FOR_TEENSY_3X
+  #define USE_N2K_CAN USE_N2K_TEENSY_CAN
+#else
+  #define USE_N2K_CAN USE_N2K_TEENSYX_CAN
+#endif
 #elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \
       defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)
 #define USE_N2K_CAN USE_N2K_AVR_CAN
@@ -75,6 +86,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define USE_N2K_CAN USE_N2K_SOCKET_CAN
 #elif defined(ARDUINO_ARCH_ESP32) || defined(ESP32)
 #define USE_N2K_CAN USE_N2K_ESP32_CAN
+#elif defined(__IMXRT1062__)
+#define USE_N2K_CAN USE_N2K_TEENSYX_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
@@ -87,13 +100,17 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 tNMEA2000 &NMEA2000=*(new tNMEA2000_due());
 
 #elif USE_N2K_CAN == USE_N2K_TEENSY_CAN
-// Use Teensy 3.1&3.2 board internal CAN FlexCAN library
-#include <FlexCAN.h>
+// Use Teensy 3.1/3.2/3.5/3.6 boards internal CAN FlexCAN library
 #include <NMEA2000_teensy.h>    // https://github.com/sarfata/NMEA2000_teensy
 #ifndef NMEA2000_TEENSY_VER
-#error Update NMEA2000_Teensy for the latest version!
+#error Update NMEA2000_Teensy for the latest version! 
 #endif
 tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy());
+
+#elif USE_N2K_CAN == USE_N2K_TEENSYX_CAN
+// Use Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards internal CAN
+#include <NMEA2000_Teensyx.h>    // https://github.com/ttlappalainen/NMEA2000_Teensyx
+tNMEA2000 &NMEA2000=*(new tNMEA2000_Teensyx(NMEA2000_TEENSYX_CAN_BUS));
 
 #elif USE_N2K_CAN == USE_N2K_AVR_CAN
 // Use Atmel AVR internal CAN controller with avr_can library
