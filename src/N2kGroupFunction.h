@@ -26,7 +26,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _N2kGroupFunction_H_
 #define _N2kGroupFunction_H_
 
+#ifndef ARDUINO
 #include <cstring>
+#endif
 #include "NMEA2000_CompilerDefns.h"
 #include "N2kMsg.h"
 
