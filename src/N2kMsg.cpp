@@ -660,7 +660,7 @@ float GetBufFloat(int &index, const unsigned char *buf, float def) {
   int32_t vl = GetBuf<int32_t>(4, index, buf);
   float ret;
   if ( !N2kIsNA(vl) ) {
-    memcpy(&ret,&vl,8);
+    memcpy(&ret,&vl,4);
     if ( isnan(ret) ) ret=def;
   } else { // On avr double==float
     ret=def;
