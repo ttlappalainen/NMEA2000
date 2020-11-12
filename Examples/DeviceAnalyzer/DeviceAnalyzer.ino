@@ -47,7 +47,9 @@ void setup() {
   NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode, 50);
   pN2kDeviceList = new tN2kDeviceList(&NMEA2000);
   NMEA2000.Open();
-  Serial.println("Device analyzer started");
+  Serial.println("Device analyzer started.");
+  Serial.println("  - Analyzer will automatically print new list on list changes.");
+  Serial.println("  - Send 'u' to print latest list");
 }
 
 //*****************************************************************************
@@ -64,23 +66,52 @@ void PrintUlongList(const char *prefix, const unsigned long * List) {
 }
 
 //*****************************************************************************
+void PrintText(const char *Text, bool AddLineFeed=true) {
+  if ( Text!=0 ) Serial.print(Text);
+  if ( AddLineFeed ) Serial.println();   
+}
+
+//*****************************************************************************
 void PrintDevice(const tNMEA2000::tDevice *pDevice) {
   if ( pDevice == 0 ) return;
 
+  Serial.println("----------------------------------------------------------------------");
   Serial.println(pDevice->GetModelID());
   Serial.print("  Source: "); Serial.println(pDevice->GetSource());
   Serial.print("  Manufacturer code:        "); Serial.println(pDevice->GetManufacturerCode());
   Serial.print("  Unique number:            "); Serial.println(pDevice->GetUniqueNumber());
   Serial.print("  Software version:         "); Serial.println(pDevice->GetSwCode());
   Serial.print("  Model version:            "); Serial.println(pDevice->GetModelVersion());
-  Serial.print("  Manufacturer Information: "); Serial.println(pDevice->GetManufacturerInformation());
+  Serial.print("  Manufacturer Information: "); PrintText(pDevice->GetManufacturerInformation());
+  Serial.print("  Installation description1: "); PrintText(pDevice->GetInstallationDescription1());
+  Serial.print("  Installation description2: "); PrintText(pDevice->GetInstallationDescription2());
   PrintUlongList("  Transmit PGNs :",pDevice->GetTransmitPGNs());
   PrintUlongList("  Receive PGNs  :",pDevice->GetReceivePGNs());
   Serial.println();
 }
 
+#define START_DELAY_IN_S 8
 //*****************************************************************************
 void ListDevices(bool force = false) {
+  static bool StartDelayDone=false;
+  static int StartDelayCount=0;
+  static unsigned long NextStartDelay=0;
+  if ( !StartDelayDone ) { // We let system first collect data to avoid printing all changes
+    if ( millis()>NextStartDelay ) {
+      if ( StartDelayCount==0 ) {
+        Serial.print("Reading device information from bus ");
+        NextStartDelay=millis();
+      }
+      Serial.print(".");
+      NextStartDelay+=1000;
+      StartDelayCount++;
+      if ( StartDelayCount>START_DELAY_IN_S ) {
+        StartDelayDone=true;
+        Serial.println();
+      }
+    }
+    return;
+  }
   if ( !force && !pN2kDeviceList->ReadResetIsListUpdated() ) return;
 
   Serial.println();
@@ -104,4 +135,3 @@ void loop() {
   ListDevices();
   CheckCommand();
 }
-
