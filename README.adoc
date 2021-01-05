@@ -84,6 +84,10 @@ support.
 
 
 == Changes ==
+05.01.2021
+
+- Added better engine discrete status handling to N2kMessages
+
 08.10.2020
 
 - Fix for 'memcpy' overflow for float reading on N2kMsg.cpp

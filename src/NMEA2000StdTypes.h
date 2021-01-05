@@ -1,7 +1,7 @@
 /*
 NMEA2000StdTypes.h
 
-Copyright (c) 2019-2020 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2019-2021 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -39,6 +39,8 @@ into corresponding long names (once again, exactly as described by NMEA).
 #ifndef _NMEA2000StdTypes_H_
 #define _NMEA2000StdTypes_H_
 
+#include <stdint.h>
+
 // DD002 - Generic Status Pair
 //                
 enum tN2kDD002 {
@@ -61,67 +63,106 @@ enum tN2kDD002 {
 //
 union tN2kDD477 {
 			    unsigned char Events;
-                            struct {
-                            	unsigned char ControllerUnderVoltageCutout:1;
-                            	unsigned char ControllerOverCurrentCutout:1;
-                            	unsigned char ControllerOverTemperatureCutout:1;
+          struct {
+            unsigned char ControllerUnderVoltageCutout:1;
+            unsigned char ControllerOverCurrentCutout:1;
+            unsigned char ControllerOverTemperatureCutout:1;
 			    } Event;
-                            tN2kDD477(): Events(0) {};
+          tN2kDD477(): Events(0) {};
 			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
-                          };
+        };
 
 // DD478 - Windlass Control Events
 //
 union tN2kDD478 {
 			    unsigned char Events;
-                            struct {
-				unsigned char AnotherDeviceControllingWindlass:1;
+          struct {
+            unsigned char AnotherDeviceControllingWindlass:1;
 			    } Event;
-                            tN2kDD478(): Events(0) {};
+          tN2kDD478(): Events(0) {};
 			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
-                          };
-                          
+        };
+
+union tN2kDD206 {
+			    uint16_t Status;
+          struct {
+              uint16_t CheckEngine:1;
+              uint16_t OverTemperature:1;
+              uint16_t LowOilPressure:1;
+              uint16_t LowOilLevel:1;
+              uint16_t LowFuelPressure:1;
+              uint16_t LowSystemVoltage:1;
+              uint16_t LowCoolantLevel:1;
+              uint16_t WaterFlow:1;
+              uint16_t WaterInFuel:1;
+              uint16_t ChargeIndicator:1;
+              uint16_t PreheatIndicator:1;
+              uint16_t HighBoostPressure:1;
+              uint16_t RevLimitExceeded:1;
+              uint16_t EGRSystem:1;
+              uint16_t ThrottlePositionSensor:1;
+              uint16_t EngineEmergencyStopMode:1;
+			    } Bits;
+          tN2kDD206(uint16_t _Status=0): Status(_Status) {};
+};
+
+union tN2kDD223 {
+			    uint16_t Status;
+          struct {
+              uint16_t WarningLevel1:1;
+              uint16_t WarningLevel2:1;
+              uint16_t LowOiPowerReduction:1;
+              uint16_t MaintenanceNeeded:1;
+              uint16_t EngineCommError:1;
+              uint16_t SubOrSecondaryThrottle:1;
+              uint16_t NeutralStartProtect:1;
+              uint16_t EngineShuttingDown:1;
+			    } Bits;
+          tN2kDD223(uint16_t _Status=0): Status(_Status | 0xff00) {};
+          uint16_t operator= (uint16_t val) { Status=val | 0xff00; return Status;}
+};
+
 // DD480 - Windlass Motion States
 //                          
 enum tN2kDD480 {
-                            N2kDD480_WindlassStopped=0,
-                            N2kDD480_DeploymentOccurring=1,
-                            N2kDD480_RetrievalOccurring=2,
-                            N2kDD480_Unavailable=3
-                          };
+                N2kDD480_WindlassStopped=0,
+                N2kDD480_DeploymentOccurring=1,
+                N2kDD480_RetrievalOccurring=2,
+                N2kDD480_Unavailable=3
+              };
 
 //  DD481 - Rode Type States
 //            
 enum tN2kDD481 {
-                            N2kDD481_ChainPresentlyDetected=0,
-                            N2kDD481_RopePresentlyDetected=1,
-                            N2kDD481_Error=2,
-                            N2kDD481_Unavailable=3
-                          };
+                N2kDD481_ChainPresentlyDetected=0,
+                N2kDD481_RopePresentlyDetected=1,
+                N2kDD481_Error=2,
+                N2kDD481_Unavailable=3
+              };
 
 // DD482 - Anchor Docking States
 //
 enum tN2kDD482 {
-                            N2kDD482_NotDocked=0,
-                            N2kDD482_FullyDocked=1,
-                            N2kDD482_Error=2,
-                            N2kDD482_DataNotAvailable=3
-                          };
+                N2kDD482_NotDocked=0,
+                N2kDD482_FullyDocked=1,
+                N2kDD482_Error=2,
+                N2kDD482_DataNotAvailable=3
+              };
 
 // DD483 - Windlass Operating Events
 //
 union tN2kDD483 {
 			    unsigned char Events;
-                            struct {
-				unsigned char SystemError:1;
-                            	unsigned char SensorError:1;
-                            	unsigned char NoWindlassMotionDetected:1;
-                            	unsigned char RetrievalDockingDistanceReached:1;
-                            	unsigned char EndOfRodeReached:1;
+          struct {
+            unsigned char SystemError:1;
+            unsigned char SensorError:1;
+            unsigned char NoWindlassMotionDetected:1;
+            unsigned char RetrievalDockingDistanceReached:1;
+            unsigned char EndOfRodeReached:1;
 			    } Event;
-                            tN2kDD483(): Events(0) {};
+          tN2kDD483(): Events(0) {};
 			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x1F); }
-                          };                         
+        };                         
 
 // DD484 - Windlass Direction Control
 //            

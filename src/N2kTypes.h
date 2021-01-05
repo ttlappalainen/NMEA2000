@@ -1,7 +1,7 @@
 /*
 N2kTypes.h
 
-Copyright (c) 2019-2020 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2019-2021 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -330,6 +330,8 @@ enum tN2kTurnMode {
 //*****************************************************************************
 // Aliases for N2K standard types.
 //*****************************************************************************
+using tN2kEngineDiscreteStatus1 = tN2kDD206;
+using tN2kEngineDiscreteStatus2 = tN2kDD223;
 
 using tN2kGenericStatusPair = tN2kDD002;
 			    // Enum type members:

@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -216,11 +216,7 @@ bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, dou
 // Engine parameters dynamic
 void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
                        double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, int8_t EngineLoad, int8_t EngineTorque,
-                       bool flagCheckEngine,
-                       bool flagOverTemp, bool flagLowOilPress, bool flagLowOilLevel, bool flagLowFuelPress, bool flagLowSystemVoltage, bool flagLowCoolantLevel,
-                       bool flagWaterFlow, bool flagWaterInFuel, bool flagChargeIndicator, bool flagPreheatIndicator, bool flagHighBoostPress, bool flagRevLimitExceeded,
-                       bool flagEgrSystem, bool flagTPS, bool flagEmergencyStopMode, bool flagWarning1, bool flagWarning2, bool flagPowerReduction,
-                       bool flagMaintenanceNeeded, bool flagEngineCommError, bool flagSubThrottle, bool flagNeutralStartProtect, bool flagEngineShuttingDown) {
+                       tN2kEngineDiscreteStatus1 Status1, tN2kEngineDiscreteStatus2 Status2) {
     N2kMsg.SetPGN(127489L);
     N2kMsg.Priority=2;
 
@@ -235,37 +231,8 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
   N2kMsg.Add2ByteUDouble(EngineFuelPress, 1000);
   N2kMsg.AddByte(0xff);  // reserved
 
-  int engineStatus1P1 = 0;
-  int engineStatus1P2 = 0;
-  int engineStatus2 = 0;
-  if (flagCheckEngine) engineStatus1P1      |= BIT(0);
-  if (flagOverTemp) engineStatus1P1         |= BIT(1);
-  if (flagLowOilPress) engineStatus1P1      |= BIT(2);
-  if (flagLowOilLevel) engineStatus1P1      |= BIT(3);
-  if (flagLowFuelPress) engineStatus1P1     |= BIT(4);
-  if (flagLowSystemVoltage) engineStatus1P1 |= BIT(5);
-  if (flagLowCoolantLevel) engineStatus1P1  |= BIT(6);
-  if (flagWaterFlow) engineStatus1P1        |= BIT(7);
-
-  if (flagWaterInFuel) engineStatus1P2       |= BIT(0);
-  if (flagChargeIndicator) engineStatus1P2   |= BIT(1);
-  if (flagPreheatIndicator) engineStatus1P2  |= BIT(2);
-  if (flagHighBoostPress) engineStatus1P2    |= BIT(3);
-  if (flagRevLimitExceeded) engineStatus1P2  |= BIT(4);
-  if (flagEgrSystem) engineStatus1P2         |= BIT(5);
-  if (flagTPS) engineStatus1P2               |= BIT(6);
-  if (flagEmergencyStopMode) engineStatus1P2 |= BIT(7);
-
-  if (flagWarning1) engineStatus2            |= BIT(0);
-  if (flagWarning2) engineStatus2            |= BIT(1);
-  if (flagPowerReduction) engineStatus2      |= BIT(2);
-  if (flagMaintenanceNeeded) engineStatus2   |= BIT(3);
-  if (flagEngineCommError) engineStatus2     |= BIT(4);
-  if (flagSubThrottle) engineStatus2         |= BIT(5);
-  if (flagNeutralStartProtect) engineStatus2 |= BIT(6);
-  if (flagEngineShuttingDown) engineStatus2  |= BIT(7);
-  N2kMsg.Add2ByteInt(engineStatus1P2<<8 | engineStatus1P1); // Discrete Status 1
-  N2kMsg.Add2ByteInt(engineStatus2);  // Discrete Status 1
+  N2kMsg.Add2ByteUInt(Status1.Status); // Discrete Status 1
+  N2kMsg.Add2ByteUInt(Status2.Status);  // Discrete Status 2
 
   N2kMsg.AddByte(EngineLoad);
   N2kMsg.AddByte(EngineTorque);
@@ -273,7 +240,8 @@ void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
 bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
                       double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque) {
+                      int8_t &EngineLoad, int8_t &EngineTorque,
+                      tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2) {
   if (N2kMsg.PGN != 127489L) return false;
 
   int Index = 0;
@@ -288,8 +256,8 @@ bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, dou
   EngineCoolantPress=N2kMsg.Get2ByteUDouble(100, Index);
   EngineFuelPress=N2kMsg.Get2ByteUDouble(1000, Index);
   N2kMsg.GetByte(Index);  // reserved
-  N2kMsg.Get2ByteInt(Index);  // Discrete Status 1
-  N2kMsg.Get2ByteInt(Index);  // Discrete Status 2
+  Status1=N2kMsg.Get2ByteUInt(Index);  // Discrete Status 1
+  Status2=N2kMsg.Get2ByteUInt(Index);  // Discrete Status 2
   EngineLoad=N2kMsg.GetByte(Index);
   EngineTorque=N2kMsg.GetByte(Index);
 

@@ -1,7 +1,7 @@
 /*
 N2kMessages.h
 
-Copyright (c) 2015-2020 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -40,21 +40,22 @@ NMEA2000.h
 #include "N2kTypes.h"
 #include <stdint.h>
 
-inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795; }
-inline double DegToRad(double v) { return N2kIsNA(v)?v:v/180.0*3.1415926535897932384626433832795; }
-inline double CToKelvin(double v) { return N2kIsNA(v)?v:v+273.15; }
-inline double KelvinToC(double v) { return N2kIsNA(v)?v:v-273.15; }
+inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795L; }
+inline double DegToRad(double v) { return N2kIsNA(v)?v:v/180.0*3.1415926535897932384626433832795L; }
+inline double CToKelvin(double v) { return N2kIsNA(v)?v:v+273.15L; }
+inline double KelvinToC(double v) { return N2kIsNA(v)?v:v-273.15L; }
 inline double FToKelvin(double v) { return N2kIsNA(v)?v:(v-32)*5.0/9.0+273.15; }
 inline double KelvinToF(double v) { return N2kIsNA(v)?v:(v-273.15)*9.0/5.0+32; }
-inline double mBarToPascal(double v) { return N2kIsNA(v)?v:v*100; }
-inline double PascalTomBar(double v) { return N2kIsNA(v)?v:v/100; }
-inline double hPAToPascal(double v) { return N2kIsNA(v)?v:v*100; }
-inline double PascalTohPA(double v) { return N2kIsNA(v)?v:v/100; }
-inline double AhToCoulomb(double v) { return N2kIsNA(v)?v:v*3600; }
-inline double CoulombToAh(double v) { return N2kIsNA(v)?v:v/3600; }
-inline double hToSeconds(double v) { return N2kIsNA(v)?v:v*3600; }
-inline double SecondsToh(double v) { return N2kIsNA(v)?v:v/3600; }
-inline double msToKnots(double v) { return N2kIsNA(v)?v:v*3600/1852.0; }
+inline double mBarToPascal(double v) { return N2kIsNA(v)?v:v*100L; }
+inline double PascalTomBar(double v) { return N2kIsNA(v)?v:v/100L; }
+inline double hPAToPascal(double v) { return N2kIsNA(v)?v:v*100L; }
+inline double PascalTohPA(double v) { return N2kIsNA(v)?v:v/100L; }
+inline double AhToCoulomb(double v) { return N2kIsNA(v)?v:v*3600L; }
+inline double CoulombToAh(double v) { return N2kIsNA(v)?v:v/3600L; }
+inline double hToSeconds(double v) { return N2kIsNA(v)?v:v*3600L; }
+inline double SecondsToh(double v) { return N2kIsNA(v)?v:v/3600L; }
+inline double msToKnots(double v) { return N2kIsNA(v)?v:v*1.9438444924406047516198704103672L; } // 3600L/1852.0L
+inline double KnotsToms(double v) { return N2kIsNA(v)?v:v*0.51444444444444444444444444444444L; } // 1852L/3600.0L
 
 //*****************************************************************************
 // System date/time
@@ -243,12 +244,57 @@ inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &Engin
 void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
                        double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
                        int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                       tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0);
+
+inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
+                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                       tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0) {
+  SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                       Status1,Status2);
+}                         
+
+inline void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
+                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
                        bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false,
                        bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false,
                        bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false,
                        bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false,
                        bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false,
-                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false);
+                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
+  tN2kEngineDiscreteStatus1 Status1;
+  tN2kEngineDiscreteStatus2 Status2;
+  Status1.Bits.CheckEngine=flagCheckEngine;
+  Status1.Bits.OverTemperature=flagOverTemp;
+  Status1.Bits.LowOilPressure=flagLowOilPress;
+  Status1.Bits.LowOilLevel=flagLowOilLevel;
+  Status1.Bits.LowFuelPressure=flagLowFuelPress;
+  Status1.Bits.LowSystemVoltage=flagLowSystemVoltage;
+  Status1.Bits.LowCoolantLevel=flagLowCoolantLevel;
+  Status1.Bits.WaterFlow=flagWaterFlow;
+  Status1.Bits.WaterInFuel=flagWaterInFuel;
+  Status1.Bits.ChargeIndicator=flagChargeIndicator;
+  Status1.Bits.PreheatIndicator=flagPreheatIndicator;
+  Status1.Bits.HighBoostPressure=flagHighBoostPress;
+  Status1.Bits.RevLimitExceeded=flagRevLimitExceeded;
+  Status1.Bits.EGRSystem=flagEgrSystem;
+  Status1.Bits.ThrottlePositionSensor=flagTPS;
+  Status1.Bits.EngineEmergencyStopMode=flagEmergencyStopMode;
+  Status2.Bits.WarningLevel1=flagWarning1;
+  Status2.Bits.WarningLevel2=flagWarning2;
+  Status2.Bits.LowOiPowerReduction=flagPowerReduction;
+  Status2.Bits.MaintenanceNeeded=flagMaintenanceNeeded;
+  Status2.Bits.EngineCommError=flagEngineCommError;
+  Status2.Bits.SubOrSecondaryThrottle=flagSubThrottle;
+  Status2.Bits.NeutralStartProtect=flagNeutralStartProtect;
+  Status2.Bits.EngineShuttingDown=flagEngineShuttingDown;
+
+  SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                       Status1,Status2);
+}
 inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
                        double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
                        int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
@@ -271,7 +317,20 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstan
 bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
                       double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque);
+                      int8_t &EngineLoad, int8_t &EngineTorque,
+                      tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2);
+
+inline bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                      int8_t &EngineLoad, int8_t &EngineTorque) {
+  tN2kEngineDiscreteStatus1 Status1;
+  tN2kEngineDiscreteStatus2 Status2;
+  return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
+                    EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                    FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                    EngineLoad, EngineTorque,Status1,Status2);
+}
 
 inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
@@ -287,10 +346,12 @@ inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &Eng
                       double &FuelRate, double &EngineHours) {
     double EngineCoolantPress, EngineFuelPress;
     int8_t EngineLoad, EngineTorque;
+    tN2kEngineDiscreteStatus1 Status1;
+    tN2kEngineDiscreteStatus2 Status2;
     return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
                       EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
                       FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
-                      EngineLoad, EngineTorque);
+                      EngineLoad, EngineTorque,Status1,Status2);
 }
 
 //*****************************************************************************
