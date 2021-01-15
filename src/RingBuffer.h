@@ -1,7 +1,7 @@
 /*
   RingBuffer.h
 
-  Copyright (c) 2020 Timo Lappalainen
+  Copyright (c) 2020-2021 Timo Lappalainen
 
   The MIT License
 

@@ -84,6 +84,12 @@ support.
 
 
 == Changes ==
+15.01.2021
+
+- Added better inline ParseN2kEngineDynamicParam to N2kMessages
+- Copyright update
+
+== Changes ==
 05.01.2021
 
 - Added better engine discrete status handling to N2kMessages

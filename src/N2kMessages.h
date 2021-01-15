@@ -343,6 +343,17 @@ inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &Eng
 }
 inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                      int8_t &EngineLoad, int8_t &EngineTorque,
+                      tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2) {
+    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
+                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                      EngineLoad, EngineTorque,
+                      Status1, Status2);
+}
+inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
+                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
                       double &FuelRate, double &EngineHours) {
     double EngineCoolantPress, EngineFuelPress;
     int8_t EngineLoad, EngineTorque;

@@ -1,8 +1,8 @@
 /*
 N2kMaretron.h
 
-Copyright (c) 2019 Vassilis Bourdakis,
-                   Timo Lappalainen, Kave Oy, www.kave.fi, 
+Copyright (c) 2019-2021 Vassilis Bourdakis,
+                        Timo Lappalainen, Kave Oy, www.kave.fi, 
 
 Authors  Vassilis Bourdakis
          Timo Lappalainen          
