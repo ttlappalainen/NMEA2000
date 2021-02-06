@@ -9,8 +9,11 @@
 // without interrupt.
 
 #include <Arduino.h>
-//#include <Time.h>  // 
-#define N2k_CAN_INT_PIN 21
+//#define N2k_SPI_CS_PIN 53    // Pin for SPI select for mcp_can
+//#define N2k_CAN_INT_PIN 21   // Interrupt pin for mcp_can
+//#define USE_MCP_CAN_CLOCK_SET 8  // Uncomment this, if your mcp_can shield has 8MHz chrystal
+//#define ESP32_CAN_TX_PIN GPIO_NUM_16 // Uncomment this and set right CAN TX pin definition, if you use ESP32 and do not have TX on default IO 16
+//#define ESP32_CAN_RX_PIN GPIO_NUM_17 // Uncomment this and set right CAN RX pin definition, if you use ESP32 and do not have RX on default IO 4
 #include <NMEA2000_CAN.h>
 #include <N2kMessages.h>
 #include <N2kMessagesEnumToStr.h>
@@ -42,6 +45,8 @@ void Attitude(const tN2kMsg &N2kMsg);
 void Heading(const tN2kMsg &N2kMsg);
 void Humidity(const tN2kMsg &N2kMsg);
 void Pressure(const tN2kMsg &N2kMsg);
+void UserDatumSettings(const tN2kMsg &N2kMsg);
+void GNSSSatsInView(const tN2kMsg &N2kMsg);
 
 tNMEA2000Handler NMEA2000Handlers[]={
   {126992L,&SystemTime},
@@ -61,6 +66,8 @@ tNMEA2000Handler NMEA2000Handlers[]={
   {129026L,&COGSOG},
   {129029L,&GNSS},
   {129033L,&LocalOffset},
+  {129045L,&UserDatumSettings},
+  {129540L,&GNSSSatsInView},
   {130310L,&OutsideEnvironmental},
   {130312L,&Temperature},
   {130313L,&Humidity},
@@ -91,10 +98,14 @@ void setup() {
 }
 
 //*****************************************************************************
-template<typename T> void PrintLabelValWithConversionCheckUnDef(const char* label, T val, double (*ConvFunc)(double val)=0, bool AddLf=false ) {
+template<typename T> void PrintLabelValWithConversionCheckUnDef(const char* label, T val, double (*ConvFunc)(double val)=0, bool AddLf=false, int8_t Desim=-1 ) {
   OutputStream->print(label);
   if (!N2kIsNA(val)) {
-    if (ConvFunc) { OutputStream->print(ConvFunc(val)); } else { OutputStream->print(val); }
+    if ( Desim<0 ) {
+      if (ConvFunc) { OutputStream->print(ConvFunc(val)); } else { OutputStream->print(val); }
+    } else {
+      if (ConvFunc) { OutputStream->print(ConvFunc(val),Desim); } else { OutputStream->print(val,Desim); }
+    }
   } else OutputStream->print("not available");
   if (AddLf) OutputStream->println();
 }
@@ -107,7 +118,8 @@ void SystemTime(const tN2kMsg &N2kMsg) {
     tN2kTimeSource TimeSource;
     
     if (ParseN2kSystemTime(N2kMsg,SID,SystemDate,SystemTime,TimeSource) ) {
-      PrintLabelValWithConversionCheckUnDef("System time: ",SID,0,true);
+                      OutputStream->println("System time:");
+      PrintLabelValWithConversionCheckUnDef("  SID: ",SID,0,true);
       PrintLabelValWithConversionCheckUnDef("  days since 1.1.1970: ",SystemDate,0,true);
       PrintLabelValWithConversionCheckUnDef("  seconds since midnight: ",SystemTime,0,true);
                         OutputStream->print("  time source: "); PrintN2kEnumType(TimeSource,OutputStream);
@@ -163,11 +175,13 @@ void EngineDynamicParameters(const tN2kMsg &N2kMsg) {
     double EngineFuelPress; 
     int8_t EngineLoad;
     int8_t EngineTorque;
+    tN2kEngineDiscreteStatus1 Status1;
+    tN2kEngineDiscreteStatus2 Status2;
     
     if (ParseN2kEngineDynamicParam(N2kMsg,EngineInstance,EngineOilPress,EngineOilTemp,EngineCoolantTemp,
-                                   AltenatorVoltage,FuelRate,EngineHours,
-                                   EngineCoolantPress,EngineFuelPress,
-                                   EngineLoad,EngineTorque) ) {
+                                 AltenatorVoltage,FuelRate,EngineHours,
+                                 EngineCoolantPress,EngineFuelPress,
+                                 EngineLoad,EngineTorque,Status1,Status2) ) {
       PrintLabelValWithConversionCheckUnDef("Engine dynamic params: ",EngineInstance,0,true);
       PrintLabelValWithConversionCheckUnDef("  oil pressure (Pa): ",EngineOilPress,0,true);
       PrintLabelValWithConversionCheckUnDef("  oil temp (C): ",EngineOilTemp,&KelvinToC,true);
@@ -231,7 +245,8 @@ void Heading(const tN2kMsg &N2kMsg) {
     double Variation;
     
     if (ParseN2kHeading(N2kMsg,SID,Heading,Deviation,Variation,HeadingReference) ) {
-      PrintLabelValWithConversionCheckUnDef("Heading: ",SID,0,true);
+                      OutputStream->println("Heading:");
+      PrintLabelValWithConversionCheckUnDef("  SID: ",SID,0,true);
                         OutputStream->print("  reference: "); PrintN2kEnumType(HeadingReference,OutputStream);
       PrintLabelValWithConversionCheckUnDef("  Heading (deg): ",Heading,&RadToDeg,true);
       PrintLabelValWithConversionCheckUnDef("  Deviation (deg): ",Deviation,&RadToDeg,true);
@@ -249,7 +264,8 @@ void COGSOG(const tN2kMsg &N2kMsg) {
     double SOG;
     
     if (ParseN2kCOGSOGRapid(N2kMsg,SID,HeadingReference,COG,SOG) ) {
-      PrintLabelValWithConversionCheckUnDef("COG/SOG: ",SID,0,true);
+                      OutputStream->println("COG/SOG:");
+      PrintLabelValWithConversionCheckUnDef("  SID: ",SID,0,true);
                         OutputStream->print("  reference: "); PrintN2kEnumType(HeadingReference,OutputStream);
       PrintLabelValWithConversionCheckUnDef("  COG (deg): ",COG,&RadToDeg,true);
       PrintLabelValWithConversionCheckUnDef("  SOG (m/s): ",SOG,0,true);
@@ -283,11 +299,12 @@ void GNSS(const tN2kMsg &N2kMsg) {
                   nSatellites,HDOP,PDOP,GeoidalSeparation,
                   nReferenceStations,ReferenceStationType,ReferenceSationID,
                   AgeOfCorrection) ) {
-      PrintLabelValWithConversionCheckUnDef("GNSS info: ",SID,0,true);
+                      OutputStream->println("GNSS info:");
+      PrintLabelValWithConversionCheckUnDef("  SID: ",SID,0,true);
       PrintLabelValWithConversionCheckUnDef("  days since 1.1.1970: ",DaysSince1970,0,true);
       PrintLabelValWithConversionCheckUnDef("  seconds since midnight: ",SecondsSinceMidnight,0,true);
-      PrintLabelValWithConversionCheckUnDef("  latitude: ",Latitude,0,true);
-      PrintLabelValWithConversionCheckUnDef("  longitude: ",Longitude,0,true);
+      PrintLabelValWithConversionCheckUnDef("  latitude: ",Latitude,0,true,9);
+      PrintLabelValWithConversionCheckUnDef("  longitude: ",Longitude,0,true,9);
       PrintLabelValWithConversionCheckUnDef("  altitude: (m): ",Altitude,0,true);
                         OutputStream->print("  GNSS type: "); PrintN2kEnumType(GNSStype,OutputStream);
                         OutputStream->print("  GNSS method: "); PrintN2kEnumType(GNSSmethod,OutputStream);
@@ -299,6 +316,51 @@ void GNSS(const tN2kMsg &N2kMsg) {
     } else {
       OutputStream->print("Failed to parse PGN: "); OutputStream->println(N2kMsg.PGN);
     }
+}
+
+//*****************************************************************************
+void UserDatumSettings(const tN2kMsg &N2kMsg) {
+  if (N2kMsg.PGN!=129045L) return;
+  int Index=0;
+  double val;
+
+  OutputStream->println("User Datum Settings: ");
+  val=N2kMsg.Get4ByteDouble(1e-2,Index);
+  PrintLabelValWithConversionCheckUnDef("  delta x (m): ",val,0,true);
+  val=N2kMsg.Get4ByteDouble(1e-2,Index);
+  PrintLabelValWithConversionCheckUnDef("  delta y (m): ",val,0,true);
+  val=N2kMsg.Get4ByteDouble(1e-2,Index);
+  PrintLabelValWithConversionCheckUnDef("  delta z (m): ",val,0,true);
+  val=N2kMsg.GetFloat(Index);
+  PrintLabelValWithConversionCheckUnDef("  rotation in x (deg): ",val,&RadToDeg,true,5);
+  val=N2kMsg.GetFloat(Index);
+  PrintLabelValWithConversionCheckUnDef("  rotation in y (deg): ",val,&RadToDeg,true,5);
+  val=N2kMsg.GetFloat(Index);
+  PrintLabelValWithConversionCheckUnDef("  rotation in z (deg): ",val,&RadToDeg,true,5);
+  val=N2kMsg.GetFloat(Index);
+  PrintLabelValWithConversionCheckUnDef("  scale: ",val,0,true,3);
+}
+
+//*****************************************************************************
+void GNSSSatsInView(const tN2kMsg &N2kMsg) {
+  unsigned char SID;
+  tN2kRangeResidualMode Mode;
+  uint8_t NumberOfSVs;
+  tSatelliteInfo SatelliteInfo;
+
+  if (ParseN2kPGNSatellitesInView(N2kMsg,SID,Mode,NumberOfSVs) ) {
+    OutputStream->println("Satellites in view: ");
+                      OutputStream->print("  mode: "); OutputStream->println(Mode);
+                      OutputStream->print("  number of satellites: ");  OutputStream->println(NumberOfSVs);
+    for ( uint8_t i=0; i<NumberOfSVs && ParseN2kPGNSatellitesInView(N2kMsg,i,SatelliteInfo); i++) {
+                        OutputStream->print("  Satellite PRN: ");  OutputStream->println(SatelliteInfo.PRN);
+      PrintLabelValWithConversionCheckUnDef("    elevation: ",SatelliteInfo.Elevation,&RadToDeg,true,1);
+      PrintLabelValWithConversionCheckUnDef("    azimuth:   ",SatelliteInfo.Azimuth,&RadToDeg,true,1);
+      PrintLabelValWithConversionCheckUnDef("    SNR:       ",SatelliteInfo.SNR,0,true,1);
+      PrintLabelValWithConversionCheckUnDef("    residuals: ",SatelliteInfo.RangeResiduals,0,true,1);
+                        OutputStream->print("    status: "); OutputStream->println(SatelliteInfo.UsageStatus);
+    }
+  }
 }
 
 //*****************************************************************************
@@ -601,7 +663,8 @@ void Attitude(const tN2kMsg &N2kMsg) {
     double Roll;
     
     if (ParseN2kAttitude(N2kMsg,SID,Yaw,Pitch,Roll) ) {
-      PrintLabelValWithConversionCheckUnDef("Attitude: ",SID,0,true);
+                      OutputStream->println("Attitude:");
+      PrintLabelValWithConversionCheckUnDef("  SID: ",SID,0,true);
       PrintLabelValWithConversionCheckUnDef("  Yaw (deg): ",Yaw,&RadToDeg,true);
       PrintLabelValWithConversionCheckUnDef("  Pitch (deg): ",Pitch,&RadToDeg,true);
       PrintLabelValWithConversionCheckUnDef("  Roll (deg): ",Roll,&RadToDeg,true);

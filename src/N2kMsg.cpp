@@ -426,8 +426,18 @@ bool tN2kMsg::GetBuf(void *buf, size_t Length, int &Index) const {
 }
 
 //*****************************************************************************
+bool tN2kMsg::SetByte(uint8_t v, int &Index) {
+  if (Index<DataLen) {
+    Data[Index]=v;
+    Index++;
+    return true;
+  } else
+    return false;
+}
+
+//*****************************************************************************
 bool tN2kMsg::Set2ByteUInt(uint16_t v, int &Index) {
-  if (Index+2<=DataLen) {
+  if (Index+1<DataLen) {
     SetBuf2ByteUInt(v,Index,Data);
     return true;
   } else

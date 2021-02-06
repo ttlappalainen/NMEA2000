@@ -84,12 +84,27 @@ support.
 
 
 == Changes ==
+06.02.2021
+
+- Added handlers for PGN 129540 GNSS satellites in view
+
+- Added new necessary types
+
+- Added SetByte for tN2kMsg class.
+
+- Added PGN 129540 handler for test example DataDisplay2
+
+- Redesigned example MessageSender. Now it is more usefull for testing, since each
+  message can be individually enabled/disabled.
+
+- Added PGN 129540 handler for test example MessageSender
+
 15.01.2021
 
 - Added better inline ParseN2kEngineDynamicParam to N2kMessages
+
 - Copyright update
 
-== Changes ==
 05.01.2021
 
 - Added better engine discrete status handling to N2kMessages

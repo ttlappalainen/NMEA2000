@@ -994,6 +994,80 @@ bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmod
 }
 
 //*****************************************************************************
+// GNSS Satellites in View
+
+#define MaxSatelliteInfoCount 18 // Fast packet can hold this max stellites. Maybe later more with TP message.
+
+void SetN2kPGN129540(tN2kMsg& N2kMsg, unsigned char SID, tN2kRangeResidualMode Mode) {
+    N2kMsg.SetPGN(129540L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(0xfc || Mode);
+    N2kMsg.AddByte(0); // Init satellite count to 0
+}
+
+bool AppendN2kPGN129540(tN2kMsg& N2kMsg, const tSatelliteInfo& SatelliteInfo) {
+  if(N2kMsg.PGN != 129540L) return false;
+
+  int Index = 2;
+  uint8_t NumberOfSVs=N2kMsg.GetByte(Index);
+
+  if ( NumberOfSVs>=MaxSatelliteInfoCount ) return false;
+
+  NumberOfSVs++;
+  Index=2;
+  N2kMsg.SetByte(NumberOfSVs, Index);  // increment the number satellites
+  // add the new satellite info
+  N2kMsg.AddByte(SatelliteInfo.PRN);            
+  N2kMsg.Add2ByteDouble(SatelliteInfo.Elevation,1e-4L);
+  N2kMsg.Add2ByteUDouble(SatelliteInfo.Azimuth,1e-4L);
+  N2kMsg.Add2ByteDouble(SatelliteInfo.SNR,1e-2L);
+  N2kMsg.Add4ByteDouble(SatelliteInfo.RangeResiduals,1e-5L);
+  N2kMsg.AddByte(0xf0 | SatelliteInfo.UsageStatus);            
+
+  return true;
+}
+
+bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kRangeResidualMode &Mode, uint8_t& NumberOfSVs) {
+  if(N2kMsg.PGN != 129540L) return false;
+
+  int Index = 0;
+
+  SID = N2kMsg.GetByte(Index);
+  Mode = (tN2kRangeResidualMode)(N2kMsg.GetByte(Index) & 0x03);
+  NumberOfSVs = N2kMsg.GetByte(Index);
+  
+  return true;
+}
+
+bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, uint8_t SVIndex, tSatelliteInfo& SatelliteInfo) {
+  if(N2kMsg.PGN != 129540L) return false;
+
+  int Index = 2;
+  uint8_t NumberOfSVs=N2kMsg.GetByte(Index);
+  bool ret=( NumberOfSVs<MaxSatelliteInfoCount && SVIndex<NumberOfSVs );
+  
+  if ( ret ) {
+    Index=3+SVIndex*12;
+    SatelliteInfo.PRN=N2kMsg.GetByte(Index);
+    SatelliteInfo.Elevation=N2kMsg.Get2ByteDouble(1e-4L,Index);
+    SatelliteInfo.Azimuth=N2kMsg.Get2ByteUDouble(1e-4L,Index);
+    SatelliteInfo.SNR=N2kMsg.Get2ByteDouble(1e-2L,Index);
+    SatelliteInfo.RangeResiduals=N2kMsg.Get4ByteDouble(1e-5L,Index);;
+    SatelliteInfo.UsageStatus=(tN2kPRNUsageStatus)(N2kMsg.GetByte(Index) & 0x0f);
+  } else {
+    SatelliteInfo.PRN=0xff;
+    SatelliteInfo.Elevation=N2kDoubleNA;
+    SatelliteInfo.Azimuth=N2kDoubleNA;
+    SatelliteInfo.SNR=N2kDoubleNA;
+    SatelliteInfo.RangeResiduals=N2kDoubleNA;
+    SatelliteInfo.UsageStatus=N2kDD124_Unavailable;
+  }
+  
+  return ret;
+}
+
+//*****************************************************************************
 // AIS position report (class A 129038)
 // Latitude and Longitude in degrees (1e7)
 // COG and Heading in radians (1e4)
@@ -1211,10 +1285,11 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
     int NumItemsIdx, len;
     uint16_t NumItems;
 
-    if (strlen(Name) > 0)
+    if (strlen(Name) > 0) {
         len = 12 + strlen(Name);
-    else
+    } else {
         len = 13;
+    }
 
     if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
         NumItemsIdx = 2;

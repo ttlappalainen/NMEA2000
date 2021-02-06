@@ -44,47 +44,64 @@ into corresponding long names (once again, exactly as described by NMEA).
 // DD002 - Generic Status Pair
 //                
 enum tN2kDD002 {
-                            N2kDD002_No=0,
-                            N2kDD002_Yes=1,
-                            N2kDD002_Error=2,
-                            N2kDD002_Unavailable=3,
-                            N2kDD002_Off=N2kDD002_No,
-                            N2kDD002_Disabled=N2kDD002_No,
-                            N2kDD002_Reset=N2kDD002_No,
-                            N2kDD002_0=N2kDD002_No,
-                            N2kDD002_On=N2kDD002_Yes,
-                            N2kDD002_Enabled=N2kDD002_Yes,
-                            N2kDD002_Set=N2kDD002_Yes,
-                            N2kDD002_1=N2kDD002_Yes,
-                            N2kDD002_Unknown=N2kDD002_Unavailable
-                          };
+                  N2kDD002_No=0,
+                  N2kDD002_Yes=1,
+                  N2kDD002_Error=2,
+                  N2kDD002_Unavailable=3,
+                  N2kDD002_Off=N2kDD002_No,
+                  N2kDD002_Disabled=N2kDD002_No,
+                  N2kDD002_Reset=N2kDD002_No,
+                  N2kDD002_0=N2kDD002_No,
+                  N2kDD002_On=N2kDD002_Yes,
+                  N2kDD002_Enabled=N2kDD002_Yes,
+                  N2kDD002_Set=N2kDD002_Yes,
+                  N2kDD002_1=N2kDD002_Yes,
+                  N2kDD002_Unknown=N2kDD002_Unavailable
+                };
                           
+enum tN2kDD072 {
+                  N2kDD072_RangeResidualsWereUsedToCalculateData=0,
+                  N2kDD072_RangeResidualsWereCalculatedAfterPosition=1,
+                  N2kDD072_Error=2,
+                  N2kDD072_Unavailable=3
+                };
+
+enum tN2kDD124 {
+                  N2kDD124_NotTracked=0,
+                  N2kDD124_TrackedButNotUsedInSolution=1,
+                  N2kDD124_UsedInSolutionWithoutDifferentialCorrections=2,
+                  N2kDD124_DifferentialCorrectionsAvailable=3,
+                  N2kDD124_TrackedWithDifferentialCorrections=4,
+                  N2kDD124_UsedWithDifferentialCorrections=5,
+                  N2kDD124_Error=14,
+                  N2kDD124_Unavailable=15,
+                };
 // DD477 - Windlass Monitoring Events
 //
 union tN2kDD477 {
-			    unsigned char Events;
+          unsigned char Events;
           struct {
             unsigned char ControllerUnderVoltageCutout:1;
             unsigned char ControllerOverCurrentCutout:1;
             unsigned char ControllerOverTemperatureCutout:1;
-			    } Event;
+          } Event;
           tN2kDD477(): Events(0) {};
-			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
+          void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
         };
 
 // DD478 - Windlass Control Events
 //
 union tN2kDD478 {
-			    unsigned char Events;
+          unsigned char Events;
           struct {
             unsigned char AnotherDeviceControllingWindlass:1;
-			    } Event;
+          } Event;
           tN2kDD478(): Events(0) {};
-			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
+          void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
         };
 
 union tN2kDD206 {
-			    uint16_t Status;
+          uint16_t Status;
           struct {
               uint16_t CheckEngine:1;
               uint16_t OverTemperature:1;
@@ -102,12 +119,12 @@ union tN2kDD206 {
               uint16_t EGRSystem:1;
               uint16_t ThrottlePositionSensor:1;
               uint16_t EngineEmergencyStopMode:1;
-			    } Bits;
+          } Bits;
           tN2kDD206(uint16_t _Status=0): Status(_Status) {};
 };
 
 union tN2kDD223 {
-			    uint16_t Status;
+          uint16_t Status;
           struct {
               uint16_t WarningLevel1:1;
               uint16_t WarningLevel2:1;
@@ -117,7 +134,7 @@ union tN2kDD223 {
               uint16_t SubOrSecondaryThrottle:1;
               uint16_t NeutralStartProtect:1;
               uint16_t EngineShuttingDown:1;
-			    } Bits;
+          } Bits;
           tN2kDD223(uint16_t _Status=0): Status(_Status | 0xff00) {};
           uint16_t operator= (uint16_t val) { Status=val | 0xff00; return Status;}
 };
@@ -152,16 +169,16 @@ enum tN2kDD482 {
 // DD483 - Windlass Operating Events
 //
 union tN2kDD483 {
-			    unsigned char Events;
+          unsigned char Events;
           struct {
             unsigned char SystemError:1;
             unsigned char SensorError:1;
             unsigned char NoWindlassMotionDetected:1;
             unsigned char RetrievalDockingDistanceReached:1;
             unsigned char EndOfRodeReached:1;
-			    } Event;
+          } Event;
           tN2kDD483(): Events(0) {};
-			    void SetEvents(unsigned char _Events) { Events = (_Events & 0x1F); }
+          void SetEvents(unsigned char _Events) { Events = (_Events & 0x1F); }
         };                         
 
 // DD484 - Windlass Direction Control

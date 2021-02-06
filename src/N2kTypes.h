@@ -335,19 +335,35 @@ using tN2kEngineDiscreteStatus2 = tN2kDD223;
 
 using tN2kGenericStatusPair = tN2kDD002;
 			    // Enum type members:
-                            // N2kDD002_No=0
-                            // N2kDD002_Yes=1
-                            // N2kDD002_Error=2
-                            // N2kDD002_Unavailable=3
-                            // N2kDD002_Off=N2kDD002_No
-                            // N2kDD002_Disabled=N2kDD002_No
-                            // N2kDD002_Reset=N2kDD002_No
-                            // N2kDD002_0=N2kDD002_No
-                            // N2kDD002_On=N2kDD002_Yes
-                            // N2kDD002_Enabled=N2kDD002_Yes
-                            // N2kDD002_Set=N2kDD002_Yes
-                            // N2kDD002_1=N2kDD002_Yes
-                            // N2kDD002_Unknown=N2kDD002_Unavailable                         
+                  // N2kDD002_No=0
+                  // N2kDD002_Yes=1
+                  // N2kDD002_Error=2
+                  // N2kDD002_Unavailable=3
+                  // N2kDD002_Off=N2kDD002_No
+                  // N2kDD002_Disabled=N2kDD002_No
+                  // N2kDD002_Reset=N2kDD002_No
+                  // N2kDD002_0=N2kDD002_No
+                  // N2kDD002_On=N2kDD002_Yes
+                  // N2kDD002_Enabled=N2kDD002_Yes
+                  // N2kDD002_Set=N2kDD002_Yes
+                  // N2kDD002_1=N2kDD002_Yes
+                  // N2kDD002_Unknown=N2kDD002_Unavailable                         
+
+using tN2kRangeResidualMode = tN2kDD072;
+                  // N2kDD072_RangeResidualsWereUsedToCalculateData=0,
+                  // N2kDD072_RangeResidualsWereCalculatedAfterPosition=1,
+                  // N2kDD072_Error=2,
+                  // N2kDD072_Unavailable=3
+                            
+using tN2kPRNUsageStatus = tN2kDD124;                           
+                  // N2kDD124_NotTracked=0,
+                  // N2kDD124_TrackedButNotUsedInSolution=1,
+                  // N2kDD124_UsedInSolutionWithoutDifferentialCorrections=2,
+                  // N2kDD124_DifferentialCorrectionsAvailable=3,
+                  // N2kDD124_TrackedWithDifferentialCorrections=4,
+                  // N2kDD124_UsedWithDifferentialCorrections=5,
+                  // N2kDD124_Error=14,
+                  // N2kDD124_Unavailable=15,
 
 using tN2kWindlassMonitoringEvents = tN2kDD477;
 			    // Union type with fields:

@@ -556,10 +556,10 @@ inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, t
 //  - RippleVoltage         DC output voltage ripple in V
 //  - Capacity              Battery capacity in coulombs
 void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity);
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage=N2kDoubleNA, double Capacity=N2kDoubleNA);
 
 inline void SetN2kDCStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity) {
+                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage=N2kDoubleNA, double Capacity=N2kDoubleNA) {
   SetN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage,Capacity);
 }
 
@@ -988,37 +988,6 @@ inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
   return ParseN2kPGN129033(N2kMsg,DaysSince1970,SecondsSinceMidnight,LocalOffset);
 }
 
-
-//*****************************************************************************
-// GNSS DOP data
-// Input:
-//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
-//                          to indicate that they are measured at same time.
-//  - DesiredMode           Desired DOP mode.
-//  - ActualMode            Actual DOP mode.
-//  - HDOP                  Horizontal Dilution Of Precision in meters.
-//  - PDOP                  Probable dilution of precision in meters.
-//  - TDOP                  Time dilution of precision
-// Output:
-//  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
-                     double HDOP, double VDOP, double TDOP);
-
-inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
-                              double HDOP, double VDOP, double TDOP)
-{
-    SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
-}
-
-bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
-                       double& HDOP, double& VDOP, double& TDOP);
-
-inline bool ParseN2kGNSSDOPData(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
-                         double& HDOP, double& VDOP, double& TDOP)
-{
-    return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
-}
-
 //*****************************************************************************
 // AIS position reports for Class A
 // Input:
@@ -1140,6 +1109,113 @@ void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_
                         bool NavDirection, bool SupplementaryData, char* RouteName);
 
 bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+
+//*****************************************************************************
+// GNSS DOP data
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - DesiredMode           Desired DOP mode.
+//  - ActualMode            Actual DOP mode.
+//  - HDOP                  Horizontal Dilution Of Precision in meters.
+//  - PDOP                  Probable dilution of precision in meters.
+//  - TDOP                  Time dilution of precision
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                     double HDOP, double VDOP, double TDOP);
+
+inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
+                              double HDOP, double VDOP, double TDOP)
+{
+    SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+}
+
+bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                       double& HDOP, double& VDOP, double& TDOP);
+
+inline bool ParseN2kGNSSDOPData(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
+                         double& HDOP, double& VDOP, double& TDOP)
+{
+    return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+}
+
+
+//*****************************************************************************
+struct tSatelliteInfo {
+  unsigned char PRN;
+  double Elevation;
+  double Azimuth;
+  double SNR;
+  double RangeResiduals;
+  tN2kPRNUsageStatus UsageStatus;
+};
+
+//*****************************************************************************
+// GNSS Satellites in View
+// Use first function for basic initialization and second for adding satellites.
+//
+// Initialize GNSS Satellites in View message
+// Input:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Mode                  Range residual mode.
+//  - SatelliteInfo         Satellite info see tSatelliteInfo above.
+void SetN2kPGN129540(tN2kMsg& N2kMsg, unsigned char SID=0xff, tN2kRangeResidualMode Mode=N2kDD072_Unavailable);
+
+// Append new satellite info for GNSS Satellites in View message
+// Input:
+//  - SatelliteInfo         Requested satellite info.
+//
+// Return:
+//   true  - if function succeeds.
+//   false - if no more satellites can be added or try to use wrong or uninitialized message.
+bool AppendN2kPGN129540(tN2kMsg& N2kMsg, const tSatelliteInfo& SatelliteInfo);
+
+inline void SetN2kGNSSSatellitesInView(tN2kMsg& N2kMsg, unsigned char SID=0xff, tN2kRangeResidualMode Mode=N2kDD072_Unavailable) {
+  SetN2kPGN129540(N2kMsg,SID,Mode);
+}
+
+inline bool AppendSatelliteInfo(tN2kMsg& N2kMsg, const tSatelliteInfo& SatelliteInfo) {
+  return AppendN2kPGN129540(N2kMsg,SatelliteInfo);
+}
+
+// Parse GNSS Satellites in View
+// Use first function to get basic information and specially NumberOfSVs. Then use second function to get
+// information for specific satellite. 
+// It is possible to use just second function, but it returns also false for wrong message.
+//
+// Request common information for GNSS Satellites in View
+// Output:
+//  - SID                   Sequence ID. If your device is e.g. boat speed and GPS at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Mode                  Range residual mode.
+//  - NumberOfSVs           Number of satellite infos in message.
+//
+// Return:
+//   true  - if function succeeds.
+//   false - when called with wrong message.
+bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kRangeResidualMode &Mode, uint8_t& NumberOfSVs);
+
+// Request specific satellite info from message.
+// Input:
+//  - SVIndex               Index of saelliten info requested.
+//
+// Output:
+//  - SatelliteInfo         Requested satellite info.
+//
+// Return:
+//   true  - if function succeeds.
+//   false - when called with wrong message or SVIndex in second function is out of range.
+bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, uint8_t SVIndex, tSatelliteInfo& SatelliteInfo);
+
+inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kRangeResidualMode &Mode, uint8_t& NumberOfSVs){
+  return ParseN2kPGN129540(N2kMsg,SID,Mode,NumberOfSVs);
+}
+inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, tSatelliteInfo& SatelliteInfo){
+  return ParseN2kPGN129540(N2kMsg,SVIndex,SatelliteInfo);
+}
+
 
 //*****************************************************************************
 // AIS static data class A
