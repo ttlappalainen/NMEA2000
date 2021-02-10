@@ -32,6 +32,36 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   #define USE_N2K_CAN 6  // for use with MBED (ARM) systems
   #define USE_N2K_CAN 7  // for use with ESP32
   #define USE_N2K_CAN 8  // for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards
+  
+  Depending of your board you will need to also install "driver" libraries:
+  Arduino CAN shield (mcp_can) with MCP2515 chip:
+    - https://github.com/ttlappalainen/CAN_BUS_Shield
+    - https://github.com/ttlappalainen/NMEA2000_mcp
+    
+  Arduino DUE internal CAN:
+    - https://github.com/ttlappalainen/due_can
+    - https://github.com/ttlappalainen/NMEA2000_due
+    
+  Teensy 3.2-3.6 internal CAN:
+    - https://github.com/ttlappalainen/FlexCAN_Library
+    - https://github.com/ttlappalainen/NMEA2000_teensy
+    
+  Teensy 4.X internal CAN:
+    - https://github.com/ttlappalainen/NMEA2000_Teensyx
+    
+  ESP32 internal CAN:
+    - https://github.com/ttlappalainen/NMEA2000_esp32
+  
+  AVR:
+    - https://github.com/thomasonw/avr_can
+    - https://github.com/thomasonw/NMEA2000_avr
+  
+  MBED (note that there may be problem with fastpackets on MBED):
+    - https://github.com/thomasonw/NMEA2000_mbed
+    
+  RPi socket CAN:
+    -  https://github.com/thomasonw/NMEA2000_socketCAN
+  
 
   There are also library specific defines:
   mcp_can:
@@ -46,6 +76,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   Teensyx:
     #define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN2 // select CAN bus 2
     #define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // Force NMEA2000_TEENSYX also for Teensy 3.x boards
+    
+  Arduino DUE:
+    #define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // Use CAN bus 1 instead of 0 for Arduino DUE
 */
 
 
@@ -95,13 +128,15 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if USE_N2K_CAN == USE_N2K_DUE_CAN
 // Use Arduino Due internal CAN with due_can library
-#include <due_can.h>         // https://github.com/collin80/due_can
 #include <NMEA2000_due.h>
-tNMEA2000 &NMEA2000=*(new tNMEA2000_due());
+#ifndef NMEA2000_ARDUINO_DUE_CAN_BUS
+  #define NMEA2000_ARDUINO_DUE_CAN_BUS
+#endif
+tNMEA2000 &NMEA2000=*(new tNMEA2000_due(NMEA2000_ARDUINO_DUE_CAN_BUS));
 
 #elif USE_N2K_CAN == USE_N2K_TEENSY_CAN
 // Use Teensy 3.1/3.2/3.5/3.6 boards internal CAN FlexCAN library
-#include <NMEA2000_teensy.h>    // https://github.com/sarfata/NMEA2000_teensy
+#include <NMEA2000_teensy.h>    // https://github.com/ttlappalainen/NMEA2000_teensy
 #ifndef NMEA2000_TEENSY_VER
 #error Update NMEA2000_Teensy for the latest version! 
 #endif

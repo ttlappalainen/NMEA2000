@@ -84,6 +84,10 @@ support.
 
 
 == Changes ==
+10.02.2021
+
+- Added definition to NMEA2000_CAN.h to select CAN device for Arduino DUE
+
 06.02.2021
 
 - Added handlers for PGN 129540 GNSS satellites in view
