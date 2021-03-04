@@ -135,8 +135,8 @@ union tN2kDD223 {
               uint16_t NeutralStartProtect:1;
               uint16_t EngineShuttingDown:1;
           } Bits;
-          tN2kDD223(uint16_t _Status=0): Status(_Status | 0xff00) {};
-          uint16_t operator= (uint16_t val) { Status=val | 0xff00; return Status;}
+          tN2kDD223(uint16_t _Status=0): Status(_Status & 0x00ff) {};
+          uint16_t operator= (uint16_t val) { Status=val & 0x00ff; return Status;}
 };
 
 // DD480 - Windlass Motion States
