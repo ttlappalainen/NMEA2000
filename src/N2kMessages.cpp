@@ -594,6 +594,89 @@ bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway
 }
 
 //*****************************************************************************
+// Thruster Control Status (PGN 128006)
+
+void SetN2kPGN128006(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterDirectionControl ThrusterDirectionControl, tN2kGenericStatusPair PowerEnable, tN2kThrusterRetraction ThrusterRetractControl, unsigned char SpeedControl, tN2kThrusterControlEvents ThrusterControlEvents, double CommandTimeout, double AzimuthControl) {
+    N2kMsg.SetPGN(128006L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(ThrusterId);
+    N2kMsg.AddByte((unsigned char) ((ThrusterRetractControl & 0x03) << 6) | ((PowerEnable & 0x03) << 4) | (ThrusterDirectionControl & 0x0f)); 
+    N2kMsg.AddByte((SpeedControl > 100)?100:0);
+    N2kMsg.AddByte(ThrusterControlEvents.Events);
+    N2kMsg.Add1ByteUDouble(CommandTimeout, 0.005);
+    N2kMsg.Add2ByteDouble(AzimuthControl, 0.0001);
+}
+
+bool parseN2kPGN128006(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ThrusterId, tN2kThrusterDirectionControl &ThrusterDirectionControl, tN2kGenericStatusPair &PowerEnable, tN2kThrusterRetraction &ThrusterRetractControl, unsigned char &SpeedControl, tN2kThrusterControlEvents &ThrusterControlEvents, double &CommandTimeout, double &AzimuthControl) {
+    if (N2kMsg.PGN != 128006UL) return false;
+    int Index = 0;
+    SID = N2kMsg.GetByte(Index);
+    ThrusterId = N2kMsg.GetByte(Index);
+    unsigned char pack = N2kMsg.GetByte(Index);
+    ThrusterDirectionControl = (tN2kThrusterDirectionControl) (pack & 0x04);
+    PowerEnable = (tN2kGenericStatusPair) ((pack >> 4) & 0x02);
+    ThrusterRetractControl = (tN2kThrusterRetraction) ((pack >> 6) & 0x02);
+    SpeedControl = N2kMsg.GetByte(Index);
+    ThrusterControlEvents.SetEvents(N2kMsg.GetByte(Index));
+    CommandTimeout = N2kMsg.Get1ByteUDouble(0.005, Index);
+    AzimuthControl = N2kMsg.Get2ByteDouble(0.0001, Index);
+    return true;
+}
+
+
+//*****************************************************************************
+// Thruster Information (PGN 128007)
+
+void SetN2kPGN128007(tN2kMsg &N2kMsg, unsigned char ThrusterId, tN2kMotorPowerType ThrusterMotorType, uint16_t MotorPowerRating, uint16_t MaximumMotorTemperatureRating, uint16_t MaximumRotationalSpeed) {
+    N2kMsg.SetPGN(128006L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte(ThrusterId);
+    N2kMsg.AddByte((unsigned char) (0xf0 | (ThrusterMotorType & 0x04)));
+    N2kMsg.Add2ByteUInt(MotorPowerRating);
+    N2kMsg.Add2ByteUDouble(MaximumMotorTemperatureRating, 0.01);
+    N2kMsg.Add2ByteUDouble(MaximumRotationalSpeed, 0.25);
+}
+
+bool parseN2kPGN128007(const tN2kMsg &N2kMsg, unsigned char &ThrusterId, tN2kMotorPowerType &ThrusterMotorType, uint16_t &MotorPowerRating, uint16_t &MaximumMotorTemperatureRating, uint16_t &MaximumRotationalSpeed) {
+    if (N2kMsg.PGN != 128007UL) return false;
+    int Index = 0;
+    ThrusterId = N2kMsg.GetByte(Index);
+    unsigned char pack = N2kMsg.GetByte(Index);
+    ThrusterMotorType = (tN2kMotorPowerType) (pack & 0x04);
+    MotorPowerRating = N2kMsg.Get2ByteUInt(Index);
+    MaximumMotorTemperatureRating = N2kMsg.Get2ByteUDouble(0.01, Index);
+    MaximumRotationalSpeed = N2kMsg.Get2ByteUDouble(0.25, Index);
+    return true;
+}
+
+//*****************************************************************************
+// Thruster Motor Status (PGN 128008)
+
+void setN2kPGN128008(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterMotorEvents ThrusterMotorEvents, unsigned char MotorCurrent, double MotorTemperature, uint16_t TotalMotorOperatingTime) {
+    N2kMsg.SetPGN(128008L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(ThrusterId);
+    N2kMsg.AddByte(ThrusterMotorEvents.Events);
+    N2kMsg.AddByte((MotorCurrent > 252)?252:MotorCurrent);
+    N2kMsg.Add2ByteUDouble(MotorTemperature, 0.01);
+    N2kMsg.Add2ByteUInt(TotalMotorOperatingTime);
+}
+
+bool parseN2kPGN128008(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ThrusterId, tN2kThrusterMotorEvents &ThrusterMotorEvents, unsigned char &MotorCurrent, double &MotorTemperature, uint16_t &TotalMotorOperatingTime) {
+    if (N2kMsg.PGN != 128008UL) return false;
+    int Index = 0;
+    SID = N2kMsg.GetByte(Index);
+    ThrusterId = N2kMsg.GetByte(Index);
+    ThrusterMotorEvents.SetEvents(N2kMsg.GetByte(Index));
+    MotorCurrent = N2kMsg.GetByte(Index);
+    MotorTemperature = N2kMsg.Get2ByteUDouble(0.01, Index);
+    TotalMotorOperatingTime = N2kMsg.Get2ByteUInt(Index);
+    return true;
+}
+
+//*****************************************************************************
 // Boat speed
 void SetN2kPGN128259(tN2kMsg &N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced, tN2kSpeedWaterReferenceType SWRT) {
     N2kMsg.SetPGN(128259L);

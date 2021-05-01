@@ -76,29 +76,6 @@ enum tN2kDD124 {
                   N2kDD124_Error=14,
                   N2kDD124_Unavailable=15,
                 };
-// DD477 - Windlass Monitoring Events
-//
-union tN2kDD477 {
-          unsigned char Events;
-          struct {
-            unsigned char ControllerUnderVoltageCutout:1;
-            unsigned char ControllerOverCurrentCutout:1;
-            unsigned char ControllerOverTemperatureCutout:1;
-          } Event;
-          tN2kDD477(): Events(0) {};
-          void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
-        };
-
-// DD478 - Windlass Control Events
-//
-union tN2kDD478 {
-          unsigned char Events;
-          struct {
-            unsigned char AnotherDeviceControllingWindlass:1;
-          } Event;
-          tN2kDD478(): Events(0) {};
-          void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
-        };
 
 union tN2kDD206 {
           uint16_t Status;
@@ -138,6 +115,78 @@ union tN2kDD223 {
           tN2kDD223(uint16_t _Status=0): Status(_Status & 0x00ff) {};
           uint16_t operator= (uint16_t val) { Status=val & 0x00ff; return Status;}
 };
+
+// Thruster Motor Events
+//
+union tN2kDD471 {
+	unsigned char Events;
+	struct {
+		unsigned char MotorOverTemperatureCutout:1;
+		unsigned char MotorOverCurrentCutout:1;
+		unsigned char LowOilLevelWarning:1;
+		unsigned char OilOverTemperatureWarning:1;
+		unsigned char ControllerUnderVoltageCutout:1;
+		unsigned char ManufacturerDefined:1;
+		unsigned char Reserved:1;
+		unsigned char DataNotAvailable:1;
+	} Event;
+	tN2kDD471(): Events(0) {};
+	void SetEvents(unsigned char _Events) { Events = (_Events & 0xbf); }
+};
+
+// Thruster Direction Control
+//
+enum tN2kDD473 {
+	N2kDD473_OFF=0,
+	N2kDD473_ThrusterReady=1,
+	N2kDD473_ThrusterToPORT=2,
+	N2kDD473_ThrusterToSTARBOARD=3
+};
+
+// Thruster Retraction
+//
+enum tN2kDD474 {
+	N2kDD474_OFF=0,
+	N2kDD474_Extend=1,
+	N2kDD474_Retract=2
+};
+
+// Thruster Control Events
+//
+union tN2kDD475 {
+	unsigned char Events;
+	struct {
+		unsigned char AnotherDeviceControllingThruster:1;
+		unsigned char BoatSpeedTooFast:1;
+	} Event;
+	tN2kDD475(): Events(0) {};
+	void SetEvents(unsigned char _Events) { Events = (_Events & 0x03); }
+};
+
+// DD477 - Windlass Monitoring Events
+//
+union tN2kDD477 {
+          unsigned char Events;
+          struct {
+            unsigned char ControllerUnderVoltageCutout:1;
+            unsigned char ControllerOverCurrentCutout:1;
+            unsigned char ControllerOverTemperatureCutout:1;
+          } Event;
+          tN2kDD477(): Events(0) {};
+          void SetEvents(unsigned char _Events) { Events = (_Events & 0x07); }
+        };
+
+// DD478 - Windlass Control Events
+//
+union tN2kDD478 {
+          unsigned char Events;
+          struct {
+            unsigned char AnotherDeviceControllingWindlass:1;
+          } Event;
+          tN2kDD478(): Events(0) {};
+          void SetEvents(unsigned char _Events) { Events = (_Events & 0x01); }
+        };
+
 
 // DD480 - Windlass Motion States
 //                          
@@ -189,6 +238,16 @@ enum tN2kDD484 {
                             N2kDD484_Up=2,
                             N2kDD484_Reserved=3
                           };
+
+// DD487 - Motor Power Type
+//
+enum tN2kDD487 {
+	N2kDD487_12VDC=0,
+	N2kDD487_24VDC=1,
+	N2kDD487_48VDC=2,
+	N2kDD487_24VAC=3,
+	N2kDD487_Hydraulic=4,
+};
 
 // DD488 - Speed Type
 //          

@@ -684,6 +684,99 @@ inline bool ParseN2kLeeway(const tN2kMsg &N2kMsg, unsigned char &SID, double &Le
 }
 
 //*****************************************************************************
+// Thruster Control Status
+//  - SID - sequence ID
+//  - ThrusterId - thruster ID in range 0..255
+//  - ThrusterDirectionControl - which way the thruster is operating
+//  - PowerEnable - whether the thruster is enabled or disabled
+//  - ThrusterRetractControl - whether the thruster is retracted or deployed
+//  - SpeedControl - thruster speed in range 0..100
+//  - ThrusterControlEvents - current control errors (0 says none)
+//  - CommandTimeout - in the range 0..1.25s
+//  - AzimuthControl - in radians relative to bow, +ve starboard, -ve port
+
+void SetN2kPGN128006(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char ThrusterId,
+  tN2kThrusterDirectionControl ThrusterDirectionControl,
+  tN2kGenericStatusPair PowerEnable,
+  tN2kThrusterRetraction ThrusterRetractControl,
+  unsigned char SpeedControl,
+  tN2kThrusterControlEvents ThrusterControlEvents,
+  double CommandTimeout,
+  double AzimuthControl
+);
+
+bool parseN2kPGN128006(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &ThrusterId,
+  tN2kThrusterDirectionControl &ThrusterDirectionControl,
+  tN2kGenericStatusPair &PowerEnable,
+  tN2kThrusterRetraction &ThrusterRetractControl,
+  unsigned char &SpeedControl,
+  tN2kThrusterControlEvents &ThrusterControlEvents,
+  double &CommandTimeout,
+  double &AzimuthControl
+);
+
+//*****************************************************************************
+// Thruster Information
+//  - ThrusterID
+//  - ThrusterMotorType
+//  - MotorPowerRating
+//  - MaximumMotorTemperatureRating
+//  - MaximumRotationalSpeed
+
+void SetN2kPGN128007(
+  tN2kMsg &N2kMsg,
+  unsigned char ThrusterId,
+  tN2kMotorPowerType ThrusterMotorType,
+  uint16_t MotorPowerRating,
+  uint16_t MaximumMotorTemperatureRating,
+  uint16_t MaximumRotationalSpeed
+);
+
+bool parseN2kPGN128007(
+  const tN2kMsg &N2kMsg,
+  unsigned char &ThrusterId,
+  tN2kMotorPowerType &ThrusterMotorType,
+  uint16_t &MotorPowerRating,
+  uint16_t &MaximumMotorTemperatureRating,
+  uint16_t &MaximumRotationalSpeed
+);
+
+//*****************************************************************************
+// Thruster Motor Status
+//  - SID
+//  - Thruster ID - 0..255
+//  - ThrusterMotorEvents - see tN2kThrusterMotorEvents
+//  - MotorCurrent - 0..252 Amps
+//  - MotorTemperature - 0..655.32 degrees Kelvin
+//  - TotalMotorOperatingTime - 0..65536 minutes
+
+void setN2kPGN128008(
+  tN2kMsg &N2kMsg,
+  unsigned char SID,
+  unsigned char ThrusterId,
+  tN2kThrusterMotorEvents ThrusterMotorEvents,
+  unsigned char MotorCurrent,
+  double MotorTemperature,
+  uint16_t TotalMotorOperatingTime
+);
+
+bool parseN2kPGN128008(
+  const tN2kMsg &N2kMsg,
+  unsigned char &SID,
+  unsigned char &ThrusterId,
+  tN2kThrusterMotorEvents &ThrusterMotorEvents,
+  unsigned char &MotorCurrent,
+  double &MotorTemperature,
+  uint16_t &TotalMotorOperatingTime
+);
+
+//*****************************************************************************
 // Boat speed
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and wind at same time, you can set same SID for different messages
