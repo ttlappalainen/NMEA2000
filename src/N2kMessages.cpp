@@ -598,7 +598,7 @@ bool ParseN2kPGN128000(const tN2kMsg &N2kMsg, unsigned char &SID, double &Leeway
 
 void SetN2kPGN128006(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterDirectionControl ThrusterDirectionControl, tN2kGenericStatusPair PowerEnable, tN2kThrusterRetraction ThrusterRetractControl, unsigned char SpeedControl, tN2kThrusterControlEvents ThrusterControlEvents, double CommandTimeout, double AzimuthControl) {
     N2kMsg.SetPGN(128006L);
-    N2kMsg.Priority=4;
+    N2kMsg.Priority = 2;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(ThrusterId);
     N2kMsg.AddByte((unsigned char) ((ThrusterRetractControl & 0x03) << 6) | ((PowerEnable & 0x03) << 4) | (ThrusterDirectionControl & 0x0f)); 
@@ -630,7 +630,7 @@ bool parseN2kPGN128006(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 
 void SetN2kPGN128007(tN2kMsg &N2kMsg, unsigned char ThrusterId, tN2kMotorPowerType ThrusterMotorType, uint16_t MotorPowerRating, uint16_t MaximumMotorTemperatureRating, uint16_t MaximumRotationalSpeed) {
     N2kMsg.SetPGN(128006L);
-    N2kMsg.Priority=4;
+    N2kMsg.Priority = 7;
     N2kMsg.AddByte(ThrusterId);
     N2kMsg.AddByte((unsigned char) (0xf0 | (ThrusterMotorType & 0x04)));
     N2kMsg.Add2ByteUInt(MotorPowerRating);
@@ -655,7 +655,7 @@ bool parseN2kPGN128007(const tN2kMsg &N2kMsg, unsigned char &ThrusterId, tN2kMot
 
 void setN2kPGN128008(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterMotorEvents ThrusterMotorEvents, unsigned char MotorCurrent, double MotorTemperature, uint16_t TotalMotorOperatingTime) {
     N2kMsg.SetPGN(128008L);
-    N2kMsg.Priority=4;
+    N2kMsg.Priority = 2;
     N2kMsg.AddByte(SID);
     N2kMsg.AddByte(ThrusterId);
     N2kMsg.AddByte(ThrusterMotorEvents.Events);
