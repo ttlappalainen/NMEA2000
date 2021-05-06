@@ -653,7 +653,7 @@ bool parseN2kPGN128007(const tN2kMsg &N2kMsg, unsigned char &ThrusterId, tN2kMot
 //*****************************************************************************
 // Thruster Motor Status (PGN 128008)
 
-void setN2kPGN128008(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterMotorEvents ThrusterMotorEvents, unsigned char MotorCurrent, double MotorTemperature, uint16_t TotalMotorOperatingTime) {
+void SetN2kPGN128008(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterId, tN2kThrusterMotorEvents ThrusterMotorEvents, unsigned char MotorCurrent, double MotorTemperature, uint16_t TotalMotorOperatingTime) {
     N2kMsg.SetPGN(128008L);
     N2kMsg.Priority = 2;
     N2kMsg.AddByte(SID);
@@ -664,7 +664,7 @@ void setN2kPGN128008(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ThrusterI
     N2kMsg.Add2ByteUInt(TotalMotorOperatingTime);
 }
 
-bool parseN2kPGN128008(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ThrusterId, tN2kThrusterMotorEvents &ThrusterMotorEvents, unsigned char &MotorCurrent, double &MotorTemperature, uint16_t &TotalMotorOperatingTime) {
+bool ParseN2kPGN128008(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ThrusterId, tN2kThrusterMotorEvents &ThrusterMotorEvents, unsigned char &MotorCurrent, double &MotorTemperature, uint16_t &TotalMotorOperatingTime) {
     if (N2kMsg.PGN != 128008UL) return false;
     int Index = 0;
     SID = N2kMsg.GetByte(Index);

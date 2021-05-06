@@ -72,7 +72,6 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
 
 inline void SetN2kSystemTime(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS) {
-  SetN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
 }
 
 bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
@@ -756,7 +755,7 @@ bool parseN2kPGN128007(
 //  - MotorTemperature - 0..655.32 degrees Kelvin
 //  - TotalMotorOperatingTime - 0..65536 minutes
 
-void setN2kPGN128008(
+void SetN2kPGN128008(
   tN2kMsg &N2kMsg,
   unsigned char SID,
   unsigned char ThrusterId,
@@ -766,7 +765,7 @@ void setN2kPGN128008(
   uint16_t TotalMotorOperatingTime
 );
 
-bool parseN2kPGN128008(
+bool ParseN2kPGN128008(
   const tN2kMsg &N2kMsg,
   unsigned char &SID,
   unsigned char &ThrusterId,
