@@ -365,6 +365,30 @@ using tN2kPRNUsageStatus = tN2kDD124;
                   // N2kDD124_Error=14,
                   // N2kDD124_Unavailable=15,
 
+using tN2kThrusterMotorEvents = tN2kDD471;
+	// .Event.MotorOverTemperatureCutout = 0 | 1
+	// .Event.MotorOverCurrentCutout = 0 | 1
+	// .Event.LowOilLevelWarning = 0 | 1
+	// .Event.OilOverTemperatureWarning = 0 | 1
+	// .Event.ControllerUnderVoltageCutout = 0 | 1
+	// .Event.ManufacturerDefined = 0 | 1
+	// .Event.DataNotAvailable = 0 | 1
+
+using tN2kThrusterDirectionControl = tN2kDD473;
+	// N2kDD473_OFF=0
+	// N2kDD473_ThrusterReady=1
+	// N2kDD473_ThrusterToPORT=2
+	// N2kDD473_ThrusterToSTARBOARD=3
+
+using tN2kThrusterRetraction = tN2kDD474;
+	// N2kDD474_OFF=0
+	// N2kDD474_Extend=1
+	// N2kDD474_Retract=2
+
+using tN2kThrusterControlEvents = tN2kDD475;
+	// .Event.AnotherDeviceControllingThruster = 0 | 1
+	// .Event.BoatSpeedTooFast = 0 | 1
+
 using tN2kWindlassMonitoringEvents = tN2kDD477;
 			    // Union type with fields:
                             // .Event.ControllerUnderVoltageCutout = 0 | 1
@@ -412,6 +436,13 @@ using tN2kWindlassDirectionControl = tN2kDD484;
                             // N2kDD484_Down=1
                             // N2kDD484_Up=2
                             // N2kDD484_Reserved=3
+
+using tN2kMotorPowerType = tN2kDD487;
+	// N2kDD487_12VDC=0
+	// N2kDD487_24VDC=1
+	// N2kDD487_48VDC=2
+	// N2kDD487_12VAC=3
+	// N2kDD487_Hydraulic=4
 
 using tN2kSpeedType = tN2kDD488;
 			    // Enum type members:
