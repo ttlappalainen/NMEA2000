@@ -327,6 +327,41 @@ enum tN2kTurnMode {
                             N2kTM_Unavailable=7
                           };
 
+enum tN2kAtoNType {
+  N2kATON_Default=0,
+  N2kATON_RefPoint=1,
+  N2kATON_Racon=2,
+  N2kATON_FixedObstruction=3,
+  N2kATON_Emergency=4,
+  N2kATON_LightNoSectors=5,
+  N2kATON_LightWithSectors=6,
+  N2kATON_LeadLightFront=7,
+  N2kATON_LeadLightRear=8,
+  N2kATON_BeaconCardN=9,
+  N2kATON_BeaconCardE=10,
+  N2kATON_BeaconCardS=11,
+  N2kATON_BeaconCardW=12,
+  N2kATON_BeaconPortHand=13,
+  N2kATON_BeaconStbdHand=14,
+  N2kATON_BeaconPrefChPortHand=15,
+  N2kATON_BeaconPrefChStbdHand=16,
+  N2kATON_BeaconIsoDanger=17,
+  N2kATON_BeaconSafeWater=18,
+  N2kATON_BeaconSpecialMark=19,
+  N2kATON_FloatCardMarkN=20,
+  N2kATON_FloatCardMarkE=21,
+  N2kATON_FloatCardMarkS=22,
+  N2kATON_FloatCardMarkW=23,
+  N2kATON_FloatPortHandMark=24,
+  N2kATON_FloatStbdHandMark=25,
+  N2kATON_FloatPrefChPortHand=26,
+  N2kATON_FloatPrefChStbdHand=27,
+  N2kATON_FloatIsoDanger=28,
+  N2kATON_FloatSafeWater=29,
+  N2kATON_FloatSpecialMark=30,
+  N2kATON_FloatLightVessel=31
+};
+
 //*****************************************************************************
 // Aliases for N2K standard types.
 //*****************************************************************************

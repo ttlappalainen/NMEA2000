@@ -31,7 +31,7 @@ priority on function, you have to do it after Setxxx call.
 If you do not send anything to NMEA2000 bus, you do not need this library. Funtions for
 BUS handling PGN:s like 60928 "ISO Address Claim" has been defined in bus device library
 NMEA2000.h
-*/
+ */
 
 #ifndef _N2kMessages_H_
 #define _N2kMessages_H_
@@ -71,14 +71,14 @@ void SetN2kPGN126992(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
                      double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS);
 
 inline void SetN2kSystemTime(tN2kMsg &N2kMsg, unsigned char SID, uint16_t SystemDate,
-                     double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS) {
+                             double SystemTime, tN2kTimeSource TimeSource=N2ktimes_GPS) {
   SetN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
 }
 
 bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
-                     double &SystemTime, tN2kTimeSource &TimeSource);
+                       double &SystemTime, tN2kTimeSource &TimeSource);
 inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &SystemDate,
-                     double &SystemTime, tN2kTimeSource &TimeSource) {
+                               double &SystemTime, tN2kTimeSource &TimeSource) {
   return ParseN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
 }
 
@@ -95,15 +95,15 @@ void SetN2kPGN127245(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Insta
                      tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA);
 
 inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char Instance=0,
-                     tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA) {
+                         tN2kRudderDirectionOrder RudderDirectionOrder=N2kRDO_NoDirectionOrder, double AngleOrder=N2kDoubleNA) {
   SetN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
 }
 
 bool ParseN2kPGN127245(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance,
-                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder);
+                       tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder);
 
 inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition, unsigned char &Instance,
-                     tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
+                           tN2kRudderDirectionOrder &RudderDirectionOrder, double &AngleOrder) {
   return ParseN2kPGN127245(N2kMsg,RudderPosition,Instance,RudderDirectionOrder,AngleOrder);
 }
 
@@ -214,14 +214,14 @@ void SetN2kPGN127488(tN2kMsg &N2kMsg, unsigned char EngineInstance, double Engin
                      double EngineBoostPressure=N2kDoubleNA, int8_t EngineTiltTrim=N2kInt8NA);
 
 inline void SetN2kEngineParamRapid(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineSpeed,
-                      double EngineBoostPressure=N2kDoubleNA, int8_t EngineTiltTrim=N2kInt8NA) {
+                                   double EngineBoostPressure=N2kDoubleNA, int8_t EngineTiltTrim=N2kInt8NA) {
   SetN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);
 }
 
 bool ParseN2kPGN127488(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed,
-                     double &EngineBoostPressure, int8_t &EngineTiltTrim);
+                       double &EngineBoostPressure, int8_t &EngineTiltTrim);
 inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineSpeed,
-                     double &EngineBoostPressure, int8_t &EngineTiltTrim) {
+                                     double &EngineBoostPressure, int8_t &EngineTiltTrim) {
   return ParseN2kPGN127488(N2kMsg,EngineInstance,EngineSpeed,EngineBoostPressure,EngineTiltTrim);
 }
 
@@ -242,28 +242,28 @@ inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &Engin
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
-                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
-                       tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0);
+                     double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                     int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                     tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0);
 
 inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
-                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
-                       tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0) {
+                                     double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                                     int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                                     tN2kEngineDiscreteStatus1 Status1=0, tN2kEngineDiscreteStatus2 Status2=0) {
   SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
-                       Status1,Status2);
+                  FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                  Status1,Status2);
 }                         
 
 inline void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
-                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
-                       bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false,
-                       bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false,
-                       bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false,
-                       bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false,
-                       bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false,
-                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
+                            double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                            int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                            bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false,
+                            bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false,
+                            bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false,
+                            bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false,
+                            bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false,
+                            bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
   tN2kEngineDiscreteStatus1 Status1;
   tN2kEngineDiscreteStatus2 Status2;
   Status1.Bits.CheckEngine=flagCheckEngine;
@@ -292,77 +292,77 @@ inline void SetN2kPGN127489(tN2kMsg &N2kMsg, unsigned char EngineInstance, doubl
   Status2.Bits.EngineShuttingDown=flagEngineShuttingDown;
 
   SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
-                       Status1,Status2);
+                  FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                  Status1,Status2);
 }
 inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage,
-                       double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
-                       int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
-                       bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false,
-                       bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false,
-                       bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false,
-                       bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false,
-                       bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false,
-                       bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
+                                     double FuelRate, double EngineHours, double EngineCoolantPress=N2kDoubleNA, double EngineFuelPress=N2kDoubleNA,
+                                     int8_t EngineLoad=N2kInt8NA, int8_t EngineTorque=N2kInt8NA,
+                                     bool flagCheckEngine=false,       bool flagOverTemp=false,         bool flagLowOilPress=false,         bool flagLowOilLevel=false,
+                                     bool flagLowFuelPress=false,      bool flagLowSystemVoltage=false, bool flagLowCoolantLevel=false,     bool flagWaterFlow=false,
+                                     bool flagWaterInFuel=false,       bool flagChargeIndicator=false,  bool flagPreheatIndicator=false,    bool flagHighBoostPress=false,
+                                     bool flagRevLimitExceeded=false,  bool flagEgrSystem=false,        bool flagTPS=false,                 bool flagEmergencyStopMode=false,
+                                     bool flagWarning1=false,          bool flagWarning2=false,         bool flagPowerReduction=false,      bool flagMaintenanceNeeded=false,
+                                     bool flagEngineCommError=false,   bool flagSubThrottle=false,      bool flagNeutralStartProtect=false, bool flagEngineShuttingDown=false) {
   SetN2kPGN127489(N2kMsg,EngineInstance, EngineOilPress, EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                       FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
-                       flagCheckEngine, flagOverTemp, flagLowOilPress, flagLowOilLevel,
-                       flagLowFuelPress, flagLowSystemVoltage, flagLowCoolantLevel, flagWaterFlow,
-                       flagWaterInFuel, flagChargeIndicator, flagPreheatIndicator, flagHighBoostPress,
-                       flagRevLimitExceeded, flagEgrSystem, flagTPS, flagEmergencyStopMode,
-                       flagWarning1, flagWarning2, flagPowerReduction, flagMaintenanceNeeded,
-                       flagEngineCommError, flagSubThrottle, flagNeutralStartProtect, flagEngineShuttingDown);
+                  FuelRate, EngineHours, EngineCoolantPress, EngineFuelPress, EngineLoad, EngineTorque,
+                  flagCheckEngine, flagOverTemp, flagLowOilPress, flagLowOilLevel,
+                  flagLowFuelPress, flagLowSystemVoltage, flagLowCoolantLevel, flagWaterFlow,
+                  flagWaterInFuel, flagChargeIndicator, flagPreheatIndicator, flagHighBoostPress,
+                  flagRevLimitExceeded, flagEgrSystem, flagTPS, flagEmergencyStopMode,
+                  flagWarning1, flagWarning2, flagPowerReduction, flagMaintenanceNeeded,
+                  flagEngineCommError, flagSubThrottle, flagNeutralStartProtect, flagEngineShuttingDown);
 }
 
 bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
-                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
-                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque,
-                      tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2);
+                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                       double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                       int8_t &EngineLoad, int8_t &EngineTorque,
+                       tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2);
 
 inline bool ParseN2kPGN127489(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
-                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
-                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque) {
+                              double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                              double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                              int8_t &EngineLoad, int8_t &EngineTorque) {
   tN2kEngineDiscreteStatus1 Status1;
   tN2kEngineDiscreteStatus2 Status2;
   return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
-                    EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                    FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
-                    EngineLoad, EngineTorque,Status1,Status2);
+                           EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                           FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                           EngineLoad, EngineTorque,Status1,Status2);
 }
 
 inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
-                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
-                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque) {
-    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
-                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
-                      EngineLoad, EngineTorque);
+                                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                                       double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                                       int8_t &EngineLoad, int8_t &EngineTorque) {
+  return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
+                           EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                           FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                           EngineLoad, EngineTorque);
 }
 inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
-                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
-                      double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
-                      int8_t &EngineLoad, int8_t &EngineTorque,
-                      tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2) {
-    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
-                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
-                      EngineLoad, EngineTorque,
-                      Status1, Status2);
+                                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                                       double &FuelRate, double &EngineHours, double &EngineCoolantPress, double &EngineFuelPress,
+                                       int8_t &EngineLoad, int8_t &EngineTorque,
+                                       tN2kEngineDiscreteStatus1 &Status1, tN2kEngineDiscreteStatus2 &Status2) {
+  return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
+                           EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                           FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                           EngineLoad, EngineTorque,
+                           Status1, Status2);
 }
 inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &EngineOilPress,
-                      double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
-                      double &FuelRate, double &EngineHours) {
-    double EngineCoolantPress, EngineFuelPress;
-    int8_t EngineLoad, EngineTorque;
-    tN2kEngineDiscreteStatus1 Status1;
-    tN2kEngineDiscreteStatus2 Status2;
-    return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
-                      EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
-                      FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
-                      EngineLoad, EngineTorque,Status1,Status2);
+                                       double &EngineOilTemp, double &EngineCoolantTemp, double &AltenatorVoltage,
+                                       double &FuelRate, double &EngineHours) {
+  double EngineCoolantPress, EngineFuelPress;
+  int8_t EngineLoad, EngineTorque;
+  tN2kEngineDiscreteStatus1 Status1;
+  tN2kEngineDiscreteStatus2 Status2;
+  return ParseN2kPGN127489(N2kMsg, EngineInstance, EngineOilPress,
+                           EngineOilTemp, EngineCoolantTemp, AltenatorVoltage,
+                           FuelRate, EngineHours,EngineCoolantPress, EngineFuelPress,
+                           EngineLoad, EngineTorque,Status1,Status2);
 }
 
 //*****************************************************************************
@@ -379,14 +379,14 @@ void SetN2kPGN127493(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmis
                      double OilPressure, double OilTemperature, unsigned char DiscreteStatus1=0);
 
 inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear,
-                     double OilPressure, double OilTemperature, unsigned char DiscreteStatus1=0) {
+                                         double OilPressure, double OilTemperature, unsigned char DiscreteStatus1=0) {
   SetN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
 }
 
 inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, tN2kTransmissionGear TransmissionGear,
-                     double OilPressure, double OilTemperature,
-                     bool flagCheck,       bool flagOverTemp,         bool flagLowOilPressure=false,         bool flagLowOilLevel=false,
-                     bool flagSailDrive=false) {
+                                         double OilPressure, double OilTemperature,
+                                         bool flagCheck,       bool flagOverTemp,         bool flagLowOilPressure=false,         bool flagLowOilLevel=false,
+                                         bool flagSailDrive=false) {
   unsigned char DiscreteStatus1=0;
 
   if (flagCheck) DiscreteStatus1          |= BIT(0);
@@ -398,24 +398,24 @@ inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineIn
 }
 
 bool ParseN2kPGN127493(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear,
-                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1);
+                       double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1);
 inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear,
-                     double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1) {
+                                           double &OilPressure, double &OilTemperature, unsigned char &DiscreteStatus1) {
   return ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
 }
 
 inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, tN2kTransmissionGear &TransmissionGear,
-                     double &OilPressure, double &OilTemperature,
-                     bool &flagCheck,       bool &flagOverTemp,         bool &flagLowOilPressure,         bool &flagLowOilLevel,
-                     bool &flagSailDrive) {
+                                           double &OilPressure, double &OilTemperature,
+                                           bool &flagCheck,       bool &flagOverTemp,         bool &flagLowOilPressure,         bool &flagLowOilLevel,
+                                           bool &flagSailDrive) {
   unsigned char DiscreteStatus1;
   bool ret=ParseN2kPGN127493(N2kMsg, EngineInstance, TransmissionGear, OilPressure, OilTemperature, DiscreteStatus1);
   if (ret) {
-    flagCheck          = ((DiscreteStatus1 & BIT(0))!=0);
-    flagOverTemp       = ((DiscreteStatus1 & BIT(1))!=0);
-    flagLowOilPressure = ((DiscreteStatus1 & BIT(2))!=0);
-    flagLowOilLevel    = ((DiscreteStatus1 & BIT(3))!=0);
-    flagSailDrive      = ((DiscreteStatus1 & BIT(4))!=0);
+      flagCheck          = ((DiscreteStatus1 & BIT(0))!=0);
+      flagOverTemp       = ((DiscreteStatus1 & BIT(1))!=0);
+      flagLowOilPressure = ((DiscreteStatus1 & BIT(2))!=0);
+      flagLowOilLevel    = ((DiscreteStatus1 & BIT(3))!=0);
+      flagSailDrive      = ((DiscreteStatus1 & BIT(4))!=0);
   }
   return ret;
 }
@@ -435,17 +435,17 @@ void SetN2kPGN127497(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripF
                      double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA);
 
 inline void SetN2kEngineTripParameters(tN2kMsg &N2kMsg, unsigned char EngineInstance, double TripFuelUsed,
-                     double FuelRateAverage,
-                     double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA) {
+                                       double FuelRateAverage,
+                                       double FuelRateEconomy=N2kDoubleNA, double InstantaneousFuelEconomy=N2kDoubleNA) {
   SetN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy,InstantaneousFuelEconomy);
 }
 
 bool ParseN2kPGN127497(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
-                     double &FuelRateAverage,
-                     double &FuelRateEconomy, double &InstantaneousFuelEconomy);
+                       double &FuelRateAverage,
+                       double &FuelRateEconomy, double &InstantaneousFuelEconomy);
 inline bool ParseN2kEngineTripParameters(const tN2kMsg &N2kMsg, unsigned char &EngineInstance, double &TripFuelUsed,
-                     double &FuelRateAverage,
-                     double &FuelRateEconomy, double &InstantaneousFuelEconomy) {
+                                         double &FuelRateAverage,
+                                         double &FuelRateEconomy, double &InstantaneousFuelEconomy) {
   return ParseN2kPGN127497(N2kMsg,EngineInstance,TripFuelUsed,FuelRateAverage,FuelRateEconomy, InstantaneousFuelEconomy);
 }
 
@@ -471,48 +471,48 @@ void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStat
 void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus);
 
 inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance, tN2kBinaryStatus BankStatus) {
-	SetN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+  SetN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
 }
 
 //*****************************************************************************
 // Binary status report
 void SetN2kPGN127501(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
-                      ,tN2kOnOff Status1
-                      ,tN2kOnOff Status2=N2kOnOff_Unavailable
-                      ,tN2kOnOff Status3=N2kOnOff_Unavailable
-                      ,tN2kOnOff Status4=N2kOnOff_Unavailable
-                    );
+                     ,tN2kOnOff Status1
+                     ,tN2kOnOff Status2=N2kOnOff_Unavailable
+                     ,tN2kOnOff Status3=N2kOnOff_Unavailable
+                     ,tN2kOnOff Status4=N2kOnOff_Unavailable
+);
 
 inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
-                      ,tN2kOnOff Status1
-                      ,tN2kOnOff Status2=N2kOnOff_Unavailable
-                      ,tN2kOnOff Status3=N2kOnOff_Unavailable
-                      ,tN2kOnOff Status4=N2kOnOff_Unavailable
-					) {
+                               ,tN2kOnOff Status1
+                               ,tN2kOnOff Status2=N2kOnOff_Unavailable
+                               ,tN2kOnOff Status3=N2kOnOff_Unavailable
+                               ,tN2kOnOff Status4=N2kOnOff_Unavailable
+) {
   SetN2kPGN127501(N2kMsg, DeviceBankInstance,Status1,Status2,Status3,Status4);
 }
 
 // Parse four first status of binary status report.
 bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
-                      ,tN2kOnOff &Status1
-                      ,tN2kOnOff &Status2
-                      ,tN2kOnOff &Status3
-                      ,tN2kOnOff &Status4
-                    );
+                       ,tN2kOnOff &Status1
+                       ,tN2kOnOff &Status2
+                       ,tN2kOnOff &Status3
+                       ,tN2kOnOff &Status4
+);
 inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance
-                      ,tN2kOnOff &Status1
-                      ,tN2kOnOff &Status2
-                      ,tN2kOnOff &Status3
-                      ,tN2kOnOff &Status4
-                    ) {
- return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,Status1,Status2,Status3,Status4);
+                                 ,tN2kOnOff &Status1
+                                 ,tN2kOnOff &Status2
+                                 ,tN2kOnOff &Status3
+                                 ,tN2kOnOff &Status4
+) {
+  return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,Status1,Status2,Status3,Status4);
 }
 
 // Parse bank status of binary status report. Use N2kGetBinaryStatus to read specific status
 bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus);
 
 inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance, tN2kBinaryStatus &BankStatus) {
- return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
+  return ParseN2kPGN127501(N2kMsg,DeviceBankInstance,BankStatus);
 }
 
 //*****************************************************************************
@@ -559,15 +559,15 @@ void SetN2kPGN127506(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstanc
                      unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage=N2kDoubleNA, double Capacity=N2kDoubleNA);
 
 inline void SetN2kDCStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCInstance, tN2kDCType DCType,
-                     unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage=N2kDoubleNA, double Capacity=N2kDoubleNA) {
+                           unsigned char StateOfCharge, unsigned char StateOfHealth, double TimeRemaining, double RippleVoltage=N2kDoubleNA, double Capacity=N2kDoubleNA) {
   SetN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage,Capacity);
 }
 
 bool ParseN2kPGN127506(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
-                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity);
+                       unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity);
 
 inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &DCInstance, tN2kDCType &DCType,
-                     unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity) {
+                             unsigned char &StateOfCharge, unsigned char &StateOfHealth, double &TimeRemaining, double &RippleVoltage, double &Capacity) {
   return ParseN2kPGN127506(N2kMsg,SID,DCInstance,DCType,StateOfCharge,StateOfHealth,TimeRemaining,RippleVoltage, Capacity);
 }
 
@@ -587,18 +587,18 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
                      tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA);
 
 inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
-                     tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
-                     tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
- SetN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+                                tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+                                tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
+  SetN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
 }
 
 bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
-                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
-                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining);
+                       tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                       tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining);
 inline bool ParseN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
-                     tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
-                     tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
- return ParseN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
+                                  tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
+                                  tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
+  return ParseN2kPGN127507(N2kMsg, Instance,BatteryInstance,ChargeState,ChargerMode,Enabled,EqualizationPending,EqualizationTimeRemaining);
 }
 
 //*****************************************************************************
@@ -613,14 +613,14 @@ void SetN2kPGN127508(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double Batt
                      double BatteryTemperature=N2kDoubleNA, unsigned char SID=1);
 
 inline void SetN2kDCBatStatus(tN2kMsg &N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=N2kDoubleNA,
-                     double BatteryTemperature=N2kDoubleNA, unsigned char SID=1) {
+                              double BatteryTemperature=N2kDoubleNA, unsigned char SID=1) {
   SetN2kPGN127508(N2kMsg,BatteryInstance,BatteryVoltage,BatteryCurrent,BatteryTemperature,SID);
 }
 
 bool ParseN2kPGN127508(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
-                     double &BatteryTemperature, unsigned char &SID);
+                       double &BatteryTemperature, unsigned char &SID);
 inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryInstance, double &BatteryVoltage, double &BatteryCurrent,
-                     double &BatteryTemperature, unsigned char &SID) {
+                                double &BatteryTemperature, unsigned char &SID) {
   return ParseN2kPGN127508(N2kMsg, BatteryInstance, BatteryVoltage, BatteryCurrent, BatteryTemperature, SID);
 }
 
@@ -642,25 +642,25 @@ inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryIns
 //  - ChargeEfficiencyFactor Charge efficiency factor
 void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
                      tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
-				double PeukertExponent, int8_t ChargeEfficiencyFactor);
+                     double PeukertExponent, int8_t ChargeEfficiencyFactor);
 
 inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
-                     tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
-				double PeukertExponent, int8_t ChargeEfficiencyFactor) {
-   SetN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
-				PeukertExponent,ChargeEfficiencyFactor);
+                          tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
+                          double PeukertExponent, int8_t ChargeEfficiencyFactor) {
+  SetN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
+                  PeukertExponent,ChargeEfficiencyFactor);
 }
 
 bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
-                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
-				double &PeukertExponent, int8_t &ChargeEfficiencyFactor);
+                       tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
+                       double &PeukertExponent, int8_t &ChargeEfficiencyFactor);
 
 
 inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBatType &BatType, tN2kBatEqSupport &SupportsEqual,
-                     tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
-				double &PeukertExponent, int8_t &ChargeEfficiencyFactor) {
-	return ParseN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
-				PeukertExponent,ChargeEfficiencyFactor);
+                            tN2kBatNomVolt &BatNominalVoltage, tN2kBatChem &BatChemistry, double &BatCapacity, int8_t &BatTemperatureCoefficient,
+                            double &PeukertExponent, int8_t &ChargeEfficiencyFactor) {
+  return ParseN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
+                           PeukertExponent,ChargeEfficiencyFactor);
 }
 
 //*****************************************************************************
@@ -771,35 +771,35 @@ inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
 // -- WindlassControlEvents (optional) - see tN2kWindlassControlEvents
 
 void SetN2kPGN128776(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  tN2kWindlassDirectionControl WindlassDirectionControl,
-  unsigned char SpeedControl,
-  tN2kSpeedType SpeedControlType = N2kDD488_DataNotAvailable,
-  tN2kGenericStatusPair AnchorDockingControl = N2kDD002_Unavailable,
-  tN2kGenericStatusPair PowerEnable = N2kDD002_Unavailable,
-  tN2kGenericStatusPair MechanicalLock = N2kDD002_Unavailable,
-  tN2kGenericStatusPair DeckAndAnchorWash = N2kDD002_Unavailable,
-  tN2kGenericStatusPair AnchorLight = N2kDD002_Unavailable,
-  double CommandTimeout = 0.4,
-  const tN2kWindlassControlEvents &WindlassControlEvents = tN2kWindlassControlEvents()
+    tN2kMsg &N2kMsg,
+    unsigned char SID,
+    unsigned char WindlassIdentifier,
+    tN2kWindlassDirectionControl WindlassDirectionControl,
+    unsigned char SpeedControl,
+    tN2kSpeedType SpeedControlType = N2kDD488_DataNotAvailable,
+    tN2kGenericStatusPair AnchorDockingControl = N2kDD002_Unavailable,
+    tN2kGenericStatusPair PowerEnable = N2kDD002_Unavailable,
+    tN2kGenericStatusPair MechanicalLock = N2kDD002_Unavailable,
+    tN2kGenericStatusPair DeckAndAnchorWash = N2kDD002_Unavailable,
+    tN2kGenericStatusPair AnchorLight = N2kDD002_Unavailable,
+    double CommandTimeout = 0.4,
+    const tN2kWindlassControlEvents &WindlassControlEvents = tN2kWindlassControlEvents()
 );
 
 bool ParseN2kPGN128776(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  tN2kWindlassDirectionControl &WindlassDirectionControl,
-  unsigned char &SpeedControl,
-  tN2kSpeedType &SpeedControlType,
-  tN2kGenericStatusPair &AnchorDockingControl,
-  tN2kGenericStatusPair &PowerEnable,
-  tN2kGenericStatusPair &MechanicalLock,
-  tN2kGenericStatusPair &DeckAndAnchorWash,
-  tN2kGenericStatusPair &AnchorLight,
-  double &CommandTimeout,
-  tN2kWindlassControlEvents &WindlassControlEvents
+    const tN2kMsg &N2kMsg,
+    unsigned char &SID,
+    unsigned char &WindlassIdentifier,
+    tN2kWindlassDirectionControl &WindlassDirectionControl,
+    unsigned char &SpeedControl,
+    tN2kSpeedType &SpeedControlType,
+    tN2kGenericStatusPair &AnchorDockingControl,
+    tN2kGenericStatusPair &PowerEnable,
+    tN2kGenericStatusPair &MechanicalLock,
+    tN2kGenericStatusPair &DeckAndAnchorWash,
+    tN2kGenericStatusPair &AnchorLight,
+    double &CommandTimeout,
+    tN2kWindlassControlEvents &WindlassControlEvents
 );
 
 //*****************************************************************************
@@ -816,27 +816,27 @@ bool ParseN2kPGN128776(
 // -- WindlassOperatingEvents (optional) -- see tN2kWindlassOperatingEvents
 
 void SetN2kPGN128777(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  double RodeCounterValue,
-  double WindlassLineSpeed = N2kDoubleNA,
-  tN2kWindlassMotionStates WindlassMotionStatus = N2kDD480_Unavailable,
-  tN2kRodeTypeStates RodeTypeStatus = N2kDD481_Unavailable,
-  tN2kDD482 AnchorDockingStatus = N2kDD482_DataNotAvailable,
-  const tN2kWindlassOperatingEvents &WindlassOperatingEvents = tN2kWindlassOperatingEvents()
+    tN2kMsg &N2kMsg,
+    unsigned char SID,
+    unsigned char WindlassIdentifier,
+    double RodeCounterValue,
+    double WindlassLineSpeed = N2kDoubleNA,
+    tN2kWindlassMotionStates WindlassMotionStatus = N2kDD480_Unavailable,
+    tN2kRodeTypeStates RodeTypeStatus = N2kDD481_Unavailable,
+    tN2kDD482 AnchorDockingStatus = N2kDD482_DataNotAvailable,
+    const tN2kWindlassOperatingEvents &WindlassOperatingEvents = tN2kWindlassOperatingEvents()
 );
 
 bool ParseN2kPGN128777(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  double &RodeCounterValue,
-  double &WindlassLineSpeed,
-  tN2kWindlassMotionStates &WindlassMotionStatus,
-  tN2kRodeTypeStates &RodeTypeStatus,
-  tN2kAnchorDockingStates &AnchorDockingStatus,
-  tN2kWindlassOperatingEvents &WindlassOperatingEvents
+    const tN2kMsg &N2kMsg,
+    unsigned char &SID,
+    unsigned char &WindlassIdentifier,
+    double &RodeCounterValue,
+    double &WindlassLineSpeed,
+    tN2kWindlassMotionStates &WindlassMotionStatus,
+    tN2kRodeTypeStates &RodeTypeStatus,
+    tN2kAnchorDockingStates &AnchorDockingStatus,
+    tN2kWindlassOperatingEvents &WindlassOperatingEvents
 );
 
 //*****************************************************************************
@@ -851,23 +851,23 @@ bool ParseN2kPGN128777(
 // -- WindlassMonitoringEvents (optional) - see tN2kWindlassMonitoringEvents
 
 void SetN2kPGN128778(
-  tN2kMsg &N2kMsg,
-  unsigned char SID,
-  unsigned char WindlassIdentifier,
-  double TotalMotorTime,
-  double ControllerVoltage = N2kDoubleNA,
-  double MotorCurrent = N2kDoubleNA,
-  const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents()
+    tN2kMsg &N2kMsg,
+    unsigned char SID,
+    unsigned char WindlassIdentifier,
+    double TotalMotorTime,
+    double ControllerVoltage = N2kDoubleNA,
+    double MotorCurrent = N2kDoubleNA,
+    const tN2kWindlassMonitoringEvents &WindlassMonitoringEvents = tN2kWindlassMonitoringEvents()
 );
 
 bool ParseN2kPGN128778(
-  const tN2kMsg &N2kMsg,
-  unsigned char &SID,
-  unsigned char &WindlassIdentifier,
-  double &TotalMotorTime,
-  double &ControllerVoltage,
-  double &MotorCurrent,
-  tN2kWindlassMonitoringEvents &WindlassMonitoringEvents
+    const tN2kMsg &N2kMsg,
+    unsigned char &SID,
+    unsigned char &WindlassIdentifier,
+    double &TotalMotorTime,
+    double &ControllerVoltage,
+    double &MotorCurrent,
+    tN2kWindlassMonitoringEvents &WindlassMonitoringEvents
 );
 
 //*****************************************************************************
@@ -885,7 +885,7 @@ inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude
 
 bool ParseN2kPGN129025(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude);
 inline bool ParseN2kPositionRapid(const tN2kMsg &N2kMsg, double &Latitude, double &Longitude) {
-	return ParseN2kPGN129025(N2kMsg, Latitude, Longitude);
+  return ParseN2kPGN129025(N2kMsg, Latitude, Longitude);
 }
 //*****************************************************************************
 // COG SOG rapid
@@ -929,15 +929,15 @@ void SetN2kPGN129029(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970,
                      unsigned char nSatellites, double HDOP, double PDOP=0, double GeoidalSeparation=0,
                      unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, uint16_t ReferenceSationID=0,
                      double AgeOfCorrection=0
-                     );
+);
 
 inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight,
-                     double Latitude, double Longitude, double Altitude,
-                     tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
-                     unsigned char nSatellites, double HDOP, double PDOP=0, double GeoidalSeparation=0,
-                     unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, uint16_t ReferenceSationID=0,
-                     double AgeOfCorrection=0
-                     ) {
+                       double Latitude, double Longitude, double Altitude,
+                       tN2kGNSStype GNSStype, tN2kGNSSmethod GNSSmethod,
+                       unsigned char nSatellites, double HDOP, double PDOP=0, double GeoidalSeparation=0,
+                       unsigned char nReferenceStations=0, tN2kGNSStype ReferenceStationType=N2kGNSSt_GPS, uint16_t ReferenceSationID=0,
+                       double AgeOfCorrection=0
+) {
   SetN2kPGN129029(N2kMsg,SID,DaysSince1970,SecondsSinceMidnight,
                   Latitude,Longitude,Altitude,
                   GNSStype,GNSSmethod,
@@ -947,26 +947,26 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince197
 }
 
 bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight,
-                     double &Latitude, double &Longitude, double &Altitude,
-                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
-                     unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
-                     unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
-                     double &AgeOfCorrection
-                     );
+                       double &Latitude, double &Longitude, double &Altitude,
+                       tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                       unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                       unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                       double &AgeOfCorrection
+);
 inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &DaysSince1970, double &SecondsSinceMidnight,
-                     double &Latitude, double &Longitude, double &Altitude,
-                     tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
-                     unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
-                     unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
-                     double &AgeOfCorrection
-                     ) {
+                         double &Latitude, double &Longitude, double &Altitude,
+                         tN2kGNSStype &GNSStype, tN2kGNSSmethod &GNSSmethod,
+                         unsigned char &nSatellites, double &HDOP, double &PDOP, double &GeoidalSeparation,
+                         unsigned char &nReferenceStations, tN2kGNSStype &ReferenceStationType, uint16_t &ReferenceSationID,
+                         double &AgeOfCorrection
+) {
   return ParseN2kPGN129029(N2kMsg, SID, DaysSince1970, SecondsSinceMidnight,
-                     Latitude, Longitude, Altitude,
-                     GNSStype, GNSSmethod,
-                     nSatellites, HDOP, PDOP, GeoidalSeparation,
-                     nReferenceStations, ReferenceStationType, ReferenceSationID,
-                     AgeOfCorrection
-                     );
+                           Latitude, Longitude, Altitude,
+                           GNSStype, GNSSmethod,
+                           nSatellites, HDOP, PDOP, GeoidalSeparation,
+                           nReferenceStations, ReferenceStationType, ReferenceSationID,
+                           AgeOfCorrection
+  );
 }
 
 //*****************************************************************************
@@ -993,18 +993,20 @@ inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
-                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus);
+                     bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus,
+                     tN2kAISTranceiverInfo AISInfo = N2kaisti_Reserved);
 
 inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, double Latitude, double Longitude,
-                        bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus) {
-  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+                                    bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, double Heading, double ROT, tN2kAISNavStatus NavStatus,
+                                    tN2kAISTranceiverInfo AISInfo = N2kaisti_Reserved) {
+  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus, AISInfo);
 }
 
 bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus);
+                       bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus);
 
 inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus) {
+                                      bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus) {
   return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
 }
 
@@ -1013,29 +1015,31 @@ inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
 // Input:
 //  - N2kMsg                NMEA2000 message to decode
 void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State);
+                     double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                     uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                     bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State,
+                     tN2kAISTranceiverInfo AISInfo = N2kaisti_Reserved);
 
 inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State) {
+                                    double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                                    uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+                                    bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State,
+                                    tN2kAISTranceiverInfo AISInfo = N2kaisti_Reserved) {
   SetN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds,
-                    COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+                  COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State, AISInfo);
 }
 
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State);
+                       double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                       uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                       bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State);
 
 inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
+                                      double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                                      uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+                                      bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
   return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
-                            RAIM, Seconds, COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+                           RAIM, Seconds, COG, SOG, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
 //*****************************************************************************
@@ -1051,7 +1055,7 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
 bool ParseN2kPGN129283(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE);
 
 inline bool ParseN2kXTE(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& XTEMode, bool& NavigationTerminated, double& XTE) {
-   return ParseN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
+  return ParseN2kPGN129283(N2kMsg, SID, XTEMode, NavigationTerminated, XTE);
 }
 
 //*****************************************************************************
@@ -1059,37 +1063,37 @@ inline bool ParseN2kXTE(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& 
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129284(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
-                      bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
-                      double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
-                      uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber,
-                      double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity);
+                     bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
+                     double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                     uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber,
+                     double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity);
 
 inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double DistanceToWaypoint, tN2kHeadingReference BearingReference,
-                      bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
-                      double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
-                      uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber,
-                      double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
+                                 bool PerpendicularCrossed, bool ArrivalCircleEntered, tN2kDistanceCalculationType CalculationType,
+                                 double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint,
+                                 uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber,
+                                 double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity) {
   SetN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference,
-                      PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
-                      ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
-                      OriginWaypointNumber, DestinationWaypointNumber,
-                      DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
+                  PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
+                  ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
+                  OriginWaypointNumber, DestinationWaypointNumber,
+                  DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
 }
 
 bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
-                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
-                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
-                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
-                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity);
+                       bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                       double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                       uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                       double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity);
 
 inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, double& DistanceToWaypoint, tN2kHeadingReference& BearingReference,
-                      bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
-                      double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
-                      uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
-                      double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
-   return ParseN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference, PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
-                            ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
-                            OriginWaypointNumber, DestinationWaypointNumber, DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
+                                   bool& PerpendicularCrossed, bool& ArrivalCircleEntered, tN2kDistanceCalculationType& CalculationType,
+                                   double& ETATime, int16_t& ETADate, double& BearingOriginToDestinationWaypoint, double& BearingPositionToDestinationWaypoint,
+                                   uint8_t& OriginWaypointNumber, uint8_t& DestinationWaypointNumber,
+                                   double& DestinationLatitude, double& DestinationLongitude, double& WaypointClosingVelocity) {
+  return ParseN2kPGN129284(N2kMsg, SID, DistanceToWaypoint, BearingReference, PerpendicularCrossed, ArrivalCircleEntered, CalculationType,
+                           ETATime, ETADate, BearingOriginToDestinationWaypoint, BearingPositionToDestinationWaypoint,
+                           OriginWaypointNumber, DestinationWaypointNumber, DestinationLatitude, DestinationLongitude, WaypointClosingVelocity);
 }
 
 //*****************************************************************************
@@ -1106,7 +1110,7 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-                        bool NavDirection, bool SupplementaryData, char* RouteName);
+                     bool NavDirection, bool SupplementaryData, char* RouteName);
 
 bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
 
@@ -1128,16 +1132,16 @@ void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode Desired
 inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode DesiredMode, tN2kGNSSDOPmode ActualMode,
                               double HDOP, double VDOP, double TDOP)
 {
-    SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+  SetN2kPGN129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
 }
 
 bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
                        double& HDOP, double& VDOP, double& TDOP);
 
 inline bool ParseN2kGNSSDOPData(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmode& DesiredMode, tN2kGNSSDOPmode& ActualMode,
-                         double& HDOP, double& VDOP, double& TDOP)
+                                double& HDOP, double& VDOP, double& TDOP)
 {
-    return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
+  return ParseN2kPgn129539(N2kMsg, SID, DesiredMode, ActualMode, HDOP, VDOP, TDOP);
 }
 
 
@@ -1226,33 +1230,33 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
-                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo);
+                     uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
+                     double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                     double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                     tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo);
 inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
-                        tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo) {
+                                  uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
+                                  double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+                                  double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                                  tN2kAISDTE DTE, tN2kAISTranceiverInfo AISinfo) {
   SetN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
                   Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
-                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo);
+                       uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                       double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                       double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                       tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo);
 
 inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t & IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
-                        tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo) {
+                                    uint32_t & IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                                    double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+                                    double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                                    tN2kAISDTE &DTE, tN2kAISTranceiverInfo &AISinfo) {
   return ParseN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
-                          Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion,
-                          GNSStype, DTE, AISinfo);
+                           Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion,
+                           GNSStype, DTE, AISinfo);
 }
 
 //*****************************************************************************
@@ -1264,10 +1268,12 @@ inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, t
 //  - Name                  Vessel name
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name);
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name,
+                     tN2kAISTranceiverInfo AISInfo=N2kaisti_Reserved);
 
-inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name) {
-  SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
+inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name,
+                                       tN2kAISTranceiverInfo AISInfo=N2kaisti_Reserved) {
+  SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name, AISInfo);
 }
 
 bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name);
@@ -1286,25 +1292,27 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
-                      double PosRefStbd, double PosRefBow, uint32_t MothershipID);
+                     uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
+                     double PosRefStbd, double PosRefBow, uint32_t MothershipID,
+                     tN2kAISTranceiverInfo AISInfo=N2kaisti_Reserved);
 
 inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
-                      double PosRefStbd, double PosRefBow, uint32_t MothershipID) {
+                                       uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
+                                       double PosRefStbd, double PosRefBow, uint32_t MothershipID,
+                                       tN2kAISTranceiverInfo AISInfo=N2kaisti_Reserved) {
   SetN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign, Length, Beam,
-                  PosRefStbd, PosRefBow, MothershipID);
+                  PosRefStbd, PosRefBow, MothershipID, AISInfo);
 }
 
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
-                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
+                       uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
 
 inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
-                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
+                                         uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                                         double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
   return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign,
-                                Length, Beam, PosRefStbd, PosRefBow, MothershipID);
+                           Length, Beam, PosRefStbd, PosRefBow, MothershipID);
 }
 
 //*****************************************************************************
@@ -1367,14 +1375,14 @@ void SetN2kPGN130310(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature
                      double OutsideAmbientAirTemperature=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
 
 inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, double WaterTemperature,
-                     double OutsideAmbientAirTemperature=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
+                                                 double OutsideAmbientAirTemperature=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
   SetN2kPGN130310(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
 }
 
 bool ParseN2kPGN130310(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
-                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure);
+                       double &OutsideAmbientAirTemperature, double &AtmosphericPressure);
 inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, double &WaterTemperature,
-                     double &OutsideAmbientAirTemperature, double &AtmosphericPressure) {
+                                                   double &OutsideAmbientAirTemperature, double &AtmosphericPressure) {
   return ParseN2kPGN130310(N2kMsg, SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure);
 }
 
@@ -1396,14 +1404,14 @@ void SetN2kPGN130311(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSour
                      tN2kHumiditySource HumiditySource=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA);
 
 inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN2kTempSource TempSource, double Temperature,
-                     tN2kHumiditySource HumiditySource=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
+                                          tN2kHumiditySource HumiditySource=N2khs_Undef, double Humidity=N2kDoubleNA, double AtmosphericPressure=N2kDoubleNA) {
   SetN2kPGN130311(N2kMsg,SID,TempSource,Temperature,HumiditySource,Humidity,AtmosphericPressure);
 }
 
 bool ParseN2kPGN130311(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempSource, double &Temperature,
-                     tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure);
+                       tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure);
 inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kTempSource &TempSource, double &Temperature,
-                     tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure) {
+                                            tN2kHumiditySource &HumiditySource, double &Humidity, double &AtmosphericPressure) {
   return ParseN2kPGN130311(N2kMsg,SID,TempSource,Temperature,HumiditySource,Humidity,AtmosphericPressure);
 }
 
@@ -1424,14 +1432,14 @@ void SetN2kPGN130312(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInsta
                      double ActualTemperature, double SetTemperature=N2kDoubleNA);
 
 inline void SetN2kTemperature(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=N2kDoubleNA) {
+                              double ActualTemperature, double SetTemperature=N2kDoubleNA) {
   SetN2kPGN130312(N2kMsg,SID,TempInstance,TempSource,ActualTemperature,SetTemperature);
 }
 
 bool ParseN2kPGN130312(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
-                     double &ActualTemperature, double &SetTemperature);
+                       double &ActualTemperature, double &SetTemperature);
 inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
-                     double &ActualTemperature, double &SetTemperature) {
+                                double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130312(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
 
@@ -1448,7 +1456,7 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
 void SetN2kPGN130313(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
                      tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA);
 inline void SetN2kHumidity(tN2kMsg &N2kMsg, unsigned char SID, unsigned char HumidityInstance,
-                     tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA) {
+                           tN2kHumiditySource HumiditySource, double ActualHumidity, double SetHumidity=N2kDoubleNA) {
   SetN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity,SetHumidity);
 }
 
@@ -1456,18 +1464,18 @@ bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
                        tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity);
 
 inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity) {
+                             tN2kHumiditySource &HumiditySource, double &ActualHumidity, double &SetHumidity) {
   return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
 }
 
 inline bool ParseN2kPGN130313(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+                              tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
   double SetHumidity;
   return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity, SetHumidity);
 }
 
 inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &HumidityInstance,
-                       tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
+                             tN2kHumiditySource &HumiditySource, double &ActualHumidity) {
   return ParseN2kPGN130313(N2kMsg, SID, HumidityInstance, HumiditySource, ActualHumidity);
 }
 
@@ -1490,7 +1498,7 @@ inline void SetN2kPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char Pre
 bool ParseN2kPGN130314(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
                        tN2kPressureSource &PressureSource, double &Pressure);
 inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &PressureInstance,
-                       tN2kPressureSource &PressureSource, double &Pressure) {
+                             tN2kPressureSource &PressureSource, double &Pressure) {
   return ParseN2kPGN130314(N2kMsg, SID, PressureInstance, PressureSource, Pressure);
 }
 
@@ -1507,7 +1515,7 @@ inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
 void SetN2kPGN130315(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
                      tN2kPressureSource PressureSource, double SetPressure);
 inline void SetN2kSetPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char PressureInstance,
-                           tN2kPressureSource PressureSource, double SetPressure) {
+                              tN2kPressureSource PressureSource, double SetPressure) {
   SetN2kPGN130315(N2kMsg, SID, PressureInstance, PressureSource, SetPressure);
 }
 
@@ -1528,14 +1536,14 @@ void SetN2kPGN130316(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInsta
                      double ActualTemperature, double SetTemperature=N2kDoubleNA);
 
 inline void SetN2kTemperatureExt(tN2kMsg &N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource,
-                     double ActualTemperature, double SetTemperature=N2kDoubleNA) {
+                                 double ActualTemperature, double SetTemperature=N2kDoubleNA) {
   SetN2kPGN130316(N2kMsg,SID,TempInstance,TempSource,ActualTemperature,SetTemperature);
 }
 
 bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
-                     double &ActualTemperature, double &SetTemperature);
+                       double &ActualTemperature, double &SetTemperature);
 inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &TempInstance, tN2kTempSource &TempSource,
-                     double &ActualTemperature, double &SetTemperature) {
+                                   double &ActualTemperature, double &SetTemperature) {
   return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
 
@@ -1560,5 +1568,25 @@ bool ParseN2kPGN130576(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdT
 inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &StbdTrimTab) {
   return ParseN2kPGN130576(N2kMsg, PortTrimTab, StbdTrimTab);
 }
+
+//*****************************************************************************
+// AIS Aids to Navigation (AtoN) Report
+// This is a representation of AIS message 21 which is transmitted by shore
+// stations to place physical and virtual "buoys" onto chartplotters
+//
+
+void SetN2kPGN129041(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
+                     double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds,
+                     tN2kAtoNType type, const char *Name,
+                     double Length, double Beam, double PosRefStbd, double PosRefBow,
+                     bool OffPos, bool Virtual, bool AssignedMode, tN2kGNSStype GNSSType,
+                     tN2kAISTranceiverInfo AISinfo);
+
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+                       double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+                       uint8_t &Seconds, tN2kAtoNType &type, char *Name,
+                       double &Length, double &Beam, double &PosRefStbd, double &PosRefBow,
+                       bool &OffPos, bool &Virtual, bool &AssignedMode, tN2kGNSStype &GNSSType,
+                       tN2kAISTranceiverInfo &AISinfo);
 
 #endif
