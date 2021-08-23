@@ -431,11 +431,12 @@ protected:
     void HandleGroupFunction(const tN2kMsg &N2kMsg);
 #endif
     void StartAddressClaim(int iDev);
+    void StartAddressClaim();
     bool IsAddressClaimStarted(int iDev);
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
     void HandleCommandedAddress(uint64_t CommandedName, unsigned char NewAddress, int iDev);
     void HandleCommandedAddress(const tN2kMsg &N2kMsg);
-    void GetNextAddress(int DeviceIndex, bool RestartAtAnd=false);
+    void GetNextAddress(int DeviceIndex, bool RestartAtEnd=false);
     bool IsMySource(unsigned char Source);
     int FindSourceDeviceIndex(unsigned char Source);
     int GetSequenceCounter(unsigned long PGN, int iDev);
@@ -635,14 +636,20 @@ public:
     void SetForwardStream(N2kStream* _stream) { ForwardStream=_stream; }
 
     // You can call this. It will be called anyway automatically by ParseMessages();
+    // Note that after Open() you should start loop ParseMessages() without delays.
     bool Open();
+
+    // This is preliminary function for e.g. battery powered or devices, which may
+    // go to sleep or of the bus in any way. Function is under development.
+    void Restart();
 
     // Generate N2k message e.g. by using N2kMessages.h and simply send it to the bus.
     bool SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex=0);
 
     // Call this periodically to handle N2k messages. Note that even if you only send e.g.
     // temperature to the bus, you should call this so the code will automatically inform
-    // abot itselt to others.
+    // about itselt to others. Take care that your loop to call ParseMessages() does not have
+    // long delays. 
     void ParseMessages();
 
     // Set the message handler for incoming N2kMessages.

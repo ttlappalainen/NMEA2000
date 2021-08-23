@@ -84,6 +84,31 @@ support.
 
 
 == Changes ==
+23.08.2021
+
+- Added manufacturer bits to engine discrete status ( PGN 127489 )
+
+- Added data limitation handling to tN2kMsg. Now overflow values will be sent as overflow. E.g.
+  SetN2kTemperature(N2kMsg,0xff,0,N2kts_MainCabinTemperature,CToKelvin(800)); +
+  will send temperature as 0xfffe, which is NMEA2000 standard way to inform that value is out of range.
+  Library does not yet handle overflow on reading, but it is under construction.
+  
+- Fixed PGNs 126992, 128275, 129029 time reading to UDouble
+
+- Added function tNMEA2000::Restart(). This is preliminary and may change. Read more info on NMEA2000.h.
+
+- Modified tNMEA2000::RespondGroupFunction to allow user add own common group function handler with PGN=0.
+
+- Fixed tNMEA2000::HandleCommandedAddress which should be accepted only by BAM TP.
+
+- Added tN2kGroupFunctionHandler::ChangeTransmissionOrPriorityErrorCode
+
+- Fixed tN2kGroupFunctionHandlerForPGN126993::HandleRequest. System must not respond to pure 126208 request for 126993.
+  Also TransmissionInterval setting is limited to 1000 - 60000 ms.
+  
+- Modified debug messages.
+
+== Changes ==
 04.03.2021
 
 - Fix for engine discrete status 2.

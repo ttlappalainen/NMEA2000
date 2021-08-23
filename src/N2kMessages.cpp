@@ -46,7 +46,7 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
   SID=N2kMsg.GetByte(Index);
   TimeSource=(tN2kTimeSource)(N2kMsg.GetByte(Index) & 0x0f);
   SystemDate=N2kMsg.Get2ByteUInt(Index);
-  SystemTime=N2kMsg.Get4ByteDouble(0.0001,Index);
+  SystemTime=N2kMsg.Get4ByteUDouble(0.0001,Index);
 
   return true;
 }
@@ -659,7 +659,7 @@ bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &S
     int Index=0;
 
     DaysSince1970=N2kMsg.Get2ByteUInt(Index);
-    SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+    SecondsSinceMidnight=N2kMsg.Get4ByteUDouble(0.0001,Index);
     Log=N2kMsg.Get4ByteUDouble(1,Index);
     TripLog=N2kMsg.Get4ByteUDouble(1,Index);
 
@@ -919,7 +919,7 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
 
   SID=N2kMsg.GetByte(Index);
   DaysSince1970=N2kMsg.Get2ByteUInt(Index);
-  SecondsSinceMidnight=N2kMsg.Get4ByteDouble(0.0001,Index);
+  SecondsSinceMidnight=N2kMsg.Get4ByteUDouble(0.0001,Index);
   Latitude=N2kMsg.Get8ByteDouble(1e-16,Index);
   Longitude=N2kMsg.Get8ByteDouble(1e-16,Index);
   Altitude=N2kMsg.Get8ByteDouble(1e-6,Index);

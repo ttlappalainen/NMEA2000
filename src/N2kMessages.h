@@ -1093,7 +1093,7 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
 }
 
 //*****************************************************************************
-// Waypoint list
+// Route/WP information
 // Input:
 //  - Start                 The ID of the first waypoint
 //  - Database              Database ID

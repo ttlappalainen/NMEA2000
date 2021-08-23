@@ -504,12 +504,15 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, 
 // Heartbeat settings
 bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
                                uint32_t TransmissionInterval,
-                               uint16_t /*TransmissionIntervalOffset*/,
+                               uint16_t TransmissionIntervalOffset,
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
 	tN2kGroupFunctionTransmissionOrPriorityErrorCode pec = GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
-	if (TransmissionInterval > 1000 && TransmissionInterval < 120000) pec = N2kgfTPec_Acknowledge;
+	if ( TransmissionInterval >= 1000 && TransmissionInterval <= 60000 ) pec = N2kgfTPec_Acknowledge;
   if ( NumberOfParameterPairs==0 ) { // According to doc, there should not be any parameter pairs defined
+    if ( TransmissionInterval==0xffffffff && TransmissionIntervalOffset==0xffff ) {
+      return tN2kGroupFunctionHandler::HandleRequest(N2kMsg,TransmissionInterval,TransmissionIntervalOffset,NumberOfParameterPairs,iDev);
+    }
     if ( pec==N2kgfTPec_Acknowledge ) {
       pNMEA2000->SetHeartbeatInterval(TransmissionInterval,false,iDev);
       pNMEA2000->SendHeartbeat(iDev);

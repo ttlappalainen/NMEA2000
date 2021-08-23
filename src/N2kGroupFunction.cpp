@@ -396,6 +396,7 @@ void tN2kGroupFunctionHandler::SetStartAcknowledge(tN2kMsg &N2kMsg, unsigned cha
                                          tN2kGroupFunctionPGNErrorCode PGNErrorCode,
                                          tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode,
                                          uint8_t NumberOfParameterPairs) {
+  N2kMsg.Clear();
 	N2kMsg.SetPGN(126208L);
 	N2kMsg.Priority=3;
   N2kMsg.Destination=Destination;
@@ -412,6 +413,14 @@ void tN2kGroupFunctionHandler::ChangePNGErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunc
   int Index=ErrorcodeIndex;
   uint8_t ec=N2kMsg.GetByte(Index);
   ec = (ec & 0xf0) | PGNErrorCode;
+  N2kMsg.Data[ErrorcodeIndex]=ec;
+}
+
+//*****************************************************************************
+void tN2kGroupFunctionHandler::ChangeTransmissionOrPriorityErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode) {
+  int Index=ErrorcodeIndex;
+  uint8_t ec=N2kMsg.GetByte(Index);
+  ec = (ec & 0x0f) | (TransmissionOrPriorityErrorCode<<4);
   N2kMsg.Data[ErrorcodeIndex]=ec;
 }
 
