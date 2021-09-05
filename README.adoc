@@ -1,73 +1,110 @@
 = NMEA2000 library for C++ =
 
-Object oriented NMEA2000 library for Teensy, Arduino, MBED and Rasberry type Boards.
-These board types has been tested, but library may work also in other systems.
+Object oriented NMEA2000 library for Teensy, ESP, Arduino, MBED and Rasberry type Boards.
+These board types has been tested, but library can be used also in other systems by writing
+compatible CAN driver and wrapper for other hw specific functions.
 
 Library gives you easy way to make different kind of NMEA2000 bus devices like
-NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 converter,
-sensor (e.g. temperature, wind, engine) node.
+sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,
+NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.
 
-Library fulfills NMEA 2000 mandatory functions and behaviour, so it
-looks a bit complex inside. With default settings it requires about 23 kB rom
-and 3.3kB RAM in normal operation. So I prefer to use Teensy 3.2, 3.5, 3.6, 4.0, 4.1 or
-ESP32 board. Arduino Due board works fine, but is physically bigger and eats
-more power. Arduino Mega board is ok for simple projects.
-Arduino Uno board has too little memory for full
-functionality. See "Memory requirements" later.
+Library fulfills NMEA 2000 mandatory functions and behaviour. Devices using library can pass NMEA2000
+certification tests. Library has been used in several commercial certified products.
 
-If you are not sure what board would be best, I personally prefer Teensy boards. They are
-smaller size, more powerfull and uses less power than traditional Arduino Mega or Due boards. Also 
-Arduino Mega double is only 4 byte, while some NMEA2000 data uses 8 byte which means that with Mega you will
-loose accuracy.
+== Documents ==
 
-To use Teensy 4.0/4.1 boards internal CAN you need also 
-https://github.com/ttlappalainen/NMEA2000_Teensyx[NMEA2000_Teensyx] library. CAN library
-is included to the code so you do not need any extra CAN library with this. NMEA2000_Teensyx
+Please read document https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Connecting_hardware_to_NMEA2000.pdf
+before purchasing any hardware.
+
+For library there is document https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/NMEA2000_library_reference.pdf
+
+== Recommended hardware ==
+
+I prefer to use *Teensy 3.2, 3.5, 3.6, 4.0, 4.1* or *ESP32* board with either unisolated 
+*MCP2562* or isolated *ISO1050* tranceiver. Those boards are "very" powerfull, small and
+runs with low power. See more about hardware under <<Hardware setup>> below.
+
+With default settings library requires about *23 kB rom and 3.3 kB RAM* in normal operation. So you should
+have at least *8 kB RAM* in your chip. If you have Arduino Mega board, it is OK for testing and for small projects,
+but I do not prefer to buy one for new project. Arduino Due is OK, but is physically bigger and eats
+more power than Teensies or ESP32. If you have Arduino Uno or any board with less than 8 kB RAM, please read
+all issues and <<Memory requirements>> below and then forget it. If you anyway want to use it
+please do not set any issues, if it does not work or does unexpected crashes.
+
+== Hardware depended libraries ==
+
+Take care that you use libraries under my Github, when available! Others may not work right
+with NMEA2000!
+
+=== Teensy 4.0/4.1 boards with internal CAN ===
+ 
+- https://github.com/ttlappalainen/NMEA2000_Teensyx[NMEA2000_Teensyx] library.
+
+CAN library is included to the code so you do not need any extra CAN library with this. NMEA2000_Teensyx
 library will replace NMEA2000_teensy library in future. You can already start to use it with
 all Teensy boards by forcing it with define (see NMEA2000_CAN.h comment). For critical
 projects I prefer to use old library until this has been running under tests for a while.
  
-To use a Teensy 3.1/3.2 or 3.5/3.6 board internal CAN with a MCP2562 or MCP2551
-CAN-bus transeiver (or similar, see FlexCAN documentation), you will need the
-https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy] library contributed
-by (https://twitter.com/sarfata/[Thomas Sarlandie]) and the
-https://github.com/ttlappalainen/FlexCAN_Library[FlexCAN library]. FlexCan
-library is already included in
+=== Teensy 3.1/3.2 or 3.5/3.6 board with internal CAN ===
+
+- https://github.com/ttlappalainen/NMEA2000_teensy[NMEA2000_teensy] library.
+
+- https://github.com/ttlappalainen/FlexCAN_Library[FlexCAN] library.
+
+NMEA2000_teensy has been originally forked from https://github.com/sarfata/NMEA2000_teensy[NMEA2000_teensy] contributed
+by (https://twitter.com/sarfata/[Thomas Sarlandie])
+
+*Note* that FlexCan library is already included in
 https://www.pjrc.com/teensy/teensyduino.html[Teensyduino] extension. In order
 to use my fork, you have to remove FlexCAN library from `C:\Program Files
-(x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN`
+(x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN`. Default FlexCAN library does not
+work right with NMEA2000.
 
-To use ESP32 boards you need also https://github.com/ttlappalainen/NMEA2000_esp32[NMEA2000_esp32] library. ESP32
-CAN driver by Thomas Barth has been implemented inside NMEA2000_esp32
+=== ESP32 boards  with internal CAN ===
+
+- https://github.com/ttlappalainen/NMEA2000_esp32[NMEA2000_esp32] library.
+
+ESP32 CAN driver by Thomas Barth has been implemented inside NMEA2000_esp32
 so you do not need other drivers for that.
 
-To use Arduino Due board internal CAN you will also need 
-https://github.com/ttlappalainen/NMEA2000_due[NMEA2000_due] library
-and due_can library, which you can download from
-https://github.com/ttlappalainen/due_can
+=== Arduino Due board with internal CAN ===
 
-To use Arduino boards with MCP2515 CAN bus controller, you will also need
-https://github.com/ttlappalainen/NMEA2000_mcp[NMEA2000_mcp] library and mcp_can library. Use mcp_can library found on
-https://github.com/ttlappalainen/CAN_BUS_Shield, which is developed version of
-original mcp_can library. This allows also to use 8MHz clock and has been tested with
+- https://github.com/ttlappalainen/NMEA2000_due[NMEA2000_due] library
+
+- https://github.com/ttlappalainen/due_can[due_can] library
+
+=== Boards with MCP2515 CAN bus controller (e.g. Arduino Mega, ESP8266) ===
+
+- https://github.com/ttlappalainen/NMEA2000_mcp[NMEA2000_mcp] library.
+
+- https://github.com/ttlappalainen/CAN_BUS_Shield[mcp_can] library.
+
+You can use mcp_can with boards where you connect MCP2515 CAN bus controller with SPI. You can
+also use it as secondary CAN for e.g. Teensy 3.2 or ESP32.
+
+mcp_can library is developed version of original mcp_can library. 
+This allows also to use 8MHz clock and has been tested with
 Maple Mini.  mcp_can library can be originally found on
 https://github.com/Seeed-Studio/CAN_BUS_Shield, but check library status has all improvements
 been implemented to Seeed-Studio. At least 18.09.2017 it was up to date. 
 
-To use avr processors internal CAN you need also 
-https://github.com/thomasonw/NMEA2000_avr[NMEA2000_avr] library and
-avr_can library, which you can download from
-https://github.com/thomasonw/avr_can
+=== avr processors with internal CAN ===
 
-To use MBED boards you need also 
-https://github.com/thomasonw/NMEA2000_mbed[NMEA2000_mbed] library and other related
-libraries. See origin for MBED port on
-https://github.com/thomasonw/NMEA2000_mbed
+- https://github.com/thomasonw/NMEA2000_avr[NMEA2000_avr] library
 
-To use Raspberry boards you need also 
-https://github.com/ttlappalainen/NMEA2000_socketCAN[NMEA2000_socketCAN] library.
-NMEA2000_socketCAN has been originally forked from
-https://github.com/thomasonw/NMEA2000_socketCAN
+- https://github.com/thomasonw/avr_can[avr_can] library
+
+=== MBED boards ===
+
+- https://github.com/thomasonw/NMEA2000_mbed[NMEA2000_mbed] library
+
+- other related libraries. See origin for MBED port on https://github.com/thomasonw/NMEA2000_mbed
+
+=== Raspberry Pi ===
+ 
+- https://github.com/ttlappalainen/NMEA2000_socketCAN[NMEA2000_socketCAN] library.
+
+NMEA2000_socketCAN has been originally forked from https://github.com/thomasonw/NMEA2000_socketCAN
 
 == Thanks ==
 
@@ -82,6 +119,10 @@ project.
 I also thank for anybody who has extended library with new PGNs or processor
 support.
 
+== Changes ==
+05.09.2021
+
+- Documentation update.
 
 == Changes ==
 23.08.2021
@@ -108,7 +149,6 @@ support.
   
 - Modified debug messages.
 
-== Changes ==
 04.03.2021
 
 - Fix for engine discrete status 2.
@@ -821,12 +861,14 @@ setting:
 With those setting you can go down to appr. 19 kB ROM and 1.9 kB RAM. So for 2
 kB devices like Arduino Uno, there is not much for your own code.
 
+*Note!* By squeezing memory, library can not fullfill certification requirements anymore.
+
 == Hardware setup ==
 
 NMEA2000 is inherited from CAN. Many MCUs like Teensy >3.1, ESP32, Arduino Due has already
 CAN controller inside. If your MCU does not have CAN controller inside or you need second
 external CAN controller, you can use e.g. MCP2515 CAN controller, which is supported by
-library.
+library (mcp_can).
 
 For final connection to the bus you need CAN bus_transceiver chip. Devices on NMEA2000
 bus should be isolated to avoid ground loops. So if you take power from NMEA2000
