@@ -28,3 +28,12 @@ add_executable(SeasmartTests
 target_link_libraries(SeasmartTests catch)
 target_link_libraries(SeasmartTests nmea2000)
 add_test(Seasmart SeasmartTests)
+
+add_executable(N2kMessagesTests 
+  N2kMessagesTest.cpp
+  millis.cpp
+)
+
+target_link_libraries(N2kMessagesTests catch)
+target_link_libraries(N2kMessagesTests nmea2000)
+add_test(N2kMessages N2kMessagesTests)

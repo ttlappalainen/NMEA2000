@@ -69,7 +69,6 @@ void SetN2kPGN127233(tN2kMsg &N2kMsg,
       uint32_t MMSI,
       tN2kMOBEmitterBatteryStatus MOBEmitterBatteryStatus)
 {
-<<<<<<< HEAD
   N2kMsg.SetPGN(127233L);
   N2kMsg.Priority=3;
   N2kMsg.AddByte(SID);
@@ -168,13 +167,13 @@ void SetN2kPGN127237(tN2kMsg &N2kMsg,
   N2kMsg.Add2ByteUDouble(Track,0.0001);
   N2kMsg.Add2ByteUDouble(RudderLimit,0.0001);
   N2kMsg.Add2ByteUDouble(OffHeadingLimit,0.0001);
-  N2kMsg.Add2ByteDouble(RadiusOfTurnOrder,0.0001);
+  N2kMsg.Add2ByteDouble(RadiusOfTurnOrder,1);
   N2kMsg.Add2ByteDouble(RateOfTurnOrder,3.125e-5);
   N2kMsg.Add2ByteDouble(OffTrackLimit,1);
   N2kMsg.Add2ByteUDouble(VesselHeading,0.0001);
 }
 
-bool ParseN2kPGN127327(const tN2kMsg &N2kMsg,
+bool ParseN2kPGN127237(const tN2kMsg &N2kMsg,
       tN2kOnOff &RudderLimitExceeded,
       tN2kOnOff &OffHeadingLimitExceeded,
       tN2kOnOff &OffTrackLimitExceeded,
@@ -193,7 +192,7 @@ bool ParseN2kPGN127327(const tN2kMsg &N2kMsg,
       double &OffTrackLimit,
       double &VesselHeading) {
 
-  if (N2kMsg.PGN!=127327L) return false;
+  if (N2kMsg.PGN!=127237L) return false;
   int Index = 0;
   unsigned char v;
   v = N2kMsg.GetByte(Index);
@@ -204,172 +203,18 @@ bool ParseN2kPGN127327(const tN2kMsg &N2kMsg,
   v = N2kMsg.GetByte(Index);
   SteeringMode =             (tN2kSteeringMode)(v & 0x07);
   TurnMode =                 (tN2kTurnMode)((v >> 3) & 0x07);
-  HeadingReference =         (tN2kHeadingReference)((v >> 3) & 0x03);
+  HeadingReference =         (tN2kHeadingReference)((v >> 6) & 0x03);
   CommandedRudderDirection = (tN2kRudderDirectionOrder)((N2kMsg.GetByte(Index) >> 5) & 0x07);
   CommandedRudderAngle = N2kMsg.Get2ByteDouble(0.0001,Index);
   HeadingToSteerCourse = N2kMsg.Get2ByteUDouble(0.0001,Index);
   Track = N2kMsg.Get2ByteUDouble(0.0001,Index);
   RudderLimit = N2kMsg.Get2ByteUDouble(0.0001,Index);
   OffHeadingLimit = N2kMsg.Get2ByteUDouble(0.0001,Index);
-  RadiusOfTurnOrder = N2kMsg.Get2ByteDouble(0.0001,Index);
+  RadiusOfTurnOrder = N2kMsg.Get2ByteDouble(1,Index);
   RateOfTurnOrder = N2kMsg.Get2ByteDouble(3.125e-5,Index);
   OffTrackLimit = N2kMsg.Get2ByteDouble(1,Index);
   VesselHeading = N2kMsg.Get2ByteUDouble(0.0001,Index);
   return true;
-=======
-   N2kMsg.SetPGN(127233L);
-   N2kMsg.Priority=3;
-   N2kMsg.AddByte(SID);
-   N2kMsg.Add4ByteUInt(MobEmitterId);
-   N2kMsg.AddByte((MOBStatus & 0x07) | 0xf8);
-   N2kMsg.Add4ByteUDouble(ActivationTime,0.0001);
-   N2kMsg.AddByte((PositionSource & 0x07) | 0xf8);
-   N2kMsg.Add2ByteUInt(PositionDate);
-   N2kMsg.Add4ByteUDouble(PositionTime,0.0001);
-   N2kMsg.Add4ByteDouble(Latitude,1e-7);
-   N2kMsg.Add4ByteDouble(Longitude,1e-7);
-   N2kMsg.AddByte((COGReference & 0x03) | 0xfc);
-   N2kMsg.Add2ByteUDouble(COG,0.0001);
-   N2kMsg.Add2ByteUDouble(SOG,0.01);
-   N2kMsg.Add4ByteUInt(MMSI);
-   N2kMsg.AddByte((MOBEmitterBatteryStatus & 0x07) | 0xf8);
-}
-
-bool ParseN2kPGN127233(const tN2kMsg &N2kMsg,
-      unsigned char &SID,
-      uint32_t &MobEmitterId,
-      tN2kMOBStatus &MOBStatus,
-      double &ActivationTime,
-      tN2kMOBPositionSource &PositionSource,
-      uint16_t &PositionDate,
-      double &PositionTime,
-      double &Latitude,
-      double &Longitude,
-      tN2kHeadingReference &COGReference,
-      double &COG,
-      double &SOG,
-      uint32_t &MMSI,
-      tN2kMOBEmitterBatteryStatus &MOBEmitterBatteryStatus)
-{
-   if (N2kMsg.PGN!=127233L) return false;
-   int Index = 0;
-   SID = N2kMsg.GetByte(Index);
-   MobEmitterId = N2kMsg.Get4ByteUInt(Index);
-   MOBStatus = (tN2kMOBStatus)(N2kMsg.GetByte(Index) & 0x07);
-   ActivationTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
-   PositionSource = (tN2kMOBPositionSource)(N2kMsg.GetByte(Index) & 0x07);
-   PositionDate = N2kMsg.Get2ByteUInt(Index);
-   PositionTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
-   Latitude = N2kMsg.Get4ByteDouble(1e-7,Index);
-   Longitude = N2kMsg.Get4ByteDouble(1e-7,Index);
-   COGReference = (tN2kHeadingReference)(N2kMsg.GetByte(Index) & 0x03);
-   COG = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   SOG = N2kMsg.Get2ByteUDouble(0.01,Index);
-   MMSI = N2kMsg.Get4ByteUInt(Index);
-   MOBEmitterBatteryStatus = (tN2kMOBEmitterBatteryStatus)(N2kMsg.GetByte(Index) & 0x07);
-   return true;
-}
-
-
-//*****************************************************************************
-// Heading/Track control
-// Angles should be in radians
-void SetN2kPGN127237(tN2kMsg &N2kMsg,
-      tN2kOnOff RudderLimitExceeded,
-      tN2kOnOff OffHeadingLimitExceeded,
-      tN2kOnOff OffTrackLimitExceeded,
-      tN2kOnOff Override,
-      tN2kSteeringMode SteeringMode,
-      tN2kTurnMode TurnMode,
-      tN2kHeadingReference HeadingReference,
-      tN2kRudderDirectionOrder CommandedRudderDirection,
-      double CommandedRudderAngle,
-      double HeadingToSteerCourse,
-      double Track,
-      double RudderLimit,
-      double OffHeadingLimit,
-      double RadiusOfTurnOrder,
-      double RateOfTurnOrder,
-      double OffTrackLimit,
-      double VesselHeading) {
-
-   N2kMsg.SetPGN(127237L);
-   N2kMsg.Priority=2;
-   N2kMsg.AddByte(
-         (0x03 & RudderLimitExceeded)           |
-         (0x03 & OffHeadingLimitExceeded)  << 2 |
-         (0x03 & OffTrackLimitExceeded)    << 4 |
-         (0x03 & Override)                 << 6
-   );
-   N2kMsg.AddByte(
-         (0x07 & SteeringMode)                  |
-         (0x07 & TurnMode)                 << 3 |
-         (0x03 & HeadingReference)         << 6
-   );
-   N2kMsg.AddByte(
-         0x1f                                   |
-         (0x07 & CommandedRudderDirection) << 5
-   );
-   N2kMsg.Add2ByteDouble(CommandedRudderAngle,0.0001);
-   N2kMsg.Add2ByteUDouble(HeadingToSteerCourse,0.0001);
-   N2kMsg.Add2ByteUDouble(Track,0.0001);
-   N2kMsg.Add2ByteUDouble(RudderLimit,0.0001);
-   N2kMsg.Add2ByteUDouble(OffHeadingLimit,0.0001);
-   N2kMsg.Add2ByteDouble(RadiusOfTurnOrder,0.0001);
-   N2kMsg.Add2ByteDouble(RateOfTurnOrder,3.125e-5);
-   N2kMsg.Add2ByteDouble(OffTrackLimit,1);
-   N2kMsg.Add2ByteUDouble(VesselHeading,0.0001);
-}
-
-bool ParseN2kPGN127327(const tN2kMsg &N2kMsg,
-      tN2kOnOff &RudderLimitExceeded,
-      tN2kOnOff &OffHeadingLimitExceeded,
-      tN2kOnOff &OffTrackLimitExceeded,
-      tN2kOnOff &Override,
-      tN2kSteeringMode &SteeringMode,
-      tN2kTurnMode &TurnMode,
-      tN2kHeadingReference &HeadingReference,
-      tN2kRudderDirectionOrder &CommandedRudderDirection,
-      double &CommandedRudderAngle,
-      double &HeadingToSteerCourse,
-      double &Track,
-      double &RudderLimit,
-      double &OffHeadingLimit,
-      double &RadiusOfTurnOrder,
-      double &RateOfTurnOrder,
-      double &OffTrackLimit,
-      double &VesselHeading) {
-
-   if (N2kMsg.PGN!=127327L) return false;
-
-   int Index = 0;
-   unsigned char v;
-
-   v = N2kMsg.GetByte(Index);
-   RudderLimitExceeded =      (tN2kOnOff)(v & 0x03);
-   OffHeadingLimitExceeded =  (tN2kOnOff)((v >> 2) & 0x03);
-   OffTrackLimitExceeded =    (tN2kOnOff)((v >> 4) & 0x03);
-   Override =                 (tN2kOnOff)((v >> 6) & 0x03);
-
-   v = N2kMsg.GetByte(Index);
-   SteeringMode =             (tN2kSteeringMode)(v & 0x07);
-   TurnMode =                 (tN2kTurnMode)((v >> 3) & 0x07);
-   HeadingReference =         (tN2kHeadingReference)((v >> 3) & 0x03);
-
-   CommandedRudderDirection = (tN2kRudderDirectionOrder)((N2kMsg.GetByte(Index) >> 5) & 0x07);
-
-   CommandedRudderAngle = N2kMsg.Get2ByteDouble(0.0001,Index);
-   HeadingToSteerCourse = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   Track = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   RudderLimit = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   OffHeadingLimit = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   RadiusOfTurnOrder = N2kMsg.Get2ByteDouble(0.0001,Index);
-   RateOfTurnOrder = N2kMsg.Get2ByteDouble(3.125e-5,Index);
-   OffTrackLimit = N2kMsg.Get2ByteDouble(1,Index);
-   VesselHeading = N2kMsg.Get2ByteUDouble(0.0001,Index);
-
-   return true;
->>>>>>> branch 'master' of git@github.com:aydosj/NMEA2000.git
 }
 
 //*****************************************************************************
@@ -2043,7 +1888,6 @@ void SetN2kPGN130577(tN2kMsg &N2kMsg,
       double Drift
       )
 {
-<<<<<<< HEAD
   N2kMsg.SetPGN(130577L);
   N2kMsg.Priority=2;
   N2kMsg.AddByte(
@@ -2085,52 +1929,5 @@ bool ParseN2kPGN130577(const tN2kMsg &N2kMsg,
   Set = N2kMsg.Get2ByteUDouble(0.0001, Index);
   Drift = N2kMsg.Get2ByteUDouble(0.01, Index);
   return true;
-=======
-   N2kMsg.SetPGN(130577L);
-   N2kMsg.Priority=2;
-   N2kMsg.AddByte(
-         (0x0F & DataMode)          |
-         (0x03 & CogReference) << 4 |
-         0xc0
-         );
-   N2kMsg.AddByte(SID);
-   N2kMsg.Add2ByteUDouble(COG,0.0001);
-   N2kMsg.Add2ByteUDouble(SOG,0.01);
-   N2kMsg.Add2ByteUDouble(Heading,0.0001);
-   N2kMsg.Add2ByteUDouble(SpeedThroughWater,0.01);
-   N2kMsg.Add2ByteUDouble(Set,0.0001);
-   N2kMsg.Add2ByteUDouble(Drift,0.01);
-}
-
-bool ParseN2kPGN130577(const tN2kMsg &N2kMsg,
-      tN2kDataMode &DataMode,
-      tN2kHeadingReference &CogReference,
-      unsigned char &SID,
-      double &COG,
-      double &SOG,
-      double &Heading,
-      double &SpeedThroughWater,
-      double &Set,
-      double &Drift)
-{
-   if (N2kMsg.PGN!=130577L) return false;
-   int Index=0;
-   unsigned char v;
-
-   v = N2kMsg.GetByte(Index);
-
-   DataMode = (tN2kDataMode)(v & 0x0F);
-   CogReference = (tN2kHeadingReference)((v >> 4) & 0x03);
-
-   SID = N2kMsg.GetByte(Index);
-   COG = N2kMsg.Get2ByteUDouble(0.0001,Index);
-   SOG = N2kMsg.Get2ByteUDouble(0.01, Index);
-   Heading = N2kMsg.Get2ByteUDouble(0.0001, Index);
-   SpeedThroughWater=  N2kMsg.Get2ByteUDouble(0.01, Index);
-   Set = N2kMsg.Get2ByteUDouble(0.0001, Index);
-   Drift = N2kMsg.Get2ByteUDouble(0.01, Index);
-
-   return true;
->>>>>>> branch 'master' of git@github.com:aydosj/NMEA2000.git
 }
 
