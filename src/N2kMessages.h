@@ -83,6 +83,32 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
 }
 
 //*****************************************************************************
+// AIS Safety Related Broadcast Message
+// Input:
+//  - MessageID                        Message type
+//  - Repeat                           Repeat indicator
+//  - SourceID                         MMSI
+//  - tN2kAISTransceiverInformation
+//  - SafetyRelatedText
+// Output:
+//  - N2kMsg                           NMEA2000 message ready to be send.
+void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText);
+
+inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText) {
+   return SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
+}
+
+bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
+      tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText);
+
+inline bool ParseN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
+      tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText) {
+   return ParseN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
+}
+
+//*****************************************************************************
 // Man Overboard Notification
 // Input:
 //  - SID                     Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
@@ -1316,17 +1342,44 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
 //  - Start                 The ID of the first waypoint
 //  - Database              Database ID
 //  - Route                 Route ID
+//  - NavDirection          Navigation direction in route
+//  - SupplementaryData     Supplementary Route/WP data available
 //  - RouteName             The name of the current route
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName);
+
+inline void SetN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName)
+{
+   SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection, SupplementaryData, RouteName);
+}
+
+// for backwards compatibility
+inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
+                        bool NavDirection, bool SupplementaryData, char* RouteName)
+{
+   tN2kNavigationDirection NavDirection1 = NavDirection?N2kdir_reverse:N2kdir_forward;
+	SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection1, (uint8_t)SupplementaryData, RouteName);
+}                        
+
+// Route/WP appended information
+// Input:
 //  - ID                    The ID of the current waypoint
 //  - Name                  The name of the current waypoint
 //  - Latitude              The latitude of the current waypoint
 //  - Longitude             The longitude of the current waypoint
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-                        bool NavDirection, bool SupplementaryData, char* RouteName);
+// Return:
+//  - true if there was enough space in the message
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Latitude, double Longitude);
 
-bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID2, char* WPName2, double Latitude2, double Longitude2);
+inline bool AppendN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Latitude, double Longitude)
+{
+   return AppendN2kPGN129285(N2kMsg, WPID, WPName, Latitude, Longitude);
+}
 
 //*****************************************************************************
 // GNSS DOP data

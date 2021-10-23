@@ -361,3 +361,27 @@ TEST_CASE("PGN127237 HeadingTrackControl")
   }
 }
 
+TEST_CASE("PGN129285 Route/WP information")
+{
+   tN2kMsg N2kMsg1, N2kMsg2;
+   uint16_t Start = 1;
+   uint16_t Database = 2;
+   uint16_t Route = 3;
+   bool NavDirection = true;
+   tN2kNavigationDirection NavDirectiont =  N2kdir_reverse;
+   bool SupplementaryData = true;
+   const char* RouteName = "test route";
+
+   SetN2kPGN129285(N2kMsg1, Start, Database, Route, NavDirection, SupplementaryData, (char*)RouteName);
+
+   SetN2kRouteWPInfo(N2kMsg2, Start, Database, Route, NavDirectiont, SupplementaryData, (char*)RouteName);
+
+   SECTION("values of both calls produce identical messages")
+   {
+      REQUIRE(N2kMsg1.DataLen == N2kMsg2.DataLen);
+      for(int i = 0; i < N2kMsg1.DataLen;i++)
+      {
+         REQUIRE(N2kMsg1.Data[i] == N2kMsg2.Data[i]);
+      }
+   }
+}

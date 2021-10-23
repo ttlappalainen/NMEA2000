@@ -52,6 +52,38 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
 }
 
 //*****************************************************************************
+// AIS Safety Related Broadcast Message
+void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText)
+{
+   N2kMsg.SetPGN(129802L);
+   N2kMsg.Priority=5;
+   N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+   N2kMsg.Add4ByteUInt(0xc0000000 | (SourceID & 0x3fffffff));
+   N2kMsg.AddByte(0xe0 | (0x1f & AISTransceiverInformation));
+   N2kMsg.AddVarStr(SafetyRelatedText);
+}
+
+bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
+      tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText)
+{
+   if (N2kMsg.PGN!=129802L) return false;
+
+   int Index=0;
+   unsigned char vb;
+
+   vb=N2kMsg.GetByte(Index);
+   MessageID=(vb & 0x3f);
+   Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+   SourceID = N2kMsg.Get4ByteUInt(Index) & 0x3fffffff;
+   AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
+   N2kMsg.GetStr(SafetyRelatedText, 36, Index);
+
+   return true;
+}
+
+
+//*****************************************************************************
 // Man Overboard Notification
 void SetN2kPGN127233(tN2kMsg &N2kMsg,
       unsigned char SID,
@@ -1428,7 +1460,7 @@ bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& Distan
 //*****************************************************************************
 // Waypoint list
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-                        bool NavDirection, bool SupplementaryData, char* RouteName) {
+         tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName) {
     unsigned int i;
     N2kMsg.SetPGN(129285L);
     N2kMsg.Priority=6;
