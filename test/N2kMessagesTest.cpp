@@ -1,3 +1,4 @@
+#include <string.h>
 #include <catch.hpp>
 #include <N2kMessages.h>
 
@@ -383,5 +384,29 @@ TEST_CASE("PGN129285 Route/WP information")
       {
          REQUIRE(N2kMsg1.Data[i] == N2kMsg2.Data[i]);
       }
+   }
+}
+
+TEST_CASE("PGN129802 AIS Safety Related Broadcast Message")
+{
+   tN2kMsg N2kMsg;
+   uint8_t MessageID[2] = {27, 27};
+   tN2kAISRepeat Repeat[2] = {N2kaisr_First, N2kaisr_First};
+   uint32_t SourceID[2] = {2, 2};
+   tN2kAISTransceiverInformation AISTransceiverInformation[2] = {N2kaischannel_B_VDL_transmission, N2kaischannel_B_VDL_transmission};
+   const char * SafetyRelatedText_TX = "MOB";
+   size_t buflen = 36;
+   char SafetyRelatedText_RX[buflen];
+
+   SetN2kAISSafetyRelatedBroadcastMsg(N2kMsg, MessageID[0], Repeat[0], SourceID[0], AISTransceiverInformation[0], (char*)SafetyRelatedText_TX);
+   ParseN2kAISSafetyRelatedBroadcastMsg(N2kMsg, MessageID[1], Repeat[1], SourceID[1], AISTransceiverInformation[1], SafetyRelatedText_RX, buflen);
+
+   SECTION("parsed values match set values")
+   {
+     REQUIRE(MessageID[0] == MessageID[1]);
+     REQUIRE(Repeat[0] == Repeat[1]);
+     REQUIRE(SourceID[0] == SourceID[1]);
+     REQUIRE(AISTransceiverInformation[0] == AISTransceiverInformation[1]);
+     REQUIRE(strcmp(SafetyRelatedText_TX,SafetyRelatedText_RX) == 0);
    }
 }

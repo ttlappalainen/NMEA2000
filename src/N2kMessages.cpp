@@ -65,7 +65,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 }
 
 bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
-      tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText)
+      tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText, size_t &SafetyRelatedTextMaxSize)
 {
    if (N2kMsg.PGN!=129802L) return false;
 
@@ -77,7 +77,7 @@ bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repea
    Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
    SourceID = N2kMsg.Get4ByteUInt(Index) & 0x3fffffff;
    AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
-   N2kMsg.GetStr(SafetyRelatedText, 36, Index);
+   N2kMsg.GetVarStr(SafetyRelatedTextMaxSize, SafetyRelatedText, Index);
 
    return true;
 }
