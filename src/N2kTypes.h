@@ -29,6 +29,17 @@ NMEA2000 type definitions.
 
 #include "NMEA2000StdTypes.h"
 
+enum tN2kNavigationDirection {
+                            N2kdir_forward=0,
+                            N2kdir_reverse=1,
+                            N2kdir_reserved1=2,
+                            N2kdir_reserved2=3,
+                            N2kdir_reserved3=4,
+                            N2kdir_reserved4=5,
+                            N2kdir_error=6,
+                            N2kdir_unknown=7
+                              };
+
 enum tN2kHeadingReference {
                             N2khr_true=0,
                             N2khr_magnetic=1,
@@ -269,6 +280,13 @@ enum tN2kAISMode {
                             N2kaismode_Autonomous=0,
                             N2kaismode_Assigned=1,
                           };
+enum tN2kAISTransceiverInformation {
+                           N2kaischannel_A_VDL_reception=0,
+                           N2kaischannel_B_VDL_reception=1,
+                           N2kaischannel_A_VDL_transmission=2,
+                           N2kaischannel_B_VDL_transmission=3,
+                           N2kaisown_information_not_broadcast=4
+                          };
 enum tN2kMagneticVariation {
                             N2kmagvar_Manual=0,
                             N2kmagvar_Chart=1,
@@ -326,6 +344,30 @@ enum tN2kTurnMode {
                             N2kTM_RadiusControlled=2,
                             N2kTM_Unavailable=7
                           };
+
+enum tN2kMOBStatus {
+                            MOBEmitterActivated=0,
+                            ManualOnBoardMOBButtonActivation=1,
+                            TestMode=2,
+                            MOBNotActive=3
+                          };
+
+enum tN2kMOBPositionSource {
+                           PositionEstimatedByVessel=0,
+                           PositionReportedByMOBEmitter=1,
+                          };
+
+enum tN2kMOBEmitterBatteryStatus {
+                           Good=0,
+                           Low=1,
+                          };
+enum tN2kDataMode {
+                           Autonomous = 0,
+                           DifferentialEnhanced = 1,
+                           Estimated = 2,
+                           Simulator = 3,
+                           Manual = 4
+                           };
 
 //*****************************************************************************
 // Aliases for N2K standard types.
