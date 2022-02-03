@@ -20,7 +20,8 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
+#include <cstdio>
+#include <iostream>
 #include "N2kMessages.h"
 #include <string.h>
 
@@ -1374,6 +1375,66 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     Unit=(tN2kAISUnit)(vb>>2 & 0x01); Display=(vb>>3 & 0x01); DSC=(vb>>4 & 0x01);
     Band=(vb>>5 & 0x01); Msg22=(vb>>6 & 0x01); Mode=(tN2kAISMode)(vb>>7 & 0x01);
     vb=N2kMsg.GetByte(Index); State=(vb & 0x01);
+
+    return true;
+}
+
+//*****************************************************************************
+// AIS Aids to Navigation (AtoN) Report (PGN 129041)
+void SetN2kPGN129041(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
+                      double Longitude, double Latitude, bool Accuracy, bool RAIM, uint8_t Seconds, 
+                      double Length, double Beam, double PositionReferenceStarboard , double PositionReferenceTrueNorth, 
+                      tN2kAISAtoNType AtoNType, bool OffPositionIndicator, bool VirtualAtoNFlag, bool AssignedModeFlag, 
+                      tN2kGNSStype GNSSType, uint8_t AtoNStatus, tN2kAISTransceiverInformation AISTransceiverInformation, 
+                      char* AtoNName) {
+    N2kMsg.SetPGN(129041L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(UserID);
+    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
+    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01)); //BUG This might be backwards
+    N2kMsg.Add2ByteUDouble(Length, 0.1);
+    N2kMsg.Add2ByteUDouble(Beam, 0.1);
+    N2kMsg.Add2ByteUDouble(PositionReferenceStarboard, 0.1);
+    N2kMsg.Add2ByteUDouble(PositionReferenceTrueNorth, 0.1);
+    N2kMsg.AddByte((AtoNType & 0x1F)<<3 | (OffPositionIndicator & 0x01) << 2 | (VirtualAtoNFlag & 0x01) << 1 | (AssignedModeFlag & 0x01)); 
+    uint8_t b = (GNSSType & 0x0F) << 3;
+    N2kMsg.AddByte(b);
+    N2kMsg.AddByte(AtoNStatus);
+    N2kMsg.AddByte(((0x1f & AISTransceiverInformation) << 3) | 0x7);
+    N2kMsg.AddStr(AtoNName, 20);
+}
+
+
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, 
+                      double &Longitude, double &Latitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
+                      double &Length, double &Beam, double &PositionReferenceStarboard , double &PositionReferenceTrueNorth, 
+                      tN2kAISAtoNType &AtoNType, bool &OffPositionIndicator, bool &VirtualAtoNFlag, bool &AssignedModeFlag, 
+                      tN2kGNSStype &GNSSType, uint8_t &AtoNStatus, tN2kAISTransceiverInformation &AISTransceiverInformation, 
+                      char* AtoNName) {
+    if (N2kMsg.PGN!=129041L) return false;
+
+    int Index=0;
+    unsigned char vb;
+    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    UserID=N2kMsg.Get4ByteUInt(Index);
+    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
+    Length=N2kMsg.Get2ByteDouble(0.1, Index);
+    Beam=N2kMsg.Get2ByteDouble(0.1, Index);
+    PositionReferenceStarboard=N2kMsg.Get2ByteDouble(0.1, Index);
+    PositionReferenceTrueNorth=N2kMsg.Get2ByteDouble(0.1, Index);
+    vb=N2kMsg.GetByte(Index); 
+    AtoNType=(tN2kAISAtoNType)(vb >> 3); 
+    OffPositionIndicator=(vb >> 2  & 0x01); 
+    VirtualAtoNFlag=(vb >> 1  & 0x01); 
+    AssignedModeFlag=(vb & 0x01); 
+    GNSSType = (tN2kGNSStype)((N2kMsg.GetByte(Index) & 0x78) >> 3);
+    AtoNStatus=N2kMsg.GetByte(Index);  
+    AISTransceiverInformation = (tN2kAISTransceiverInformation)((N2kMsg.GetByte(Index) & 0x1f) >> 3);
+    N2kMsg.GetStr(AtoNName, 20, Index);
 
     return true;
 }

@@ -204,6 +204,102 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
 
 }
 
+TEST_CASE("PGN129041 AIS AtoN Navigation Report") 
+{
+
+  tN2kMsg N2kMsg;
+  uint8_t MessageID[2] = {5,0};
+  tN2kAISRepeat Repeat[2] = {N2kaisr_Final,N2kaisr_Final};
+  uint32_t UserID[2] = {7,0};
+  double Latitude[2] = {-33.0,0};
+  double Longitude[2] = {151.0,0};
+  bool Accuracy[2] = {true,true};
+  bool RAIM[2] = {false,false};
+  uint8_t Seconds[2] = {4,0};
+  //TODO Add better values
+  double Length[2] = {52.5,0};
+  double Beam[2] = {21.5,0};
+  double PositionReferenceStarboard[2] = {3.6,0};
+  double PositionReferenceTrueNorth[2] = {7.2,0};
+  tN2kAISAtoNType AtoNType[2] = {N2kAISAtoN_beacon_isolated_danger,N2kAISAtoN_starboard_hand_mark};
+  bool OffPositionIndicator[2] = {true,false};
+  bool VirtualAtoNFlag[2] = {true,false};
+  bool AssignedModeFlag[2] = {true,false};
+  tN2kGNSStype GNSSType[2] = {N2kGNSSt_Chayka,N2kGNSSt_GLONASS};
+  uint8_t AtoNStatus[2] = {0x00,0x01};
+  tN2kAISTransceiverInformation AISTransceiverInformation[2] = {N2kaischannel_B_VDL_transmission,N2kaischannel_B_VDL_transmission};
+  const char *AtoNName_TX = "BINGBONG";
+  char AtoNName_RX[34];
+
+  SetN2kAISClassBPosition(N2kMsg,
+        MessageID[0],
+        Repeat[0],
+        UserID[0],
+        Latitude[0],
+        Longitude[0],
+        Accuracy[0],
+        RAIM[0],
+        Seconds[0],
+        Length[0],
+        Beam[0],
+        PositionReferenceStarboard[0],
+        PositionReferenceTrueNorth[0],
+        AtoNType[0],
+        OffPositionIndicator[0],
+        VirtualAtoNFlag[0],
+        AssignedModeFlag[0],
+        GNSSType[0],
+        AtoNStatus[0],
+        AISTransceiverInformation[0],
+        (char*)AtoNName_TX);
+
+
+  ParseN2kAISClassBPosition(N2kMsg,
+        MessageID[1],
+        Repeat[1],
+        UserID[1],
+        Latitude[1],
+        Longitude[1],
+        Accuracy[1],
+        RAIM[1],
+        Seconds[1],
+        Length[1],
+        Beam[1],
+        PositionReferenceStarboard[1],
+        PositionReferenceTrueNorth[1],
+        AtoNType[1],
+        OffPositionIndicator[1],
+        VirtualAtoNFlag[1],
+        AssignedModeFlag[1],
+        GNSSType[1],
+        AtoNStatus[1],
+        AISTransceiverInformation[1],
+        AtoNName_RX);
+
+  SECTION("parsed values match set values")
+  {
+        REQUIRE(MessageID[0] == MessageID[1]);
+        REQUIRE(Repeat[0] == Repeat[1]);
+        REQUIRE(UserID[0] == UserID[1]);
+        REQUIRE(Latitude[0] == Latitude[1]);
+        REQUIRE(Longitude[0] == Longitude[1]);
+        REQUIRE(Accuracy[0] == Accuracy[1]);
+        REQUIRE(RAIM[0] == RAIM[1]);
+        REQUIRE(Seconds[0] == Seconds[1]);
+        REQUIRE(Length[0] == Length[1]);
+        REQUIRE(Beam[0] == Beam[1]);
+        REQUIRE(PositionReferenceStarboard[0] == PositionReferenceStarboard[1]);
+        REQUIRE(PositionReferenceTrueNorth[0] == PositionReferenceTrueNorth[1]);
+        REQUIRE(AtoNType[0] == AtoNType[1]);
+        REQUIRE(OffPositionIndicator[0] == OffPositionIndicator[1]);
+        REQUIRE(VirtualAtoNFlag[0] == VirtualAtoNFlag[1]);
+        REQUIRE(AssignedModeFlag[0] == AssignedModeFlag[1]);
+        REQUIRE(GNSSType[0] == GNSSType[1]);
+        REQUIRE(AtoNStatus[0] == AtoNStatus[1]);
+        REQUIRE(AISTransceiverInformation[0] == AISTransceiverInformation[1]);
+  }
+}
+
 TEST_CASE("PGN130577 Direction Data")
 {
   tN2kMsg N2kMsg;
