@@ -1824,8 +1824,8 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
 //  - WindGusts             Measured wind gusts speed in m/s
 //  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
 //  - OutsideAmbientAirTemperature      Outside ambient temperature in K. Use function CToKelvin, if you want to use °C.
-//  - StationID             //TODO What is this?
-//  - StationName           //TODO What is this?
+//  - StationID             Identifier of the transmitting weather station. (255 bytes max)
+//  - StationName           Friendly name of the transmitting weather station. (255 bytes max)
 //  
 //
 // Output:
