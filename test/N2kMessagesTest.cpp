@@ -160,6 +160,76 @@ TEST_CASE("PGN129039 AIS Class B Position")
       }
 }
 
+TEST_CASE("PGN130323 Meteorlogical Station Data")
+{
+  tN2kMsg N2kMsg;
+  uint16_t SystemDate[2] = {10, 0};
+  double SystemTime[2] = {10.9, 0};
+  double Latitude[2] = {-33.0,0};
+  double Longitude[2] = {151.0,0};
+  double WindSpeed[2] = {12.3, 0};
+  double WindAngle[2] = {12.3, 0};
+  tN2kWindReference WindReference[2] = {N2kWind_True_North, N2kWind_Magnetic};
+  double WindGusts[2] = {12.3, 0};
+  const char *StationID_TX = "StationID";
+  size_t StationIDMaxSize = 15;
+  const char *StationName_TX = "StationName";
+  size_t StationNameMaxSize = 50;
+  double AtmosphericPressure[2] = {100, 0};
+  double OutsideAmbientAirTemperature[2] = {12.3, 0};
+
+  SetN2kPGN130323(
+    N2kMsg,
+    SystemDate[0], 
+    SystemTime[0],
+    Latitude[0],
+    Longitude[0],
+    WindSpeed[0],
+    WindAngle[0],
+    WindReference[0],
+    WindGusts[0],
+    (char*)StationID_TX,
+    (char*)StationName_TX,
+    AtmosphericPressure[0],
+    OutsideAmbientAirTemperature[0]);
+
+  char StationID_RX[15];
+  char StationName_RX[50];
+  ParseN2kPGN130323(
+    N2kMsg,
+    SystemDate[1],
+    SystemTime[1],
+    Latitude[1],
+    Longitude[1],
+    WindSpeed[1],
+    WindAngle[1],
+    WindReference[1],
+    WindGusts[1],
+    StationID_RX,
+    StationIDMaxSize,
+    StationName_RX,
+    StationNameMaxSize,
+    AtmosphericPressure[1],
+    OutsideAmbientAirTemperature[1]);
+
+  SECTION("parsed values match set values")
+  {
+    REQUIRE(SystemDate[0] ==                      SystemDate[1]);
+    REQUIRE(SystemTime[0] ==                      SystemTime[1]);
+    REQUIRE(Latitude[0] ==                        Latitude[1]);
+    REQUIRE(Longitude[0] ==                       Longitude[1]);
+    REQUIRE(WindSpeed[0] ==                       WindSpeed[1]);
+    REQUIRE(WindAngle[0] ==                       WindAngle[1]);
+    REQUIRE(WindReference[0] ==                   WindReference[1]);
+    REQUIRE(WindGusts[0] ==                       WindGusts[1]);
+    REQUIRE(AtmosphericPressure[0] ==             AtmosphericPressure[1]);
+    REQUIRE(OutsideAmbientAirTemperature[0] ==    OutsideAmbientAirTemperature[1]);
+    REQUIRE(strcmp(StationID_TX,                  StationID_RX) == 0);
+    REQUIRE(strcmp(StationName_TX,                StationName_RX) == 0);
+   }
+
+}
+
 TEST_CASE("PGN130577 Direction Data")
 {
   tN2kMsg N2kMsg;
