@@ -1829,33 +1829,32 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
 //
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be sent.
-void SetN2kPGN130323(tN2kMsg &N2kMsg, tN2kAISMode Mode, uint16_t SystemDate, double SystemTime, double Latitude, double Longitude,
-                      double WindSpeed, double WindDirection, tN2kWindReference WindReference, double WindGusts, 
-                      const char *StationID, const char* StationName, double AtmosphericPressure=N2kDoubleNA, 
-                      double OutsideAmbientAirTemperature=N2kDoubleNA);
+//*****************************************************************************
+typedef struct tN2kPGN130323Data {
+  tN2kAISMode Mode;
+  uint16_t SystemDate;
+  double SystemTime;
+  double Latitude;
+  double Longitude;
+  double WindSpeed;
+  double WindDirection;
+  tN2kWindReference WindReference;
+  double WindGusts;
+  double AtmosphericPressure;
+  double OutsideAmbientAirTemperature;
+  char StationID[15];
+  char StationName[50];
+} tN2kMeteorlogicalStationData;
 
-inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, tN2kAISMode Mode,  uint16_t SystemDate, double SystemTime, 
-                      double Latitude, double Longitude, double WindSpeed, double WindDirection, tN2kWindReference WindReference,
-                      double WindGusts, const char *StationID, const char* StationName, double AtmosphericPressure=N2kDoubleNA, 
-                      double OutsideAmbientAirTemperature=N2kDoubleNA) {
-  SetN2kPGN130323(N2kMsg, Mode, SystemDate, SystemTime, Latitude, Longitude,
-                      WindSpeed, WindDirection, WindReference, WindGusts, 
-                      StationID, StationName, AtmosphericPressure, 
-                      OutsideAmbientAirTemperature);
-}
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData N2kData);
+inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData N2kData) { SetN2kPGN130323(N2kMsg, N2kData); }
 
-bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kAISMode &Mode, uint16_t &SystemDate, double &SystemTime, double &Latitude, 
-                      double &Longitude, double &WindSpeed, double &WindDirection, tN2kWindReference &WindReference,
-                      double &WindGusts, char *StationID, size_t StationIDMaxSize, char* StationName, size_t StationNameMaxSize, 
-                      double &AtmosphericPressure, double &OutsideAmbientAirTemperature);
-inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kAISMode &Mode, uint16_t &SystemDate, double &SystemTime,
-                      double &Latitude, double &Longitude, double &WindSpeed, double &WindDirection, 
-                      tN2kWindReference &WindReference, double &WindGusts, char *StationID, size_t StationIDMaxSize, 
-                      char* StationName, size_t StationNameMaxSize, double &AtmosphericPressure, double &OutsideAmbientAirTemperature) {
-  return ParseN2kPGN130323(N2kMsg, Mode, SystemDate, SystemTime, Latitude, Longitude,
-                      WindSpeed, WindDirection, WindReference, WindGusts, 
-                      StationID, StationIDMaxSize, StationName, StationNameMaxSize, AtmosphericPressure, 
-                      OutsideAmbientAirTemperature);
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData,
+                        size_t StationIDMaxSize=15, size_t StationNameMaxSize=50);
+
+inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData, 
+                                              size_t StationIDMaxSize=15, size_t StationNameMaxSize=50) {
+  return ParseN2kPGN130323(N2kMsg, N2kData, StationIDMaxSize, StationNameMaxSize);
 }
 
 //*****************************************************************************

@@ -23,6 +23,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "N2kMessages.h"
 #include <string.h>
+#include <iostream>
 
 //*****************************************************************************
 // System time
@@ -1886,51 +1887,47 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 
 //*****************************************************************************
 // Meteorological Station Data
-void SetN2kPGN130323(tN2kMsg &N2kMsg, tN2kAISMode Mode, uint16_t SystemDate, double SystemTime, double Latitude, double Longitude,
-                      double WindSpeed, double WindDirection, tN2kWindReference WindReference, double WindGusts, 
-                      const char *StationID, const char* StationName, double AtmosphericPressure, 
-                      double OutsideAmbientAirTemperature) {
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData N2kData) {
     N2kMsg.SetPGN(130323L);
     N2kMsg.Priority=6;
-    N2kMsg.AddByte( ((((unsigned char) Mode) & 0x0f) << 4) | 0x0f );
-    N2kMsg.Add2ByteUInt(SystemDate);
-    N2kMsg.Add4ByteUDouble(SystemTime,0.0001);
-    N2kMsg.Add4ByteDouble(Latitude,1e-7);
-    N2kMsg.Add4ByteDouble(Longitude,1e-7);
-    N2kMsg.Add2ByteUDouble(WindSpeed,0.01);
-    N2kMsg.Add2ByteUDouble(WindDirection,0.0001);
-    N2kMsg.AddByte( ((((unsigned char)WindReference) & 0x07) << 5) | 0x1f );
-    N2kMsg.Add2ByteUDouble(WindGusts,0.01);
-    N2kMsg.Add2ByteUDouble(AtmosphericPressure,100);
-    N2kMsg.Add2ByteUDouble(OutsideAmbientAirTemperature,0.01);
-    N2kMsg.AddVarStr(StationID);
-    N2kMsg.AddVarStr(StationName);
+    N2kMsg.AddByte( ((((unsigned char) N2kData.Mode) & 0x0f) << 4) | 0x0f );
+    N2kMsg.Add2ByteUInt(N2kData.SystemDate);
+    N2kMsg.Add4ByteUDouble(N2kData.SystemTime,0.0001);
+    N2kMsg.Add4ByteDouble(N2kData.Latitude,1e-7);
+    N2kMsg.Add4ByteDouble(N2kData.Longitude,1e-7);
+    N2kMsg.Add2ByteUDouble(N2kData.WindSpeed,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.WindDirection,0.0001);
+    N2kMsg.AddByte( ((((unsigned char)N2kData.WindReference) & 0x07) << 5) | 0x1f );
+    N2kMsg.Add2ByteUDouble(N2kData.WindGusts,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.AtmosphericPressure,100);
+    N2kMsg.Add2ByteUDouble(N2kData.OutsideAmbientAirTemperature,0.01);
+    N2kMsg.AddVarStr((char*)N2kData.StationID);
+    N2kMsg.AddVarStr((char*)N2kData.StationName);
 }
 
 
-bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kAISMode &Mode, uint16_t &SystemDate, double &SystemTime, double &Latitude, 
-                      double &Longitude, double &WindSpeed, double &WindDirection, tN2kWindReference &WindReference,
-                      double &WindGusts, char *StationID, size_t StationIDMaxSize, char* StationName, size_t StationNameMaxSize, 
-                      double &AtmosphericPressure, double &OutsideAmbientAirTemperature) {
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData,
+                        size_t StationIDMaxSize, size_t StationNameMaxSize) {
     if (N2kMsg.PGN!=130323L) return false;
     int Index=0;
     unsigned char vb;
 
     vb = N2kMsg.GetByte(Index);
-    Mode=(tN2kAISMode)((vb >> 4) & 0x0f);
-    SystemDate = N2kMsg.Get2ByteUInt(Index);
-    SystemTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
-    Latitude = N2kMsg.Get4ByteDouble(1e-7,Index);
-    Longitude = N2kMsg.Get4ByteDouble(1e-7,Index);
-    WindSpeed = N2kMsg.Get2ByteUDouble(0.01,Index);
-    WindDirection = N2kMsg.Get2ByteUDouble(0.0001,Index);
+    N2kData.Mode=(tN2kAISMode)((vb >> 4) & 0x0f);
+
+    N2kData.SystemDate = N2kMsg.Get2ByteUInt(Index);
+    N2kData.SystemTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
+    N2kData.Latitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.Longitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.WindSpeed = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.WindDirection = N2kMsg.Get2ByteUDouble(0.0001,Index);
     vb = N2kMsg.GetByte(Index);
-    WindReference = (tN2kWindReference)((vb >> 5) & 0x07);
-    WindGusts = N2kMsg.Get2ByteUDouble(0.01,Index);
-    AtmosphericPressure = N2kMsg.Get2ByteUDouble(100,Index);
-    OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
-    N2kMsg.GetVarStr(StationIDMaxSize, StationID, Index);
-    N2kMsg.GetVarStr(StationNameMaxSize, StationName, Index);
+    N2kData.WindReference = (tN2kWindReference)((vb >> 5) & 0x07);
+    N2kData.WindGusts = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.AtmosphericPressure = N2kMsg.Get2ByteUDouble(100,Index);
+    N2kData.OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kMsg.GetVarStr(StationIDMaxSize, (char*)N2kData.StationID, Index);
+    N2kMsg.GetVarStr(StationNameMaxSize, (char*)N2kData.StationName, Index);
 
     return true;
 }

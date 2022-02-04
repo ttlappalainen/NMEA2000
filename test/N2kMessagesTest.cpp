@@ -163,73 +163,45 @@ TEST_CASE("PGN129039 AIS Class B Position")
 TEST_CASE("PGN130323 Meteorlogical Station Data")
 {
   tN2kMsg N2kMsg;
-  tN2kAISMode Mode[2] = {N2kaismode_Assigned, N2kaismode_Autonomous};
-  uint16_t SystemDate[2] = {10, 0};
-  double SystemTime[2] = {10.9, 0};
-  double Latitude[2] = {-33.0,0};
-  double Longitude[2] = {151.0,0};
-  double WindSpeed[2] = {12.3, 0};
-  double WindDirection[2] = {2.1, 0};
-  tN2kWindReference WindReference[2] = {N2kWind_True_North, N2kWind_Magnetic};
-  double WindGusts[2] = {12.3, 0};
-  const char *StationID_TX = "StationID";
+
+  tN2kMeteorlogicalStationData data_tx = {
+    N2kaismode_Assigned,
+    10,
+    10.9,
+    -33.0,
+    151.0,
+    12.3,
+    2.1,
+    N2kWind_True_North,
+    12.3,
+    100,
+    12.3,
+    "StationID",
+    "StationName",
+  };
+
+  SetN2kPGN130323(N2kMsg, data_tx);
+
+  tN2kMeteorlogicalStationData data_rx;
   size_t StationIDMaxSize = 15;
-  const char *StationName_TX = "StationName";
   size_t StationNameMaxSize = 50;
-  double AtmosphericPressure[2] = {100, 0};
-  double OutsideAmbientAirTemperature[2] = {12.3, 0};
-
-  SetN2kPGN130323(
-    N2kMsg,
-    Mode[0], 
-    SystemDate[0], 
-    SystemTime[0],
-    Latitude[0],
-    Longitude[0],
-    WindSpeed[0],
-    WindDirection[0],
-    WindReference[0],
-    WindGusts[0],
-    (char*)StationID_TX,
-    (char*)StationName_TX,
-    AtmosphericPressure[0],
-    OutsideAmbientAirTemperature[0]);
-
-  char StationID_RX[15];
-  char StationName_RX[50];
-  ParseN2kPGN130323(
-    N2kMsg,
-    Mode[1], 
-    SystemDate[1],
-    SystemTime[1],
-    Latitude[1],
-    Longitude[1],
-    WindSpeed[1],
-    WindDirection[1],
-    WindReference[1],
-    WindGusts[1],
-    StationID_RX,
-    StationIDMaxSize,
-    StationName_RX,
-    StationNameMaxSize,
-    AtmosphericPressure[1],
-    OutsideAmbientAirTemperature[1]);
+  ParseN2kPGN130323(N2kMsg, data_rx, StationIDMaxSize, StationIDMaxSize);
 
   SECTION("parsed values match set values")
   {
-    REQUIRE(Mode[0] ==                            Mode[1]);
-    REQUIRE(SystemDate[0] ==                      SystemDate[1]);
-    REQUIRE(SystemTime[0] ==                      SystemTime[1]);
-    REQUIRE(Latitude[0] ==                        Latitude[1]);
-    REQUIRE(Longitude[0] ==                       Longitude[1]);
-    REQUIRE(WindSpeed[0] ==                       WindSpeed[1]);
-    REQUIRE(WindDirection[0] ==                   WindDirection[1]);
-    REQUIRE(WindReference[0] ==                   WindReference[1]);
-    REQUIRE(WindGusts[0] ==                       WindGusts[1]);
-    REQUIRE(AtmosphericPressure[0] ==             AtmosphericPressure[1]);
-    REQUIRE(OutsideAmbientAirTemperature[0] ==    OutsideAmbientAirTemperature[1]);
-    REQUIRE(strcmp(StationID_TX,                  StationID_RX) == 0);
-    REQUIRE(strcmp(StationName_TX,                StationName_RX) == 0);
+    REQUIRE(data_tx.Mode ==                            data_rx.Mode);
+    REQUIRE(data_tx.SystemDate ==                      data_rx.SystemDate);
+    REQUIRE(data_tx.SystemTime ==                      data_rx.SystemTime);
+    REQUIRE(data_tx.Latitude ==                        data_rx.Latitude);
+    REQUIRE(data_tx.Longitude ==                       data_rx.Longitude);
+    REQUIRE(data_tx.WindSpeed ==                       data_rx.WindSpeed);
+    REQUIRE(data_tx.WindDirection ==                   data_rx.WindDirection);
+    REQUIRE(data_tx.WindReference ==                   data_rx.WindReference);
+    REQUIRE(data_tx.WindGusts ==                       data_rx.WindGusts);
+    REQUIRE(data_tx.AtmosphericPressure ==             data_rx.AtmosphericPressure);
+    REQUIRE(data_tx.OutsideAmbientAirTemperature ==    data_rx.OutsideAmbientAirTemperature);
+    REQUIRE(strcmp(data_tx.StationID,                  data_rx.StationID) == 0);
+    REQUIRE(strcmp(data_tx.StationName,                data_rx.StationName) == 0);
    }
 
 }
