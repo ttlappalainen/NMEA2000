@@ -23,7 +23,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "N2kMessages.h"
 #include <string.h>
-#include <iostream>
 
 //*****************************************************************************
 // System time
