@@ -20,8 +20,6 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#include <cstdio>
-#include <iostream>
 #include "N2kMessages.h"
 #include <string.h>
 
@@ -1381,60 +1379,53 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 
 //*****************************************************************************
 // AIS Aids to Navigation (AtoN) Report (PGN 129041)
-void SetN2kPGN129041(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
-                      double Longitude, double Latitude, bool Accuracy, bool RAIM, uint8_t Seconds, 
-                      double Length, double Beam, double PositionReferenceStarboard , double PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType AtoNType, bool OffPositionIndicator, bool VirtualAtoNFlag, bool AssignedModeFlag, 
-                      tN2kGNSStype GNSSType, uint8_t AtoNStatus, tN2kAISTransceiverInformation AISTransceiverInformation, 
-                      char* AtoNName) {
+void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData N2kData) {
     N2kMsg.SetPGN(129041L);
     N2kMsg.Priority=4;
-    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-    N2kMsg.Add4ByteUInt(UserID);
-    N2kMsg.Add4ByteDouble(Longitude, 1e-07);
-    N2kMsg.Add4ByteDouble(Latitude, 1e-07);
-    N2kMsg.AddByte((Seconds & 0x3f)<<2 | (RAIM & 0x01)<<1 | (Accuracy & 0x01)); //BUG This might be backwards
-    N2kMsg.Add2ByteUDouble(Length, 0.1);
-    N2kMsg.Add2ByteUDouble(Beam, 0.1);
-    N2kMsg.Add2ByteUDouble(PositionReferenceStarboard, 0.1);
-    N2kMsg.Add2ByteUDouble(PositionReferenceTrueNorth, 0.1);
-    N2kMsg.AddByte((AtoNType & 0x1F)<<3 | (OffPositionIndicator & 0x01) << 2 | (VirtualAtoNFlag & 0x01) << 1 | (AssignedModeFlag & 0x01)); 
-    uint8_t b = (GNSSType & 0x0F) << 3;
+    N2kMsg.AddByte((N2kData.Repeat & 0x03)<<6 | (N2kData.MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(N2kData.UserID);
+    N2kMsg.Add4ByteDouble(N2kData.Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(N2kData.Latitude, 1e-07);
+    N2kMsg.AddByte((N2kData.Seconds & 0x3f)<<2 | (N2kData.RAIM & 0x01)<<1 | (N2kData.Accuracy & 0x01)); 
+    N2kMsg.Add2ByteUDouble(N2kData.Length, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.Beam, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.PositionReferenceStarboard, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.PositionReferenceTrueNorth, 0.1);
+    N2kMsg.AddByte((N2kData.AtoNType & 0x1F)<<3 
+                    | (N2kData.OffPositionIndicator & 0x01) << 2 
+                    | (N2kData.VirtualAtoNFlag & 0x01) << 1 
+                    | (N2kData.AssignedModeFlag & 0x01)); 
+    uint8_t b = (N2kData.GNSSType & 0x0F) << 3;
     N2kMsg.AddByte(b);
-    N2kMsg.AddByte(AtoNStatus);
-    N2kMsg.AddByte(((0x1f & AISTransceiverInformation) << 3) | 0x7);
-    N2kMsg.AddStr(AtoNName, 20);
+    N2kMsg.AddByte(N2kData.AtoNStatus);
+    N2kMsg.AddByte(((0x1f & N2kData.AISTransceiverInformation) << 3) | 0x7);
+    N2kMsg.AddStr(N2kData.AtoNName, 20);
 }
 
 
-bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, 
-                      double &Longitude, double &Latitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
-                      double &Length, double &Beam, double &PositionReferenceStarboard , double &PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType &AtoNType, bool &OffPositionIndicator, bool &VirtualAtoNFlag, bool &AssignedModeFlag, 
-                      tN2kGNSStype &GNSSType, uint8_t &AtoNStatus, tN2kAISTransceiverInformation &AISTransceiverInformation, 
-                      char* AtoNName) {
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
     if (N2kMsg.PGN!=129041L) return false;
 
     int Index=0;
     unsigned char vb;
-    vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
-    UserID=N2kMsg.Get4ByteUInt(Index);
-    Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
-    Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
-    vb=N2kMsg.GetByte(Index); Accuracy=(vb & 0x01); RAIM=(vb>>1 & 0x01); Seconds=(vb>>2 & 0x3f);
-    Length=N2kMsg.Get2ByteDouble(0.1, Index);
-    Beam=N2kMsg.Get2ByteDouble(0.1, Index);
-    PositionReferenceStarboard=N2kMsg.Get2ByteDouble(0.1, Index);
-    PositionReferenceTrueNorth=N2kMsg.Get2ByteDouble(0.1, Index);
+    vb=N2kMsg.GetByte(Index); N2kData.MessageID=(vb & 0x3f); N2kData.Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    N2kData.UserID=N2kMsg.Get4ByteUInt(Index);
+    N2kData.Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    N2kData.Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); N2kData.Accuracy=(vb & 0x01); N2kData.RAIM=(vb>>1 & 0x01); N2kData.Seconds=(vb>>2 & 0x3f);
+    N2kData.Length=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.Beam=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.PositionReferenceStarboard=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.PositionReferenceTrueNorth=N2kMsg.Get2ByteDouble(0.1, Index);
     vb=N2kMsg.GetByte(Index); 
-    AtoNType=(tN2kAISAtoNType)(vb >> 3); 
-    OffPositionIndicator=(vb >> 2  & 0x01); 
-    VirtualAtoNFlag=(vb >> 1  & 0x01); 
-    AssignedModeFlag=(vb & 0x01); 
-    GNSSType = (tN2kGNSStype)((N2kMsg.GetByte(Index) & 0x78) >> 3);
-    AtoNStatus=N2kMsg.GetByte(Index);  
-    AISTransceiverInformation = (tN2kAISTransceiverInformation)((N2kMsg.GetByte(Index) & 0x1f) >> 3);
-    N2kMsg.GetStr(AtoNName, 20, Index);
+    N2kData.AtoNType=(tN2kAISAtoNType)(vb >> 3); 
+    N2kData.OffPositionIndicator=(vb >> 2  & 0x01); 
+    N2kData.VirtualAtoNFlag=(vb >> 1  & 0x01); 
+    N2kData.AssignedModeFlag=(vb & 0x01); 
+    N2kData.GNSSType = (tN2kGNSStype)((N2kMsg.GetByte(Index) & 0x78) >> 3);
+    N2kData.AtoNStatus=N2kMsg.GetByte(Index);  
+    N2kData.AISTransceiverInformation = (tN2kAISTransceiverInformation)((N2kMsg.GetByte(Index) & 0x1f) >> 3);
+    N2kMsg.GetStr(N2kData.AtoNName, 20, Index);
 
     return true;
 }
