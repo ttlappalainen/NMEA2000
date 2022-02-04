@@ -1309,43 +1309,37 @@ inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
 //  
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-void SetN2kPGN129041(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
-                      double Longitude, double Latitude, bool Accuracy, bool RAIM, uint8_t Seconds, 
-                      double Length, double Beam, double PositionReferenceStarboard , double PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType AtoNType, bool OffPositionIndicator, bool VirtualAtoNFlag, bool AssignedModeFlag, 
-                      tN2kGNSStype GNSSType, uint8_t AtoNStatus, tN2kAISTransceiverInformation AISTransceiverInformation, 
-                      char* AtoNName);
+typedef struct tN2kPGN129041 {
+  uint8_t MessageID;
+  tN2kAISRepeat Repeat;
+  uint32_t UserID;
+  double Longitude;
+  double Latitude;
+  bool Accuracy;
+  bool RAIM;
+  uint8_t Seconds;
+  double Length;
+  double Beam;
+  double PositionReferenceStarboard ;
+  double PositionReferenceTrueNorth;
+  tN2kAISAtoNType AtoNType;
+  bool OffPositionIndicator;
+  bool VirtualAtoNFlag;
+  bool AssignedModeFlag;
+  tN2kGNSStype GNSSType;
+  uint8_t AtoNStatus;
+  tN2kAISTransceiverInformation AISTransceiverInformation; 
+  char AtoNName[20];
+} tN2kAISAtoNReportData;
 
-inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
-                      double Longitude, double Latitude, bool Accuracy, bool RAIM, uint8_t Seconds, 
-                      double Length, double Beam, double PositionReferenceStarboard , double PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType AtoNType, bool OffPositionIndicator, bool VirtualAtoNFlag, bool AssignedModeFlag, 
-                      tN2kGNSStype GNSSType, uint8_t AtoNStatus, tN2kAISTransceiverInformation AISTransceiverInformation, 
-                      char* AtoNName) {
-  SetN2kPGN129041(N2kMsg, MessageID, Repeat, UserID, 
-                      Longitude, Latitude, Accuracy, RAIM, Seconds, 
-                      Length, Beam, PositionReferenceStarboard , PositionReferenceTrueNorth, 
-                      AtoNType, OffPositionIndicator, VirtualAtoNFlag, AssignedModeFlag, 
-                      GNSSType, AtoNStatus, AISTransceiverInformation, 
-                      AtoNName);
+void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData N2kData);
+inline void SetN2kAISAtoNReport(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData N2kData) {
+  SetN2kPGN129041(N2kMsg, N2kData);
 }
 
-bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, 
-                      double &Longitude, double &Latitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
-                      double &Length, double &Beam, double &PositionReferenceStarboard , double &PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType &AtoNType, bool &OffPositionIndicator, bool &VirtualAtoNFlag, bool &AssignedModeFlag, 
-                      tN2kGNSStype &GNSSType, uint8_t &AtoNStatus, tN2kAISTransceiverInformation &AISTransceiverInformation, 
-                      char* AtoNName);
-
-inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, 
-                      double &Longitude, double &Latitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, 
-                      double &Length, double &Beam, double &PositionReferenceStarboard , double &PositionReferenceTrueNorth, 
-                      tN2kAISAtoNType &AtoNType, bool &OffPositionIndicator, bool &VirtualAtoNFlag, bool &AssignedModeFlag, 
-                      tN2kGNSStype &GNSSType, uint8_t &AtoNStatus, tN2kAISTransceiverInformation &AISTransceiverInformation, 
-                      char* AtoNName) {
-  return ParseN2kPGN129041(N2kMsg, MessageID, Repeat, UserID, Longitude, Latitude, Accuracy, RAIM , Seconds, Length, Beam, 
-                            PositionReferenceStarboard , PositionReferenceTrueNorth , AtoNType, OffPositionIndicator, 
-                            VirtualAtoNFlag, AssignedModeFlag, GNSSType, AtoNStatus, AISTransceiverInformation, AtoNName);
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData);
+inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
+  return ParseN2kPGN129041(N2kMsg, N2kData);
 }
 
 //*****************************************************************************
