@@ -183,9 +183,7 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
   SetN2kPGN130323(N2kMsg, data_tx);
 
   tN2kMeteorlogicalStationData data_rx;
-  size_t StationIDMaxSize = 15;
-  size_t StationNameMaxSize = 50;
-  ParseN2kPGN130323(N2kMsg, data_rx, StationIDMaxSize, StationIDMaxSize);
+  ParseN2kPGN130323(N2kMsg, data_rx);
 
   SECTION("parsed values match set values")
   {
@@ -209,7 +207,7 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
 TEST_CASE("PGN130577 Direction Data")
 {
   tN2kMsg N2kMsg;
-  tN2kDataMode DataMode[2] = {Simulator,Simulator};
+  tN2kDataMode DataMode[2] = {N2kDD025_Simulator,N2kDD025_Simulator};
   tN2kHeadingReference CogReference[2] = {N2khr_magnetic,N2khr_magnetic};
   unsigned char SID[2] = {3,0};
   double COG[2] = {0.1,0};

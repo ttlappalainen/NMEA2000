@@ -1843,8 +1843,8 @@ struct tN2kMeteorlogicalStationData {
   double WindGusts;
   double AtmosphericPressure;
   double OutsideAmbientAirTemperature;
-  char StationID[15];
-  char StationName[50];
+  char StationID[15 + 1];
+  char StationName[50 + 1];
 
   tN2kMeteorlogicalStationData():
     Mode(N2kaismode_Autonomous),
@@ -1876,12 +1876,9 @@ struct tN2kMeteorlogicalStationData {
 void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData);
 inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) { SetN2kPGN130323(N2kMsg, N2kData); }
 
-bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData,
-                        size_t StationIDMaxSize=15, size_t StationNameMaxSize=50);
-
-inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData, 
-                                              size_t StationIDMaxSize=15, size_t StationNameMaxSize=50) {
-  return ParseN2kPGN130323(N2kMsg, N2kData, StationIDMaxSize, StationNameMaxSize);
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData);
+inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData) {
+  return ParseN2kPGN130323(N2kMsg, N2kData);
 }
 
 //*****************************************************************************

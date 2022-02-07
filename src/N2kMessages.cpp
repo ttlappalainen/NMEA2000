@@ -1905,8 +1905,7 @@ void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kDat
 }
 
 
-bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData,
-                        size_t StationIDMaxSize, size_t StationNameMaxSize) {
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData) {
     if (N2kMsg.PGN!=130323L) return false;
     int Index=0;
     unsigned char vb;
@@ -1924,8 +1923,10 @@ bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kD
     N2kData.WindGusts = N2kMsg.Get2ByteUDouble(0.01,Index);
     N2kData.AtmosphericPressure = N2kMsg.Get2ByteUDouble(100,Index);
     N2kData.OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
-    N2kMsg.GetVarStr(StationIDMaxSize, (char*)N2kData.StationID, Index);
-    N2kMsg.GetVarStr(StationNameMaxSize, (char*)N2kData.StationName, Index);
+    size_t StationIDSize = sizeof(N2kData.StationID);
+    size_t StationNameSize = sizeof(N2kData.StationName);
+    N2kMsg.GetVarStr(StationIDSize, (char*)N2kData.StationID, Index);
+    N2kMsg.GetVarStr(StationNameSize, (char*)N2kData.StationName, Index);
 
     return true;
 }
