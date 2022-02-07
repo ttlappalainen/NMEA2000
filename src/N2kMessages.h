@@ -1309,7 +1309,7 @@ inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
 //  
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
-typedef struct tN2kPGN129041 {
+struct tN2kAISAtoNReportData {
   uint8_t MessageID;
   tN2kAISRepeat Repeat;
   uint32_t UserID;
@@ -1329,17 +1329,45 @@ typedef struct tN2kPGN129041 {
   tN2kGNSStype GNSSType;
   uint8_t AtoNStatus;
   tN2kAISTransceiverInformation AISTransceiverInformation; 
-  char AtoNName[20];
-} tN2kAISAtoNReportData;
+  char AtoNName[34];
 
-void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData N2kData);
-inline void SetN2kAISAtoNReport(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData N2kData) {
+  tN2kAISAtoNReportData():
+    MessageID(N2kUInt8NA),
+    Repeat(N2kaisr_Initial),
+    UserID(N2kUInt32NA),
+    Longitude(N2kDoubleNA),
+    Latitude(N2kDoubleNA),
+    Accuracy(false),
+    RAIM(false),
+    Seconds(N2kUInt8NA),
+    Length(N2kDoubleNA),
+    Beam(N2kDoubleNA),
+    PositionReferenceStarboard(N2kDoubleNA),
+    PositionReferenceTrueNorth(N2kDoubleNA),
+    AtoNType(N2kAISAtoN_not_specified),
+    OffPositionIndicator(false),
+    VirtualAtoNFlag(false),
+    AssignedModeFlag(false),
+    GNSSType(N2kGNSSt_GPS),
+    AtoNStatus(N2kUInt8NA),
+    AISTransceiverInformation(N2kaischannel_A_VDL_reception) { 
+      AtoNName[0]=0; 
+   }
+
+  void SetAtoNName(const char *name) {
+    strncpy(AtoNName, name, sizeof(AtoNName));
+    AtoNName[sizeof(AtoNName) - 1] = 0;
+  }
+};
+
+void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData);
+inline void SetN2kAISAtoNReport(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
   SetN2kPGN129041(N2kMsg, N2kData);
 }
 
-bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData);
-inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
-  return ParseN2kPGN129041(N2kMsg, N2kData);
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, size_t AtoNNameMaxSize);
+inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, size_t AtoNNameMaxSize) {
+  return ParseN2kPGN129041(N2kMsg, N2kData, AtoNNameMaxSize);
 }
 
 //*****************************************************************************

@@ -208,35 +208,37 @@ TEST_CASE("PGN129041 AIS AtoN Navigation Report")
 {
 
   tN2kMsg N2kMsg;
-  tN2kAISAtoNReportData data_tx = {
-    5,
-    N2kaisr_Final,
-    7,
-    -33.0,
-    151.0,
-    true,
-    false,
-    4,
-    52.5,
-    21.5,
-    3.6,
-    7.2,
-    N2kAISAtoN_beacon_isolated_danger,
-    true,
-    true,
-    true,
-    N2kGNSSt_Chayka,
-    0x00,
-    N2kaischannel_B_VDL_transmission,
-    "BINGBONG",
-  };
+  tN2kAISAtoNReportData data_tx;
+
+  data_tx.MessageID = 5;
+  data_tx.Repeat = N2kaisr_Final;
+  data_tx.UserID = 7;
+  data_tx.Longitude =  -33.0;
+  data_tx.Latitude = 151.0;
+  data_tx.Accuracy = true;
+  data_tx.RAIM = true;
+  data_tx.Seconds = 4;
+  data_tx.Length =  52.5;
+  data_tx.Beam = 21.5;
+  data_tx.PositionReferenceStarboard  = 3.6;
+  data_tx.PositionReferenceTrueNorth = 7.2;
+  data_tx.AtoNType = N2kAISAtoN_beacon_isolated_danger;
+  data_tx.OffPositionIndicator = true;
+  data_tx.VirtualAtoNFlag = true;
+  data_tx.AssignedModeFlag = true;
+  data_tx.GNSSType = N2kGNSSt_Chayka;
+  data_tx.AtoNStatus = 0x00;
+  data_tx.AISTransceiverInformation =  N2kaischannel_B_VDL_transmission;
+  data_tx.SetAtoNName("BINGBONG");
+  size_t AtoNNameMaxSize = 34;
+
 
   SetN2kAISAtoNReport(N2kMsg, data_tx);
 
 
   char AtoNName_RX[34];
   tN2kAISAtoNReportData data_rx;
-  ParseN2kAISAtoNReport(N2kMsg, data_rx);
+  ParseN2kAISAtoNReport(N2kMsg, data_rx, AtoNNameMaxSize);
 
   SECTION("parsed values match set values")
   {
