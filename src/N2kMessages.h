@@ -1329,7 +1329,7 @@ struct tN2kAISAtoNReportData {
   tN2kGNSStype GNSSType;
   uint8_t AtoNStatus;
   tN2kAISTransceiverInformation AISTransceiverInformation; 
-  char AtoNName[34];
+  char AtoNName[34 + 1];
 
   tN2kAISAtoNReportData():
     MessageID(N2kUInt8NA),
@@ -1365,9 +1365,9 @@ inline void SetN2kAISAtoNReport(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2
   SetN2kPGN129041(N2kMsg, N2kData);
 }
 
-bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, size_t AtoNNameMaxSize);
-inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, size_t AtoNNameMaxSize) {
-  return ParseN2kPGN129041(N2kMsg, N2kData, AtoNNameMaxSize);
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData);
+inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
+  return ParseN2kPGN129041(N2kMsg, N2kData);
 }
 
 //*****************************************************************************

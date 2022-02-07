@@ -1395,14 +1395,14 @@ void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
                     | (N2kData.VirtualAtoNFlag & 0x01) << 6 
                     | (N2kData.OffPositionIndicator & 0x01) << 5
                     | (N2kData.AtoNType & 0x1f)); 
-    N2kMsg.AddByte(0x00 | (N2kData.GNSSType & 0x0F) << 3 | 0x07);
+    N2kMsg.AddByte((N2kData.GNSSType & 0x0F) << 1 | 0xe7);
     N2kMsg.AddByte(N2kData.AtoNStatus);
-    N2kMsg.AddByte((N2kData.AISTransceiverInformation & 0x1f) | 0xE0);
+    N2kMsg.AddByte((N2kData.AISTransceiverInformation & 0x1f) | 0xe0);
     N2kMsg.AddVarStr((char*)N2kData.AtoNName);
 }
 
 
-bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, size_t AtoNNameMaxSize) {
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
     if (N2kMsg.PGN!=129041L) return false;
 
     int Index=0;
@@ -1424,7 +1424,8 @@ bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData, si
     N2kData.GNSSType = (tN2kGNSStype)((N2kMsg.GetByte(Index) & 0x78) >> 3);
     N2kData.AtoNStatus=N2kMsg.GetByte(Index);  
     N2kData.AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
-    N2kMsg.GetVarStr(AtoNNameMaxSize, (char*)N2kData.AtoNName, Index);
+    size_t AtoNNameSize = sizeof(N2kData.AtoNName);
+    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, Index);
 
     return true;
 }

@@ -206,7 +206,6 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
 
 TEST_CASE("PGN129041 AIS AtoN Navigation Report") 
 {
-
   tN2kMsg N2kMsg;
   tN2kAISAtoNReportData data_tx;
 
@@ -230,15 +229,12 @@ TEST_CASE("PGN129041 AIS AtoN Navigation Report")
   data_tx.AtoNStatus = 0x00;
   data_tx.AISTransceiverInformation =  N2kaischannel_B_VDL_transmission;
   data_tx.SetAtoNName("BINGBONG");
-  size_t AtoNNameMaxSize = 34;
-
 
   SetN2kAISAtoNReport(N2kMsg, data_tx);
 
-
   char AtoNName_RX[34];
   tN2kAISAtoNReportData data_rx;
-  ParseN2kAISAtoNReport(N2kMsg, data_rx, AtoNNameMaxSize);
+  ParseN2kAISAtoNReport(N2kMsg, data_rx);
 
   SECTION("parsed values match set values")
   {
