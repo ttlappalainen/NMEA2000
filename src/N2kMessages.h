@@ -38,6 +38,7 @@ NMEA2000.h
 
 #include "N2kMsg.h"
 #include "N2kTypes.h"
+#include <cstring>
 #include <stdint.h>
 
 inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795L; }
@@ -1830,7 +1831,7 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be sent.
 //*****************************************************************************
-typedef struct tN2kPGN130323Data {
+struct tN2kMeteorlogicalStationData {
   tN2kAISMode Mode;
   uint16_t SystemDate;
   double SystemTime;
@@ -1844,10 +1845,36 @@ typedef struct tN2kPGN130323Data {
   double OutsideAmbientAirTemperature;
   char StationID[15];
   char StationName[50];
-} tN2kMeteorlogicalStationData;
 
-void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData N2kData);
-inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData N2kData) { SetN2kPGN130323(N2kMsg, N2kData); }
+  tN2kMeteorlogicalStationData():
+    Mode(N2kaismode_Autonomous),
+    SystemDate(N2kUInt16NA),
+    SystemTime(N2kDoubleNA),
+    Latitude(N2kDoubleNA),
+    Longitude(N2kDoubleNA),
+    WindSpeed(N2kDoubleNA),
+    WindDirection(N2kDoubleNA),
+    WindReference(N2kWind_Unavailable),
+    WindGusts(N2kDoubleNA),
+    AtmosphericPressure(N2kDoubleNA),
+    OutsideAmbientAirTemperature(N2kDoubleNA) {
+      StationID[0] = 0;
+      StationName[0] = 0;
+    }
+
+  void SetStationID(const char *id) {
+    strncpy(StationID, id, sizeof(StationID));
+    StationID[sizeof(StationID) - 1] = 0;
+  }
+
+  void SetStationName(const char *name) {
+    strncpy(StationName, name, sizeof(StationName));
+    StationName[sizeof(StationName) - 1] = 0;
+  }
+};
+
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData);
+inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) { SetN2kPGN130323(N2kMsg, N2kData); }
 
 bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData,
                         size_t StationIDMaxSize=15, size_t StationNameMaxSize=50);

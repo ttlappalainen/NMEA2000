@@ -164,21 +164,21 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
 {
   tN2kMsg N2kMsg;
 
-  tN2kMeteorlogicalStationData data_tx = {
-    N2kaismode_Assigned,
-    10,
-    10.9,
-    -33.0,
-    151.0,
-    12.3,
-    2.1,
-    N2kWind_True_North,
-    12.3,
-    100,
-    12.3,
-    "StationID",
-    "StationName",
-  };
+  tN2kMeteorlogicalStationData data_tx;
+
+  data_tx.Mode = N2kaismode_Assigned;
+  data_tx.SystemDate = 10;
+  data_tx.SystemTime = 10.8;
+  data_tx.Latitude = -33.1;
+  data_tx.Longitude = 151.6;
+  data_tx.WindSpeed = 12.3;
+  data_tx.WindDirection = 2.1;
+  data_tx.WindReference = N2kWind_True_North;
+  data_tx.WindGusts = 12.3;
+  data_tx.AtmosphericPressure = 100;
+  data_tx.OutsideAmbientAirTemperature= 19.1;
+  data_tx.SetStationID("AX12");
+  data_tx.SetStationName("StationName");
 
   SetN2kPGN130323(N2kMsg, data_tx);
 
