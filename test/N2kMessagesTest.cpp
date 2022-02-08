@@ -160,10 +160,54 @@ TEST_CASE("PGN129039 AIS Class B Position")
       }
 }
 
+TEST_CASE("PGN130323 Meteorlogical Station Data")
+{
+  tN2kMsg N2kMsg;
+
+  tN2kMeteorlogicalStationData data_tx;
+
+  data_tx.Mode = N2kaismode_Assigned;
+  data_tx.SystemDate = 10;
+  data_tx.SystemTime = 10.8;
+  data_tx.Latitude = -33.1;
+  data_tx.Longitude = 151.6;
+  data_tx.WindSpeed = 12.3;
+  data_tx.WindDirection = 2.1;
+  data_tx.WindReference = N2kWind_True_North;
+  data_tx.WindGusts = 12.3;
+  data_tx.AtmosphericPressure = 100;
+  data_tx.OutsideAmbientAirTemperature= 19.1;
+  data_tx.SetStationID("AX12");
+  data_tx.SetStationName("StationName");
+
+  SetN2kPGN130323(N2kMsg, data_tx);
+
+  tN2kMeteorlogicalStationData data_rx;
+  ParseN2kPGN130323(N2kMsg, data_rx);
+
+  SECTION("parsed values match set values")
+  {
+    REQUIRE(data_tx.Mode ==                            data_rx.Mode);
+    REQUIRE(data_tx.SystemDate ==                      data_rx.SystemDate);
+    REQUIRE(data_tx.SystemTime ==                      data_rx.SystemTime);
+    REQUIRE(data_tx.Latitude ==                        data_rx.Latitude);
+    REQUIRE(data_tx.Longitude ==                       data_rx.Longitude);
+    REQUIRE(data_tx.WindSpeed ==                       data_rx.WindSpeed);
+    REQUIRE(data_tx.WindDirection ==                   data_rx.WindDirection);
+    REQUIRE(data_tx.WindReference ==                   data_rx.WindReference);
+    REQUIRE(data_tx.WindGusts ==                       data_rx.WindGusts);
+    REQUIRE(data_tx.AtmosphericPressure ==             data_rx.AtmosphericPressure);
+    REQUIRE(data_tx.OutsideAmbientAirTemperature ==    data_rx.OutsideAmbientAirTemperature);
+    REQUIRE(strcmp(data_tx.StationID,                  data_rx.StationID) == 0);
+    REQUIRE(strcmp(data_tx.StationName,                data_rx.StationName) == 0);
+   }
+
+}
+
 TEST_CASE("PGN130577 Direction Data")
 {
   tN2kMsg N2kMsg;
-  tN2kDataMode DataMode[2] = {Simulator,Simulator};
+  tN2kDataMode DataMode[2] = {N2kDD025_Simulator,N2kDD025_Simulator};
   tN2kHeadingReference CogReference[2] = {N2khr_magnetic,N2khr_magnetic};
   unsigned char SID[2] = {3,0};
   double COG[2] = {0.1,0};

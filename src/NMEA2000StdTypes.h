@@ -58,6 +58,16 @@ enum tN2kDD002 {
                   N2kDD002_1=N2kDD002_Yes,
                   N2kDD002_Unknown=N2kDD002_Unavailable
                 };
+
+enum tN2kDD025 {
+                  N2kDD025_Autonomous=0,
+                  N2kDD025_Differential=1,
+                  N2kDD025_Estimated=2,
+                  N2kDD025_Simulator=3,
+                  N2kDD025_Manual=4,
+                  N2kDD025_Error=0xe,
+                  N2kDD025_Unavailable=0xf
+                };
                           
 enum tN2kDD072 {
                   N2kDD072_RangeResidualsWereUsedToCalculateData=0,
@@ -264,6 +274,8 @@ enum tN2kDD488 {
                             N2kDD488_ProportionalSpeed=2,
                             N2kDD488_DataNotAvailable=3
                           };
+
+
 
 #endif
 

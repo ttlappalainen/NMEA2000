@@ -38,6 +38,7 @@ NMEA2000.h
 
 #include "N2kMsg.h"
 #include "N2kTypes.h"
+#include <cstring>
 #include <stdint.h>
 
 inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795L; }
@@ -1810,6 +1811,75 @@ inline bool ParseN2kTemperatureExt(const tN2kMsg &N2kMsg, unsigned char &SID, un
   return ParseN2kPGN130316(N2kMsg, SID, TempInstance, TempSource, ActualTemperature, SetTemperature);
 }
 
+//*****************************************************************************
+// Meteorlogical Station Data
+// Input:
+//  - SystemDate            Days since 1970-01-01
+//  - SystemTime            seconds since midnight
+//  - Latitude              The latitude of the current waypoint
+//  - Longitude             The longitude of the current waypoint
+//  - WindSpeed             Measured wind speed in m/s
+//  - WindDirection         Measured wind direction in radians. If you have value in degrees, use function DegToRad(myval) in call.
+//  - WindReference         Wind reference, see definition of tN2kWindReference
+//  - WindGusts             Measured wind gusts speed in m/s
+//  - AtmosphericPressure   Atmospheric pressure in Pascals. Use function mBarToPascal, if you like to use mBar
+//  - OutsideAmbientAirTemperature      Outside ambient temperature in K. Use function CToKelvin, if you want to use °C.
+//  - StationID             Identifier of the transmitting weather station. (15 bytes max)
+//  - StationName           Friendly name of the transmitting weather station. (50 bytes max)
+//  
+//
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be sent.
+//*****************************************************************************
+struct tN2kMeteorlogicalStationData {
+  tN2kAISMode Mode;
+  uint16_t SystemDate;
+  double SystemTime;
+  double Latitude;
+  double Longitude;
+  double WindSpeed;
+  double WindDirection;
+  tN2kWindReference WindReference;
+  double WindGusts;
+  double AtmosphericPressure;
+  double OutsideAmbientAirTemperature;
+  char StationID[15 + 1];
+  char StationName[50 + 1];
+
+  tN2kMeteorlogicalStationData():
+    Mode(N2kaismode_Autonomous),
+    SystemDate(N2kUInt16NA),
+    SystemTime(N2kDoubleNA),
+    Latitude(N2kDoubleNA),
+    Longitude(N2kDoubleNA),
+    WindSpeed(N2kDoubleNA),
+    WindDirection(N2kDoubleNA),
+    WindReference(N2kWind_Unavailable),
+    WindGusts(N2kDoubleNA),
+    AtmosphericPressure(N2kDoubleNA),
+    OutsideAmbientAirTemperature(N2kDoubleNA) {
+      StationID[0] = 0;
+      StationName[0] = 0;
+    }
+
+  void SetStationID(const char *id) {
+    strncpy(StationID, id, sizeof(StationID));
+    StationID[sizeof(StationID) - 1] = 0;
+  }
+
+  void SetStationName(const char *name) {
+    strncpy(StationName, name, sizeof(StationName));
+    StationName[sizeof(StationName) - 1] = 0;
+  }
+};
+
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData);
+inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) { SetN2kPGN130323(N2kMsg, N2kData); }
+
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData);
+inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData) {
+  return ParseN2kPGN130323(N2kMsg, N2kData);
+}
 
 //*****************************************************************************
 // Small Craft Status (Trim Tab Position)

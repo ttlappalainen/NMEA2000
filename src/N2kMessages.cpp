@@ -1885,6 +1885,53 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 }
 
 //*****************************************************************************
+// Meteorological Station Data
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) {
+    N2kMsg.SetPGN(130323L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte( (((unsigned char) N2kData.Mode) & 0x0f) | 0xf0 );
+    N2kMsg.Add2ByteUInt(N2kData.SystemDate);
+    N2kMsg.Add4ByteUDouble(N2kData.SystemTime,0.0001);
+    N2kMsg.Add4ByteDouble(N2kData.Latitude,1e-7);
+    N2kMsg.Add4ByteDouble(N2kData.Longitude,1e-7);
+    N2kMsg.Add2ByteUDouble(N2kData.WindSpeed,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.WindDirection,0.0001);
+    N2kMsg.AddByte( (((unsigned char)N2kData.WindReference) & 0x07) | 0xf8 );
+    N2kMsg.Add2ByteUDouble(N2kData.WindGusts,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.AtmosphericPressure,100);
+    N2kMsg.Add2ByteUDouble(N2kData.OutsideAmbientAirTemperature,0.01);
+    N2kMsg.AddVarStr((char*)N2kData.StationID);
+    N2kMsg.AddVarStr((char*)N2kData.StationName);
+}
+
+
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData) {
+    if (N2kMsg.PGN!=130323L) return false;
+    int Index=0;
+    unsigned char vb;
+
+    vb = N2kMsg.GetByte(Index);
+    N2kData.Mode=(tN2kAISMode)(vb & 0x0f);
+    N2kData.SystemDate = N2kMsg.Get2ByteUInt(Index);
+    N2kData.SystemTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
+    N2kData.Latitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.Longitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.WindSpeed = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.WindDirection = N2kMsg.Get2ByteUDouble(0.0001,Index);
+    vb = N2kMsg.GetByte(Index);
+    N2kData.WindReference = (tN2kWindReference)(vb & 0x07);
+    N2kData.WindGusts = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.AtmosphericPressure = N2kMsg.Get2ByteUDouble(100,Index);
+    N2kData.OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+    size_t StationIDSize = sizeof(N2kData.StationID);
+    size_t StationNameSize = sizeof(N2kData.StationName);
+    N2kMsg.GetVarStr(StationIDSize, (char*)N2kData.StationID, Index);
+    N2kMsg.GetVarStr(StationNameSize, (char*)N2kData.StationName, Index);
+
+    return true;
+}
+
+//*****************************************************************************
 // Trim Tab Position
 // Trim tab position is a percentage 0 to 100% where 0 is fully retracted and 100 is fully extended
 void SetN2kPGN130576(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab) {

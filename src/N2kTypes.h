@@ -361,13 +361,6 @@ enum tN2kMOBEmitterBatteryStatus {
                            Good=0,
                            Low=1,
                           };
-enum tN2kDataMode {
-                           Autonomous = 0,
-                           DifferentialEnhanced = 1,
-                           Estimated = 2,
-                           Simulator = 3,
-                           Manual = 4
-                           };
 
 //*****************************************************************************
 // Aliases for N2K standard types.
@@ -390,6 +383,16 @@ using tN2kGenericStatusPair = tN2kDD002;
                   // N2kDD002_Set=N2kDD002_Yes
                   // N2kDD002_1=N2kDD002_Yes
                   // N2kDD002_Unknown=N2kDD002_Unavailable                         
+                  
+using tN2kDataMode = tN2kDD025;
+            // Enum type members:
+                  // N2kDD025_Autonomous=0,
+                  // N2kDD025_Differential=1,
+                  // N2kDD025_Estimated=2,
+                  // N2kDD025_Simulator=3,
+                  // N2kDD025_Manual=4,
+                  // N2kDD025_Error=0xe,
+                  // N2kDD025_Unavailable=0xf
 
 using tN2kRangeResidualMode = tN2kDD072;
                   // N2kDD072_RangeResidualsWereUsedToCalculateData=0,
@@ -492,6 +495,7 @@ using tN2kSpeedType = tN2kDD488;
                             // N2kDD488_DualSpeed=1
                             // N2kDD488_ProportionalSpeed=2
                             // N2kDD488_DataNotAvailable=3
+
 
 #endif
 
