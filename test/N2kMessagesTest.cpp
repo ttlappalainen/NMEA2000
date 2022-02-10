@@ -204,6 +204,62 @@ TEST_CASE("PGN130323 Meteorlogical Station Data")
 
 }
 
+TEST_CASE("PGN129041 AIS AtoN Navigation Report") 
+{
+  tN2kMsg N2kMsg;
+  tN2kAISAtoNReportData data_tx;
+
+  data_tx.MessageID = 5;
+  data_tx.Repeat = N2kaisr_Final;
+  data_tx.UserID = 7;
+  data_tx.Longitude =  -33.0;
+  data_tx.Latitude = 151.0;
+  data_tx.Accuracy = true;
+  data_tx.RAIM = true;
+  data_tx.Seconds = 4;
+  data_tx.Length =  52.5;
+  data_tx.Beam = 21.5;
+  data_tx.PositionReferenceStarboard  = 3.6;
+  data_tx.PositionReferenceTrueNorth = 7.2;
+  data_tx.AtoNType = N2kAISAtoN_beacon_isolated_danger;
+  data_tx.OffPositionIndicator = true;
+  data_tx.VirtualAtoNFlag = true;
+  data_tx.AssignedModeFlag = true;
+  data_tx.GNSSType = N2kGNSSt_Chayka;
+  data_tx.AtoNStatus = 0x00;
+  data_tx.AISTransceiverInformation =  N2kaischannel_B_VDL_transmission;
+  data_tx.SetAtoNName("BINGBONG");
+
+  SetN2kAISAtoNReport(N2kMsg, data_tx);
+
+  char AtoNName_RX[34];
+  tN2kAISAtoNReportData data_rx;
+  ParseN2kAISAtoNReport(N2kMsg, data_rx);
+
+  SECTION("parsed values match set values")
+  {
+      REQUIRE(data_tx.MessageID ==                    data_rx.MessageID);
+      REQUIRE(data_tx.Repeat ==                       data_rx.Repeat);
+      REQUIRE(data_tx.UserID ==                       data_rx.UserID);
+      REQUIRE(data_tx.Latitude ==                     data_rx.Latitude);
+      REQUIRE(data_tx.Longitude ==                    data_rx.Longitude);
+      REQUIRE(data_tx.Accuracy ==                     data_rx.Accuracy);
+      REQUIRE(data_tx.RAIM ==                         data_rx.RAIM);
+      REQUIRE(data_tx.Seconds ==                      data_rx.Seconds);
+      REQUIRE(data_tx.Length ==                       data_rx.Length);
+      REQUIRE(data_tx.Beam ==                         data_rx.Beam);
+      REQUIRE(data_tx.PositionReferenceStarboard ==   data_rx.PositionReferenceStarboard);
+      REQUIRE(data_tx.PositionReferenceTrueNorth ==   data_rx.PositionReferenceTrueNorth);
+      REQUIRE(data_tx.AtoNType ==                     data_rx.AtoNType);
+      REQUIRE(data_tx.OffPositionIndicator ==         data_rx.OffPositionIndicator);
+      REQUIRE(data_tx.VirtualAtoNFlag ==              data_rx.VirtualAtoNFlag);
+      REQUIRE(data_tx.AssignedModeFlag ==             data_rx.AssignedModeFlag);
+      REQUIRE(data_tx.GNSSType ==                     data_rx.GNSSType);
+      REQUIRE(data_tx.AtoNStatus ==                   data_rx.AtoNStatus);
+      REQUIRE(data_tx.AISTransceiverInformation ==    data_rx.AISTransceiverInformation);
+  }
+}
+
 TEST_CASE("PGN130577 Direction Data")
 {
   tN2kMsg N2kMsg;
