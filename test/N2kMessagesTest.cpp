@@ -375,7 +375,7 @@ TEST_CASE("PGN129285 Route/WP information")
 
    SetN2kPGN129285(N2kMsg1, Start, Database, Route, NavDirection, SupplementaryData, (char*)RouteName);
 
-   SetN2kRouteWPInfo(N2kMsg2, Start, Database, Route, NavDirectiont, SupplementaryData, (char*)RouteName);
+   SetN2kRouteWPInfo(N2kMsg2, Start, Database, Route, NavDirectiont, (tN2kTrueFalse)SupplementaryData, (char*)RouteName);
 
    SECTION("values of both calls produce identical messages")
    {

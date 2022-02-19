@@ -32,13 +32,16 @@ NMEA2000 type definitions.
 enum tN2kNavigationDirection {
                             N2kdir_forward=0,
                             N2kdir_reverse=1,
-                            N2kdir_reserved1=2,
-                            N2kdir_reserved2=3,
-                            N2kdir_reserved3=4,
-                            N2kdir_reserved4=5,
-                            N2kdir_error=6,
-                            N2kdir_unknown=7
+                            N2kdir_error=2,
+                            N2kdir_unknown=3
                               };
+
+enum tN2kTrueFalse {
+                            N2ktf_false = 0,
+                            N2ktf_true = 1,
+                            N2ktf_error = 2,
+                            N2ktf_unknown = 3
+};
 
 enum tN2kHeadingReference {
                             N2khr_true=0,

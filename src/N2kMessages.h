@@ -82,6 +82,27 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
   return ParseN2kPGN126992(N2kMsg,SID,SystemDate,SystemTime,TimeSource);
 }
 
+
+//*****************************************************************************
+// Heave
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Heave
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127252(tN2kMsg &N2kMsg, unsigned char SID, double Heave);
+
+inline void SetN2kHeave(tN2kMsg &N2kMsg, unsigned char SID, double Heave) {
+   SetN2kPGN127252(N2kMsg, SID, Heave);
+}
+
+bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave);
+
+inline bool ParseN2kHeave(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave) {
+   return ParseN2kPGN127252(N2kMsg, SID, Heave);
+}
+
+
 //*****************************************************************************
 // AIS Safety Related Broadcast Message
 // Input:
@@ -97,7 +118,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 
 inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
       tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText) {
-   return SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
+   SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
 }
 
 bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
@@ -1348,10 +1369,10 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName);
+      tN2kNavigationDirection NavDirection, tN2kTrueFalse SupplementaryData, char* RouteName);
 
 inline void SetN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName)
+      tN2kNavigationDirection NavDirection, tN2kTrueFalse SupplementaryData, char* RouteName)
 {
    SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection, SupplementaryData, RouteName);
 }
@@ -1360,8 +1381,7 @@ inline void SetN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database
 inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
                         bool NavDirection, bool SupplementaryData, char* RouteName)
 {
-   tN2kNavigationDirection NavDirection1 = NavDirection?N2kdir_reverse:N2kdir_forward;
-	SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection1, (uint8_t)SupplementaryData, RouteName);
+	SetN2kPGN129285(N2kMsg, Start, Database, Route, (tN2kNavigationDirection)NavDirection, (tN2kTrueFalse)SupplementaryData, RouteName);
 }                        
 
 // Route/WP appended information
@@ -1379,6 +1399,14 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Lat
 inline bool AppendN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Latitude, double Longitude)
 {
    return AppendN2kPGN129285(N2kMsg, WPID, WPName, Latitude, Longitude);
+}
+
+bool ParseN2kPGN129285(const tN2kMsg &N2kMsg, uint16_t &Start, uint16_t &Database, uint16_t &Route,
+      tN2kNavigationDirection &NavDirection, tN2kTrueFalse &SupplementaryData, char* RouteName);
+
+inline bool ParseN2kRouteWPInfo(const tN2kMsg &N2kMsg, uint16_t &Start, uint16_t &Database, uint16_t &Route,
+      tN2kNavigationDirection &NavDirection, tN2kTrueFalse &SupplementaryData, char* RouteName) {
+   return ParseN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection, SupplementaryData, RouteName);
 }
 
 //*****************************************************************************

@@ -52,6 +52,26 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
 }
 
 //*****************************************************************************
+// Heave
+void SetN2kPGN127252(tN2kMsg &N2kMsg, unsigned char SID, double Heave)
+{
+   N2kMsg.SetPGN(127252L);
+   N2kMsg.Priority=3;
+   N2kMsg.AddByte(SID);
+   N2kMsg.Add2ByteDouble(Heave,0.01);
+}
+
+bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave)
+{
+   if (N2kMsg.PGN!=127252L) return false;
+   int Index = 0;
+   SID = N2kMsg.GetByte(Index);
+   Heave = N2kMsg.Get2ByteDouble(0.01,Index);
+   return true;
+}
+
+
+//*****************************************************************************
 // AIS Safety Related Broadcast Message
 void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
       tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText)
@@ -1460,20 +1480,21 @@ bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& Distan
 //*****************************************************************************
 // Waypoint list
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-         tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName) {
-    unsigned int i;
+         tN2kNavigationDirection NavDirection, tN2kTrueFalse SupplementaryData, char* RouteName) {
+    unsigned int i, len;
     N2kMsg.SetPGN(129285L);
     N2kMsg.Priority=6;
     N2kMsg.Add2ByteUInt(Start);
     N2kMsg.Add2ByteUInt(0); // number of items initially 0
     N2kMsg.Add2ByteUInt(Database);
     N2kMsg.Add2ByteUInt(Route);
-    N2kMsg.AddByte(0xC0 | (SupplementaryData & 0x03)<<4 | (NavDirection & 0x0F));
-    if (strlen(RouteName) == 0) {
+    N2kMsg.AddByte(0xF0 | (SupplementaryData & 0x03)<<2 | (NavDirection & 0x03));
+    len = strlen(RouteName);
+    if (len == 0) {
       N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
     } else {
-      N2kMsg.AddByte(strlen(RouteName)+2);N2kMsg.AddByte(0x01);
-      for (i=0; i<strlen(RouteName); i++)
+      N2kMsg.AddByte(len+2);N2kMsg.AddByte(0x01);
+      for (i=0; i<len; i++)
         N2kMsg.AddByte(RouteName[i]);
     }
     N2kMsg.AddByte(0xff); // reserved
@@ -1510,6 +1531,24 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
         return true;
     } else
         return false;
+}
+
+bool ParseN2kPGN129285(const tN2kMsg &N2kMsg, uint16_t &Start, uint16_t &Database, uint16_t &Route,
+      tN2kNavigationDirection &NavDirection, tN2kTrueFalse &SupplementaryData, char* RouteName)
+{
+   if(N2kMsg.PGN != 129285L)
+     return false;
+
+   unsigned char vb;
+   int Index = 0;
+   Start = N2kMsg.Get2ByteUInt(Index);
+   Database = N2kMsg.Get2ByteUInt(Index);
+   Route = N2kMsg.Get2ByteUInt(Index);
+   vb = N2kMsg.GetByte(Index);
+   NavDirection = (tN2kNavigationDirection)(vb & 0x03);
+   SupplementaryData = (tN2kTrueFalse)(vb>>2 & 0x03);
+   N2kMsg.GetStr(RouteName, 255, Index);
+   return true;
 }
 
 //*****************************************************************************
