@@ -600,7 +600,7 @@ void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *b
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf) {
   double vd=round(v/precision);
   int32_t vi = (vd>=N2kInt24Min && vd<N2kInt24OR)?(int32_t)vd:N2kInt24OR;
-  SetBuf<int32_t>(vi, 4, index, buf);
+  SetBuf<int32_t>(vi, 3, index, buf);
 }
 
 //*****************************************************************************
