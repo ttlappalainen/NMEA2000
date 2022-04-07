@@ -1,7 +1,7 @@
 /*
 N2kGroupFunction.cpp
 
-Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -44,6 +44,7 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
   uint8_t UniqueID;
   uint8_t NumberOfSelectionPairs;
   uint8_t NumberOfParameterPairs;
+  bool Propr=(PGN!=0?Proprietary:tNMEA2000::IsProprietaryMessage(PGNForGroupFunction));
 
   switch (GroupFunctionCode) {
     case N2kgfc_Request:
@@ -77,7 +78,7 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
         if ( tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
           handled=true;  // We can mark this handled, since read is not allowed to broadcast.
         } else {
-          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary)) {
+          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Propr)) {
             handled=HandleReadFields(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,iDev);
           }
         }
@@ -89,7 +90,7 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
         if ( tNMEA2000::IsBroadcast(N2kMsg.Destination) ) {
           handled=true;  // We can mark this handled, since write is not allowed to broadcast.
         } else {
-          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Proprietary)) {
+          if (ParseReadOrWriteParams(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,Propr)) {
             handled=HandleWriteFields(N2kMsg,ManufacturerCode,IndustryGroup,UniqueID,NumberOfSelectionPairs,NumberOfParameterPairs,iDev);
           }
         }

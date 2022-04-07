@@ -1,7 +1,7 @@
 /*
 N2kMessages.h
 
-Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +38,7 @@ NMEA2000.h
 
 #include "N2kMsg.h"
 #include "N2kTypes.h"
-#include <cstring>
+#include <string.h>
 #include <stdint.h>
 
 inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795L; }

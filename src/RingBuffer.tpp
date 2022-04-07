@@ -1,7 +1,7 @@
 /*
   RingBuffer.tpp  (RingBuffer template code)
 
-  Copyright (c) 2020-2021 Timo Lappalainen
+  Copyright (c) 2020-2022 Timo Lappalainen
 
   The MIT License
 
