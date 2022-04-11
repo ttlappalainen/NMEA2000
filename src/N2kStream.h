@@ -44,6 +44,7 @@ class N2kStream {
    public:
    // Returns first byte if incoming data, or -1 on no available data.
    virtual int read() = 0;
+   virtual int peek() = 0;
 
    // Write data to stream.
    virtual size_t write(const uint8_t* data, size_t size) = 0;
