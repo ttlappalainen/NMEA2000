@@ -60,7 +60,7 @@ tRingBuffer<T>::tRingBuffer(uint16_t _size) : head(0), tail(0), size(_size) {
 // *****************************************************************************
 template<typename T>
 tRingBuffer<T>::~tRingBuffer() {
-  delete buffer;
+  delete[] buffer;
 }
 
 // *****************************************************************************
@@ -134,8 +134,8 @@ tPriorityRingBuffer<T>::tPriorityRingBuffer(uint16_t _size, uint8_t _maxPrioriti
 // *****************************************************************************
 template<typename T>
 tPriorityRingBuffer<T>::~tPriorityRingBuffer() {
-  delete buffer;
-  delete priorityReferencies;
+  delete[] buffer;
+  delete[] priorityReferencies;
 }
 
 // *****************************************************************************
