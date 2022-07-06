@@ -120,6 +120,15 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+06.07.2022
+
+- Fix: use proper array delete operator in RingBuffer, thanks garaminowicz
+
+- Fix: PGN 127251 rate of turn type, thanks BerndCirotzki and for remind speters.
+
+- Fix: PGN 129794 setter.
+
+== Changes ==
 07.04.2022
 
 - Changed #include <cstring> to #include <string.h>. <cstring> is not available on all environments.

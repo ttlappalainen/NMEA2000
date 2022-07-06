@@ -309,7 +309,7 @@ void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
     N2kMsg.SetPGN(127251L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteUDouble(RateOfTurn,3.125E-08); //1e-6/32.0 
+    N2kMsg.Add4ByteDouble(RateOfTurn,3.125E-08); //1e-6/32.0 
     N2kMsg.AddByte(0xff);
     N2kMsg.Add2ByteUInt(0xffff);
 }
@@ -1589,7 +1589,8 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteDouble(Draught, 0.01);
     N2kMsg.AddStr(Destination, 20);
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
-    N2kMsg.AddByte(AISinfo & 0x1f);
+    N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
+    N2kMsg.AddByte(0xff);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
