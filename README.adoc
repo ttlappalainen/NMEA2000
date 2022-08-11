@@ -120,6 +120,12 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+11.08.2022
+
+- Fix: On N2kGroupFunctionDefaultHandlers.cpp tN2kGroupFunctionHandlerForPGN60928 unique number length is 3 bytes.
+
+- Fix: On N2kMsg.cpp changed round(v/precision) to round((v/precision)), since some system round macro behaved unexpectedly. Thaks to ieb.
+
 06.07.2022
 
 - Fix: use proper array delete operator in RingBuffer, thanks garaminowicz

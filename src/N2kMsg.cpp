@@ -584,21 +584,21 @@ void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *bu
 
 //*****************************************************************************
 void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   int32_t vi = (vd>=N2kInt32Min && vd<N2kInt32OR)?(int32_t)vd:N2kInt32OR;
   SetBuf<int32_t>(vi, 4, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   uint32_t vi = (vd>=0 && vd<N2kUInt32OR)?(uint32_t)vd:N2kUInt32OR;
   SetBuf<uint32_t>(vi, 4, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   int32_t vi = (vd>=N2kInt24Min && vd<N2kInt24OR)?(int32_t)vd:N2kInt24OR;
   SetBuf<int32_t>(vi, 3, index, buf);
 }
@@ -721,28 +721,28 @@ double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf
 
 //*****************************************************************************
 void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   int16_t vi = (vd>=N2kInt16Min && vd<N2kInt16OR)?(int16_t)vd:N2kInt16OR;
   SetBuf(vi, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   uint16_t vi = (vd>=0 && vd<N2kUInt16OR)?(uint16_t)vd:N2kUInt16OR;
   SetBuf(vi, 2, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   int8_t vi = (vd>=N2kInt8Min && vd<N2kInt8OR)?(int8_t)vd:N2kInt8OR;
   SetBuf(vi, 1, index, buf);
 }
 
 //*****************************************************************************
 void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *buf) {
-  double vd=round(v/precision);
+  double vd=round((v/precision));
   uint8_t vi = (vd>=0 && vd<N2kUInt8OR)?(uint8_t)vd:N2kUInt8OR;
   SetBuf(vi, 1, index, buf);
 }
