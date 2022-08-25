@@ -120,11 +120,39 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+11.08.2022
+
+- Fix: On N2kGroupFunctionDefaultHandlers.cpp tN2kGroupFunctionHandlerForPGN60928 unique number length is 3 bytes.
+
+- Fix: On N2kMsg.cpp changed round(v/precision) to round((v/precision)), since some system round macro behaved unexpectedly. Thaks to ieb.
+
+06.07.2022
+
+- Fix: use proper array delete operator in RingBuffer, thanks garaminowicz
+
+- Fix: PGN 127251 rate of turn type, thanks BerndCirotzki and for remind speters.
+
+- Fix: PGN 129794 setter.
+
+== Changes ==
+07.04.2022
+
+- Changed #include <cstring> to #include <string.h>. <cstring> is not available on all environments.
+
+- Fixed proprietary PGN handling on N2kGroupFunction.cpp.
+
+- Fixed N2kMsg.cpp:SetBuf3ByteDouble(). Thanks to mairas.
+
+- Add support for PGN 129041, 130323. Thanks to MattCairns.
+
+- Added support for PGN127237, 127233, 130577 and more detail for 129039. Thanks to aydosj.
+
+- Copyright update.
+
 05.09.2021
 
 - Documentation update.
 
-== Changes ==
 23.08.2021
 
 - Added manufacturer bits to engine discrete status ( PGN 127489 )
@@ -1045,7 +1073,7 @@ For use with Atmel AVR processors internal CAN controller
 
 MIT license
 
-Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

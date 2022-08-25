@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,6 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTIO
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 #include "N2kMessages.h"
 #include <string.h>
 
@@ -330,7 +329,7 @@ void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
     N2kMsg.SetPGN(127251L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteDouble(RateOfTurn,3.125E-08); //1e-6/32.0
+    N2kMsg.Add4ByteDouble(RateOfTurn,3.125E-08); //1e-6/32.0 
     N2kMsg.AddByte(0xff);
     N2kMsg.Add2ByteUInt(0xffff);
 }
@@ -1399,6 +1398,59 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 }
 
 //*****************************************************************************
+// AIS Aids to Navigation (AtoN) Report (PGN 129041)
+void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
+    N2kMsg.SetPGN(129041L);
+    N2kMsg.Priority=4;
+    N2kMsg.AddByte((N2kData.Repeat & 0x03) << 6 | (N2kData.MessageID & 0x3f));
+    N2kMsg.Add4ByteUInt(N2kData.UserID);
+    N2kMsg.Add4ByteDouble(N2kData.Longitude, 1e-07);
+    N2kMsg.Add4ByteDouble(N2kData.Latitude, 1e-07);
+    N2kMsg.AddByte((N2kData.Seconds & 0x3f)<<2 | (N2kData.RAIM & 0x01)<<1 | (N2kData.Accuracy & 0x01)); 
+    N2kMsg.Add2ByteUDouble(N2kData.Length, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.Beam, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.PositionReferenceStarboard, 0.1);
+    N2kMsg.Add2ByteUDouble(N2kData.PositionReferenceTrueNorth, 0.1);
+    N2kMsg.AddByte((N2kData.AssignedModeFlag & 0x01) << 7 
+                    | (N2kData.VirtualAtoNFlag & 0x01) << 6 
+                    | (N2kData.OffPositionIndicator & 0x01) << 5
+                    | (N2kData.AtoNType & 0x1f)); 
+    N2kMsg.AddByte((N2kData.GNSSType & 0x0F) << 1 | 0xe0);
+    N2kMsg.AddByte(N2kData.AtoNStatus);
+    N2kMsg.AddByte((N2kData.AISTransceiverInformation & 0x1f) | 0xe0);
+    N2kMsg.AddVarStr((char*)N2kData.AtoNName);
+}
+
+
+bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
+    if (N2kMsg.PGN!=129041L) return false;
+
+    int Index=0;
+    unsigned char vb;
+    vb=N2kMsg.GetByte(Index); N2kData.MessageID=(vb & 0x3f); N2kData.Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
+    N2kData.UserID=N2kMsg.Get4ByteUInt(Index);
+    N2kData.Longitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    N2kData.Latitude=N2kMsg.Get4ByteDouble(1e-07, Index);
+    vb=N2kMsg.GetByte(Index); N2kData.Accuracy=(vb & 0x01); N2kData.RAIM=(vb>>1 & 0x01); N2kData.Seconds=(vb>>2 & 0x3f);
+    N2kData.Length=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.Beam=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.PositionReferenceStarboard=N2kMsg.Get2ByteDouble(0.1, Index);
+    N2kData.PositionReferenceTrueNorth=N2kMsg.Get2ByteDouble(0.1, Index);
+    vb=N2kMsg.GetByte(Index); 
+    N2kData.AtoNType=(tN2kAISAtoNType)(vb & 0x1f); 
+    N2kData.OffPositionIndicator=(vb >> 5  & 0x01); 
+    N2kData.VirtualAtoNFlag=(vb >> 6  & 0x01); 
+    N2kData.AssignedModeFlag=(vb >> 7 &  0x01); 
+    N2kData.GNSSType = (tN2kGNSStype)((N2kMsg.GetByte(Index) >> 1) & 0x0f);
+    N2kData.AtoNStatus=N2kMsg.GetByte(Index);  
+    N2kData.AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
+    size_t AtoNNameSize = sizeof(N2kData.AtoNName);
+    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, Index);
+
+    return true;
+}
+
+//*****************************************************************************
 // Cross Track Error
 void SetN2kPGN129283(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, bool NavigationTerminated, double XTE) {
     N2kMsg.SetPGN(129283L);
@@ -1576,7 +1628,8 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteDouble(Draught, 0.01);
     N2kMsg.AddStr(Destination, 20);
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
-    N2kMsg.AddByte(AISinfo & 0x1f);
+    N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
+    N2kMsg.AddByte(0xff);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
@@ -1921,6 +1974,53 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   SetTemperature=N2kMsg.Get2ByteDouble(0.1,Index);
 
   return true;
+}
+
+//*****************************************************************************
+// Meteorological Station Data
+void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) {
+    N2kMsg.SetPGN(130323L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte( (((unsigned char) N2kData.Mode) & 0x0f) | 0xf0 );
+    N2kMsg.Add2ByteUInt(N2kData.SystemDate);
+    N2kMsg.Add4ByteUDouble(N2kData.SystemTime,0.0001);
+    N2kMsg.Add4ByteDouble(N2kData.Latitude,1e-7);
+    N2kMsg.Add4ByteDouble(N2kData.Longitude,1e-7);
+    N2kMsg.Add2ByteUDouble(N2kData.WindSpeed,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.WindDirection,0.0001);
+    N2kMsg.AddByte( (((unsigned char)N2kData.WindReference) & 0x07) | 0xf8 );
+    N2kMsg.Add2ByteUDouble(N2kData.WindGusts,0.01);
+    N2kMsg.Add2ByteUDouble(N2kData.AtmosphericPressure,100);
+    N2kMsg.Add2ByteUDouble(N2kData.OutsideAmbientAirTemperature,0.01);
+    N2kMsg.AddVarStr((char*)N2kData.StationID);
+    N2kMsg.AddVarStr((char*)N2kData.StationName);
+}
+
+
+bool ParseN2kPGN130323(const tN2kMsg &N2kMsg, tN2kMeteorlogicalStationData &N2kData) {
+    if (N2kMsg.PGN!=130323L) return false;
+    int Index=0;
+    unsigned char vb;
+
+    vb = N2kMsg.GetByte(Index);
+    N2kData.Mode=(tN2kAISMode)(vb & 0x0f);
+    N2kData.SystemDate = N2kMsg.Get2ByteUInt(Index);
+    N2kData.SystemTime = N2kMsg.Get4ByteUDouble(0.0001,Index);
+    N2kData.Latitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.Longitude = N2kMsg.Get4ByteDouble(1e-7,Index);
+    N2kData.WindSpeed = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.WindDirection = N2kMsg.Get2ByteUDouble(0.0001,Index);
+    vb = N2kMsg.GetByte(Index);
+    N2kData.WindReference = (tN2kWindReference)(vb & 0x07);
+    N2kData.WindGusts = N2kMsg.Get2ByteUDouble(0.01,Index);
+    N2kData.AtmosphericPressure = N2kMsg.Get2ByteUDouble(100,Index);
+    N2kData.OutsideAmbientAirTemperature=N2kMsg.Get2ByteUDouble(0.01,Index);
+    size_t StationIDSize = sizeof(N2kData.StationID);
+    size_t StationNameSize = sizeof(N2kData.StationName);
+    N2kMsg.GetVarStr(StationIDSize, (char*)N2kData.StationID, Index);
+    N2kMsg.GetVarStr(StationNameSize, (char*)N2kData.StationName, Index);
+
+    return true;
 }
 
 //*****************************************************************************

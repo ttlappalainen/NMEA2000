@@ -1,7 +1,7 @@
 /*
 N2kGroupFunctionDefaultHandlers.cpp
 
-Copyright (c) 2015-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -72,7 +72,7 @@ bool tN2kGroupFunctionHandlerForPGN60928::HandleRequest(const tN2kMsg &N2kMsg,
         field=N2kMsg.GetByte(Index);
         switch (field) {
           case N2kPGN60928_UniqueNumber_field:
-            MatchRequestField(N2kMsg.Get4ByteUInt(Index),(uint32_t)DI.GetUniqueNumber(),(uint32_t)0x001fffff,MatchFilter,FieldErrorCode);
+            MatchRequestField(N2kMsg.Get3ByteUInt(Index),(uint32_t)DI.GetUniqueNumber(),(uint32_t)0x001fffff,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN60928_ManufacturerCode_field:
             MatchRequestField(N2kMsg.Get2ByteUInt(Index),DI.GetManufacturerCode(),(uint16_t)0x07ff,MatchFilter,FieldErrorCode);

@@ -1,7 +1,7 @@
 /*
 NMEA2000StdTypes.h
 
-Copyright (c) 2019-2021 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2019-2022 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -57,6 +57,16 @@ enum tN2kDD002 {
                   N2kDD002_Set=N2kDD002_Yes,
                   N2kDD002_1=N2kDD002_Yes,
                   N2kDD002_Unknown=N2kDD002_Unavailable
+                };
+
+enum tN2kDD025 {
+                  N2kDD025_Autonomous=0,
+                  N2kDD025_Differential=1,
+                  N2kDD025_Estimated=2,
+                  N2kDD025_Simulator=3,
+                  N2kDD025_Manual=4,
+                  N2kDD025_Error=0xe,
+                  N2kDD025_Unavailable=0xf
                 };
                           
 enum tN2kDD072 {
@@ -123,6 +133,42 @@ union tN2kDD223 {
           tN2kDD223(uint16_t _Status=0): Status(_Status) {};
           uint16_t operator= (uint16_t val) { Status=val & 0x00ff; return Status;}
 };
+
+enum tN2kDD305 {
+          N2kAISAtoN_not_specified=0,
+          N2kAISAtoN_reference_point=1,
+          N2kAISAtoN_RACON=2,
+          N2kAISAtoN_fixed_structure=3,
+          N2kAISAtoN_emergency_wreck_marking_buoy=4,
+          N2kAISAtoN_light_without_sectors=5,
+          N2kAISAtoN_light_with_sectors=6,
+          N2kAISAtoN_leading_light_front=7,
+          N2kAISAtoN_leading_light_rear=8,
+          N2kAISAtoN_beacon_cardinal_N=9,
+          N2kAISAtoN_beacon_cardinal_E=10,
+          N2kAISAtoN_beacon_cardinal_S=11,
+          N2kAISAtoN_beacon_cardinal_W=12,
+          N2kAISAtoN_beacon_port_hand=13,
+          N2kAISAtoN_beacon_starboard_hand=14,
+          N2kAISAtoN_beacon_preferred_ch_port_hand=15,
+          N2kAISAtoN_beacon_preferred_ch_starboard_hand=16,
+          N2kAISAtoN_beacon_isolated_danger=17,
+          N2kAISAtoN_beacon_safe_water=18,
+          N2kAISAtoN_beacon_special_mark=19,
+          N2kAISAtoN_cardinal_mark_N=20,
+          N2kAISAtoN_cardinal_mark_E=21,
+          N2kAISAtoN_cardinal_mark_S=22,
+          N2kAISAtoN_cardinal_mark_W=23,
+          N2kAISAtoN_port_hand_mark=24,
+          N2kAISAtoN_starboard_hand_mark=25,
+          N2kAISAtoN_preferred_channel_port_hand=26,
+          N2kAISAtoN_preferred_channel_starboard_hand=27,
+          N2kAISAtoN_isolated_danger=28,
+          N2kAISAtoN_safe_water=29,
+          N2kAISAtoN_special_mark=30,
+          N2kAISAtoN_light_vessel_lanby_rigs=31,
+};
+
 // Thruster Motor Events
 //
 union tN2kDD471 {
@@ -264,6 +310,8 @@ enum tN2kDD488 {
                             N2kDD488_ProportionalSpeed=2,
                             N2kDD488_DataNotAvailable=3
                           };
+
+
 
 #endif
 
