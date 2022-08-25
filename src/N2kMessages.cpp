@@ -330,7 +330,7 @@ void SetN2kPGN127251(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTurn) {
     N2kMsg.SetPGN(127251L);
     N2kMsg.Priority=2;
     N2kMsg.AddByte(SID);
-    N2kMsg.Add4ByteUDouble(RateOfTurn,3.125E-08); //1e-6/32.0 
+    N2kMsg.Add4ByteDouble(RateOfTurn,3.125E-08); //1e-6/32.0
     N2kMsg.AddByte(0xff);
     N2kMsg.Add2ByteUInt(0xffff);
 }
