@@ -26,6 +26,10 @@ This is class for reading Actisense format messages from given stream.
 #include "ActisenseReader.h"
 #include <string.h>
 
+#ifdef ESP_PLATFORM
+#include "compat.h"
+#endif
+
 //*****************************************************************************
 tActisenseReader::tActisenseReader() {
   DefaultSource=65;

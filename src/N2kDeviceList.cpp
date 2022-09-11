@@ -24,6 +24,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdlib.h>
 #include "N2kDeviceList.h"
+#ifdef ESP_PLATFORM
+#include "compat.h"
+#endif
 
 //#define N2kDeviceList_HANDLE_IN_DEBUG
 

@@ -53,6 +53,10 @@ address anymore. See also method ReadResetAddressChanged().
 #include "N2kGroupFunction.h"
 #endif
 
+#ifdef ESP_PLATFORM
+#include "compat.h"
+#endif
+
 #define N2kPGNIsoAddressClaim 60928L
 #define N2kPGNProductInformation 126996L
 #define N2kPGNConfigurationInformation 126998L

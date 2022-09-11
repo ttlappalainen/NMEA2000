@@ -29,15 +29,6 @@ Type definitions and utility macros used in the NMEA2000 libraries.
 
 #include <stdint.h>
 
-#if !defined(ARDUINO)
-extern "C" {
-// Application execution delay. Must be implemented by application.
-extern void delay(uint32_t ms);
-
-// Current uptime in milliseconds. Must be implemented by application.
-extern uint32_t millis();
-}
-#endif
 
 // Declare PROGMEM macros to nothing on non-AVR targets.
 #if !defined(__AVR__) && !defined(ARDUINO)

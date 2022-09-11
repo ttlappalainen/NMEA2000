@@ -27,6 +27,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "NMEA2000.h"
 
+#ifdef ESP_PLATFORM
+  #include "compat.h"
+#endif
+
+
 #define N2kMaxBusDevices 254
 
 #define N2kDL_TimeForFirstRequest 1000 // Time in ms for first request after device has been noticed on the bus

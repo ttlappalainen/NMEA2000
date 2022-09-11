@@ -29,6 +29,12 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef ESP_PLATFORM
+  #include "compat.h"
+#endif
+
+
+
 #define DebugStream Serial
 
 // #define NMEA2000_FRAME_ERROR_DEBUG

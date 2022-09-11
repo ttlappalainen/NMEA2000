@@ -27,8 +27,8 @@
 extern "C" {
 
 // So that millis() work
-uint32_t millis() {
-  return 42;
-}
+//uint32_t millis() {
+//  return 42;
+//}
 
 }
