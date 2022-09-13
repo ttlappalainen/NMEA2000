@@ -63,7 +63,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
    N2kMsg.AddVarStr(SafetyRelatedText);
 }
 
-bool ParseN2kPGN129802(tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
+bool ParseN2kPGN129802(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
       tN2kAISTransceiverInformation &AISTransceiverInformation, char * SafetyRelatedText, size_t &SafetyRelatedTextMaxSize)
 {
    if (N2kMsg.PGN!=129802L) return false;
@@ -683,7 +683,7 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
     N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,1);
 }
 
-bool ParseN2kPGN127507(tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
+bool ParseN2kPGN127507(const tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,
                      tN2kChargeState &ChargeState, tN2kChargerMode &ChargerMode,
                      tN2kOnOff &Enabled, tN2kOnOff &EqualizationPending, double &EqualizationTimeRemaining) {
   if (N2kMsg.PGN!=127507UL) return false;
