@@ -160,7 +160,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_avr());
   #endif
 #include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
 tNMEA2000 &NMEA2000=*(new tNMEA2000_SocketCAN(SOCKET_CAN_PORT));
-tSocketStream serStream;
+//tSocketStream serStream; //ayd this was creating compiler error, not sure why we need it?
 
 #elif USE_N2K_CAN == USE_N2K_MBED_CAN
 // Use MBED devices
