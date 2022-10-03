@@ -138,11 +138,12 @@ support.
   Compiler could not solve ambiguous problem between compatibility inlines, so users are forced to change
   to new interface.
 
-- Added [[SetOnOpen]]tNMEA2000::SetOnOpen to set callback for communication open.
+- Added [[SetOnOpen]]tNMEA2000::SetOnOpen to set callback for communication open. You need this e.g., if you want to
+  synchronize your messages with offsets. See how it has been used e.g., on exmample TemperatureMonitor.
 
 - New module N2kTimer to hide platform dependent millis(). Module declares scheduler classes to
   fix problems on simple millis() testing in case of roll over. Class tN2kSyncScheduler is
-  for synchronizing message sending.
+  for synchronizing message sending. See how it has been used e.g., on exmample TemperatureMonitor
   
 - Improved: Single test for pending information (tInternalDevice::HasPendingInformation) to avoid multiple tests in every loop.
   
@@ -157,6 +158,9 @@ support.
 - Added: PGN 127252 Heave. Thanks aydosj.
 
 - Changed some parameter order in classes to save small amount of memory.
+
+- Updated examples TemperatureMonitor, WindMonitor, BatteryMonitor and MessageSender to use tN2kSyncScheduler
+  and tNMEA2000::SetOnOpen for synchronizating messages.
 
 11.08.2022
 
