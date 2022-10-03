@@ -326,6 +326,38 @@ bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOf
 }
 
 //*****************************************************************************
+// Heave
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Heave                 Vertical displacement perpendicular to the earth’s surface in meters
+//  - Delay                 Delay added by calculations in seconds
+//  - DelaySource           tN2kDelaySource
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127252(tN2kMsg &N2kMsg, unsigned char SID, double Heave,
+                     double Delay, tN2kDelaySource DelaySource) {
+
+  N2kMsg.SetPGN(127252L);
+  N2kMsg.Priority=3;
+  N2kMsg.AddByte(SID);
+  N2kMsg.Add2ByteDouble(Heave,0.01);
+  N2kMsg.Add2ByteUDouble(Delay,0.01);
+  N2kMsg.AddByte(0xf0 | (DelaySource & 0x0f));
+  N2kMsg.Add2ByteUInt(N2kUInt16NA);
+}
+
+bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave, double &Delay, tN2kDelaySource &DelaySource) {
+   if (N2kMsg.PGN!=127252L) return false;
+   int Index = 0;
+   SID = N2kMsg.GetByte(Index);
+   Heave = N2kMsg.Get2ByteDouble(0.01,Index);
+   Delay = N2kMsg.Get2ByteUDouble(0.01,Index);
+   uint8_t v=N2kMsg.GetByte(Index);
+   DelaySource=(tN2kDelaySource)(v & 0x0f);
+   return true;
+}
+
+//*****************************************************************************
 // Attitude
 // Input:
 //  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
@@ -1512,56 +1544,39 @@ bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& Distan
 //*****************************************************************************
 // Waypoint list
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-         tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName) {
-    unsigned int i;
+         tN2kNavigationDirection NavDirection, const char* RouteName, tN2kGenericStatusPair SupplementaryData) {
     N2kMsg.SetPGN(129285L);
     N2kMsg.Priority=6;
     N2kMsg.Add2ByteUInt(Start);
     N2kMsg.Add2ByteUInt(0); // number of items initially 0
     N2kMsg.Add2ByteUInt(Database);
     N2kMsg.Add2ByteUInt(Route);
-    N2kMsg.AddByte(0xC0 | (SupplementaryData & 0x03)<<4 | (NavDirection & 0x0F));
-    if (strlen(RouteName) == 0) {
-      N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
-    } else {
-      N2kMsg.AddByte(strlen(RouteName)+2);N2kMsg.AddByte(0x01);
-      for (i=0; i<strlen(RouteName); i++)
-        N2kMsg.AddByte(RouteName[i]);
-    }
+    N2kMsg.AddByte(0xE0 | (SupplementaryData & 0x03)<<3 | (NavDirection & 0x07));
+    N2kMsg.AddVarStr(RouteName);
     N2kMsg.AddByte(0xff); // reserved
 }
 
-bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitude, double Longitude) {
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double Latitude, double Longitude) {
    if (N2kMsg.PGN!=129285L) return false;
 
-    unsigned int i;
     int NumItemsIdx, len;
     uint16_t NumItems;
 
-    if (strlen(Name) > 0) {
-        len = 12 + strlen(Name);
-    } else {
-        len = 13;
-    }
+    len = 12 + strlen(Name);
 
-    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+    if ( N2kMsg.DataLen + len < N2kMsg.MaxDataLen ) {
         NumItemsIdx = 2;
         NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
         NumItemsIdx = 2;
         N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
         N2kMsg.Add2ByteUInt(ID);                          // add the new item
-        if (strlen(Name) == 0) {
-          N2kMsg.AddByte(0x03);N2kMsg.AddByte(0x01);N2kMsg.AddByte(0x00);
-        } else {
-          N2kMsg.AddByte(strlen(Name)+2);N2kMsg.AddByte(0x01);
-          for (i=0; i<strlen(Name); i++)
-            N2kMsg.AddByte(Name[i]);
-        }
+        N2kMsg.AddVarStr(Name);
         N2kMsg.Add4ByteDouble(Latitude,1e-07);
         N2kMsg.Add4ByteDouble(Longitude,1e-07);
         return true;
-    } else
+    } else {
         return false;
+    }
 }
 
 //*****************************************************************************

@@ -25,6 +25,7 @@ This is class for reading Actisense format messages from given stream.
 */
 #include "ActisenseReader.h"
 #include <string.h>
+#include "N2kTimer.h"
 
 //*****************************************************************************
 tActisenseReader::tActisenseReader() {
@@ -81,7 +82,7 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
      N2kMsg.MsgTime=GetBuf4ByteUInt(i,MsgBuf);
    } else {
      N2kMsg.Source=DefaultSource;
-     N2kMsg.MsgTime=millis();
+     N2kMsg.MsgTime=N2kMillis();
    }
    N2kMsg.DataLen=MsgBuf[i++];
 

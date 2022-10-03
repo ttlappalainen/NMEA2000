@@ -448,6 +448,14 @@ using tN2kAISAtoNType = tN2kDD305;
                 // N2kAISAtoN_special_mark=30,
                 // N2kAISAtoN_light_vessel_lanby_rigs=31,
 
+using tN2kDelaySource = tN2kDD374;
+  //        N2kDD374_UserDefined=0,
+  //        N2kDD374_MinimumDefined=1,
+  //        N2kDD374_FactoruDefault=2,
+  //        N2kDD374_MaximumSupported=3,
+  //        N2kDD374_OutOfRange=14,
+  //        N2kDD374_DataNotAvailable=15
+
 using tN2kThrusterMotorEvents = tN2kDD471;
 	// .Event.MotorOverTemperatureCutout = 0 | 1
 	// .Event.MotorOverCurrentCutout = 0 | 1

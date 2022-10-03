@@ -48,6 +48,7 @@ address anymore. See also method ReadResetAddressChanged().
 #include "N2kStream.h"
 #include "N2kMsg.h"
 #include "N2kCANMsg.h"
+#include "N2kTimer.h"
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 #include "N2kGroupFunction.h"
@@ -168,12 +169,12 @@ public:
 
   class tDevice {
     protected:
-      uint8_t Source;
-      unsigned long CreateTime;
       tDeviceInformation DevI;
+      unsigned long CreateTime;
+      uint8_t Source;
 
     public:
-      tDevice(uint64_t _Name, uint8_t _Source=255) { Source=_Source; DevI.SetName(_Name); CreateTime=millis(); }
+      tDevice(uint64_t _Name, uint8_t _Source=255) { Source=_Source; DevI.SetName(_Name); CreateTime=N2kMillis(); }
       virtual ~tDevice() {;}
       uint8_t GetSource() const { return Source; }
 
@@ -257,70 +258,84 @@ public:
   };
 
 protected:
+  typedef enum {
+                  os_None
+                  ,os_OpenCAN
+                  ,os_WaitOpen
+                  ,os_Open
+               } tOpenState;
+
   class tInternalDevice {
   public:
-    uint8_t N2kSource;
     tDeviceInformation DeviceInformation;
     // Product information
     const tProductInformation *ProductInformation;
     tProductInformation *LocalProductInformation;
     char *ManufacturerSerialCode;
-    unsigned long PendingIsoAddressClaim;
-    unsigned long PendingProductInformation;
-    unsigned long PendingConfigurationInformation;
-    unsigned long AddressClaimStarted;
-    uint8_t AddressClaimEndSource;
+    tN2kScheduler PendingIsoAddressClaim;
+    tN2kScheduler PendingProductInformation;
+    tN2kScheduler PendingConfigurationInformation;
+    tN2kScheduler AddressClaimTimer;
     // Transmit and receive PGNs
     const unsigned long *TransmitMessages;
     const unsigned long *ReceiveMessages;
     // Fast packet PGNs sequence counters
-    size_t MaxPGNSequenceCounters;
     unsigned long *PGNSequenceCounters;
+    size_t MaxPGNSequenceCounters;
+    uint8_t AddressClaimEndSource;
+    bool HasPendingInformation;
+    uint8_t N2kSource;
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-      tN2kMsg PendingTPMsg;
-      unsigned long NextDTSendTime; // Time, when next data packet can be send on TP broadcast
-      uint8_t NextDTSequence;
+    tN2kMsg PendingTPMsg;
+    tN2kScheduler NextDTSendTime; // Time, when next data packet can be send on TP broadcast
+    uint8_t NextDTSequence;
 #endif
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
-    unsigned long HeartbeatInterval;
-    unsigned long DefaultHeartbeatInterval;
-    unsigned long NextHeartbeatSentTime;
+    #define DefaultHeartbeatInterval 60000
+    tN2kSyncScheduler HeartbeatScheduler;
+    uint8_t HeartbeatSequence;
 #endif
 
 
   public:
     tInternalDevice() {
       N2kSource=0;
+      HasPendingInformation=false;
       ProductInformation=0; LocalProductInformation=0; ManufacturerSerialCode=0;
-      PendingIsoAddressClaim=0; PendingProductInformation=0; PendingConfigurationInformation=0;
-      AddressClaimStarted=0; AddressClaimEndSource=N2kMaxCanBusAddress; //GetNextAddressFromBeginning=true;
+      AddressClaimEndSource=N2kMaxCanBusAddress; //GetNextAddressFromBeginning=true;
       TransmitMessages=0; ReceiveMessages=0;
-      MaxPGNSequenceCounters=0; PGNSequenceCounters=0;
+      PGNSequenceCounters=0; MaxPGNSequenceCounters=0;
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-      NextDTSendTime=0;
       NextDTSequence=0;
 #endif
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
-      HeartbeatInterval=60000;
-      DefaultHeartbeatInterval=60000;
-      NextHeartbeatSentTime=0;
+      HeartbeatSequence=0;
 #endif
     }
-    void SetPendingIsoAddressClaim(unsigned long FromNow=2) { PendingIsoAddressClaim=millis()+FromNow; }
-    bool QueryPendingIsoAddressClaim() { return (PendingIsoAddressClaim?PendingIsoAddressClaim<millis():false); }
-    void ClearPendingIsoAddressClaim() { PendingIsoAddressClaim=0; }
+    void SetPendingIsoAddressClaim(unsigned long FromNow=2) { PendingIsoAddressClaim.FromNow(FromNow); HasPendingInformation=true; }
+    bool QueryPendingIsoAddressClaim() { return PendingIsoAddressClaim.IsTime(); }
+    void ClearPendingIsoAddressClaim() { PendingIsoAddressClaim.Disable(); UpdateHasPendingInformation(); }
 
-    void SetPendingProductInformation() { PendingProductInformation=millis()+187+N2kSource*8; } // Use strange increment to avoid synchronize
-    void ClearPendingProductInformation() { PendingProductInformation=0; }
-    bool QueryPendingProductInformation() { return (PendingProductInformation?PendingProductInformation<millis():false); }
+    void SetPendingProductInformation() { PendingProductInformation.FromNow(187+N2kSource*8); HasPendingInformation=true; } // Use strange increment to avoid synchronize
+    void ClearPendingProductInformation() { PendingProductInformation.Disable(); UpdateHasPendingInformation(); }
+    bool QueryPendingProductInformation() { return PendingProductInformation.IsTime(); }
 
-    void SetPendingConfigurationInformation() { PendingConfigurationInformation=millis()+187+N2kSource*10; } // Use strange increment to avoid synchronize
-    void ClearPendingConfigurationInformation() { PendingConfigurationInformation=0; }
-    bool QueryPendingConfigurationInformation() { return (PendingConfigurationInformation?PendingConfigurationInformation<millis():false); }
+    void SetPendingConfigurationInformation() { PendingConfigurationInformation.FromNow(187+N2kSource*10); HasPendingInformation=true; } // Use strange increment to avoid synchronize
+    void ClearPendingConfigurationInformation() { PendingConfigurationInformation.Disable(); UpdateHasPendingInformation(); }
+    bool QueryPendingConfigurationInformation() { return PendingConfigurationInformation.IsTime(); }
     void UpdateAddressClaimEndSource() {
       AddressClaimEndSource=N2kSource;
       if ( AddressClaimEndSource>0 ) { AddressClaimEndSource--; } else { AddressClaimEndSource=N2kMaxCanBusAddress; }
+    }
+    void UpdateHasPendingInformation() {
+      HasPendingInformation=  PendingIsoAddressClaim.IsEnabled()
+                            | PendingProductInformation.IsEnabled()
+                            | PendingConfigurationInformation.IsEnabled()
+                            #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+                            | NextDTSendTime.IsEnabled()
+                            #endif
+                            ;
     }
   };
 
@@ -340,7 +355,8 @@ protected:
     N2kStream *ForwardStream;
     tMsgHandler *MsgHandlers;
 
-    bool DeviceReady;
+    tN2kScheduler OpenScheduler;
+    tOpenState OpenState;
     bool AddressChanged;
     bool DeviceInformationChanged;
 
@@ -380,6 +396,7 @@ protected:
     uint16_t MaxCANReceiveFrames;
 
     // Handler callbacks
+    void (*OnOpen)();
     void (*MsgHandler)(const tN2kMsg &N2kMsg);                  // Normal messages
     bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);                 // 'ISORequest' messages
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
@@ -458,7 +475,7 @@ protected:
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
     bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
     bool IsReadyToSend() const {
-      return ( (DeviceReady || dbMode!=dm_None) &&
+      return ( (OpenState==os_Open || dbMode!=dm_None) &&
                (N2kMode!=N2km_ListenOnly) &&
                (N2kMode!=N2km_SendOnly) &&
                (N2kMode!=N2km_ListenAndSend)
@@ -480,7 +497,7 @@ protected:
     bool HasAllTPDTSent(int iDev);
     bool StartSendTPMessage(const tN2kMsg& msg, int iDev);
     void EndSendTPMessage(int iDev);
-    void SendPendingTPMessages();
+    void SendPendingTPMessage(int iDev);
 #endif
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     void CopyProgmemConfigurationInformationToLocal();
@@ -594,7 +611,7 @@ public:
     const tDeviceInformation GetDeviceInformation(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return tDeviceInformation(); return Devices[iDev].DeviceInformation; }
 
     // Class handles automatically address claiming and tell to the bus about itself.
-    void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0, unsigned long delay=0);
+    void SendIsoAddressClaim(unsigned char Destination=0xff, int DeviceIndex=0, unsigned long FromNow=0);
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     bool SendProductInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
     bool SendConfigurationInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
@@ -610,17 +627,22 @@ public:
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
     // According to document https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf
     // all NMEA devices shall transmit heartbeat PGN 126993.
-    // With this function you can set transmission interval in ms (range 1000-655320 ms, default 60000). Set <1000 to disable it.
-    // You can temporaly change interval by setting SetAsDefault parameter to false. Then you can restore default interval
-    // with interval parameter value 0xfffffffe
-    void SetHeartbeatInterval(unsigned long interval, bool SetAsDefault=true, int iDev=-1);
-    // Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found should changed value be saved
-    // for next startup or not.
-    unsigned long GetHeartbeatInterval(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 60000; return Devices[iDev].HeartbeatInterval; }
-    // Send heartbeat for specific device.
+
+    // Restore heartbeat interval and offset on device startup.
+    // With this function you can set transmission interval in ms (range 1000-60000 ms, default 60000).
+    // Function allows to set interval over 60 s or 0 to disable sending fr test purposes.
+    void SetHeartbeatIntervalAndOffset(uint32_t interval, uint32_t offset=0, int iDev=-1);
+    // Heartbeat interval and offset may be changed by with group function. In that case device should
+    // restore changed value on startup.
+    uint32_t GetHeartbeatInterval(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 60000; return Devices[iDev].HeartbeatScheduler.GetPeriod(); }
+    uint32_t GetHeartbeatOffset(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 0; return Devices[iDev].HeartbeatScheduler.GetOffset(); }
+    // Send heartbeat for specific device. This is for test purposes.
     void SendHeartbeat(int iDev);
     // Library will automatically send heartbeat, if interval is >0. You can also manually send it any time or force sent, if interval=0;
     void SendHeartbeat(bool force=false);
+
+    // deprecated! SetAsDefault has no effect. Use function SetHeartbeatIntervalAndOffset.
+    void SetHeartbeatInterval(unsigned long interval, bool SetAsDefault=true, int iDev=-1) __attribute__ ((deprecated));
 #endif
 
     // Set this before open. You can not change mode after Open().
@@ -637,6 +659,7 @@ public:
 
     // You can call this. It will be called anyway automatically by ParseMessages();
     // Note that after Open() you should start loop ParseMessages() without delays.
+    // When system is finally opened, OnOpen callback will be executed. See. SetOnOpen
     bool Open();
 
     // This is preliminary function for e.g. battery powered or devices, which may
@@ -651,6 +674,11 @@ public:
     // about itselt to others. Take care that your loop to call ParseMessages() does not have
     // long delays. 
     void ParseMessages();
+
+    // Set OnOpen callback function. This will be called, when communication really opens
+    // and starts initial address claiming. You can use this to init your message sending
+    // to syncronize them with e.g., heartbeat.
+    void SetOnOpen(void (*_OnOpen)());
 
     // Set the message handler for incoming N2kMessages.
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));             // Old style - callback function pointer
@@ -805,14 +833,14 @@ inline void SetN2kPGNTransmitList(tN2kMsg &N2kMsg, uint8_t Destination, const un
 //*****************************************************************************
 // Heartbeat
 // Input:
-//  - time interval in msec (0.01 - 655.32s )
-//  - status byte - set to 0x00
+//  - time interval in msec (1000-60000 ms )
+//  - sequence counter - set to 0xff for testing purposes
 //			/ Output:
 //  - N2kMsg NMEA2000 message ready to be send.
-void SetN2kPGN126993(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t statusByte);
+void SetN2kPGN126993(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t sequenceCounter);
 
-inline void SetHeartbeat(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t statusByte) {
-	SetN2kPGN126993(N2kMsg, timeInterval_ms, statusByte);
+inline void SetHeartbeat(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t sequenceCounter) {
+	SetN2kPGN126993(N2kMsg, timeInterval_ms, sequenceCounter);
 }
 
 #endif

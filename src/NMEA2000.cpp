@@ -39,7 +39,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // #define NMEA2000_DEBUG
 
 #if defined(NMEA2000_FRAME_ERROR_DEBUG)
-# define N2kFrameErrDbgStart(fmt, args...) DebugStream.print(millis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
+# define N2kFrameErrDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
 # define N2kFrameErrDbg(fmt, args...)     DebugStream.print (fmt , ## args)
 # define N2kFrameErrDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
 #else
@@ -49,7 +49,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(NMEA2000_FRAME_IN_DEBUG)
-# define N2kFrameInDbgStart(fmt, args...) DebugStream.print(millis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
+# define N2kFrameInDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
 # define N2kFrameInDbg(fmt, args...)     DebugStream.print (fmt , ## args)
 # define N2kFrameInDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
 #else
@@ -59,7 +59,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(NMEA2000_FRAME_OUT_DEBUG)
-# define N2kFrameOutDbgStart(fmt, args...) DebugStream.print(millis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
+# define N2kFrameOutDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
 # define N2kFrameOutDbg(fmt, args...)     DebugStream.print (fmt , ## args)
 # define N2kFrameOutDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
 #else
@@ -69,7 +69,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(NMEA2000_MSG_DEBUG)
-# define N2kMsgDbgStart(fmt, args...) DebugStream.print(millis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
+# define N2kMsgDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
 # define N2kMsgDbg(fmt, args...)     DebugStream.print (fmt , ## args)
 # define N2kMsgDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
 #else
@@ -122,7 +122,6 @@ void N2kPrintFreeMemory(const char *Source) {
 #define TP_CM_AbortBusy 1	// Already in one or more connection managed sessions and cannot support another.
 #define TP_CM_AbortNoResources 2	// System resources were needed for another task so this connection managed session was terminated.
 #define TP_CM_AbortTimeout 3 //	A timeout occurred and this is the connection abort to close the session.
-
 
 const unsigned long DefTransmitMessages[] PROGMEM = {
                                         59392L, /* ISO Acknowledgement, pri=6, period=NA */
@@ -391,11 +390,13 @@ tNMEA2000::tNMEA2000() {
   MaxCANReceiveFrames=0; // Use driver default
   CANSendFrameBuf=0;
 
+  OnOpen=0;
   MsgHandler=0;
   MsgHandlers=0;
   ISORqstHandler=0;
 
-  DeviceReady=false;
+  OpenScheduler.FromNow(0);
+  OpenState=os_None;
   AddressChanged=false;
   DeviceInformationChanged=false;
   dbMode=dm_None;
@@ -911,8 +912,9 @@ void tNMEA2000::InitCANFrameBuffers() {
 
 //*****************************************************************************
 bool tNMEA2000::Open() {
+  if ( OpenState==os_Open ) return true;
 
-  if (!DeviceReady) {
+  if ( OpenState==os_None ) {
     InitCANFrameBuffers();
     InitDevices();
 
@@ -921,29 +923,48 @@ bool tNMEA2000::Open() {
       N2kCANMsgBuf = new tN2kCANMsg[MaxN2kCANMsgs];
       for (int i=0; i<MaxN2kCANMsgs; i++) N2kCANMsgBuf[i].FreeMessage();
 
-#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+      #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
       // On first open try add also default group function handlers
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN60928(this)); // NAME handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126464(this)); // Rx/Tx list handler
-#if !defined(N2K_NO_HEARTBEAT_SUPPORT)
+      #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126993(this)); // Heartbeat handler
-#endif
+      #endif
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126996(this)); // Product information
       AddGroupFunctionHandler(new tN2kGroupFunctionHandlerForPGN126998(this)); // Configuration information handler
       AddGroupFunctionHandler(new tN2kGroupFunctionHandler(this,0)); // Default handler at last
-#endif
+      #endif
     }
-
-    DeviceReady = (dbMode!=dm_None) || CANOpen();
-    if ( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) ) {
-      if ( DeviceReady ) { ForwardStream->println(F("CAN device ready")); } else { ForwardStream->println(F("CAN device failed to open")); }
-    }
-
-    delay(200);
-    StartAddressClaim();
+    OpenState=os_OpenCAN;
   }
 
-  return DeviceReady;
+  if ( !OpenScheduler.IsTime() ) return false;
+
+  if ( OpenState==os_OpenCAN ) {
+    bool Notify=( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) );
+    if ( (dbMode!=dm_None) || CANOpen() ) {
+      OpenState=os_WaitOpen;
+      OpenScheduler.FromNow(200);
+      if ( Notify ) ForwardStream->println(F("CAN device ready"));
+    } else { // Open failed, delay next open
+      OpenScheduler.FromNow(1000);
+      if ( Notify ) ForwardStream->println(F("CAN device failed to open"));
+    }
+    return false;
+  }
+
+  // There were problems with some CAN controllers start sending immediately after
+  // Initialization so we start sending delayed.
+  if ( OpenState==os_WaitOpen ) {
+    OpenState=os_Open;
+    StartAddressClaim();
+    tN2kSyncScheduler::SetSyncOffset();
+    if ( OnOpen!=0 ) OnOpen();
+    SetHeartbeatIntervalAndOffset(DefaultHeartbeatInterval,10000); // Init default hearbeat interval and offset.
+  }
+
+  // For compatibility return true, when final open is waiting.
+  return OpenState>=os_WaitOpen;
 }
 
 //*****************************************************************************
@@ -1022,29 +1043,42 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
 
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
 //*****************************************************************************
-void tNMEA2000::SetHeartbeatInterval(unsigned long interval, bool SetAsDefault, int iDev) {
-  if (interval==0xffffffff) return; // Do not change
+void tNMEA2000::SetHeartbeatIntervalAndOffset(uint32_t interval, uint32_t offset, int iDev) {
+  if ( interval==0xffffffff && offset==0xffff ) return; // Do not change
   InitDevices();
   for (int i=(iDev<0?0:iDev); i<DeviceCount && (iDev<0?true:i<iDev+1); i++) {
-    if (interval==0xfffffffe) { // restore default
-      Devices[i].HeartbeatInterval=Devices[i].DefaultHeartbeatInterval;
+    if ( interval==0xffffffff ) {
+      interval=Devices[i].HeartbeatScheduler.GetPeriod();
+    } else if (interval==0xfffffffe) { // restore default
+      interval=DefaultHeartbeatInterval;
+    }
+    if ( offset==0xffffffff ) offset=Devices[i].HeartbeatScheduler.GetOffset();
+
+    if ( interval==0 ) { // This is for test purposes
+      Devices[i].HeartbeatScheduler.Disable();
     } else {
       if ( interval>MaxHeartbeatInterval ) interval=MaxHeartbeatInterval;
-      if ( interval<1000 ) interval=0;
+      if ( interval<1000 ) interval=1000;
 
-      Devices[i].HeartbeatInterval=interval;
+      bool changed=( Devices[i].HeartbeatScheduler.GetPeriod()!=interval || Devices[i].HeartbeatScheduler.GetOffset()!=offset ); 
+      if ( changed ) {
+        Devices[i].HeartbeatScheduler.SetPeriodAndOffset(interval,offset);
+        DeviceInformationChanged=true;
+      }
     }
-
-    if (SetAsDefault) Devices[i].DefaultHeartbeatInterval=Devices[i].HeartbeatInterval;
-    Devices[i].NextHeartbeatSentTime=(millis()/Devices[i].HeartbeatInterval+1)*Devices[i].HeartbeatInterval;
   }
+}
+
+//*****************************************************************************
+void tNMEA2000::SetHeartbeatInterval(unsigned long interval, bool /*SetAsDefault*/, int iDev) {
+  SetHeartbeatIntervalAndOffset(interval,0xffffffff,iDev);
 }
 
 //*****************************************************************************
 void tNMEA2000::SendHeartbeat(int iDev) {
   if ( !IsValidDevice(iDev) ) return;
   tN2kMsg N2kMsg;
-  SetHeartbeat(N2kMsg,Devices[iDev].HeartbeatInterval,0);
+  SetHeartbeat(N2kMsg,Devices[iDev].HeartbeatScheduler.GetPeriod(),0xff);
   SendMsg(N2kMsg,iDev);
 }
 
@@ -1054,13 +1088,15 @@ void tNMEA2000::SendHeartbeat(bool force) {
 
   for (int iDev=0; iDev<DeviceCount; iDev++) {
     if ( !IsAddressClaimStarted(iDev) ) {
-      if ( force ) Devices[iDev].NextHeartbeatSentTime=0;
-      if ( Devices[iDev].HeartbeatInterval>0 && Devices[iDev].NextHeartbeatSentTime<millis() ) {
+      if ( force || Devices[iDev].HeartbeatScheduler.IsTime() ) {
+        Devices[iDev].HeartbeatScheduler.UpdateNextTime();
         tN2kMsg N2kMsg;
-        if ( Devices[iDev].NextHeartbeatSentTime==0 ) { Devices[iDev].NextHeartbeatSentTime=millis(); }
-        Devices[iDev].NextHeartbeatSentTime+=Devices[iDev].HeartbeatInterval;
-        SetHeartbeat(N2kMsg,Devices[iDev].HeartbeatInterval,0);
+        SetHeartbeat(N2kMsg,Devices[iDev].HeartbeatScheduler.GetPeriod(),force?0xff:Devices[iDev].HeartbeatSequence);
         SendMsg(N2kMsg,iDev);
+        if ( !force ) {
+          Devices[iDev].HeartbeatSequence++;
+          if ( Devices[iDev].HeartbeatSequence>252 ) Devices[iDev].HeartbeatSequence=0;
+        }
       }
     }
   }
@@ -1084,12 +1120,17 @@ tNMEA2000::tCANSendFrame *tNMEA2000::GetNextFreeCANSendFrame() {
 //*****************************************************************************
 void tNMEA2000::SendPendingInformation() {
   for (int i=0; i<DeviceCount; i++ ) {
-    if ( Devices[i].QueryPendingIsoAddressClaim() ) {
-      SendIsoAddressClaim(0xff,i);
-      Devices[i].ClearPendingIsoAddressClaim();
+    if (  Devices[i].HasPendingInformation ) {
+      #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
+      SendPendingTPMessage(i);
+      #endif
+      if ( Devices[i].QueryPendingIsoAddressClaim() ) {
+        SendIsoAddressClaim(0xff,i);
+        Devices[i].ClearPendingIsoAddressClaim();
+      }
+      if ( Devices[i].QueryPendingProductInformation() ) SendProductInformation(i);
+      if ( Devices[i].QueryPendingConfigurationInformation() ) SendConfigurationInformation(i);
     }
-    if ( Devices[i].QueryPendingProductInformation() ) SendProductInformation(i);
-    if ( Devices[i].QueryPendingConfigurationInformation() ) SendConfigurationInformation(i);
   }
 }
 
@@ -1097,7 +1138,11 @@ void tNMEA2000::SendPendingInformation() {
 // Sends message to N2k bus
 //
 bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
-  if ( dbMode==dm_None && !Open() ) return false;
+  if ( dbMode==dm_None ) {
+    if ( OpenState!=os_Open ) {
+      if ( !(Open() && OpenState==os_Open) ) return false;  // Can not do much
+    }
+  }
 
   bool result=false;
 
@@ -1162,7 +1207,7 @@ bool tNMEA2000::SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex) {
                        temp[j]=0xff;
                    }
               }
-              // delay(3);
+
               DbgPrintBuf(8,temp,true);
               result=SendFrame(canId, 8, temp, true);
               if (!result && ForwardStream!=0 && ForwardType==tNMEA2000::fwdt_Text) {
@@ -1276,7 +1321,7 @@ void tNMEA2000::FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uns
   unsigned long OldestMsgTime,CurTime;
   int OldestIndex;
 
-  for (MsgIndex=0, CurTime=OldestMsgTime=millis(), OldestIndex=MaxN2kCANMsgs;
+  for (MsgIndex=0, CurTime=OldestMsgTime=N2kMillis(), OldestIndex=MaxN2kCANMsgs;
        MsgIndex<MaxN2kCANMsgs &&
        !( N2kCANMsgBuf[MsgIndex].FreeMsg ||
          ( N2kCANMsgBuf[MsgIndex].N2kMsg.PGN==PGN
@@ -1288,12 +1333,12 @@ void tNMEA2000::FindFreeCANMsgIndex(unsigned long PGN, unsigned char Source, uns
          )
         );
        MsgIndex++) { // Find free message place
-    if (N2kCANMsgBuf[MsgIndex].N2kMsg.MsgTime<OldestMsgTime) {
+    if ( N2kIsTimeBefore(N2kCANMsgBuf[MsgIndex].N2kMsg.MsgTime,OldestMsgTime) ) {
       OldestIndex=MsgIndex;
       OldestMsgTime=N2kCANMsgBuf[MsgIndex].N2kMsg.MsgTime;
     }
   }
-  if ( MsgIndex==MaxN2kCANMsgs && OldestMsgTime+Max_N2kMsgBuf_Time<CurTime) {
+  if ( MsgIndex==MaxN2kCANMsgs && N2kHasElapsed(OldestMsgTime,Max_N2kMsgBuf_Time,CurTime) ) {
     MsgIndex=OldestIndex; // Use the old one, which has timed out
     N2kCANMsgBuf[MsgIndex].FreeMessage();
   }
@@ -1494,7 +1539,7 @@ bool tNMEA2000::TestHandleTPMessage(unsigned long PGN, unsigned char Source, uns
           for ( uint8_t iSeq=0; TPDTResult &&iSeq<MaxTPSequences && !HasAllTPDTSent(iDev); iSeq++ ) TPDTResult&=SendTPDT(iDev);
           if ( !TPDTResult ) EndSendTPMessage(iDev);
         }
-        Devices[iDev].NextDTSendTime=millis()+100; // Set timeout for next response
+        Devices[iDev].NextDTSendTime.FromNow(100); // Set timeout for next response
         break;
       case TP_CM_ACK:
         if ( !IsValidDevice(iDev) ) break; // Should never fail
@@ -1533,7 +1578,7 @@ bool tNMEA2000::TestHandleTPMessage(unsigned long PGN, unsigned char Source, uns
         CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],1,len,buf);
         N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
         // Transport protocol is slower, so to avoid timeout, we reset message time
-        N2kCANMsgBuf[MsgIndex].N2kMsg.MsgTime=millis();
+        N2kCANMsgBuf[MsgIndex].N2kMsg.MsgTime=N2kMillis();
         if ( N2kCANMsgBuf[MsgIndex].CopiedLen>=N2kCANMsgBuf[MsgIndex].N2kMsg.DataLen ) { // all done
           N2kCANMsgBuf[MsgIndex].Ready=true;
           if ( N2kCANMsgBuf[MsgIndex].TPRequireCTS>0 && iDev>=0 ) { // send response
@@ -1568,9 +1613,10 @@ bool tNMEA2000::StartSendTPMessage(const tN2kMsg& msg, int iDev) {
 
   int result=false;
 
+  Devices[iDev].HasPendingInformation=true;
   Devices[iDev].PendingTPMsg=msg;
   Devices[iDev].NextDTSequence=0;
-  Devices[iDev].NextDTSendTime=millis()+50;
+  Devices[iDev].NextDTSendTime.FromNow(50);
   if ( IsBroadcast(msg.Destination) ) { // Start with BAM
     result=SendTPCM_BAM(iDev);
   } else {
@@ -1585,20 +1631,19 @@ bool tNMEA2000::StartSendTPMessage(const tN2kMsg& msg, int iDev) {
 //*****************************************************************************
 void tNMEA2000::EndSendTPMessage(int iDev) {
   Devices[iDev].PendingTPMsg.Clear();
-  Devices[iDev].NextDTSendTime=0;
+  Devices[iDev].NextDTSendTime.Disable();
+  Devices[iDev].UpdateHasPendingInformation();
 }
 
 //*****************************************************************************
-void tNMEA2000::SendPendingTPMessages() {
-  for (int iDev=0; iDev<DeviceCount; iDev++ ) {
-    if ( Devices[iDev].PendingTPMsg.PGN!=0 && Devices[iDev].NextDTSendTime<millis() ) { // Pending message and timed out
-      if ( IsBroadcast(Devices[iDev].PendingTPMsg.Destination) ) { // For broadcast we just send next data
-        SendTPDT(iDev);
-        Devices[iDev].NextDTSendTime=millis()+50;
-        if ( HasAllTPDTSent(iDev) ) EndSendTPMessage(iDev); // All done
-      } else { // We have not got response from receiver within timeout, so just end. Or should we retry?
-        EndSendTPMessage(iDev);
-      }
+void tNMEA2000::SendPendingTPMessage(int iDev) {
+  if ( Devices[iDev].PendingTPMsg.PGN!=0 && Devices[iDev].NextDTSendTime.IsTime() ) { // Pending message and timed out
+    if ( IsBroadcast(Devices[iDev].PendingTPMsg.Destination) ) { // For broadcast we just send next data
+      SendTPDT(iDev);
+      Devices[iDev].NextDTSendTime.FromNow(50);
+      if ( HasAllTPDTSent(iDev) ) EndSendTPMessage(iDev); // All done
+    } else { // We have not got response from receiver within timeout, so just end. Or should we retry?
+      EndSendTPMessage(iDev);
     }
   }
 }
@@ -1732,7 +1777,7 @@ void tNMEA2000::ForwardMessage(const tN2kCANMsg &N2kCanMsg) {
 }
 
 //*****************************************************************************
-void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex, unsigned long delay) {
+void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex, unsigned long FromNow) {
 
   // Some devices (Garmin) request constantly information on network about others
   // 59904 ISO Request:  PGN = 60928
@@ -1742,8 +1787,8 @@ void tNMEA2000::SendIsoAddressClaim(unsigned char Destination, int DeviceIndex, 
   if ( DeviceIndex<0 || DeviceIndex>=DeviceCount) return;
 
   // Set pending, if we have delayed it.
-  if ( delay>0 ) {
-    Devices[DeviceIndex].SetPendingIsoAddressClaim(delay);
+  if ( FromNow>0 ) {
+    Devices[DeviceIndex].SetPendingIsoAddressClaim(FromNow);
     return;
   }
 
@@ -1759,6 +1804,7 @@ template <typename T> void PROGMEM_readAnything (const T * sce, T& dest)
   memcpy_P (&dest, sce, sizeof (T));
   }
 
+#define MAX_PGNS_IN_LIST 74
 
 //*****************************************************************************
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
@@ -1781,11 +1827,12 @@ void tNMEA2000::SendTxPGNList(unsigned char Destination, int DeviceIndex) {
 #endif
     RespondMsg.AddByte(N2kpgnl_transmit);
     // First add default messages
-    for (int i=0; (PGN=pgm_read_dword(&DefTransmitMessages[i]))!=0; i++) {
+    size_t PGNCount=0;
+    for (int i=0; (PGN=pgm_read_dword(&DefTransmitMessages[i]))!=0 && PGNCount<MAX_PGNS_IN_LIST; i++, PGNCount++ ) {
       RespondMsg.Add3ByteInt(PGN);
     }
     if (Devices[DeviceIndex].TransmitMessages!=0) {
-      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].TransmitMessages[i]))!=0; i++) {
+      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].TransmitMessages[i]))!=0 && PGNCount<MAX_PGNS_IN_LIST; i++, PGNCount++ ) {
         RespondMsg.Add3ByteInt(PGN);
       }
     }
@@ -1813,11 +1860,12 @@ void tNMEA2000::SendRxPGNList(unsigned char Destination, int DeviceIndex) {
 #endif
     RespondMsg.AddByte(N2kpgnl_receive);
     // First add default messages
-    for (int i=0; (PGN=pgm_read_dword(&DefReceiveMessages[i]))!=0; i++) {
+    size_t PGNCount=0;
+    for (int i=0; (PGN=pgm_read_dword(&DefReceiveMessages[i]))!=0 && PGNCount<MAX_PGNS_IN_LIST; i++, PGNCount++ ) {
       RespondMsg.Add3ByteInt(PGN);
     }
     if (Devices[DeviceIndex].ReceiveMessages!=0) {
-      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].ReceiveMessages[i]))!=0; i++) {
+      for (int i=0; (PGN=pgm_read_dword(&Devices[DeviceIndex].ReceiveMessages[i]))!=0 && PGNCount<MAX_PGNS_IN_LIST; i++, PGNCount++ ) {
         RespondMsg.Add3ByteInt(PGN);
       }
     }
@@ -2027,13 +2075,13 @@ void tNMEA2000::HandleGroupFunction(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 void tNMEA2000::StartAddressClaim(int iDev) {
   if ( IsReadyToSend() ) { // Start address claim automatically
-    Devices[iDev].AddressClaimStarted=0;
+    Devices[iDev].AddressClaimTimer.Disable();
     if ( (ForwardStream!=0) && ( ForwardType==tNMEA2000::fwdt_Text) ) {
       ForwardStream->print(F("Start address claim for device "));
       ForwardStream->println(iDev);
     }
     SendIsoAddressClaim(0xff,iDev);
-    Devices[iDev].AddressClaimStarted=millis();
+    Devices[iDev].AddressClaimTimer.FromNow(N2kAddressClaimTimeout);
   }
 }
 
@@ -2048,15 +2096,17 @@ void tNMEA2000::StartAddressClaim() {
 //*****************************************************************************
 bool tNMEA2000::IsAddressClaimStarted(int iDev) {
   // Reset address claim after timeout
-  if ( Devices[iDev].AddressClaimStarted!=0 ) {
-    if ( Devices[iDev].AddressClaimStarted+N2kAddressClaimTimeout<millis()) {
-      Devices[iDev].AddressClaimStarted=0;
+  bool result=Devices[iDev].AddressClaimTimer.IsEnabled();
+  if ( result ) {
+    if ( Devices[iDev].AddressClaimTimer.IsTime() ) {
+      Devices[iDev].AddressClaimTimer.Disable();
+      result=false;
       // We have claimed our address, so save end source for next possible claim run.
       Devices[iDev].UpdateAddressClaimEndSource();
     }
   }
 
-  return (Devices[iDev].AddressClaimStarted!=0);
+  return result;
 }
 
 //*****************************************************************************
@@ -2098,7 +2148,7 @@ void tNMEA2000::HandleCommandedAddress(uint64_t CommandedName, unsigned char New
 
 //*****************************************************************************
 void tNMEA2000::HandleCommandedAddress(const tN2kMsg &N2kMsg) {
-  N2kMsgDbg(millis()); N2kMsgDbg(" Commanded address:"); N2kMsgDbgln(N2kMsg.Destination);
+  N2kMsgDbgStart(" Commanded address:"); N2kMsgDbgln(N2kMsg.Destination);
 
   if ( N2kMsg.PGN!=65240L || !N2kMsg.IsTPMessage() || N2kMsg.DataLen!=9 ) return;
 
@@ -2216,14 +2266,13 @@ void tNMEA2000::ParseMessages() {
     int FramesRead=0;
 //    tN2kMsg N2kMsg;
 
-    if (!Open()) return;  // Can not do much
+    if ( OpenState!=os_Open ) {
+      if ( !(Open() && OpenState==os_Open) ) return;  // Can not do much
+    }
 
     if (dbMode != dm_None) return; // No much to do here, when in Debug mode
 
     SendFrames();
-#if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-    SendPendingTPMessages();
-#endif
     SendPendingInformation();
 #if defined(DEBUG_NMEA2000_ISR)
     TestISR();
@@ -2261,6 +2310,11 @@ void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
   for ( ;MsgHandler!=0 && MsgHandler->GetPGN()<=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
     if ( MsgHandler->GetPGN()==N2kMsg.PGN ) MsgHandler->HandleMsg(N2kMsg);
   }
+}
+
+//*****************************************************************************
+void tNMEA2000::SetOnOpen(void (*_OnOpen)()) {
+  OnOpen=_OnOpen;
 }
 
 //*****************************************************************************
@@ -2549,15 +2603,15 @@ void SetN2kPGN126464(tN2kMsg &N2kMsg, uint8_t Destination, tN2kPGNList tr, const
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
 //*****************************************************************************
 // Heartbeat
-void SetN2kPGN126993(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t statusByte) {
+void SetN2kPGN126993(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t sequenceCounter) {
 	N2kMsg.SetPGN(126993L);
 	N2kMsg.Priority=7;
 	if ( timeInterval_ms>MaxHeartbeatInterval ) {
-	  N2kMsg.Add2ByteUInt(65532);
+	  N2kMsg.Add2ByteUInt(0xfffe); // Error
 	} else {
 	  N2kMsg.Add2ByteUInt((uint16_t)(timeInterval_ms));
 	}
-	N2kMsg.AddByte(statusByte);
+	N2kMsg.AddByte(sequenceCounter);
 	N2kMsg.AddByte(0xff); // Reserved
 	N2kMsg.Add4ByteUInt(0xffffffff); // Reserved
 }

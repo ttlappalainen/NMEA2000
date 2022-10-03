@@ -105,11 +105,31 @@ bool tN2kGroupFunctionHandler::Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCo
 }
 
 //*****************************************************************************
-tN2kGroupFunctionTransmissionOrPriorityErrorCode tN2kGroupFunctionHandler::GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval) {
-  // In NMEA tests "C.3.13.2  Expanded Acknowledgment Message Timing" tool is Old
+tN2kGroupFunctionTransmissionOrPriorityErrorCode tN2kGroupFunctionHandler::GetRequestGroupFunctionTransmissionOrPriorityErrorCode(
+                              uint32_t TransmissionInterval,
+                              uint16_t TransmissionIntervalOffset,
+                              bool UseIntervalLimits,
+                              uint32_t IntervalMax,
+                              uint32_t IntervalMin,
+                              bool UseOffsetLimits,
+                              uint16_t OffsetMax
+                              ) {
+  // In NMEA tool v2.0 tests "C.3.13.2  Expanded Acknowledgment Message Timing" tool is Old
   // and does not know interval 0xFFFFFFFE=Restore Default Interval. So to pass
   // that test, that has to be commented out
-  return (TransmissionInterval==0xFFFFFFFF || TransmissionInterval==0xFFFFFFFE?
+  return ( (TransmissionInterval==0xFFFFFFFF     // No change
+            || TransmissionInterval==0xFFFFFFFE  // Restore default
+            || TransmissionInterval==0           // Turn off
+            || ( UseIntervalLimits && TransmissionInterval>=IntervalMin && TransmissionInterval<=IntervalMax)
+           )
+           &&
+           // Specification for transmission interval is confusing. To keep test tool
+           // happy, we accept also 0 offset
+           (TransmissionIntervalOffset==0xffff
+            || TransmissionIntervalOffset==0
+            || ( UseOffsetLimits && TransmissionIntervalOffset<=OffsetMax)
+           )
+           ?
           N2kgfTPec_Acknowledge:
           N2kgfTPec_TransmitIntervalOrPriorityNotSupported);
 }
@@ -117,13 +137,13 @@ tN2kGroupFunctionTransmissionOrPriorityErrorCode tN2kGroupFunctionHandler::GetRe
 //*****************************************************************************
 bool tN2kGroupFunctionHandler::HandleRequest(const tN2kMsg &N2kMsg,
                                uint32_t TransmissionInterval,
-                               uint16_t /*TransmissionIntervalOffset*/,
+                               uint16_t TransmissionIntervalOffset,
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
 
     // As default we respond with not supported.
     bool IsTxPGN=pNMEA2000->IsTxPGN(GetPGNForGroupFunction(N2kMsg),iDev);
-    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval);
+    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval,TransmissionIntervalOffset);
     tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_PGNTemporarilyNotAvailable:N2kgfPGNec_PGNNotSupported);
     tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
 

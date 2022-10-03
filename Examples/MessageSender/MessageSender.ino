@@ -1,16 +1,16 @@
 // Demo: NMEA2000 library. Send different NMEA 2000 messages as example to the bus.
 //
-// Original MessageSender sent different messages mostly with 1000 ms or 100 ms period. The
-// new version sends all messages with their right (NMEA2000 specified) period. Messages also
+// MessageSender uses tN2kSyncScheduler, which sends all messages synchronized to library open time.
+// As default messages will have their default(NMEA2000 specified) period. Messages also
 // has different offsets to avoid filling up buffer at once. NMEA2000 bus can handle about
 // 2.5 frame/ms. So two single frame messages could be sent at same time, but e.g. 7 frame
 // GNSS position data takes about 3 ms. With unlapping offsets there should be only one message
 // on buffer at time
 //
 // If you need to test new message for testing, write sender function - see. e.g. SendN2kTemperatureExt
-// around line 320 (may change after update). Then add function to N2kSendMessages (somewhere line 470 )
+// around line 360 (may change after update). Then add function to N2kSendMessages (somewhere line 504 )
 // vector in similar way as SendN2kTemperatureExt. Set message period value according to message
-// definition - some periods has been listed also on NMEA2000.cpp.
+// definition - most periods has been listed also on NMEA2000.cpp.
 //
 // Messages sending will be done by SendN2kMessages, which loops through message sender vector and sets
 // loop NextSend scheduler to next nearest sent time. In this way function does not need every time
@@ -22,12 +22,13 @@
 // then enable them one by one. To get available commands type ? and line feed to console to get help.
 
 #include <Arduino.h>
-//#define N2k_SPI_CS_PIN 53    // Pin for SPI select for mcp_can
-//#define N2k_CAN_INT_PIN 21   // Interrupt pin for mcp_can
-//#define USE_MCP_CAN_CLOCK_SET 8  // Uncomment this, if your mcp_can shield has 8MHz chrystal
-//#define ESP32_CAN_TX_PIN GPIO_NUM_16 // Uncomment this and set right CAN TX pin definition, if you use ESP32 and do not have TX on default IO 16
-//#define ESP32_CAN_RX_PIN GPIO_NUM_17 // Uncomment this and set right CAN RX pin definition, if you use ESP32 and do not have RX on default IO 4
-//#define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1    // Uncomment this, if you want to use CAN bus 1 instead of 0 for Arduino DUE
+//#define N2k_SPI_CS_PIN 53    // If you use mcp_can and CS pin is not 53, uncomment this and modify definition to match your CS pin.
+//#define N2k_CAN_INT_PIN 21   // If you use mcp_can and interrupt pin is not 21, uncomment this and modify definition to match your interrupt pin.
+//#define USE_MCP_CAN_CLOCK_SET 8  // If you use mcp_can and your mcp_can shield has 8MHz chrystal, uncomment this.
+//#define ESP32_CAN_TX_PIN GPIO_NUM_16 // If you use ESP32 and do not have TX on default IO 16, uncomment this and and modify definition to match your CAN TX pin.
+//#define ESP32_CAN_RX_PIN GPIO_NUM_17 // If you use ESP32 and do not have RX on default IO 4, uncomment this and and modify definition to match your CAN TX pin.
+//#define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // If you use Arduino DUE and want to use CAN bus 1 instead of 0, uncomment this.
+#define NMEA2000_TEENSY_CAN_BUS 1
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
 #include <N2kMessages.h>
 #include <N2kMaretron.h>
@@ -38,13 +39,14 @@ using tN2kSendFunction=void (*)();
 struct tN2kSendMessage {
   tN2kSendFunction SendFunction;
   const char *const Description;
-  unsigned long NextSend;
-  unsigned long Period;
-  unsigned long Offset;
-  bool Enabled;
+  tN2kSyncScheduler Scheduler;
 
+  tN2kSendMessage(tN2kSendFunction _SendFunction, const char *const _Description, uint32_t /* _NextTime */ 
+                  ,uint32_t _Period, uint32_t _Offset, bool _Enabled) : 
+                    SendFunction(_SendFunction), 
+                    Description(_Description), 
+                    Scheduler(_Enabled,_Period,_Offset) {}
   void Enable(bool state);
-  void SetNextUpdate();
 };
 
 extern tN2kSendMessage N2kSendMessages[];
@@ -54,16 +56,15 @@ static unsigned long N2kMsgSentCount=0;
 static unsigned long N2kMsgFailCount=0;
 static bool ShowSentMessages=false;
 static bool ShowStatistics=false;
-static bool Sending=true;
+static bool Sending=false;
 static bool EnableForward=false;
-static unsigned long NextStatsTime=3000;
+static tN2kScheduler NextStatsTime;
 static unsigned long StatisticsPeriod=2000;
 
 // Forward declarations for functions
 void CheckCommand(); 
 void CheckLoopTime();
-bool IsTimeToUpdate(unsigned long NextUpdate);
-void SetNextUpdate(unsigned long &NextUpdate, unsigned long Period, unsigned long Offset=0);
+void OnN2kOpen();
 
 // *****************************************************************************
 void setup() {
@@ -79,8 +80,8 @@ void setup() {
   NMEA2000.SetProductInformation("00000001", // Manufacturer's Model serial code
                                  100, // Manufacturer's product code
                                  "Message sender example",  // Manufacturer's Model ID
-                                 "1.1.1.30 (2021-02-05)",  // Manufacturer's Software version code
-                                 "1.1.1.0 (2021-02-05)" // Manufacturer's Model version
+                                 "1.1.2.35 (2022-10-01)",  // Manufacturer's Software version code
+                                 "1.1.2.0 (2022-10-01)" // Manufacturer's Model version
                                  );
   // Set device information
   NMEA2000.SetDeviceInformation(1, // Unique number. Use e.g. Serial number.
@@ -97,6 +98,7 @@ void setup() {
   NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode,22);
   //NMEA2000.SetDebugMode(tNMEA2000::dm_ClearText); // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
   NMEA2000.EnableForward(EnableForward); // Disable all msg forwarding to USB (=Serial)
+  NMEA2000.SetOnOpen(OnN2kOpen);
   NMEA2000.Open();
 
   Serial.println("Starting message sender!");
@@ -118,28 +120,27 @@ void SendN2kMsg(const tN2kMsg &N2kMsg) {
 // Function check is it time to send message. If it is, message will be sent and
 // next send time will be updated.
 // Function always returns next time it should be handled.
-unsigned long CheckSendMessage(tN2kSendMessage &N2kSendMessage) {
-  if ( !N2kSendMessage.Enabled ) return millis()+2000;
+int64_t CheckSendMessage(tN2kSendMessage &N2kSendMessage) {
+  if ( N2kSendMessage.Scheduler.IsDisabled() ) return N2kSendMessage.Scheduler.GetNextTime();
 
-  if ( IsTimeToUpdate(N2kSendMessage.NextSend) ) {
-    if ( N2kSendMessage.NextSend!=0 ) { // do not send on first round
-      N2kSendMessage.SendFunction();
-    }
-    N2kSendMessage.SetNextUpdate();
+  if ( N2kSendMessage.Scheduler.IsTime() ) {
+    N2kSendMessage.Scheduler.UpdateNextTime();
+    N2kSendMessage.SendFunction();
   }
 
-  return N2kSendMessage.NextSend;
+  return N2kSendMessage.Scheduler.GetNextTime();
 }
 
 // *****************************************************************************
 // Function send enabled messages from tN2kSendMessage structure according to their
 // period+offset.
 void SendN2kMessages() {
-  static unsigned long NextSend=10000;
+  static uint64_t NextSend=0;
+  uint64_t Now=N2kMillis64();
 
-  if ( IsTimeToUpdate(NextSend) ) {
-    unsigned long NextMsgSend;
-    NextSend=millis()+2000;
+  if ( NextSend<Now ) {
+    uint64_t NextMsgSend;
+    NextSend=Now+2000;
     for ( size_t i=0; i<nN2kSendMessages; i++ ) {
       NextMsgSend=CheckSendMessage(N2kSendMessages[i]);
       if ( NextMsgSend<NextSend ) NextSend=NextMsgSend;
@@ -154,8 +155,8 @@ void loop() {
   CheckCommand();
 
   if ( ShowStatistics ) {
-    if ( IsTimeToUpdate(NextStatsTime) ) {
-      SetNextUpdate(NextStatsTime,StatisticsPeriod);
+    if ( NextStatsTime.IsTime() ) {
+      NextStatsTime.FromNow(StatisticsPeriod);
       char buf[200];
       snprintf(buf,200,"\nMessages sent:%lu, sent failed:%lu\n",N2kMsgSentCount,N2kMsgFailCount);
       Serial.print(buf);
@@ -299,6 +300,23 @@ void SendSalinity() {
   N2kMsg.Add2ByteUDouble(293.15,0.01);
   N2kMsg.AddVarStr("00022");
   N2kMsg.AddVarStr("Test");
+  SendN2kMsg(N2kMsg);
+}
+
+// *****************************************************************************
+void SendHeave() {
+  tN2kMsg N2kMsg;
+  SetN2kHeave(N2kMsg,0xff,5.3,2.1,N2kDD374_UserDefined);
+  SendN2kMsg(N2kMsg);
+}
+
+// *****************************************************************************
+void SendRouteInfo() {
+  tN2kMsg N2kMsg;
+  SetN2kRouteWPInfo(N2kMsg,0,1,7,N2kdir_forward,"Back to home");
+  AppendN2kPGN129285(N2kMsg,1,"Start point",60.0,21.0);
+  AppendN2kPGN129285(N2kMsg,2,"Turn before rock",60.01,21.01);
+  AppendN2kPGN129285(N2kMsg,3,"Home",60.02,21.02);
   SendN2kMsg(N2kMsg);
 }
 
@@ -480,7 +498,10 @@ void SendN2kMagneticHeading() {
   SendN2kMsg(N2kMsg);
 }
 
-#define AddSendPGN(fn,NextSend,Period,Offset,Enabled) {fn,#fn,NextSend,Period,Offset,Enabled}
+// We add 300 ms as default for each offset to avoid failed sending at start. 
+// Message sending is synchronized to open. After open there is 250 ms address claiming time when
+// message sending fails.
+#define AddSendPGN(fn,NextSend,Period,Offset,Enabled) {fn,#fn,NextSend,Period,Offset+300,Enabled}
 
 tN2kSendMessage N2kSendMessages[]={
    AddSendPGN(SendN2kIsoAddressClaim,0,5000,0,false) // 60928 Not periodic
@@ -516,10 +537,24 @@ tN2kSendMessage N2kSendMessages[]={
   ,AddSendPGN(SendN2kTemperatureExt,0,2500,44,true) // 130316 Not periodic
   ,AddSendPGN(SendTideStationData,0,1000,86,false) // 130320 (8)
   ,AddSendPGN(SendSalinity,0,1000,90,false) // 130321 (8)
+  ,AddSendPGN(SendHeave,0,100,94,true) // 127252
+  ,AddSendPGN(SendRouteInfo,0,5000,94,true) // 129285 Not periodic
   ,AddSendPGN(SendN2kMaretronTempHR,0,2000,45,false) // 130823 (2)
 };
 
 size_t nN2kSendMessages=sizeof(N2kSendMessages)/sizeof(tN2kSendMessage);
+
+// *****************************************************************************
+// Call back for NMEA2000 open. This will be called, when library starts bus communication.
+// See NMEA2000.SetOnOpen(OnN2kOpen); on setup()
+// We initialize here all messages next sending time. Since we use tN2kSyncScheduler all messages
+// send offset will be synchronized to libary.
+void OnN2kOpen() {
+  for ( size_t i=0; i<nN2kSendMessages; i++ ) {
+    if ( N2kSendMessages[i].Scheduler.IsEnabled() ) N2kSendMessages[i].Scheduler.UpdateNextTime();
+  }
+  Sending=true;
+}
 
 // *****************************************************************************
 // Command handling functions. These are environment functions for example not
@@ -554,45 +589,14 @@ void CheckLoopTime() {
   StartTime=micros();
 }
 
-#ifndef LONG_MAX
-#define LONG_MAX 0x7fffffff
-#endif
-
-// *****************************************************************************
-bool IsTimeToUpdate(unsigned long NextUpdate) {
-  return ( millis()-NextUpdate<LONG_MAX );
-}
-
-// *****************************************************************************
-unsigned long RemainingToUpdate(unsigned long NextUpdate) {
-  unsigned long Diff=NextUpdate-millis();
-  return ( Diff<LONG_MAX?0:Diff);
-}
-
-// *****************************************************************************
-unsigned long InitNextUpdate(unsigned long Period, unsigned long Offset=0) {
-  return millis()+Period+Offset;
-}
-
-// *****************************************************************************
-void SetNextUpdate(unsigned long &NextUpdate, unsigned long Period, unsigned long Offset) {
-  unsigned long Now=millis();
-  if ( Now>Offset ) {
-    Now-=Offset;
-    NextUpdate=Now+(Period-Now%Period)+Offset;
-  } else { NextUpdate=Period+Offset; }
-}
-
-// *****************************************************************************
-void tN2kSendMessage::SetNextUpdate()  {
-  ::SetNextUpdate(NextSend,Period,Offset);
-}
-
 // *****************************************************************************
 void tN2kSendMessage::Enable(bool state)  {
-  if ( Enabled!=state ) {
-    Enabled=state;
-    if ( state ) SetNextUpdate();
+  if ( Scheduler.IsEnabled()!=state ) {
+    if ( state ) {
+      Scheduler.UpdateNextTime();
+    } else {
+      Scheduler.Disable();
+    }
   }
 }
 
@@ -608,7 +612,11 @@ struct tCommand {
 // *****************************************************************************
 void ToggleStats(const char *) {
   ShowStatistics=!ShowStatistics;
-  if ( ShowStatistics ) SetNextUpdate(NextStatsTime,StatisticsPeriod);
+  if ( ShowStatistics ) {
+    NextStatsTime.FromNow(StatisticsPeriod);
+  } else {
+    NextStatsTime.Disable();
+  }
 }
 
 // *****************************************************************************
@@ -640,16 +648,116 @@ void ClearStatistics(const char *) {
 }
 
 // *****************************************************************************
-void ToggleMsgSending(const char *Params) {
-  if ( Params==0 ) return;
-
-  size_t MsgIndex=atoi(Params);
-  if ( MsgIndex<nN2kSendMessages ) {
-    N2kSendMessages[MsgIndex].Enable(!N2kSendMessages[MsgIndex].Enabled);
-    Serial.print(N2kSendMessages[MsgIndex].Description);
-    Serial.print("  ");
-    Serial.println(N2kSendMessages[MsgIndex].Enabled?"enabled":"disabled");
+bool HasParam(const char *&Params) {
+  if ( Params==0 ) return false;
+  
+  while ( *Params==' ' || *Params=='\t' ) Params++; // Pass spaces to check param exist
+  if ( *Params==0 ) {
+    return false; // Param not defined.
   }
+  
+  return true;
+}
+
+// *****************************************************************************
+template<typename T> bool GetParam(const char *&Params, T &Value, T Def=0) {
+  Value=Def;
+  char* ParamEnd;
+  Value=strtol(Params,&ParamEnd,10);
+  bool ret = ( Params!=ParamEnd && (*ParamEnd==0 || *ParamEnd==' ' || *ParamEnd=='\t') );
+  Params=ParamEnd;
+  return ret;
+}
+
+// *****************************************************************************
+void ToggleMsgSending(const char *Params) {
+  if ( !HasParam(Params) ) {
+    Serial.println("Message index not defined");
+    return;
+  }
+
+  size_t MsgIndex;
+  if ( !GetParam(Params,MsgIndex) || MsgIndex>=nN2kSendMessages ) {
+    Serial.println("Invalid message index");
+    return;
+  }
+  
+  N2kSendMessages[MsgIndex].Enable(!N2kSendMessages[MsgIndex].Scheduler.IsEnabled());
+  Serial.print(N2kSendMessages[MsgIndex].Description);
+  Serial.print("  ");
+  Serial.println(N2kSendMessages[MsgIndex].Scheduler.IsEnabled()?"enabled":"disabled");
+}
+
+// *****************************************************************************
+void SendMessageNow(const char *Params) {
+  if ( !HasParam(Params) ) {
+    Serial.println("Message index not defined");
+    return;
+  }
+
+  size_t MsgIndex;
+  if ( !GetParam(Params,MsgIndex) || MsgIndex>=nN2kSendMessages ) {
+    Serial.println("Invalid message index");
+    return;
+  }
+  
+  N2kSendMessages[MsgIndex].SendFunction();
+  Serial.print(N2kSendMessages[MsgIndex].Description);
+  Serial.println("  sent");
+}
+
+// *****************************************************************************
+void SetMessagePeriod(const char *Params) {
+  if ( !HasParam(Params) ) {
+    Serial.println("Message index not defined");
+    return;
+  }
+
+  size_t MsgIndex;
+  if ( !GetParam(Params,MsgIndex) || MsgIndex>=nN2kSendMessages ) {
+    Serial.println("Invalid message index");
+    return;
+  }
+  
+  if ( HasParam(Params) ) {
+    uint32_t Period;
+    if ( !GetParam(Params,Period) || Period>60000 ) {
+      Serial.println("Invalid period");
+      return;
+    }
+    
+    N2kSendMessages[MsgIndex].Scheduler.SetPeriod(Period);
+  }
+  Serial.print(N2kSendMessages[MsgIndex].Description);
+  Serial.print("  period is ");
+  Serial.println(N2kSendMessages[MsgIndex].Scheduler.GetPeriod());
+}
+
+// *****************************************************************************
+void SetMessageOffset(const char *Params) {
+  if ( !HasParam(Params) ) {
+    Serial.println("Message index not defined");
+    return;
+  }
+
+  size_t MsgIndex;
+  if ( !GetParam(Params,MsgIndex) || MsgIndex>=nN2kSendMessages ) {
+    Serial.println("Invalid message index");
+    return;
+  }
+  
+  if ( HasParam(Params) ) {
+    uint32_t Offset;
+    if ( !GetParam(Params,Offset) || Offset>60000 ) {
+      Serial.println("Invalid offset");
+      return;
+    }
+    
+    N2kSendMessages[MsgIndex].Scheduler.SetOffset(Offset);
+  }
+  Serial.print(N2kSendMessages[MsgIndex].Description);
+  Serial.print("  offset is ");
+  Serial.println(N2kSendMessages[MsgIndex].Scheduler.GetOffset());
 }
 
 // *****************************************************************************
@@ -674,7 +782,7 @@ void ListMessages(const char *) {
     Serial.print("    "); 
     Serial.print(i);
     Serial.print(" : ");
-    Serial.print(N2kSendMessages[i].Enabled?"(enabled)  ":"(disabled) ");
+    Serial.print(N2kSendMessages[i].Scheduler.IsEnabled()?"(enabled)  ":"(disabled) ");
     Serial.println(N2kSendMessages[i].Description);
   }
 }
@@ -691,7 +799,10 @@ tCommand Commands[]={
   ,{"s",0,"Toggle show sent messages",ToggleShowSentMessages}
   ,{"fwd",0,"Toggle show other bus messages",ToggleForward}
   ,{"msgs",0,"List messages",ListMessages}
-  ,{"msg","msg x","Toggle message x sending",ToggleMsgSending}
+  ,{"msg","msg <x>","Toggle message x sending",ToggleMsgSending}
+  ,{"once","once <x>","Sends message x on request",SendMessageNow}
+  ,{"period","period <x> [p]","Set message x period to p. If p is not defined, just shows period.",SetMessagePeriod}
+  ,{"offset","offset <x> [o]","Set message x offset to o. If o is not defined, just shows offset.",SetMessageOffset}
 };
 
 size_t nCommands=sizeof(Commands)/sizeof(tCommand);
@@ -725,6 +836,7 @@ void CheckCommand() {
     char ch=Serial.read();
     if ( ch=='\n') {
       char *Params=strchr(Command,' ');
+      bool FoundCommand=false;
       if ( Params!=0 ) {
         
         *Params=0;
@@ -733,8 +845,13 @@ void CheckCommand() {
       for ( size_t i=0; i<nCommands; i++ ) {
         if ( strcmp(Command,Commands[i].Command)==0 ) {
           Commands[i].CommandFunction(Params);
+          FoundCommand=true;
           break;
         }
+      }
+      if ( !FoundCommand ) {
+        Serial.print("Unknown command ");
+        Serial.println(Command);
       }
       CommandPos=0;
       Command[CommandPos]=0;

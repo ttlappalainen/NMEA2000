@@ -1,5 +1,7 @@
 = NMEA2000 library for C++ =
 
+If you are familiar with library, here is quick link to <<Changes>>.
+
 Object oriented NMEA2000 library for Teensy, ESP, Arduino, MBED and Rasberry type Boards.
 These board types has been tested, but library can be used also in other systems by writing
 compatible CAN driver and wrapper for other hw specific functions.
@@ -120,11 +122,47 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+03.10.2022
+
+- *Possible compatibility change:* tN2kGroupFunctionHandler::GetRequestGroupFunctionTransmissionOrPriorityErrorCode
+  interface has changed. If you have used that, please update interface.
+
+- *Possible compatibility change:* Removed need of delay function on tNMEA2000::Open(). Now it opens CAN commununication
+  and returns true, if that and other configuration succeeds. Final open, when address claiming starts, will be delayed
+  and done by ParseMessages. There is new callback OnOpen, which will be called on initial address claiming started. See
+  <<SetOnOpen,below>>
+  
+- *Possible compatibility change:* For linux users removed default dummy tSocketStream serStream; from NMEA2000_CAN.h
+  
+- *Compatibility change:* PGN129285 parameter list SetN2kPGN129285 and SetN2kRouteWPInfo has been changed.
+  Compiler could not solve ambiguous problem between compatibility inlines, so users are forced to change
+  to new interface.
+
+- Added [[SetOnOpen]]tNMEA2000::SetOnOpen to set callback for communication open.
+
+- New module N2kTimer to hide platform dependent millis(). Module declares scheduler classes to
+  fix problems on simple millis() testing in case of roll over. Class tN2kSyncScheduler is
+  for synchronizing message sending.
+  
+- Improved: Single test for pending information (tInternalDevice::HasPendingInformation) to avoid multiple tests in every loop.
+  
+- Fix: Heartbeat problem caused by millis() roll over after 49 days.
+
+- Fix: Added missing const modifiers. Thanks alexg-k.
+
+- Fix: Limit SendRxPGNList/SendTxPGNList to avoid crash in case of error.
+
+- Fix: PGN 129285 Waypoint list. Thanks aydosj.
+
+- Added: PGN 127252 Heave. Thanks aydosj.
+
+- Changed some parameter order in classes to save small amount of memory.
+
 11.08.2022
 
 - Fix: On N2kGroupFunctionDefaultHandlers.cpp tN2kGroupFunctionHandlerForPGN60928 unique number length is 3 bytes.
 
-- Fix: On N2kMsg.cpp changed round(v/precision) to round((v/precision)), since some system round macro behaved unexpectedly. Thaks to ieb.
+- Fix: On N2kMsg.cpp changed round(v/precision) to round( (v/precision) ), since some system round macro behaved unexpectedly. Thaks to ieb.
 
 06.07.2022
 
@@ -134,7 +172,6 @@ support.
 
 - Fix: PGN 129794 setter.
 
-== Changes ==
 07.04.2022
 
 - Changed #include <cstring> to #include <string.h>. <cstring> is not available on all environments.

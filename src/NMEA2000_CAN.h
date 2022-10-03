@@ -73,6 +73,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     #define ESP32_CAN_TX_PIN GPIO_NUM_16
     #define ESP32_CAN_RX_PIN GPIO_NUM_4
     
+  Teensy:
+    #define NMEA2000_TEENSY_CAN_BUS 1 // Select second CAN bus for Teensy 3.5 or 3.6
+    
   Teensyx:
     #define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN2 // select CAN bus 2
     #define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // Force NMEA2000_TEENSYX also for Teensy 3.x boards
@@ -140,7 +143,13 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_due(NMEA2000_ARDUINO_DUE_CAN_BUS));
 #ifndef NMEA2000_TEENSY_VER
 #error Update NMEA2000_Teensy for the latest version! 
 #endif
-tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy());
+#ifndef NMEA2000_TEENSY_DEF_TIMEOUT
+#define NMEA2000_TEENSY_DEF_TIMEOUT 4
+#endif
+#ifndef NMEA2000_TEENSY_CAN_BUS
+#define NMEA2000_TEENSY_CAN_BUS 0
+#endif
+tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy(NMEA2000_TEENSY_DEF_TIMEOUT,NMEA2000_TEENSY_CAN_BUS));
 
 #elif USE_N2K_CAN == USE_N2K_TEENSYX_CAN
 // Use Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards internal CAN
@@ -160,7 +169,6 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_avr());
   #endif
 #include <NMEA2000_SocketCAN.h>       // https://github.com/thomasonw/NMEA2000_socketCAN
 tNMEA2000 &NMEA2000=*(new tNMEA2000_SocketCAN(SOCKET_CAN_PORT));
-tSocketStream serStream;
 
 #elif USE_N2K_CAN == USE_N2K_MBED_CAN
 // Use MBED devices

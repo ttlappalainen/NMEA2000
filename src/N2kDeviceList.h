@@ -121,8 +121,8 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
         void ClearProductInformationLoaded() { ProdILoaded=false; ProdIRequested=0; nProdIRequested=0; }
         void ClearProductInformation() { ProdI.Clear(); ClearProductInformationLoaded(); }
         bool ShouldRequestProductInformation() { return ( !ProdILoaded && nProdIRequested<4 ); } // We do not have it and not tried enough
-        bool ReadyForRequestProductInformation() { return ( ShouldRequestProductInformation() && millis()-ProdIRequested>N2kDL_TimeBetweenPIRequest && millis()-GetCreateTime()>N2kDL_TimeForFirstRequest ); }
-        void SetProductInformationRequested() { ProdIRequested=millis(); nProdIRequested++; }
+        bool ReadyForRequestProductInformation() { return ( ShouldRequestProductInformation() && N2kHasElapsed(ProdIRequested,N2kDL_TimeBetweenPIRequest) && N2kHasElapsed(GetCreateTime(),N2kDL_TimeForFirstRequest) ); }
+        void SetProductInformationRequested() { ProdIRequested=N2kMillis(); nProdIRequested++; }
         bool IsSameProductInformation(tNMEA2000::tProductInformation &Other) {
             if (ProdI.IsSame(Other)) {
               ProdILoaded=true; return true;
@@ -132,13 +132,13 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
           }
         void ClearConfigurationInformationLoaded() { ConfILoaded=false; ConfIRequested=0; nConfIRequested=0; }
         bool ShouldRequestConfigurationInformation() { return ( !ConfILoaded && nConfIRequested<4 ); } // We do not have it and not tried enough
-        bool ReadyForRequestConfigurationInformation() { return ( ShouldRequestConfigurationInformation() && millis()-ConfIRequested>N2kDL_TimeBetweenCIRequest && millis()-GetCreateTime()>N2kDL_TimeForFirstRequest ); }
-        void SetConfigurationInformationRequested() { ConfIRequested=millis(); nConfIRequested++; }
+        bool ReadyForRequestConfigurationInformation() { return ( ShouldRequestConfigurationInformation() && N2kHasElapsed(ConfIRequested,N2kDL_TimeBetweenCIRequest) && N2kHasElapsed(GetCreateTime(),N2kDL_TimeForFirstRequest) ); }
+        void SetConfigurationInformationRequested() { ConfIRequested=N2kMillis(); nConfIRequested++; }
 
         void ClearPGNListLoaded() { PGNsRequested=0; nPGNsRequested=0; }
         bool ShouldRequestPGNList() { return ( ((TransmitPGNs==0) || (ReceivePGNs==0))  && nPGNsRequested<4 ); } // We do not have it and not tried enough
-        void SetPGNListRequested() { PGNsRequested=millis(); nPGNsRequested++; }
-        bool ReadyForRequestPGNList() { return ( ShouldRequestPGNList() && millis()-PGNsRequested>1000 && millis()-GetCreateTime()>N2kDL_TimeForFirstRequest ); }
+        void SetPGNListRequested() { PGNsRequested=N2kMillis(); nPGNsRequested++; }
+        bool ReadyForRequestPGNList() { return ( ShouldRequestPGNList() && N2kHasElapsed(PGNsRequested,1000) && N2kHasElapsed(GetCreateTime(),N2kDL_TimeForFirstRequest) ); }
     }; // tInternalDevice
 
   protected:
@@ -172,7 +172,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
     // source, function returns nul.
     const tNMEA2000::tDevice * FindDeviceBySource(uint8_t Source) const { return LocalFindDeviceBySource(Source); }
 
-    // Return device last message time in millis.
+    // Return device last message time in milliseconds.
     unsigned long GetDeviceLastMessageTime(uint8_t Source) const {
       tN2kDeviceList::tInternalDevice *dev=LocalFindDeviceBySource(Source);
       return ( dev!=0?dev->LastMessageTime:0 );

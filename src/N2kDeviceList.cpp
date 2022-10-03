@@ -153,11 +153,11 @@ void tN2kDeviceList::HandleMsg(const tN2kMsg &N2kMsg) {
     // start request sequence again
     if ( Sources[N2kMsg.Source]->GetName()==0 &&
          Sources[N2kMsg.Source]->nNameRequested>0 && 
-         Sources[N2kMsg.Source]->LastMessageTime+60000 < millis() ) {
+         N2kHasElapsed(Sources[N2kMsg.Source]->LastMessageTime,60000) ) {
       Sources[N2kMsg.Source]->nNameRequested=0;
       HasPendingRequests=true;
     }
-    Sources[N2kMsg.Source]->LastMessageTime=millis();
+    Sources[N2kMsg.Source]->LastMessageTime=N2kMillis();
   }
 }
 
@@ -165,7 +165,7 @@ void tN2kDeviceList::HandleMsg(const tN2kMsg &N2kMsg) {
 void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
   if ( N2kMsg.Source>=N2kMaxBusDevices ) return;
 
-//  N2kHandleInDbg(millis()); N2kHandleInDbg(" PGN: "); N2kHandleInDbgln(N2kMsg.PGN);
+//  N2kHandleInDbg(N2kMillis()); N2kHandleInDbg(" PGN: "); N2kHandleInDbgln(N2kMsg.PGN);
 
   if ( !HasPendingRequests ) return;
 
@@ -183,7 +183,7 @@ void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
       // Test do we need product information for this device
       if ( Sources[i]->ReadyForRequestProductInformation() ) {
         if ( RequestProductInformation(Sources[i]->GetSource()) ) {
-          N2kHandleInDbg(millis()); N2kHandleInDbg(" Request product information for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
+          N2kHandleInDbg(N2kMillis()); N2kHandleInDbg(" Request product information for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
           Sources[i]->SetProductInformationRequested();
           HasPendingRequests=true;
           return;
@@ -201,7 +201,7 @@ void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
       // Test do we need product information for this device
       if ( Sources[i]->ReadyForRequestConfigurationInformation() ) {
         if ( RequestConfigurationInformation(Sources[i]->GetSource()) ) {
-          N2kHandleInDbg(millis()); N2kHandleInDbg(" Request configuration information for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
+          N2kHandleInDbg(N2kMillis()); N2kHandleInDbg(" Request configuration information for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
           Sources[i]->SetConfigurationInformationRequested();
           HasPendingRequests=true;
           return;
@@ -219,7 +219,7 @@ void tN2kDeviceList::HandleOther(const tN2kMsg &N2kMsg) {
       // Test do we need product information for this device
       if ( Sources[i]->ReadyForRequestPGNList() ) {
         if ( RequestSupportedPGNList(Sources[i]->GetSource()) ) {
-          N2kHandleInDbg(millis()); N2kHandleInDbg(" Request supported PGN lists for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
+          N2kHandleInDbg(N2kMillis()); N2kHandleInDbg(" Request supported PGN lists for source: "); N2kHandleInDbgln(Sources[i]->GetSource());
           Sources[i]->SetPGNListRequested();
           HasPendingRequests=true;
           return;

@@ -34,6 +34,11 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
+#define N2k_KEEP_TRANSMISSION_INTERVAL 0xffffffff
+#define N2k_RESTORE_TRANSMISSION_INTERVAL 0xfffffffe // Restore default
+#define N2k_MAX_TRANSMISSION_INTERVAL 0xfffffff0
+#define N2k_MAX_TRANSMISSION_INTERVAL_OFFSET 0xfffc
+
 enum tN2kGroupFunctionCode {
                             N2kgfc_Request=0,
                             N2kgfc_Command=1,
@@ -100,16 +105,38 @@ class tN2kGroupFunctionHandler {
     tNMEA2000 *pNMEA2000;
 
   protected:
-    // This is default handler for Complex Request transmission interval setting. Overwrite it, if your PGN will support
-    // changing interval.
-    virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval);
+    // deprecated! Use new version with offset test too.
+    // deprecated attribute does not work with overrided methods, so easier just force users to update code.
+    // virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval) __attribute__ ((deprecated));
 
+    // This is default handler for Complex Request transmission interval setting. Overwrite it, if your PGN will support
+    // changing interval and/or offset.
+    // If you support changing interval and offset for your PGN, you can either overwrite function
+    // or set UseLimits and provide interval and offset limits.
+    virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(
+                              uint32_t TransmissionInterval,
+                              uint16_t TransmissionIntervalOffset,
+                              bool UseIntervalLimits=false,
+                              uint32_t IntervalMax=N2k_MAX_TRANSMISSION_INTERVAL,
+                              uint32_t IntervalMin=50,
+                              bool UseOffsetLimits=false,
+                              uint16_t OffsetMax=N2k_MAX_TRANSMISSION_INTERVAL_OFFSET
+                              );
+
+    // Default request handler for group function requests for PGN.
+    // Note!
+    //   TransmissionInterval in in ms
+    //   TransmissionIntervalOffset is in 10 ms  (sorry my old mistake)
+    // Default response is "not supported". 
+    // Certified devices must respond to requests!
     virtual bool HandleRequest(const tN2kMsg &N2kMsg,
                                uint32_t TransmissionInterval,
                                uint16_t TransmissionIntervalOffset,
                                uint8_t  NumberOfParameterPairs,
                                int iDev);
 
+    // Default request handler for group function commands for PGN.
+    // Default response is "not supported". 
     virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
 
     // This function handles Acknowledge group function, whis is response for Request, Command, ReadFields or WriteFields

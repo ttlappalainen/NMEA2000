@@ -98,7 +98,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 
 inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
       tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText) {
-   return SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
+   SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
 }
 
 bool ParseN2kPGN129802(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
@@ -378,6 +378,35 @@ inline void SetN2kRateOfTurn(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTu
 bool ParseN2kPGN127251(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn);
 inline bool ParseN2kRateOfTurn(const tN2kMsg &N2kMsg, unsigned char &SID, double &RateOfTurn) {
   return ParseN2kPGN127251(N2kMsg,SID,RateOfTurn);
+}
+
+//*****************************************************************************
+// Heave
+//  - SID                   Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages
+//                          to indicate that they are measured at same time.
+//  - Heave                 Vertical displacement perpendicular to the earth’s surface in meters
+//  - Delay                 Delay added by calculations in seconds
+//  - DelaySource           tN2kDelaySource
+// Output:
+//  - N2kMsg                NMEA2000 message ready to be send.
+void SetN2kPGN127252(tN2kMsg &N2kMsg, unsigned char SID, double Heave,
+                     double Delay=N2kDoubleNA, tN2kDelaySource DelaySource=N2kDD374_DataNotAvailable);
+
+inline void SetN2kHeave(tN2kMsg &N2kMsg, unsigned char SID, double Heave,
+                     double Delay=N2kDoubleNA, tN2kDelaySource DelaySource=N2kDD374_DataNotAvailable) {
+  SetN2kPGN127252(N2kMsg, SID, Heave, Delay, DelaySource);
+}
+
+bool ParseN2kPGN127252(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave, double &Delay, tN2kDelaySource &DelaySource);
+
+inline bool ParseN2kHeave(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave) {
+  double Delay;
+  tN2kDelaySource DelaySource;
+  return ParseN2kPGN127252(N2kMsg, SID, Heave, Delay, DelaySource);
+}
+
+inline bool ParseN2kHeave(const tN2kMsg &N2kMsg, unsigned char &SID, double &Heave, double &Delay, tN2kDelaySource &DelaySource) {
+  return ParseN2kPGN127252(N2kMsg, SID, Heave, Delay, DelaySource);
 }
 
 //*****************************************************************************
@@ -1436,21 +1465,12 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
 // Output:
 //  - N2kMsg                NMEA2000 message ready to be send.
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName);
+      tN2kNavigationDirection NavDirection, const char* RouteName, tN2kGenericStatusPair SupplementaryData=N2kDD002_No);
 
 inline void SetN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-      tN2kNavigationDirection NavDirection, uint8_t SupplementaryData, char* RouteName)
-{
-   SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection, SupplementaryData, RouteName);
+      tN2kNavigationDirection NavDirection, const char* RouteName, tN2kGenericStatusPair SupplementaryData=N2kDD002_No) {
+  SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection, RouteName, SupplementaryData);
 }
-
-// for backwards compatibility
-inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
-                        bool NavDirection, bool SupplementaryData, char* RouteName)
-{
-   tN2kNavigationDirection NavDirection1 = NavDirection?N2kdir_reverse:N2kdir_forward;
-	SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection1, (uint8_t)SupplementaryData, RouteName);
-}                        
 
 // Route/WP appended information
 // Input:
@@ -1462,10 +1482,9 @@ inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, 
 //  - N2kMsg                NMEA2000 message ready to be send.
 // Return:
 //  - true if there was enough space in the message
-bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Latitude, double Longitude);
+bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t WPID, const char* WPName, double Latitude, double Longitude);
 
-inline bool AppendN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t WPID, char* WPName, double Latitude, double Longitude)
-{
+inline bool AppendN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t WPID, const char* WPName, double Latitude, double Longitude) {
    return AppendN2kPGN129285(N2kMsg, WPID, WPName, Latitude, Longitude);
 }
 

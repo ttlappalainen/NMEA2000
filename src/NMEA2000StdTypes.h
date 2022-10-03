@@ -169,6 +169,15 @@ enum tN2kDD305 {
           N2kAISAtoN_light_vessel_lanby_rigs=31,
 };
 
+enum tN2kDD374 {
+          N2kDD374_UserDefined=0,
+          N2kDD374_MinimumDefined=1,
+          N2kDD374_FactoruDefault=2,
+          N2kDD374_MaximumSupported=3,
+          N2kDD374_OutOfRange=14,
+          N2kDD374_DataNotAvailable=15
+};
+
 // Thruster Motor Events
 //
 union tN2kDD471 {

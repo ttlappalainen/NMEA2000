@@ -22,6 +22,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include "N2kMsg.h"
+#include "N2kTimer.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,14 +60,14 @@ tN2kMsg::tN2kMsg(unsigned char _Source, unsigned char _Priority, unsigned long _
   Init(_Priority,_PGN,_Source,255);
   if ( _DataLen>0 && _DataLen<MaxDataLen ) DataLen=_DataLen;
   ResetData();
-  if ( PGN!=0 ) MsgTime=millis();
+  if ( PGN!=0 ) MsgTime=N2kMillis();
 }
 
 //*****************************************************************************
 void tN2kMsg::SetPGN(unsigned long _PGN) {
   Clear();
   if ( PGN==0 ) PGN=_PGN;
-  MsgTime=millis();
+  MsgTime=N2kMillis();
 }
 
 //*****************************************************************************
@@ -805,7 +806,7 @@ void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bo
 //*****************************************************************************
 void tN2kMsg::Print(N2kStream *port, bool NoData) const {
   if (port==0 || !IsValid()) return;
-  port->print(millis()); port->print(F(" : "));
+  port->print(N2kMillis()); port->print(F(" : "));
   port->print(F("Pri:")); port->print(Priority);
   port->print(F(" PGN:")); port->print(PGN);
   port->print(F(" Source:")); port->print(Source);
