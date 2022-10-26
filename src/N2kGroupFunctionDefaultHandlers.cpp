@@ -507,6 +507,9 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
                                uint8_t  NumberOfParameterPairs,
                                int iDev) {
   tN2kGroupFunctionTransmissionOrPriorityErrorCode pec = GetRequestGroupFunctionTransmissionOrPriorityErrorCode(TransmissionInterval,TransmissionIntervalOffset,true,60000U,1000U,true,6000U);
+  // Turn off is not allowed for heartbeat.
+  if ( TransmissionInterval==0 ) pec=N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+  
   if ( NumberOfParameterPairs==0 ) { // According to doc, there should not be any parameter pairs defined
     if ( TransmissionInterval==0xffffffff && TransmissionIntervalOffset==0xffff ) {
       // Request for 126993 with 0xffffffff and 0xffff is prohibited so use default reponse.

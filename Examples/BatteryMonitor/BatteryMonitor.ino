@@ -15,6 +15,10 @@
 //#define ESP32_CAN_TX_PIN GPIO_NUM_16 // If you use ESP32 and do not have TX on default IO 16, uncomment this and and modify definition to match your CAN TX pin.
 //#define ESP32_CAN_RX_PIN GPIO_NUM_17 // If you use ESP32 and do not have RX on default IO 4, uncomment this and and modify definition to match your CAN TX pin.
 //#define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // If you use Arduino DUE and want to use CAN bus 1 instead of 0, uncomment this.
+//#define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // If you use Teensy 3.x, you can force NMEA2000_TEENSYX driver
+//#define NMEA2000_TEENSYX_TX_PIN tNMEA2000_Teensyx::pinAlternate // Force alternate pin with TeensyX
+//#define NMEA2000_TEENSYX_RX_PIN tNMEA2000_Teensyx::pinAlternate // Force alternate pin with TeensyX
+//#define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN1 // Force CAN bus for TeensyX
 //#define NMEA2000_TEENSY_CAN_BUS 1 // If you use Teensy 3.5 or 3.6 and want to use second CAN bus, uncomment this.
 #include "NMEA2000_CAN.h"       // This will automatically choose right CAN library and create suitable NMEA2000 object
 #include "N2kMessages.h"
@@ -76,12 +80,12 @@ void setup() {
                                
                                
   // Uncomment 3 rows below to see, what device will send to bus                           
-   Serial.begin(115200);
-   NMEA2000.SetForwardStream(&Serial);
+  Serial.begin(115200);
+  NMEA2000.SetForwardStream(&Serial);
   // NMEA2000.SetForwardType(tNMEA2000::fwdt_Text);     // Show in clear text. Leave uncommented for default Actisense format.
 
   // If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below
-  NMEA2000.SetMode(tNMEA2000::N2km_NodeOnly,25);
+  NMEA2000.SetMode(tNMEA2000::N2km_ListenAndNode,25);
   // NMEA2000.SetDebugMode(tNMEA2000::dm_ClearText);     // Uncomment this, so you can test code without CAN bus chips on Arduino Mega
   // NMEA2000.EnableForward(false);                      // Disable all msg forwarding to USB (=Serial)
   

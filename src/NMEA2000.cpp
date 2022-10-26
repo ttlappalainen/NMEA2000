@@ -938,9 +938,8 @@ bool tNMEA2000::Open() {
     OpenState=os_OpenCAN;
   }
 
-  if ( !OpenScheduler.IsTime() ) return false;
-
   if ( OpenState==os_OpenCAN ) {
+    if ( !OpenScheduler.IsTime() ) return false;
     bool Notify=( (ForwardStream!=0) && (ForwardType==tNMEA2000::fwdt_Text) );
     if ( (dbMode!=dm_None) || CANOpen() ) {
       OpenState=os_WaitOpen;
@@ -950,17 +949,22 @@ bool tNMEA2000::Open() {
       OpenScheduler.FromNow(1000);
       if ( Notify ) ForwardStream->println(F("CAN device failed to open"));
     }
-    return false;
+    return OpenState==os_WaitOpen;
   }
 
   // There were problems with some CAN controllers start sending immediately after
   // Initialization so we start sending delayed.
-  if ( OpenState==os_WaitOpen ) {
+  if ( OpenState==os_WaitOpen && OpenScheduler.IsTime() ) {
     OpenState=os_Open;
     StartAddressClaim();
     tN2kSyncScheduler::SetSyncOffset();
     if ( OnOpen!=0 ) OnOpen();
     SetHeartbeatIntervalAndOffset(DefaultHeartbeatInterval,10000); // Init default hearbeat interval and offset.
+  } else {
+    unsigned long canId;
+    unsigned char len = 0;
+    unsigned char buf[8];
+    while ( CANGetFrame(canId,len,buf) );
   }
 
   // For compatibility return true, when final open is waiting.

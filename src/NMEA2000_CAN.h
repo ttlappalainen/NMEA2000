@@ -78,6 +78,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
   Teensyx:
     #define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN2 // select CAN bus 2
+    #define NMEA2000_TEENSYX_TX_PIN tNMEA2000_Teensyx::pinAlternate // Use selected CAN alternate Tx pin
+    #define NMEA2000_TEENSYX_RX_PIN tNMEA2000_Teensyx::pinAlternate // Use selected CAN alternate Rx pin
     #define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // Force NMEA2000_TEENSYX also for Teensy 3.x boards
     
   Arduino DUE:
@@ -154,7 +156,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_teensy(NMEA2000_TEENSY_DEF_TIMEOUT,NMEA2000_
 #elif USE_N2K_CAN == USE_N2K_TEENSYX_CAN
 // Use Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards internal CAN
 #include <NMEA2000_Teensyx.h>    // https://github.com/ttlappalainen/NMEA2000_Teensyx
-tNMEA2000 &NMEA2000=*(new tNMEA2000_Teensyx(NMEA2000_TEENSYX_CAN_BUS));
+tNMEA2000 &NMEA2000=*(new tNMEA2000_Teensyx(NMEA2000_TEENSYX_CAN_BUS,NMEA2000_TEENSYX_TX_PIN,NMEA2000_TEENSYX_RX_PIN));
 
 #elif USE_N2K_CAN == USE_N2K_AVR_CAN
 // Use Atmel AVR internal CAN controller with avr_can library
