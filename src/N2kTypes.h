@@ -242,15 +242,6 @@ enum tN2kAISVersion {
                             N2kaisv_ITU_R_M_1371_3=1,
                           };
 
-enum tN2kAISTranceiverInfo {
-                            N2kaisti_Channel_A_VDL_reception=0,
-                            N2kaisti_Channel_B_VDL_reception=1,
-                            N2kaisti_Channel_A_VDL_transmission=2,
-                            N2kaisti_Channel_B_VDL_transmission=3,
-                            N2kaisti_Own_information_not_broadcast=4,
-                            N2kaisti_Reserved=5
-                          };
-
 enum tN2kAISNavStatus {
                             N2kaisns_Under_Way_Motoring=0,
                             N2kaisns_At_Anchor=1,

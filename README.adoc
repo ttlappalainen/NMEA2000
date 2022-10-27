@@ -122,6 +122,15 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+27.10.2022
+
+- *Compatibility change for PGN 129794 setter function:* Replaced tN2kAISTranceiverInfo with tN2kAISTransceiverInformation.
+  tN2kAISTranceiverInfo was duplicate for tN2kAISTransceiverInformation. It has been also removed from N2kTypes.h.
+  
+- *Compatibility change for PGN 129038 setter function:* Added tN2kAISTransceiverInformation as parameter. I pop up that
+  at least some MFD:s does not show class A AIS objects, if transceiver information has not been properly set. +
+  Thanks to usauerbrey.
+  
 26.10.2022
 
 - Version confirmed to pass NMEA2000 certification tests.
