@@ -26,6 +26,7 @@ add_library(nmea2000
   N2kMsg.cpp
   N2kStream.cpp
   N2kMessages.cpp
+  N2kTimer.cpp
   Seasmart.cpp
 )
 

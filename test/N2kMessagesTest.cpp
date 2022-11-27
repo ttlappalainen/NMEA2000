@@ -468,14 +468,13 @@ TEST_CASE("PGN129285 Route/WP information")
    uint16_t Start = 1;
    uint16_t Database = 2;
    uint16_t Route = 3;
-   bool NavDirection = true;
    tN2kNavigationDirection NavDirectiont =  N2kdir_reverse;
    bool SupplementaryData = true;
    const char* RouteName = "test route";
 
-   SetN2kPGN129285(N2kMsg1, Start, Database, Route, NavDirection, SupplementaryData, (char*)RouteName);
+   SetN2kPGN129285(N2kMsg1, Start, Database, Route, NavDirectiont, (char*)RouteName, N2kDD002_Yes );
 
-   SetN2kRouteWPInfo(N2kMsg2, Start, Database, Route, NavDirectiont, SupplementaryData, (char*)RouteName);
+   SetN2kRouteWPInfo(N2kMsg2, Start, Database, Route, NavDirectiont, (char*)RouteName, N2kDD002_Yes );
 
    SECTION("values of both calls produce identical messages")
    {
