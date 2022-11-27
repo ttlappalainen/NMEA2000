@@ -122,6 +122,16 @@ I also thank for anybody who has extended library with new PGNs or processor
 support.
 
 == Changes ==
+27.11.2022
+
+- Updated test and added missing source file, thanks to PeterFromSweden.
+
+- Fixed tN2kBatChem - Added ZnO, noted by matthias-mw
+
+- Added optional SID to SetN2kPGN129039, noted by matthias-mw
+
+- Added N2kts_ShaftSealTemperature, noted by gorlanovmax
+
 27.10.2022
 
 - *Compatibility change for PGN 129794 setter function:* Replaced tN2kAISTranceiverInfo with tN2kAISTransceiverInformation.

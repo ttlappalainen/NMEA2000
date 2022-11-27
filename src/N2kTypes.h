@@ -105,7 +105,8 @@ enum tN2kTempSource {
                             N2kts_TheoreticalWindChillTemperature=11,
                             N2kts_HeatIndexTemperature=12,
                             N2kts_FreezerTemperature=13,
-                            N2kts_ExhaustGasTemperature=14
+                            N2kts_ExhaustGasTemperature=14,
+                            N2kts_ShaftSealTemperature=15
                           };
 
 enum tN2kHumiditySource {
@@ -210,7 +211,8 @@ enum tN2kBatChem {
                             N2kDCbc_LeadAcid=0,
                             N2kDCbc_LiIon=1,
                             N2kDCbc_NiCad=2,
-                            N2kDCbc_NiMh=3
+                            N2kDCbc_ZnO=3,
+                            N2kDCbc_NiMh=4
                           };
 
 enum tN2kBatNomVolt {

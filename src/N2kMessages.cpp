@@ -1356,7 +1356,7 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
                         uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation,
                         double Heading, tN2kAISUnit Unit, bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode,
-                        bool State)
+                        bool State, unsigned char SID)
 {
     N2kMsg.SetPGN(129039L);
     N2kMsg.Priority=4;
@@ -1375,6 +1375,7 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte((Mode & 0x01)<<7 | (Msg22 & 0x01)<<6 | (Band & 0x01)<<5 |
                     (DSC & 0x01)<<4 | (Display & 0x01)<<3 | (Unit & 0x01)<<2);
     N2kMsg.AddByte(0xfe | (State & 0x01));
+    N2kMsg.AddByte(SID);
 }
 
 
