@@ -45,3 +45,8 @@ Temporary Items
 # CMake
 build
 tags
+
+# Added by Matthias
+build/*
+Documents/tmp/
+/src/N2kMessages_StyleTest.h
