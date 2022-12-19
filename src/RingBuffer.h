@@ -178,7 +178,7 @@ public:
   /************************************************************************//**
    * \brief Reads a value from the ring buffer
    *
-   * \param val       Referenz to the value that have to be read out
+   * \param val       Reference to the value that have to be read out
    * \return true     
    * \return false    -> There is no data available inside the buffer
    */
@@ -299,7 +299,7 @@ public:
   /************************************************************************//**
    * \brief Reads a value from the ring buffer
    *
-   * \param val       Referenz to the value that have to be read out
+   * \param val       Reference to the value that have to be read out
    * \return true     
    * \return false    -> There is no data available inside the buffer
    */

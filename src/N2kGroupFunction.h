@@ -324,7 +324,7 @@ class tN2kGroupFunctionHandler {
      * Default response is "not supported". Certified devices must respond
      * to requests!
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param TransmissionInterval    Transmission interval [ms]
      * \param TransmissionIntervalOffset  Offset to the transmission 
@@ -346,7 +346,7 @@ class tN2kGroupFunctionHandler {
      *
      * Default response is "not supported". 
      *  
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param PrioritySetting     Priority Setting
      * \param NumberOfParameterPairs  Number of parameter pairs contained
@@ -367,7 +367,7 @@ class tN2kGroupFunctionHandler {
      *       acknowledge has been handled. So you need to override this,
      *        if your device will send one of those commands.
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param PGNErrorCode  PGN Error Code, see 
      *                      \ref tN2kGroupFunctionPGNErrorCode
@@ -392,7 +392,7 @@ class tN2kGroupFunctionHandler {
      *
      * 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param ManufacturerCode    Manufacturer Code, This will be set to 
      *                            0xffff for non-propprietary PNGs
@@ -421,7 +421,7 @@ class tN2kGroupFunctionHandler {
      *
      * \warning Under construction! No real code inside, always returns true!
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param iDev          Index off the device in \ref tNMEA2000::Devices
      * 
@@ -434,7 +434,7 @@ class tN2kGroupFunctionHandler {
      *
      * 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param ManufacturerCode    Manufacturer Code, This will be set to 
      *                            0xffff for non-propprietary PNGs
@@ -463,7 +463,7 @@ class tN2kGroupFunctionHandler {
      *
      * \warning Under construction! No real code inside, always returns true!
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param iDev          Index off the device in \ref tNMEA2000::Devices
      * 
@@ -484,7 +484,7 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Handle for a Group Function
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param GroupFunctionCode     Code for Group Function, see 
      *                              \ref tN2kGroupFunctionCode
@@ -503,7 +503,7 @@ class tN2kGroupFunctionHandler {
      * function extracts the PGN (as 3 bytes) from the given 
      * N2K message.
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \return unsigned long -> PGN for Group Function
      */
@@ -514,7 +514,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param GroupFunctionCode   Group Function Code, see \ref 
      *                            tN2kGroupFunctionCode
@@ -532,7 +532,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param TransmissionInterval    Transmission interval
      * \param TransmissionIntervalOffset Offset to the transmission interval
@@ -553,7 +553,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param Index       Index where the Request Pair Parameters start
      * 
@@ -567,7 +567,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param PrioritySetting     Priority setting
      * \param NumberOfParameterPairs   Number of parameter pairs contained
@@ -586,7 +586,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param Index       Index where the Command Pair Parameters start
      * 
@@ -600,7 +600,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param PGNErrorCode  PGN error code, see \ref 
      *                      tN2kGroupFunctionPGNErrorCode
@@ -623,7 +623,7 @@ class tN2kGroupFunctionHandler {
      *
      * This is a static function for PGN 126208 handling. 
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param Proprietary Group function is proprietary
      * \param Index       Index where the Command Pair Parameters start
@@ -635,7 +635,7 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Parse parameters from group function ReadOrWrite message
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param ManufacturerCode    Manufacturer Code, This will be set to 
      *                            0xffff for non-propprietary PNGs
@@ -663,7 +663,7 @@ class tN2kGroupFunctionHandler {
      * \brief Setting up the group function message for Read Reply
      * 
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param Destination address of Destination 
      * \param PGN         Parameter group Number
@@ -690,7 +690,7 @@ class tN2kGroupFunctionHandler {
      * \brief Setting up the group function message for Write Reply
      * 
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param Destination address of Destination 
      * \param PGN         Parameter group Number
@@ -716,7 +716,7 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Setting up the group function message for Acknowledge
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    Output: NMEA2000 message ready to be send.
      * \param Destination address of Destination 
      * \param PGN         Parameter group Number
@@ -735,7 +735,7 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Change the PGN error code for a group function message
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param PGNErrorCode  PGN error code, see \ref 
      *                      tN2kGroupFunctionPGNErrorCode
@@ -746,7 +746,7 @@ class tN2kGroupFunctionHandler {
      * \brief Change the Transmission or Priority error code code for 
      *        a group function message
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param TransmissionOrPriorityErrorCode Transmission or Priority error
      *     code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
@@ -756,7 +756,7 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Add parameter to a Acknowledge group function message
      *
-     * \param N2kMsg      Referenz to a N2kMsg Object, 
+     * \param N2kMsg      Reference to a N2kMsg Object, 
      *                    This message is an Group function message
      * \param ParameterPairIndex Index of the parameter pair
      * \param ErrorCode   Error code to be added to the message

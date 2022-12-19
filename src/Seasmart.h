@@ -50,7 +50,7 @@
  * written including the terminating \0 (but this function does not add the
  * NMEA separator \\r\\n).
  * 
- * \param msg         Referenz to a N2kMsg Object 
+ * \param msg         Reference to a N2kMsg Object 
  * \param timestamp   Timestamp of the message
  * \param buffer      char array buffer for seasmart message
  * \param size        size of the char buffer
@@ -70,7 +70,7 @@ size_t N2kToSeasmart(const tN2kMsg &msg, uint32_t timestamp, char *buffer, size_
 
  * \param buffer      char array buffer with seasmart message
  * \param timestamp   Timestamp of the message
- * \param msg         Referenz to a N2kMsg Object 
+ * \param msg         Reference to a N2kMsg Object 
  * 
  * \return true -> Success
  * \return false -> an error occured

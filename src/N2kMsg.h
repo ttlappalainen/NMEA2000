@@ -188,8 +188,9 @@ void SetBufDouble(double v, int &index, unsigned char *buf);
  * \brief Writes a double signed value into a byte array buffer using 8 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -205,8 +206,9 @@ void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *bu
  * \brief Writes a double signed value into a byte array buffer using 4 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -222,8 +224,9 @@ void SetBuf4ByteDouble(double v, double precision, int &index, unsigned char *bu
  * \brief Writes a double unsigned value into a byte array buffer using 4 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -239,8 +242,9 @@ void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *b
  * \brief Writes a double signed value into a byte array buffer using 3 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -256,8 +260,9 @@ void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *bu
  * \brief Writes a double signed value into a byte array buffer using 2 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -273,8 +278,9 @@ void SetBuf2ByteDouble(double v, double precision, int &index, unsigned char *bu
  * \brief Writes a double unsigned value into a byte array buffer using 2 bytes
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -290,8 +296,9 @@ void SetBuf2ByteUDouble(double v, double precision, int &index, unsigned char *b
  * \brief Writes a double signed value into a byte array buffer using 1 byte
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -307,8 +314,9 @@ void SetBuf1ByteDouble(double v, double precision, int &index, unsigned char *bu
  * \brief Writes a double unsigned value into a byte array buffer using 1 byte
  *
  * To write a double value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer. The fixed point integer mechanism is used.
@@ -323,8 +331,7 @@ void SetBuf1ByteUDouble(double v, double precision, int &index, unsigned char *b
 /**************************************************************************//**
  * \brief Writes an integer value into a byte array buffer using 2 bytes
  * To write a integer value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used.
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer
@@ -340,8 +347,7 @@ void SetBuf2ByteInt(int16_t v, int &index, unsigned char *buf);
  * 2 bytes
  * 
  * To write a integer value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer
@@ -355,8 +361,7 @@ void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf);
 /**************************************************************************//**
  * \brief Writes an integer value into a byte array buffer using 3 bytes
  * To write a integer value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer
@@ -371,8 +376,7 @@ void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf);
  * \brief Writes an unsigned integer value into a byte array buffer u
  * ing 4 bytes
  * To write a integer value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer
@@ -387,8 +391,7 @@ void SetBuf4ByteUInt(uint32_t v, int &index, unsigned char *buf);
  * \brief Writes an unsigned integer 64bit value into a byte array buffer
  * using 8 bytes
  * To write a integer value into a certain position of an byte array buffer
- * the function memcpy is used. If the value represents "not available", the
- * corresponding constant is copied into the buffer.
+ * the function memcpy is used. 
  * 
  * There are different functions depending on how many byte should be used
  * in the buffer

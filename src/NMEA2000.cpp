@@ -1568,7 +1568,7 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
 /************************************************************************//**
  * \brief   Copy a Buffer to a CAN Message
  *
- * \param CANMsg  Referenz to an CANMsg Object with the result
+ * \param CANMsg  Reference to an CANMsg Object with the result
  * \param start   Startbyte inside the buffer
  * \param len     Length of the buffer
  * \param buf     Pointer to a buffer

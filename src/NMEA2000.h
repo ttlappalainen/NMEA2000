@@ -618,7 +618,7 @@ public:
       unsigned long PGN;
       /*******************************************************************//**
        * \brief Handles a given message       *
-       * \param N2kMsg Referenz to a N2kMsg Object
+       * \param N2kMsg Reference to a N2kMsg Object
        */
       virtual void HandleMsg(const tN2kMsg &N2kMsg)=0;
       /** \brief Returns the tNMEA2000 object of this handler
@@ -1230,7 +1230,7 @@ protected:
      * checking if a corresponding message is listed on \ref
      * FastPacketMessages[]
      * 
-     * \param N2kMsg Referenz to a N2kMsg Object
+     * \param N2kMsg Reference to a N2kMsg Object
      * \return true 
      * \return false 
      */
@@ -1302,7 +1302,7 @@ protected:
      * If non of this fits the RequestedPGN, we directly respond to the 
      * requester NAK. ( \ref SetN2kPGNISOAcknowledgement)
      * 
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      * \param RequestedPGN  Requested PGN
      * \param iDev          index of the device on \ref Devices
      */
@@ -1314,7 +1314,7 @@ protected:
      * The function determines if the request is for us (Broadcast message or
      * device in our list) and responds to the request.
      *
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      */
     void HandleISORequest(const tN2kMsg &N2kMsg);
 
@@ -1329,7 +1329,7 @@ protected:
      * group function PGN 126208. Here we first call callback and if that will 
      * not handle function, we use default handler.
      * 
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      * \param GroupFunctionCode 
      * \param PGNForGroupFunction 
      * \param iDev          index of the device on \ref Devices
@@ -1344,7 +1344,7 @@ protected:
      * group function PGN 126208. On the document it is not clear can request 
      * be send as broadcast, so we handle it, if we can.
      *
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      */
     void HandleGroupFunction(const tN2kMsg &N2kMsg);
 #endif
@@ -1374,7 +1374,7 @@ protected:
     /**********************************************************************//**
      * \brief Handles an IsoAddressClaim
      *
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      */
     void HandleISOAddressClaim(const tN2kMsg &N2kMsg);
 
@@ -1391,7 +1391,7 @@ protected:
      /**********************************************************************//**
      * \brief Handles if we get commanded to set a new address
      *
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      */
     void HandleCommandedAddress(const tN2kMsg &N2kMsg);
 
@@ -1484,7 +1484,7 @@ protected:
     /*********************************************************************//**
      * \brief Run all message handlers
      *
-     * \param N2kMsg        Referenz to a N2kMsg Object
+     * \param N2kMsg        Reference to a N2kMsg Object
      */
     void RunMessageHandlers(const tN2kMsg &N2kMsg);
 
@@ -1637,7 +1637,7 @@ protected:
     /*********************************************************************//**
      * \brief Start sending an ISO-TP message
      *
-     * \param msg     Referenz to a N2kMsg Object
+     * \param msg     Reference to a N2kMsg Object
      * \param iDev    index of the device on \ref Devices
      * 
      * \return true 
@@ -2478,7 +2478,7 @@ public:
      * 
      * See example TemperatureMonitor.ino.
      * 
-     * \param N2kMsg          Referenz to a N2kMsg Object
+     * \param N2kMsg          Reference to a N2kMsg Object
      * \param DeviceIndex     index of the device on \ref Devices
      * \return true         -> Success
      * \return false 
@@ -2771,7 +2771,7 @@ public:
  * broadcast” message or the response to a specific command to indicate 
  * compliance or failure.
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg          Reference to a N2kMsg Object, ready to be send 
  * \param Control         Control Byte
  * \param GroupFunction   Group Function value
  * \param PGN             PGN of requested Information
@@ -2798,7 +2798,7 @@ inline void SetN2kPGNISOAcknowledgement(tN2kMsg &N2kMsg, unsigned char Control, 
  * response to requests for this PGN.
  * 
  * 
- * \param N2kMsg            Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg            Reference to a N2kMsg Object, ready to be send 
  * \param UniqueNumber      Unique Number (ISO Identity Number)
  * \param ManufacturerCode  Manufacturer Code
  * \param DeviceFunction    Device Function (ISO Function)
@@ -2820,7 +2820,7 @@ void SetN2kPGN60928(tN2kMsg &N2kMsg, unsigned long UniqueNumber, int Manufacture
  * that are Request Parameters that can be used to control the expected 
  * response to requests for this PGN.
  * 
- * \param N2kMsg            Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg            Reference to a N2kMsg Object, ready to be send 
  * \param Name              Name of the device 
  */
 void SetN2kPGN60928(tN2kMsg &N2kMsg, uint64_t Name);
@@ -2854,7 +2854,7 @@ inline void SetN2kISOAddressClaim(tN2kMsg &N2kMsg, uint64_t Name) {
  * Provides product information onto the network that could be important 
  * for determining quality of data coming from this product.
  * 
- * \param N2kMsg              Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg              Reference to a N2kMsg Object, ready to be send 
  * \param N2kVersion          NMEA Network Message Database Version
  * \param ProductCode         NMEA Manufacturer's Product Code
  * \param ModelID             Manufacturer's Model ID
@@ -2890,7 +2890,7 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
  * Provides product information onto the network that could be important 
  * for determining quality of data coming from this product.
  * 
- * \param N2kMsg              Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg              Reference to a N2kMsg Object, ready to be send 
  * \param N2kVersion          NMEA Network Message Database Version
  * \param ProductCode         NMEA Manufacturer's Product Code
  * \param ModelIDSize         Size of ModelID
@@ -2919,7 +2919,7 @@ bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsign
  * starboard engine room location) of the device and installation 
  * notes (e.g., calibration data).
  * 
- * \param N2kMsg              Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg              Reference to a N2kMsg Object, ready to be send 
  * \param ManufacturerInformation   Manufacturer Information
  * \param InstallationDescription1  Installation Description, Field 1
  * \param InstallationDescription2  Installation Description, Field 2
@@ -2957,7 +2957,7 @@ inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
  * starboard engine room location) of the device and installation 
  * notes (e.g., calibration data).
  *
- * \param N2kMsg            Referenz to a N2kMsg Object
+ * \param N2kMsg            Reference to a N2kMsg Object
  * \param ManufacturerInformationSize Size off Manufacturer Information
  * \param ManufacturerInformation     Manufacturer Information
  * \param InstallationDescription1Size Size off Installation Description
@@ -2982,7 +2982,7 @@ bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
  * to this message is based on the PGN being requested, and whether the 
  * receiver supports the requested PGN.
  * 
- * \param N2kMsg            Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg            Reference to a N2kMsg Object, ready to be send 
  * \param Destination       Address of the destination
  * \param RequestedPGN      PGN being requested
  */
@@ -3006,7 +3006,7 @@ inline void SetN2kPGNISORequest(tN2kMsg &N2kMsg, uint8_t Destination, unsigned l
  * to this message is based on the PGN being requested, and whether the 
  * receiver supports the requested PGN.
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object 
+ * \param N2kMsg        Reference to a N2kMsg Object 
  * \param RequestedPGN  PGN being requested
  * 
  * \return true     Parsing of PGN Message successful
@@ -3043,7 +3043,7 @@ enum tN2kPGNList {N2kpgnl_transmit=0, N2kpgnl_receive=1 };
  * \note List of PGNs must be null terminated and defined as PROGMEM e.g. 
  *        const unsigned long TransmitMessages[] PROGMEM={130310L,0};
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, ready to be send 
+ * \param N2kMsg          Reference to a N2kMsg Object, ready to be send 
  * \param Destination     Address of the destination
  * \param tr              Transmit or Receive, see \ref tN2kPGNList
  * \param PGNs            List of PGNs
@@ -3069,7 +3069,7 @@ inline void SetN2kPGNTransmitList(tN2kMsg &N2kMsg, uint8_t Destination, const un
  * of this PGN may also be used to maintain an address to NAME association 
  * table within the receiving device.
  * 
- * \param N2kMsg            Referenz to a N2kMsg Object, ready to be send
+ * \param N2kMsg            Reference to a N2kMsg Object, ready to be send
  * \param timeInterval_ms   time interval in msec (0.01 - 655.32s )
  * \param sequenceCounter   Sequence counter
  */

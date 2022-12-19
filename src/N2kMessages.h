@@ -175,12 +175,13 @@ inline double KnotsToms(double v) { return N2kIsNA(v)?v:v*0.51444444444444444444
  * \brief Setting up PGN126992 Message "System date/time"
  * \ingroup group_msgSetUp
  * 
- * The PGN126992 purpose is twofold: To provide a regular transmission of UTC 
- * time and date. To provide synchronism for measurement data.
+ * The purpose of this PGN isto provide a regular transmission of UTC time
+ * and date; optionally synchronized to other parameter groups from the same
+ * source.
  * 
  * The default Priority is set to 3.
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object
+ * \param N2kMsg        Reference to a N2kMsg Object
  * \param SID           Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255
  *                      to indicate that they are measured at same time.
  * \param SystemDate    Days since 1970-01-01 (UTC)
@@ -246,7 +247,7 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
  * parameter group either upon receiving a VHF data link message 14,
  * or upon receipt of an ISO or NMEA request PGN.
  * 
- * \param N2kMsg                    Referenz to a N2kMsg Object, 
+ * \param N2kMsg                    Reference to a N2kMsg Object, 
  *                                  Output: NMEA2000 message ready to be send.
  * \param MessageID                 Message type
  * \param Repeat                    Repeat indicator
@@ -285,7 +286,7 @@ inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageI
  * parameter group either upon receiving a VHF data link message 14,
  * or upon receipt of an ISO or NMEA request PGN.
  *
- * \param N2kMsg                    Referenz to a N2kMsg Object, 
+ * \param N2kMsg                    Reference to a N2kMsg Object, 
  *                                  Output: NMEA2000 message ready to be send.
  * \param MessageID                 Message type
  * \param Repeat                    Repeat indicator
@@ -326,7 +327,7 @@ inline bool ParseN2kAISSafetyRelatedBroadcastMsg(const tN2kMsg &N2kMsg, uint8_t 
  * information may include the current state of the MOB device, time of
  * activation, and MOB device battery status.
 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  *                              Output: NMEA2000 message ready to be send.
  * \param SID                   Sequence ID. If your device is e.g. boat
  *                              speed and heading at same time, you can set
@@ -401,7 +402,7 @@ inline void SetN2kMOBNotification(tN2kMsg &N2kMsg,
  * information may include the current state of the MOB device, time of
  * activation, and MOB device battery status.
  * 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  * \param SID                   Sequence ID. If your device is e.g. boat
  *                              speed and heading at same time, you can set
  *                              same SID for different messages to link this
@@ -476,7 +477,7 @@ inline bool ParseN2kMOBNotification(const tN2kMsg &N2kMsg,
  * for navigational (remote) control of a heading control system and direct
  * rudder control.
  * 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  *                              Output: NMEA2000 message ready to be send.
  * \param RudderLimitExceeded       Yes/No
  * \param OffHeadingLimitExceeded   Yes/No
@@ -555,7 +556,7 @@ inline void SetN2kHeadingTrackControl(tN2kMsg &N2kMsg,
  * for navigational (remote) control of a heading control system and direct
  * rudder control.
  * 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  * \param RudderLimitExceeded       Yes/No
  * \param OffHeadingLimitExceeded   Yes/No
  * \param OffTrackLimitExceeded     Yes/No
@@ -635,7 +636,7 @@ inline bool ParseN2kHeadingTrackControl(const tN2kMsg &N2kMsg,
  * 
  * Rudder order command in direction or angle with current rudder angle reading.
  * 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  *                              Output: NMEA2000 message ready to be send.
  * \param RudderPosition        Current rudder postion in radians.
  * \param Instance              Rudder instance.
@@ -666,7 +667,7 @@ inline void SetN2kRudder(tN2kMsg &N2kMsg, double RudderPosition, unsigned char I
  * 
  * Rudder order command in direction or angle with current rudder angle reading.
  * 
- * \param N2kMsg                Referenz to a N2kMsg Object, 
+ * \param N2kMsg                Reference to a N2kMsg Object, 
  *                              Output: NMEA2000 message ready to be send.
  * \param RudderPosition        Current rudder postion in radians.
  * \param Instance              Rudder instance.
@@ -718,7 +719,7 @@ inline bool ParseN2kRudder(const tN2kMsg &N2kMsg, double &RudderPosition) {
  * and the variation field can be used to correct the Magnetic heading to
  * produce a True heading.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
@@ -766,7 +767,7 @@ inline void SetN2kMagneticHeading(tN2kMsg &N2kMsg, unsigned char SID, double Hea
  * and the variation field can be used to correct the Magnetic heading to
  * produce a True heading.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
  *                    same SID for different messages to link this PGN to other
@@ -804,7 +805,7 @@ inline bool ParseN2kHeading(const tN2kMsg &N2kMsg, unsigned char &SID, double &H
  * 
  * Rate of Turn is the rate of change of the Heading.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
@@ -833,7 +834,7 @@ inline void SetN2kRateOfTurn(tN2kMsg &N2kMsg, unsigned char SID, double RateOfTu
  * 
  * Rate of Turn is the rate of change of the Heading.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
  *                    same SID for different messages to link this PGN to other
@@ -866,7 +867,7 @@ inline bool ParseN2kRateOfTurn(const tN2kMsg &N2kMsg, unsigned char &SID, double
  * Vertical displacement perpendicular to (smooth, wave-free water on)
  * the earth’s surface.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
  *                    same SID for different messages to link this PGN to other
@@ -899,7 +900,7 @@ inline void SetN2kHeave(tN2kMsg &N2kMsg, unsigned char SID, double Heave,
  * Vertical displacement perpendicular to (smooth, wave-free water on)
  * the earth’s surface.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
  *                    same SID for different messages to link this PGN to other
@@ -950,7 +951,7 @@ inline bool ParseN2kHeave(const tN2kMsg &N2kMsg, unsigned char &SID, double &Hea
  * planes. This would typically be used for vessel stabilization, vessel
  * control and onboard platform stabilization.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
@@ -982,7 +983,7 @@ inline void SetN2kAttitude(tN2kMsg &N2kMsg, unsigned char SID, double Yaw, doubl
  * planes. This would typically be used for vessel stabilization, vessel
  * control and onboard platform stabilization.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat
  *                    speed and heading at same time, you can set
  *                    same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255
@@ -1018,7 +1019,7 @@ inline bool ParseN2kAttitude(const tN2kMsg &N2kMsg, unsigned char &SID, double &
  * recipients to determine an appropriate level of service if multiple
  * transmissions exist.
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat
  *                        speed and heading at same time, you can set
@@ -1053,7 +1054,7 @@ inline void SetN2kMagneticVariation(tN2kMsg &N2kMsg, unsigned char SID, tN2kMagn
  * recipients to determine an appropriate level of service if multiple
  * transmissions exist.
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  * \param SID             Sequence ID. If your device is e.g. boat
  *                        speed and heading at same time, you can set
  *                        same SID for different messages to link this PGN to
@@ -1088,7 +1089,7 @@ inline bool ParseN2kMagneticVariation(const tN2kMsg &N2kMsg, unsigned char &SID,
  * Provides data with a high update rate for a specific engine in a single
  * frame message. The first field provides information as to which engine.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param EngineInstance      Engine instance.
  * \param EngineSpeed         RPM (Revolutions Per Minute)
@@ -1118,7 +1119,7 @@ inline void SetN2kEngineParamRapid(tN2kMsg &N2kMsg, unsigned char EngineInstance
  * Provides data with a high update rate for a specific engine in a single
  * frame message. The first field provides information as to which engine.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  * \param EngineInstance      Engine instance.
  * \param EngineSpeed         RPM (Revolutions Per Minute)
  * \param EngineBoostPressure in Pascal
@@ -1153,7 +1154,7 @@ inline bool ParseN2kEngineParamRapid(const tN2kMsg &N2kMsg, unsigned char &Engin
  * message would normally be broadcasted periodically to provide information
  * for instrumentation or control functions.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param EngineInstance       Engine instance
  * \param EngineOilPress      in Pascal
@@ -1202,7 +1203,7 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstan
  * message would normally be broadcasted periodically to provide information
  * for instrumentation or control functions.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param EngineInstance       Engine instance
  * \param EngineOilPress      in Pascal
@@ -1316,7 +1317,7 @@ inline void SetN2kEngineDynamicParam(tN2kMsg &N2kMsg, unsigned char EngineInstan
  * message would normally be broadcasted periodically to provide information
  * for instrumentation or control functions.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  * \param EngineInstance       Engine instance
  * \param EngineOilPress      in Pascal
  * \param EngineOilTemp       in Kelvin
@@ -1430,7 +1431,7 @@ inline bool ParseN2kEngineDynamicParam(const tN2kMsg &N2kMsg, unsigned char &Eng
  * message would normally be broadcasted periodically to provide information
  * for instrumentation or control functions.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param EngineInstance      Engine instance.
  * \param TransmissionGear    Selected transmission. \ref tN2kTransmissionGear
@@ -1484,7 +1485,7 @@ inline void SetN2kTransmissionParameters(tN2kMsg &N2kMsg, unsigned char EngineIn
  * message would normally be broadcasted periodically to provide information
  * for instrumentation or control functions.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  * \param EngineInstance      Engine instance.
  * \param TransmissionGear    Selected transmission. \ref tN2kTransmissionGear
  * \param OilPressure         in Pascal
@@ -1541,7 +1542,7 @@ inline bool ParseN2kTransmissionParameters(const tN2kMsg &N2kMsg, unsigned char 
  * 
  * Engine related trip / fuel information.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param EngineInstance            Engine instance
  * \param TripFuelUsed              in litres
@@ -1573,7 +1574,7 @@ inline void SetN2kEngineTripParameters(tN2kMsg &N2kMsg, unsigned char EngineInst
  * 
  * Engine related trip / fuel information.
  *  
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  * \param EngineInstance            Engine instance
  * \param TripFuelUsed              in litres
  * \param FuelRateAverage           in litres/hour
@@ -1659,7 +1660,7 @@ void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStat
  * The meaning of these states depends on the implementation by
  * the manufacture.
  *
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param DeviceBankInstance  Device or Bank Instance
  * \param BankStatus          Full bank status. Read single status by using
@@ -1689,7 +1690,7 @@ inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
  * The meaning of these states depends on the implementation by
  * the manufacture.
  *
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param DeviceBankInstance  Device or Bank Instance
  * \param Status1             On/Off for Status1
@@ -1733,7 +1734,7 @@ inline void SetN2kBinaryStatus(tN2kMsg &N2kMsg, unsigned char DeviceBankInstance
  * The meaning of these states depends on the implementation by
  * the manufacture.
  *
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param DeviceBankInstance  Device or Bank Instance
  * \param Status1             On/Off for Status1
@@ -1781,7 +1782,7 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
  *
  * \note Use N2kGetStatusOnBinaryStatus to read specific status
  * 
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param DeviceBankInstance  Device or Bank Instance
  * \param BankStatus          Full bank status. Read single status by using
@@ -1814,7 +1815,7 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
  * tank or the level of water in the bilge. Used primarily by display or
  * instrumentation devices.
  *
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param Instance     Tank instance. Different devices handles this a
  *                     bit differently. So it is best to have instance
@@ -1846,7 +1847,7 @@ inline void SetN2kFluidLevel(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidT
  * tank or the level of water in the bilge. Used primarily by display or
  * instrumentation devices.
  *
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  * \param Instance     Tank instance. Different devices handles this a
  *                     bit differently. So it is best to have instance
  *                     unique over
@@ -1880,7 +1881,7 @@ inline bool ParseN2kFluidLevel(const tN2kMsg &N2kMsg, unsigned char &Instance, t
  * instance field. Used primarily by display or instrumentation devices, but
  * may also be used by battery management controls.
  *
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -1920,7 +1921,7 @@ inline void SetN2kDCStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char DCI
  * instance field. Used primarily by display or instrumentation devices, but
  * may also be used by battery management controls.
  *
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
  *                        different messages to link this PGN to other related
@@ -1962,7 +1963,7 @@ inline bool ParseN2kDCStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
  * Any device capable of charging a battery may transmit this message.
  * \note This PGN is DEPRECATED
  * 
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param Instance                    ChargerInstance
  * \param BatteryInstance             BatteryInstance
@@ -1997,7 +1998,7 @@ inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigne
  * Any device capable of charging a battery may transmit this message.
  * \note This PGN is DEPRECATED
  * 
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param Instance                    ChargerInstance
  * \param BatteryInstance             BatteryInstance
@@ -2038,7 +2039,7 @@ inline bool ParseN2kChargerStatus(const tN2kMsg &N2kMsg, unsigned char &Instance
  * DC Detailed Status PGN. Used primarily by display or instrumentation
  * devices, but may also be used by power management.
 
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param BatteryInstance     BatteryInstance.
  * \param BatteryVoltage      Battery voltage in V
@@ -2075,7 +2076,7 @@ inline void SetN2kDCBatStatus(tN2kMsg &N2kMsg, unsigned char BatteryInstance, do
  * DC Detailed Status PGN. Used primarily by display or instrumentation
  * devices, but may also be used by power management.
 
- * \param N2kMsg              Referenz to a N2kMsg Object, 
+ * \param N2kMsg              Reference to a N2kMsg Object, 
  *                            Output: NMEA2000 message ready to be send.
  * \param BatteryInstance     BatteryInstance.
  * \param BatteryVoltage      Battery voltage in V
@@ -2117,7 +2118,7 @@ inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryIns
  * Exponent can have in this configuration values from 1 to 1.504.
  * And I expect on code that I have to send value PeukertExponent-1 to the bus.
  * 
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param BatInstance          BatteryInstance
  * \param BatType              Type of battery. See \ref tN2kBatType
@@ -2158,7 +2159,7 @@ inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatTyp
  * Exponent can have in this configuration values from 1 to 1.504.
  * And I expect on code that I have to send value PeukertExponent-1 to the bus.
  * 
- * \param N2kMsg       Referenz to a N2kMsg Object, 
+ * \param N2kMsg       Reference to a N2kMsg Object, 
  *                     Output: NMEA2000 message ready to be send.
  * \param BatInstance          BatteryInstance
  * \param BatType              Type of battery. See \ref tN2kBatType
@@ -2219,7 +2220,7 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
  * the value of the SID shall be set to 255
  * 
  * [NMEA2000 document](https://www.nmea.org/Assets/20170204%20nmea%202000%20leeway%20pgn%20final.pdf)
- * \param N2kMsg    Referenz to a N2kMsg Object, 
+ * \param N2kMsg    Reference to a N2kMsg Object, 
  *                  Output: NMEA2000 message ready to be send.
  * \param SID       Sequence ID. If your device is e.g. boat speed and
  *                  heading at same time, you can set same SID for
@@ -2268,7 +2269,7 @@ inline void SetN2kLeeway(tN2kMsg &N2kMsg, unsigned char SID, double Leeway) {
  * the value of the SID shall be set to 255
  * 
  * [NMEA2000 document](https://www.nmea.org/Assets/20170204%20nmea%202000%20leeway%20pgn%20final.pdf)
- * \param N2kMsg    Referenz to a N2kMsg Object, 
+ * \param N2kMsg    Reference to a N2kMsg Object, 
  *                  Output: NMEA2000 message ready to be send.
  * \param SID       Sequence ID. If your device is e.g. boat speed and
  *                  heading at same time, you can set same SID for
@@ -2304,7 +2305,7 @@ inline bool ParseN2kLeeway(const tN2kMsg &N2kMsg, unsigned char &SID, double &Le
  * This parameter group provides a single transmission that describes the
  * motion of a vessel.
  * 
- * \param N2kMsg    Referenz to a N2kMsg Object, 
+ * \param N2kMsg    Reference to a N2kMsg Object, 
  *                  Output: NMEA2000 message ready to be send.
  * \param SID       Sequence ID. If your device is e.g. boat speed and heading 
  *                  at same time, you can set same SID for different messages
@@ -2338,7 +2339,7 @@ inline void SetN2kBoatSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WaterRefe
  * This parameter group provides a single transmission that describes the
  * motion of a vessel.
  * 
- * \param N2kMsg    Referenz to a N2kMsg Object, 
+ * \param N2kMsg    Reference to a N2kMsg Object, 
  *                  Output: NMEA2000 message ready to be send.
  * \param SID       Sequence ID. If your device is e.g. boat speed and heading 
  *                  at same time, you can set same SID for different messages
@@ -2374,7 +2375,7 @@ inline bool ParseN2kBoatSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double 
  * transducer. Positive offset numbers provide the distance from the
  * transducer to the waterline.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2408,7 +2409,7 @@ inline void SetN2kWaterDepth(tN2kMsg &N2kMsg, unsigned char SID, double DepthBel
  * transducer. Positive offset numbers provide the distance from the
  * transducer to the waterline.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2460,7 +2461,7 @@ inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double
  * reset. The distance is tagged with the time and date of
  * the distance measurement.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param DaysSince1970         Timestamp
  * \param SecondsSinceMidnight  Timestamp
@@ -2492,7 +2493,7 @@ inline void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double Se
  * reset. The distance is tagged with the time and date of
  * the distance measurement.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param DaysSince1970         Timestamp
  * \param SecondsSinceMidnight  Timestamp
  * \param Log                   This field indicates the total distance 
@@ -2539,7 +2540,7 @@ inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
  * 
  * \sa <https://www.nmea.org/Assets/20190613%20windlass%20amendment,%20128776,%20128777,%20128778.pdf>
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2604,7 +2605,7 @@ void SetN2kPGN128776(
  * 
  * \sa <https://www.nmea.org/Assets/20190613%20windlass%20amendment,%20128776,%20128777,%20128778.pdf>
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
  *                    different messages to link this PGN to other related
@@ -2671,7 +2672,7 @@ bool ParseN2kPGN128776(
  * monitoring status. The Sequence ID can be used to link the three windlass
  * PGNs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2729,7 +2730,7 @@ void SetN2kPGN128777(
  * monitoring status. The Sequence ID can be used to link the three windlass
  * PGNs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
  *                    different messages to link this PGN to other related
@@ -2788,7 +2789,7 @@ bool ParseN2kPGN128777(
  * provide the windlass control status, and PGN 128777 to provide the operating
  * status. The Sequence ID can be used to link the three windlass PGNs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2841,7 +2842,7 @@ void SetN2kPGN128778(
  * provide the windlass control status, and PGN 128777 to provide the operating
  * status. The Sequence ID can be used to link the three windlass PGNs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2888,7 +2889,7 @@ bool ParseN2kPGN128778(
  * position updates.
 
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param Latitude    Latitude in degrees
  * \param Longitude   Longitude in degrees
@@ -2919,7 +2920,7 @@ inline void SetN2kLatLonRapid(tN2kMsg &N2kMsg, double Latitude, double Longitude
  * position updates.
 
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param Latitude    Latitude in degrees
  * \param Longitude   Longitude in degrees
  * 
@@ -2948,7 +2949,7 @@ inline bool ParseN2kPositionRapid(const tN2kMsg &N2kMsg, double &Latitude, doubl
  * This parameter group is a single frame parameter group that provides Course
  * Over Ground (COG) and Speed Over Ground (SOG).
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -2980,7 +2981,7 @@ inline void SetN2kCOGSOGRapid(tN2kMsg &N2kMsg, unsigned char SID, tN2kHeadingRef
  * This parameter group is a single frame parameter group that provides Course
  * Over Ground (COG) and Speed Over Ground (SOG).
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
  *                    different messages to link this PGN to other related
@@ -3014,7 +3015,7 @@ inline bool ParseN2kCOGSOGRapid(const tN2kMsg &N2kMsg, unsigned char &SID, tN2kH
  * This parameter group conveys a comprehensive set of Global Navigation 
  * Satellite System (GNSS) parameters, including position information.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -3076,7 +3077,7 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince197
  * This parameter group conveys a comprehensive set of Global Navigation 
  * Satellite System (GNSS) parameters, including position information.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
  *                    different messages to link this PGN to other related
@@ -3145,7 +3146,7 @@ inline bool ParseN2kGNSS(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Da
  * 
  * \sa SetN2kPGN126992 , ParseN2kPGN126992
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param DaysSince1970         UTC Date in resolution of 1 day (The number of
  *                              days since January 1, 1970).
@@ -3176,7 +3177,7 @@ inline void SetN2kLocalOffset(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double Se
  * 
  * \sa SetN2kPGN126992 , ParseN2kPGN126992
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param DaysSince1970         UTC Date in resolution of 1 day (The number of
  *                              days since January 1, 1970).
@@ -3213,7 +3214,7 @@ inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param MessageID   Message Type ID according to e ITU-R M.1371 
  * \param Repeat      Repeat indicator, Used by the repeater to indicate how
@@ -3277,7 +3278,7 @@ inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISR
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param MessageID   Message Type ID according to e ITU-R M.1371 
  * \param Repeat      Repeat indicator, Used by the repeater to indicate how
@@ -3339,7 +3340,7 @@ inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param MessageID   Message Type ID according to e ITU-R M.1371 
  * \param Repeat      Repeat indicator, Used by the repeater to indicate how
@@ -3455,7 +3456,7 @@ inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISR
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param MessageID   Message Type ID according to e ITU-R M.1371 
  * \param Repeat      Repeat indicator, Used by the repeater to indicate how
@@ -3720,7 +3721,7 @@ struct tN2kAISAtoNReportData {
  * This PGN provides information received from an AtoN AIS station conforming
  * to ITU-R M.1371-4 Message 21.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param N2kData     structure that consists all relevant data, see 
  *                    \ref tN2kAISAtoNReportData
@@ -3746,7 +3747,7 @@ inline void SetN2kAISAtoNReport(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2
  * This PGN provides information received from an AtoN AIS station conforming
  * to ITU-R M.1371-4 Message 21.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param N2kData     structure that consists all relevant data, see 
  *                    \ref tN2kAISAtoNReportData
@@ -3776,7 +3777,7 @@ inline bool ParseN2kAISAtoNReport(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &
  * This parameter group provides the magnitude of position error perpendicular
  * to the desired course.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -3808,7 +3809,7 @@ inline void SetN2kXTE(tN2kMsg &N2kMsg, unsigned char SID, tN2kXTEMode XTEMode, b
  * This parameter group provides the magnitude of position error perpendicular
  * to the desired course.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -3846,7 +3847,7 @@ inline bool ParseN2kXTE(const tN2kMsg &N2kMsg, unsigned char& SID, tN2kXTEMode& 
  * routes using waypoints. This information is intended for navigational
  * repeaters.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -3907,7 +3908,7 @@ inline void SetN2kNavigationInfo(tN2kMsg &N2kMsg, unsigned char SID, double Dist
  * routes using waypoints. This information is intended for navigational
  * repeaters.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -3970,7 +3971,7 @@ inline bool ParseN2kNavigationInfo(const tN2kMsg &N2kMsg, unsigned char& SID, do
  * can be requested or may be transmitted without a request, typically at each
  * Waypoint advance.
  *
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param Start       The ID of the first waypoint
  * \param Database    Database ID
@@ -4018,7 +4019,7 @@ inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, 
  * This function appends another waypoint data to an N2kMsg created
  * with \ref SetN2kPGN129285.
  *
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param WPID        The ID of the current waypoint
  * \param WPName      The name of the current waypoint
  * \param Latitude    The latitude of the current waypoint
@@ -4050,7 +4051,7 @@ inline bool AppendN2kRouteWPInfo(tN2kMsg &N2kMsg, uint16_t WPID, const char* WPN
  * geometry to the overall positioning error. There are three DOP parameters
  * reported, horizontal (HDOP), Vertical (VDOP) and time (TDOP).
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param SID           Sequence ID. If your device is e.g. boat speed and
  *                      heading at same time, you can set same SID for
@@ -4091,7 +4092,7 @@ inline void SetN2kGNSSDOPData(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmod
  * geometry to the overall positioning error. There are three DOP parameters
  * reported, horizontal (HDOP), Vertical (VDOP) and time (TDOP).
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  * \param SID           Sequence ID. If your device is e.g. boat speed and
  *                      heading at same time, you can set same SID for
  *                      different messages to link this PGN to other related
@@ -4153,7 +4154,7 @@ struct tSatelliteInfo {
  * 
  * To add satellites use \ref AppendN2kPGN129540 and \ref tSatelliteInfo
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param SID           Sequence ID. If your device is e.g. boat speed and
  *                      heading at same time, you can set same SID for
@@ -4171,7 +4172,7 @@ void SetN2kPGN129540(tN2kMsg& N2kMsg, unsigned char SID=0xff, tN2kRangeResidualM
  * "GNSS Satellites in View"
  * \ingroup group_msgSetUp
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param SatelliteInfo Requested satellite info, see \ref tSatelliteInfo
  * 
@@ -4216,7 +4217,7 @@ inline bool AppendSatelliteInfo(tN2kMsg& N2kMsg, const tSatelliteInfo& Satellite
  * Use first (THIS) function to get basic information and specially 
  * NumberOfSVs. 
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  * \param SID           Sequence ID. If your device is e.g. boat speed and
  *                      heading at same time, you can set same SID for
  *                      different messages to link this PGN to other related
@@ -4243,7 +4244,7 @@ bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kRangeResid
  * possible to use just this function, but it returns also false for wrong
  * message.
  *  
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  * \param SVIndex       Index of saellite info requested.
  * \param SatelliteInfo Requested satellite info
  * 
@@ -4289,7 +4290,7 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4361,7 +4362,7 @@ inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRep
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4438,7 +4439,7 @@ inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, t
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * \sa SetN2kPGN129810 and ParseN2kPGN129810
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4476,7 +4477,7 @@ inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * \sa SetN2kPGN129810 and ParseN2kPGN129810
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4517,7 +4518,7 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * \sa SetN2kPGN129809 and ParseN2kPGN129809
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4570,7 +4571,7 @@ inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * \sa SetN2kPGN129809 and ParseN2kPGN129809
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param MessageID       Message Type ID according to e ITU-R M.1371
  * \param Repeat          Repeat indicator, Used by the repeater to indicate
@@ -4628,7 +4629,7 @@ inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &Message
  * 
  * \sa AppendN2kPGN130074
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param Start         The ID of the first waypoint
  * \param NumWaypoints  Number of valid WPs in the WP-List
@@ -4658,7 +4659,7 @@ inline void SetN2kWaypointList(tN2kMsg &N2kMsg, uint16_t Start, uint16_t NumWayp
  * 
  * \sa SetN2kPGN130074
  * 
- * \param N2kMsg        Referenz to a N2kMsg Object, 
+ * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
  * \param ID            The ID of the waypoint
  * \param Name          The name of the waypoint
@@ -4694,7 +4695,7 @@ inline bool AppendN2kWaypointList(tN2kMsg &N2kMsg, uint16_t ID, char* Name, doub
  * true wind is given by the vector sum of Apparent wind and vessel's
  * heading and speed over ground.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4732,7 +4733,7 @@ inline void SetN2kWindSpeed(tN2kMsg &N2kMsg, unsigned char SID, double WindSpeed
  * true wind is given by the vector sum of Apparent wind and vessel's
  * heading and speed over ground.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4771,7 +4772,7 @@ inline bool ParseN2kWindSpeed(const tN2kMsg &N2kMsg, unsigned char &SID, double 
  * \note This PGN has been depricated. Specific PGNs 130316 Temperature,
  * 130313 Relative Humidity, 130314 Actual Pressure, 130315 Set Pressure
  * shall be used.
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4812,7 +4813,7 @@ inline void SetN2kOutsideEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char 
  * \note This PGN has been deprecated. Specific PGNs 130316 Temperature,
  * 130313 Relative Humidity, 130314 Actual Pressure, 130315 Set Pressure
  * shall be used.
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4858,7 +4859,7 @@ inline bool ParseN2kOutsideEnvironmentalParameters(const tN2kMsg &N2kMsg, unsign
  * (other then in PGN 130312 where TempSource really means source of
  * temperature)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4903,7 +4904,7 @@ inline void SetN2kEnvironmentalParameters(tN2kMsg &N2kMsg, unsigned char SID, tN
  * (other then in PGN 130312 where TempSource really means source of
  * temperature)
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4946,7 +4947,7 @@ inline bool ParseN2kEnvironmentalParameters(const tN2kMsg &N2kMsg, unsigned char
  * PGN has been deprecated. Please use PGN 130316 (Temperature-Extended Range)
  * for all new designs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -4989,7 +4990,7 @@ inline void SetN2kTemperature(tN2kMsg &N2kMsg, unsigned char SID, unsigned char 
  * PGN has been deprecated. Please use PGN 130316 (Temperature-Extended Range)
  * for all new designs.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5035,7 +5036,7 @@ inline bool ParseN2kTemperature(const tN2kMsg &N2kMsg, unsigned char &SID, unsig
  * 
  * Humidity as measured by a specific humidity source.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5069,7 +5070,7 @@ inline void SetN2kHumidity(tN2kMsg &N2kMsg, unsigned char SID, unsigned char Hum
  * 
  * Humidity as measured by a specific humidity source.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
  *                    different messages to link this PGN to other related
@@ -5135,7 +5136,7 @@ inline bool ParseN2kHumidity(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
  * 
  * Pressure as measured by a specific pressure source
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5170,7 +5171,7 @@ inline void SetN2kPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char Pre
  * 
  * Pressure as measured by a specific pressure source
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5212,7 +5213,7 @@ inline bool ParseN2kPressure(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned
  * change its targeted pressure, or it can be sent out by the control device
  * to indicate its current targeted pressure.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5249,7 +5250,7 @@ inline void SetN2kSetPressure(tN2kMsg &N2kMsg, unsigned char SID, unsigned char 
  * This parameter group is used to report a wide variety of temperature 
  * measurements.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5289,7 +5290,7 @@ inline void SetN2kTemperatureExt(tN2kMsg &N2kMsg, unsigned char SID, unsigned ch
  * This parameter group is used to report a wide variety of temperature
  * measurements.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for
@@ -5414,7 +5415,7 @@ struct tN2kMeteorlogicalStationData {
  * Meteorological station measurement data including station location,
  * numeric identifier, and name.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param N2kData     Meterological Station Data, see 
  *                    \ref tN2kMeteorlogicalStationData
@@ -5438,7 +5439,7 @@ inline void SetN2kMeteorlogicalStationData(tN2kMsg &N2kMsg, const tN2kMeteorlogi
  * Meteorological station measurement data including station location,
  * numeric identifier, and name.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param N2kData     Meterological Station Data, see 
  *                    \ref tN2kMeteorlogicalStationData
  */
@@ -5465,7 +5466,7 @@ inline bool ParseN2kMeteorlogicalStationData(const tN2kMsg &N2kMsg, tN2kMeteorlo
  * is a percentage 0 to 100% where 0 is fully retracted and 100 is fully 
  * extended.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param PortTrimTab Port trim tab position
  * \param StbdTrimTab Starboard trim tab position
@@ -5492,7 +5493,7 @@ inline void SetN2kTrimTab(tN2kMsg &N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTa
  * is a percentage 0 to 100% where 0 is fully retracted and 100 is fully 
  * extended.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param PortTrimTab Port trim tab position
  * \param StbdTrimTab Starboard trim tab position
  * 
@@ -5522,7 +5523,7 @@ inline bool ParseN2kTrimTab(const tN2kMsg &N2kMsg, int8_t &PortTrimTab, int8_t &
  * to vessel motion, speed and heading referenced to the water, speed and
  * course referenced to ground and current speed and flow direction.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param DataMode             Data mode, see \ref tN2kDataMode
  * \param CogReference         True or Magnetic
@@ -5562,7 +5563,7 @@ inline void SetN2kDirectionData(tN2kMsg &N2kMsg, tN2kDataMode DataMode, tN2kHead
  * to vessel motion, speed and heading referenced to the water, speed and
  * course referenced to ground and current speed and flow direction.
  * 
- * \param N2kMsg      Referenz to a N2kMsg Object, 
+ * \param N2kMsg      Reference to a N2kMsg Object, 
  *                    Output: NMEA2000 message ready to be send.
  * \param DataMode             Data mode, see \ref tN2kDataMode
  * \param CogReference         True or Magnetic

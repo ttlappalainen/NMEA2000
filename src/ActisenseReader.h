@@ -79,7 +79,7 @@ protected:
 
 protected:
     /********************************************************************//**
-     * \brief Adds a neu Byte to the buffer
+     * \brief Adds a new Byte to the buffer
      *
      * \param NewByte   new Byte to be added
      * \return true     -> Success
@@ -94,7 +94,7 @@ protected:
     /********************************************************************//**
      * \brief Checks if a message is valide
      *
-     * \param N2kMsg    Referenz to a N2kMsg Object  
+     * \param N2kMsg    Reference to a N2kMsg Object  
      * \return true     
      * \return false    -> Length does not match. Add type, length and crc
      * \return false    -> Checksum does not match
@@ -142,7 +142,7 @@ public:
      * <10><02><93><length (1)><priority (1)><PGN (3)><destination (1)><source (1)><time (4)><len (1)><data (len)><CRC (1)><10><03>
      * or
      * <10><02><94><length (1)><priority (1)><PGN (3)><destination (1)><len (1)><data (len)><CRC (1)><10><03>
-     * \param N2kMsg    Referenz to a N2kMsg Object  
+     * \param N2kMsg    Reference to a N2kMsg Object  
      * \param ReadOut   
      * 
      * \return true 

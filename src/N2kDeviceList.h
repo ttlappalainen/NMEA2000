@@ -448,7 +448,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * If the caller is completely unknown, a new device will be placed in 
      * \ref Sources.
      *
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleIsoAddressClaim(const tN2kMsg &N2kMsg);
 
@@ -460,7 +460,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * this product. The message is parsed and all data is stored 
      * in \ref tInternalDevice::ProdI
      * 
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleProductInformation(const tN2kMsg &N2kMsg);
     /********************************************************************//**
@@ -471,7 +471,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * and installation notes (e.g., calibration data).
      * It is parsed and all data is stored in the internal device
      * 
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleConfigurationInformation(const tN2kMsg &N2kMsg);
     /********************************************************************//**
@@ -485,7 +485,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * (see \ref tN2kPGNList) an the stores the PGNs to the corresponding 
      * internal device in \ref Sources.
      * 
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleSupportedPGNList(const tN2kMsg &N2kMsg); 
     /********************************************************************//**
@@ -495,7 +495,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * a name for every device, then loads product + config informations 
      * and supported PGN lists as needed.
      *
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleOther(const tN2kMsg &N2kMsg);
     /********************************************************************//**
@@ -609,7 +609,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * If ther e is now device with this source address is listed in \ref 
      * Sources, a new device is added ( \ref AddDevice).
      *
-     * \param N2kMsg    Referenz to a N2kMsg Object, 
+     * \param N2kMsg    Reference to a N2kMsg Object, 
      */
     void HandleMsg(const tN2kMsg &N2kMsg);
 

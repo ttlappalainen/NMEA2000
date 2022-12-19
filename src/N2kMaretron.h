@@ -58,7 +58,7 @@
  * 
  * \note Temperatures should be in Kelvin
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -102,7 +102,7 @@ inline void SetN2kMaretronTempHR(tN2kMsg &N2kMsg, unsigned char SID, unsigned ch
  * 
  * \note Temperatures should be in Kelvin
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -151,7 +151,7 @@ inline bool ParseN2kMaretronTempHR(const tN2kMsg &N2kMsg, unsigned char &SID, un
  * 
  * \note Flow Rate should be in lt/hour
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -194,7 +194,7 @@ inline void SetN2kMaretronFluidFR(tN2kMsg &N2kMsg, unsigned char SID, unsigned c
  * 
  * \note Flow Rate should be in lt/hour
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -240,7 +240,7 @@ inline bool ParseN2kMaretronFluidFR(const tN2kMsg &N2kMsg, unsigned char &SID, u
  * 
  * \note Volume should be in litres
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for
@@ -282,7 +282,7 @@ inline void SetN2kMaretronTripVolume(tN2kMsg &N2kMsg, unsigned char SID, unsigne
  * 
  * \note Volume should be in litres
  * 
- * \param N2kMsg          Referenz to a N2kMsg Object, 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
  * \param SID             Sequence ID. If your device is e.g. boat speed and
  *                        heading at same time, you can set same SID for

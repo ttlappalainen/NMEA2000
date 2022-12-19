@@ -54,7 +54,7 @@ public:
     {
 	  N2kMsg.Clear();
   }
-  /** \brief Referenz to a N2kMsg Object, Output: NMEA2000 message ready 
+  /** \brief Reference to a N2kMsg Object, Output: NMEA2000 message ready 
    * to be send.*/
   tN2kMsg N2kMsg;
   /** \brief Message ready for handling?   */
