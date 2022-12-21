@@ -1,0 +1,77 @@
+
+/** \defgroup group_core 1 Core
+    \brief This is the core functionality of this library
+    
+    Some more thoughts on core ....
+
+    */
+/** \defgroup group_coreSupplementary 2 Core supplementary
+    \brief These are also needed to compile core.
+
+    Very long text about supplementary functions ....
+
+*/
+
+/** \defgroup group_helperClass 3 Helper Classes
+    \brief These are Helper Functions.
+
+    Very long text about helper ....
+
+*/
+
+/** \defgroup group_msg 4 Handling of NMEA2000 Messages
+    \brief Functions and enums for handling tN2kMsg objects
+
+    This group consists all functions and enums to operate NMEA2000 messages. NMEA messages are handled inside the library with the tN2kMsg object. This object contains all data for a valid NMEA2000 message. In order to set up this tN2kMsg object from given values there are SetN2kPGNxxx functions defined. The payload of a given tN2kMsg object can be extracted by the corresponding ParseN2kPGNxxx function.
+
+    To make reading of these values more convenient there are enums defined.
+
+    <b>Supported Messages</b>
+
+    To see a short list with all supported PGNs see \ref listMsg
+
+    @{
+
+*/
+
+/** \defgroup group_msgTypes Types for payload of NMEA2000 Messages
+    \brief Types used to make the payload of NMEA2000 messages more easy to read for humans
+
+    As the payload of a NMEA2000 is quite limited, the data is stored with variable number of bits. To make these "bitmasks" more convenient for humans to read enums are defined.
+
+    \sa 
+    \ref n2kMsg.h
+
+*/
+
+/** \defgroup group_msgParsers Parsing tN2kMsg objects
+    \brief List of functions which parse the data content of tN2kMsg objects
+
+    This is a collection of functions for handling NMEA2000 bus messages.
+    
+    Each SetN2kPNGxxx function has a corresponding ParsN2kPGNxxx function which
+    can extract the data out of an incoming N2k Message. These functions have as
+    well an inline alias easy for humans to read like \ref ParseN2kPositionRapid.
+
+    \sa 
+    \ref n2kMessages.h
+*/
+
+/** \defgroup group_msgSetUp Setting up tN2kMsg objects
+    \brief List of functions which sets up the data of tN2kMsg objects so that it can be send out to the bus.
+
+    This is a collection of functions for handling NMEA2000 bus messages.
+    
+    Library contains functions to e.g. create message named with PGN like
+    \ref SetN2kPGN129025 and alias easy for humans to read like \ref 
+    SetN2kLatLonRapid.
+
+    Each SetN2kPNGxxx function sets related message PGN and its default
+    priority. The default priority can be different for each PGN. So if you
+    want to change priority on function, you have to do it after Setxxx call.
+
+    \sa 
+    \ref n2kMessages.h
+*/
+
+/**    @} */

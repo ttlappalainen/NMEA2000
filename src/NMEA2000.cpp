@@ -106,23 +106,57 @@ void N2kPrintFreeMemory(const char *Source) {
 #define N2kPrintFreeMemory(a)
 #endif
 
+/** \brief Timeout value for the ISO Address Claim in ms*/
 #define N2kAddressClaimTimeout 250
-
+/** \brief Maximum value for the Iso Heartbeat interval in ms */
 #define MaxHeartbeatInterval 655320UL
 
-#define TP_MAX_FRAMES 5  // Max frames, which can be received at time
-#define TP_CM 60416L /* Multi packet connection management, TP.CM */
-#define TP_DT 60160L /* Multi packet data transfer, TP.DT */
+/** \brief Max frames, which can be received at time */
+#define TP_MAX_FRAMES 5 
+/** \brief Multi packet connection management, TP.CM */
+#define TP_CM 60416L 
+/** \brief Multi packet data transfer */
+#define TP_DT 60160L 
+/** \brief Multi packet connection management, Broadcast Announce Message */
 #define TP_CM_BAM    32
+/** \brief Multi packet connection management, Request To Send */
 #define TP_CM_RTS    16
+/** \brief Multi packet connection management, Clear To Send */
 #define TP_CM_CTS    17
+/** \brief Multi packet connection management, End of Message Acknowledgement */
 #define TP_CM_ACK    19
+/** \brief Multi packet connection management, Abort Connection */
 #define TP_CM_Abort 255
 
-#define TP_CM_AbortBusy 1	// Already in one or more connection managed sessions and cannot support another.
-#define TP_CM_AbortNoResources 2	// System resources were needed for another task so this connection managed session was terminated.
-#define TP_CM_AbortTimeout 3 //	A timeout occurred and this is the connection abort to close the session.
+/** \brief Already in one or more connection managed sessions and cannot 
+ * support another */
+#define TP_CM_AbortBusy 1	
+/** \brief System resources were needed for another task so this connection 
+ * managed session was terminated */
+#define TP_CM_AbortNoResources 2	
+/** \brief A timeout occurred and this is the connection abort to close the s
+ * ession */
+#define TP_CM_AbortTimeout 3 
 
+/************************************************************************//**
+ * \
+ * \brief Default list of Transmit Messages
+ * 
+ * List of default transmit PGNs:
+ * - 59392L ISO Acknowledgement, pri=6, period=NA
+ * - 59904L ISO Request, pri=6, period=NA
+ * - 60416L Multi packet data transfer, TP.DT, pri=6, period=NA
+ * - 60160L Multi packet connection management, TP.CM, pri=6, period=NA
+ * - 60928L ISO Address Claim, pri=6, period=NA
+ * - 126208L NMEA Request/Command/Acknowledge group function, pri=3, period=NA
+ * - 126464L PGN List (Transmit and Receive), pri=6, period=NA
+ * - 126993L Heartbeat, pri=7, period=60000
+ * - 126996L Product information, pri=6, period=NA
+ * - 126998L Configuration information, pri=6, period=NA
+ * 
+ * This lis is terminated by 0.
+ *
+ */
 const unsigned long DefTransmitMessages[] PROGMEM = {
                                         59392L, /* ISO Acknowledgement, pri=6, period=NA */
                                         59904L, /* ISO Request, pri=6, period=NA */
@@ -141,6 +175,22 @@ const unsigned long DefTransmitMessages[] PROGMEM = {
                                        126996L, /* Product information, pri=6, period=NA */
                                        126998L, /* Configuration information, pri=6, period=NA */
                                        0};
+
+/************************************************************************//**
+ * \brief Default list of Received Messages
+ * 
+ * List of default transmit PGNs:
+ * - 59392L ISO Acknowledgement, pri=6, period=NA
+ * - 59904L ISO Request, pri=6, period=NA
+ * - 60416L Multi packet data transfer, TP.DT, pri=6, period=NA
+ * - 60160L Multi packet connection management, TP.CM, pri=6, period=NA
+ * - 60928L ISO Address Claim
+ * - 65240L Commanded Address
+ * - 126208L NMEA Request/Command/Acknowledge group function
+ * 
+ * This lis is terminated by 0.
+ *
+ */
 const unsigned long DefReceiveMessages[] PROGMEM = {
                                         59392L, /* ISO Acknowledgement, pri=6, period=NA */
                                         59904L, /* ISO Request, pri=6, period=NA */
@@ -155,6 +205,13 @@ const unsigned long DefReceiveMessages[] PROGMEM = {
 #endif
                                        0};
 
+/************************************************************************//**
+ * \brief Checks if the given PGN is a Single Frame System Message
+ *
+ * \param PGN      PGN to be tested
+ * \return true -> for PGNs: 59392L, 59904L, 60928L, 60416L, 60160L
+ * \return false 
+ */
 bool IsSingleFrameSystemMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case  59392L: /* ISO Acknowledgement */
@@ -167,6 +224,13 @@ bool IsSingleFrameSystemMessage(unsigned long PGN) {
                                   return false;
 }
 
+/************************************************************************//**
+ * \brief Checks if the given PGN is a Fast Packet System Message
+ *
+ * \param PGN     PGN to be tested
+ * \return true   -> for PGNs: 65240L, 126208L
+ * \return false 
+ */
 bool IsFastPacketSystemMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case  65240L: /* Commanded Address*/
@@ -176,6 +240,39 @@ bool IsFastPacketSystemMessage(unsigned long PGN) {
                                   return false;
 }
 
+/************************************************************************//**
+ * \brief Checks if the given PGN is a Default Single Frame Message
+ *
+ * \param PGN     PGN to be tested
+ * \return true   -> for PGNs: 
+ *              - 126992L: System date/time, pri=3, period=1000
+ *              - 126993L: Heartbeat, pri=7, period=60000
+ *              - 127245L: Rudder, pri=2, period=100
+ *              - 127250L: Vessel Heading, pri=2, period=100
+ *              - 127251L: Rate of Turn, pri=2, period=100
+ *              - 127257L: Attitude, pri=3, period=1000
+ *              - 127488L: Engine parameters rapid, rapid Update, pri=2, period=100
+ *              - 127493L: Transmission parameters: dynamic, pri=2, period=100
+ *              - 127501L: Binary status report, pri=3, period=NA
+ *              - 127505L: Fluid level, pri=6, period=2500
+ *              - 127508L: Battery Status, pri=6, period=1500
+ *              - 128259L: Boat speed, pri=2, period=1000
+ *              - 128267L: Water depth, pri=3, period=1000
+ *              - 129025L: Lat/lon rapid, pri=2, period=100
+ *              - 129026L: COG SOG rapid, pri=2, period=250
+ *              - 129283L: Cross Track Error, pri=3, period=1000
+ *              - 130306L: Wind Speed, pri=2, period=100
+ *              - 130310L: Outside Environmental parameters, pri=5, period=500
+ *              - 130311L: Environmental parameters, pri=5, period=500
+ *              - 130312L: Temperature, pri=5, period=2000
+ *              - 130313L: Humidity, pri=5, period=2000
+ *              - 130314L: Pressure, pri=5, period=2000
+ *              - 130316L: Temperature extended range, pri=5, period=NA
+ *              - 130576L: Small Craft Status (Trim Tab position), pri=2, period=200
+ * 
+ * 
+ * \return false 
+ */
 bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case 126992L: // System date/time, pri=3, period=1000
@@ -207,6 +304,17 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                   return false;
 }
 
+/************************************************************************//**
+ * \brief   Checks if the PGN is a Mandatory Fast Packet Message
+ *
+ * \param PGN PGN to be checked
+ * \return true    -> for PGNs:
+ *         - 126464L: PGN List (Transmit and Receive), pri=6, period=NA
+ *         - 126996L: Product information, pri=6, period=NA
+ *         - 126998L: Configuration information, pri=6, period=NA
+ * 
+ * \return false 
+ */
 bool IsMandatoryFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case 126464L: // PGN List (Transmit and Receive), pri=6, period=NA
@@ -217,6 +325,103 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
                                   return false;
 }
 
+/************************************************************************//**
+ * \brief   Checks if the PGN is a Default Fast Packet Message
+ *
+ * \param PGN  PGN to be checked
+ * \return true   -> for PGNs:
+ *          - 126983L: Alert, pri=2, period=1000
+ *          - 126984L: Alert Response, pri=2, period=NA
+ *          - 126985L: Alert Text, pri=2, period=10000
+ *          - 126986L: Alert Configuration, pri=2, period=NA
+ *          - 126987L: Alert Threshold, pri=2, period=NA
+ *          - 126988L: Alert Value, pri=2, period=10000
+ *          - 127233L: Alert Value, pri=3, period=NA
+ *          - 127237L: Heading/Track control, pri=2, period=250
+ *          - 127489L: Engine parameters dynamic, pri=2, period=500
+ *          - 127496L: Trip fuel consumption, vessel, pri=5, period=1000
+ *          - 127497L: Trip fuel consumption, engine, pri=5, period=1000
+ *          - 127498L: Engine parameters static, pri=5, period=NA
+ *          - 127503L: AC Input Status, pri=6, period=1500
+ *          - 127504L: AC Output Status, pri=6, period=1500
+ *          - 127506L: DC Detailed status, pri=6, period=1500
+ *          - 127507L: Charger status, pri=6, period=1500
+ *          - 127509L: Inverter status, pri=6, period=1500
+ *          - 127510L: Charger configuration status, pri=6, period=NA
+ *          - 127511L: Inverter Configuration Status, pri=6, period=NA
+ *          - 127512L: AGS configuration status, pri=6, period=NA
+ *          - 127513L: Battery configuration status, pri=6, period=NA
+ *          - 127514L: AGS Status, pri=6, period=1500
+ *          - 128275L: Distance log, pri=6, period=1000
+ *          - 128520L: Tracked Target Data, pri=2, period=1000
+ *          - 129029L: GNSS Position Data, pri=3, period=1000
+ *          - 129038L: AIS Class A Position Report, pri=4, period=NA
+ *          - 129039L: AIS Class B Position Report, pri=4, period=NA
+ *          - 129040L: AIS Class B Extended Position Report, pri=4, period=NA
+ *          - 129041L: AIS Aids to Navigation (AtoN) Report, pri=4, period=NA
+ *          - 129044L: Datum, pri=6, period=10000
+ *          - 129045L: User Datum Settings, pri=6, period=NA
+ *          - 129284L: Navigation info, pri=3, period=1000
+ *          - 129285L: Waypoint list, pri=3, period=NA
+ *          - 129301L: Time to/from Mark, pri=3, period=1000
+ *          - 129302L: Bearing and Distance between two Marks, pri=6, period=NA
+ *          - 129538L: GNSS Control Status, pri=6, period=NA
+ *          - 129540L: GNSS Sats in View, pri=6, period=1000
+ *          - 129541L: GPS Almanac Data, pri=6, period=NA
+ *          - 129542L: GNSS Pseudorange Noise Statistics, pri=6, period=1000
+ *          - 129545L: GNSS RAIM Output, pri=6, period=NA
+ *          - 129547L: GNSS Pseudorange Error Statistics, pri=6, period=NA
+ *          - 129549L: DGNSS Corrections, pri=6, period=NA
+ *          - 129551L: GNSS Differential Correction Receiver Signal, pri=6, period=NA
+ *          - 129556L: GLONASS Almanac Data, pri=6, period=NA
+ *          - 129792L: AIS DGNSS Broadcast Binary Message, pri=6, period=NA
+ *          - 129793L: AIS UTC and Date Report, pri=7, period=NA
+ *          - 129794L: AIS Class A Static data, pri=6, period=NA
+ *          - 129795L: AIS Addressed Binary Message, pri=5, period=NA
+ *          - 129796L: AIS Acknowledge, pri=7, period=NA
+ *          - 129797L: AIS Binary Broadcast Message, pri=5, period=NA
+ *          - 129798L: AIS SAR Aircraft Position Report, pri=4, period=NA
+ *          - 129799L: Radio Frequency/Mode/Power, pri=3, period=NA
+ *          - 129800L: AIS UTC/Date Inquiry, pri=7, period=NA
+ *          - 129801L: AIS Addressed Safety Related Message, pri=5, period=NA
+ *          - 129802L: AIS Safety Related Broadcast Message, pri=5, period=NA
+ *          - 129803L: AIS Interrogation PGN, pri=7, period=NA
+ *          - 129804L: AIS Assignment Mode Command, pri=7, period=NA
+ *          - 129805L: AIS Data Link Management Message, pri=7, period=NA
+ *          - 129806L: AIS Channel Management, pri=7, period=NA
+ *          - 129807L: AIS Group Assignment, pri=7, period=NA
+ *          - 129808L: DSC Call Information, pri=8, period=NA
+ *          - 129809L: AIS Class B Static Data: Part A, pri=6, period=NA
+ *          - 129810L: AIS Class B Static Data Part B, pri=6, period=NA
+ *          - 129811L: AIS Single Slot Binary Message, pri=5, period=NA
+ *          - 129812L: AIS Multi Slot Binary Message, pri=5, period=NA
+ *          - 129813L: AIS Long-Range Broadcast Message, pri=5, period=NA
+ *          - 130052L: Loran-C TD Data, pri=3, period=1000
+ *          - 130053L: Loran-C Range Data, pri=3, period=1000
+ *          - 130054L: Loran-C Signal Data, pri=3, period=1000
+ *          - 130060L: Label, pri=7, period=NA
+ *          - 130061L: Channel Source Configuration, pri=7, period=NA
+ *          - 130064L: Route and WP Service - Database List, pri=7, period=NA
+ *          - 130065L: Route and WP Service - Route List, pri=7, period=NA
+ *          - 130066L: Route and WP Service - Route/WP-List Attributes, pri=7, period=NA
+ *          - 130067L: Route and WP Service - Route - WP Name & Position, pri=7, period=NA
+ *          - 130068L: Route and WP Service - Route - WP Name, pri=7, period=NA
+ *          - 130069L: Route and WP Service - XTE Limit & Navigation Method, pri=7, period=NA
+ *          - 130070L: Route and WP Service - WP Comment, pri=7, period=NA
+ *          - 130071L: Route and WP Service - Route Comment, pri=7, period=NA
+ *          - 130072L: Route and WP Service - Database Comment, pri=7, period=NA
+ *          - 130073L: Route and WP Service - Radius of Turn, pri=7, period=NA
+ *          - 130074L: Route and WP Service - WP List - WP Name & Position, pri=7, period=NA
+ *          - 130320L: Tide Station Data, pri=6, period=1000
+ *          - 130321L: Salinity Station Data, pri=6, period=1000
+ *          - 130322L: Current Station Data, pri=6, period=1000
+ *          - 130323L: Meteorological Station Data, pri=6, period=1000
+ *          - 130324L: Moored Buoy Station Data, pri=6, period=1000
+ *          - 130567L: Watermaker Input Setting and Status, pri=6, period=2500
+ *          - 130577L: Direction Data PGN, pri=3, period=1000
+ *          - 130578L: Vessel Speed Components, pri=2, period=250
+ * \return false 
+ */
 bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
                                       case 126983L: // Alert, pri=2, period=1000
@@ -314,6 +519,16 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   return false;
 }
 
+/************************************************************************//**
+ * \brief Checks if the PGN is a Proprietary Fast Packet Message
+ *
+ * \param PGN PGN to be checked
+ * \return true -> for PGNs:
+ *    - 126720L
+ *    - 130816L
+ *    - 131071L
+ * \return false 
+ */
 bool IsProprietaryFastPacketMessage(unsigned long PGN) {
   return ( PGN==126720L ) || ( 130816L<=PGN && PGN<=131071L );
 }
@@ -322,6 +537,21 @@ bool tNMEA2000::IsProprietaryMessage(unsigned long PGN) {
   return IsProprietaryFastPacketMessage(PGN) || ( PGN==61184L ) || ( 65280L<=PGN && PGN<=65535L );
 }
 
+/************************************************************************//**
+ * \brief Default Product Information 
+ * 
+ * This structure holds the default Produkt Information of the device:
+ * 
+ * - N2kVersion = 2101
+ * - ProductCode = 666
+ * - N2kModelID = Arduino N2k->PC
+ * - N2kSwCode = 1.0.0.0
+ * - N2kModelVersion = 1.0.0
+ * - N2kModelSerialCode = 00000001
+ * - CertificationLevel = 0
+ * - LoadEquivalency = 1
+ * 
+ */
 const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        2101,               // N2kVersion
                                        666,                // ProductCode
@@ -333,8 +563,17 @@ const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        1 // LoadEquivalency
                                       };
 
+/************************************************************************//**
+ * \brief Default Manufacturer Information
+ */
 const char DefManufacturerInformation [] PROGMEM = "NMEA2000 library, https://github.com/ttlappalainen/NMEA2000";
+/************************************************************************//**
+ * \brief Default Installation Description (Field1)
+ */
 const char DefInstallationDescription1 [] PROGMEM = "";
+/************************************************************************//**
+ * \brief Default Installation Description (Field2)
+ */
 const char DefInstallationDescription2 [] PROGMEM = "";
 
 //*****************************************************************************
@@ -976,7 +1215,15 @@ void tNMEA2000::Restart() {
   StartAddressClaim();
 }
 
-//*****************************************************************************
+/************************************************************************//**
+ * \brief Convert a CAN Id to NMEA2000 values
+ *
+ * \param id    given CAN Id
+ * \param prio  Priority of the N2k message
+ * \param pgn   PGN of the N2k message
+ * \param src   Source of the N2k message
+ * \param dst   Destination of the N2k message
+ */
 void CanIdToN2k(unsigned long id, unsigned char &prio, unsigned long &pgn, unsigned char &src, unsigned char &dst) {
   unsigned char CanIdPF = (unsigned char) (id >> 16);
   unsigned char CanIdPS = (unsigned char) (id >> 8);
@@ -996,7 +1243,16 @@ void CanIdToN2k(unsigned long id, unsigned char &prio, unsigned long &pgn, unsig
     }
 }
 
-//*****************************************************************************
+/************************************************************************//**
+ * \brief Convert NMEA2000 values into a CAN Id
+ *
+ * \param priority  Priority of the N2k message
+ * \param PGN       PGN of the N2k message
+ * \param Source    Source of the N2k message
+ * \param Destination   Destination of the N2k message
+ * 
+ * \return unsigned long -> CAN Id
+ */
 unsigned long N2ktoCanID(unsigned char priority, unsigned long PGN, unsigned long Source, unsigned char Destination) {
   unsigned char CanIdPF = (unsigned char) (PGN >> 8);
 
@@ -1309,7 +1565,14 @@ bool tNMEA2000::CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &
     return false;
 }
 
-//*****************************************************************************
+/************************************************************************//**
+ * \brief   Copy a Buffer to a CAN Message
+ *
+ * \param CANMsg  Reference to an CANMsg Object with the result
+ * \param start   Startbyte inside the buffer
+ * \param len     Length of the buffer
+ * \param buf     Pointer to a buffer
+ */
 void CopyBufToCANMsg(tN2kCANMsg &CANMsg, unsigned char start, unsigned char len, unsigned char *buf) {
         for (int j=start; (j<len) & (CANMsg.CopiedLen<CANMsg.N2kMsg.MaxDataLen); j++, CANMsg.CopiedLen++) {
           CANMsg.N2kMsg.Data[CANMsg.CopiedLen]=buf[j];
