@@ -1,5 +1,12 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 21.12.2022
+
+- Creating Doxygen based documentation for the library. There will be more documentation updating in future, 
+  when I have time to read it through. I also encourage users to read documentation and fix errors, spelling, grammar.
+  I prefer to make pure documentation update PRs to keep them separate from new features. +
+  Great thanks for matthias-mv for excellent and big job!
+
 ## 27.11.2022
 
 - Updated test and added missing source file, thanks to PeterFromSweden.

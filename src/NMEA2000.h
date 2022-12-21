@@ -487,7 +487,7 @@ public:
       /*******************************************************************//**
        * \brief Construct a new Device object
        *
-       * Initialise all the attributes of the device. 
+       * Initialize all the attributes of the device. 
        * 
        * \param _Name   Name of the device
        * \param _Source Source address on the bus (default = 255)
@@ -809,7 +809,7 @@ protected:
     /********************************************************************//**
      * \brief Construct a new Internal Device object
      * 
-     * Initialise all the attributes of this internal device.
+     * Initialize all the attributes of this internal device.
      */
     tInternalDevice() {
       N2kSource=0;
@@ -1079,7 +1079,7 @@ protected:
 
     
     /*********************************************************************//**
-     * \brief Initialise CAN Frame buffers
+     * \brief Initialize CAN Frame buffers
      *
      * This will be called on \ref tNMEA2000::Open() before any other 
      * initialization. Inherit this, if buffers can be set for the driver
@@ -1155,7 +1155,7 @@ protected:
      */
     void InitDevices();
     /*********************************************************************//**
-     * \brief Determines if the CAN BUS is already initialised
+     * \brief Determines if the CAN BUS is already initialized
      * \return true 
      * \return false 
      */

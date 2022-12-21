@@ -12,10 +12,10 @@ Library fulfills NMEA 2000 mandatory functions and behaviour. Devices using libr
 certification tests. Library has been used in several commercial certified products.
 
 If you are familiar with library, here is quick link to the changes: 
-https://matthias-mw.github.io/NMEA2000/changes.html
+https://ttlappalainen.github.io/NMEA2000/changes.html
 
 Read more from the full documentation on Github Pages: 
-https://matthias-mw.github.io/NMEA2000/index.html
+https://ttlappalainen.github.io/NMEA2000/index.html
 
 
 == License ==

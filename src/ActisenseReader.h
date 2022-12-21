@@ -106,7 +106,7 @@ public:
 
     /********************************************************************//**
      * \brief Constructor for the class
-     * Initialise all class attributes and clear the buffer
+     * Initialize all class attributes and clear the buffer
      */
     tActisenseReader();
 

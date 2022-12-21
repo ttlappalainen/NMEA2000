@@ -3563,7 +3563,7 @@ inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
  * 
  * This structure should provide an a more convenient way to process data
  * of an AIS Aids to Navigation (AtoN) Report. The data can be used in 
- * PGN 129041. It also handles initialisation of all values.
+ * PGN 129041. It also handles initialization of all values.
  * 
  * \sa SetN2kPGN129041 and ParseN2kPGN129041
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
