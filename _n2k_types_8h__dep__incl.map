@@ -1,0 +1,7 @@
+<map id="N2kTypes.h" name="N2kTypes.h">
+<area shape="rect" id="node1" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="91,5,182,32"/>
+<area shape="rect" id="node2" href="$_n2k_maretron_8cpp.html" title=" " alt="" coords="5,80,127,107"/>
+<area shape="rect" id="node3" href="$_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="151,80,267,107"/>
+<area shape="rect" id="node4" href="$_n2k_messages_8cpp.html" title=" " alt="" coords="53,155,183,181"/>
+<area shape="rect" id="node5" href="$_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="207,155,389,181"/>
+</map>

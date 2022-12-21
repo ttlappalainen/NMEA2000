@@ -1,0 +1,5 @@
+<map id="tNMEA2000::tDevice" name="tNMEA2000::tDevice">
+<area shape="rect" id="node1" title="This class represents a N2k device." alt="" coords="37,199,180,225"/>
+<area shape="rect" id="node2" href="$classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that." alt="" coords="5,109,212,136"/>
+<area shape="rect" id="node3" href="$uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,5,212,47"/>
+</map>

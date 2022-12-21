@@ -1,0 +1,5 @@
+<map id="tPriorityRingBuffer&lt; T &gt;" name="tPriorityRingBuffer&lt; T &gt;">
+<area shape="rect" id="node1" title="Template Class that holds simple data structures with given priorities in a ring buffer." alt="" coords="65,109,221,136"/>
+<area shape="rect" id="node2" href="$structt_priority_ring_buffer_1_1t_value_slot.html" title="Structure that holds the actual value and meta data." alt="" coords="5,5,132,47"/>
+<area shape="rect" id="node3" href="$structt_priority_ring_buffer_1_1t_priority_ref.html" title="Structure handles meta data for each priority." alt="" coords="156,5,283,47"/>
+</map>

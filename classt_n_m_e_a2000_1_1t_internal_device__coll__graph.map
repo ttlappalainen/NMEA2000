@@ -1,0 +1,9 @@
+<map id="tNMEA2000::tInternalDevice" name="tNMEA2000::tInternalDevice">
+<area shape="rect" id="node1" title="This class represents an internal device." alt="" coords="817,179,1003,205"/>
+<area shape="rect" id="node2" href="$classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that." alt="" coords="372,15,579,41"/>
+<area shape="rect" id="node3" href="$uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,7,212,49"/>
+<area shape="rect" id="node4" href="$structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information." alt="" coords="369,75,581,101"/>
+<area shape="rect" id="node5" href="$classt_n2k_scheduler.html" title="Un synchronized Scheduler which can roll over." alt="" coords="421,176,529,203"/>
+<area shape="rect" id="node6" href="$classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message." alt="" coords="438,227,513,253"/>
+<area shape="rect" id="node7" href="$classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending." alt="" coords="407,277,544,304"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="Types for payload of NMEA2000 Messages" name="Types for payload of NMEA2000 Messages">
+<area shape="rect" id="node1" href="$group__group__msg.html" title="Functions and enums for handling tN2kMsg objects." alt="" coords="5,5,172,45"/>
+<area shape="rect" id="node2" title="Types used to make the payload of NMEA2000 messages more easy to read for humans." alt="" coords="220,5,375,45"/>
+</map>

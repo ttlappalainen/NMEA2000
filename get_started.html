@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: Get your Project Started</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('get_started.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Get your Project Started </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#secMem">Memory requirements</a></li>
+<li class="level1"><a href="#secHWSet">Hardware setup</a></li>
+<li class="level1"><a href="#autotoc_md89">Breakout Boards</a><ul><li class="level2"><a href="#autotoc_md90">Teensy 3.2</a></li>
+<li class="level2"><a href="#autotoc_md91">ESP32</a></li>
+<li class="level2"><a href="#autotoc_md92">Arduino Due</a></li>
+<li class="level2"><a href="#autotoc_md93">Arduino Mega</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#autotoc_md94">Schematics for standalone CAN transceiver</a><ul><li class="level2"><a href="#autotoc_md95">Teensy 3.2</a></li>
+<li class="level2"><a href="#autotoc_md96">Arduino Due</a></li>
+<li class="level2"><a href="#autotoc_md97">Arduino Mega</a></li>
+<li class="level2"><a href="#autotoc_md98">ATmegaxxM1</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#secHWlib">Hardware depended libraries</a><ul><li class="level2"><a href="#autotoc_md99">Teensy 4.0/4.1 boards with internal CAN</a></li>
+<li class="level2"><a href="#autotoc_md100">Teensy 3.1/3.2 or 3.5/3.6 board with internal CAN</a></li>
+<li class="level2"><a href="#autotoc_md101">ESP32 boards  with internal CAN</a></li>
+<li class="level2"><a href="#autotoc_md102">Arduino Due board with internal CAN</a></li>
+<li class="level2"><a href="#autotoc_md103">Boards with MCP2515 CAN bus controller (e.g. Arduino Mega, ESP8266)</a></li>
+<li class="level2"><a href="#autotoc_md104">AVR processors with internal CAN</a></li>
+<li class="level2"><a href="#autotoc_md105">MBED boards</a></li>
+<li class="level2"><a href="#autotoc_md106">Raspberry Pi</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#autotoc_md107">Quick Example</a></li>
+<li class="level1"><a href="#autotoc_md108">Forcing CAN &quot;driver&quot;</a><ul><li class="level2"><a href="#autotoc_md109">For use with Teensy 4.x (also with 3.1/3.2/3.5/3.6)</a></li>
+<li class="level2"><a href="#autotoc_md110">For use with Teensy 3.1/3.2/3.5/3.6 board and FlexCan</a></li>
+<li class="level2"><a href="#autotoc_md111">For use with ESP32</a></li>
+<li class="level2"><a href="#autotoc_md112">For use board with MCP2515 SPI can bus tranceiver and mcp_can library</a></li>
+<li class="level2"><a href="#autotoc_md113">For use with Arduino due and due_can library</a></li>
+<li class="level2"><a href="#autotoc_md114">For use with Atmel AVR processors internal CAN controller</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><p >A short introduction how to get started.</p>
+<p ><a class="anchor" id="md_4_gettingStarted"></a></p>
+<h1><a class="anchor" id="secMem"></a>
+Memory requirements</h1>
+<p >I have tried to measure memory used by library, but it is not so simple, since there are some automated operations. With version 11.06.2017 I got results:</p>
+<ul>
+<li>Approximate ROM 26.9 kB</li>
+<li>Approximate RAM 3.4 kB</li>
+</ul>
+<p >This is with simple TemperatureMonitor example. This can be squeezed by setting:</p>
+<ul>
+<li>Add below to setup() before NMEA2000.Open(); .... NMEA2000.SetN2kCANMsgBufSize(2); NMEA2000.SetN2kCANSendFrameBufSize(15); ....</li>
+<li>Defining ProductInformation to PROGMEM as in BatteryMonitor example.</li>
+<li>Disabling all extra features. See <a class="el" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs.">NMEA2000_CompilerDefns.h</a></li>
+<li>Disable interrupt receiving.</li>
+</ul>
+<p >With those setting you can go down to appr. 19 kB ROM and 1.9 kB RAM. So for 2 kB devices like Arduino Uno, there is not much for your own code.</p>
+<dl class="section warning"><dt>Warning</dt><dd>By squeezing memory, library can not fulfill certification requirements anymore.</dd></dl>
+<h1><a class="anchor" id="secHWSet"></a>
+Hardware setup</h1>
+<p >NMEA2000 is inherited from CAN. Many MCUs like Teensy &gt;3.1, ESP32, Arduino Due has already CAN controller inside. If your MCU does not have CAN controller inside or you need second external CAN controller, you can use e.g. MCP2515 CAN controller, which is supported by library (mcp_can).</p>
+<p >For final connection to the bus you need CAN bus_transceiver chip. Devices on NMEA2000 bus should be isolated to avoid ground loops. So if you take power from NMEA2000 bus and your device is not connected to ground enywhere else, you can use unisolated tranceiver like MCP2551, MCP2562 or SN65HVD234. If you instead feed power to your device directly or e.g. use engine own sensors for measuring, you have to use isolated tranceivers like ISO1050. Remember also use isolated power supply, if you take power from bus and have any unisolated connection to anywhere on your whole system.</p>
+<p >Easiest for connecting to NMEA2000 bus is to use some ready shield. For more information on how to wire everything to the bus please see <a class="el" href="page_h_w_set_up.html">Setting Up Hardware Environment</a></p>
+<h1><a class="anchor" id="autotoc_md89"></a>
+Breakout Boards</h1>
+<h2><a class="anchor" id="autotoc_md90"></a>
+Teensy 3.2</h2>
+<ul>
+<li><a href="https://www.skpang.co.uk/products/teensy-can-bus-breakout-board-include-teensy-3-2">https://www.skpang.co.uk/products/teensy-can-bus-breakout-board-include-teensy-3-2</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md91"></a>
+ESP32</h2>
+<ul>
+<li><a href="https://www.tindie.com/products/fusion/can32-an-esp32-dev-board-with-can-bus-v21/">https://www.tindie.com/products/fusion/can32-an-esp32-dev-board-with-can-bus-v21/</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md92"></a>
+Arduino Due</h2>
+<ul>
+<li><a href="http://skpang.co.uk/catalog/dual-can-bus-interface-for-arduino-due-p-1579.html">http://skpang.co.uk/catalog/dual-can-bus-interface-for-arduino-due-p-1579.html</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md93"></a>
+Arduino Mega</h2>
+<ul>
+<li><a href="https://wiki.seeedstudio.com/CAN-BUS_Shield_V1.2/">https://wiki.seeedstudio.com/CAN-BUS_Shield_V1.2/</a></li>
+</ul>
+<p >Note that there are several different shields for CAN bus available and others may use 8 MHz chrystal instead of <b>default 16 MHz chrystal</b>. This must be set before including <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a></p>
+<h1><a class="anchor" id="autotoc_md94"></a>
+Schematics for standalone CAN transceiver</h1>
+<p >In case you build your tranceiver connection by yourself there are some connection examples under <a href="https://github.com/ttlappalainen/NMEA2000/tree/master/Documents">documents</a>.</p>
+<h2><a class="anchor" id="autotoc_md95"></a>
+Teensy 3.2</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Examples/TeensyActisenseListenerSender/Documents/Teensy_Actisense_listener_sender_schematics.pdf">Teensy_Actisense_listener_sender_schematics.pdf</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md96"></a>
+Arduino Due</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoDUE_CAN_with_MCP2562.pdf">ArduinoDUE_CAN_with_MCP2562.pdf</a></li>
+<li><a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoDue_CAN_with_SN65HVD234.jpg">ArduinoDue_CAN_with_SN65HVD234.jpg</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md97"></a>
+Arduino Mega</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoMega_CAN_with_MCP2515_MCP2551.pdf">ArduinoMega_CAN_with_MCP2515_MCP2551.pdf</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md98"></a>
+ATmegaxxM1</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ATmegaxxM1%20CAN%20example.pdf">ATmegaxxM1 CAN example.pdf</a></li>
+</ul>
+<p >Library has been also used with Maple Mini board.</p>
+<h1><a class="anchor" id="secHWlib"></a>
+Hardware depended libraries</h1>
+<p >You need at least Arduino Software 1.6.6 for this sample. I'll expect you are familiar with Arduino and using libraries. When your Arduino environment is ready.</p>
+<ul>
+<li>Download <a href="https://github.com/ttlappalainen/NMEA2000">NMEA2000</a> library zip.</li>
+<li>Depending of your board download libraries as zip</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Take care that you use libraries under my Github, when available! Others may not work right with NMEA2000!</dd></dl>
+<h2><a class="anchor" id="autotoc_md99"></a>
+Teensy 4.0/4.1 boards with internal CAN</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_Teensyx">NMEA2000_Teensyx</a> library.</li>
+<li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> !</li>
+</ul>
+<p >CAN library is included to the code so you do not need any extra CAN library with this. NMEA2000_Teensyx library will replace NMEA2000_teensy library in future. You can already start to use it with all Teensy boards by forcing it with define (see <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a> comment). For critical projects I prefer to use old library until this has been running under tests for a while.</p>
+<h2><a class="anchor" id="autotoc_md100"></a>
+Teensy 3.1/3.2 or 3.5/3.6 board with internal CAN</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_teensy">NMEA2000_teensy</a> library. <br  />
+</li>
+<li><a href="https://github.com/ttlappalainen/FlexCAN_Library">FlexCAN</a> library. <br  />
+</li>
+<li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> !</li>
+</ul>
+<p >NMEA2000_teensy has been originally forked from <a href="https://github.com/sarfata/NMEA2000_teensy">NMEA2000_teensy</a> contributed by <a href="https://twitter.com/sarfata/">Thomas Sarlandie</a></p>
+<dl class="section note"><dt>Note</dt><dd>FlexCan library is already included in <a href="https://www.pjrc.com/teensy/teensyduino.html">Teensyduino</a> extension. In order to use my fork, you have to remove FlexCAN library from <br  />
+ <code>C:\Program Files(x86)\Arduino\hardware\teensy\avr\libraries\FlexCAN</code>. <br  />
+ Default FlexCAN library does not work right with NMEA2000. <br  />
+</dd></dl>
+<h2><a class="anchor" id="autotoc_md101"></a>
+ESP32 boards  with internal CAN</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_esp32">NMEA2000_esp32</a> library</li>
+</ul>
+<p >ESP32 CAN driver by Thomas Barth has been implemented inside NMEA2000_esp32 so you do not need other drivers for that.</p>
+<h2><a class="anchor" id="autotoc_md102"></a>
+Arduino Due board with internal CAN</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_due">NMEA2000_due</a> library</li>
+<li><a href="https://github.com/ttlappalainen/due_can">due_can</a> library</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md103"></a>
+Boards with MCP2515 CAN bus controller (e.g. Arduino Mega, ESP8266)</h2>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_mcp">NMEA2000_mcp</a> library.</li>
+<li><a href="https://github.com/ttlappalainen/CAN_BUS_Shield">mcp_can</a> library.</li>
+</ul>
+<p >You can use mcp_can with boards where you connect MCP2515 CAN bus controller with SPI. You can also use it as secondary CAN for e.g. Teensy 3.2 or ESP32.</p>
+<p >mcp_can library is developed version of original mcp_can library. This allows also to use 8MHz clock and has been tested with Maple Mini. mcp_can library can be originally found on <a href="https://github.com/Seeed-Studio/CAN_BUS_Shield">https://github.com/Seeed-Studio/CAN_BUS_Shield</a>, but check library status has all improvements been implemented to Seeed-Studio. At least 18.09.2017 it was up to date.</p>
+<h2><a class="anchor" id="autotoc_md104"></a>
+AVR processors with internal CAN</h2>
+<ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_avr">NMEA2000_avr</a> library</li>
+<li><a href="https://github.com/thomasonw/avr_can">avr_can</a> library</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md105"></a>
+MBED boards</h2>
+<ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_mbed">NMEA2000_mbed</a> library other related libraries. See origin for MBED port on <a href="https://github.com/thomasonw/NMEA2000_mbed">https://github.com/thomasonw/NMEA2000_mbed</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md106"></a>
+Raspberry Pi</h2>
+<p ><a href="https://github.com/ttlappalainen/NMEA2000_socketCAN">NMEA2000_socketCAN</a> library.</p>
+<p >NMEA2000_socketCAN has been originally forked from <a href="https://github.com/thomasonw/NMEA2000_socketCAN">https://github.com/thomasonw/NMEA2000_socketCAN</a></p>
+<p >There is a document <a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Preparing%20your%20Raspberry%20Pi%20for%20the%20NMEA2000%20library.pdf">Preparing your Raspberry Pi for the NMEA2000 library.pdf</a> for starting up with RPi. Hopefully I have time to write more complete document. There is example NMEA2000ToNMEA0183, which has been tested with RPi 3B.</p>
+<h1><a class="anchor" id="autotoc_md107"></a>
+Quick Example</h1>
+<p >Install all libraries to your Arduino IDE (Sketch-Include Library-Add .ZIP library).</p>
+<ul>
+<li>Open <code>NMEA2000\Examples\TemperatureMonitor</code>.</li>
+<li>Connect you board to USB and NMEA2000 bus.</li>
+<li>Send sketch to your board.</li>
+</ul>
+<p >If you have Multi Function Display (e.g. Garmin GMI-20) on your NMEA2000 bus, you should see on it's NMEA2000 bus devices new device "Simple temp monitor" on the list.</p>
+<p >Now you are ready to play with your own device. Check also the <code>NMEA2000\Examples\ActisenseListener</code>, which reads all data from NMEA2000 bus and sends it to PC. <code>NMEA2000/Examples/ArduinoGateway</code> allows you to mimic Actisense NGT-1 and connect e.g. a Raspberry Pi running Signal-K to the NMEA2000 bus with an Arduino or Teensy.</p>
+<h1><a class="anchor" id="autotoc_md108"></a>
+Forcing CAN "driver"</h1>
+<p >was using Arduino Software older than 1.6.6)</p>
+<p >In examples there are simple includes:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span>  <span class="comment">// This will automatically choose right CAN library and create suitable NMEA2000 object</span></div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a></div><div class="ttdoc">Automatic library selection according to the selected board.</div></div>
+</div><!-- fragment --><p >If that can not be used (like with Arduino IDE older than 1.6.6) or you would like to control naming and used "driver", you can manually include necessary files. Specially if you want to use secondary CAN bus on your system.</p>
+<h2><a class="anchor" id="autotoc_md109"></a>
+For use with Teensy 4.x (also with 3.1/3.2/3.5/3.6)</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_Teensyx.h&gt;</span> <span class="comment">// https://github.com/ttlappalainen/NMEA2000_Teensyx</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_Teensyx <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+<div class="ttc" id="a_n2k_msg_8h_html"><div class="ttname"><a href="_n2k_msg_8h.html">N2kMsg.h</a></div><div class="ttdoc">This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message.</div></div>
+<div class="ttc" id="a_n_m_e_a2000_8h_html"><div class="ttname"><a href="_n_m_e_a2000_8h.html">NMEA2000.h</a></div><div class="ttdoc">This file contains the class tNMEA2000, which is consists the main functionality of the library.</div></div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a99f6ed3fa2b0b15f276c856e10a7a3ab"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a></div><div class="ttdeci">tNMEA2000 &amp; NMEA2000</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00337">NMEA2000_CAN.h:337</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md110"></a>
+For use with Teensy 3.1/3.2/3.5/3.6 board and FlexCan</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;FlexCAN.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_teensy.h&gt;</span> <span class="comment">// https://github.com/sarfata/NMEA2000_teensy</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_teensy <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md111"></a>
+For use with ESP32</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_esp32.h&gt;</span> <span class="comment">// https://github.com/ttlappalainen/NMEA2000_esp32</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_esp32 <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md112"></a>
+For use board with MCP2515 SPI can bus tranceiver and mcp_can library</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;SPI.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;mcp_can.h&gt;</span> <span class="comment">// https://github.com/ttlappalainen/CAN_BUS_Shield</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_mcp.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#define N2k_CAN_INT_PIN 21 </span><span class="comment">// Pin, where interrupt line has been connected</span></div>
+<div class="line"><span class="preprocessor">#define N2k_SPI_CS_PIN 53  </span><span class="comment">// Pin for SPI Can Select</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_mcp <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>(<a class="code hl_define" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,MCP_16MHz,<a class="code hl_define" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>);</div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a2cedc3aec3faef9621813e91a828a4c4"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a></div><div class="ttdeci">#define N2k_CAN_INT_PIN</div><div class="ttdoc">Definition of the CAN Interrupt Pin This defines the number of the CAN Interrupt PIN....</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00292">NMEA2000_CAN.h:292</a></div></div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a3b620e8c35e1d4fb1ca29b5e07954650"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a></div><div class="ttdeci">#define N2k_SPI_CS_PIN</div><div class="ttdoc">Definition of the SPI ChipSelectPin for the CAN Transceiver This defines the the I/O Pin uses for the...</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00312">NMEA2000_CAN.h:312</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md113"></a>
+For use with Arduino due and due_can library</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;due_can.h&gt;</span>  <span class="comment">// https://github.com/ttlappalainen/due_can</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_due.h&gt;</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_due <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md114"></a>
+For use with Atmel AVR processors internal CAN controller</h2>
+<p >Your file should start with:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n2k_msg_8h.html">N2kMsg.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000_8h.html">NMEA2000.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;avr_can.h&gt;</span>            <span class="comment">// https://github.com/thomasonw/avr_can</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_avr.h&gt;</span>       <span class="comment">// https://github.com/thomasonw/NMEA2000_avr</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line">tNMEA2000_avr <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

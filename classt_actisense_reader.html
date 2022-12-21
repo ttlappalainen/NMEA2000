@@ -1,0 +1,839 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: tActisenseReader Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classt_actisense_reader.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classt_actisense_reader-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tActisenseReader Class Reference<div class="ingroups"><a class="el" href="group__group__helper_class.html">3 Helper Classes</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Class for reading Actisense format messages.  
+ <a href="classt_actisense_reader.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for tActisenseReader:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_actisense_reader__coll__graph.png" border="0" usemap="#at_actisense_reader_coll__map" alt="Collaboration graph"/></div>
+<map name="at_actisense_reader_coll__map" id="at_actisense_reader_coll__map">
+<area shape="rect" title="Class for reading Actisense format messages." alt="" coords="5,95,131,121"/>
+<area shape="rect" href="class_n2k_stream.html" title="Streaming Class to handle all Streams generated by the Library." alt="" coords="24,5,112,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a703dee87b012a47077c0f84d280e17e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a703dee87b012a47077c0f84d280e17e1">tActisenseReader</a> ()</td></tr>
+<tr class="memdesc:a703dee87b012a47077c0f84d280e17e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the class Initialise all class attributes and clear the buffer.  <a href="classt_actisense_reader.html#a703dee87b012a47077c0f84d280e17e1">More...</a><br /></td></tr>
+<tr class="separator:a703dee87b012a47077c0f84d280e17e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d60abae0039ce1d23261c7a71385faa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a4d60abae0039ce1d23261c7a71385faa">GetMessageFromStream</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, bool ReadOut=true)</td></tr>
+<tr class="memdesc:a4d60abae0039ce1d23261c7a71385faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read Actisense formatted NMEA2000 message from stream.  <a href="classt_actisense_reader.html#a4d60abae0039ce1d23261c7a71385faa">More...</a><br /></td></tr>
+<tr class="separator:a4d60abae0039ce1d23261c7a71385faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a4b0bd7c748798de68549fb90a01f5d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a2a4b0bd7c748798de68549fb90a01f5d">Handling</a> () const</td></tr>
+<tr class="memdesc:a2a4b0bd7c748798de68549fb90a01f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if still message handling is needed.  <a href="classt_actisense_reader.html#a2a4b0bd7c748798de68549fb90a01f5d">More...</a><br /></td></tr>
+<tr class="separator:a2a4b0bd7c748798de68549fb90a01f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9965bb37f4372c99da831975e6b05026"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a9965bb37f4372c99da831975e6b05026">IsStart</a> (char ch)</td></tr>
+<tr class="memdesc:a9965bb37f4372c99da831975e6b05026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if character is start.  <a href="classt_actisense_reader.html#a9965bb37f4372c99da831975e6b05026">More...</a><br /></td></tr>
+<tr class="separator:a9965bb37f4372c99da831975e6b05026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac252eabd1ae7dbc380b2014a3c7c242"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242">ParseMessages</a> ()</td></tr>
+<tr class="memdesc:aac252eabd1ae7dbc380b2014a3c7c242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse messages.  <a href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242">More...</a><br /></td></tr>
+<tr class="separator:aac252eabd1ae7dbc380b2014a3c7c242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43cfbf44f9a4b4f5b97145668751374a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a43cfbf44f9a4b4f5b97145668751374a">SetDefaultSource</a> (unsigned char source)</td></tr>
+<tr class="memdesc:a43cfbf44f9a4b4f5b97145668751374a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default source address for the messages.  <a href="classt_actisense_reader.html#a43cfbf44f9a4b4f5b97145668751374a">More...</a><br /></td></tr>
+<tr class="separator:a43cfbf44f9a4b4f5b97145668751374a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f476677b4973320543fd9dda26e108f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a7f476677b4973320543fd9dda26e108f">SetMsgHandler</a> (void(*_MsgHandler)(const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg))</td></tr>
+<tr class="memdesc:a7f476677b4973320543fd9dda26e108f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Msg Handler object.  <a href="classt_actisense_reader.html#a7f476677b4973320543fd9dda26e108f">More...</a><br /></td></tr>
+<tr class="separator:a7f476677b4973320543fd9dda26e108f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7481ded5bfa3f2324345bf386623337a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a7481ded5bfa3f2324345bf386623337a">SetReadStream</a> (<a class="el" href="class_n2k_stream.html">N2kStream</a> *_stream)</td></tr>
+<tr class="memdesc:a7481ded5bfa3f2324345bf386623337a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Read Stream object.  <a href="classt_actisense_reader.html#a7481ded5bfa3f2324345bf386623337a">More...</a><br /></td></tr>
+<tr class="separator:a7481ded5bfa3f2324345bf386623337a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ab85258a6c11ed3da4cececf66aebfab5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ab85258a6c11ed3da4cececf66aebfab5">AddByteToBuffer</a> (char NewByte)</td></tr>
+<tr class="memdesc:ab85258a6c11ed3da4cececf66aebfab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new Byte to the buffer.  <a href="classt_actisense_reader.html#ab85258a6c11ed3da4cececf66aebfab5">More...</a><br /></td></tr>
+<tr class="separator:ab85258a6c11ed3da4cececf66aebfab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4b67f887f3f5045220548107f6bb361"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ad4b67f887f3f5045220548107f6bb361">CheckMessage</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
+<tr class="memdesc:ad4b67f887f3f5045220548107f6bb361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a message is valide.  <a href="classt_actisense_reader.html#ad4b67f887f3f5045220548107f6bb361">More...</a><br /></td></tr>
+<tr class="separator:ad4b67f887f3f5045220548107f6bb361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abab06ffc7dd4499b5059bb413b797b2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#abab06ffc7dd4499b5059bb413b797b2a">ClearBuffer</a> ()</td></tr>
+<tr class="memdesc:abab06ffc7dd4499b5059bb413b797b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer.  <a href="classt_actisense_reader.html#abab06ffc7dd4499b5059bb413b797b2a">More...</a><br /></td></tr>
+<tr class="separator:abab06ffc7dd4499b5059bb413b797b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a946c91222866e1ab88137adea0b78dd9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a946c91222866e1ab88137adea0b78dd9">byteSum</a></td></tr>
+<tr class="memdesc:a946c91222866e1ab88137adea0b78dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum of all bytes is used as kind of check sum.  <a href="classt_actisense_reader.html#a946c91222866e1ab88137adea0b78dd9">More...</a><br /></td></tr>
+<tr class="separator:a946c91222866e1ab88137adea0b78dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd032d981bdbc3f694fa631fb1fe03c"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#aacd032d981bdbc3f694fa631fb1fe03c">DefaultSource</a></td></tr>
+<tr class="memdesc:aacd032d981bdbc3f694fa631fb1fe03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default source of the N2k message.  <a href="classt_actisense_reader.html#aacd032d981bdbc3f694fa631fb1fe03c">More...</a><br /></td></tr>
+<tr class="separator:aacd032d981bdbc3f694fa631fb1fe03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02dc98c25d8cd00557832be2f46942bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a02dc98c25d8cd00557832be2f46942bd">EscapeReceived</a></td></tr>
+<tr class="memdesc:a02dc98c25d8cd00557832be2f46942bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escape character has been received.  <a href="classt_actisense_reader.html#a02dc98c25d8cd00557832be2f46942bd">More...</a><br /></td></tr>
+<tr class="separator:a02dc98c25d8cd00557832be2f46942bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8dd6305e0e490d4a5db6096300fe78a"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ac8dd6305e0e490d4a5db6096300fe78a">MsgBuf</a> [<a class="el" href="_actisense_reader_8h.html#ac8f32aaaba7b724013a03ba123cca09a">MAX_STREAM_MSG_BUF_LEN</a>]</td></tr>
+<tr class="memdesc:ac8dd6305e0e490d4a5db6096300fe78a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for incoming messages from stream.  <a href="classt_actisense_reader.html#ac8dd6305e0e490d4a5db6096300fe78a">More...</a><br /></td></tr>
+<tr class="separator:ac8dd6305e0e490d4a5db6096300fe78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee2d7ad88a2b2ff4dd4ad1e614210251"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#aee2d7ad88a2b2ff4dd4ad1e614210251">MsgHandler</a> )(const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
+<tr class="separator:aee2d7ad88a2b2ff4dd4ad1e614210251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1d7d55c931d15af44e036e392791da2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ae1d7d55c931d15af44e036e392791da2">MsgIsComing</a></td></tr>
+<tr class="memdesc:ae1d7d55c931d15af44e036e392791da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Message is coming.  <a href="classt_actisense_reader.html#ae1d7d55c931d15af44e036e392791da2">More...</a><br /></td></tr>
+<tr class="separator:ae1d7d55c931d15af44e036e392791da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1bac81fdc3d11308bde1660eb10edaf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ad1bac81fdc3d11308bde1660eb10edaf">MsgWritePos</a></td></tr>
+<tr class="memdesc:ad1bac81fdc3d11308bde1660eb10edaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current write position inside the buffer.  <a href="classt_actisense_reader.html#ad1bac81fdc3d11308bde1660eb10edaf">More...</a><br /></td></tr>
+<tr class="separator:ad1bac81fdc3d11308bde1660eb10edaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4c0bdf677e93ba527d3e48123f884b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_n2k_stream.html">N2kStream</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#af4c0bdf677e93ba527d3e48123f884b1">ReadStream</a></td></tr>
+<tr class="memdesc:af4c0bdf677e93ba527d3e48123f884b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stream to read from.  <a href="classt_actisense_reader.html#af4c0bdf677e93ba527d3e48123f884b1">More...</a><br /></td></tr>
+<tr class="separator:af4c0bdf677e93ba527d3e48123f884b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68b15c17cff1dbf77ec8f42f381f317"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ae68b15c17cff1dbf77ec8f42f381f317">StartOfTextReceived</a></td></tr>
+<tr class="memdesc:ae68b15c17cff1dbf77ec8f42f381f317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start of text has been received.  <a href="classt_actisense_reader.html#ae68b15c17cff1dbf77ec8f42f381f317">More...</a><br /></td></tr>
+<tr class="separator:ae68b15c17cff1dbf77ec8f42f381f317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Class for reading Actisense format messages. </p>
+<p >This is class for reading Actisense format messages from given stream.</p>
+<dl class="section note"><dt>Note</dt><dd>There is an unresolved problem to use programming port with reading data. Read works fine for a while, but then stops. With e.g. Arduino Due USB port there is no problem. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00054">54</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a703dee87b012a47077c0f84d280e17e1" name="a703dee87b012a47077c0f84d280e17e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a703dee87b012a47077c0f84d280e17e1">&#9670;&nbsp;</a></span>tActisenseReader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tActisenseReader::tActisenseReader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for the class Initialise all class attributes and clear the buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00031">31</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab85258a6c11ed3da4cececf66aebfab5" name="ab85258a6c11ed3da4cececf66aebfab5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab85258a6c11ed3da4cececf66aebfab5">&#9670;&nbsp;</a></span>AddByteToBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::AddByteToBuffer </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>NewByte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a new Byte to the buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">NewByte</td><td>new Byte to be added </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Success </dd>
+<dd>
+false -&gt; Buffer is full </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00047">47</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad4b67f887f3f5045220548107f6bb361" name="ad4b67f887f3f5045220548107f6bb361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4b67f887f3f5045220548107f6bb361">&#9670;&nbsp;</a></span>CheckMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::CheckMessage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a message is valide. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true <br  />
+ </dd>
+<dd>
+false -&gt; Length does not match. Add type, length and crc </dd>
+<dd>
+false -&gt; Checksum does not match </dd>
+<dd>
+false -&gt; data length greater then <a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751" title="Maximum number of bytes that can be stored in the data buffer With fast packet the first frame can ha...">tN2kMsg::MaxDataLen</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00063">63</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abab06ffc7dd4499b5059bb413b797b2a" name="abab06ffc7dd4499b5059bb413b797b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abab06ffc7dd4499b5059bb413b797b2a">&#9670;&nbsp;</a></span>ClearBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tActisenseReader::ClearBuffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clears the buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00038">38</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4d60abae0039ce1d23261c7a71385faa" name="a4d60abae0039ce1d23261c7a71385faa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d60abae0039ce1d23261c7a71385faa">&#9670;&nbsp;</a></span>GetMessageFromStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::GetMessageFromStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>ReadOut</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read Actisense formatted NMEA2000 message from stream. </p>
+<p >You can either call this or ParseMessages periodically.</p>
+<p >Read Actisense formatted NMEA2000 message from stream Actisense Format: &lt;10&gt;&lt;02&gt;&lt;93&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;source (1)&gt;&lt;time (4)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; or &lt;10&gt;&lt;02&gt;&lt;94&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object <br  />
+ </td></tr>
+    <tr><td class="paramname">ReadOut</td><td><br  />
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (ReadStream==0) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00110">110</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2a4b0bd7c748798de68549fb90a01f5d" name="a2a4b0bd7c748798de68549fb90a01f5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a4b0bd7c748798de68549fb90a01f5d">&#9670;&nbsp;</a></span>Handling()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::Handling </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates if still message handling is needed. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00186">186</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="a9965bb37f4372c99da831975e6b05026" name="a9965bb37f4372c99da831975e6b05026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9965bb37f4372c99da831975e6b05026">&#9670;&nbsp;</a></span>IsStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::IsStart </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if character is start. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>character </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; if (ch==Escape) </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00100">100</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aac252eabd1ae7dbc380b2014a3c7c242" name="aac252eabd1ae7dbc380b2014a3c7c242"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac252eabd1ae7dbc380b2014a3c7c242">&#9670;&nbsp;</a></span>ParseMessages()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tActisenseReader::ParseMessages </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse messages. </p>
+<p >Set message handler with SetMsgHandler and then call this periodically or use GetMessageFromStream </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00183">183</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a43cfbf44f9a4b4f5b97145668751374a" name="a43cfbf44f9a4b4f5b97145668751374a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43cfbf44f9a4b4f5b97145668751374a">&#9670;&nbsp;</a></span>SetDefaultSource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tActisenseReader::SetDefaultSource </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the default source address for the messages. </p>
+<p >If you use an application, which sends data by using Actisense data request type, the source set by this function will be set as source. Default=65;</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source address to be used </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00133">133</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="a7f476677b4973320543fd9dda26e108f" name="a7f476677b4973320543fd9dda26e108f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f476677b4973320543fd9dda26e108f">&#9670;&nbsp;</a></span>SetMsgHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tActisenseReader::SetMsgHandler </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)&#160;</td>
+          <td class="paramname"><em>_MsgHandler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Msg Handler object. </p>
+<p >Set message handler to be used in ParseMessages, when message has been received.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MsgHandler</td><td>{type} </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00179">179</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="a7481ded5bfa3f2324345bf386623337a" name="a7481ded5bfa3f2324345bf386623337a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7481ded5bfa3f2324345bf386623337a">&#9670;&nbsp;</a></span>SetReadStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tActisenseReader::SetReadStream </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_n2k_stream.html">N2kStream</a> *&#160;</td>
+          <td class="paramname"><em>_stream</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Read Stream object. </p>
+<p >Set stream, which would be used for reading messages. You have to open stream first, so e.g. for SerialUSB call begin first.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_stream</td><td>Stream to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00122">122</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a946c91222866e1ab88137adea0b78dd9" name="a946c91222866e1ab88137adea0b78dd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a946c91222866e1ab88137adea0b78dd9">&#9670;&nbsp;</a></span>byteSum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tActisenseReader::byteSum</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sum of all bytes is used as kind of check sum. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00066">66</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="aacd032d981bdbc3f694fa631fb1fe03c" name="aacd032d981bdbc3f694fa631fb1fe03c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacd032d981bdbc3f694fa631fb1fe03c">&#9670;&nbsp;</a></span>DefaultSource</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tActisenseReader::DefaultSource</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default source of the N2k message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00072">72</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="a02dc98c25d8cd00557832be2f46942bd" name="a02dc98c25d8cd00557832be2f46942bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02dc98c25d8cd00557832be2f46942bd">&#9670;&nbsp;</a></span>EscapeReceived</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::EscapeReceived</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Escape character has been received. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00064">64</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="ac8dd6305e0e490d4a5db6096300fe78a" name="ac8dd6305e0e490d4a5db6096300fe78a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8dd6305e0e490d4a5db6096300fe78a">&#9670;&nbsp;</a></span>MsgBuf</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tActisenseReader::MsgBuf[<a class="el" href="_actisense_reader_8h.html#ac8f32aaaba7b724013a03ba123cca09a">MAX_STREAM_MSG_BUF_LEN</a>]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Buffer for incoming messages from stream. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00068">68</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="aee2d7ad88a2b2ff4dd4ad1e614210251" name="aee2d7ad88a2b2ff4dd4ad1e614210251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee2d7ad88a2b2ff4dd4ad1e614210251">&#9670;&nbsp;</a></span>MsgHandler</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* tActisenseReader::MsgHandler) (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00078">78</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="ae1d7d55c931d15af44e036e392791da2" name="ae1d7d55c931d15af44e036e392791da2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1d7d55c931d15af44e036e392791da2">&#9670;&nbsp;</a></span>MsgIsComing</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::MsgIsComing</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A Message is coming. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00062">62</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="ad1bac81fdc3d11308bde1660eb10edaf" name="ad1bac81fdc3d11308bde1660eb10edaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1bac81fdc3d11308bde1660eb10edaf">&#9670;&nbsp;</a></span>MsgWritePos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tActisenseReader::MsgWritePos</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current write position inside the buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00070">70</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="af4c0bdf677e93ba527d3e48123f884b1" name="af4c0bdf677e93ba527d3e48123f884b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4c0bdf677e93ba527d3e48123f884b1">&#9670;&nbsp;</a></span>ReadStream</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_n2k_stream.html">N2kStream</a>* tActisenseReader::ReadStream</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stream to read from. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00076">76</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<a id="ae68b15c17cff1dbf77ec8f42f381f317" name="ae68b15c17cff1dbf77ec8f42f381f317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68b15c17cff1dbf77ec8f42f381f317">&#9670;&nbsp;</a></span>StartOfTextReceived</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tActisenseReader::StartOfTextReceived</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start of text has been received. </p>
+
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00060">60</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a></li>
+<li><a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classt_actisense_reader.html">tActisenseReader</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

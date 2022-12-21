@@ -1,0 +1,2695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: tN2kMsg Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classt_n2k_msg.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classt_n2k_msg-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tN2kMsg Class Reference<div class="ingroups"><a class="el" href="group__group__core.html">1 Core</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>This class contains all the data of an NMEA2000 message.  
+ <a href="classt_n2k_msg.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae31f3621593999fdbf6c4e243f2fb89d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#ae31f3621593999fdbf6c4e243f2fb89d">tN2kMsg</a> (unsigned char _Source=15, unsigned char _Priority=6, unsigned long _PGN=0, int _DataLen=0)</td></tr>
+<tr class="memdesc:ae31f3621593999fdbf6c4e243f2fb89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new t N2k Msg object.  <a href="classt_n2k_msg.html#ae31f3621593999fdbf6c4e243f2fb89d">More...</a><br /></td></tr>
+<tr class="separator:ae31f3621593999fdbf6c4e243f2fb89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5999e88e3aa3c175cd388ee286fd5035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a5999e88e3aa3c175cd388ee286fd5035">Add1ByteDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a5999e88e3aa3c175cd388ee286fd5035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 1 byte.  <a href="classt_n2k_msg.html#a5999e88e3aa3c175cd388ee286fd5035">More...</a><br /></td></tr>
+<tr class="separator:a5999e88e3aa3c175cd388ee286fd5035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa27df1f03b5d1c1fcd314427deac33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a4fa27df1f03b5d1c1fcd314427deac33">Add1ByteUDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a4fa27df1f03b5d1c1fcd314427deac33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 1 byte.  <a href="classt_n2k_msg.html#a4fa27df1f03b5d1c1fcd314427deac33">More...</a><br /></td></tr>
+<tr class="separator:a4fa27df1f03b5d1c1fcd314427deac33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e94130675970b0aeb5a4d7cc472cd24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a4e94130675970b0aeb5a4d7cc472cd24">Add2ByteDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a4e94130675970b0aeb5a4d7cc472cd24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 2 bytes.  <a href="classt_n2k_msg.html#a4e94130675970b0aeb5a4d7cc472cd24">More...</a><br /></td></tr>
+<tr class="separator:a4e94130675970b0aeb5a4d7cc472cd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a362244b6bd8108b23901f0b70fec8817"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a362244b6bd8108b23901f0b70fec8817">Add2ByteInt</a> (int16_t v)</td></tr>
+<tr class="memdesc:a362244b6bd8108b23901f0b70fec8817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add integer value to the buffer using 2 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a362244b6bd8108b23901f0b70fec8817">More...</a><br /></td></tr>
+<tr class="separator:a362244b6bd8108b23901f0b70fec8817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0467dec57bd94c5ea60898da4ea87e0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a0467dec57bd94c5ea60898da4ea87e0f">Add2ByteUDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a0467dec57bd94c5ea60898da4ea87e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 2 bytes.  <a href="classt_n2k_msg.html#a0467dec57bd94c5ea60898da4ea87e0f">More...</a><br /></td></tr>
+<tr class="separator:a0467dec57bd94c5ea60898da4ea87e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d0a4f2d1770d55028fc56bb85190318"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a1d0a4f2d1770d55028fc56bb85190318">Add2ByteUInt</a> (uint16_t v)</td></tr>
+<tr class="memdesc:a1d0a4f2d1770d55028fc56bb85190318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add unsigned integer value to the buffer using 2 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a1d0a4f2d1770d55028fc56bb85190318">More...</a><br /></td></tr>
+<tr class="separator:a1d0a4f2d1770d55028fc56bb85190318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef6760d92a5d7898745479b421ed8df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a3ef6760d92a5d7898745479b421ed8df">Add3ByteDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a3ef6760d92a5d7898745479b421ed8df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 3 bytes.  <a href="classt_n2k_msg.html#a3ef6760d92a5d7898745479b421ed8df">More...</a><br /></td></tr>
+<tr class="separator:a3ef6760d92a5d7898745479b421ed8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9639563464023238e4e44e180ea956c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a9639563464023238e4e44e180ea956c3">Add3ByteInt</a> (int32_t v)</td></tr>
+<tr class="memdesc:a9639563464023238e4e44e180ea956c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add integer value to the buffer using 3 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a9639563464023238e4e44e180ea956c3">More...</a><br /></td></tr>
+<tr class="separator:a9639563464023238e4e44e180ea956c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb4cbb2a8080db8af4993f8c4769ff3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a3bb4cbb2a8080db8af4993f8c4769ff3">Add4ByteDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a3bb4cbb2a8080db8af4993f8c4769ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 4 bytes.  <a href="classt_n2k_msg.html#a3bb4cbb2a8080db8af4993f8c4769ff3">More...</a><br /></td></tr>
+<tr class="separator:a3bb4cbb2a8080db8af4993f8c4769ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a313ea1a5e176279aa5fd3e9de42f8555"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a313ea1a5e176279aa5fd3e9de42f8555">Add4ByteUDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a313ea1a5e176279aa5fd3e9de42f8555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 4 bytes.  <a href="classt_n2k_msg.html#a313ea1a5e176279aa5fd3e9de42f8555">More...</a><br /></td></tr>
+<tr class="separator:a313ea1a5e176279aa5fd3e9de42f8555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3d1166d76c0f87485e769ec6a50a73d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aa3d1166d76c0f87485e769ec6a50a73d">Add4ByteUInt</a> (uint32_t v)</td></tr>
+<tr class="memdesc:aa3d1166d76c0f87485e769ec6a50a73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add unsigned integer value to the buffer using 4 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#aa3d1166d76c0f87485e769ec6a50a73d">More...</a><br /></td></tr>
+<tr class="separator:aa3d1166d76c0f87485e769ec6a50a73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ecfc66cd25fa556482627c7aa3e28ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a6ecfc66cd25fa556482627c7aa3e28ac">Add8ByteDouble</a> (double v, double precision, double UndefVal=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
+<tr class="memdesc:a6ecfc66cd25fa556482627c7aa3e28ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add double value to the buffer using 8 bytes.  <a href="classt_n2k_msg.html#a6ecfc66cd25fa556482627c7aa3e28ac">More...</a><br /></td></tr>
+<tr class="separator:a6ecfc66cd25fa556482627c7aa3e28ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a667f843d629fb485389f40b8bb0bf20e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a667f843d629fb485389f40b8bb0bf20e">AddBuf</a> (const void *buf, size_t bufLen)</td></tr>
+<tr class="memdesc:a667f843d629fb485389f40b8bb0bf20e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add byte array to the buffer.  <a href="classt_n2k_msg.html#a667f843d629fb485389f40b8bb0bf20e">More...</a><br /></td></tr>
+<tr class="separator:a667f843d629fb485389f40b8bb0bf20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4768bbe782a0c9dcbd8e8f5afee3c69c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a> (unsigned char v)</td></tr>
+<tr class="memdesc:a4768bbe782a0c9dcbd8e8f5afee3c69c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add byte value to the buffer The byte will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">More...</a><br /></td></tr>
+<tr class="separator:a4768bbe782a0c9dcbd8e8f5afee3c69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4">AddFloat</a> (float v, float UndefVal=<a class="el" href="_n2k_msg_8h.html#ab95c498bff0bb973d532641ca216723e">N2kFloatNA</a>)</td></tr>
+<tr class="memdesc:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add float value to the buffer This method adds a float value to the message buffer using <a class="el" href="_n2k_msg_8h.html#aa5e10e7e62b233b41018ab9c3b907ef2">SetBufFloat</a> The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4">More...</a><br /></td></tr>
+<tr class="separator:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719ea5181274ce242045a46fe7a8af1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c">AddStr</a> (const char *str, int len, bool UsePgm=false)</td></tr>
+<tr class="memdesc:a719ea5181274ce242045a46fe7a8af1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add string value to the buffer The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c">More...</a><br /></td></tr>
+<tr class="separator:a719ea5181274ce242045a46fe7a8af1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602a0146af8d99e6c91fd8afd11ec245"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245">AddUInt64</a> (uint64_t v)</td></tr>
+<tr class="memdesc:a602a0146af8d99e6c91fd8afd11ec245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add unsigned integer value to the buffer using 8 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245">More...</a><br /></td></tr>
+<tr class="separator:a602a0146af8d99e6c91fd8afd11ec245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a760ba7be88a03a34cd138cac8853ccda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a760ba7be88a03a34cd138cac8853ccda">AddVarStr</a> (const char *str, bool UsePgm=false)</td></tr>
+<tr class="memdesc:a760ba7be88a03a34cd138cac8853ccda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add string value to the buffer This method determines the length of the string by it self using strlen(). The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a760ba7be88a03a34cd138cac8853ccda">More...</a><br /></td></tr>
+<tr class="separator:a760ba7be88a03a34cd138cac8853ccda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa531cb5b3e45a907f77fa3fd8236cc6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aa531cb5b3e45a907f77fa3fd8236cc6a">CheckDestination</a> () const</td></tr>
+<tr class="memdesc:aa531cb5b3e45a907f77fa3fd8236cc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validation check for the message destination We can send to specified destination only for PGN:s low byte=0.  <a href="classt_n2k_msg.html#aa531cb5b3e45a907f77fa3fd8236cc6a">More...</a><br /></td></tr>
+<tr class="separator:aa531cb5b3e45a907f77fa3fd8236cc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d5b6696759b5a0ae8f4788d4853f13"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a97d5b6696759b5a0ae8f4788d4853f13">Clear</a> ()</td></tr>
+<tr class="memdesc:a97d5b6696759b5a0ae8f4788d4853f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the content of the N2kMsg object The method sets the <a class="el" href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">PGN</a>, <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> and <a class="el" href="classt_n2k_msg.html#a97dc35c67607186b03e9633d592f497c">MsgTime</a> to zero.  <a href="classt_n2k_msg.html#a97d5b6696759b5a0ae8f4788d4853f13">More...</a><br /></td></tr>
+<tr class="separator:a97d5b6696759b5a0ae8f4788d4853f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b19da3f627e8598845f346465a79667"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a5b19da3f627e8598845f346465a79667">ForceSource</a> (unsigned char _Source) const</td></tr>
+<tr class="memdesc:a5b19da3f627e8598845f346465a79667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Source of the message.  <a href="classt_n2k_msg.html#a5b19da3f627e8598845f346465a79667">More...</a><br /></td></tr>
+<tr class="separator:a5b19da3f627e8598845f346465a79667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ef7899f712c5f03abd7450140931ea4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a2ef7899f712c5f03abd7450140931ea4">Get1ByteDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a2ef7899f712c5f03abd7450140931ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 1 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a2ef7899f712c5f03abd7450140931ea4">More...</a><br /></td></tr>
+<tr class="separator:a2ef7899f712c5f03abd7450140931ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93ce216b77dca9db564ae760246fcf2d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a93ce216b77dca9db564ae760246fcf2d">Get1ByteUDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a93ce216b77dca9db564ae760246fcf2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 1 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a93ce216b77dca9db564ae760246fcf2d">More...</a><br /></td></tr>
+<tr class="separator:a93ce216b77dca9db564ae760246fcf2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d1237035c9d1701626680c6aa5c6478"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a6d1237035c9d1701626680c6aa5c6478">Get2ByteDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a6d1237035c9d1701626680c6aa5c6478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a6d1237035c9d1701626680c6aa5c6478">More...</a><br /></td></tr>
+<tr class="separator:a6d1237035c9d1701626680c6aa5c6478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf238857c160c5e23515a96c3dd224c0"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#abf238857c160c5e23515a96c3dd224c0">Get2ByteInt</a> (int &amp;Index, int16_t def=0x7fff) const</td></tr>
+<tr class="memdesc:abf238857c160c5e23515a96c3dd224c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an integer from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#abf238857c160c5e23515a96c3dd224c0">More...</a><br /></td></tr>
+<tr class="separator:abf238857c160c5e23515a96c3dd224c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a737b5844984a825abd3c647523ba0309"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a737b5844984a825abd3c647523ba0309">Get2ByteUDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a737b5844984a825abd3c647523ba0309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a737b5844984a825abd3c647523ba0309">More...</a><br /></td></tr>
+<tr class="separator:a737b5844984a825abd3c647523ba0309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b70a278347ba8c3daeef370d8199d95"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a6b70a278347ba8c3daeef370d8199d95">Get2ByteUInt</a> (int &amp;Index, uint16_t def=0xffff) const</td></tr>
+<tr class="memdesc:a6b70a278347ba8c3daeef370d8199d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an unsigned integer from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a6b70a278347ba8c3daeef370d8199d95">More...</a><br /></td></tr>
+<tr class="separator:a6b70a278347ba8c3daeef370d8199d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26325870f789840a3389b27a5e20ae83"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a26325870f789840a3389b27a5e20ae83">Get3ByteDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a26325870f789840a3389b27a5e20ae83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 3 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a26325870f789840a3389b27a5e20ae83">More...</a><br /></td></tr>
+<tr class="separator:a26325870f789840a3389b27a5e20ae83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a930d8221da004a49f4eaa53e605bee36"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a930d8221da004a49f4eaa53e605bee36">Get3ByteUInt</a> (int &amp;Index, uint32_t def=0xffffffff) const</td></tr>
+<tr class="memdesc:a930d8221da004a49f4eaa53e605bee36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an unsigned integer from 3 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a930d8221da004a49f4eaa53e605bee36">More...</a><br /></td></tr>
+<tr class="separator:a930d8221da004a49f4eaa53e605bee36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26be9eb2922badc1a4f1ad0e6667934b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a26be9eb2922badc1a4f1ad0e6667934b">Get4ByteDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:a26be9eb2922badc1a4f1ad0e6667934b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#a26be9eb2922badc1a4f1ad0e6667934b">More...</a><br /></td></tr>
+<tr class="separator:a26be9eb2922badc1a4f1ad0e6667934b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbe3e2704190b3b63d02f08d97cbd549"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#adbe3e2704190b3b63d02f08d97cbd549">Get4ByteUDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:adbe3e2704190b3b63d02f08d97cbd549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#adbe3e2704190b3b63d02f08d97cbd549">More...</a><br /></td></tr>
+<tr class="separator:adbe3e2704190b3b63d02f08d97cbd549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0498c14a5abfc95f7458f64455b337d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#af0498c14a5abfc95f7458f64455b337d">Get4ByteUInt</a> (int &amp;Index, uint32_t def=0xffffffff) const</td></tr>
+<tr class="memdesc:af0498c14a5abfc95f7458f64455b337d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an unsigned integer from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#af0498c14a5abfc95f7458f64455b337d">More...</a><br /></td></tr>
+<tr class="separator:af0498c14a5abfc95f7458f64455b337d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca210dd49fe23545a03300cbc1446d7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aeca210dd49fe23545a03300cbc1446d7">Get8ByteDouble</a> (double precision, int &amp;Index, double def=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>) const</td></tr>
+<tr class="memdesc:aeca210dd49fe23545a03300cbc1446d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a double from 8 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used.  <a href="classt_n2k_msg.html#aeca210dd49fe23545a03300cbc1446d7">More...</a><br /></td></tr>
+<tr class="separator:aeca210dd49fe23545a03300cbc1446d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf50f95ea9e7376c4660ae3a43e4adcb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#acf50f95ea9e7376c4660ae3a43e4adcb">GetAvailableDataLength</a> () const</td></tr>
+<tr class="memdesc:acf50f95ea9e7376c4660ae3a43e4adcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Available Data Length The method calculates the available data length with <a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a> - <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>.  <a href="classt_n2k_msg.html#acf50f95ea9e7376c4660ae3a43e4adcb">More...</a><br /></td></tr>
+<tr class="separator:acf50f95ea9e7376c4660ae3a43e4adcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc4eca8ce76445a67f2fde0fa4d3cb77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#acc4eca8ce76445a67f2fde0fa4d3cb77">GetBuf</a> (void *buf, size_t Length, int &amp;Index) const</td></tr>
+<tr class="memdesc:acc4eca8ce76445a67f2fde0fa4d3cb77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a byte array out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#acc4eca8ce76445a67f2fde0fa4d3cb77">More...</a><br /></td></tr>
+<tr class="separator:acc4eca8ce76445a67f2fde0fa4d3cb77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacc7803b444c8cba9b08a335987f1171"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aacc7803b444c8cba9b08a335987f1171">GetByte</a> (int &amp;Index) const</td></tr>
+<tr class="memdesc:aacc7803b444c8cba9b08a335987f1171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value from a byte out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#aacc7803b444c8cba9b08a335987f1171">More...</a><br /></td></tr>
+<tr class="separator:aacc7803b444c8cba9b08a335987f1171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70132d59fe946911380ed599a5a3f74c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a70132d59fe946911380ed599a5a3f74c">GetFloat</a> (int &amp;Index, float def=<a class="el" href="_n2k_msg_8h.html#ab95c498bff0bb973d532641ca216723e">N2kFloatNA</a>) const</td></tr>
+<tr class="memdesc:a70132d59fe946911380ed599a5a3f74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a float out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a70132d59fe946911380ed599a5a3f74c">More...</a><br /></td></tr>
+<tr class="separator:a70132d59fe946911380ed599a5a3f74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36af763fa7d6d3929c9bbea63a6a95d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a36af763fa7d6d3929c9bbea63a6a95d4">GetRemainingDataLength</a> (int Index) const</td></tr>
+<tr class="memdesc:a36af763fa7d6d3929c9bbea63a6a95d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Remaining Data Length.  <a href="classt_n2k_msg.html#a36af763fa7d6d3929c9bbea63a6a95d4">More...</a><br /></td></tr>
+<tr class="separator:a36af763fa7d6d3929c9bbea63a6a95d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad862d140ed228b644bf33a46ddae3cbb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#ad862d140ed228b644bf33a46ddae3cbb">GetStr</a> (char *StrBuf, size_t Length, int &amp;Index) const</td></tr>
+<tr class="memdesc:ad862d140ed228b644bf33a46ddae3cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#ad862d140ed228b644bf33a46ddae3cbb">More...</a><br /></td></tr>
+<tr class="separator:ad862d140ed228b644bf33a46ddae3cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9024d8745b958feb6237325c50fc447b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a9024d8745b958feb6237325c50fc447b">GetStr</a> (size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &amp;Index) const</td></tr>
+<tr class="memdesc:a9024d8745b958feb6237325c50fc447b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a9024d8745b958feb6237325c50fc447b">More...</a><br /></td></tr>
+<tr class="separator:a9024d8745b958feb6237325c50fc447b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba773ee38ba53c94e0c9c25af80dd24a"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aba773ee38ba53c94e0c9c25af80dd24a">GetUInt64</a> (int &amp;Index, uint64_t def=0xffffffffffffffffULL) const</td></tr>
+<tr class="memdesc:aba773ee38ba53c94e0c9c25af80dd24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an unsigned integer from 8 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#aba773ee38ba53c94e0c9c25af80dd24a">More...</a><br /></td></tr>
+<tr class="separator:aba773ee38ba53c94e0c9c25af80dd24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa9d6983da6de6729568ab7f334d7ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a2fa9d6983da6de6729568ab7f334d7ac">GetVarStr</a> (size_t &amp;StrBufSize, char *StrBuf, int &amp;Index) const</td></tr>
+<tr class="memdesc:a2fa9d6983da6de6729568ab7f334d7ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> This method determines the length of the string by it self, using the byte (index -2) inside <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a2fa9d6983da6de6729568ab7f334d7ac">More...</a><br /></td></tr>
+<tr class="separator:a2fa9d6983da6de6729568ab7f334d7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade7516dd8d4b4d5978ceab5ee6215094"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#ade7516dd8d4b4d5978ceab5ee6215094">Init</a> (unsigned char _Priority, unsigned long _PGN, unsigned char _Source, unsigned char _Destination=0xff)</td></tr>
+<tr class="memdesc:ade7516dd8d4b4d5978ceab5ee6215094"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialisation of the N2kMsg object.  <a href="classt_n2k_msg.html#ade7516dd8d4b4d5978ceab5ee6215094">More...</a><br /></td></tr>
+<tr class="separator:ade7516dd8d4b4d5978ceab5ee6215094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40d6ece47119207a73ac233c32fbcb59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a40d6ece47119207a73ac233c32fbcb59">IsTPMessage</a> () const</td></tr>
+<tr class="memdesc:a40d6ece47119207a73ac233c32fbcb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if the message is flagged as MultiPacket Message.  <a href="classt_n2k_msg.html#a40d6ece47119207a73ac233c32fbcb59">More...</a><br /></td></tr>
+<tr class="separator:a40d6ece47119207a73ac233c32fbcb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c64609bc1a0f86ed083b59c1491747"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a43c64609bc1a0f86ed083b59c1491747">IsValid</a> () const</td></tr>
+<tr class="memdesc:a43c64609bc1a0f86ed083b59c1491747"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Message Meta Content is valid Basic check if the message object is valide, mean datalen &gt;0 and PGN != 0.  <a href="classt_n2k_msg.html#a43c64609bc1a0f86ed083b59c1491747">More...</a><br /></td></tr>
+<tr class="separator:a43c64609bc1a0f86ed083b59c1491747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e4eceb30573fc3baa75f0584c0a9001"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a5e4eceb30573fc3baa75f0584c0a9001">Print</a> (<a class="el" href="class_n2k_stream.html">N2kStream</a> *port, bool NoData=false) const</td></tr>
+<tr class="memdesc:a5e4eceb30573fc3baa75f0584c0a9001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print out the whole content of the N2kMsg Object.  <a href="classt_n2k_msg.html#a5e4eceb30573fc3baa75f0584c0a9001">More...</a><br /></td></tr>
+<tr class="separator:a5e4eceb30573fc3baa75f0584c0a9001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8b108b0c29bfd1673b49d83ea2e180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aeb8b108b0c29bfd1673b49d83ea2e180">SendInActisenseFormat</a> (<a class="el" href="class_n2k_stream.html">N2kStream</a> *port) const</td></tr>
+<tr class="memdesc:aeb8b108b0c29bfd1673b49d83ea2e180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print out the whole content of the N2kMsg Object using the Actisense Format.  <a href="classt_n2k_msg.html#aeb8b108b0c29bfd1673b49d83ea2e180">More...</a><br /></td></tr>
+<tr class="separator:aeb8b108b0c29bfd1673b49d83ea2e180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551341e6028b4cd304b581129289b634"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a551341e6028b4cd304b581129289b634">Set2ByteUInt</a> (uint16_t v, int &amp;Index)</td></tr>
+<tr class="memdesc:a551341e6028b4cd304b581129289b634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a 2byte unsigned integer in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a551341e6028b4cd304b581129289b634">More...</a><br /></td></tr>
+<tr class="separator:a551341e6028b4cd304b581129289b634"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d53ee8aad108632f3b66cbbd7b36ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a91d53ee8aad108632f3b66cbbd7b36ab">SetByte</a> (uint8_t v, int &amp;Index)</td></tr>
+<tr class="memdesc:a91d53ee8aad108632f3b66cbbd7b36ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a byte in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a91d53ee8aad108632f3b66cbbd7b36ab">More...</a><br /></td></tr>
+<tr class="separator:a91d53ee8aad108632f3b66cbbd7b36ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d0f0f5c4976c5e0bdb20c867fce78b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#ae0d0f0f5c4976c5e0bdb20c867fce78b">SetIsTPMessage</a> (bool tp=true)</td></tr>
+<tr class="memdesc:ae0d0f0f5c4976c5e0bdb20c867fce78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the MultiPacket Message status.  <a href="classt_n2k_msg.html#ae0d0f0f5c4976c5e0bdb20c867fce78b">More...</a><br /></td></tr>
+<tr class="separator:ae0d0f0f5c4976c5e0bdb20c867fce78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b36bf88a96fcad78cdd07eed95e517"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aa7b36bf88a96fcad78cdd07eed95e517">SetPGN</a> (unsigned long _PGN)</td></tr>
+<tr class="memdesc:aa7b36bf88a96fcad78cdd07eed95e517"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Parameter Group Number of the message *.  <a href="classt_n2k_msg.html#aa7b36bf88a96fcad78cdd07eed95e517">More...</a><br /></td></tr>
+<tr class="separator:aa7b36bf88a96fcad78cdd07eed95e517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a01ad108e237eb28230b45028a2fbc924"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> [<a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a>]</td></tr>
+<tr class="memdesc:a01ad108e237eb28230b45028a2fbc924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte array which carries oll the data of the NMEA2000 message.  <a href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">More...</a><br /></td></tr>
+<tr class="separator:a01ad108e237eb28230b45028a2fbc924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af304b7211179a8216138fe61a1e6be9f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a></td></tr>
+<tr class="memdesc:af304b7211179a8216138fe61a1e6be9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes already stored in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">tN2kMsg::Data</a> of this message.  <a href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">More...</a><br /></td></tr>
+<tr class="separator:af304b7211179a8216138fe61a1e6be9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaff84ef0f9c513907d12dd4989a7252"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#afaff84ef0f9c513907d12dd4989a7252">Destination</a></td></tr>
+<tr class="memdesc:afaff84ef0f9c513907d12dd4989a7252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination of the NMEA2000 message.  <a href="classt_n2k_msg.html#afaff84ef0f9c513907d12dd4989a7252">More...</a><br /></td></tr>
+<tr class="separator:afaff84ef0f9c513907d12dd4989a7252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97dc35c67607186b03e9633d592f497c"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a97dc35c67607186b03e9633d592f497c">MsgTime</a></td></tr>
+<tr class="memdesc:a97dc35c67607186b03e9633d592f497c"><td class="mdescLeft">&#160;</td><td class="mdescRight">timestamp (ms since start [max 49days]) of the NMEA2000 message  <a href="classt_n2k_msg.html#a97dc35c67607186b03e9633d592f497c">More...</a><br /></td></tr>
+<tr class="separator:a97dc35c67607186b03e9633d592f497c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af53cd136e372778a85807e82f7b61238"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">PGN</a></td></tr>
+<tr class="memdesc:af53cd136e372778a85807e82f7b61238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter Group Number (PGN) of the NMEA2000 message.  <a href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">More...</a><br /></td></tr>
+<tr class="separator:af53cd136e372778a85807e82f7b61238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7645bd9aec82bc0263d421cb307852e4"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a7645bd9aec82bc0263d421cb307852e4">Priority</a></td></tr>
+<tr class="memdesc:a7645bd9aec82bc0263d421cb307852e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority of the NMEA2000 message.  <a href="classt_n2k_msg.html#a7645bd9aec82bc0263d421cb307852e4">More...</a><br /></td></tr>
+<tr class="separator:a7645bd9aec82bc0263d421cb307852e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e9f41914d2a260868981e3cd6d4fc37"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a6e9f41914d2a260868981e3cd6d4fc37">Source</a></td></tr>
+<tr class="memdesc:a6e9f41914d2a260868981e3cd6d4fc37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source of the NMEA2000 message.  <a href="classt_n2k_msg.html#a6e9f41914d2a260868981e3cd6d4fc37">More...</a><br /></td></tr>
+<tr class="separator:a6e9f41914d2a260868981e3cd6d4fc37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a6f739c31a9e35c0b08fc7596cc9b2751"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a> =223</td></tr>
+<tr class="memdesc:a6f739c31a9e35c0b08fc7596cc9b2751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of bytes that can be stored in the data buffer With fast packet the first frame can have 6 byte and rest 31 frames 7 bytes.  <a href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">More...</a><br /></td></tr>
+<tr class="separator:a6f739c31a9e35c0b08fc7596cc9b2751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a47b3afdc99a5dd05f360298a2cd54e8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a47b3afdc99a5dd05f360298a2cd54e8c">ResetData</a> ()</td></tr>
+<tr class="memdesc:a47b3afdc99a5dd05f360298a2cd54e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills the whole data buffer with 0xff.  <a href="classt_n2k_msg.html#a47b3afdc99a5dd05f360298a2cd54e8c">More...</a><br /></td></tr>
+<tr class="separator:a47b3afdc99a5dd05f360298a2cd54e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aa6911dc6de5d47b13d9dc7b8bf900519"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#aa6911dc6de5d47b13d9dc7b8bf900519">TPMessage</a></td></tr>
+<tr class="memdesc:aa6911dc6de5d47b13d9dc7b8bf900519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message is a MultiPacket Message.  <a href="classt_n2k_msg.html#aa6911dc6de5d47b13d9dc7b8bf900519">More...</a><br /></td></tr>
+<tr class="separator:aa6911dc6de5d47b13d9dc7b8bf900519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >This class contains all the data of an NMEA2000 message. </p>
+<p >The class <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> holds all necessary data of an NMEA2000 message. An object of this class will be passed to the SetN2kPGNxxxx function and there it is "filled" with the corresponding data. To extract data out of a NMEA2000 message, the ParseN2kPGNxxxx functions can be used.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00655">655</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ae31f3621593999fdbf6c4e243f2fb89d" name="ae31f3621593999fdbf6c4e243f2fb89d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae31f3621593999fdbf6c4e243f2fb89d">&#9670;&nbsp;</a></span>tN2kMsg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tN2kMsg::tN2kMsg </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Source</em> = <code>15</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Priority</em> = <code>6</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>_PGN</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>_DataLen</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new t N2k Msg object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Source</td><td>Source address of the NMEA2000 device sending this message [range 0 .. 251] default = 15 </td></tr>
+    <tr><td class="paramname">_Priority</td><td>Priority of the Message [0 .. 7] default = 6 </td></tr>
+    <tr><td class="paramname">_PGN</td><td>Parameter Group Number [decimal] </td></tr>
+    <tr><td class="paramname">_DataLen</td><td>Length off the data field </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00059">59</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5999e88e3aa3c175cd388ee286fd5035" name="a5999e88e3aa3c175cd388ee286fd5035"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5999e88e3aa3c175cd388ee286fd5035">&#9670;&nbsp;</a></span>Add1ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add1ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 1 byte. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00164">164</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4fa27df1f03b5d1c1fcd314427deac33" name="a4fa27df1f03b5d1c1fcd314427deac33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fa27df1f03b5d1c1fcd314427deac33">&#9670;&nbsp;</a></span>Add1ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add1ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 1 byte. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00173">173</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4e94130675970b0aeb5a4d7cc472cd24" name="a4e94130675970b0aeb5a4d7cc472cd24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e94130675970b0aeb5a4d7cc472cd24">&#9670;&nbsp;</a></span>Add2ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add2ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 2 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00146">146</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a362244b6bd8108b23901f0b70fec8817" name="a362244b6bd8108b23901f0b70fec8817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a362244b6bd8108b23901f0b70fec8817">&#9670;&nbsp;</a></span>Add2ByteInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add2ByteInt </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add integer value to the buffer using 2 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00182">182</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0467dec57bd94c5ea60898da4ea87e0f" name="a0467dec57bd94c5ea60898da4ea87e0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0467dec57bd94c5ea60898da4ea87e0f">&#9670;&nbsp;</a></span>Add2ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add2ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 2 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00155">155</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1d0a4f2d1770d55028fc56bb85190318" name="a1d0a4f2d1770d55028fc56bb85190318"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d0a4f2d1770d55028fc56bb85190318">&#9670;&nbsp;</a></span>Add2ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add2ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add unsigned integer value to the buffer using 2 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00187">187</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3ef6760d92a5d7898745479b421ed8df" name="a3ef6760d92a5d7898745479b421ed8df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef6760d92a5d7898745479b421ed8df">&#9670;&nbsp;</a></span>Add3ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add3ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 3 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00137">137</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9639563464023238e4e44e180ea956c3" name="a9639563464023238e4e44e180ea956c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9639563464023238e4e44e180ea956c3">&#9670;&nbsp;</a></span>Add3ByteInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add3ByteInt </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add integer value to the buffer using 3 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00192">192</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3bb4cbb2a8080db8af4993f8c4769ff3" name="a3bb4cbb2a8080db8af4993f8c4769ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bb4cbb2a8080db8af4993f8c4769ff3">&#9670;&nbsp;</a></span>Add4ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add4ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 4 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00119">119</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a313ea1a5e176279aa5fd3e9de42f8555" name="a313ea1a5e176279aa5fd3e9de42f8555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a313ea1a5e176279aa5fd3e9de42f8555">&#9670;&nbsp;</a></span>Add4ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add4ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 4 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00128">128</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa3d1166d76c0f87485e769ec6a50a73d" name="aa3d1166d76c0f87485e769ec6a50a73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3d1166d76c0f87485e769ec6a50a73d">&#9670;&nbsp;</a></span>Add4ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add4ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add unsigned integer value to the buffer using 4 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00197">197</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6ecfc66cd25fa556482627c7aa3e28ac" name="a6ecfc66cd25fa556482627c7aa3e28ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ecfc66cd25fa556482627c7aa3e28ac">&#9670;&nbsp;</a></span>Add8ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Add8ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add double value to the buffer using 8 bytes. </p>
+<p >The fixed point integer mechanism is used. The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00109">109</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a667f843d629fb485389f40b8bb0bf20e" name="a667f843d629fb485389f40b8bb0bf20e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a667f843d629fb485389f40b8bb0bf20e">&#9670;&nbsp;</a></span>AddBuf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddBuf </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bufLen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add byte array to the buffer. </p>
+<p >The buffer will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf</td><td>Pointer to the byte array </td></tr>
+    <tr><td class="paramname">bufLen</td><td>Number of bytes to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00225">225</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4768bbe782a0c9dcbd8e8f5afee3c69c" name="a4768bbe782a0c9dcbd8e8f5afee3c69c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4768bbe782a0c9dcbd8e8f5afee3c69c">&#9670;&nbsp;</a></span>AddByte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddByte </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add byte value to the buffer The byte will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00207">207</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a15e6ff99aa27d4ef355cb1248c2402d4" name="a15e6ff99aa27d4ef355cb1248c2402d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15e6ff99aa27d4ef355cb1248c2402d4">&#9670;&nbsp;</a></span>AddFloat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddFloat </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>UndefVal</em> = <code><a class="el" href="_n2k_msg_8h.html#ab95c498bff0bb973d532641ca216723e">N2kFloatNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add float value to the buffer This method adds a float value to the message buffer using <a class="el" href="_n2k_msg_8h.html#aa5e10e7e62b233b41018ab9c3b907ef2">SetBufFloat</a> The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+    <tr><td class="paramname">UndefVal</td><td>"not available" value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00100">100</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a719ea5181274ce242045a46fe7a8af1c" name="a719ea5181274ce242045a46fe7a8af1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a719ea5181274ce242045a46fe7a8af1c">&#9670;&nbsp;</a></span>AddStr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddStr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>UsePgm</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add string value to the buffer The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String as pointer to a char array </td></tr>
+    <tr><td class="paramname">len</td><td>Length of the string </td></tr>
+    <tr><td class="paramname">UsePgm</td><td>{bool} use the pgm_read_byte function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00212">212</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a602a0146af8d99e6c91fd8afd11ec245" name="a602a0146af8d99e6c91fd8afd11ec245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a602a0146af8d99e6c91fd8afd11ec245">&#9670;&nbsp;</a></span>AddUInt64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddUInt64 </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add unsigned integer value to the buffer using 8 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>value to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00202">202</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a760ba7be88a03a34cd138cac8853ccda" name="a760ba7be88a03a34cd138cac8853ccda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a760ba7be88a03a34cd138cac8853ccda">&#9670;&nbsp;</a></span>AddVarStr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::AddVarStr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>UsePgm</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add string value to the buffer This method determines the length of the string by it self using strlen(). The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String as pointer to a char array </td></tr>
+    <tr><td class="paramname">UsePgm</td><td>{bool} use the pgm_read_byte function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00217">217</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa531cb5b3e45a907f77fa3fd8236cc6a" name="aa531cb5b3e45a907f77fa3fd8236cc6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa531cb5b3e45a907f77fa3fd8236cc6a">&#9670;&nbsp;</a></span>CheckDestination()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::CheckDestination </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Validation check for the message destination We can send to specified destination only for PGN:s low byte=0. </p>
+<ul>
+<li>PGN 060928 (0xEE00 ) ISO Address Claim</li>
+<li>PGN 059392 (0xE800) - ISO Acknowledgment</li>
+<li>... </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00734">734</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a97d5b6696759b5a0ae8f4788d4853f13" name="a97d5b6696759b5a0ae8f4788d4853f13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97d5b6696759b5a0ae8f4788d4853f13">&#9670;&nbsp;</a></span>Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clears the content of the N2kMsg object The method sets the <a class="el" href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">PGN</a>, <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> and <a class="el" href="classt_n2k_msg.html#a97dc35c67607186b03e9633d592f497c">MsgTime</a> to zero. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00093">93</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5b19da3f627e8598845f346465a79667" name="a5b19da3f627e8598845f346465a79667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b19da3f627e8598845f346465a79667">&#9670;&nbsp;</a></span>ForceSource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::ForceSource </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Source</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Source of the message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Source</td><td>Source address of the NMEA2000 device sending this message [range 0 .. 251] default = 15 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00725">725</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a2ef7899f712c5f03abd7450140931ea4" name="a2ef7899f712c5f03abd7450140931ea4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ef7899f712c5f03abd7450140931ea4">&#9670;&nbsp;</a></span>Get1ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get1ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 1 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00279">279</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a93ce216b77dca9db564ae760246fcf2d" name="a93ce216b77dca9db564ae760246fcf2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93ce216b77dca9db564ae760246fcf2d">&#9670;&nbsp;</a></span>Get1ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get1ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 1 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00286">286</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6d1237035c9d1701626680c6aa5c6478" name="a6d1237035c9d1701626680c6aa5c6478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d1237035c9d1701626680c6aa5c6478">&#9670;&nbsp;</a></span>Get2ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get2ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00293">293</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abf238857c160c5e23515a96c3dd224c0" name="abf238857c160c5e23515a96c3dd224c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf238857c160c5e23515a96c3dd224c0">&#9670;&nbsp;</a></span>Get2ByteInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t tN2kMsg::Get2ByteInt </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>def</em> = <code>0x7fff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an integer from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00244">244</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a737b5844984a825abd3c647523ba0309" name="a737b5844984a825abd3c647523ba0309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a737b5844984a825abd3c647523ba0309">&#9670;&nbsp;</a></span>Get2ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get2ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00300">300</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6b70a278347ba8c3daeef370d8199d95" name="a6b70a278347ba8c3daeef370d8199d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b70a278347ba8c3daeef370d8199d95">&#9670;&nbsp;</a></span>Get2ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tN2kMsg::Get2ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>def</em> = <code>0xffff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an unsigned integer from 2 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00251">251</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a26325870f789840a3389b27a5e20ae83" name="a26325870f789840a3389b27a5e20ae83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26325870f789840a3389b27a5e20ae83">&#9670;&nbsp;</a></span>Get3ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get3ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 3 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00307">307</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a930d8221da004a49f4eaa53e605bee36" name="a930d8221da004a49f4eaa53e605bee36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a930d8221da004a49f4eaa53e605bee36">&#9670;&nbsp;</a></span>Get3ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tN2kMsg::Get3ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>def</em> = <code>0xffffffff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an unsigned integer from 3 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00258">258</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a26be9eb2922badc1a4f1ad0e6667934b" name="a26be9eb2922badc1a4f1ad0e6667934b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26be9eb2922badc1a4f1ad0e6667934b">&#9670;&nbsp;</a></span>Get4ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get4ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00314">314</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adbe3e2704190b3b63d02f08d97cbd549" name="adbe3e2704190b3b63d02f08d97cbd549"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbe3e2704190b3b63d02f08d97cbd549">&#9670;&nbsp;</a></span>Get4ByteUDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get4ByteUDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00321">321</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af0498c14a5abfc95f7458f64455b337d" name="af0498c14a5abfc95f7458f64455b337d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0498c14a5abfc95f7458f64455b337d">&#9670;&nbsp;</a></span>Get4ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tN2kMsg::Get4ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>def</em> = <code>0xffffffff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an unsigned integer from 4 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00265">265</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aeca210dd49fe23545a03300cbc1446d7" name="aeca210dd49fe23545a03300cbc1446d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeca210dd49fe23545a03300cbc1446d7">&#9670;&nbsp;</a></span>Get8ByteDouble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tN2kMsg::Get8ByteDouble </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>precision</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a double from 8 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> The fixed point integer mechanism is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">precision</td><td>the value is rounded to the given precision (e.g. 0.01) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00328">328</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acf50f95ea9e7376c4660ae3a43e4adcb" name="acf50f95ea9e7376c4660ae3a43e4adcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf50f95ea9e7376c4660ae3a43e4adcb">&#9670;&nbsp;</a></span>GetAvailableDataLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tN2kMsg::GetAvailableDataLength </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Available Data Length The method calculates the available data length with <a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a> - <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>int Available Data Length </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00778">778</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="acc4eca8ce76445a67f2fde0fa4d3cb77" name="acc4eca8ce76445a67f2fde0fa4d3cb77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc4eca8ce76445a67f2fde0fa4d3cb77">&#9670;&nbsp;</a></span>GetBuf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::GetBuf </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>Length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a byte array out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf</td><td>Pointer to byte array </td></tr>
+    <tr><td class="paramname">Length</td><td>Length of byte array to be extracted </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true data has been extracted </dd>
+<dd>
+false not successful, no data available </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00413">413</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aacc7803b444c8cba9b08a335987f1171" name="aacc7803b444c8cba9b08a335987f1171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacc7803b444c8cba9b08a335987f1171">&#9670;&nbsp;</a></span>GetByte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tN2kMsg::GetByte </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the value from a byte out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>value represented in the byte array </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00237">237</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a70132d59fe946911380ed599a5a3f74c" name="a70132d59fe946911380ed599a5a3f74c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70132d59fe946911380ed599a5a3f74c">&#9670;&nbsp;</a></span>GetFloat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float tN2kMsg::GetFloat </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>def</em> = <code><a class="el" href="_n2k_msg_8h.html#ab95c498bff0bb973d532641ca216723e">N2kFloatNA</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a float out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00335">335</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a36af763fa7d6d3929c9bbea63a6a95d4" name="a36af763fa7d6d3929c9bbea63a6a95d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36af763fa7d6d3929c9bbea63a6a95d4">&#9670;&nbsp;</a></span>GetRemainingDataLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tN2kMsg::GetRemainingDataLength </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>Index</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Remaining Data Length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>Position inside the buffer</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int - Remaining Data length </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00769">769</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="ad862d140ed228b644bf33a46ddae3cbb" name="ad862d140ed228b644bf33a46ddae3cbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad862d140ed228b644bf33a46ddae3cbb">&#9670;&nbsp;</a></span>GetStr() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::GetStr </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>StrBuf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>Length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">StrBuf</td><td>Pointer to a char array as string </td></tr>
+    <tr><td class="paramname">Length</td><td>Length of the string </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true String data has been extracted </dd>
+<dd>
+false not successful, no string data available </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00342">342</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9024d8745b958feb6237325c50fc447b" name="a9024d8745b958feb6237325c50fc447b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9024d8745b958feb6237325c50fc447b">&#9670;&nbsp;</a></span>GetStr() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::GetStr </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>StrBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>StrBuf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>Length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>nulChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">StrBufSize</td><td>Size of String Buffer </td></tr>
+    <tr><td class="paramname">StrBuf</td><td>Pointer to a char array as string </td></tr>
+    <tr><td class="paramname">Length</td><td>Length of the string </td></tr>
+    <tr><td class="paramname">nulChar</td><td>used "null Char" in the message (e.g. '@' in AIS) </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true String data has been extracted </dd>
+<dd>
+false not successful, no string data available </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00368">368</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aba773ee38ba53c94e0c9c25af80dd24a" name="aba773ee38ba53c94e0c9c25af80dd24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba773ee38ba53c94e0c9c25af80dd24a">&#9670;&nbsp;</a></span>GetUInt64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t tN2kMsg::GetUInt64 </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>def</em> = <code>0xffffffffffffffffULL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get an unsigned integer from 8 bytes out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+    <tr><td class="paramname">def</td><td>default value when data is unavailable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>integer value </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00272">272</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2fa9d6983da6de6729568ab7f334d7ac" name="a2fa9d6983da6de6729568ab7f334d7ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa9d6983da6de6729568ab7f334d7ac">&#9670;&nbsp;</a></span>GetVarStr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::GetVarStr </td>
+          <td>(</td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>StrBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>StrBuf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a string out of <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> This method determines the length of the string by it self, using the byte (index -2) inside <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">StrBufSize</td><td>Size of String Buffer </td></tr>
+    <tr><td class="paramname">StrBuf</td><td>Pointer to a char array as string </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true String data has been extracted </dd>
+<dd>
+false not successful, no string data available </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00399">399</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ade7516dd8d4b4d5978ceab5ee6215094" name="ade7516dd8d4b4d5978ceab5ee6215094"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade7516dd8d4b4d5978ceab5ee6215094">&#9670;&nbsp;</a></span>Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Init </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>_PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_Destination</em> = <code>0xff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialisation of the N2kMsg object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Priority</td><td>Priority of the Message [0 .. 7] </td></tr>
+    <tr><td class="paramname">_PGN</td><td>Parameter Group Number [decimal] </td></tr>
+    <tr><td class="paramname">_Source</td><td>Source address of the NMEA2000 device sending this message [range 0 .. 251] </td></tr>
+    <tr><td class="paramname">_Destination</td><td>Destination address of the NMEA2000 device sending this message [range 0 .. 251] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00074">74</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a40d6ece47119207a73ac233c32fbcb59" name="a40d6ece47119207a73ac233c32fbcb59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40d6ece47119207a73ac233c32fbcb59">&#9670;&nbsp;</a></span>IsTPMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::IsTPMessage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if the message is flagged as MultiPacket Message. </p>
+<dl class="section return"><dt>Returns</dt><dd>true Message is a MultiPacket Message </dd>
+<dd>
+false Message is not a MultiPacket Message </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00699">699</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a43c64609bc1a0f86ed083b59c1491747" name="a43c64609bc1a0f86ed083b59c1491747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c64609bc1a0f86ed083b59c1491747">&#9670;&nbsp;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::IsValid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the Message Meta Content is valid Basic check if the message object is valide, mean datalen &gt;0 and PGN != 0. </p>
+<dl class="section return"><dt>Returns</dt><dd>true message is valide </dd>
+<dd>
+false message is not valide </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00760">760</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a5e4eceb30573fc3baa75f0584c0a9001" name="a5e4eceb30573fc3baa75f0584c0a9001"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e4eceb30573fc3baa75f0584c0a9001">&#9670;&nbsp;</a></span>Print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::Print </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_n2k_stream.html">N2kStream</a> *&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>NoData</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print out the whole content of the N2kMsg Object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>port where to stream, see <a class="el" href="class_n2k_stream.html">N2kStream</a> </td></tr>
+    <tr><td class="paramname">NoData</td><td>if true the data buffer will not be printed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00807">807</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a47b3afdc99a5dd05f360298a2cd54e8c" name="a47b3afdc99a5dd05f360298a2cd54e8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47b3afdc99a5dd05f360298a2cd54e8c">&#9670;&nbsp;</a></span>ResetData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::ResetData </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fills the whole data buffer with 0xff. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00086">86</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aeb8b108b0c29bfd1673b49d83ea2e180" name="aeb8b108b0c29bfd1673b49d83ea2e180"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb8b108b0c29bfd1673b49d83ea2e180">&#9670;&nbsp;</a></span>SendInActisenseFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::SendInActisenseFormat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_n2k_stream.html">N2kStream</a> *&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print out the whole content of the N2kMsg Object using the Actisense Format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>port where to stream, see <a class="el" href="class_n2k_stream.html">N2kStream</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00836">836</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a551341e6028b4cd304b581129289b634" name="a551341e6028b4cd304b581129289b634"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a551341e6028b4cd304b581129289b634">&#9670;&nbsp;</a></span>Set2ByteUInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::Set2ByteUInt </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a 2byte unsigned integer in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Value to add </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true success </dd>
+<dd>
+false Index is grater then DataLen </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00440">440</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a91d53ee8aad108632f3b66cbbd7b36ab" name="a91d53ee8aad108632f3b66cbbd7b36ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d53ee8aad108632f3b66cbbd7b36ab">&#9670;&nbsp;</a></span>SetByte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::SetByte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a byte in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Value to add </td></tr>
+    <tr><td class="paramname">Index</td><td>position inside the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>, getting incremented according to the number of bytes extracted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true success </dd>
+<dd>
+false Index is grater then DataLen </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00430">430</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae0d0f0f5c4976c5e0bdb20c867fce78b" name="ae0d0f0f5c4976c5e0bdb20c867fce78b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d0f0f5c4976c5e0bdb20c867fce78b">&#9670;&nbsp;</a></span>SetIsTPMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::SetIsTPMessage </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>tp</em> = <code>true</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the MultiPacket Message status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tp</td><td>{bool} true if message is an MultiPacket Message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00692">692</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="aa7b36bf88a96fcad78cdd07eed95e517" name="aa7b36bf88a96fcad78cdd07eed95e517"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7b36bf88a96fcad78cdd07eed95e517">&#9670;&nbsp;</a></span>SetPGN()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kMsg::SetPGN </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>_PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Parameter Group Number of the message *. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_PGN</td><td>Parameter Group Number [decimal] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8cpp_source.html#l00067">67</a> of file <a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a01ad108e237eb28230b45028a2fbc924" name="a01ad108e237eb28230b45028a2fbc924"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01ad108e237eb28230b45028a2fbc924">&#9670;&nbsp;</a></span>Data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tN2kMsg::Data[<a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Byte array which carries oll the data of the NMEA2000 message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00675">675</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="af304b7211179a8216138fe61a1e6be9f" name="af304b7211179a8216138fe61a1e6be9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af304b7211179a8216138fe61a1e6be9f">&#9670;&nbsp;</a></span>DataLen</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tN2kMsg::DataLen</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of bytes already stored in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">tN2kMsg::Data</a> of this message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00673">673</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="afaff84ef0f9c513907d12dd4989a7252" name="afaff84ef0f9c513907d12dd4989a7252"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaff84ef0f9c513907d12dd4989a7252">&#9670;&nbsp;</a></span>Destination</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tN2kMsg::Destination</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destination of the NMEA2000 message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00671">671</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a6f739c31a9e35c0b08fc7596cc9b2751" name="a6f739c31a9e35c0b08fc7596cc9b2751"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f739c31a9e35c0b08fc7596cc9b2751">&#9670;&nbsp;</a></span>MaxDataLen</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int tN2kMsg::MaxDataLen =223</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum number of bytes that can be stored in the data buffer With fast packet the first frame can have 6 byte and rest 31 frames 7 bytes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00663">663</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a97dc35c67607186b03e9633d592f497c" name="a97dc35c67607186b03e9633d592f497c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97dc35c67607186b03e9633d592f497c">&#9670;&nbsp;</a></span>MsgTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kMsg::MsgTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>timestamp (ms since start [max 49days]) of the NMEA2000 message </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00677">677</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="af53cd136e372778a85807e82f7b61238" name="af53cd136e372778a85807e82f7b61238"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af53cd136e372778a85807e82f7b61238">&#9670;&nbsp;</a></span>PGN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kMsg::PGN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parameter Group Number (PGN) of the NMEA2000 message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00667">667</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a7645bd9aec82bc0263d421cb307852e4" name="a7645bd9aec82bc0263d421cb307852e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7645bd9aec82bc0263d421cb307852e4">&#9670;&nbsp;</a></span>Priority</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tN2kMsg::Priority</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Priority of the NMEA2000 message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00665">665</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="a6e9f41914d2a260868981e3cd6d4fc37" name="a6e9f41914d2a260868981e3cd6d4fc37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e9f41914d2a260868981e3cd6d4fc37">&#9670;&nbsp;</a></span>Source</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tN2kMsg::Source</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Source of the NMEA2000 message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00669">669</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<a id="aa6911dc6de5d47b13d9dc7b8bf900519" name="aa6911dc6de5d47b13d9dc7b8bf900519"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6911dc6de5d47b13d9dc7b8bf900519">&#9670;&nbsp;</a></span>TPMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kMsg::TPMessage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Message is a MultiPacket Message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00685">685</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a></li>
+<li><a class="el" href="_n2k_msg_8cpp_source.html">N2kMsg.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,2656 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: NMEA2000.cpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n_m_e_a2000_8cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">NMEA2000.cpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_n2k_def_8h_source.html">N2kDef.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_n2k_group_function_default_handlers_8h_source.html">N2kGroupFunctionDefaultHandlers.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for NMEA2000.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n_m_e_a2000_8cpp__incl.png" border="0" usemap="#a_n_m_e_a2000_8cpp" alt=""/></div>
+<map name="a_n_m_e_a2000_8cpp" id="a_n_m_e_a2000_8cpp">
+<area shape="rect" title=" " alt="" coords="567,5,679,32"/>
+<area shape="rect" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="422,80,521,107"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="575,379,651,405"/>
+<area shape="rect" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes." alt="" coords="113,80,347,107"/>
+<area shape="rect" title=" " alt="" coords="661,80,725,107"/>
+<area shape="rect" title=" " alt="" coords="749,80,812,107"/>
+<area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="5,229,196,256"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="437,304,535,331"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="377,229,459,256"/>
+<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="This File contains a CAN message helper class." alt="" coords="325,155,434,181"/>
+<area shape="rect" href="_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="661,304,751,331"/>
+<area shape="rect" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="159,155,301,181"/>
+<area shape="rect" title=" " alt="" coords="497,453,561,480"/>
+<area shape="rect" title=" " alt="" coords="483,379,551,405"/>
+<area shape="rect" title=" " alt="" coords="675,379,737,405"/>
+<area shape="rect" title=" " alt="" coords="221,229,282,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n_m_e_a2000_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a16a6a6c6fab609e9bee58c1e9ce7708a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a16a6a6c6fab609e9bee58c1e9ce7708a">DbgPrintBuf</a>(len,  buf,  addln)</td></tr>
+<tr class="separator:a16a6a6c6fab609e9bee58c1e9ce7708a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac1db96ae530d789edb207be0aee572"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#aaac1db96ae530d789edb207be0aee572">DebugStream</a>&#160;&#160;&#160;Serial</td></tr>
+<tr class="separator:aaac1db96ae530d789edb207be0aee572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a0cea72fa382c7c8d67cfe8e6bfcb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a31a0cea72fa382c7c8d67cfe8e6bfcb2">MAX_PGNS_IN_LIST</a>&#160;&#160;&#160;74</td></tr>
+<tr class="separator:a31a0cea72fa382c7c8d67cfe8e6bfcb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e94cd638000d4709484a37571247ec4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a7e94cd638000d4709484a37571247ec4">MaxHeartbeatInterval</a>&#160;&#160;&#160;655320UL</td></tr>
+<tr class="memdesc:a7e94cd638000d4709484a37571247ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum value for the Iso Heartbeat interval in ms.  <a href="_n_m_e_a2000_8cpp.html#a7e94cd638000d4709484a37571247ec4">More...</a><br /></td></tr>
+<tr class="separator:a7e94cd638000d4709484a37571247ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab99f46b1e011a09bc53eaf77f8cb8f10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab99f46b1e011a09bc53eaf77f8cb8f10">N2kAddressClaimTimeout</a>&#160;&#160;&#160;250</td></tr>
+<tr class="memdesc:ab99f46b1e011a09bc53eaf77f8cb8f10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value for the ISO Address Claim in ms.  <a href="_n_m_e_a2000_8cpp.html#ab99f46b1e011a09bc53eaf77f8cb8f10">More...</a><br /></td></tr>
+<tr class="separator:ab99f46b1e011a09bc53eaf77f8cb8f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3965134bdd14b3b2dd9d3ac1c4f6f186"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a3965134bdd14b3b2dd9d3ac1c4f6f186">N2kDbg</a>(fmt,  args...)</td></tr>
+<tr class="separator:a3965134bdd14b3b2dd9d3ac1c4f6f186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7210fe52ee3abc2971fdea570b5c0d35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a7210fe52ee3abc2971fdea570b5c0d35">N2kDbgln</a>(fmt,  args...)</td></tr>
+<tr class="separator:a7210fe52ee3abc2971fdea570b5c0d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11300418e91aa9de53a49af0ca308d2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a11300418e91aa9de53a49af0ca308d2d">N2kFrameErrDbg</a>(fmt,  args...)</td></tr>
+<tr class="separator:a11300418e91aa9de53a49af0ca308d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07899f929f5af61e8533396e76c3397a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a07899f929f5af61e8533396e76c3397a">N2kFrameErrDbgln</a>(fmt,  args...)</td></tr>
+<tr class="separator:a07899f929f5af61e8533396e76c3397a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9574ff7cf6e6e361b5ab8be4e8ade47f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a9574ff7cf6e6e361b5ab8be4e8ade47f">N2kFrameErrDbgStart</a>(fmt,  args...)</td></tr>
+<tr class="separator:a9574ff7cf6e6e361b5ab8be4e8ade47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7be46dbd290e7b684bd2a038369c7807"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a7be46dbd290e7b684bd2a038369c7807">N2kFrameInDbg</a>(fmt,  args...)</td></tr>
+<tr class="separator:a7be46dbd290e7b684bd2a038369c7807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac350bad35478198fadd058985774a00f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ac350bad35478198fadd058985774a00f">N2kFrameInDbgln</a>(fmt,  args...)</td></tr>
+<tr class="separator:ac350bad35478198fadd058985774a00f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3a760e1e81cb3116cf5a22ed2f16c74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab3a760e1e81cb3116cf5a22ed2f16c74">N2kFrameInDbgStart</a>(fmt,  args...)</td></tr>
+<tr class="separator:ab3a760e1e81cb3116cf5a22ed2f16c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb5fe0bba5e213abfad57c07fd8ba432"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#adb5fe0bba5e213abfad57c07fd8ba432">N2kFrameOutDbg</a>(fmt,  args...)</td></tr>
+<tr class="separator:adb5fe0bba5e213abfad57c07fd8ba432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84a4f14db3bf4fec3ae71d7ff499612d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a84a4f14db3bf4fec3ae71d7ff499612d">N2kFrameOutDbgln</a>(fmt,  args...)</td></tr>
+<tr class="separator:a84a4f14db3bf4fec3ae71d7ff499612d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41394d0c2f514740451a7bc714ec6b7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a41394d0c2f514740451a7bc714ec6b7b">N2kFrameOutDbgStart</a>(fmt,  args...)</td></tr>
+<tr class="separator:a41394d0c2f514740451a7bc714ec6b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a02a5b8429a411f51f06485de21411"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a01a02a5b8429a411f51f06485de21411">N2kMsgDbg</a>(fmt,  args...)</td></tr>
+<tr class="separator:a01a02a5b8429a411f51f06485de21411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a169c83488a9fd9680e0ae13c296086d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a169c83488a9fd9680e0ae13c296086d7">N2kMsgDbgln</a>(fmt,  args...)</td></tr>
+<tr class="separator:a169c83488a9fd9680e0ae13c296086d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a928d3f3795498796617cb67bb17276ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a928d3f3795498796617cb67bb17276ab">N2kMsgDbgStart</a>(fmt,  args...)</td></tr>
+<tr class="separator:a928d3f3795498796617cb67bb17276ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa321b2060f06fce634e8bf9cf817b06f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#aa321b2060f06fce634e8bf9cf817b06f">N2kPrintFreeMemory</a>(a)</td></tr>
+<tr class="separator:aa321b2060f06fce634e8bf9cf817b06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea2258f5dcc8dc92473652a55b8bfc5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#aea2258f5dcc8dc92473652a55b8bfc5d">TP_CM</a>&#160;&#160;&#160;60416L</td></tr>
+<tr class="memdesc:aea2258f5dcc8dc92473652a55b8bfc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, TP.CM.  <a href="_n_m_e_a2000_8cpp.html#aea2258f5dcc8dc92473652a55b8bfc5d">More...</a><br /></td></tr>
+<tr class="separator:aea2258f5dcc8dc92473652a55b8bfc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fed39e578be73fa200d72eb6f8bcbfb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a5fed39e578be73fa200d72eb6f8bcbfb">TP_CM_Abort</a>&#160;&#160;&#160;255</td></tr>
+<tr class="memdesc:a5fed39e578be73fa200d72eb6f8bcbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, Abort Connection.  <a href="_n_m_e_a2000_8cpp.html#a5fed39e578be73fa200d72eb6f8bcbfb">More...</a><br /></td></tr>
+<tr class="separator:a5fed39e578be73fa200d72eb6f8bcbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8e486eb0987b7c722d847cd01ddeed2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ac8e486eb0987b7c722d847cd01ddeed2">TP_CM_AbortBusy</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ac8e486eb0987b7c722d847cd01ddeed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Already in one or more connection managed sessions and cannot support another.  <a href="_n_m_e_a2000_8cpp.html#ac8e486eb0987b7c722d847cd01ddeed2">More...</a><br /></td></tr>
+<tr class="separator:ac8e486eb0987b7c722d847cd01ddeed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab973854ea30f70aa8132ec91e107f96f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab973854ea30f70aa8132ec91e107f96f">TP_CM_AbortNoResources</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ab973854ea30f70aa8132ec91e107f96f"><td class="mdescLeft">&#160;</td><td class="mdescRight">System resources were needed for another task so this connection managed session was terminated.  <a href="_n_m_e_a2000_8cpp.html#ab973854ea30f70aa8132ec91e107f96f">More...</a><br /></td></tr>
+<tr class="separator:ab973854ea30f70aa8132ec91e107f96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c854543c2d390e951c6ca57386dc49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a64c854543c2d390e951c6ca57386dc49">TP_CM_AbortTimeout</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a64c854543c2d390e951c6ca57386dc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">A timeout occurred and this is the connection abort to close the s ession.  <a href="_n_m_e_a2000_8cpp.html#a64c854543c2d390e951c6ca57386dc49">More...</a><br /></td></tr>
+<tr class="separator:a64c854543c2d390e951c6ca57386dc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af28e2322f6abbe6c06c996a542fc2d1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#af28e2322f6abbe6c06c996a542fc2d1c">TP_CM_ACK</a>&#160;&#160;&#160;19</td></tr>
+<tr class="memdesc:af28e2322f6abbe6c06c996a542fc2d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, End of Message Acknowledgement.  <a href="_n_m_e_a2000_8cpp.html#af28e2322f6abbe6c06c996a542fc2d1c">More...</a><br /></td></tr>
+<tr class="separator:af28e2322f6abbe6c06c996a542fc2d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5271281387bf5c0abcfe903a3473b715"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a5271281387bf5c0abcfe903a3473b715">TP_CM_BAM</a>&#160;&#160;&#160;32</td></tr>
+<tr class="memdesc:a5271281387bf5c0abcfe903a3473b715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, Broadcast Announce Message.  <a href="_n_m_e_a2000_8cpp.html#a5271281387bf5c0abcfe903a3473b715">More...</a><br /></td></tr>
+<tr class="separator:a5271281387bf5c0abcfe903a3473b715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2c432b559956d9ce1b72591f349854"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a9c2c432b559956d9ce1b72591f349854">TP_CM_CTS</a>&#160;&#160;&#160;17</td></tr>
+<tr class="memdesc:a9c2c432b559956d9ce1b72591f349854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, Clear To Send.  <a href="_n_m_e_a2000_8cpp.html#a9c2c432b559956d9ce1b72591f349854">More...</a><br /></td></tr>
+<tr class="separator:a9c2c432b559956d9ce1b72591f349854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad38da3368d3635a6c648d91939e33cde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ad38da3368d3635a6c648d91939e33cde">TP_CM_RTS</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:ad38da3368d3635a6c648d91939e33cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet connection management, Request To Send.  <a href="_n_m_e_a2000_8cpp.html#ad38da3368d3635a6c648d91939e33cde">More...</a><br /></td></tr>
+<tr class="separator:ad38da3368d3635a6c648d91939e33cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6912b69ca428205f1b75126fc4359108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a6912b69ca428205f1b75126fc4359108">TP_DT</a>&#160;&#160;&#160;60160L</td></tr>
+<tr class="memdesc:a6912b69ca428205f1b75126fc4359108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi packet data transfer.  <a href="_n_m_e_a2000_8cpp.html#a6912b69ca428205f1b75126fc4359108">More...</a><br /></td></tr>
+<tr class="separator:a6912b69ca428205f1b75126fc4359108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0001bb692b97e23ed56ca4341a70f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a5b0001bb692b97e23ed56ca4341a70f1">TP_MAX_FRAMES</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:a5b0001bb692b97e23ed56ca4341a70f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max frames, which can be received at time.  <a href="_n_m_e_a2000_8cpp.html#a5b0001bb692b97e23ed56ca4341a70f1">More...</a><br /></td></tr>
+<tr class="separator:a5b0001bb692b97e23ed56ca4341a70f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a8486144165b3bace244e1ab3356f5ff8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a8486144165b3bace244e1ab3356f5ff8">CanIdToN2k</a> (unsigned long id, unsigned char &amp;prio, unsigned long &amp;pgn, unsigned char &amp;src, unsigned char &amp;dst)</td></tr>
+<tr class="memdesc:a8486144165b3bace244e1ab3356f5ff8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a CAN Id to NMEA2000 values.  <a href="_n_m_e_a2000_8cpp.html#a8486144165b3bace244e1ab3356f5ff8">More...</a><br /></td></tr>
+<tr class="separator:a8486144165b3bace244e1ab3356f5ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc61923f7c46f428fef92d18abfaa74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#aecc61923f7c46f428fef92d18abfaa74">CopyBufToCANMsg</a> (<a class="el" href="classt_n2k_c_a_n_msg.html">tN2kCANMsg</a> &amp;CANMsg, unsigned char start, unsigned char len, unsigned char *buf)</td></tr>
+<tr class="memdesc:aecc61923f7c46f428fef92d18abfaa74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a Buffer to a CAN Message.  <a href="_n_m_e_a2000_8cpp.html#aecc61923f7c46f428fef92d18abfaa74">More...</a><br /></td></tr>
+<tr class="separator:aecc61923f7c46f428fef92d18abfaa74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad642d761f60d509c69bb47b85d1a9c69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ad642d761f60d509c69bb47b85d1a9c69">CopyProgmemString</a> (const char *str, size_t MaxLen, char *buf)</td></tr>
+<tr class="separator:ad642d761f60d509c69bb47b85d1a9c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26e3c3dd9c94a5d23ac9880f6e3f8a70"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a26e3c3dd9c94a5d23ac9880f6e3f8a70">IsDefaultFastPacketMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:a26e3c3dd9c94a5d23ac9880f6e3f8a70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the PGN is a Default Fast Packet Message.  <a href="_n_m_e_a2000_8cpp.html#a26e3c3dd9c94a5d23ac9880f6e3f8a70">More...</a><br /></td></tr>
+<tr class="separator:a26e3c3dd9c94a5d23ac9880f6e3f8a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b3feabbc94c6a5c9c824b29791db85"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ad8b3feabbc94c6a5c9c824b29791db85">IsDefaultSingleFrameMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:ad8b3feabbc94c6a5c9c824b29791db85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given PGN is a Default Single Frame Message.  <a href="_n_m_e_a2000_8cpp.html#ad8b3feabbc94c6a5c9c824b29791db85">More...</a><br /></td></tr>
+<tr class="separator:ad8b3feabbc94c6a5c9c824b29791db85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f0005da5a5246c5e228ccf132089600"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a8f0005da5a5246c5e228ccf132089600">IsFastPacketFirstFrame</a> (unsigned char b)</td></tr>
+<tr class="separator:a8f0005da5a5246c5e228ccf132089600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d7bb61a1d75b9be7c3c20b10011ade2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a2d7bb61a1d75b9be7c3c20b10011ade2">IsFastPacketSystemMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:a2d7bb61a1d75b9be7c3c20b10011ade2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given PGN is a Fast Packet System Message.  <a href="_n_m_e_a2000_8cpp.html#a2d7bb61a1d75b9be7c3c20b10011ade2">More...</a><br /></td></tr>
+<tr class="separator:a2d7bb61a1d75b9be7c3c20b10011ade2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a074f6908ad2de6708e3922a5dca98a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a8a074f6908ad2de6708e3922a5dca98a">IsMandatoryFastPacketMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:a8a074f6908ad2de6708e3922a5dca98a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the PGN is a Mandatory Fast Packet Message.  <a href="_n_m_e_a2000_8cpp.html#a8a074f6908ad2de6708e3922a5dca98a">More...</a><br /></td></tr>
+<tr class="separator:a8a074f6908ad2de6708e3922a5dca98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5230c7d6721ee04ecd47a0093d2134fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a5230c7d6721ee04ecd47a0093d2134fa">IsProprietaryFastPacketMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:a5230c7d6721ee04ecd47a0093d2134fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the PGN is a Proprietary Fast Packet Message.  <a href="_n_m_e_a2000_8cpp.html#a5230c7d6721ee04ecd47a0093d2134fa">More...</a><br /></td></tr>
+<tr class="separator:a5230c7d6721ee04ecd47a0093d2134fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e89c5057e6f36ae6cf645c14585482a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a1e89c5057e6f36ae6cf645c14585482a">IsSingleFrameSystemMessage</a> (unsigned long PGN)</td></tr>
+<tr class="memdesc:a1e89c5057e6f36ae6cf645c14585482a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given PGN is a Single Frame System Message.  <a href="_n_m_e_a2000_8cpp.html#a1e89c5057e6f36ae6cf645c14585482a">More...</a><br /></td></tr>
+<tr class="separator:a1e89c5057e6f36ae6cf645c14585482a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d1d0a809aa6d82f6b0f449adb7833b"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a75d1d0a809aa6d82f6b0f449adb7833b">N2ktoCanID</a> (unsigned char priority, unsigned long PGN, unsigned long Source, unsigned char Destination)</td></tr>
+<tr class="memdesc:a75d1d0a809aa6d82f6b0f449adb7833b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert NMEA2000 values into a CAN Id.  <a href="_n_m_e_a2000_8cpp.html#a75d1d0a809aa6d82f6b0f449adb7833b">More...</a><br /></td></tr>
+<tr class="separator:a75d1d0a809aa6d82f6b0f449adb7833b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4110ca1a5bf9efa63fdd7ea895866d7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a4110ca1a5bf9efa63fdd7ea895866d7e">ParseN2kPGN126996</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned short &amp;N2kVersion, unsigned short &amp;ProductCode, int ModelIDSize, char *ModelID, int SwCodeSize, char *SwCode, int ModelVersionSize, char *ModelVersion, int ModelSerialCodeSize, char *ModelSerialCode, unsigned char &amp;CertificationLevel, unsigned char &amp;LoadEquivalency)</td></tr>
+<tr class="memdesc:a4110ca1a5bf9efa63fdd7ea895866d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 126996 "Product information".  <a href="_n_m_e_a2000_8cpp.html#a4110ca1a5bf9efa63fdd7ea895866d7e">More...</a><br /></td></tr>
+<tr class="separator:a4110ca1a5bf9efa63fdd7ea895866d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77cf6e6cdcf3b0b66bface17b241eeb3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a77cf6e6cdcf3b0b66bface17b241eeb3">ParseN2kPGN126998</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, size_t &amp;ManufacturerInformationSize, char *ManufacturerInformation, size_t &amp;InstallationDescription1Size, char *InstallationDescription1, size_t &amp;InstallationDescription2Size, char *InstallationDescription2)</td></tr>
+<tr class="memdesc:a77cf6e6cdcf3b0b66bface17b241eeb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 126998 "Configuration information".  <a href="_n_m_e_a2000_8cpp.html#a77cf6e6cdcf3b0b66bface17b241eeb3">More...</a><br /></td></tr>
+<tr class="separator:a77cf6e6cdcf3b0b66bface17b241eeb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5409c3f185f2955f22257cf5318ea95"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab5409c3f185f2955f22257cf5318ea95">ParseN2kPGN59904</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned long &amp;RequestedPGN)</td></tr>
+<tr class="memdesc:ab5409c3f185f2955f22257cf5318ea95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 59904 "ISO request".  <a href="_n_m_e_a2000_8cpp.html#ab5409c3f185f2955f22257cf5318ea95">More...</a><br /></td></tr>
+<tr class="separator:ab5409c3f185f2955f22257cf5318ea95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a811b7f7b3b649da008ea67b11f121ea1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a811b7f7b3b649da008ea67b11f121ea1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a811b7f7b3b649da008ea67b11f121ea1">PROGMEM_readAnything</a> (const T *sce, T &amp;dest)</td></tr>
+<tr class="separator:a811b7f7b3b649da008ea67b11f121ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0757dfc2b63ef86ea358e765a517cf31"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a0757dfc2b63ef86ea358e765a517cf31">ProgmemStrLen</a> (const char *str)</td></tr>
+<tr class="separator:a0757dfc2b63ef86ea358e765a517cf31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6758abf82bbde509d0bb8879b492d9ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a6758abf82bbde509d0bb8879b492d9ae">SetN2kPGN126464</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t Destination, <a class="el" href="_n_m_e_a2000_8h.html#afe3510c9b614e5cd7d30c8095882cde0">tN2kPGNList</a> tr, const unsigned long *PGNs)</td></tr>
+<tr class="memdesc:a6758abf82bbde509d0bb8879b492d9ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 126464 Message "PGN List - Transmit PGNs group 
+       function".  <a href="_n_m_e_a2000_8cpp.html#a6758abf82bbde509d0bb8879b492d9ae">More...</a><br /></td></tr>
+<tr class="separator:a6758abf82bbde509d0bb8879b492d9ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fae1052033c2b02fbadbb9032d58f2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a4fae1052033c2b02fbadbb9032d58f2a">SetN2kPGN126993</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint32_t timeInterval_ms, uint8_t sequenceCounter)</td></tr>
+<tr class="memdesc:a4fae1052033c2b02fbadbb9032d58f2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 126993 Message "Heartbeat".  <a href="_n_m_e_a2000_8cpp.html#a4fae1052033c2b02fbadbb9032d58f2a">More...</a><br /></td></tr>
+<tr class="separator:a4fae1052033c2b02fbadbb9032d58f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe42ffbc17c4de5dc603221c2c00ba7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#abe42ffbc17c4de5dc603221c2c00ba7e">SetN2kPGN126996</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned int N2kVersion, unsigned int ProductCode, const char *ModelID, const char *SwCode, const char *ModelVersion, const char *ModelSerialCode, unsigned char CertificationLevel, unsigned char LoadEquivalency)</td></tr>
+<tr class="memdesc:abe42ffbc17c4de5dc603221c2c00ba7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 126996 Message "Product information".  <a href="_n_m_e_a2000_8cpp.html#abe42ffbc17c4de5dc603221c2c00ba7e">More...</a><br /></td></tr>
+<tr class="separator:abe42ffbc17c4de5dc603221c2c00ba7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83cee127ff33e5576a0c0c548cf8c0be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a83cee127ff33e5576a0c0c548cf8c0be">SetN2kPGN126996Progmem</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> *ProductInformation, char *OptionalSerialCode=0)</td></tr>
+<tr class="separator:a83cee127ff33e5576a0c0c548cf8c0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3965a30d08ef52a3ad8e8ab0033a19d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab3965a30d08ef52a3ad8e8ab0033a19d">SetN2kPGN126998</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, const char *ManufacturerInformation, const char *InstallationDescription1, const char *InstallationDescription2, bool UsePgm)</td></tr>
+<tr class="memdesc:ab3965a30d08ef52a3ad8e8ab0033a19d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 126998 Message "Configuration information".  <a href="_n_m_e_a2000_8cpp.html#ab3965a30d08ef52a3ad8e8ab0033a19d">More...</a><br /></td></tr>
+<tr class="separator:ab3965a30d08ef52a3ad8e8ab0033a19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c9b91f17beb9663aa75b63f2e831664"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a9c9b91f17beb9663aa75b63f2e831664">SetN2kPGN59392</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Control, unsigned char GroupFunction, unsigned long PGN)</td></tr>
+<tr class="memdesc:a9c9b91f17beb9663aa75b63f2e831664"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISO Acknowledgement.  <a href="_n_m_e_a2000_8cpp.html#a9c9b91f17beb9663aa75b63f2e831664">More...</a><br /></td></tr>
+<tr class="separator:a9c9b91f17beb9663aa75b63f2e831664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ff5d9b29c69cc09f6b99a8380c642a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a8ff5d9b29c69cc09f6b99a8380c642a8">SetN2kPGN59904</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t Destination, unsigned long RequestedPGN)</td></tr>
+<tr class="memdesc:a8ff5d9b29c69cc09f6b99a8380c642a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 59904 Message "ISO request".  <a href="_n_m_e_a2000_8cpp.html#a8ff5d9b29c69cc09f6b99a8380c642a8">More...</a><br /></td></tr>
+<tr class="separator:a8ff5d9b29c69cc09f6b99a8380c642a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c1cd19678b9e95c2c854d5e59099b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a43c1cd19678b9e95c2c854d5e59099b4">SetN2kPGN60928</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint64_t Name)</td></tr>
+<tr class="memdesc:a43c1cd19678b9e95c2c854d5e59099b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 60928 Message "ISO Address Claim".  <a href="_n_m_e_a2000_8cpp.html#a43c1cd19678b9e95c2c854d5e59099b4">More...</a><br /></td></tr>
+<tr class="separator:a43c1cd19678b9e95c2c854d5e59099b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e471a8466b6c5a444048f88ea65fe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab5e471a8466b6c5a444048f88ea65fe0">SetN2kPGN60928</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned long UniqueNumber, int ManufacturerCode, unsigned char DeviceFunction, unsigned char DeviceClass, unsigned char DeviceInstance, unsigned char SystemInstance, unsigned char IndustryGroup)</td></tr>
+<tr class="memdesc:ab5e471a8466b6c5a444048f88ea65fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 60928 Message "ISO Address Claim".  <a href="_n_m_e_a2000_8cpp.html#ab5e471a8466b6c5a444048f88ea65fe0">More...</a><br /></td></tr>
+<tr class="separator:ab5e471a8466b6c5a444048f88ea65fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af18a10d314d1393994c195278562d3cc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#af18a10d314d1393994c195278562d3cc">StrLen</a> (const char *str)</td></tr>
+<tr class="separator:af18a10d314d1393994c195278562d3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc965669e6064605de5aa086f0b377e7"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#acc965669e6064605de5aa086f0b377e7">TPCtsPackets</a> (unsigned char nPackets)</td></tr>
+<tr class="separator:acc965669e6064605de5aa086f0b377e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a5d0a3229b751afe4031006a4e7741738"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a5d0a3229b751afe4031006a4e7741738">DefInstallationDescription1</a> [] = &quot;&quot;</td></tr>
+<tr class="memdesc:a5d0a3229b751afe4031006a4e7741738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Installation Description (Field1)  <a href="_n_m_e_a2000_8cpp.html#a5d0a3229b751afe4031006a4e7741738">More...</a><br /></td></tr>
+<tr class="separator:a5d0a3229b751afe4031006a4e7741738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76adbe70f8120855a2107e9b45f8589"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#af76adbe70f8120855a2107e9b45f8589">DefInstallationDescription2</a> [] = &quot;&quot;</td></tr>
+<tr class="memdesc:af76adbe70f8120855a2107e9b45f8589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Installation Description (Field2)  <a href="_n_m_e_a2000_8cpp.html#af76adbe70f8120855a2107e9b45f8589">More...</a><br /></td></tr>
+<tr class="separator:af76adbe70f8120855a2107e9b45f8589"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc2a70663ff091c69cf8da410783742a"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#acc2a70663ff091c69cf8da410783742a">DefManufacturerInformation</a> [] = &quot;NMEA2000 library, https://github.com/ttlappalainen/<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>&quot;</td></tr>
+<tr class="memdesc:acc2a70663ff091c69cf8da410783742a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Manufacturer Information.  <a href="_n_m_e_a2000_8cpp.html#acc2a70663ff091c69cf8da410783742a">More...</a><br /></td></tr>
+<tr class="separator:acc2a70663ff091c69cf8da410783742a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671e932c355cea4819a1db5ec543dc99"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#a671e932c355cea4819a1db5ec543dc99">DefProductInformation</a></td></tr>
+<tr class="memdesc:a671e932c355cea4819a1db5ec543dc99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Product Information.  <a href="_n_m_e_a2000_8cpp.html#a671e932c355cea4819a1db5ec543dc99">More...</a><br /></td></tr>
+<tr class="separator:a671e932c355cea4819a1db5ec543dc99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd182c72a77c64e03c989a5bac1eaeb2"><td class="memItemLeft" align="right" valign="top">const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#acd182c72a77c64e03c989a5bac1eaeb2">DefReceiveMessages</a> []</td></tr>
+<tr class="memdesc:acd182c72a77c64e03c989a5bac1eaeb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default list of Received Messages.  <a href="_n_m_e_a2000_8cpp.html#acd182c72a77c64e03c989a5bac1eaeb2">More...</a><br /></td></tr>
+<tr class="separator:acd182c72a77c64e03c989a5bac1eaeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88cd5348d8e9ea53b5e71f05883f356"><td class="memItemLeft" align="right" valign="top">const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000_8cpp.html#ab88cd5348d8e9ea53b5e71f05883f356">DefTransmitMessages</a> []</td></tr>
+<tr class="memdesc:ab88cd5348d8e9ea53b5e71f05883f356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default list of Transmit Messages.  <a href="_n_m_e_a2000_8cpp.html#ab88cd5348d8e9ea53b5e71f05883f356">More...</a><br /></td></tr>
+<tr class="separator:ab88cd5348d8e9ea53b5e71f05883f356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a16a6a6c6fab609e9bee58c1e9ce7708a" name="a16a6a6c6fab609e9bee58c1e9ce7708a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16a6a6c6fab609e9bee58c1e9ce7708a">&#9670;&nbsp;</a></span>DbgPrintBuf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DbgPrintBuf</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">len, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">buf, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">addln&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00084">84</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aaac1db96ae530d789edb207be0aee572" name="aaac1db96ae530d789edb207be0aee572"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaac1db96ae530d789edb207be0aee572">&#9670;&nbsp;</a></span>DebugStream</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DebugStream&#160;&#160;&#160;Serial</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00032">32</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a31a0cea72fa382c7c8d67cfe8e6bfcb2" name="a31a0cea72fa382c7c8d67cfe8e6bfcb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31a0cea72fa382c7c8d67cfe8e6bfcb2">&#9670;&nbsp;</a></span>MAX_PGNS_IN_LIST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_PGNS_IN_LIST&#160;&#160;&#160;74</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02074">2074</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7e94cd638000d4709484a37571247ec4" name="a7e94cd638000d4709484a37571247ec4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e94cd638000d4709484a37571247ec4">&#9670;&nbsp;</a></span>MaxHeartbeatInterval</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MaxHeartbeatInterval&#160;&#160;&#160;655320UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximum value for the Iso Heartbeat interval in ms. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00112">112</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab99f46b1e011a09bc53eaf77f8cb8f10" name="ab99f46b1e011a09bc53eaf77f8cb8f10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab99f46b1e011a09bc53eaf77f8cb8f10">&#9670;&nbsp;</a></span>N2kAddressClaimTimeout</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kAddressClaimTimeout&#160;&#160;&#160;250</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timeout value for the ISO Address Claim in ms. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00110">110</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3965134bdd14b3b2dd9d3ac1c4f6f186" name="a3965134bdd14b3b2dd9d3ac1c4f6f186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3965134bdd14b3b2dd9d3ac1c4f6f186">&#9670;&nbsp;</a></span>N2kDbg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kDbg</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00091">91</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7210fe52ee3abc2971fdea570b5c0d35" name="a7210fe52ee3abc2971fdea570b5c0d35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7210fe52ee3abc2971fdea570b5c0d35">&#9670;&nbsp;</a></span>N2kDbgln</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kDbgln</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00092">92</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a11300418e91aa9de53a49af0ca308d2d" name="a11300418e91aa9de53a49af0ca308d2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11300418e91aa9de53a49af0ca308d2d">&#9670;&nbsp;</a></span>N2kFrameErrDbg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameErrDbg</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00047">47</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a07899f929f5af61e8533396e76c3397a" name="a07899f929f5af61e8533396e76c3397a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07899f929f5af61e8533396e76c3397a">&#9670;&nbsp;</a></span>N2kFrameErrDbgln</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameErrDbgln</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00048">48</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9574ff7cf6e6e361b5ab8be4e8ade47f" name="a9574ff7cf6e6e361b5ab8be4e8ade47f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9574ff7cf6e6e361b5ab8be4e8ade47f">&#9670;&nbsp;</a></span>N2kFrameErrDbgStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameErrDbgStart</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00046">46</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7be46dbd290e7b684bd2a038369c7807" name="a7be46dbd290e7b684bd2a038369c7807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7be46dbd290e7b684bd2a038369c7807">&#9670;&nbsp;</a></span>N2kFrameInDbg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameInDbg</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00057">57</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac350bad35478198fadd058985774a00f" name="ac350bad35478198fadd058985774a00f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac350bad35478198fadd058985774a00f">&#9670;&nbsp;</a></span>N2kFrameInDbgln</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameInDbgln</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00058">58</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab3a760e1e81cb3116cf5a22ed2f16c74" name="ab3a760e1e81cb3116cf5a22ed2f16c74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3a760e1e81cb3116cf5a22ed2f16c74">&#9670;&nbsp;</a></span>N2kFrameInDbgStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameInDbgStart</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00056">56</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adb5fe0bba5e213abfad57c07fd8ba432" name="adb5fe0bba5e213abfad57c07fd8ba432"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb5fe0bba5e213abfad57c07fd8ba432">&#9670;&nbsp;</a></span>N2kFrameOutDbg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameOutDbg</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00067">67</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a84a4f14db3bf4fec3ae71d7ff499612d" name="a84a4f14db3bf4fec3ae71d7ff499612d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84a4f14db3bf4fec3ae71d7ff499612d">&#9670;&nbsp;</a></span>N2kFrameOutDbgln</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameOutDbgln</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00068">68</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a41394d0c2f514740451a7bc714ec6b7b" name="a41394d0c2f514740451a7bc714ec6b7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41394d0c2f514740451a7bc714ec6b7b">&#9670;&nbsp;</a></span>N2kFrameOutDbgStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kFrameOutDbgStart</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00066">66</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a01a02a5b8429a411f51f06485de21411" name="a01a02a5b8429a411f51f06485de21411"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a02a5b8429a411f51f06485de21411">&#9670;&nbsp;</a></span>N2kMsgDbg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kMsgDbg</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00077">77</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a169c83488a9fd9680e0ae13c296086d7" name="a169c83488a9fd9680e0ae13c296086d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a169c83488a9fd9680e0ae13c296086d7">&#9670;&nbsp;</a></span>N2kMsgDbgln</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kMsgDbgln</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00078">78</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a928d3f3795498796617cb67bb17276ab" name="a928d3f3795498796617cb67bb17276ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a928d3f3795498796617cb67bb17276ab">&#9670;&nbsp;</a></span>N2kMsgDbgStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kMsgDbgStart</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">args...&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00076">76</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa321b2060f06fce634e8bf9cf817b06f" name="aa321b2060f06fce634e8bf9cf817b06f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa321b2060f06fce634e8bf9cf817b06f">&#9670;&nbsp;</a></span>N2kPrintFreeMemory</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPrintFreeMemory</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">a</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00106">106</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aea2258f5dcc8dc92473652a55b8bfc5d" name="aea2258f5dcc8dc92473652a55b8bfc5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea2258f5dcc8dc92473652a55b8bfc5d">&#9670;&nbsp;</a></span>TP_CM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM&#160;&#160;&#160;60416L</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, TP.CM. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00117">117</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5fed39e578be73fa200d72eb6f8bcbfb" name="a5fed39e578be73fa200d72eb6f8bcbfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fed39e578be73fa200d72eb6f8bcbfb">&#9670;&nbsp;</a></span>TP_CM_Abort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_Abort&#160;&#160;&#160;255</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, Abort Connection. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00129">129</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac8e486eb0987b7c722d847cd01ddeed2" name="ac8e486eb0987b7c722d847cd01ddeed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8e486eb0987b7c722d847cd01ddeed2">&#9670;&nbsp;</a></span>TP_CM_AbortBusy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_AbortBusy&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Already in one or more connection managed sessions and cannot support another. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00133">133</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab973854ea30f70aa8132ec91e107f96f" name="ab973854ea30f70aa8132ec91e107f96f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab973854ea30f70aa8132ec91e107f96f">&#9670;&nbsp;</a></span>TP_CM_AbortNoResources</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_AbortNoResources&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>System resources were needed for another task so this connection managed session was terminated. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00136">136</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a64c854543c2d390e951c6ca57386dc49" name="a64c854543c2d390e951c6ca57386dc49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c854543c2d390e951c6ca57386dc49">&#9670;&nbsp;</a></span>TP_CM_AbortTimeout</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_AbortTimeout&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A timeout occurred and this is the connection abort to close the s ession. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00139">139</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af28e2322f6abbe6c06c996a542fc2d1c" name="af28e2322f6abbe6c06c996a542fc2d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af28e2322f6abbe6c06c996a542fc2d1c">&#9670;&nbsp;</a></span>TP_CM_ACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_ACK&#160;&#160;&#160;19</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, End of Message Acknowledgement. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00127">127</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5271281387bf5c0abcfe903a3473b715" name="a5271281387bf5c0abcfe903a3473b715"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5271281387bf5c0abcfe903a3473b715">&#9670;&nbsp;</a></span>TP_CM_BAM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_BAM&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, Broadcast Announce Message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00121">121</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9c2c432b559956d9ce1b72591f349854" name="a9c2c432b559956d9ce1b72591f349854"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c2c432b559956d9ce1b72591f349854">&#9670;&nbsp;</a></span>TP_CM_CTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_CTS&#160;&#160;&#160;17</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, Clear To Send. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00125">125</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad38da3368d3635a6c648d91939e33cde" name="ad38da3368d3635a6c648d91939e33cde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad38da3368d3635a6c648d91939e33cde">&#9670;&nbsp;</a></span>TP_CM_RTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_CM_RTS&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet connection management, Request To Send. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00123">123</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6912b69ca428205f1b75126fc4359108" name="a6912b69ca428205f1b75126fc4359108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6912b69ca428205f1b75126fc4359108">&#9670;&nbsp;</a></span>TP_DT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_DT&#160;&#160;&#160;60160L</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multi packet data transfer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00119">119</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5b0001bb692b97e23ed56ca4341a70f1" name="a5b0001bb692b97e23ed56ca4341a70f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b0001bb692b97e23ed56ca4341a70f1">&#9670;&nbsp;</a></span>TP_MAX_FRAMES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TP_MAX_FRAMES&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Max frames, which can be received at time. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00115">115</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a8486144165b3bace244e1ab3356f5ff8" name="a8486144165b3bace244e1ab3356f5ff8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8486144165b3bace244e1ab3356f5ff8">&#9670;&nbsp;</a></span>CanIdToN2k()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CanIdToN2k </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>prio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long &amp;&#160;</td>
+          <td class="paramname"><em>pgn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert a CAN Id to NMEA2000 values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>given CAN Id </td></tr>
+    <tr><td class="paramname">prio</td><td>Priority of the N2k message </td></tr>
+    <tr><td class="paramname">pgn</td><td>PGN of the N2k message </td></tr>
+    <tr><td class="paramname">src</td><td>Source of the N2k message </td></tr>
+    <tr><td class="paramname">dst</td><td>Destination of the N2k message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01227">1227</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aecc61923f7c46f428fef92d18abfaa74" name="aecc61923f7c46f428fef92d18abfaa74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecc61923f7c46f428fef92d18abfaa74">&#9670;&nbsp;</a></span>CopyBufToCANMsg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CopyBufToCANMsg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_c_a_n_msg.html">tN2kCANMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>CANMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>buf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copy a Buffer to a CAN Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">CANMsg</td><td>Reference to an CANMsg Object with the result </td></tr>
+    <tr><td class="paramname">start</td><td>Startbyte inside the buffer </td></tr>
+    <tr><td class="paramname">len</td><td>Length of the buffer </td></tr>
+    <tr><td class="paramname">buf</td><td>Pointer to a buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01576">1576</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad642d761f60d509c69bb47b85d1a9c69" name="ad642d761f60d509c69bb47b85d1a9c69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad642d761f60d509c69bb47b85d1a9c69">&#9670;&nbsp;</a></span>CopyProgmemString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CopyProgmemString </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>MaxLen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00817">817</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a26e3c3dd9c94a5d23ac9880f6e3f8a70" name="a26e3c3dd9c94a5d23ac9880f6e3f8a70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26e3c3dd9c94a5d23ac9880f6e3f8a70">&#9670;&nbsp;</a></span>IsDefaultFastPacketMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsDefaultFastPacketMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the PGN is a Default Fast Packet Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be checked </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs:<ul>
+<li>126983L: Alert, pri=2, period=1000</li>
+<li>126984L: Alert Response, pri=2, period=NA</li>
+<li>126985L: Alert Text, pri=2, period=10000</li>
+<li>126986L: Alert Configuration, pri=2, period=NA</li>
+<li>126987L: Alert Threshold, pri=2, period=NA</li>
+<li>126988L: Alert Value, pri=2, period=10000</li>
+<li>127233L: Alert Value, pri=3, period=NA</li>
+<li>127237L: Heading/Track control, pri=2, period=250</li>
+<li>127489L: Engine parameters dynamic, pri=2, period=500</li>
+<li>127496L: Trip fuel consumption, vessel, pri=5, period=1000</li>
+<li>127497L: Trip fuel consumption, engine, pri=5, period=1000</li>
+<li>127498L: Engine parameters static, pri=5, period=NA</li>
+<li>127503L: AC Input Status, pri=6, period=1500</li>
+<li>127504L: AC Output Status, pri=6, period=1500</li>
+<li>127506L: DC Detailed status, pri=6, period=1500</li>
+<li>127507L: Charger status, pri=6, period=1500</li>
+<li>127509L: Inverter status, pri=6, period=1500</li>
+<li>127510L: Charger configuration status, pri=6, period=NA</li>
+<li>127511L: Inverter Configuration Status, pri=6, period=NA</li>
+<li>127512L: AGS configuration status, pri=6, period=NA</li>
+<li>127513L: Battery configuration status, pri=6, period=NA</li>
+<li>127514L: AGS Status, pri=6, period=1500</li>
+<li>128275L: Distance log, pri=6, period=1000</li>
+<li>128520L: Tracked Target Data, pri=2, period=1000</li>
+<li>129029L: GNSS Position Data, pri=3, period=1000</li>
+<li>129038L: AIS Class A Position Report, pri=4, period=NA</li>
+<li>129039L: AIS Class B Position Report, pri=4, period=NA</li>
+<li>129040L: AIS Class B Extended Position Report, pri=4, period=NA</li>
+<li>129041L: AIS Aids to Navigation (AtoN) Report, pri=4, period=NA</li>
+<li>129044L: Datum, pri=6, period=10000</li>
+<li>129045L: User Datum Settings, pri=6, period=NA</li>
+<li>129284L: Navigation info, pri=3, period=1000</li>
+<li>129285L: Waypoint list, pri=3, period=NA</li>
+<li>129301L: Time to/from Mark, pri=3, period=1000</li>
+<li>129302L: Bearing and Distance between two Marks, pri=6, period=NA</li>
+<li>129538L: GNSS Control Status, pri=6, period=NA</li>
+<li>129540L: GNSS Sats in View, pri=6, period=1000</li>
+<li>129541L: GPS Almanac Data, pri=6, period=NA</li>
+<li>129542L: GNSS Pseudorange Noise Statistics, pri=6, period=1000</li>
+<li>129545L: GNSS RAIM Output, pri=6, period=NA</li>
+<li>129547L: GNSS Pseudorange Error Statistics, pri=6, period=NA</li>
+<li>129549L: DGNSS Corrections, pri=6, period=NA</li>
+<li>129551L: GNSS Differential Correction Receiver Signal, pri=6, period=NA</li>
+<li>129556L: GLONASS Almanac Data, pri=6, period=NA</li>
+<li>129792L: AIS DGNSS Broadcast Binary Message, pri=6, period=NA</li>
+<li>129793L: AIS UTC and Date Report, pri=7, period=NA</li>
+<li>129794L: AIS Class A Static data, pri=6, period=NA</li>
+<li>129795L: AIS Addressed Binary Message, pri=5, period=NA</li>
+<li>129796L: AIS Acknowledge, pri=7, period=NA</li>
+<li>129797L: AIS Binary Broadcast Message, pri=5, period=NA</li>
+<li>129798L: AIS SAR Aircraft Position Report, pri=4, period=NA</li>
+<li>129799L: Radio Frequency/Mode/Power, pri=3, period=NA</li>
+<li>129800L: AIS UTC/Date Inquiry, pri=7, period=NA</li>
+<li>129801L: AIS Addressed Safety Related Message, pri=5, period=NA</li>
+<li>129802L: AIS Safety Related Broadcast Message, pri=5, period=NA</li>
+<li>129803L: AIS Interrogation PGN, pri=7, period=NA</li>
+<li>129804L: AIS Assignment Mode Command, pri=7, period=NA</li>
+<li>129805L: AIS Data Link Management Message, pri=7, period=NA</li>
+<li>129806L: AIS Channel Management, pri=7, period=NA</li>
+<li>129807L: AIS Group Assignment, pri=7, period=NA</li>
+<li>129808L: DSC Call Information, pri=8, period=NA</li>
+<li>129809L: AIS Class B Static Data: Part A, pri=6, period=NA</li>
+<li>129810L: AIS Class B Static Data Part B, pri=6, period=NA</li>
+<li>129811L: AIS Single Slot Binary Message, pri=5, period=NA</li>
+<li>129812L: AIS Multi Slot Binary Message, pri=5, period=NA</li>
+<li>129813L: AIS Long-Range Broadcast Message, pri=5, period=NA</li>
+<li>130052L: Loran-C TD Data, pri=3, period=1000</li>
+<li>130053L: Loran-C Range Data, pri=3, period=1000</li>
+<li>130054L: Loran-C Signal Data, pri=3, period=1000</li>
+<li>130060L: Label, pri=7, period=NA</li>
+<li>130061L: Channel Source Configuration, pri=7, period=NA</li>
+<li>130064L: Route and WP Service - Database List, pri=7, period=NA</li>
+<li>130065L: Route and WP Service - Route List, pri=7, period=NA</li>
+<li>130066L: Route and WP Service - Route/WP-List Attributes, pri=7, period=NA</li>
+<li>130067L: Route and WP Service - Route - WP Name &amp; Position, pri=7, period=NA</li>
+<li>130068L: Route and WP Service - Route - WP Name, pri=7, period=NA</li>
+<li>130069L: Route and WP Service - XTE Limit &amp; Navigation Method, pri=7, period=NA</li>
+<li>130070L: Route and WP Service - WP Comment, pri=7, period=NA</li>
+<li>130071L: Route and WP Service - Route Comment, pri=7, period=NA</li>
+<li>130072L: Route and WP Service - Database Comment, pri=7, period=NA</li>
+<li>130073L: Route and WP Service - Radius of Turn, pri=7, period=NA</li>
+<li>130074L: Route and WP Service - WP List - WP Name &amp; Position, pri=7, period=NA</li>
+<li>130320L: Tide Station Data, pri=6, period=1000</li>
+<li>130321L: Salinity Station Data, pri=6, period=1000</li>
+<li>130322L: Current Station Data, pri=6, period=1000</li>
+<li>130323L: Meteorological Station Data, pri=6, period=1000</li>
+<li>130324L: Moored Buoy Station Data, pri=6, period=1000</li>
+<li>130567L: Watermaker Input Setting and Status, pri=6, period=2500</li>
+<li>130577L: Direction Data PGN, pri=3, period=1000</li>
+<li>130578L: Vessel Speed Components, pri=2, period=250 </li>
+</ul>
+</dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00425">425</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad8b3feabbc94c6a5c9c824b29791db85" name="ad8b3feabbc94c6a5c9c824b29791db85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8b3feabbc94c6a5c9c824b29791db85">&#9670;&nbsp;</a></span>IsDefaultSingleFrameMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsDefaultSingleFrameMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the given PGN is a Default Single Frame Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be tested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs:<ul>
+<li>126992L: System date/time, pri=3, period=1000</li>
+<li>126993L: Heartbeat, pri=7, period=60000</li>
+<li>127245L: Rudder, pri=2, period=100</li>
+<li>127250L: Vessel Heading, pri=2, period=100</li>
+<li>127251L: Rate of Turn, pri=2, period=100</li>
+<li>127257L: Attitude, pri=3, period=1000</li>
+<li>127488L: Engine parameters rapid, rapid Update, pri=2, period=100</li>
+<li>127493L: Transmission parameters: dynamic, pri=2, period=100</li>
+<li>127501L: Binary status report, pri=3, period=NA</li>
+<li>127505L: Fluid level, pri=6, period=2500</li>
+<li>127508L: Battery Status, pri=6, period=1500</li>
+<li>128259L: Boat speed, pri=2, period=1000</li>
+<li>128267L: Water depth, pri=3, period=1000</li>
+<li>129025L: Lat/lon rapid, pri=2, period=100</li>
+<li>129026L: COG SOG rapid, pri=2, period=250</li>
+<li>129283L: Cross Track Error, pri=3, period=1000</li>
+<li>130306L: Wind Speed, pri=2, period=100</li>
+<li>130310L: Outside Environmental parameters, pri=5, period=500</li>
+<li>130311L: Environmental parameters, pri=5, period=500</li>
+<li>130312L: Temperature, pri=5, period=2000</li>
+<li>130313L: Humidity, pri=5, period=2000</li>
+<li>130314L: Pressure, pri=5, period=2000</li>
+<li>130316L: Temperature extended range, pri=5, period=NA</li>
+<li>130576L: Small Craft Status (Trim Tab position), pri=2, period=200</li>
+</ul>
+</dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00276">276</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8f0005da5a5246c5e228ccf132089600" name="a8f0005da5a5246c5e228ccf132089600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f0005da5a5246c5e228ccf132089600">&#9670;&nbsp;</a></span>IsFastPacketFirstFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsFastPacketFirstFrame </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01921">1921</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2d7bb61a1d75b9be7c3c20b10011ade2" name="a2d7bb61a1d75b9be7c3c20b10011ade2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d7bb61a1d75b9be7c3c20b10011ade2">&#9670;&nbsp;</a></span>IsFastPacketSystemMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsFastPacketSystemMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the given PGN is a Fast Packet System Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be tested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs: 65240L, 126208L </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00234">234</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8a074f6908ad2de6708e3922a5dca98a" name="a8a074f6908ad2de6708e3922a5dca98a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a074f6908ad2de6708e3922a5dca98a">&#9670;&nbsp;</a></span>IsMandatoryFastPacketMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsMandatoryFastPacketMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the PGN is a Mandatory Fast Packet Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be checked </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs:<ul>
+<li>126464L: PGN List (Transmit and Receive), pri=6, period=NA</li>
+<li>126996L: Product information, pri=6, period=NA</li>
+<li>126998L: Configuration information, pri=6, period=NA</li>
+</ul>
+</dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00318">318</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5230c7d6721ee04ecd47a0093d2134fa" name="a5230c7d6721ee04ecd47a0093d2134fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5230c7d6721ee04ecd47a0093d2134fa">&#9670;&nbsp;</a></span>IsProprietaryFastPacketMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsProprietaryFastPacketMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the PGN is a Proprietary Fast Packet Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be checked </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs:<ul>
+<li>126720L</li>
+<li>130816L</li>
+<li>131071L </li>
+</ul>
+</dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00532">532</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e89c5057e6f36ae6cf645c14585482a" name="a1e89c5057e6f36ae6cf645c14585482a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e89c5057e6f36ae6cf645c14585482a">&#9670;&nbsp;</a></span>IsSingleFrameSystemMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IsSingleFrameSystemMessage </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the given PGN is a Single Frame System Message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">PGN</td><td>PGN to be tested </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; for PGNs: 59392L, 59904L, 60928L, 60416L, 60160L </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00215">215</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a75d1d0a809aa6d82f6b0f449adb7833b" name="a75d1d0a809aa6d82f6b0f449adb7833b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75d1d0a809aa6d82f6b0f449adb7833b">&#9670;&nbsp;</a></span>N2ktoCanID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long N2ktoCanID </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>Source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert NMEA2000 values into a CAN Id. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">priority</td><td>Priority of the N2k message </td></tr>
+    <tr><td class="paramname">PGN</td><td>PGN of the N2k message </td></tr>
+    <tr><td class="paramname">Source</td><td>Source of the N2k message </td></tr>
+    <tr><td class="paramname">Destination</td><td>Destination of the N2k message</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned long -&gt; CAN Id </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01256">1256</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4110ca1a5bf9efa63fdd7ea895866d7e" name="a4110ca1a5bf9efa63fdd7ea895866d7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4110ca1a5bf9efa63fdd7ea895866d7e">&#9670;&nbsp;</a></span>ParseN2kPGN126996()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ParseN2kPGN126996 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned short &amp;&#160;</td>
+          <td class="paramname"><em>N2kVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned short &amp;&#160;</td>
+          <td class="paramname"><em>ProductCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ModelIDSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ModelID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>SwCodeSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>SwCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ModelVersionSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ModelVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ModelSerialCodeSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ModelSerialCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>CertificationLevel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>LoadEquivalency</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parsing the content of message PGN 126996 "Product information". </p>
+<p >Provides product information onto the network that could be important for determining quality of data coming from this product.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">N2kVersion</td><td>NMEA Network Message Database Version </td></tr>
+    <tr><td class="paramname">ProductCode</td><td>NMEA Manufacturer's Product Code </td></tr>
+    <tr><td class="paramname">ModelIDSize</td><td>Size of ModelID </td></tr>
+    <tr><td class="paramname">ModelID</td><td>Manufacturer's Model ID </td></tr>
+    <tr><td class="paramname">SwCodeSize</td><td>Size of Software Version Code </td></tr>
+    <tr><td class="paramname">SwCode</td><td>Manufacturer's Software Version Code </td></tr>
+    <tr><td class="paramname">ModelVersionSize</td><td>Size of Model Version </td></tr>
+    <tr><td class="paramname">ModelVersion</td><td>Manufacturer's Model Version </td></tr>
+    <tr><td class="paramname">ModelSerialCodeSize</td><td>Size of Model Serial Code </td></tr>
+    <tr><td class="paramname">ModelSerialCode</td><td>Manufacturer's Model Serial Code </td></tr>
+    <tr><td class="paramname">CertificationLevel</td><td>NMEA 2000 Certification Level </td></tr>
+    <tr><td class="paramname">LoadEquivalency</td><td>Load Equivalency</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
+<dd>
+false Parsing of PGN Message aborted </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02738">2738</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a77cf6e6cdcf3b0b66bface17b241eeb3" name="a77cf6e6cdcf3b0b66bface17b241eeb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77cf6e6cdcf3b0b66bface17b241eeb3">&#9670;&nbsp;</a></span>ParseN2kPGN126998()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ParseN2kPGN126998 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>ManufacturerInformationSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>ManufacturerInformation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>InstallationDescription1Size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>InstallationDescription1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>InstallationDescription2Size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>InstallationDescription2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parsing the content of message PGN 126998 "Configuration information". </p>
+<p >Free-form alphanumeric fields describing the installation (e.g., starboard engine room location) of the device and installation notes (e.g., calibration data).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object </td></tr>
+    <tr><td class="paramname">ManufacturerInformationSize</td><td>Size off Manufacturer Information </td></tr>
+    <tr><td class="paramname">ManufacturerInformation</td><td>Manufacturer Information </td></tr>
+    <tr><td class="paramname">InstallationDescription1Size</td><td>Size off Installation Description </td></tr>
+    <tr><td class="paramname">InstallationDescription1</td><td>Installation Description, Field 1 </td></tr>
+    <tr><td class="paramname">InstallationDescription2Size</td><td>Size off Installation Description </td></tr>
+    <tr><td class="paramname">InstallationDescription2</td><td>Installation Description, Field 2</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
+<dd>
+false Parsing of PGN Message aborted </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02823">2823</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab5409c3f185f2955f22257cf5318ea95" name="ab5409c3f185f2955f22257cf5318ea95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5409c3f185f2955f22257cf5318ea95">&#9670;&nbsp;</a></span>ParseN2kPGN59904()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ParseN2kPGN59904 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long &amp;&#160;</td>
+          <td class="paramname"><em>RequestedPGN</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parsing the content of message PGN 59904 "ISO request". </p>
+<p >As defined by ISO, this message has a data length of 3 bytes with no padding added to complete the single frame. The appropriate response to this message is based on the PGN being requested, and whether the receiver supports the requested PGN.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object </td></tr>
+    <tr><td class="paramname">RequestedPGN</td><td>PGN being requested</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
+<dd>
+false Parsing of PGN Message aborted </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02844">2844</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a811b7f7b3b649da008ea67b11f121ea1" name="a811b7f7b3b649da008ea67b11f121ea1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a811b7f7b3b649da008ea67b11f121ea1">&#9670;&nbsp;</a></span>PROGMEM_readAnything()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void PROGMEM_readAnything </td>
+          <td>(</td>
+          <td class="paramtype">const T *&#160;</td>
+          <td class="paramname"><em>sce</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02069">2069</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0757dfc2b63ef86ea358e765a517cf31" name="a0757dfc2b63ef86ea358e765a517cf31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0757dfc2b63ef86ea358e765a517cf31">&#9670;&nbsp;</a></span>ProgmemStrLen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ProgmemStrLen </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02758">2758</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6758abf82bbde509d0bb8879b492d9ae" name="a6758abf82bbde509d0bb8879b492d9ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6758abf82bbde509d0bb8879b492d9ae">&#9670;&nbsp;</a></span>SetN2kPGN126464()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN126464 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n_m_e_a2000_8h.html#afe3510c9b614e5cd7d30c8095882cde0">tN2kPGNList</a>&#160;</td>
+          <td class="paramname"><em>tr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned long *&#160;</td>
+          <td class="paramname"><em>PGNs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 126464 Message "PGN List - Transmit PGNs group 
+       function". </p>
+<p >The PGN List group function type is defined by the first field. The message will be either a Transmit PGNs or a Receive PGNs group function that identifies the PGNs transmitted from or received by a node.</p>
+<dl class="section note"><dt>Note</dt><dd>List of PGNs must be null terminated and defined as PROGMEM e.g. const unsigned long TransmitMessages[] PROGMEM={130310L,0};</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">Destination</td><td>Address of the destination </td></tr>
+    <tr><td class="paramname">tr</td><td>Transmit or Receive, see <a class="el" href="_n_m_e_a2000_8h.html#afe3510c9b614e5cd7d30c8095882cde0">tN2kPGNList</a> </td></tr>
+    <tr><td class="paramname">PGNs</td><td>List of PGNs </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02857">2857</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4fae1052033c2b02fbadbb9032d58f2a" name="a4fae1052033c2b02fbadbb9032d58f2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fae1052033c2b02fbadbb9032d58f2a">&#9670;&nbsp;</a></span>SetN2kPGN126993()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN126993 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeInterval_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sequenceCounter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 126993 Message "Heartbeat". </p>
+<p >This PGN shall be transmitted by all NMEA devices. Reception of this PGN confirms that a device is still present on the network. Reception of this PGN may also be used to maintain an address to NAME association table within the receiving device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">timeInterval_ms</td><td>time interval in msec (0.01 - 655.32s ) </td></tr>
+    <tr><td class="paramname">sequenceCounter</td><td>Sequence counter </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02873">2873</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abe42ffbc17c4de5dc603221c2c00ba7e" name="abe42ffbc17c4de5dc603221c2c00ba7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe42ffbc17c4de5dc603221c2c00ba7e">&#9670;&nbsp;</a></span>SetN2kPGN126996()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN126996 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>N2kVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>ProductCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ModelID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>SwCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ModelVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ModelSerialCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>CertificationLevel</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>LoadEquivalency</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 126996 Message "Product information". </p>
+<p >Provides product information onto the network that could be important for determining quality of data coming from this product.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">N2kVersion</td><td>NMEA Network Message Database Version </td></tr>
+    <tr><td class="paramname">ProductCode</td><td>NMEA Manufacturer's Product Code </td></tr>
+    <tr><td class="paramname">ModelID</td><td>Manufacturer's Model ID </td></tr>
+    <tr><td class="paramname">SwCode</td><td>Manufacturer's Software Version Code </td></tr>
+    <tr><td class="paramname">ModelVersion</td><td>Manufacturer's Model Version </td></tr>
+    <tr><td class="paramname">ModelSerialCode</td><td>Manufacturer's Model Serial Code </td></tr>
+    <tr><td class="paramname">CertificationLevel</td><td>NMEA 2000 Certification Level </td></tr>
+    <tr><td class="paramname">LoadEquivalency</td><td>Load Equivalency </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02721">2721</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a83cee127ff33e5576a0c0c548cf8c0be" name="a83cee127ff33e5576a0c0c548cf8c0be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83cee127ff33e5576a0c0c548cf8c0be">&#9670;&nbsp;</a></span>SetN2kPGN126996Progmem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN126996Progmem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> *&#160;</td>
+          <td class="paramname"><em>ProductInformation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>OptionalSerialCode</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02143">2143</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab3965a30d08ef52a3ad8e8ab0033a19d" name="ab3965a30d08ef52a3ad8e8ab0033a19d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3965a30d08ef52a3ad8e8ab0033a19d">&#9670;&nbsp;</a></span>SetN2kPGN126998()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN126998 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ManufacturerInformation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>InstallationDescription1</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>InstallationDescription2</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>UsePgm</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 126998 Message "Configuration information". </p>
+<p >Free-form alphanumeric fields describing the installation (e.g., starboard engine room location) of the device and installation notes (e.g., calibration data).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">ManufacturerInformation</td><td>Manufacturer Information </td></tr>
+    <tr><td class="paramname">InstallationDescription1</td><td>Installation Description, Field 1 </td></tr>
+    <tr><td class="paramname">InstallationDescription2</td><td>Installation Description, Field 2 </td></tr>
+    <tr><td class="paramname">UsePgm</td><td>Use program memory, default = false </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02773">2773</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9c9b91f17beb9663aa75b63f2e831664" name="a9c9b91f17beb9663aa75b63f2e831664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c9b91f17beb9663aa75b63f2e831664">&#9670;&nbsp;</a></span>SetN2kPGN59392()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN59392 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Control</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>GroupFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ISO Acknowledgement. </p>
+<p >Setting up PGN 59392 Message "ISO Acknowledgement". </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02682">2682</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8ff5d9b29c69cc09f6b99a8380c642a8" name="a8ff5d9b29c69cc09f6b99a8380c642a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ff5d9b29c69cc09f6b99a8380c642a8">&#9670;&nbsp;</a></span>SetN2kPGN59904()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN59904 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>RequestedPGN</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 59904 Message "ISO request". </p>
+<p >As defined by ISO, this message has a data length of 3 bytes with no padding added to complete the single frame. The appropriate response to this message is based on the PGN being requested, and whether the receiver supports the requested PGN.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">Destination</td><td>Address of the destination </td></tr>
+    <tr><td class="paramname">RequestedPGN</td><td>PGN being requested </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02837">2837</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a43c1cd19678b9e95c2c854d5e59099b4" name="a43c1cd19678b9e95c2c854d5e59099b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c1cd19678b9e95c2c854d5e59099b4">&#9670;&nbsp;</a></span>SetN2kPGN60928() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN60928 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>Name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 60928 Message "ISO Address Claim". </p>
+<p >This network management message is used to claim a network address and to respond with device information (NAME) requested by the ISO Request or Complex Request Group Function. This PGN contains several fields that are Request Parameters that can be used to control the expected response to requests for this PGN.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">Name</td><td>Name of the device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02712">2712</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab5e471a8466b6c5a444048f88ea65fe0" name="ab5e471a8466b6c5a444048f88ea65fe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e471a8466b6c5a444048f88ea65fe0">&#9670;&nbsp;</a></span>SetN2kPGN60928() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN60928 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>UniqueNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>DeviceFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>DeviceClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>DeviceInstance</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>SystemInstance</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em> = <code>4</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Setting up PGN 60928 Message "ISO Address Claim". </p>
+<p >This network management message is used to claim a network address and to respond with device information (NAME) requested by the ISO Request or Complex Request Group Function. This PGN contains several fields that are Request Parameters that can be used to control the expected response to requests for this PGN.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, ready to be send </td></tr>
+    <tr><td class="paramname">UniqueNumber</td><td>Unique Number (ISO Identity Number) </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code </td></tr>
+    <tr><td class="paramname">DeviceFunction</td><td>Device Function (ISO Function) </td></tr>
+    <tr><td class="paramname">DeviceClass</td><td>Device Class </td></tr>
+    <tr><td class="paramname">DeviceInstance</td><td>Device Instance </td></tr>
+    <tr><td class="paramname">SystemInstance</td><td>System Instance (ISO Device Class Instance) </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02696">2696</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af18a10d314d1393994c195278562d3cc" name="af18a10d314d1393994c195278562d3cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af18a10d314d1393994c195278562d3cc">&#9670;&nbsp;</a></span>StrLen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t StrLen </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02766">2766</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acc965669e6064605de5aa086f0b377e7" name="acc965669e6064605de5aa086f0b377e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc965669e6064605de5aa086f0b377e7">&#9670;&nbsp;</a></span>TPCtsPackets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char TPCtsPackets </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>nPackets</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01654">1654</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a5d0a3229b751afe4031006a4e7741738" name="a5d0a3229b751afe4031006a4e7741738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d0a3229b751afe4031006a4e7741738">&#9670;&nbsp;</a></span>DefInstallationDescription1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char DefInstallationDescription1[] = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Installation Description (Field1) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00573">573</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af76adbe70f8120855a2107e9b45f8589" name="af76adbe70f8120855a2107e9b45f8589"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76adbe70f8120855a2107e9b45f8589">&#9670;&nbsp;</a></span>DefInstallationDescription2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char DefInstallationDescription2[] = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Installation Description (Field2) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00577">577</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acc2a70663ff091c69cf8da410783742a" name="acc2a70663ff091c69cf8da410783742a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc2a70663ff091c69cf8da410783742a">&#9670;&nbsp;</a></span>DefManufacturerInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char DefManufacturerInformation[] = &quot;NMEA2000 library, https://github.com/ttlappalainen/<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Manufacturer Information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00569">569</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a671e932c355cea4819a1db5ec543dc99" name="a671e932c355cea4819a1db5ec543dc99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a671e932c355cea4819a1db5ec543dc99">&#9670;&nbsp;</a></span>DefProductInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> DefProductInformation</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                                       2101,               </div>
+<div class="line">                                       666,                </div>
+<div class="line">                                       <span class="stringliteral">&quot;Arduino N2k-&gt;PC&quot;</span>,  </div>
+<div class="line">                                       <span class="stringliteral">&quot;1.0.0.0&quot;</span>,          </div>
+<div class="line">                                       <span class="stringliteral">&quot;1.0.0&quot;</span>,    </div>
+<div class="line">                                       <span class="stringliteral">&quot;00000001&quot;</span>, </div>
+<div class="line">                                       0, </div>
+<div class="line">                                       1 </div>
+<div class="line">                                      }</div>
+</div><!-- fragment -->
+<p>Default Product Information. </p>
+<p >This structure holds the default Produkt Information of the device:</p>
+<ul>
+<li>N2kVersion = 2101</li>
+<li>ProductCode = 666</li>
+<li>N2kModelID = Arduino N2k-&gt;PC</li>
+<li>N2kSwCode = 1.0.0.0</li>
+<li>N2kModelVersion = 1.0.0</li>
+<li>N2kModelSerialCode = 00000001</li>
+<li>CertificationLevel = 0</li>
+<li>LoadEquivalency = 1 </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00555">555</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acd182c72a77c64e03c989a5bac1eaeb2" name="acd182c72a77c64e03c989a5bac1eaeb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd182c72a77c64e03c989a5bac1eaeb2">&#9670;&nbsp;</a></span>DefReceiveMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned long DefReceiveMessages[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                                        59392L, </div>
+<div class="line">                                        59904L, </div>
+<div class="line"> </div>
+<div class="line">                                         <a class="code hl_define" href="_n_m_e_a2000_8cpp.html#a6912b69ca428205f1b75126fc4359108">TP_DT</a>, </div>
+<div class="line">                                         <a class="code hl_define" href="_n_m_e_a2000_8cpp.html#aea2258f5dcc8dc92473652a55b8bfc5d">TP_CM</a>, </div>
+<div class="line"> </div>
+<div class="line">                                        60928L, </div>
+<div class="line">                                        65240L, </div>
+<div class="line"> </div>
+<div class="line">                                       126208L, </div>
+<div class="line"> </div>
+<div class="line">                                       0}</div>
+<div class="ttc" id="a_n_m_e_a2000_8cpp_html_a6912b69ca428205f1b75126fc4359108"><div class="ttname"><a href="_n_m_e_a2000_8cpp.html#a6912b69ca428205f1b75126fc4359108">TP_DT</a></div><div class="ttdeci">#define TP_DT</div><div class="ttdoc">Multi packet data transfer.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l00119">NMEA2000.cpp:119</a></div></div>
+<div class="ttc" id="a_n_m_e_a2000_8cpp_html_aea2258f5dcc8dc92473652a55b8bfc5d"><div class="ttname"><a href="_n_m_e_a2000_8cpp.html#aea2258f5dcc8dc92473652a55b8bfc5d">TP_CM</a></div><div class="ttdeci">#define TP_CM</div><div class="ttdoc">Multi packet connection management, TP.CM.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l00117">NMEA2000.cpp:117</a></div></div>
+</div><!-- fragment -->
+<p>Default list of Received Messages. </p>
+<p >List of default transmit PGNs:</p><ul>
+<li>59392L ISO Acknowledgement, pri=6, period=NA</li>
+<li>59904L ISO Request, pri=6, period=NA</li>
+<li>60416L Multi packet data transfer, TP.DT, pri=6, period=NA</li>
+<li>60160L Multi packet connection management, TP.CM, pri=6, period=NA</li>
+<li>60928L ISO Address Claim</li>
+<li>65240L Commanded Address</li>
+<li>126208L NMEA Request/Command/Acknowledge group function</li>
+</ul>
+<p >This lis is terminated by 0. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00194">194</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab88cd5348d8e9ea53b5e71f05883f356" name="ab88cd5348d8e9ea53b5e71f05883f356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88cd5348d8e9ea53b5e71f05883f356">&#9670;&nbsp;</a></span>DefTransmitMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned long DefTransmitMessages[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                                        59392L, </div>
+<div class="line">                                        59904L, </div>
+<div class="line"> </div>
+<div class="line">                                         <a class="code hl_define" href="_n_m_e_a2000_8cpp.html#a6912b69ca428205f1b75126fc4359108">TP_DT</a>, </div>
+<div class="line">                                         <a class="code hl_define" href="_n_m_e_a2000_8cpp.html#aea2258f5dcc8dc92473652a55b8bfc5d">TP_CM</a>, </div>
+<div class="line"> </div>
+<div class="line">                                        60928L, </div>
+<div class="line"> </div>
+<div class="line">                                       126208L, </div>
+<div class="line"> </div>
+<div class="line">                                       126464L, </div>
+<div class="line"> </div>
+<div class="line">                                       126993L, </div>
+<div class="line"> </div>
+<div class="line">                                       126996L, </div>
+<div class="line">                                       126998L, </div>
+<div class="line">                                       0}</div>
+</div><!-- fragment -->
+<p>Default list of Transmit Messages. </p>
+<p >\</p>
+<p >List of default transmit PGNs:</p><ul>
+<li>59392L ISO Acknowledgement, pri=6, period=NA</li>
+<li>59904L ISO Request, pri=6, period=NA</li>
+<li>60416L Multi packet data transfer, TP.DT, pri=6, period=NA</li>
+<li>60160L Multi packet connection management, TP.CM, pri=6, period=NA</li>
+<li>60928L ISO Address Claim, pri=6, period=NA</li>
+<li>126208L NMEA Request/Command/Acknowledge group function, pri=3, period=NA</li>
+<li>126464L PGN List (Transmit and Receive), pri=6, period=NA</li>
+<li>126993L Heartbeat, pri=7, period=60000</li>
+<li>126996L Product information, pri=6, period=NA</li>
+<li>126998L Configuration information, pri=6, period=NA</li>
+</ul>
+<p >This lis is terminated by 0. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00160">160</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n_m_e_a2000_8cpp.html">NMEA2000.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

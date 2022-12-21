@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: N2kTimer.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n2k_timer_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">N2kTimer.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_n2k_timer_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef _N2k_TIMER_H_</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define _N2k_TIMER_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * N2kTimer.h</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * Copyright (c) 2022 Timo Lappalainen, Kave Oy, www.kave.fi</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * Permission is hereby granted, free of charge, to any person obtaining a</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * copy of this software and associated documentation files (the &quot;Software&quot;),</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * to deal in the Software without restriction, including without limitation</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * the rights to use, copy, modify, merge, publish, distribute, sublicense,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * and/or sell copies of the Software, and to permit persons to whom the</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * Software is furnished to do so, subject to the following conditions:</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * The above copyright notice and this permission notice shall be included in</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> * all copies or substantial portions of the Software.</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS </span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * SOFTWARE.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">/*************************************************************************/</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;<a class="code" href="_n2k_def_8h.html">N2kDef.h</a>&quot;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#if defined(ARDUINO_ARCH_ESP32) || defined(ESP_PLATFORM)</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &lt;esp_timer.h&gt;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#include &lt;esp_attr.h&gt;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keyword">inline</span> uint64_t <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>() {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">return</span> esp_timer_get_time()/1000ULL;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>(); }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#elif defined(ARDUINO)</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">  #include &lt;Arduino.h&gt;</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  uint64_t <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>();</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">inline</span> uint32_t <a class="code hl_function" href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis</a>(); }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  uint64_t <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  uint32_t <a class="code hl_function" href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="_n2k_timer_8h.html#a763d1e033673f53a50073acbf04f8734">   83</a></span><span class="preprocessor">#define N2kScheduler64Disabled 0xffffffffffffffffULL</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment">/************************************************************************/</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="_n2k_timer_8h.html#af78d5b12151b6ec4b992af13c21ab57e">   96</a></span><span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="_n2k_timer_8h.html#af78d5b12151b6ec4b992af13c21ab57e">N2kIsTimeBefore</a>(uint32_t T1, uint32_t T2) { <span class="keywordflow">return</span> (T2-T1)&lt;LONG_MAX; }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">/************************************************************************/</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="_n2k_timer_8h.html#a9cc2b32bf9baf77b7e2c9eb534db6445">  111</a></span><span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="_n2k_timer_8h.html#a9cc2b32bf9baf77b7e2c9eb534db6445">N2kHasElapsed</a>(uint32_t Start, uint32_t Elapsed, uint32_t Now=<a class="code hl_function" href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a>()) { </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="keywordflow">return</span> Now-(Start+Elapsed)&lt;LONG_MAX; </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment">/************************************************************************/</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html">  124</a></span><span class="keyword">class </span><a class="code hl_class" href="classt_n2k_sync_scheduler.html">tN2kSyncScheduler</a> {</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">  127</a></span>  <span class="keyword">static</span> uint64_t <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">  129</a></span>  uint64_t <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">  131</a></span>  uint32_t <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">  133</a></span>  uint32_t <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>; </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#ae631faca16a9be1cffd6379ad3107c7c">  145</a></span>  <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ae631faca16a9be1cffd6379ad3107c7c">tN2kSyncScheduler</a>(<span class="keywordtype">bool</span> Enable=<span class="keyword">false</span>, uint32_t _Period=0, uint32_t _Offset=0) { </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>=_Offset; <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>=_Period; </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">if</span> ( Enable ) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>      <a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>();</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>      <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">Disable</a>();</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    }</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">  157</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">Disable</a>() { <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>=<a class="code hl_define" href="_n2k_timer_8h.html#a763d1e033673f53a50073acbf04f8734">N2kScheduler64Disabled</a>; }</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a6780dfa175297b6b16a72eec2a3fe8c7">  165</a></span>  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a6780dfa175297b6b16a72eec2a3fe8c7">IsDisabled</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>==<a class="code hl_define" href="_n2k_timer_8h.html#a763d1e033673f53a50073acbf04f8734">N2kScheduler64Disabled</a>; }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a9ffd76fb3b6dc0be57de6f938adfad5a">  173</a></span>  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a9ffd76fb3b6dc0be57de6f938adfad5a">IsEnabled</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>!=<a class="code hl_define" href="_n2k_timer_8h.html#a763d1e033673f53a50073acbf04f8734">N2kScheduler64Disabled</a>; }</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">  181</a></span>  <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">IsTime</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>()&gt;<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>; }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a76b5af1785373a20938b24e905a28a59">  188</a></span>  <span class="keyword">inline</span> uint64_t <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a76b5af1785373a20938b24e905a28a59">Remaining</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">IsTime</a>()?0:<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>-<a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>(); }</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#ab1307c80a6baed67d69a85a040f1a7d1">  195</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ab1307c80a6baed67d69a85a040f1a7d1">SetPeriod</a>(uint32_t _Period) { <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>=_Period; <span class="keywordflow">if</span> ( <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>&lt;1 ) <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>=1; <a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>(); }</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>  </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a48da4bf0d286b575f1cc4fcf373e779b">  202</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a48da4bf0d286b575f1cc4fcf373e779b">SetOffset</a>(uint32_t _Offset) { <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>=_Offset; <a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>(); }</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a8043b050760b92d83a0328846ed5e805">  210</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a8043b050760b92d83a0328846ed5e805">SetPeriodAndOffset</a>(uint32_t _Period, uint32_t _Offset) { </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>=_Period; </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>=_Offset;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordflow">if</span> ( <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>==0 ) <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">Disable</a>(); </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>(); </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  }</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#ab923d917020ed62b3debdee4e788a473">  222</a></span>  uint32_t <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ab923d917020ed62b3debdee4e788a473">GetOffset</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>; }</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#ab9325db87f77258a87d109e66378ea4d">  229</a></span>  uint32_t <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ab9325db87f77258a87d109e66378ea4d">GetPeriod</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>; }</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a426652500aaec6c4250e9e0509bf5151">  236</a></span>  uint64_t <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a426652500aaec6c4250e9e0509bf5151">GetNextTime</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>; }</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">  242</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>() {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keywordflow">if</span> ( <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>==0 ) {</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>      <a class="code hl_function" href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">Disable</a>();</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    uint64_t now=<a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>();</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">if</span> ( (<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>+<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>)&gt;now ) {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>      <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>=(<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>+<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>      uint64_t n=(now-(<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>+<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>))/<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>      <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">NextTime</a>=<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>+<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">Offset</a>+(n+1)*<a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">Period</a>;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    }</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="classt_n2k_sync_scheduler.html#a3c9ceafde1958b188587be1e582a465f">  259</a></span>  <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_sync_scheduler.html#a3c9ceafde1958b188587be1e582a465f">SetSyncOffset</a>() { <a class="code hl_variable" href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">SyncOffset</a>=<a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>(); }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>};</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="preprocessor">#if defined(ARDUINO_ARCH_ESP32) || defined(ESP_PLATFORM) || defined(__linux__) || defined(__linux) || defined(linux)</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span><span class="preprocessor">  #define N2kUse64bitSchedulerTime 1</span></div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="preprocessor">  #define N2kSchedulerDisabled 0xffffffffffffffffULL</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  <span class="keyword">using </span><a class="code hl_typedef" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a>=uint64_t;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="preprocessor">  #include &lt;limits.h&gt;</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">  271</a></span><span class="preprocessor">  #define N2kSchedulerDisabled 0xffffffffUL</span></div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">  272</a></span>  <span class="keyword">using </span><a class="code hl_typedef" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a>=uint32_t;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="comment">// </span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="comment">/************************************************************************/</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html">  286</a></span><span class="keyword">class </span><a class="code hl_class" href="classt_n2k_scheduler.html">tN2kScheduler</a> {</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  </div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">  290</a></span>  <a class="code hl_typedef" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a> <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="preprocessor">  #if !defined(N2kUse64bitSchedulerTime)</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  <a class="code hl_typedef" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a> <a class="code hl_function" href="classt_n2k_scheduler.html#a3c898395bc25a65f14c8a3090a6d86b4">Now</a>();</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>  </div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#ab3511459192f2c32de83142c234c6091">  301</a></span>  <a class="code hl_function" href="classt_n2k_scheduler.html#ab3511459192f2c32de83142c234c6091">tN2kScheduler</a>(<a class="code hl_typedef" href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a> _NextTime=<a class="code hl_define" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a>) : <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>(_NextTime) { }</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#a578c3d60a050c1ecc9edb1405b71c88a">  306</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_scheduler.html#a578c3d60a050c1ecc9edb1405b71c88a">Disable</a>() { </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>=<a class="code hl_define" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a>; </div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>  }</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#a6bdfbe8c4b110741f5b7c3e143a7f8de">  316</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_scheduler.html#a6bdfbe8c4b110741f5b7c3e143a7f8de">IsDisabled</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>==<a class="code hl_define" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a>; }</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#a93cf030c0d45f197949a827c1af2020a">  324</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_scheduler.html#a93cf030c0d45f197949a827c1af2020a">IsEnabled</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>!=<a class="code hl_define" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a>; }</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#ae9839c69c494de4c04f114f2685cf3de">  332</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classt_n2k_scheduler.html#ae9839c69c494de4c04f114f2685cf3de">IsTime</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="preprocessor">    #if defined(N2kUse64bitSchedulerTime)</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>()&gt;<a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>;</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="preprocessor">    #else</span></div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordflow">return</span> !<a class="code hl_function" href="classt_n2k_scheduler.html#a6bdfbe8c4b110741f5b7c3e143a7f8de">IsDisabled</a>() &amp;&amp; ( <a class="code hl_function" href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a>()-<a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>&lt;LONG_MAX );</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  }</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="comment">  /************************************************************************/</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno"><a class="line" href="classt_n2k_scheduler.html#ad8438df4d34fb04ec2eb5e87f0af79f0">  345</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classt_n2k_scheduler.html#ad8438df4d34fb04ec2eb5e87f0af79f0">FromNow</a>(uint32_t _Add) {</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="preprocessor">    #if defined(N2kUse64bitSchedulerTime)</span></div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>=<a class="code hl_function" href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a>()+_Add;</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span><span class="preprocessor">    #else</span></div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>=<a class="code hl_function" href="classt_n2k_scheduler.html#a3c898395bc25a65f14c8a3090a6d86b4">Now</a>()+_Add;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    <span class="keywordflow">if</span> ( <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>==<a class="code hl_define" href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a> ) <a class="code hl_variable" href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">NextTime</a>=0; <span class="comment">// Roll over</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>  }</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>};</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_n2k_def_8h_html"><div class="ttname"><a href="_n2k_def_8h.html">N2kDef.h</a></div><div class="ttdoc">Type definitions and utility macros used in the NMEA2000 libraries.</div></div>
+<div class="ttc" id="a_n2k_def_8h_html_adb94fbd930038e1510574dd4bcf07fe1"><div class="ttname"><a href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis</a></div><div class="ttdeci">uint32_t millis()</div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_a65190532f236d19aa4fabafdfc453d80"><div class="ttname"><a href="_n2k_timer_8h.html#a65190532f236d19aa4fabafdfc453d80">N2kSchedulerDisabled</a></div><div class="ttdeci">#define N2kSchedulerDisabled</div><div class="ttdoc">Defined Value for disabling the scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00271">N2kTimer.h:271</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_a763d1e033673f53a50073acbf04f8734"><div class="ttname"><a href="_n2k_timer_8h.html#a763d1e033673f53a50073acbf04f8734">N2kScheduler64Disabled</a></div><div class="ttdeci">#define N2kScheduler64Disabled</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00083">N2kTimer.h:83</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_a82892148b5e1623eadcd5c42933679c3"><div class="ttname"><a href="_n2k_timer_8h.html#a82892148b5e1623eadcd5c42933679c3">N2kMillis64</a></div><div class="ttdeci">uint64_t N2kMillis64()</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8cpp_source.html#l00028">N2kTimer.cpp:28</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_a9cc2b32bf9baf77b7e2c9eb534db6445"><div class="ttname"><a href="_n2k_timer_8h.html#a9cc2b32bf9baf77b7e2c9eb534db6445">N2kHasElapsed</a></div><div class="ttdeci">bool N2kHasElapsed(uint32_t Start, uint32_t Elapsed, uint32_t Now=N2kMillis())</div><div class="ttdoc">Has time elapsed since start.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00111">N2kTimer.h:111</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_ab29364efcaa764a19e4d15229e509f96"><div class="ttname"><a href="_n2k_timer_8h.html#ab29364efcaa764a19e4d15229e509f96">N2kMillis</a></div><div class="ttdeci">uint32_t N2kMillis()</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8cpp_source.html#l00025">N2kTimer.cpp:25</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_af78d5b12151b6ec4b992af13c21ab57e"><div class="ttname"><a href="_n2k_timer_8h.html#af78d5b12151b6ec4b992af13c21ab57e">N2kIsTimeBefore</a></div><div class="ttdeci">bool N2kIsTimeBefore(uint32_t T1, uint32_t T2)</div><div class="ttdoc">Comparing 2 values even after 32 bit time roll over situation.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00096">N2kTimer.h:96</a></div></div>
+<div class="ttc" id="a_n2k_timer_8h_html_afefc8ddb4eccdd10476c2fb49213fcff"><div class="ttname"><a href="_n2k_timer_8h.html#afefc8ddb4eccdd10476c2fb49213fcff">tN2kSchedulerTime</a></div><div class="ttdeci">uint32_t tN2kSchedulerTime</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00272">N2kTimer.h:272</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html"><div class="ttname"><a href="classt_n2k_scheduler.html">tN2kScheduler</a></div><div class="ttdoc">Un synchronized Scheduler which can roll over.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00286">N2kTimer.h:286</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_a3c898395bc25a65f14c8a3090a6d86b4"><div class="ttname"><a href="classt_n2k_scheduler.html#a3c898395bc25a65f14c8a3090a6d86b4">tN2kScheduler::Now</a></div><div class="ttdeci">tN2kSchedulerTime Now()</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8cpp_source.html#l00040">N2kTimer.cpp:40</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_a578c3d60a050c1ecc9edb1405b71c88a"><div class="ttname"><a href="classt_n2k_scheduler.html#a578c3d60a050c1ecc9edb1405b71c88a">tN2kScheduler::Disable</a></div><div class="ttdeci">void Disable()</div><div class="ttdoc">Disable the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00306">N2kTimer.h:306</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_a6bdfbe8c4b110741f5b7c3e143a7f8de"><div class="ttname"><a href="classt_n2k_scheduler.html#a6bdfbe8c4b110741f5b7c3e143a7f8de">tN2kScheduler::IsDisabled</a></div><div class="ttdeci">bool IsDisabled() const</div><div class="ttdoc">Check if the scheduler is disabled.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00316">N2kTimer.h:316</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_a93cf030c0d45f197949a827c1af2020a"><div class="ttname"><a href="classt_n2k_scheduler.html#a93cf030c0d45f197949a827c1af2020a">tN2kScheduler::IsEnabled</a></div><div class="ttdeci">bool IsEnabled() const</div><div class="ttdoc">Check if the scheduler is enabled.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00324">N2kTimer.h:324</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_aaa311a00980149600634e6f65514ebdf"><div class="ttname"><a href="classt_n2k_scheduler.html#aaa311a00980149600634e6f65514ebdf">tN2kScheduler::NextTime</a></div><div class="ttdeci">tN2kSchedulerTime NextTime</div><div class="ttdoc">Timestamp for next event.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00290">N2kTimer.h:290</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_ab3511459192f2c32de83142c234c6091"><div class="ttname"><a href="classt_n2k_scheduler.html#ab3511459192f2c32de83142c234c6091">tN2kScheduler::tN2kScheduler</a></div><div class="ttdeci">tN2kScheduler(tN2kSchedulerTime _NextTime=N2kSchedulerDisabled)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00301">N2kTimer.h:301</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_ad8438df4d34fb04ec2eb5e87f0af79f0"><div class="ttname"><a href="classt_n2k_scheduler.html#ad8438df4d34fb04ec2eb5e87f0af79f0">tN2kScheduler::FromNow</a></div><div class="ttdeci">void FromNow(uint32_t _Add)</div><div class="ttdoc">Set Timestamp for next event relativ to now.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00345">N2kTimer.h:345</a></div></div>
+<div class="ttc" id="aclasst_n2k_scheduler_html_ae9839c69c494de4c04f114f2685cf3de"><div class="ttname"><a href="classt_n2k_scheduler.html#ae9839c69c494de4c04f114f2685cf3de">tN2kScheduler::IsTime</a></div><div class="ttdeci">bool IsTime() const</div><div class="ttdoc">Is it time for the next event.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00332">N2kTimer.h:332</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html"><div class="ttname"><a href="classt_n2k_sync_scheduler.html">tN2kSyncScheduler</a></div><div class="ttdoc">Synchronized Scheduler for timed message sending.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00124">N2kTimer.h:124</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a1febba8dcd7a525de234b9fb790c34f3"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a1febba8dcd7a525de234b9fb790c34f3">tN2kSyncScheduler::Period</a></div><div class="ttdeci">uint32_t Period</div><div class="ttdoc">Period for scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00133">N2kTimer.h:133</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a23059c31d5e7510c044cdce61a3a98b6"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a23059c31d5e7510c044cdce61a3a98b6">tN2kSyncScheduler::SyncOffset</a></div><div class="ttdeci">static uint64_t SyncOffset</div><div class="ttdoc">???</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00127">N2kTimer.h:127</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a2903591c8aa23e3279796e69af91b06b"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a2903591c8aa23e3279796e69af91b06b">tN2kSyncScheduler::Offset</a></div><div class="ttdeci">uint32_t Offset</div><div class="ttdoc">Offset to synchronize with others.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00131">N2kTimer.h:131</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a2985dca6fadc4f9a61c945db64600d60"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a2985dca6fadc4f9a61c945db64600d60">tN2kSyncScheduler::NextTime</a></div><div class="ttdeci">uint64_t NextTime</div><div class="ttdoc">Timestamp for next event.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00129">N2kTimer.h:129</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a3c9ceafde1958b188587be1e582a465f"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a3c9ceafde1958b188587be1e582a465f">tN2kSyncScheduler::SetSyncOffset</a></div><div class="ttdeci">static void SetSyncOffset()</div><div class="ttdoc">Set the SyncOffset of the scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00259">N2kTimer.h:259</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a426652500aaec6c4250e9e0509bf5151"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a426652500aaec6c4250e9e0509bf5151">tN2kSyncScheduler::GetNextTime</a></div><div class="ttdeci">uint64_t GetNextTime() const</div><div class="ttdoc">Get the Timestamp of the NextTime.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00236">N2kTimer.h:236</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a48da4bf0d286b575f1cc4fcf373e779b"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a48da4bf0d286b575f1cc4fcf373e779b">tN2kSyncScheduler::SetOffset</a></div><div class="ttdeci">void SetOffset(uint32_t _Offset)</div><div class="ttdoc">Set the Offset of the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00202">N2kTimer.h:202</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a6780dfa175297b6b16a72eec2a3fe8c7"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a6780dfa175297b6b16a72eec2a3fe8c7">tN2kSyncScheduler::IsDisabled</a></div><div class="ttdeci">bool IsDisabled() const</div><div class="ttdoc">Checks if Scheduler is disabled.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00165">N2kTimer.h:165</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a76b5af1785373a20938b24e905a28a59"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a76b5af1785373a20938b24e905a28a59">tN2kSyncScheduler::Remaining</a></div><div class="ttdeci">uint64_t Remaining()</div><div class="ttdoc">Calculate remaining time.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00188">N2kTimer.h:188</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a8043b050760b92d83a0328846ed5e805"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a8043b050760b92d83a0328846ed5e805">tN2kSyncScheduler::SetPeriodAndOffset</a></div><div class="ttdeci">void SetPeriodAndOffset(uint32_t _Period, uint32_t _Offset)</div><div class="ttdoc">Set the Period And Offset of the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00210">N2kTimer.h:210</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a86577e69bd66bffe6f18a0f619b0731e"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">tN2kSyncScheduler::IsTime</a></div><div class="ttdeci">bool IsTime()</div><div class="ttdoc">Check if ít is time.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00181">N2kTimer.h:181</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a9ffd76fb3b6dc0be57de6f938adfad5a"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a9ffd76fb3b6dc0be57de6f938adfad5a">tN2kSyncScheduler::IsEnabled</a></div><div class="ttdeci">bool IsEnabled() const</div><div class="ttdoc">Checks if Scheduler is enabled.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00173">N2kTimer.h:173</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_ab1307c80a6baed67d69a85a040f1a7d1"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#ab1307c80a6baed67d69a85a040f1a7d1">tN2kSyncScheduler::SetPeriod</a></div><div class="ttdeci">void SetPeriod(uint32_t _Period)</div><div class="ttdoc">Set the Period of the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00195">N2kTimer.h:195</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_ab923d917020ed62b3debdee4e788a473"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#ab923d917020ed62b3debdee4e788a473">tN2kSyncScheduler::GetOffset</a></div><div class="ttdeci">uint32_t GetOffset() const</div><div class="ttdoc">Get the Offset of the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00222">N2kTimer.h:222</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_ab9325db87f77258a87d109e66378ea4d"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#ab9325db87f77258a87d109e66378ea4d">tN2kSyncScheduler::GetPeriod</a></div><div class="ttdeci">uint32_t GetPeriod() const</div><div class="ttdoc">Get the Period of the Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00229">N2kTimer.h:229</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_abb7a77a00739baac72ed2d53833d9ef6"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">tN2kSyncScheduler::UpdateNextTime</a></div><div class="ttdeci">void UpdateNextTime()</div><div class="ttdoc">Update the timestamp for NextTime.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00242">N2kTimer.h:242</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_ae631faca16a9be1cffd6379ad3107c7c"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#ae631faca16a9be1cffd6379ad3107c7c">tN2kSyncScheduler::tN2kSyncScheduler</a></div><div class="ttdeci">tN2kSyncScheduler(bool Enable=false, uint32_t _Period=0, uint32_t _Offset=0)</div><div class="ttdoc">Constructor for sync scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00145">N2kTimer.h:145</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_ae7da88a074cd3a946c4716c7fc1f4c74"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#ae7da88a074cd3a946c4716c7fc1f4c74">tN2kSyncScheduler::Disable</a></div><div class="ttdeci">void Disable()</div><div class="ttdoc">Disable Scheduler.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00157">N2kTimer.h:157</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n2k_timer_8h.html">N2kTimer.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

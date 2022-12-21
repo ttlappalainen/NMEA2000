@@ -1,0 +1,8 @@
+<map id="NMEA2000StdTypes.h" name="NMEA2000StdTypes.h">
+<area shape="rect" id="node1" title="NMEA2000 standard type definitions." alt="" coords="60,5,213,32"/>
+<area shape="rect" id="node2" href="$_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="91,80,182,107"/>
+<area shape="rect" id="node3" href="$_n2k_maretron_8cpp.html" title=" " alt="" coords="5,155,127,181"/>
+<area shape="rect" id="node4" href="$_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="151,155,267,181"/>
+<area shape="rect" id="node5" href="$_n2k_messages_8cpp.html" title=" " alt="" coords="53,229,183,256"/>
+<area shape="rect" id="node6" href="$_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="207,229,389,256"/>
+</map>

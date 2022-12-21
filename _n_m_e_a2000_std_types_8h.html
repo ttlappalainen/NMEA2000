@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: NMEA2000StdTypes.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n_m_e_a2000_std_types_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a>  </div>
+  <div class="headertitle"><div class="title">NMEA2000StdTypes.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>NMEA2000 standard type definitions.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for NMEA2000StdTypes.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n_m_e_a2000_std_types_8h__incl.png" border="0" usemap="#a_n_m_e_a2000_std_types_8h" alt=""/></div>
+<map name="a_n_m_e_a2000_std_types_8h" id="a_n_m_e_a2000_std_types_8h">
+<area shape="rect" title="NMEA2000 standard type definitions." alt="" coords="5,5,159,32"/>
+<area shape="rect" title=" " alt="" coords="50,80,114,107"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n_m_e_a2000_std_types_8h__dep__incl.png" border="0" usemap="#a_n_m_e_a2000_std_types_8hdep" alt=""/></div>
+<map name="a_n_m_e_a2000_std_types_8hdep" id="a_n_m_e_a2000_std_types_8hdep">
+<area shape="rect" title="NMEA2000 standard type definitions." alt="" coords="60,5,213,32"/>
+<area shape="rect" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="91,80,182,107"/>
+<area shape="rect" href="_n2k_maretron_8cpp.html" title=" " alt="" coords="5,155,127,181"/>
+<area shape="rect" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="151,155,267,181"/>
+<area shape="rect" href="_n2k_messages_8cpp.html" title=" " alt="" coords="53,229,183,256"/>
+<area shape="rect" href="_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="207,229,389,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n_m_e_a2000_std_types_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d206.html">tN2kDD206</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD206 - Engine Discrete Warning Status.  <a href="uniont_n2k_d_d206.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d223.html">tN2kDD223</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD223 - Engine Discrete Warning Status.  <a href="uniont_n2k_d_d223.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d471.html">tN2kDD471</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD471 - Thruster Motor Events according to PGN 128008.  <a href="uniont_n2k_d_d471.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d475.html">tN2kDD475</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD475 - Thruster Control Events according to PGN 128006.  <a href="uniont_n2k_d_d475.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d477.html">tN2kDD477</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD477 - Windlass Monitoring Events according to PGN 128778.  <a href="uniont_n2k_d_d477.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d478.html">tN2kDD478</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD478 - Windlass Control Events according to PGN 128776.  <a href="uniont_n2k_d_d478.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n2k_d_d483.html">tN2kDD483</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD483 - Windlass Operating Events according to PGN 128777.  <a href="uniont_n2k_d_d483.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:ga9b3af1938b0500dabdd11de87fa577d4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kDD002</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a12a35f91cec00f1e13409049752c142b">N2kDD002_No</a> =0
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4ad49f59479e2a38cf98997e815464228a">N2kDD002_Yes</a> =1
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a6f85a92a37281fba9413bb5d382a98b3">N2kDD002_Error</a> =2
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4abf329172e8566e31fe6a63698fa6c15f">N2kDD002_Unavailable</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a0e504a045954233c29b56f3be3af6ed2">N2kDD002_Off</a> =N2kDD002_No
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4aca4f6edc9ed7c4dbf2a2f56cf74f4ebb">N2kDD002_Disabled</a> =N2kDD002_No
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4ab97bc9d5a4a58bc912a50dcd026607ae">N2kDD002_Reset</a> =N2kDD002_No
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a3b4aa2233b25a2c911e268947ca2225b">N2kDD002_0</a> =N2kDD002_No
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a3b6429425d105b7875a07d74ec79d3f1">N2kDD002_On</a> =N2kDD002_Yes
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4af73b3d7632fcdf383d5e7e78febe64c7">N2kDD002_Enabled</a> =N2kDD002_Yes
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a25db69ec04335fd67db4c0dcfb627da8">N2kDD002_Set</a> =N2kDD002_Yes
+, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a1c8e2e346d3b4bd164c98ff4b22fcbe3">N2kDD002_1</a> =N2kDD002_Yes
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4a655381adf00fb618bd606d7a78b42555">N2kDD002_Unknown</a> =N2kDD002_Unavailable
+<br />
+ }</td></tr>
+<tr class="memdesc:ga9b3af1938b0500dabdd11de87fa577d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD002 - Generic Status Pair.  <a href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">More...</a><br /></td></tr>
+<tr class="separator:ga9b3af1938b0500dabdd11de87fa577d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64396d290128543a10f29a721f629028"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028">tN2kDD025</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a811945aca9990be3bb30556faeb12700">N2kDD025_Autonomous</a> =0
+, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a3b631c99e61c1acb5ad613edc0994484">N2kDD025_Differential</a> =1
+, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a6b59751d2541b51e859300c42324c639">N2kDD025_Estimated</a> =2
+, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a7415ea0098368e606231e806d3fd9173">N2kDD025_Simulator</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a882d4f86a476d3341b45d5f88b58b8b0">N2kDD025_Manual</a> =4
+, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028af751878d8d1195439b5103789b0fd656">N2kDD025_Error</a> =0xe
+, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028a777a8d17ae9c19b89d8bb68df2d9baac">N2kDD025_Unavailable</a> =0xf
+<br />
+ }</td></tr>
+<tr class="memdesc:ga64396d290128543a10f29a721f629028"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD025 - Mode, Data.  <a href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028">More...</a><br /></td></tr>
+<tr class="separator:ga64396d290128543a10f29a721f629028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga618c24960fcbfb338c5d29ef034c5cc1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1">tN2kDD072</a> { <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1a6f1c186b9e3967fbe634e253f127187c">N2kDD072_RangeResidualsWereUsedToCalculateData</a> =0
+, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1aff80811073a9253ecf1efb19e3aec349">N2kDD072_RangeResidualsWereCalculatedAfterPosition</a> =1
+, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1af185b628ab9c2b8b313d8e06b2df9ab8">N2kDD072_Error</a> =2
+, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1adb3c9d048ec7fb2592df867c089eae74">N2kDD072_Unavailable</a> =3
+ }</td></tr>
+<tr class="memdesc:ga618c24960fcbfb338c5d29ef034c5cc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD072 - Range Residual Mode.  <a href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1">More...</a><br /></td></tr>
+<tr class="separator:ga618c24960fcbfb338c5d29ef034c5cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga557ef409cb31124f5c79b361bd8fbfe3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3">tN2kDD124</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3af626a438c1013ea19b372d6ea1bb05de">N2kDD124_NotTracked</a> =0
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3a2e25782c7babe65f0527c44a7a68802d">N2kDD124_TrackedButNotUsedInSolution</a> =1
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3ab446d218b66f9a14d9319fdd5f0dd75a">N2kDD124_UsedInSolutionWithoutDifferentialCorrections</a> =2
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3a546ad3dcb50adc7baa2984bd7c21b012">N2kDD124_DifferentialCorrectionsAvailable</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3a0efee1999df8af238b454ca5db340299">N2kDD124_TrackedWithDifferentialCorrections</a> =4
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3a6f7656220c0f2a35c81bcafd5474e1c3">N2kDD124_UsedWithDifferentialCorrections</a> =5
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3aa9aff9ed516c4436bc09cbf7f8ea9cf1">N2kDD124_Error</a> =14
+, <a class="el" href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3a74f606147de5e36ea2b1f1446986ed06">N2kDD124_Unavailable</a> =15
+<br />
+ }</td></tr>
+<tr class="memdesc:ga557ef409cb31124f5c79b361bd8fbfe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD124 - PRN Usage Status.  <a href="group__group__msg_types.html#ga557ef409cb31124f5c79b361bd8fbfe3">More...</a><br /></td></tr>
+<tr class="separator:ga557ef409cb31124f5c79b361bd8fbfe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59a823dcb7456fe7bad874bf971e1bd6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6">tN2kDD305</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a6416355bf6ab20b66d8e696c0c0365d4">N2kAISAtoN_not_specified</a> =0
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6af38f7b1e0f2ebbcbb8bbaa38759ed3d1">N2kAISAtoN_reference_point</a> =1
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a20eea1d38464dec5abd28300617ea447">N2kAISAtoN_RACON</a> =2
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ae75d106dc1c2e82f16dad8ea95471eac">N2kAISAtoN_fixed_structure</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ae741be1dd4f1aa93cbe3fef26704c717">N2kAISAtoN_emergency_wreck_marking_buoy</a> =4
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ae0bc587d6fc02a344331f91c04fd00c8">N2kAISAtoN_light_without_sectors</a> =5
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a0e7f8a1b21a4ca37541e0dad8ef8c06c">N2kAISAtoN_light_with_sectors</a> =6
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a7be772227d82e13e8f9796de0b8fcff8">N2kAISAtoN_leading_light_front</a> =7
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ab55523e66d922526461960ff28c99f75">N2kAISAtoN_leading_light_rear</a> =8
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aef3e5bab8dd337aca48bd0208d8f9c8d">N2kAISAtoN_beacon_cardinal_N</a> =9
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aa1a229f0f99239603af2c14327fdbfb3">N2kAISAtoN_beacon_cardinal_E</a> =10
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ac20a865208e713d17b8f9a1cf2beb958">N2kAISAtoN_beacon_cardinal_S</a> =11
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ac9eaa98679e05cfdf860ad6749f2b342">N2kAISAtoN_beacon_cardinal_W</a> =12
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a44a3ea71efddca3282ae731c7e031bba">N2kAISAtoN_beacon_port_hand</a> =13
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a348c5d34a5b58567f0628901fa3d2a3e">N2kAISAtoN_beacon_starboard_hand</a> =14
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ac2385b0f4a9f0c766fcffdd7b41dbc70">N2kAISAtoN_beacon_preferred_ch_port_hand</a> =15
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aeeb1463a0d0534befcd7d68f40569221">N2kAISAtoN_beacon_preferred_ch_starboard_hand</a> =16
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ac7de646f2aab4a785f3511020588152e">N2kAISAtoN_beacon_isolated_danger</a> =17
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ac1365953494c59243bd55a653390c4f9">N2kAISAtoN_beacon_safe_water</a> =18
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a7a9e81bdc586dcd0ad0ac55d7eb22d57">N2kAISAtoN_beacon_special_mark</a> =19
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a7b1c76870bd5e8007ac466afaf98c8a0">N2kAISAtoN_cardinal_mark_N</a> =20
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a8a77a963e1c3d97de67fb8378cd6aff0">N2kAISAtoN_cardinal_mark_E</a> =21
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a5613c906d7381a999f89be42399eb82a">N2kAISAtoN_cardinal_mark_S</a> =22
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aba7068cc8c6499b195703b203c17e9c0">N2kAISAtoN_cardinal_mark_W</a> =23
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aeb5e3fe69530eb117dbc8bbce0c35f15">N2kAISAtoN_port_hand_mark</a> =24
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6aec48e5d0a28cd67ca9e1751c9d149fea">N2kAISAtoN_starboard_hand_mark</a> =25
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a4d4f3f2c6c5953930d9a1263c2803fce">N2kAISAtoN_preferred_channel_port_hand</a> =26
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a07914e7d7673b767f3ac55f5c91dc66c">N2kAISAtoN_preferred_channel_starboard_hand</a> =27
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a0639b115051b2e7327459733cb1f580b">N2kAISAtoN_isolated_danger</a> =28
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a0dcf5f1705491541c7decc4a561f91a0">N2kAISAtoN_safe_water</a> =29
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6ab572e50f27435ba69174fcd76e7ad842">N2kAISAtoN_special_mark</a> =30
+, <a class="el" href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6a1ac43cafb99f36c99ce80368d8c0cca7">N2kAISAtoN_light_vessel_lanby_rigs</a> =31
+<br />
+ }</td></tr>
+<tr class="memdesc:ga59a823dcb7456fe7bad874bf971e1bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of Aid to Navigation (AtoN) Type according to PGN129041.  <a href="group__group__msg_types.html#ga59a823dcb7456fe7bad874bf971e1bd6">More...</a><br /></td></tr>
+<tr class="separator:ga59a823dcb7456fe7bad874bf971e1bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga851033c0988bb1f058836950f92a3884"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884">tN2kDD374</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884a3d2540761b1315e30750619dfc95bf11">N2kDD374_UserDefined</a> =0
+, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884a1b97d88df3f7e0e3a028bc5cab8b1789">N2kDD374_MinimumDefined</a> =1
+, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884aa3fe9395c8b2a09d985fe6251fea4db2">N2kDD374_FactoryDefault</a> =2
+, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884ae0ab510e8de15fed7cd1feaf68aba9ea">N2kDD374_MaximumSupported</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884a3dcac87d57da691f46d2d95e61ab5e7c">N2kDD374_OutOfRange</a> =14
+, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884a6f57bf9beee1e1823b69bfa145456fad">N2kDD374_DataNotAvailable</a> =15
+<br />
+ }</td></tr>
+<tr class="memdesc:ga851033c0988bb1f058836950f92a3884"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of ....  <a href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884">More...</a><br /></td></tr>
+<tr class="separator:ga851033c0988bb1f058836950f92a3884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga806e3e52f1b9e5b5e068ab8b767294ba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294ba">tN2kDD473</a> { <a class="el" href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294baa444b1a2814255e719e09353af11fcc5e">N2kDD473_OFF</a> =0
+, <a class="el" href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294baa66d89bd7ce38a5cfe34444cbf2e84970">N2kDD473_ThrusterReady</a> =1
+, <a class="el" href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294baafb2c4b11759db21a39b5941f9fec39e2">N2kDD473_ThrusterToPORT</a> =2
+, <a class="el" href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294baaae3c733afbe3ed1f265b8c8641a6b5aa">N2kDD473_ThrusterToSTARBOARD</a> =3
+ }</td></tr>
+<tr class="memdesc:ga806e3e52f1b9e5b5e068ab8b767294ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD473 - Thruster Direction Control according to PGN 128006.  <a href="group__group__msg_types.html#ga806e3e52f1b9e5b5e068ab8b767294ba">More...</a><br /></td></tr>
+<tr class="separator:ga806e3e52f1b9e5b5e068ab8b767294ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga313f8a569b4f4718833153b0b9421034"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034">tN2kDD474</a> { <a class="el" href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034ab69782c91aa5b4318ee2c33f0a0e7a9c">N2kDD474_OFF</a> =0
+, <a class="el" href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034a1c11bf3b48a89c48f945a300848ab211">N2kDD474_Extend</a> =1
+, <a class="el" href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034a5842f1c304a607bf9cd91fd2a08a0756">N2kDD474_Retract</a> =2
+, <a class="el" href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034ace276e7b4d7829687320837326b47bec">N2kDD474_Reserved</a> =3
+ }</td></tr>
+<tr class="memdesc:ga313f8a569b4f4718833153b0b9421034"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD474 - Thruster Retraction according to PGN 128006.  <a href="group__group__msg_types.html#ga313f8a569b4f4718833153b0b9421034">More...</a><br /></td></tr>
+<tr class="separator:ga313f8a569b4f4718833153b0b9421034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae12f69d3e7352ea6a531314ea0cc8d36"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36">tN2kDD480</a> { <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36aefe1219d7701f0cf04c9e458d67528da">N2kDD480_WindlassStopped</a> =0
+, <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36ab556ead74b5dc9ca400a2dbb1ad8eaac">N2kDD480_DeploymentOccurring</a> =1
+, <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36af33047b7a0b49824d94ac2a1db108458">N2kDD480_RetrievalOccurring</a> =2
+, <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36a766cd0fdb76a68cb500fada1b48b2fca">N2kDD480_Unavailable</a> =3
+ }</td></tr>
+<tr class="memdesc:gae12f69d3e7352ea6a531314ea0cc8d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD480 - Windlass Motion States according to PGN 128777.  <a href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36">More...</a><br /></td></tr>
+<tr class="separator:gae12f69d3e7352ea6a531314ea0cc8d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07fe8ae611b7fa9c40426670c46a2348"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348">tN2kDD481</a> { <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348a34b5785f50df0e382b85a421e85867e2">N2kDD481_ChainPresentlyDetected</a> =0
+, <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348a9d835c412a6899bb6df774d6cfb86620">N2kDD481_RopePresentlyDetected</a> =1
+, <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348a869ed1a663ead82d9adf6adca4aa5976">N2kDD481_Error</a> =2
+, <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348aebe67c08887979a44485a2addb212965">N2kDD481_Unavailable</a> =3
+ }</td></tr>
+<tr class="memdesc:ga07fe8ae611b7fa9c40426670c46a2348"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD481 - Rode Type States according to PGN 128777.  <a href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348">More...</a><br /></td></tr>
+<tr class="separator:ga07fe8ae611b7fa9c40426670c46a2348"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41041126ffc78860caa451e87a19c7e5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5">tN2kDD482</a> { <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5a813cfaa67da22d1eadb2e66160c8c285">N2kDD482_NotDocked</a> =0
+, <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5a530ae6e94fad82bf113e98d28a34494a">N2kDD482_FullyDocked</a> =1
+, <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5a389339d937972b98492d607af0317db6">N2kDD482_Error</a> =2
+, <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5ab14f270ccf71247f725abdc9f42cf104">N2kDD482_DataNotAvailable</a> =3
+ }</td></tr>
+<tr class="memdesc:ga41041126ffc78860caa451e87a19c7e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD482 - Anchor Docking States according to PGN 128777.  <a href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5">More...</a><br /></td></tr>
+<tr class="separator:ga41041126ffc78860caa451e87a19c7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf338271ac220b2b8f5594caf6ce70a31"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31">tN2kDD484</a> { <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31a2e60112349f521e9aff4ee5986f7347a">N2kDD484_Off</a> =0
+, <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31a7e92f3dcd29bd20a4d459113bff65c8f">N2kDD484_Down</a> =1
+, <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31ad53e116ce5d01b5d4c5d8edd5038a3f6">N2kDD484_Up</a> =2
+, <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31a53e2d9af9152c080c03573992a2cd2f8">N2kDD484_Reserved</a> =3
+ }</td></tr>
+<tr class="memdesc:gaf338271ac220b2b8f5594caf6ce70a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD484 - Windlass Direction Control according to PGN 128776.  <a href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31">More...</a><br /></td></tr>
+<tr class="separator:gaf338271ac220b2b8f5594caf6ce70a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f9a43c81c4e5bfa3dd645f545926ea7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7">tN2kDD487</a> { <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7aed30005c69e08f66a13e6acf775b05ea">N2kDD487_12VDC</a> =0
+, <a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a673b0ab6b20f2025b363163a13fb6418">N2kDD487_24VDC</a> =1
+, <a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a64f13b92002e65862e9f25910b64bcc2">N2kDD487_48VDC</a> =2
+, <a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a81bbbe4237e3e7024a735db5ae75206d">N2kDD487_24VAC</a> =3
+, <br />
+&#160;&#160;<a class="el" href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7aac8d734e94dda14bd30dbfeca1971d52">N2kDD487_Hydraulic</a> =4
+<br />
+ }</td></tr>
+<tr class="memdesc:ga7f9a43c81c4e5bfa3dd645f545926ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD487 - Motor Power Type according to PGN 128007.  <a href="group__group__msg_types.html#ga7f9a43c81c4e5bfa3dd645f545926ea7">More...</a><br /></td></tr>
+<tr class="separator:ga7f9a43c81c4e5bfa3dd645f545926ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad29092cc71c83d37eebd0e5c6994c353"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353">tN2kDD488</a> { <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353a8d38c912744bcb47c8d8e51879a63429">N2kDD488_SingleSpeed</a> =0
+, <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353a75cd69279bbe32a359724a749fd20516">N2kDD488_DualSpeed</a> =1
+, <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353a3c82b7e50efd9290d533e8a1d73a8c97">N2kDD488_ProportionalSpeed</a> =2
+, <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353a19a7b58f7404ad214cc18b152e0a1f1b">N2kDD488_DataNotAvailable</a> =3
+ }</td></tr>
+<tr class="memdesc:gad29092cc71c83d37eebd0e5c6994c353"><td class="mdescLeft">&#160;</td><td class="mdescRight">DD488 - Speed Control Type according to PGN 128776.  <a href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353">More...</a><br /></td></tr>
+<tr class="separator:gad29092cc71c83d37eebd0e5c6994c353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >NMEA2000 standard type definitions. </p>
+<p >This file contains (and must only contain) type definitions of data types defined in the NMEA2000 standard. These all have names of the form "DDnnn". The language of the definitions should follow exactly that of the standard document from which the information is drawn. No abbreviated names. No mangled capitalisation.</p>
+<p >The entries here are mostly enums describing bit field types. Where an enum member has multiple meanings, each meaning is aliased (see tN2kDD0002 for an example).</p>
+<p >This file is included by <a class="el" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read.">N2kTypes.h</a> where the standard code names are aliased into corresponding long names (once again, exactly as described by NMEA).</p>
+<p >Ressources NMEA 2000 ® Appendix B.2 &ndash; Data Dictionary</p>
+<ul>
+<li><a href="https://hobbydocbox.com/Radio/106823300-Data-dictionary-report-by-number-national-marine-electronics-association-nmea-appendix-b-2-data-dictionary.html">https://hobbydocbox.com/Radio/106823300-Data-dictionary-report-by-number-national-marine-electronics-association-nmea-appendix-b-2-data-dictionary.html</a></li>
+<li><a href="https://www.nmea.org/Assets/20190613%20thruster%20amendment%20128006,%20128007,%20128008.pdf">https://www.nmea.org/Assets/20190613%20thruster%20amendment%20128006,%20128007,%20128008.pdf</a></li>
+<li><a href="https://www.nmea.org/Assets/20190613%20windlass%20amendment,%20128776,%20128777,%20128778.pdf">https://www.nmea.org/Assets/20190613%20windlass%20amendment,%20128776,%20128777,%20128778.pdf</a> </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="_n_m_e_a2000_std_types_8h_source.html">NMEA2000StdTypes.h</a>.</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n_m_e_a2000_std_types_8h.html">NMEA2000StdTypes.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

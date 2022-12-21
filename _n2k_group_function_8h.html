@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: N2kGroupFunction.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n2k_group_function_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">N2kGroupFunction.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>This File contains the definition of the GroupFunctionHandler.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;cstring&gt;</code><br />
+<code>#include &quot;<a class="el" href="_n_m_e_a2000___compiler_defns_8h_source.html">NMEA2000_CompilerDefns.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for N2kGroupFunction.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n2k_group_function_8h__incl.png" border="0" usemap="#a_n2k_group_function_8h" alt=""/></div>
+<map name="a_n2k_group_function_8h" id="a_n2k_group_function_8h">
+<area shape="rect" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="116,5,257,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,67,107"/>
+<area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="91,80,282,107"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="306,80,387,107"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="297,155,396,181"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="222,229,298,256"/>
+<area shape="rect" title=" " alt="" coords="304,304,368,331"/>
+<area shape="rect" title=" " alt="" coords="374,229,442,256"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n2k_group_function_8h__dep__incl.png" border="0" usemap="#a_n2k_group_function_8hdep" alt=""/></div>
+<map name="a_n2k_group_function_8hdep" id="a_n2k_group_function_8hdep">
+<area shape="rect" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="172,5,313,32"/>
+<area shape="rect" href="_n2k_group_function_8cpp.html" title=" " alt="" coords="5,155,160,181"/>
+<area shape="rect" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes." alt="" coords="125,80,360,107"/>
+<area shape="rect" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="391,80,489,107"/>
+<area shape="rect" href="_n2k_group_function_default_handlers_8cpp.html" title=" " alt="" coords="320,155,568,181"/>
+<area shape="rect" href="_n_m_e_a2000_8cpp.html" title=" " alt="" coords="184,155,296,181"/>
+<area shape="rect" href="_n2k_device_list_8h.html" title="This File contains a." alt="" coords="750,155,869,181"/>
+<area shape="rect" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="592,155,725,181"/>
+<area shape="rect" href="_n2k_device_list_8cpp.html" title=" " alt="" coords="743,229,875,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n2k_group_function_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html">tN2kGroupFunctionHandler</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler class for Group Functions.  <a href="classt_n2k_group_function_handler.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a516f932ee8e25906864cecf58f86a96c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#a516f932ee8e25906864cecf58f86a96c">N2k_KEEP_TRANSMISSION_INTERVAL</a>&#160;&#160;&#160;0xffffffff</td></tr>
+<tr class="separator:a516f932ee8e25906864cecf58f86a96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac492c2691530d90d33cea5c9572fdf97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#ac492c2691530d90d33cea5c9572fdf97">N2k_MAX_TRANSMISSION_INTERVAL</a>&#160;&#160;&#160;0xfffffff0</td></tr>
+<tr class="separator:ac492c2691530d90d33cea5c9572fdf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba0542c509abfc6113b362e92fbd379"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#a0ba0542c509abfc6113b362e92fbd379">N2k_MAX_TRANSMISSION_INTERVAL_OFFSET</a>&#160;&#160;&#160;0xfffc</td></tr>
+<tr class="separator:a0ba0542c509abfc6113b362e92fbd379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ba85938705bc92f87203130541218b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#a6ba85938705bc92f87203130541218b2">N2k_RESTORE_TRANSMISSION_INTERVAL</a>&#160;&#160;&#160;0xfffffffe</td></tr>
+<tr class="separator:a6ba85938705bc92f87203130541218b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ac314d0f10e98b40e38c24030ab7f29bc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> { <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca93801669b5bb81da1e5549568b36c84c">N2kgfc_Request</a> =0
+, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee">N2kgfc_Command</a> =1
+, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555">N2kgfc_Acknowledge</a> =2
+, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93">N2kgfc_Read</a> =3
+, <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcabc73ab615b7a7bf4141749667bfdeb1c">N2kgfc_ReadReply</a> =4
+, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca5a83cd9b4fa7adef9c65872232e4785a">N2kgfc_Write</a> =5
+, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcaa9770579a291c67e62d8b7e1aa0964be">N2kgfc_WriteReply</a> =6
+<br />
+ }</td></tr>
+<tr class="memdesc:ac314d0f10e98b40e38c24030ab7f29bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FunctionCode for the group function.  <a href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">More...</a><br /></td></tr>
+<tr class="separator:ac314d0f10e98b40e38c24030ab7f29bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13e3f4a8e8456044e9c9683c4a4cec56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> { <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6">N2kgfpec_Acknowledge</a> =0
+, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c">N2kgfpec_InvalidRequestOrCommandParameterField</a> =1
+, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a2342ca0921e1cbd36e2969f279d62091">N2kgfpec_TemporarilyUnableToComply</a> =2
+, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a5179a196f95c72e8576739af90c4309e">N2kgfpec_RequestOrCommandParameterOutOfRange</a> =3
+, <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a22cf469a1bcea89daea0dac5480aa6f8">N2kgfpec_AccessDenied</a> =4
+, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a40f83a4440412310f028268b6c0cb864">N2kgfpec_RequestOrCommandNotSupported</a> =5
+, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e">N2kgfpec_ReadOrWriteIsNotSupported</a> =6
+<br />
+ }</td></tr>
+<tr class="memdesc:a13e3f4a8e8456044e9c9683c4a4cec56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error Codes Command used by acknowledge group function.  <a href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">More...</a><br /></td></tr>
+<tr class="separator:a13e3f4a8e8456044e9c9683c4a4cec56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a581366a28f5e6d0f779da0f33191629e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> { <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135">N2kgfPGNec_Acknowledge</a> =0
+, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b">N2kgfPGNec_PGNNotSupported</a> =1
+, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629ea93df64193c71fb55a920e67389fecf60">N2kgfPGNec_PGNTemporarilyNotAvailable</a> =2
+, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eab62f93d81b2ddf930e01badee6171836">N2kgfPGNec_AccessDenied</a> =3
+, <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eadd059338a9ab3116a3cfe1d2495ba104">N2kgfPGNec_RequestOrCommandNotSupported</a> =4
+, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eae81459292f2ba91826eed1eee4193ba5">N2kgfPGNec_DefinerTagNotSupported</a> =5
+, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eaee282e93e9d6d09fde35e6457727c51c">N2kgfPGNec_ReadOrWriteNotSupported</a> =6
+<br />
+ }</td></tr>
+<tr class="memdesc:a581366a28f5e6d0f779da0f33191629e"><td class="mdescLeft">&#160;</td><td class="mdescRight">PGN error code used by acknowledge group function.  <a href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">More...</a><br /></td></tr>
+<tr class="separator:a581366a28f5e6d0f779da0f33191629e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba86dcb75a6f93dded55b6817627e94f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> { <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419">N2kgfTPec_Acknowledge</a> =0
+, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8">N2kgfTPec_TransmitIntervalOrPriorityNotSupported</a> =1
+, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa03c96a712f3b9e702435077b7fb093e5">N2kgfTPec_TransmitIntervalIsLessThanMeasurementInterval</a> =2
+, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa6940e339e9be409cfe8cd4940a2e7e26">N2kgfTPec_AccessDenied</a> =3
+, <br />
+&#160;&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fadd40ce3be446e737021c07e70c9eed94">N2kgfTPec_RequestNotSupported</a> =4
+<br />
+ }</td></tr>
+<tr class="memdesc:aba86dcb75a6f93dded55b6817627e94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes Transmit interval used by acknowledge group function.  <a href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">More...</a><br /></td></tr>
+<tr class="separator:aba86dcb75a6f93dded55b6817627e94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >This File contains the definition of the GroupFunctionHandler. </p>
+<p >Group functions can be used on the bus, to organize the devices on the network (e.g. setting a device’s PGN instances)</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Please double check and give maybe some more context</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>[<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> Documentation PGN 126208 ] (<a href="https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf">https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf</a>) </dd></dl>
+
+<p class="definition">Definition in file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a516f932ee8e25906864cecf58f86a96c" name="a516f932ee8e25906864cecf58f86a96c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a516f932ee8e25906864cecf58f86a96c">&#9670;&nbsp;</a></span>N2k_KEEP_TRANSMISSION_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_KEEP_TRANSMISSION_INTERVAL&#160;&#160;&#160;0xffffffff</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00047">47</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="ac492c2691530d90d33cea5c9572fdf97" name="ac492c2691530d90d33cea5c9572fdf97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac492c2691530d90d33cea5c9572fdf97">&#9670;&nbsp;</a></span>N2k_MAX_TRANSMISSION_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_MAX_TRANSMISSION_INTERVAL&#160;&#160;&#160;0xfffffff0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00049">49</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a0ba0542c509abfc6113b362e92fbd379" name="a0ba0542c509abfc6113b362e92fbd379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba0542c509abfc6113b362e92fbd379">&#9670;&nbsp;</a></span>N2k_MAX_TRANSMISSION_INTERVAL_OFFSET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_MAX_TRANSMISSION_INTERVAL_OFFSET&#160;&#160;&#160;0xfffc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00050">50</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a6ba85938705bc92f87203130541218b2" name="a6ba85938705bc92f87203130541218b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ba85938705bc92f87203130541218b2">&#9670;&nbsp;</a></span>N2k_RESTORE_TRANSMISSION_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_RESTORE_TRANSMISSION_INTERVAL&#160;&#160;&#160;0xfffffffe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00048">48</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ac314d0f10e98b40e38c24030ab7f29bc" name="ac314d0f10e98b40e38c24030ab7f29bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac314d0f10e98b40e38c24030ab7f29bc">&#9670;&nbsp;</a></span>tN2kGroupFunctionCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>FunctionCode for the group function. </p>
+<p >There are seven group functions associated with PGN 126208. <br  />
+ The Write Fields group function may be used to modify a device’s factory default PGN instances to create a unique device with unique PGN instance numbers. <br  />
+ The Read Fields group function can be similarly used to interrogate the current PGN instance values of any PGNs not being sent periodically. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bca93801669b5bb81da1e5549568b36c84c" name="ac314d0f10e98b40e38c24030ab7f29bca93801669b5bb81da1e5549568b36c84c"></a>N2kgfc_Request&#160;</td><td class="fielddoc"><p >This message requests the transmission of a specific set of data in a Parameter Group by setting variable parameters within theParameter Group specified by the field number. Field number and parameter value may appear in any order in this message. When multiple fields and parameters are specified the request is treated as an "AND" function. This PGN may be used to set the transmission interval and the delay before the first transmission. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee" name="ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee"></a>N2kgfc_Command&#160;</td><td class="fielddoc"><p >The Command Group Function message is directed to a specific address, the Global Address (255) shall not be used. This command sets the value of one, some or all parameters in a Parameter Group. The number of parameters to set is in field 5, then follows the field number and the new value repeated for each of them. A Parameter Group may contain one group of parameters out of multiple instances where the instance number of the group is given in one field. A command to set any parameter of such a group must contain the field number and value of the group instance number. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555" name="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555"></a>N2kgfc_Acknowledge&#160;</td><td class="fielddoc"><p >The Acknowledgement reply is transmitted in response to a Request, Command, Read or Write Group Function Message. The Acknowledge Group Function shall be transmitted in response to every Command Message received, indicating acknowledgement or containing the appropriate Error Code. The Acknowledge Group Function is only required in response to a Request, Read orWrite Group Function that cannot be satisfied. The Acknowledge Group function shall transmit all fields applicable to the Group Function being acknowledged, fields where the error does not exist are set to 0x0 (No Error/Acknowledge). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93" name="ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93"></a>N2kgfc_Read&#160;</td><td class="fielddoc"><p >This Read Fields Group Function provides a means to read specific fields in a PGN. When Field 2 (PGN number) contains a non-proprietary PGN number, field 3, field 4 and field 5 are not included in this message. If the receiver of this message can comply, the receiver will send to the transmitter a Read Fields Reply Group Function. If the receiver cannot comply, an Acknowledge Group Function shall be sent. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcabc73ab615b7a7bf4141749667bfdeb1c" name="ac314d0f10e98b40e38c24030ab7f29bcabc73ab615b7a7bf4141749667bfdeb1c"></a>N2kgfc_ReadReply&#160;</td><td class="fielddoc"><p >The Read Fields Reply Group Function is a reply to the Read Fields Group Function. When the Read Fields Group Function is received, if the receiver can comply, the Read Fields Reply Group Function will be transmitted with the resulting read values. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bca5a83cd9b4fa7adef9c65872232e4785a" name="ac314d0f10e98b40e38c24030ab7f29bca5a83cd9b4fa7adef9c65872232e4785a"></a>N2kgfc_Write&#160;</td><td class="fielddoc"><p >This Write Group Function is especially useful when configuring an instance or reference to be used by a node when transmitting a PGN such as PGN 127508. Use Fields 7, 9 and 10 to identify the currently assigned instance value. Use Fields 8, 13 and 14 to identify the new assigned instance value. When Field 2 (PGN number) contains a non-proprietary PGN number, field 3, field 4 and field 5 are not included in this message. If the receiver of this message can comply, the receiver will send to the transmitter a Write Fields Reply Group Function. If the receiver cannot comply, an Acknowledge Group Function shall be sent. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcaa9770579a291c67e62d8b7e1aa0964be" name="ac314d0f10e98b40e38c24030ab7f29bcaa9770579a291c67e62d8b7e1aa0964be"></a>N2kgfc_WriteReply&#160;</td><td class="fielddoc"><p >The Write Fields Reply Group Function is a reply to the Write Fields Group Function. When the Write Fields Group Function is received, if the receiver can comply, the Write Fields Reply Group Function will be transmitted with the resulting values. If a parameter value is accepted then the modified value will be returned. If a parameter value is not accepted, the original value will be returned. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00064">64</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a13e3f4a8e8456044e9c9683c4a4cec56" name="a13e3f4a8e8456044e9c9683c4a4cec56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13e3f4a8e8456044e9c9683c4a4cec56">&#9670;&nbsp;</a></span>tN2kGroupFunctionParameterErrorCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Error Codes Command used by acknowledge group function. </p>
+<p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6" name="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6"></a>N2kgfpec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c" name="a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c"></a>N2kgfpec_InvalidRequestOrCommandParameterField&#160;</td><td class="fielddoc"><p >Invalid request or command parameter field </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a2342ca0921e1cbd36e2969f279d62091" name="a13e3f4a8e8456044e9c9683c4a4cec56a2342ca0921e1cbd36e2969f279d62091"></a>N2kgfpec_TemporarilyUnableToComply&#160;</td><td class="fielddoc"><p >Temporarily unable to comply </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a5179a196f95c72e8576739af90c4309e" name="a13e3f4a8e8456044e9c9683c4a4cec56a5179a196f95c72e8576739af90c4309e"></a>N2kgfpec_RequestOrCommandParameterOutOfRange&#160;</td><td class="fielddoc"><p >Request or command parameter out-of-range </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a22cf469a1bcea89daea0dac5480aa6f8" name="a13e3f4a8e8456044e9c9683c4a4cec56a22cf469a1bcea89daea0dac5480aa6f8"></a>N2kgfpec_AccessDenied&#160;</td><td class="fielddoc"><p >Access denied </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a40f83a4440412310f028268b6c0cb864" name="a13e3f4a8e8456044e9c9683c4a4cec56a40f83a4440412310f028268b6c0cb864"></a>N2kgfpec_RequestOrCommandNotSupported&#160;</td><td class="fielddoc"><p >Request or Command is not supported </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e" name="a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e"></a>N2kgfpec_ReadOrWriteIsNotSupported&#160;</td><td class="fielddoc"><p >Read or Write is not supported </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00195">195</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a581366a28f5e6d0f779da0f33191629e" name="a581366a28f5e6d0f779da0f33191629e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a581366a28f5e6d0f779da0f33191629e">&#9670;&nbsp;</a></span>tN2kGroupFunctionPGNErrorCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>PGN error code used by acknowledge group function. </p>
+<p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135" name="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135"></a>N2kgfPGNec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b" name="a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b"></a>N2kgfPGNec_PGNNotSupported&#160;</td><td class="fielddoc"><p >PGN is not supported </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629ea93df64193c71fb55a920e67389fecf60" name="a581366a28f5e6d0f779da0f33191629ea93df64193c71fb55a920e67389fecf60"></a>N2kgfPGNec_PGNTemporarilyNotAvailable&#160;</td><td class="fielddoc"><p >PGN is temporarily not available </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eab62f93d81b2ddf930e01badee6171836" name="a581366a28f5e6d0f779da0f33191629eab62f93d81b2ddf930e01badee6171836"></a>N2kgfPGNec_AccessDenied&#160;</td><td class="fielddoc"><p >Access denied </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eadd059338a9ab3116a3cfe1d2495ba104" name="a581366a28f5e6d0f779da0f33191629eadd059338a9ab3116a3cfe1d2495ba104"></a>N2kgfPGNec_RequestOrCommandNotSupported&#160;</td><td class="fielddoc"><p >Request or Command is not supported </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eae81459292f2ba91826eed1eee4193ba5" name="a581366a28f5e6d0f779da0f33191629eae81459292f2ba91826eed1eee4193ba5"></a>N2kgfPGNec_DefinerTagNotSupported&#160;</td><td class="fielddoc"><p >Definer Tag is not supported </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eaee282e93e9d6d09fde35e6457727c51c" name="a581366a28f5e6d0f779da0f33191629eaee282e93e9d6d09fde35e6457727c51c"></a>N2kgfPGNec_ReadOrWriteNotSupported&#160;</td><td class="fielddoc"><p >Read or Write is not supported </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00148">148</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="aba86dcb75a6f93dded55b6817627e94f" name="aba86dcb75a6f93dded55b6817627e94f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba86dcb75a6f93dded55b6817627e94f">&#9670;&nbsp;</a></span>tN2kGroupFunctionTransmissionOrPriorityErrorCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Error codes Transmit interval used by acknowledge group function. </p>
+<p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419" name="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419"></a>N2kgfTPec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8" name="aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8"></a>N2kgfTPec_TransmitIntervalOrPriorityNotSupported&#160;</td><td class="fielddoc"><p >Transmit Interval /Priority not supported </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fa03c96a712f3b9e702435077b7fb093e5" name="aba86dcb75a6f93dded55b6817627e94fa03c96a712f3b9e702435077b7fb093e5"></a>N2kgfTPec_TransmitIntervalIsLessThanMeasurementInterval&#160;</td><td class="fielddoc"><p >Transmit interval is less than measurement/ calculation interval </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fa6940e339e9be409cfe8cd4940a2e7e26" name="aba86dcb75a6f93dded55b6817627e94fa6940e339e9be409cfe8cd4940a2e7e26"></a>N2kgfTPec_AccessDenied&#160;</td><td class="fielddoc"><p >Access denied </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fadd40ce3be446e737021c07e70c9eed94" name="aba86dcb75a6f93dded55b6817627e94fadd40ce3be446e737021c07e70c9eed94"></a>N2kgfTPec_RequestNotSupported&#160;</td><td class="fielddoc"><p >Request is not supported </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00173">173</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n2k_group_function_8h.html">N2kGroupFunction.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

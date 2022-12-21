@@ -1,0 +1,2239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: tN2kGroupFunctionHandler Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classt_n2k_group_function_handler.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="classt_n2k_group_function_handler-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tN2kGroupFunctionHandler Class Reference<div class="ingroups"><a class="el" href="group__group__core_supplementary.html">2 Core supplementary</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Handler class for Group Functions.  
+ <a href="classt_n2k_group_function_handler.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for tN2kGroupFunctionHandler:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_n2k_group_function_handler__inherit__graph.png" border="0" usemap="#at_n2k_group_function_handler_inherit__map" alt="Inheritance graph"/></div>
+<map name="at_n2k_group_function_handler_inherit__map" id="at_n2k_group_function_handler_inherit__map">
+<area shape="rect" title="Handler class for Group Functions." alt="" coords="5,143,185,170"/>
+<area shape="rect" href="classt_n2k_group_function_handler_for_p_g_n126464.html" title="Default Group Function Handler for PGN 126464 &#45; &quot;PGN List &#45; Transmit/Receive PGNs group function&quot;." alt="" coords="233,5,413,47"/>
+<area shape="rect" href="classt_n2k_group_function_handler_for_p_g_n126993.html" title="Default Group Function Handler for PGN 126993 &#45; &quot;Heartbeat&quot;." alt="" coords="233,71,413,112"/>
+<area shape="rect" href="classt_n2k_group_function_handler_for_p_g_n126996.html" title="Default Group Function Handler for PGN 126996 &#45; Product Information." alt="" coords="233,136,413,177"/>
+<area shape="rect" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 &#45; &quot;Configuration Information&quot;." alt="" coords="233,201,413,243"/>
+<area shape="rect" href="classt_n2k_group_function_handler_for_p_g_n60928.html" title="Default Group Function Handler for PGN 60928 &#45; &quot;ISO Address Claim&quot;." alt="" coords="233,267,413,308"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for tN2kGroupFunctionHandler:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_n2k_group_function_handler__coll__graph.png" border="0" usemap="#at_n2k_group_function_handler_coll__map" alt="Collaboration graph"/></div>
+<map name="at_n2k_group_function_handler_coll__map" id="at_n2k_group_function_handler_coll__map">
+<area shape="rect" title="Handler class for Group Functions." alt="" coords="826,25,1006,52"/>
+<area shape="rect" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition." alt="" coords="1211,195,1303,221"/>
+<area shape="rect" href="class_n2k_stream.html" title="Streaming Class to handle all Streams generated by the Library." alt="" coords="872,92,960,119"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_msg_handler.html" title="Message handler class." alt="" coords="830,143,1002,169"/>
+<area shape="rect" href="classt_n2k_scheduler.html" title="Un synchronized Scheduler which can roll over." alt="" coords="421,219,529,245"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_internal_device.html" title="This class represents an internal device." alt="" coords="823,295,1009,321"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that." alt="" coords="372,313,579,340"/>
+<area shape="rect" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,306,212,347"/>
+<area shape="rect" href="structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information." alt="" coords="369,373,581,400"/>
+<area shape="rect" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message." alt="" coords="438,441,513,468"/>
+<area shape="rect" href="classt_n2k_c_a_n_msg.html" title="Class to handle CAN messages." alt="" coords="865,412,967,439"/>
+<area shape="rect" href="classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending." alt="" coords="407,509,544,536"/>
+<area shape="rect" href="structt_n_m_e_a2000_1_1t_configuration_information.html" title="Structure that holds the Configuration Information of this device." alt="" coords="827,346,1005,387"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_c_a_n_send_frame.html" title="Structure holds all the data needed for a valide CAN&#45;Message." alt="" coords="817,463,1015,489"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a7a71089f3904f7b103a47e02536e9ab2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a7a71089f3904f7b103a47e02536e9ab2">tN2kGroupFunctionHandler</a> (<a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> *_pNMEA2000, unsigned long _PGN)</td></tr>
+<tr class="memdesc:a7a71089f3904f7b103a47e02536e9ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new t N2k Group Function Handler object.  <a href="classt_n2k_group_function_handler.html#a7a71089f3904f7b103a47e02536e9ab2">More...</a><br /></td></tr>
+<tr class="separator:a7a71089f3904f7b103a47e02536e9ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e845df1655bce228cf581a1e8396a45"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a6e845df1655bce228cf581a1e8396a45">Handle</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> GroupFunctionCode, unsigned long PGNForGroupFunction, int iDev)</td></tr>
+<tr class="memdesc:a6e845df1655bce228cf581a1e8396a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle for a Group Function.  <a href="classt_n2k_group_function_handler.html#a6e845df1655bce228cf581a1e8396a45">More...</a><br /></td></tr>
+<tr class="separator:a6e845df1655bce228cf581a1e8396a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0486959190ac460bc9088a5f89057a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ad0486959190ac460bc9088a5f89057a0">MatchRequestField</a> (const char *FieldVal, const char *MatchVal, bool &amp;Match, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> &amp;ErrorCode)</td></tr>
+<tr class="separator:ad0486959190ac460bc9088a5f89057a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6197d834f500feee60c036017b5c6ad1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a6197d834f500feee60c036017b5c6ad1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a6197d834f500feee60c036017b5c6ad1">MatchRequestField</a> (T FieldVal, T MatchVal, T Mask, bool &amp;Match, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> &amp;ErrorCode)</td></tr>
+<tr class="separator:a6197d834f500feee60c036017b5c6ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aed59448d3e1c9d829ac8dab5305fbc46"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#aed59448d3e1c9d829ac8dab5305fbc46">AddAcknowledgeParameter</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t ParameterPairIndex, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> ErrorCode=<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e">N2kgfpec_ReadOrWriteIsNotSupported</a>)</td></tr>
+<tr class="memdesc:aed59448d3e1c9d829ac8dab5305fbc46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add parameter to a Acknowledge group function message.  <a href="classt_n2k_group_function_handler.html#aed59448d3e1c9d829ac8dab5305fbc46">More...</a><br /></td></tr>
+<tr class="separator:aed59448d3e1c9d829ac8dab5305fbc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8d950ba4863dbf2b1893d5dc2d31aa7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#af8d950ba4863dbf2b1893d5dc2d31aa7">ChangePNGErrorCode</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> PGNErrorCode)</td></tr>
+<tr class="memdesc:af8d950ba4863dbf2b1893d5dc2d31aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the PGN error code for a group function message.  <a href="classt_n2k_group_function_handler.html#af8d950ba4863dbf2b1893d5dc2d31aa7">More...</a><br /></td></tr>
+<tr class="separator:af8d950ba4863dbf2b1893d5dc2d31aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0043135e3095922cc120255572fac85"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ac0043135e3095922cc120255572fac85">ChangeTransmissionOrPriorityErrorCode</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> TransmissionOrPriorityErrorCode)</td></tr>
+<tr class="memdesc:ac0043135e3095922cc120255572fac85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the Transmission or Priority error code code for a group function message.  <a href="classt_n2k_group_function_handler.html#ac0043135e3095922cc120255572fac85">More...</a><br /></td></tr>
+<tr class="separator:ac0043135e3095922cc120255572fac85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83a32d69380616320185314bde557f4e"><td class="memItemLeft" align="right" valign="top">static unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a83a32d69380616320185314bde557f4e">GetPGNForGroupFunction</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
+<tr class="memdesc:a83a32d69380616320185314bde557f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the PGN for the Group Function out of a n2k message.  <a href="classt_n2k_group_function_handler.html#a83a32d69380616320185314bde557f4e">More...</a><br /></td></tr>
+<tr class="separator:a83a32d69380616320185314bde557f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76998bfc0183eadf0217af1b7c2886d4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a76998bfc0183eadf0217af1b7c2886d4">Parse</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> &amp;GroupFunctionCode, unsigned long &amp;PGNForGroupFunction)</td></tr>
+<tr class="memdesc:a76998bfc0183eadf0217af1b7c2886d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse group function code and PGN from the message.  <a href="classt_n2k_group_function_handler.html#a76998bfc0183eadf0217af1b7c2886d4">More...</a><br /></td></tr>
+<tr class="separator:a76998bfc0183eadf0217af1b7c2886d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fbfa679e2f7982d9d0363eed580caf8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a3fbfa679e2f7982d9d0363eed580caf8">ParseAcknowledgeParams</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> &amp;PGNErrorCode, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> &amp;TransmissionOrPriorityErrorCode, uint8_t &amp;NumberOfParameterPairs)</td></tr>
+<tr class="memdesc:a3fbfa679e2f7982d9d0363eed580caf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse parameters from group function acknowledge message.  <a href="classt_n2k_group_function_handler.html#a3fbfa679e2f7982d9d0363eed580caf8">More...</a><br /></td></tr>
+<tr class="separator:a3fbfa679e2f7982d9d0363eed580caf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef478ccbb865047bf6b2b591ace17c2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a1ef478ccbb865047bf6b2b591ace17c2">ParseCommandParams</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;PrioritySetting, uint8_t &amp;NumberOfParameterPairs)</td></tr>
+<tr class="memdesc:a1ef478ccbb865047bf6b2b591ace17c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse parameters from a group function Command message.  <a href="classt_n2k_group_function_handler.html#a1ef478ccbb865047bf6b2b591ace17c2">More...</a><br /></td></tr>
+<tr class="separator:a1ef478ccbb865047bf6b2b591ace17c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b650fa1d0ef53a35410cc45fa52448f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a8b650fa1d0ef53a35410cc45fa52448f">ParseReadOrWriteParams</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t &amp;ManufacturerCode, uint8_t &amp;IndustryGroup, uint8_t &amp;UniqueID, uint8_t &amp;NumberOfSelectionPairs, uint8_t &amp;NumberOfParameterPairs, bool <a class="el" href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">Proprietary</a>=false)</td></tr>
+<tr class="memdesc:a8b650fa1d0ef53a35410cc45fa52448f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse parameters from group function ReadOrWrite message.  <a href="classt_n2k_group_function_handler.html#a8b650fa1d0ef53a35410cc45fa52448f">More...</a><br /></td></tr>
+<tr class="separator:a8b650fa1d0ef53a35410cc45fa52448f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011cb27f1e40c64c379f03d2bfebb666"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a011cb27f1e40c64c379f03d2bfebb666">ParseRequestParams</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint32_t &amp;TransmissionInterval, uint16_t &amp;TransmissionIntervalOffset, uint8_t &amp;NumberOfParameterPairs)</td></tr>
+<tr class="memdesc:a011cb27f1e40c64c379f03d2bfebb666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse parameters from group function Request message.  <a href="classt_n2k_group_function_handler.html#a011cb27f1e40c64c379f03d2bfebb666">More...</a><br /></td></tr>
+<tr class="separator:a011cb27f1e40c64c379f03d2bfebb666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0eb60487c02464da2011e6c3499e77e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#aa0eb60487c02464da2011e6c3499e77e">SendAcknowledge</a> (<a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> *<a class="el" href="classt_n2k_group_function_handler.html#abe8ae12fea36f090afe9f49b1fec76e7">pNMEA2000</a>, unsigned char Destination, int iDev, unsigned long <a class="el" href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">PGN</a>, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> PGNErrorCode, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> TransmissionOrPriorityErrorCode, uint8_t NumberOfParameterPairs=0, <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> ParameterErrorCodeForAll=<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6">N2kgfpec_Acknowledge</a>)</td></tr>
+<tr class="memdesc:aa0eb60487c02464da2011e6c3499e77e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send out an Acknowledge message.  <a href="classt_n2k_group_function_handler.html#aa0eb60487c02464da2011e6c3499e77e">More...</a><br /></td></tr>
+<tr class="separator:aa0eb60487c02464da2011e6c3499e77e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e1b2e697ebf726459110b2ba22abcd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ab4e1b2e697ebf726459110b2ba22abcd">SetStartAcknowledge</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Destination, unsigned long <a class="el" href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">PGN</a>, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> PGNErrorCode, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> TransmissionOrPriorityErrorCode, uint8_t NumberOfParameterPairs=0)</td></tr>
+<tr class="memdesc:ab4e1b2e697ebf726459110b2ba22abcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up the group function message for Acknowledge.  <a href="classt_n2k_group_function_handler.html#ab4e1b2e697ebf726459110b2ba22abcd">More...</a><br /></td></tr>
+<tr class="separator:ab4e1b2e697ebf726459110b2ba22abcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb8744716db85a78fb924ecd0fbe77d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#afdb8744716db85a78fb924ecd0fbe77d">SetStartReadReply</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Destination, unsigned long <a class="el" href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">PGN</a>, uint16_t ManufacturerCode, uint8_t IndustryGroup, uint8_t UniqueID, uint8_t NumberOfSelectionPairs, uint8_t NumberOfParameterPairs, bool <a class="el" href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">Proprietary</a>)</td></tr>
+<tr class="memdesc:afdb8744716db85a78fb924ecd0fbe77d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up the group function message for Read Reply.  <a href="classt_n2k_group_function_handler.html#afdb8744716db85a78fb924ecd0fbe77d">More...</a><br /></td></tr>
+<tr class="separator:afdb8744716db85a78fb924ecd0fbe77d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d92b5fdefc87fbcf7638f278bac00e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ab3d92b5fdefc87fbcf7638f278bac00e">SetStartWriteReply</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Destination, unsigned long <a class="el" href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">PGN</a>, uint16_t ManufacturerCode, uint8_t IndustryGroup, uint8_t UniqueID, uint8_t NumberOfSelectionPairs, uint8_t NumberOfParameterPairs, bool <a class="el" href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">Proprietary</a>)</td></tr>
+<tr class="memdesc:ab3d92b5fdefc87fbcf7638f278bac00e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up the group function message for Write Reply.  <a href="classt_n2k_group_function_handler.html#ab3d92b5fdefc87fbcf7638f278bac00e">More...</a><br /></td></tr>
+<tr class="separator:ab3d92b5fdefc87fbcf7638f278bac00e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec2570741630fcd9a77d768f9b67e9a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#abec2570741630fcd9a77d768f9b67e9a">StartParseCommandPairParameters</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int &amp;Index)</td></tr>
+<tr class="memdesc:abec2570741630fcd9a77d768f9b67e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get start Index of pair parameters on the group function Command message.  <a href="classt_n2k_group_function_handler.html#abec2570741630fcd9a77d768f9b67e9a">More...</a><br /></td></tr>
+<tr class="separator:abec2570741630fcd9a77d768f9b67e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbf192bc7493835c252aee35ae75e198"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#afbf192bc7493835c252aee35ae75e198">StartParseReadOrWriteParameters</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, bool <a class="el" href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">Proprietary</a>, int &amp;Index)</td></tr>
+<tr class="memdesc:afbf192bc7493835c252aee35ae75e198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get start Index of pair parameters on the group function ReadOrWrite message.  <a href="classt_n2k_group_function_handler.html#afbf192bc7493835c252aee35ae75e198">More...</a><br /></td></tr>
+<tr class="separator:afbf192bc7493835c252aee35ae75e198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602b54580fa2de40c02bbb9798cde6cb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a602b54580fa2de40c02bbb9798cde6cb">StartParseRequestPairParameters</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int &amp;Index)</td></tr>
+<tr class="memdesc:a602b54580fa2de40c02bbb9798cde6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get start Index of pair parameters on the group function Request message.  <a href="classt_n2k_group_function_handler.html#a602b54580fa2de40c02bbb9798cde6cb">More...</a><br /></td></tr>
+<tr class="separator:a602b54580fa2de40c02bbb9798cde6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ab25065d4fe7b0ace9252a09be88f42d6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ab25065d4fe7b0ace9252a09be88f42d6">GetRequestGroupFunctionTransmissionOrPriorityErrorCode</a> (uint32_t TransmissionInterval, uint16_t TransmissionIntervalOffset, bool UseIntervalLimits=false, uint32_t IntervalMax=<a class="el" href="_n2k_group_function_8h.html#ac492c2691530d90d33cea5c9572fdf97">N2k_MAX_TRANSMISSION_INTERVAL</a>, uint32_t IntervalMin=50, bool UseOffsetLimits=false, uint16_t OffsetMax=<a class="el" href="_n2k_group_function_8h.html#a0ba0542c509abfc6113b362e92fbd379">N2k_MAX_TRANSMISSION_INTERVAL_OFFSET</a>)</td></tr>
+<tr class="memdesc:ab25065d4fe7b0ace9252a09be88f42d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Request Group Function Transmission Or Priority Error Code object.  <a href="classt_n2k_group_function_handler.html#ab25065d4fe7b0ace9252a09be88f42d6">More...</a><br /></td></tr>
+<tr class="separator:ab25065d4fe7b0ace9252a09be88f42d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa68414146c1cde78747c2b79e71ae2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a2fa68414146c1cde78747c2b79e71ae2">HandleAcknowledge</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> PGNErrorCode, <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> TransmissionOrPriorityErrorCode, uint8_t NumberOfParameterPairs, int iDev)</td></tr>
+<tr class="memdesc:a2fa68414146c1cde78747c2b79e71ae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default handle function for Acknowledge a Group Function.  <a href="classt_n2k_group_function_handler.html#a2fa68414146c1cde78747c2b79e71ae2">More...</a><br /></td></tr>
+<tr class="separator:a2fa68414146c1cde78747c2b79e71ae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7adc03c4a6a17dd01242e1f0027c6c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#acb7adc03c4a6a17dd01242e1f0027c6c">HandleCommand</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev)</td></tr>
+<tr class="memdesc:acb7adc03c4a6a17dd01242e1f0027c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the response to Group Function "Command".  <a href="classt_n2k_group_function_handler.html#acb7adc03c4a6a17dd01242e1f0027c6c">More...</a><br /></td></tr>
+<tr class="separator:acb7adc03c4a6a17dd01242e1f0027c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72ce7c77053ed6c79b6865aae39eb42"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ab72ce7c77053ed6c79b6865aae39eb42">HandleReadFields</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t ManufacturerCode, uint8_t IndustryGroup, uint8_t UniqueID, uint8_t NumberOfSelectionPairs, uint8_t NumberOfParameterPairs, int iDev)</td></tr>
+<tr class="memdesc:ab72ce7c77053ed6c79b6865aae39eb42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the response to Group Function "Read Fields".  <a href="classt_n2k_group_function_handler.html#ab72ce7c77053ed6c79b6865aae39eb42">More...</a><br /></td></tr>
+<tr class="separator:ab72ce7c77053ed6c79b6865aae39eb42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a614f80038e19f4ff1ae22aec0fc3e35a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a614f80038e19f4ff1ae22aec0fc3e35a">HandleReadFieldsReply</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int iDev)</td></tr>
+<tr class="memdesc:a614f80038e19f4ff1ae22aec0fc3e35a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the response to Group Function "Read Fields Reply".  <a href="classt_n2k_group_function_handler.html#a614f80038e19f4ff1ae22aec0fc3e35a">More...</a><br /></td></tr>
+<tr class="separator:a614f80038e19f4ff1ae22aec0fc3e35a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1657de1961b6b980c78b9feabe4fdc0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ad1657de1961b6b980c78b9feabe4fdc0">HandleRequest</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint32_t TransmissionInterval, uint16_t TransmissionIntervalOffset, uint8_t NumberOfParameterPairs, int iDev)</td></tr>
+<tr class="memdesc:ad1657de1961b6b980c78b9feabe4fdc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default request handler for group function requests for PGN.  <a href="classt_n2k_group_function_handler.html#ad1657de1961b6b980c78b9feabe4fdc0">More...</a><br /></td></tr>
+<tr class="separator:ad1657de1961b6b980c78b9feabe4fdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a3917e028d3a1dd34ae39351e331150"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a7a3917e028d3a1dd34ae39351e331150">HandleWriteFields</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t ManufacturerCode, uint8_t IndustryGroup, uint8_t UniqueID, uint8_t NumberOfSelectionPairs, uint8_t NumberOfParameterPairs, int iDev)</td></tr>
+<tr class="memdesc:a7a3917e028d3a1dd34ae39351e331150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the response to Group Function "Write Fields".  <a href="classt_n2k_group_function_handler.html#a7a3917e028d3a1dd34ae39351e331150">More...</a><br /></td></tr>
+<tr class="separator:a7a3917e028d3a1dd34ae39351e331150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab05cd4d483b086b6301701cd94eb70ca"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ab05cd4d483b086b6301701cd94eb70ca">HandleWriteFieldsReply</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int iDev)</td></tr>
+<tr class="memdesc:ab05cd4d483b086b6301701cd94eb70ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle the response to Group Function "Write Fields Reply".  <a href="classt_n2k_group_function_handler.html#ab05cd4d483b086b6301701cd94eb70ca">More...</a><br /></td></tr>
+<tr class="separator:ab05cd4d483b086b6301701cd94eb70ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ac3ea9ea6e8ad725c755c1a83358768f9"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">PGN</a></td></tr>
+<tr class="memdesc:ac3ea9ea6e8ad725c755c1a83358768f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter Group Number (PGN) of this Group Function.  <a href="classt_n2k_group_function_handler.html#ac3ea9ea6e8ad725c755c1a83358768f9">More...</a><br /></td></tr>
+<tr class="separator:ac3ea9ea6e8ad725c755c1a83358768f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe8ae12fea36f090afe9f49b1fec76e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#abe8ae12fea36f090afe9f49b1fec76e7">pNMEA2000</a></td></tr>
+<tr class="memdesc:abe8ae12fea36f090afe9f49b1fec76e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">NMEA2000 object in order to send messages to the bus <br  />
+  <a href="classt_n2k_group_function_handler.html#abe8ae12fea36f090afe9f49b1fec76e7">More...</a><br /></td></tr>
+<tr class="separator:abe8ae12fea36f090afe9f49b1fec76e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43603a9dad7a6ccf80f5aff97ba9bce3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">Proprietary</a></td></tr>
+<tr class="memdesc:a43603a9dad7a6ccf80f5aff97ba9bce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag, if the Parameter Group is proprietary <br  />
+  <a href="classt_n2k_group_function_handler.html#a43603a9dad7a6ccf80f5aff97ba9bce3">More...</a><br /></td></tr>
+<tr class="separator:a43603a9dad7a6ccf80f5aff97ba9bce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a6f3317b47fbe881cd353ab77a40683dd"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html#a6f3317b47fbe881cd353ab77a40683dd">tNMEA2000</a></td></tr>
+<tr class="separator:a6f3317b47fbe881cd353ab77a40683dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Handler class for Group Functions. </p>
+<p >This class handles all functions which are needed to respond to group function messages. NMEA 2000 definition requires that devices should respond group function messages. This class is default handler, which simply responds “unsupported” for all queries.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>More description is needed, please review</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00226">226</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7a71089f3904f7b103a47e02536e9ab2" name="a7a71089f3904f7b103a47e02536e9ab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a71089f3904f7b103a47e02536e9ab2">&#9670;&nbsp;</a></span>tN2kGroupFunctionHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tN2kGroupFunctionHandler::tN2kGroupFunctionHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> *&#160;</td>
+          <td class="paramname"><em>_pNMEA2000</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>_PGN</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new t N2k Group Function Handler object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_pNMEA2000</td><td>Pointer to an NMEA2000 object, see <a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> </td></tr>
+    <tr><td class="paramname">_PGN</td><td>Parameter Group Number associated with this Group function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00030">30</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aed59448d3e1c9d829ac8dab5305fbc46" name="aed59448d3e1c9d829ac8dab5305fbc46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed59448d3e1c9d829ac8dab5305fbc46">&#9670;&nbsp;</a></span>AddAcknowledgeParameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::AddAcknowledgeParameter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ParameterPairIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a>&#160;</td>
+          <td class="paramname"><em>ErrorCode</em> = <code><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e">N2kgfpec_ReadOrWriteIsNotSupported</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add parameter to a Acknowledge group function message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">ParameterPairIndex</td><td>Index of the parameter pair </td></tr>
+    <tr><td class="paramname">ErrorCode</td><td>Error code to be added to the message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00449">449</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af8d950ba4863dbf2b1893d5dc2d31aa7" name="af8d950ba4863dbf2b1893d5dc2d31aa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8d950ba4863dbf2b1893d5dc2d31aa7">&#9670;&nbsp;</a></span>ChangePNGErrorCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::ChangePNGErrorCode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a>&#160;</td>
+          <td class="paramname"><em>PGNErrorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Change the PGN error code for a group function message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">PGNErrorCode</td><td>PGN error code, see <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00433">433</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac0043135e3095922cc120255572fac85" name="ac0043135e3095922cc120255572fac85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0043135e3095922cc120255572fac85">&#9670;&nbsp;</a></span>ChangeTransmissionOrPriorityErrorCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::ChangeTransmissionOrPriorityErrorCode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a>&#160;</td>
+          <td class="paramname"><em>TransmissionOrPriorityErrorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Change the Transmission or Priority error code code for a group function message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">TransmissionOrPriorityErrorCode</td><td>Transmission or Priority error code, see <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00441">441</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a83a32d69380616320185314bde557f4e" name="a83a32d69380616320185314bde557f4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83a32d69380616320185314bde557f4e">&#9670;&nbsp;</a></span>GetPGNForGroupFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kGroupFunctionHandler::GetPGNForGroupFunction </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the PGN for the Group Function out of a n2k message. </p>
+<p >This is a static function for PGN 126208 handling. The function extracts the PGN (as 3 bytes) from the given N2K message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned long -&gt; PGN for Group Function </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00249">249</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab25065d4fe7b0ace9252a09be88f42d6" name="ab25065d4fe7b0ace9252a09be88f42d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab25065d4fe7b0ace9252a09be88f42d6">&#9670;&nbsp;</a></span>GetRequestGroupFunctionTransmissionOrPriorityErrorCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> tN2kGroupFunctionHandler::GetRequestGroupFunctionTransmissionOrPriorityErrorCode </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>TransmissionInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>TransmissionIntervalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>UseIntervalLimits</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>IntervalMax</em> = <code><a class="el" href="_n2k_group_function_8h.html#ac492c2691530d90d33cea5c9572fdf97">N2k_MAX_TRANSMISSION_INTERVAL</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>IntervalMin</em> = <code>50</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>UseOffsetLimits</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>OffsetMax</em> = <code><a class="el" href="_n2k_group_function_8h.html#a0ba0542c509abfc6113b362e92fbd379">N2k_MAX_TRANSMISSION_INTERVAL_OFFSET</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Request Group Function Transmission Or Priority Error Code object. </p>
+<p >This is default handler for Complex Request transmission interval setting. Overwrite it, if your PGN will support changing interval. <br  />
+ If you support changing interval and offset for your PGN, you can either overwrite function or set UseLimits and provide interval and offset limits.</p>
+<dl class="section note"><dt>Note</dt><dd>see Code In NMEA tests "C.3.13.2  Expanded Acknowledgment 
+Message Timing" tool is Old and does not know interval 0xFFFFFFFE=Restore Default Interval. So to pass that test, that has to be commented out.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TransmissionInterval</td><td>Interval for Transmission </td></tr>
+    <tr><td class="paramname">TransmissionIntervalOffset</td><td>Offset for Transmission Interval </td></tr>
+    <tr><td class="paramname">UseIntervalLimits</td><td>Use the Intervall limits <br  />
+ </td></tr>
+    <tr><td class="paramname">IntervalMax</td><td>Maximum Interval </td></tr>
+    <tr><td class="paramname">IntervalMin</td><td>Minimum Interval </td></tr>
+    <tr><td class="paramname">UseOffsetLimits</td><td>Use Offset limits </td></tr>
+    <tr><td class="paramname">OffsetMax</td><td>Maximum offset</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>N2kgfTPec_Acknowledge -&gt; if TransmissionInterval = 0xFFFFFFFF or TransmissionInterval = 0xFFFFFFFE (Restore Default Interval) </dd>
+<dd>
+N2kgfTPec_TransmitIntervalOrPriorityNotSupported -&gt; all other intervals </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00108">108</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6e845df1655bce228cf581a1e8396a45" name="a6e845df1655bce228cf581a1e8396a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e845df1655bce228cf581a1e8396a45">&#9670;&nbsp;</a></span>Handle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::Handle </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a>&#160;</td>
+          <td class="paramname"><em>GroupFunctionCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGNForGroupFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle for a Group Function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">GroupFunctionCode</td><td>Code for Group Function, see <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> </td></tr>
+    <tr><td class="paramname">PGNForGroupFunction</td><td>PGN for the Group function </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Group Function was handled properly </dd>
+<dd>
+false -&gt; if (PGN!=PGNForGroupFunction &amp;&amp; PGN!=0) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00038">38</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2fa68414146c1cde78747c2b79e71ae2" name="a2fa68414146c1cde78747c2b79e71ae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa68414146c1cde78747c2b79e71ae2">&#9670;&nbsp;</a></span>HandleAcknowledge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleAcknowledge </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a>&#160;</td>
+          <td class="paramname"><em>PGNErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a>&#160;</td>
+          <td class="paramname"><em>TransmissionOrPriorityErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default handle function for Acknowledge a Group Function. </p>
+<p >This function handles Acknowledge group function, which is response for Request, Command, ReadFields or WriteFields group function.</p>
+<dl class="section note"><dt>Note</dt><dd>As default, this simply returns true meaning that received acknowledge has been handled. So you need to override this, if your device will send one of those commands.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">PGNErrorCode</td><td>PGN Error Code, see <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> </td></tr>
+    <tr><td class="paramname">TransmissionOrPriorityErrorCode</td><td>see <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; As default, simply return true meaning that received acknowledge has been handled </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00189">189</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acb7adc03c4a6a17dd01242e1f0027c6c" name="acb7adc03c4a6a17dd01242e1f0027c6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7adc03c4a6a17dd01242e1f0027c6c">&#9670;&nbsp;</a></span>HandleCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleCommand </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>PrioritySetting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle the response to Group Function "Command". </p>
+<p >Default response is "not supported".</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">PrioritySetting</td><td>Priority Setting </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; always returns true </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classt_n2k_group_function_handler_for_p_g_n60928.html#ad72018e3613219dfd17a483c7fee6c06">tN2kGroupFunctionHandlerForPGN60928</a>, and <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html#ab70a89460b7761d322088c5d594b749b">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00170">170</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab72ce7c77053ed6c79b6865aae39eb42" name="ab72ce7c77053ed6c79b6865aae39eb42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab72ce7c77053ed6c79b6865aae39eb42">&#9670;&nbsp;</a></span>HandleReadFields()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleReadFields </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>UniqueID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfSelectionPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle the response to Group Function "Read Fields". </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code, This will be set to 0xffff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group Code, This will be set to 0xff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">UniqueID</td><td>Unique ID for the device </td></tr>
+    <tr><td class="paramname">NumberOfSelectionPairs</td><td>Number of Selection pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; always returns true </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00199">199</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a614f80038e19f4ff1ae22aec0fc3e35a" name="a614f80038e19f4ff1ae22aec0fc3e35a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a614f80038e19f4ff1ae22aec0fc3e35a">&#9670;&nbsp;</a></span>HandleReadFieldsReply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleReadFieldsReply </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle the response to Group Function "Read Fields Reply". </p>
+<dl class="section warning"><dt>Warning</dt><dd>Under construction! No real code inside, always returns true!</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Always </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00218">218</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad1657de1961b6b980c78b9feabe4fdc0" name="ad1657de1961b6b980c78b9feabe4fdc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1657de1961b6b980c78b9feabe4fdc0">&#9670;&nbsp;</a></span>HandleRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleRequest </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>TransmissionInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>TransmissionIntervalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default request handler for group function requests for PGN. </p>
+<p >Default response is "not supported". Certified devices must respond to requests!</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">TransmissionInterval</td><td>Transmission interval [ms] </td></tr>
+    <tr><td class="paramname">TransmissionIntervalOffset</td><td>Offset to the transmission interval [10ms] </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; always returns true </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classt_n2k_group_function_handler_for_p_g_n60928.html#a905f7bc982b6517f7fe04f4bb53dca67">tN2kGroupFunctionHandlerForPGN60928</a>, <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126464.html#a8b86f5d5ed8d864a95b55dd14a3449d3">tN2kGroupFunctionHandlerForPGN126464</a>, <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126993.html#aaf62b5e5932dc3e1f5d3bb8efd0e2d21">tN2kGroupFunctionHandlerForPGN126993</a>, <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126996.html#a9d0dc616734482f7c4105ad423185ad4">tN2kGroupFunctionHandlerForPGN126996</a>, and <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html#a617f9be935bf13e0ce08d84cc0152780">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00138">138</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7a3917e028d3a1dd34ae39351e331150" name="a7a3917e028d3a1dd34ae39351e331150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a3917e028d3a1dd34ae39351e331150">&#9670;&nbsp;</a></span>HandleWriteFields()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleWriteFields </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>UniqueID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfSelectionPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle the response to Group Function "Write Fields". </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code, This will be set to 0xffff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group Code, This will be set to 0xff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">UniqueID</td><td>Unique ID for the device </td></tr>
+    <tr><td class="paramname">NumberOfSelectionPairs</td><td>Number of Selection pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; always returns true </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00224">224</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab05cd4d483b086b6301701cd94eb70ca" name="ab05cd4d483b086b6301701cd94eb70ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab05cd4d483b086b6301701cd94eb70ca">&#9670;&nbsp;</a></span>HandleWriteFieldsReply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::HandleWriteFieldsReply </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle the response to Group Function "Write Fields Reply". </p>
+<dl class="section warning"><dt>Warning</dt><dd>Under construction! No real code inside, always returns true!</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Always </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00243">243</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad0486959190ac460bc9088a5f89057a0" name="ad0486959190ac460bc9088a5f89057a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0486959190ac460bc9088a5f89057a0">&#9670;&nbsp;</a></span>MatchRequestField() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::MatchRequestField </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>FieldVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>MatchVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>Match</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> &amp;&#160;</td>
+          <td class="paramname"><em>ErrorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add a proper documentation</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">FieldVal</td><td>{type} </td></tr>
+    <tr><td class="paramname">MatchVal</td><td>{type} </td></tr>
+    <tr><td class="paramname">Match</td><td>{type} </td></tr>
+    <tr><td class="paramname">ErrorCode</td><td>{type} </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00258">258</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a6197d834f500feee60c036017b5c6ad1" name="a6197d834f500feee60c036017b5c6ad1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6197d834f500feee60c036017b5c6ad1">&#9670;&nbsp;</a></span>MatchRequestField() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::MatchRequestField </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>FieldVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>MatchVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>Mask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>Match</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> &amp;&#160;</td>
+          <td class="paramname"><em>ErrorCode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Add a proper documentation</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td><br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">FieldVal</td><td></td></tr>
+    <tr><td class="paramname">MatchVal</td><td></td></tr>
+    <tr><td class="paramname">Mask</td><td></td></tr>
+    <tr><td class="paramname">Match</td><td></td></tr>
+    <tr><td class="paramname">ErrorCode</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00240">240</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a76998bfc0183eadf0217af1b7c2886d4" name="a76998bfc0183eadf0217af1b7c2886d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76998bfc0183eadf0217af1b7c2886d4">&#9670;&nbsp;</a></span>Parse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::Parse </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> &amp;&#160;</td>
+          <td class="paramname"><em>GroupFunctionCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long &amp;&#160;</td>
+          <td class="paramname"><em>PGNForGroupFunction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse group function code and PGN from the message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">GroupFunctionCode</td><td>Group Function Code, see <a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bc">tN2kGroupFunctionCode</a> </td></tr>
+    <tr><td class="paramname">PGNForGroupFunction</td><td>PGN for the Group function</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00255">255</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3fbfa679e2f7982d9d0363eed580caf8" name="a3fbfa679e2f7982d9d0363eed580caf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fbfa679e2f7982d9d0363eed580caf8">&#9670;&nbsp;</a></span>ParseAcknowledgeParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::ParseAcknowledgeParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> &amp;&#160;</td>
+          <td class="paramname"><em>PGNErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> &amp;&#160;</td>
+          <td class="paramname"><em>TransmissionOrPriorityErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse parameters from group function acknowledge message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">PGNErrorCode</td><td>PGN error code, see <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> </td></tr>
+    <tr><td class="paramname">TransmissionOrPriorityErrorCode</td><td>Transmission or Priority error code, see <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00313">313</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1ef478ccbb865047bf6b2b591ace17c2" name="a1ef478ccbb865047bf6b2b591ace17c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ef478ccbb865047bf6b2b591ace17c2">&#9670;&nbsp;</a></span>ParseCommandParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::ParseCommandParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>PrioritySetting</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse parameters from a group function Command message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">PrioritySetting</td><td>Priority setting </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00293">293</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8b650fa1d0ef53a35410cc45fa52448f" name="a8b650fa1d0ef53a35410cc45fa52448f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b650fa1d0ef53a35410cc45fa52448f">&#9670;&nbsp;</a></span>ParseReadOrWriteParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::ParseReadOrWriteParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>UniqueID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfSelectionPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Proprietary</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse parameters from group function ReadOrWrite message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code, This will be set to 0xffff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group Code, This will be set to 0xff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">UniqueID</td><td>Unique ID for the device </td></tr>
+    <tr><td class="paramname">NumberOfSelectionPairs</td><td>Number of Selection pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">Proprietary</td><td>Group function is proprietary</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00342">342</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a011cb27f1e40c64c379f03d2bfebb666" name="a011cb27f1e40c64c379f03d2bfebb666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a011cb27f1e40c64c379f03d2bfebb666">&#9670;&nbsp;</a></span>ParseRequestParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::ParseRequestParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t &amp;&#160;</td>
+          <td class="paramname"><em>TransmissionInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;&#160;</td>
+          <td class="paramname"><em>TransmissionIntervalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse parameters from group function Request message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">TransmissionInterval</td><td>Transmission interval </td></tr>
+    <tr><td class="paramname">TransmissionIntervalOffset</td><td>Offset to the transmission interval </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00271">271</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa0eb60487c02464da2011e6c3499e77e" name="aa0eb60487c02464da2011e6c3499e77e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0eb60487c02464da2011e6c3499e77e">&#9670;&nbsp;</a></span>SendAcknowledge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::SendAcknowledge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> *&#160;</td>
+          <td class="paramname"><em>pNMEA2000</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iDev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a>&#160;</td>
+          <td class="paramname"><em>PGNErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a>&#160;</td>
+          <td class="paramname"><em>TransmissionOrPriorityErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a>&#160;</td>
+          <td class="paramname"><em>ParameterErrorCodeForAll</em> = <code><a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6">N2kgfpec_Acknowledge</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send out an Acknowledge message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pNMEA2000</td><td>NMEA2000 oject </td></tr>
+    <tr><td class="paramname">Destination</td><td>address of Destination </td></tr>
+    <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a> </td></tr>
+    <tr><td class="paramname">PGN</td><td>Parameter group Number </td></tr>
+    <tr><td class="paramname">PGNErrorCode</td><td>PGN error code, see <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> </td></tr>
+    <tr><td class="paramname">TransmissionOrPriorityErrorCode</td><td>Transmission or Priority error code, see <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">ParameterErrorCodeForAll</td><td>Error code for all parameter sets, see <a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56">tN2kGroupFunctionParameterErrorCode</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00461">461</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab4e1b2e697ebf726459110b2ba22abcd" name="ab4e1b2e697ebf726459110b2ba22abcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4e1b2e697ebf726459110b2ba22abcd">&#9670;&nbsp;</a></span>SetStartAcknowledge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::SetStartAcknowledge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a>&#160;</td>
+          <td class="paramname"><em>PGNErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a>&#160;</td>
+          <td class="paramname"><em>TransmissionOrPriorityErrorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setting up the group function message for Acknowledge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">Destination</td><td>address of Destination </td></tr>
+    <tr><td class="paramname">PGN</td><td>Parameter group Number </td></tr>
+    <tr><td class="paramname">PGNErrorCode</td><td>PGN error code, see <a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629e">tN2kGroupFunctionPGNErrorCode</a> </td></tr>
+    <tr><td class="paramname">TransmissionOrPriorityErrorCode</td><td>Transmission or Priority error code, see <a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94f">tN2kGroupFunctionTransmissionOrPriorityErrorCode</a> </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00416">416</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afdb8744716db85a78fb924ecd0fbe77d" name="afdb8744716db85a78fb924ecd0fbe77d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdb8744716db85a78fb924ecd0fbe77d">&#9670;&nbsp;</a></span>SetStartReadReply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::SetStartReadReply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>UniqueID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfSelectionPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Proprietary</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setting up the group function message for Read Reply. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">Destination</td><td>address of Destination </td></tr>
+    <tr><td class="paramname">PGN</td><td>Parameter group Number </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code, This will be set to 0xffff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group Code, This will be set to 0xff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">UniqueID</td><td>Unique ID for the device </td></tr>
+    <tr><td class="paramname">NumberOfSelectionPairs</td><td>Number of Selection pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">Proprietary</td><td>Is this a proprietary group function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00388">388</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab3d92b5fdefc87fbcf7638f278bac00e" name="ab3d92b5fdefc87fbcf7638f278bac00e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3d92b5fdefc87fbcf7638f278bac00e">&#9670;&nbsp;</a></span>SetStartWriteReply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kGroupFunctionHandler::SetStartWriteReply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>Destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>PGN</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ManufacturerCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>IndustryGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>UniqueID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfSelectionPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>NumberOfParameterPairs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Proprietary</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setting up the group function message for Write Reply. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
+    <tr><td class="paramname">Destination</td><td>address of Destination </td></tr>
+    <tr><td class="paramname">PGN</td><td>Parameter group Number </td></tr>
+    <tr><td class="paramname">ManufacturerCode</td><td>Manufacturer Code, This will be set to 0xffff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">IndustryGroup</td><td>Industry Group Code, This will be set to 0xff for non-propprietary PNGs </td></tr>
+    <tr><td class="paramname">UniqueID</td><td>Unique ID for the device </td></tr>
+    <tr><td class="paramname">NumberOfSelectionPairs</td><td>Number of Selection pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">NumberOfParameterPairs</td><td>Number of parameter pairs contained inside the group function message </td></tr>
+    <tr><td class="paramname">Proprietary</td><td>Is this a proprietary group function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00402">402</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="abec2570741630fcd9a77d768f9b67e9a" name="abec2570741630fcd9a77d768f9b67e9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec2570741630fcd9a77d768f9b67e9a">&#9670;&nbsp;</a></span>StartParseCommandPairParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::StartParseCommandPairParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get start Index of pair parameters on the group function Command message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">Index</td><td>Index where the Command Pair Parameters start</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00305">305</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afbf192bc7493835c252aee35ae75e198" name="afbf192bc7493835c252aee35ae75e198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbf192bc7493835c252aee35ae75e198">&#9670;&nbsp;</a></span>StartParseReadOrWriteParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::StartParseReadOrWriteParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>Proprietary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get start Index of pair parameters on the group function ReadOrWrite message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">Proprietary</td><td>Group function is proprietary </td></tr>
+    <tr><td class="paramname">Index</td><td>Index where the Command Pair Parameters start</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00330">330</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a602b54580fa2de40c02bbb9798cde6cb" name="a602b54580fa2de40c02bbb9798cde6cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a602b54580fa2de40c02bbb9798cde6cb">&#9670;&nbsp;</a></span>StartParseRequestPairParameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::StartParseRequestPairParameters </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>Index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get start Index of pair parameters on the group function Request message. </p>
+<p >This is a static function for PGN 126208 handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, This message is an Group function message </td></tr>
+    <tr><td class="paramname">Index</td><td>Index where the Request Pair Parameters start</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false -&gt; if (N2kMsg.PGN!=126208L) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8cpp_source.html#l00285">285</a> of file <a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a6f3317b47fbe881cd353ab77a40683dd" name="a6f3317b47fbe881cd353ab77a40683dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f3317b47fbe881cd353ab77a40683dd">&#9670;&nbsp;</a></span>tNMEA2000</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00267">267</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac3ea9ea6e8ad725c755c1a83358768f9" name="ac3ea9ea6e8ad725c755c1a83358768f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3ea9ea6e8ad725c755c1a83358768f9">&#9670;&nbsp;</a></span>PGN</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kGroupFunctionHandler::PGN</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parameter Group Number (PGN) of this Group Function. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00271">271</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="abe8ae12fea36f090afe9f49b1fec76e7" name="abe8ae12fea36f090afe9f49b1fec76e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe8ae12fea36f090afe9f49b1fec76e7">&#9670;&nbsp;</a></span>pNMEA2000</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a>* tN2kGroupFunctionHandler::pNMEA2000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>NMEA2000 object in order to send messages to the bus <br  />
+ </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00275">275</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<a id="a43603a9dad7a6ccf80f5aff97ba9bce3" name="a43603a9dad7a6ccf80f5aff97ba9bce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43603a9dad7a6ccf80f5aff97ba9bce3">&#9670;&nbsp;</a></span>Proprietary</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kGroupFunctionHandler::Proprietary</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flag, if the Parameter Group is proprietary <br  />
+ </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00273">273</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a></li>
+<li><a class="el" href="_n2k_group_function_8cpp_source.html">N2kGroupFunction.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classt_n2k_group_function_handler.html">tN2kGroupFunctionHandler</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

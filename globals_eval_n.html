@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: File Members</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('globals_eval_n.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="contents">
+&#160;
+
+<h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
+<li>N2kAISAtoN_beacon_cardinal_E&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aa1a229f0f99239603af2c14327fdbfb3">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_cardinal_N&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aef3e5bab8dd337aca48bd0208d8f9c8d">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_cardinal_S&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ac20a865208e713d17b8f9a1cf2beb958">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_cardinal_W&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ac9eaa98679e05cfdf860ad6749f2b342">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_isolated_danger&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ac7de646f2aab4a785f3511020588152e">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_port_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a44a3ea71efddca3282ae731c7e031bba">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_preferred_ch_port_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ac2385b0f4a9f0c766fcffdd7b41dbc70">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_preferred_ch_starboard_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aeeb1463a0d0534befcd7d68f40569221">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_safe_water&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ac1365953494c59243bd55a653390c4f9">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_special_mark&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a7a9e81bdc586dcd0ad0ac55d7eb22d57">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_beacon_starboard_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a348c5d34a5b58567f0628901fa3d2a3e">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_cardinal_mark_E&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a8a77a963e1c3d97de67fb8378cd6aff0">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_cardinal_mark_N&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a7b1c76870bd5e8007ac466afaf98c8a0">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_cardinal_mark_S&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a5613c906d7381a999f89be42399eb82a">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_cardinal_mark_W&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aba7068cc8c6499b195703b203c17e9c0">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_emergency_wreck_marking_buoy&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ae741be1dd4f1aa93cbe3fef26704c717">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_fixed_structure&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ae75d106dc1c2e82f16dad8ea95471eac">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_isolated_danger&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a0639b115051b2e7327459733cb1f580b">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_leading_light_front&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a7be772227d82e13e8f9796de0b8fcff8">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_leading_light_rear&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ab55523e66d922526461960ff28c99f75">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_light_vessel_lanby_rigs&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a1ac43cafb99f36c99ce80368d8c0cca7">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_light_with_sectors&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a0e7f8a1b21a4ca37541e0dad8ef8c06c">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_light_without_sectors&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ae0bc587d6fc02a344331f91c04fd00c8">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_not_specified&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a6416355bf6ab20b66d8e696c0c0365d4">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_port_hand_mark&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aeb5e3fe69530eb117dbc8bbce0c35f15">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_preferred_channel_port_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a4d4f3f2c6c5953930d9a1263c2803fce">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_preferred_channel_starboard_hand&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a07914e7d7673b767f3ac55f5c91dc66c">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_RACON&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a20eea1d38464dec5abd28300617ea447">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_reference_point&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6af38f7b1e0f2ebbcbb8bbaa38759ed3d1">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_safe_water&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6a0dcf5f1705491541c7decc4a561f91a0">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_special_mark&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6ab572e50f27435ba69174fcd76e7ad842">NMEA2000StdTypes.h</a></li>
+<li>N2kAISAtoN_starboard_hand_mark&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga59a823dcb7456fe7bad874bf971e1bd6aec48e5d0a28cd67ca9e1751c9d149fea">NMEA2000StdTypes.h</a></li>
+<li>N2kaischannel_A_VDL_reception&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae7f8142668a3c9396ada7d2e725eb15aafcc24a65ad9b4cd696eca0bbf6139331">N2kTypes.h</a></li>
+<li>N2kaischannel_A_VDL_transmission&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae7f8142668a3c9396ada7d2e725eb15aa2690cf92a1733bc6c77c2b22d951d57f">N2kTypes.h</a></li>
+<li>N2kaischannel_B_VDL_reception&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae7f8142668a3c9396ada7d2e725eb15aa41aa9519790616ee2a4006cae62acf35">N2kTypes.h</a></li>
+<li>N2kaischannel_B_VDL_transmission&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae7f8142668a3c9396ada7d2e725eb15aaf58cacecc5ab4e01e39b1f5524e30079">N2kTypes.h</a></li>
+<li>N2kaisdte_NotReady&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga19fcb4aaa8814904b89835d2657bb67eaa0ac3f197ded2e0a0c07b282ab01e899">N2kTypes.h</a></li>
+<li>N2kaisdte_Ready&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga19fcb4aaa8814904b89835d2657bb67ead57a2d87f23006a38e2f550a57d3cbf5">N2kTypes.h</a></li>
+<li>N2kaismode_Assigned&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga15e6ecae32fe7903ff0bfea36775181ea74692b355c662bdf1e6cc6ffb54a86f0">N2kTypes.h</a></li>
+<li>N2kaismode_Autonomous&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga15e6ecae32fe7903ff0bfea36775181eaf39e7593b78dd88c5f1e405d3dac3703">N2kTypes.h</a></li>
+<li>N2kaisns_Aground&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8ae47cd711eb4e44aa890e4fc1ee7daa69">N2kTypes.h</a></li>
+<li>N2kaisns_AIS_SART&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a76ee1738dc4c46df55e8e3659c05af58">N2kTypes.h</a></li>
+<li>N2kaisns_At_Anchor&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a5f7cd1c9c474f9525032949d1a5392d0">N2kTypes.h</a></li>
+<li>N2kaisns_Constrained_By_Draught&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a1022cd5200c251d6c76c728b1d43a335">N2kTypes.h</a></li>
+<li>N2kaisns_Fishing&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8ab610357235b6b2717a1dbd65efaab481">N2kTypes.h</a></li>
+<li>N2kaisns_Hazardous_Material_High_Speed&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a0e5132176602a2df09b4356447856495">N2kTypes.h</a></li>
+<li>N2kaisns_Hazardous_Material_Wing_In_Ground&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a5c8b1b87964f0ad1788d3d4763a015bc">N2kTypes.h</a></li>
+<li>N2kaisns_Moored&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a03807de95951e6b51737f8f1d48bd26a">N2kTypes.h</a></li>
+<li>N2kaisns_Not_Under_Command&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a07e546f78911fa877685ef744511139b">N2kTypes.h</a></li>
+<li>N2kaisns_Restricted_Manoeuverability&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8aad808e2ec02f9d2d75dffde98bee6731">N2kTypes.h</a></li>
+<li>N2kaisns_Under_Way_Motoring&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8ad83dbfc786cf5ad48f4ab0a18e6e8533">N2kTypes.h</a></li>
+<li>N2kaisns_Under_Way_Sailing&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab46a3ab176299c0d16320449b9ca61f8a326848fa44664228948bff0e04d64d70">N2kTypes.h</a></li>
+<li>N2kaisown_information_not_broadcast&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae7f8142668a3c9396ada7d2e725eb15aa0a06ca65391d01c014c01a43f9b8fe90">N2kTypes.h</a></li>
+<li>N2kaisr_Final&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae803e241caab3b8d2846b5481e78e612a74e2419b3f37b0a177c2d98ea4a04662">N2kTypes.h</a></li>
+<li>N2kaisr_First&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae803e241caab3b8d2846b5481e78e612ad921eb3a418318fbfc0eea2d47c0460f">N2kTypes.h</a></li>
+<li>N2kaisr_Initial&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae803e241caab3b8d2846b5481e78e612a00daf325bea127432c09549bddaaad26">N2kTypes.h</a></li>
+<li>N2kaisr_Second&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae803e241caab3b8d2846b5481e78e612a3c00e906cccc9fd15657d7877c477b32">N2kTypes.h</a></li>
+<li>N2kaisunit_ClassB_CS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga83ba87b4811d1e75daa47358bee034b8a48ca70ad55ab2ceb6a5c75d50ad1fbc3">N2kTypes.h</a></li>
+<li>N2kaisunit_ClassB_SOTDMA&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga83ba87b4811d1e75daa47358bee034b8a2ef1d88a88f614d70f3ca81d5a5301ad">N2kTypes.h</a></li>
+<li>N2kaisv_ITU_R_M_1371_1&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gafe82863123cd5621f27436c38fb430c4a1d443fe8cb0bed1bafd097ee44cc3757">N2kTypes.h</a></li>
+<li>N2kaisv_ITU_R_M_1371_3&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gafe82863123cd5621f27436c38fb430c4a542509b92267c88256218151ebee78e6">N2kTypes.h</a></li>
+<li>N2kCM_Echo&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afa6c2fff0b110020193fa5e80643e89b0d">N2kTypes.h</a></li>
+<li>N2kCM_Primary&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afa116c5845f082149b4cb22ac04300b3bd">N2kTypes.h</a></li>
+<li>N2kCM_Secondary&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afa56b5fd56a1078bce2b830d5cd688af85">N2kTypes.h</a></li>
+<li>N2kCM_Standalone&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afa7c67a335f373430a446ec4c793dbe619">N2kTypes.h</a></li>
+<li>N2kCM_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afafa163ad6e35071784f3e70e509e345c1">N2kTypes.h</a></li>
+<li>N2kCS_Absorption&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5a7fbe24ffadaa05e444645a2dd266b359">N2kTypes.h</a></li>
+<li>N2kCS_Bulk&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5a8ef36309179dadd0f69ef1d84fff66aa">N2kTypes.h</a></li>
+<li>N2kCS_Constant_VI&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5a5e35bb1e6ef1edd911eeb38855e3ebe1">N2kTypes.h</a></li>
+<li>N2kCS_Disabled&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5adda3eda3e21037e057457862132a6b2f">N2kTypes.h</a></li>
+<li>N2kCS_Equalise&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5ab93f435b0f9b713065165bf104141080">N2kTypes.h</a></li>
+<li>N2kCS_Fault&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5ace149992334fc834871f988e5be1e46f">N2kTypes.h</a></li>
+<li>N2kCS_Float&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5a581d1c23ef7f6847c08932f3f9fea099">N2kTypes.h</a></li>
+<li>N2kCS_No_Float&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5aefa971168536d5c21ad881bf4b8dab41">N2kTypes.h</a></li>
+<li>N2kCS_Not_Charging&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5add59ba62775e3e1b501b3f49071e1042">N2kTypes.h</a></li>
+<li>N2kCS_Overcharge&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5af2723e23ee3dc2aa33a8a21f596feecb">N2kTypes.h</a></li>
+<li>N2kCS_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30c2d8d084d6ec9d9115dded189470f5abc8016cf51b955904beaf0cabe884372">N2kTypes.h</a></li>
+<li>N2kDCbc_LeadAcid&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab176017bf781c4cc22bfa340a3b43e0aaebf4042de82b249d21e90e8c3ceedc99">N2kTypes.h</a></li>
+<li>N2kDCbc_LiIon&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab176017bf781c4cc22bfa340a3b43e0aaaa77b471d1d866ad8dae44068e3b1009">N2kTypes.h</a></li>
+<li>N2kDCbc_NiCad&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab176017bf781c4cc22bfa340a3b43e0aaf8c3bb8efdaf084af150aa0774e9e3c7">N2kTypes.h</a></li>
+<li>N2kDCbc_NiMh&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab176017bf781c4cc22bfa340a3b43e0aaf03ec79482e66155a2346658229b794d">N2kTypes.h</a></li>
+<li>N2kDCbc_ZnO&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab176017bf781c4cc22bfa340a3b43e0aa9be9db15698824ca48a3e32439f33cc1">N2kTypes.h</a></li>
+<li>N2kDCbnv_12v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa1f5ca6bf6832988d0b81451f6ef99fd0">N2kTypes.h</a></li>
+<li>N2kDCbnv_24v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa7a759e5be1e678df39ef2923797160a1">N2kTypes.h</a></li>
+<li>N2kDCbnv_32v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aaa64906c7b462e667b327b0340ce4b9cb">N2kTypes.h</a></li>
+<li>N2kDCbnv_42v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa1d27670b0444168b09b28cb6d69f7dfe">N2kTypes.h</a></li>
+<li>N2kDCbnv_48v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa57fa50015e931228a4a5a2c955edb8a8">N2kTypes.h</a></li>
+<li>N2kDCbnv_62v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa05092c4669051f7dc9d0c5241106fb73">N2kTypes.h</a></li>
+<li>N2kDCbnv_6v&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga236f04b90b570bf56b96f1d9c4ca587aa7b099a3a11a0c6e9ca84d5c4e7e3b9de">N2kTypes.h</a></li>
+<li>N2kDCbt_AGM&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a4080ba93d2a48a471c04a5aeb45abfa4">N2kTypes.h</a></li>
+<li>N2kDCbt_Flooded&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a7948c54c2778f5309970e5ea881d5c0b">N2kTypes.h</a></li>
+<li>N2kDCbt_Gel&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a333a131d41ecddb1bfe78b0b223358f1">N2kTypes.h</a></li>
+<li>N2kDCES_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gadca5f1106aa9e8e84ad7a75986a5f7eba4d49ca0c0cf9a2bb087ccdc52e093306">N2kTypes.h</a></li>
+<li>N2kDCES_No&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gadca5f1106aa9e8e84ad7a75986a5f7eba95895a2925c8356ab922eb4b055acd2f">N2kTypes.h</a></li>
+<li>N2kDCES_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gadca5f1106aa9e8e84ad7a75986a5f7eba591c0dacb526b5fbb09c7415ffa54e0b">N2kTypes.h</a></li>
+<li>N2kDCES_Yes&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gadca5f1106aa9e8e84ad7a75986a5f7eba6341b6ec9a33acc7cceee1a22bc6b6b5">N2kTypes.h</a></li>
+<li>N2kDCt_Alternator&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga60a7fbbb637e2eed35ca0014458e4466a1ca3dc87f52315e76c50631e99a48f15">N2kTypes.h</a></li>
+<li>N2kDCt_Battery&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga60a7fbbb637e2eed35ca0014458e4466aaea894a719bd6e7170472520556d64f4">N2kTypes.h</a></li>
+<li>N2kDCt_Converter&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga60a7fbbb637e2eed35ca0014458e4466a43b29660c1ff1d780c4dbb447c5c7efc">N2kTypes.h</a></li>
+<li>N2kdct_GreatCircle&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga02c7a0305cd371219c5756503b7b4433a5e605613d2708ee272e0a6dfdaac3757">N2kTypes.h</a></li>
+<li>N2kdct_RhumbLine&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga02c7a0305cd371219c5756503b7b4433a841d88ce3b577f1aabffd28e07dcd006">N2kTypes.h</a></li>
+<li>N2kDCt_SolarCell&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga60a7fbbb637e2eed35ca0014458e4466ac213c4368bf85c681916f05bd0bced02">N2kTypes.h</a></li>
+<li>N2kDCt_WindGenerator&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga60a7fbbb637e2eed35ca0014458e4466a606e98e6c354f9b9782e28e5b45a7a5f">N2kTypes.h</a></li>
+<li>N2kDD002_0&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a3b4aa2233b25a2c911e268947ca2225b">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_1&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a1c8e2e346d3b4bd164c98ff4b22fcbe3">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Disabled&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4aca4f6edc9ed7c4dbf2a2f56cf74f4ebb">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Enabled&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4af73b3d7632fcdf383d5e7e78febe64c7">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a6f85a92a37281fba9413bb5d382a98b3">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_No&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a12a35f91cec00f1e13409049752c142b">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Off&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a0e504a045954233c29b56f3be3af6ed2">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_On&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a3b6429425d105b7875a07d74ec79d3f1">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Reset&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4ab97bc9d5a4a58bc912a50dcd026607ae">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Set&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a25db69ec04335fd67db4c0dcfb627da8">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4abf329172e8566e31fe6a63698fa6c15f">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Unknown&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4a655381adf00fb618bd606d7a78b42555">NMEA2000StdTypes.h</a></li>
+<li>N2kDD002_Yes&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga9b3af1938b0500dabdd11de87fa577d4ad49f59479e2a38cf98997e815464228a">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Autonomous&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a811945aca9990be3bb30556faeb12700">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Differential&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a3b631c99e61c1acb5ad613edc0994484">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028af751878d8d1195439b5103789b0fd656">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Estimated&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a6b59751d2541b51e859300c42324c639">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Manual&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a882d4f86a476d3341b45d5f88b58b8b0">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Simulator&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a7415ea0098368e606231e806d3fd9173">NMEA2000StdTypes.h</a></li>
+<li>N2kDD025_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga64396d290128543a10f29a721f629028a777a8d17ae9c19b89d8bb68df2d9baac">NMEA2000StdTypes.h</a></li>
+<li>N2kDD072_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga618c24960fcbfb338c5d29ef034c5cc1af185b628ab9c2b8b313d8e06b2df9ab8">NMEA2000StdTypes.h</a></li>
+<li>N2kDD072_RangeResidualsWereCalculatedAfterPosition&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga618c24960fcbfb338c5d29ef034c5cc1aff80811073a9253ecf1efb19e3aec349">NMEA2000StdTypes.h</a></li>
+<li>N2kDD072_RangeResidualsWereUsedToCalculateData&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga618c24960fcbfb338c5d29ef034c5cc1a6f1c186b9e3967fbe634e253f127187c">NMEA2000StdTypes.h</a></li>
+<li>N2kDD072_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga618c24960fcbfb338c5d29ef034c5cc1adb3c9d048ec7fb2592df867c089eae74">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_DifferentialCorrectionsAvailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3a546ad3dcb50adc7baa2984bd7c21b012">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3aa9aff9ed516c4436bc09cbf7f8ea9cf1">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_NotTracked&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3af626a438c1013ea19b372d6ea1bb05de">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_TrackedButNotUsedInSolution&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3a2e25782c7babe65f0527c44a7a68802d">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_TrackedWithDifferentialCorrections&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3a0efee1999df8af238b454ca5db340299">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3a74f606147de5e36ea2b1f1446986ed06">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_UsedInSolutionWithoutDifferentialCorrections&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3ab446d218b66f9a14d9319fdd5f0dd75a">NMEA2000StdTypes.h</a></li>
+<li>N2kDD124_UsedWithDifferentialCorrections&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga557ef409cb31124f5c79b361bd8fbfe3a6f7656220c0f2a35c81bcafd5474e1c3">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_DataNotAvailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884a6f57bf9beee1e1823b69bfa145456fad">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_FactoryDefault&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884aa3fe9395c8b2a09d985fe6251fea4db2">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_MaximumSupported&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884ae0ab510e8de15fed7cd1feaf68aba9ea">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_MinimumDefined&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884a1b97d88df3f7e0e3a028bc5cab8b1789">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_OutOfRange&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884a3dcac87d57da691f46d2d95e61ab5e7c">NMEA2000StdTypes.h</a></li>
+<li>N2kDD374_UserDefined&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga851033c0988bb1f058836950f92a3884a3d2540761b1315e30750619dfc95bf11">NMEA2000StdTypes.h</a></li>
+<li>N2kDD473_OFF&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga806e3e52f1b9e5b5e068ab8b767294baa444b1a2814255e719e09353af11fcc5e">NMEA2000StdTypes.h</a></li>
+<li>N2kDD473_ThrusterReady&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga806e3e52f1b9e5b5e068ab8b767294baa66d89bd7ce38a5cfe34444cbf2e84970">NMEA2000StdTypes.h</a></li>
+<li>N2kDD473_ThrusterToPORT&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga806e3e52f1b9e5b5e068ab8b767294baafb2c4b11759db21a39b5941f9fec39e2">NMEA2000StdTypes.h</a></li>
+<li>N2kDD473_ThrusterToSTARBOARD&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga806e3e52f1b9e5b5e068ab8b767294baaae3c733afbe3ed1f265b8c8641a6b5aa">NMEA2000StdTypes.h</a></li>
+<li>N2kDD474_Extend&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga313f8a569b4f4718833153b0b9421034a1c11bf3b48a89c48f945a300848ab211">NMEA2000StdTypes.h</a></li>
+<li>N2kDD474_OFF&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga313f8a569b4f4718833153b0b9421034ab69782c91aa5b4318ee2c33f0a0e7a9c">NMEA2000StdTypes.h</a></li>
+<li>N2kDD474_Reserved&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga313f8a569b4f4718833153b0b9421034ace276e7b4d7829687320837326b47bec">NMEA2000StdTypes.h</a></li>
+<li>N2kDD474_Retract&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga313f8a569b4f4718833153b0b9421034a5842f1c304a607bf9cd91fd2a08a0756">NMEA2000StdTypes.h</a></li>
+<li>N2kDD480_DeploymentOccurring&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gae12f69d3e7352ea6a531314ea0cc8d36ab556ead74b5dc9ca400a2dbb1ad8eaac">NMEA2000StdTypes.h</a></li>
+<li>N2kDD480_RetrievalOccurring&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gae12f69d3e7352ea6a531314ea0cc8d36af33047b7a0b49824d94ac2a1db108458">NMEA2000StdTypes.h</a></li>
+<li>N2kDD480_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gae12f69d3e7352ea6a531314ea0cc8d36a766cd0fdb76a68cb500fada1b48b2fca">NMEA2000StdTypes.h</a></li>
+<li>N2kDD480_WindlassStopped&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gae12f69d3e7352ea6a531314ea0cc8d36aefe1219d7701f0cf04c9e458d67528da">NMEA2000StdTypes.h</a></li>
+<li>N2kDD481_ChainPresentlyDetected&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga07fe8ae611b7fa9c40426670c46a2348a34b5785f50df0e382b85a421e85867e2">NMEA2000StdTypes.h</a></li>
+<li>N2kDD481_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga07fe8ae611b7fa9c40426670c46a2348a869ed1a663ead82d9adf6adca4aa5976">NMEA2000StdTypes.h</a></li>
+<li>N2kDD481_RopePresentlyDetected&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga07fe8ae611b7fa9c40426670c46a2348a9d835c412a6899bb6df774d6cfb86620">NMEA2000StdTypes.h</a></li>
+<li>N2kDD481_Unavailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga07fe8ae611b7fa9c40426670c46a2348aebe67c08887979a44485a2addb212965">NMEA2000StdTypes.h</a></li>
+<li>N2kDD482_DataNotAvailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga41041126ffc78860caa451e87a19c7e5ab14f270ccf71247f725abdc9f42cf104">NMEA2000StdTypes.h</a></li>
+<li>N2kDD482_Error&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga41041126ffc78860caa451e87a19c7e5a389339d937972b98492d607af0317db6">NMEA2000StdTypes.h</a></li>
+<li>N2kDD482_FullyDocked&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga41041126ffc78860caa451e87a19c7e5a530ae6e94fad82bf113e98d28a34494a">NMEA2000StdTypes.h</a></li>
+<li>N2kDD482_NotDocked&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga41041126ffc78860caa451e87a19c7e5a813cfaa67da22d1eadb2e66160c8c285">NMEA2000StdTypes.h</a></li>
+<li>N2kDD484_Down&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gaf338271ac220b2b8f5594caf6ce70a31a7e92f3dcd29bd20a4d459113bff65c8f">NMEA2000StdTypes.h</a></li>
+<li>N2kDD484_Off&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gaf338271ac220b2b8f5594caf6ce70a31a2e60112349f521e9aff4ee5986f7347a">NMEA2000StdTypes.h</a></li>
+<li>N2kDD484_Reserved&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gaf338271ac220b2b8f5594caf6ce70a31a53e2d9af9152c080c03573992a2cd2f8">NMEA2000StdTypes.h</a></li>
+<li>N2kDD484_Up&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gaf338271ac220b2b8f5594caf6ce70a31ad53e116ce5d01b5d4c5d8edd5038a3f6">NMEA2000StdTypes.h</a></li>
+<li>N2kDD487_12VDC&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga7f9a43c81c4e5bfa3dd645f545926ea7aed30005c69e08f66a13e6acf775b05ea">NMEA2000StdTypes.h</a></li>
+<li>N2kDD487_24VAC&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a81bbbe4237e3e7024a735db5ae75206d">NMEA2000StdTypes.h</a></li>
+<li>N2kDD487_24VDC&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a673b0ab6b20f2025b363163a13fb6418">NMEA2000StdTypes.h</a></li>
+<li>N2kDD487_48VDC&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga7f9a43c81c4e5bfa3dd645f545926ea7a64f13b92002e65862e9f25910b64bcc2">NMEA2000StdTypes.h</a></li>
+<li>N2kDD487_Hydraulic&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#ga7f9a43c81c4e5bfa3dd645f545926ea7aac8d734e94dda14bd30dbfeca1971d52">NMEA2000StdTypes.h</a></li>
+<li>N2kDD488_DataNotAvailable&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gad29092cc71c83d37eebd0e5c6994c353a19a7b58f7404ad214cc18b152e0a1f1b">NMEA2000StdTypes.h</a></li>
+<li>N2kDD488_DualSpeed&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gad29092cc71c83d37eebd0e5c6994c353a75cd69279bbe32a359724a749fd20516">NMEA2000StdTypes.h</a></li>
+<li>N2kDD488_ProportionalSpeed&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gad29092cc71c83d37eebd0e5c6994c353a3c82b7e50efd9290d533e8a1d73a8c97">NMEA2000StdTypes.h</a></li>
+<li>N2kDD488_SingleSpeed&#160;:&#160;<a class="el" href="_n_m_e_a2000_std_types_8h.html#gad29092cc71c83d37eebd0e5c6994c353a8d38c912744bcb47c8d8e51879a63429">NMEA2000StdTypes.h</a></li>
+<li>N2kdir_error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a533d89a3e40d79c20d4452df085c127f">N2kTypes.h</a></li>
+<li>N2kdir_forward&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a64baf162a88a9a5fb39c75c43be929c0">N2kTypes.h</a></li>
+<li>N2kdir_reserved1&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a26d8dcd93524883a7596c37e778e7153">N2kTypes.h</a></li>
+<li>N2kdir_reserved2&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a7c843a040322d612622cdc4c62221a0e">N2kTypes.h</a></li>
+<li>N2kdir_reserved3&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a29714d05a6495920cc4a41566d41d69f">N2kTypes.h</a></li>
+<li>N2kdir_reserved4&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a92814cbfe23d6b795a3b6e5b24f66715">N2kTypes.h</a></li>
+<li>N2kdir_reverse&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512a60c6aea8212fc515dbba102ce77bcaff">N2kTypes.h</a></li>
+<li>N2kdir_unknown&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga2fe61775899a8c487358880611fec512acb976a0756fbd6f52edf89fd6a0fe1b7">N2kTypes.h</a></li>
+<li>N2kft_BlackWater&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa3223524849ee02d30411fc40c7453957">N2kTypes.h</a></li>
+<li>N2kft_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa3b4f1f5c3a2cb882b6833b59cb97d65c">N2kTypes.h</a></li>
+<li>N2kft_Fuel&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa6618d1b0b7e612d4e55d18b10e0b63e8">N2kTypes.h</a></li>
+<li>N2kft_FuelGasoline&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa1726f7c576b4edc48103809ba711021c">N2kTypes.h</a></li>
+<li>N2kft_GrayWater&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa1bf92f5029c02c1fedacab2650a9d8c5">N2kTypes.h</a></li>
+<li>N2kft_LiveWell&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfac35e19a506277226101606d3a61408f3">N2kTypes.h</a></li>
+<li>N2kft_Oil&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa6fcfbe3e786be61f6264bd42e67559b6">N2kTypes.h</a></li>
+<li>N2kft_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa14cbd0772b8098a1e5270410a00de848">N2kTypes.h</a></li>
+<li>N2kft_Water&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaebff1affd21cdcb4962682017d8a18dfa202b758c0ade353e196e380a36a9a6bc">N2kTypes.h</a></li>
+<li>N2kgfc_Acknowledge&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555">N2kGroupFunction.h</a></li>
+<li>N2kgfc_Command&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee">N2kGroupFunction.h</a></li>
+<li>N2kgfc_Read&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93">N2kGroupFunction.h</a></li>
+<li>N2kgfc_ReadReply&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcabc73ab615b7a7bf4141749667bfdeb1c">N2kGroupFunction.h</a></li>
+<li>N2kgfc_Request&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca93801669b5bb81da1e5549568b36c84c">N2kGroupFunction.h</a></li>
+<li>N2kgfc_Write&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bca5a83cd9b4fa7adef9c65872232e4785a">N2kGroupFunction.h</a></li>
+<li>N2kgfc_WriteReply&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#ac314d0f10e98b40e38c24030ab7f29bcaa9770579a291c67e62d8b7e1aa0964be">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_AccessDenied&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a22cf469a1bcea89daea0dac5480aa6f8">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_Acknowledge&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_InvalidRequestOrCommandParameterField&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_ReadOrWriteIsNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a4e6ea959a5d69e14344eb704c1cad25e">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_RequestOrCommandNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a40f83a4440412310f028268b6c0cb864">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_RequestOrCommandParameterOutOfRange&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a5179a196f95c72e8576739af90c4309e">N2kGroupFunction.h</a></li>
+<li>N2kgfpec_TemporarilyUnableToComply&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a13e3f4a8e8456044e9c9683c4a4cec56a2342ca0921e1cbd36e2969f279d62091">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_AccessDenied&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eab62f93d81b2ddf930e01badee6171836">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_Acknowledge&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_DefinerTagNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eae81459292f2ba91826eed1eee4193ba5">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_PGNNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_PGNTemporarilyNotAvailable&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629ea93df64193c71fb55a920e67389fecf60">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_ReadOrWriteNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eaee282e93e9d6d09fde35e6457727c51c">N2kGroupFunction.h</a></li>
+<li>N2kgfPGNec_RequestOrCommandNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#a581366a28f5e6d0f779da0f33191629eadd059338a9ab3116a3cfe1d2495ba104">N2kGroupFunction.h</a></li>
+<li>N2kgfTPec_AccessDenied&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa6940e339e9be409cfe8cd4940a2e7e26">N2kGroupFunction.h</a></li>
+<li>N2kgfTPec_Acknowledge&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419">N2kGroupFunction.h</a></li>
+<li>N2kgfTPec_RequestNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fadd40ce3be446e737021c07e70c9eed94">N2kGroupFunction.h</a></li>
+<li>N2kgfTPec_TransmitIntervalIsLessThanMeasurementInterval&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94fa03c96a712f3b9e702435077b7fb093e5">N2kGroupFunction.h</a></li>
+<li>N2kgfTPec_TransmitIntervalOrPriorityNotSupported&#160;:&#160;<a class="el" href="_n2k_group_function_8h.html#aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8">N2kGroupFunction.h</a></li>
+<li>N2kGNSSdm_1D&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fba25ab9330f8957941ff4bd60ee1596945">N2kTypes.h</a></li>
+<li>N2kGNSSdm_2D&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbade04225e2282e454af2714cf7c50d976">N2kTypes.h</a></li>
+<li>N2kGNSSdm_3D&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbaa86dafe91816b5e12e77a5fa5ccd1ff2">N2kTypes.h</a></li>
+<li>N2kGNSSdm_Auto&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbaa61784798eddfdc379d4d1b928a9df90">N2kTypes.h</a></li>
+<li>N2kGNSSdm_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fba5d742ccb8e930150a3469ec89a2184ce">N2kTypes.h</a></li>
+<li>N2kGNSSdm_Reserved&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbae4ea824dfa93c2743339ce214c64c1d8">N2kTypes.h</a></li>
+<li>N2kGNSSdm_Reserved2&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbaba86d30959c5b901afec7a8329f53e57">N2kTypes.h</a></li>
+<li>N2kGNSSdm_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga95bb0c22b8d09ab7e9993d0927b7a1fbabe78621e18342c35c2151fbc73d1e3b4">N2kTypes.h</a></li>
+<li>N2kGNSSm_DGNSS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001a710f1174b358e46ef99c98d8053dbcf8">N2kTypes.h</a></li>
+<li>N2kGNSSm_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001ae860ff56f8ac21bf98273995dd442e00">N2kTypes.h</a></li>
+<li>N2kGNSSm_GNSSfix&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001a2014ef72c696bc64c6083d5e3eeccc75">N2kTypes.h</a></li>
+<li>N2kGNSSm_noGNSS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001aaa8cff5986b80475d2e0128bedd47ab4">N2kTypes.h</a></li>
+<li>N2kGNSSm_PreciseGNSS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001a48bcc4ffc85cc48cdbaae16d787056af">N2kTypes.h</a></li>
+<li>N2kGNSSm_RTKFixed&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001ad9a0c85c90df2196c1104c514720ae4d">N2kTypes.h</a></li>
+<li>N2kGNSSm_RTKFloat&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001a3379f6441c0811244d78d62e8c6c56c8">N2kTypes.h</a></li>
+<li>N2kGNSSm_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d2068cf598e5b52b7f552473246e001abce67fe9a50537e943c9b41a2986f558">N2kTypes.h</a></li>
+<li>N2kGNSSt_Chayka&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a6f6e245520e137846ff47be165cd1f16">N2kTypes.h</a></li>
+<li>N2kGNSSt_Galileo&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a7b052ccd12d1efbf076e5f26726f6ef9">N2kTypes.h</a></li>
+<li>N2kGNSSt_GLONASS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394afc57b5ad02a7dadc6a6d21ec955965dd">N2kTypes.h</a></li>
+<li>N2kGNSSt_GPS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a8b7118ce0af951465a76dd55842293c3">N2kTypes.h</a></li>
+<li>N2kGNSSt_GPSGLONASS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a6b9649792e8e2a74dbc967a10f889c31">N2kTypes.h</a></li>
+<li>N2kGNSSt_GPSSBASWAAS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394af1a3adeed3ff9ce6d4475c3be70d39f9">N2kTypes.h</a></li>
+<li>N2kGNSSt_GPSSBASWAASGLONASS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a187d44e091da92c188e3d193c6dc353c">N2kTypes.h</a></li>
+<li>N2kGNSSt_integrated&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394a260d47c5e54828dbdc6c4529e72beb4e">N2kTypes.h</a></li>
+<li>N2kGNSSt_surveyed&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gab26b91bc9eb6c85000e2d2e0c1f23394afd19d7f173495f7c4776a63a12a0e5bc">N2kTypes.h</a></li>
+<li>N2khr_error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga14ed764d736a6d1f43e85b5df2acd727a83489f03fee12a8a4927753a1d3703a8">N2kTypes.h</a></li>
+<li>N2khr_magnetic&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga14ed764d736a6d1f43e85b5df2acd727a08515bd19c32f2f9c90d16cae337ea5e">N2kTypes.h</a></li>
+<li>N2khr_true&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga14ed764d736a6d1f43e85b5df2acd727a10156e26c3b423294be4fadd8f079cf3">N2kTypes.h</a></li>
+<li>N2khr_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga14ed764d736a6d1f43e85b5df2acd727ad5e5727360e14ed4ba24e55182cee99b">N2kTypes.h</a></li>
+<li>N2khs_InsideHumidity&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae0192b5ddd2902009e5f324689fe2d90a4fa68670662227e1ffe63027c91b200a">N2kTypes.h</a></li>
+<li>N2khs_OutsideHumidity&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae0192b5ddd2902009e5f324689fe2d90a62f5ffaa79f2849fb00d2359439ea6a9">N2kTypes.h</a></li>
+<li>N2khs_Undef&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gae0192b5ddd2902009e5f324689fe2d90aa698d8d6e361f3b78b1c9f51531e0c8f">N2kTypes.h</a></li>
+<li>N2kmagvar_Calc&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca4b3a84457f8f531157de72fe778d5b91">N2kTypes.h</a></li>
+<li>N2kmagvar_Chart&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca51e1989f0d29174a967efc7516892188">N2kTypes.h</a></li>
+<li>N2kmagvar_Manual&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca9fd000f1638fef8f53eebe3daab50b8c">N2kTypes.h</a></li>
+<li>N2kmagvar_Table&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca08d0b47f1ea9027d14f1840c14722480">N2kTypes.h</a></li>
+<li>N2kmagvar_WMM2000&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6cae20fe7479c54c2ce8e452abddb8c5e35">N2kTypes.h</a></li>
+<li>N2kmagvar_WMM2005&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca17b4df914581a028dad8db24bf97e675">N2kTypes.h</a></li>
+<li>N2kmagvar_WMM2010&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca4b9c71ae8ccdb370423687bf310c38f9">N2kTypes.h</a></li>
+<li>N2kmagvar_WMM2015&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca8017408c37cbe4451b9b7017d5707bbf">N2kTypes.h</a></li>
+<li>N2kmagvar_WMM2020&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga320323d038dcec3a2009a48c745edd6ca1c595b9fbcc669ded08e973e26514f21">N2kTypes.h</a></li>
+<li>N2kOnOff_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8bad19278f21a92c6ad1704410d25a8f7e8">N2kTypes.h</a></li>
+<li>N2kOnOff_Off&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8ba3cb7d1562f400617cfaf52e78de2b97b">N2kTypes.h</a></li>
+<li>N2kOnOff_On&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8babd4abbd7d032ce6c788b16ce09be4c4b">N2kTypes.h</a></li>
+<li>N2kOnOff_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8baa43583342c9dac7e107efc2b239a0dc2">N2kTypes.h</a></li>
+<li>N2kpgnl_receive&#160;:&#160;<a class="el" href="_n_m_e_a2000_8h.html#afe3510c9b614e5cd7d30c8095882cde0a95f1ae6bcf708ac57445c095d7d999ad">NMEA2000.h</a></li>
+<li>N2kpgnl_transmit&#160;:&#160;<a class="el" href="_n_m_e_a2000_8h.html#afe3510c9b614e5cd7d30c8095882cde0ab59231d6d2039c2d877e1871a3a02e01">NMEA2000.h</a></li>
+<li>N2kps_AltimeterSetting&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a98b478f13d2cf80b8ed5b19c03989120">N2kTypes.h</a></li>
+<li>N2kps_Atmospheric&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a7a6dd7a5aad15f09a79da89547afb321">N2kTypes.h</a></li>
+<li>N2kps_CompressedAir&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a4257cb760cd159d18adceed85f3e5a45">N2kTypes.h</a></li>
+<li>N2kps_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a5ec9c97eb80de23da2a2bd973145df88">N2kTypes.h</a></li>
+<li>N2kps_Filter&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a72e891c11f27cac7923d63929f752beb">N2kTypes.h</a></li>
+<li>N2kps_Fuel&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a38895bff4d99488272936d021a40293a">N2kTypes.h</a></li>
+<li>N2kps_Hydraulic&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a849eb48577b6cca62623259e48b41bcc">N2kTypes.h</a></li>
+<li>N2kps_Oil&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2aa8c9e592ce16645e8cbfca36839d9fb8">N2kTypes.h</a></li>
+<li>N2kps_Reserved&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a14e8f71d4baae36835c959c4023052ed">N2kTypes.h</a></li>
+<li>N2kps_Steam&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2afc2bc0b79488598f6768dcd2bf827ffe">N2kTypes.h</a></li>
+<li>N2kps_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2a3925583562dd6a72698d37478cd34d9c">N2kTypes.h</a></li>
+<li>N2kps_Water&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaea827abbd807a9e6c0bebf49ce656ed2ab49bc3ac2218926130a2abab878933f5">N2kTypes.h</a></li>
+<li>N2kRDO_MoveToPort&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8a78770525d742598429f15a143fa2b002">N2kTypes.h</a></li>
+<li>N2kRDO_MoveToStarboard&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8ac34e010042d4159fd1f5f5ac3e543ac5">N2kTypes.h</a></li>
+<li>N2kRDO_NoDirectionOrder&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8ac908e524f9b755d80435eec386669b06">N2kTypes.h</a></li>
+<li>N2kRDO_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8a53b2fff41e9c7006e31d977f6a427623">N2kTypes.h</a></li>
+<li>N2kSM_FollowUpDevice&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8a00d0595b0809fe779d67bd21e2e5fb4f">N2kTypes.h</a></li>
+<li>N2kSM_HeadingControl&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8a2be1b8daf6b27f057efabeb41e979cf8">N2kTypes.h</a></li>
+<li>N2kSM_HeadingControlStandalone&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8aff974209d3cac4c7cedde26da1f822c5">N2kTypes.h</a></li>
+<li>N2kSM_MainSteering&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8a730a296db2e66ca8b3431b6cb49d3042">N2kTypes.h</a></li>
+<li>N2kSM_NonFollowUpDevice&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8a9cdfe020099179d813eed6a2affeffee">N2kTypes.h</a></li>
+<li>N2kSM_TrackControl&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8a5f8d8715f63459e521d9a3ad6d6f0acf">N2kTypes.h</a></li>
+<li>N2kSM_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8101d2e7e0c51a15bd5d107900f6d1d8ac078a70ade71d668b4965631b7cf40c1">N2kTypes.h</a></li>
+<li>N2kSWRT_Doppler_log&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342a6276da474c27035062caebd62b8b62e9">N2kTypes.h</a></li>
+<li>N2kSWRT_Electro_magnetic&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342af46dca7b896ba83562ad04aed9ca0e86">N2kTypes.h</a></li>
+<li>N2kSWRT_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342ada815c702de6832c0fd5876818ac8237">N2kTypes.h</a></li>
+<li>N2kSWRT_Paddle_wheel&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342a843cb6928cd28d240090caa8d3cb10c6">N2kTypes.h</a></li>
+<li>N2kSWRT_Pitot_tube&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342a17c486d4b835b893f117420fd9f4ea43">N2kTypes.h</a></li>
+<li>N2kSWRT_Ultra_Sound&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342a57c7d7514b8ca9a3786fbcea61aa0c08">N2kTypes.h</a></li>
+<li>N2kSWRT_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gababa4fa7b370393ba663c3eb26efd342ae3d41359412e083ffe4fdf563858f364">N2kTypes.h</a></li>
+<li>N2kTG_Forward&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d4d08a6e1a5c19215dac98773275320a0d0275b93f03586c005fd120a26628b6">N2kTypes.h</a></li>
+<li>N2kTG_Neutral&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d4d08a6e1a5c19215dac98773275320af8f023617e4950a01aacd8641a077636">N2kTypes.h</a></li>
+<li>N2kTG_Reverse&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d4d08a6e1a5c19215dac98773275320ab4c80a0e64841bdd6d05119c0944acf7">N2kTypes.h</a></li>
+<li>N2kTG_Unknown&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga5d4d08a6e1a5c19215dac98773275320ac3b98ffbdd28b32f8d1a2b1c69e4a720">N2kTypes.h</a></li>
+<li>N2ktimes_GLONASS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645ae054537b6966bb136528503e2f49d902">N2kTypes.h</a></li>
+<li>N2ktimes_GPS&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645a596de6b64399016c39f5e3228457f44f">N2kTypes.h</a></li>
+<li>N2ktimes_LocalCesiumClock&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645ae40278ac74d59c35ecbb9c4411cd7977">N2kTypes.h</a></li>
+<li>N2ktimes_LocalCrystalClock&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645adeea651d1448470403b28b26e10e65f4">N2kTypes.h</a></li>
+<li>N2ktimes_LocalRubidiumClock&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645a1690f055bd5780069ca7f4d87d5bdf4e">N2kTypes.h</a></li>
+<li>N2ktimes_RadioStation&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga30a60f42828cc285a520e3a26d5a6645a3120fdfe970864fe94e9fcb15261d7dc">N2kTypes.h</a></li>
+<li>N2kTM_RadiusControlled&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6f360c10d61b4c8559979a1a447222f0a31d029ca23709b86f4d1879fb282ef9a">N2kTypes.h</a></li>
+<li>N2kTM_RudderLimitControlled&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6f360c10d61b4c8559979a1a447222f0aa0227c67040734ce04b4977cfb405aa7">N2kTypes.h</a></li>
+<li>N2kTM_TurnRateControlled&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6f360c10d61b4c8559979a1a447222f0a3fb6d844c21f58a692204661a48eb274">N2kTypes.h</a></li>
+<li>N2kTM_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga6f360c10d61b4c8559979a1a447222f0a8bda5620ddb9b759dd8ec72a28b26de0">N2kTypes.h</a></li>
+<li>N2kts_ApparentWindChillTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828aeef6f6b102b8b7206e0703b2c594db68">N2kTypes.h</a></li>
+<li>N2kts_BaitWellTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828ad1eb625c23d096f767e04a13aa851a7f">N2kTypes.h</a></li>
+<li>N2kts_DewPointTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a521c12a1b9136530f8d88d1a1c0214de">N2kTypes.h</a></li>
+<li>N2kts_EngineRoomTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a6071266cfe6b87f170717fd967bf12be">N2kTypes.h</a></li>
+<li>N2kts_ExhaustGasTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a11ac7d2decc117ffff066f022b20c3e7">N2kTypes.h</a></li>
+<li>N2kts_FreezerTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a03393a65b26ec2bd1961c7eddd962d31">N2kTypes.h</a></li>
+<li>N2kts_HeatIndexTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828aff7510ec65fe71302ff3aaa8c2ca77d5">N2kTypes.h</a></li>
+<li>N2kts_HeatingSystemTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828aff379aec75b8183ee61c402d443d3ad1">N2kTypes.h</a></li>
+<li>N2kts_InsideTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a9007e60fad35035ce7ad999f358cced9">N2kTypes.h</a></li>
+<li>N2kts_LiveWellTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a94c987ec810c6f32514488c3db3f1f06">N2kTypes.h</a></li>
+<li>N2kts_MainCabinTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kTypes.h</a></li>
+<li>N2kts_OutsideTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a3c6e36479692eb2c63122c72facc2398">N2kTypes.h</a></li>
+<li>N2kts_RefridgerationTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828ae98a23e69f4b725d0f5e5ae8b644230c">N2kTypes.h</a></li>
+<li>N2kts_SeaTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a4ffc09f667ed1c2a41c7afe51a9b2c61">N2kTypes.h</a></li>
+<li>N2kts_ShaftSealTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a64aa95a26fe97c7a59e71b27ba63b760">N2kTypes.h</a></li>
+<li>N2kts_TheoreticalWindChillTemperature&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828abfb8ae38cd10596e7b48769190824300">N2kTypes.h</a></li>
+<li>N2kWind_Apparent&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fadc63125128a147c5e910f835f2b0fe10">N2kTypes.h</a></li>
+<li>N2kWind_Apprent&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fad2f77ca5883e0d563b53d3170cdcb3c8">N2kTypes.h</a></li>
+<li>N2kWind_Error&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fad50a2ba32505f693833795f4ad4e3cb8">N2kTypes.h</a></li>
+<li>N2kWind_Magnetic&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fabb5f9bd09248fe863dd5a6394218dfea">N2kTypes.h</a></li>
+<li>N2kWind_True_boat&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fa963ca6ff3e3868e8d821b43632de08f2">N2kTypes.h</a></li>
+<li>N2kWind_True_North&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fae054cf6e43d72dea873cdcdf049a52e6">N2kTypes.h</a></li>
+<li>N2kWind_True_water&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fad88a730f9dfd90f134510bd712b2a610">N2kTypes.h</a></li>
+<li>N2kWind_Unavailable&#160;:&#160;<a class="el" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741faba1e77a2b48b38ad96fcfc731f15b075">N2kTypes.h</a></li>
+<li>N2kxtem_Autonomous&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaf6a4cf563abea3f9d3a1addb314b2dd1af8d2188a8fe18a8d00a6f6d455671221">N2kTypes.h</a></li>
+<li>N2kxtem_Differential&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaf6a4cf563abea3f9d3a1addb314b2dd1a6c65b86b7a5de0f4293cf3ab52160aa5">N2kTypes.h</a></li>
+<li>N2kxtem_Estimated&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaf6a4cf563abea3f9d3a1addb314b2dd1aa2194f8bd0c2087d29dc4d631684bdcb">N2kTypes.h</a></li>
+<li>N2kxtem_Manual&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaf6a4cf563abea3f9d3a1addb314b2dd1a04bb984e29399dec02bc2b3f2f1f706d">N2kTypes.h</a></li>
+<li>N2kxtem_Simulator&#160;:&#160;<a class="el" href="_n2k_types_8h.html#gaf6a4cf563abea3f9d3a1addb314b2dd1a86023b20fa53c3fe979a51cdb1b984ff">N2kTypes.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: tNMEA2000::tDeviceInformation Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classt_n_m_e_a2000_1_1t_device_information.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classt_n_m_e_a2000_1_1t_device_information-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tNMEA2000::tDeviceInformation Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Class that holds all the device informations and several helper functions to that.  
+ <a href="classt_n_m_e_a2000_1_1t_device_information.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for tNMEA2000::tDeviceInformation:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_n_m_e_a2000_1_1t_device_information__coll__graph.png" border="0" usemap="#at_n_m_e_a2000_1_1t_device_information_coll__map" alt="Collaboration graph"/></div>
+<map name="at_n_m_e_a2000_1_1t_device_information_coll__map" id="at_n_m_e_a2000_1_1t_device_information_coll__map">
+<area shape="rect" title="Class that holds all the device informations and several helper functions to that." alt="" coords="5,109,212,136"/>
+<area shape="rect" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,5,212,47"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html">tUnionDeviceInformation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union that holds the device informations.  <a href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aeeb02545cbf3942ee32fd6e9989d4569"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#aeeb02545cbf3942ee32fd6e9989d4569">tDeviceInformation</a> ()</td></tr>
+<tr class="memdesc:aeeb02545cbf3942ee32fd6e9989d4569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new empty Device Information object.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#aeeb02545cbf3942ee32fd6e9989d4569">More...</a><br /></td></tr>
+<tr class="separator:aeeb02545cbf3942ee32fd6e9989d4569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acba2e23e3f008c0e55bf178ce482f747"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#acba2e23e3f008c0e55bf178ce482f747">GetDeviceClass</a> () const</td></tr>
+<tr class="memdesc:acba2e23e3f008c0e55bf178ce482f747"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Class from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#acba2e23e3f008c0e55bf178ce482f747">More...</a><br /></td></tr>
+<tr class="separator:acba2e23e3f008c0e55bf178ce482f747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa442e11242a5f4fe074f1ea6fe957b13"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#aa442e11242a5f4fe074f1ea6fe957b13">GetDeviceFunction</a> () const</td></tr>
+<tr class="memdesc:aa442e11242a5f4fe074f1ea6fe957b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Function from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#aa442e11242a5f4fe074f1ea6fe957b13">More...</a><br /></td></tr>
+<tr class="separator:aa442e11242a5f4fe074f1ea6fe957b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea7ca9b93558b804a59e856963453d3"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a3ea7ca9b93558b804a59e856963453d3">GetDeviceInstance</a> () const</td></tr>
+<tr class="memdesc:a3ea7ca9b93558b804a59e856963453d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a3ea7ca9b93558b804a59e856963453d3">More...</a><br /></td></tr>
+<tr class="separator:a3ea7ca9b93558b804a59e856963453d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e4dae4d12e86f00b515f15af5367f7"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a59e4dae4d12e86f00b515f15af5367f7">GetDeviceInstanceLower</a> () const</td></tr>
+<tr class="memdesc:a59e4dae4d12e86f00b515f15af5367f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance (lower bits) from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a59e4dae4d12e86f00b515f15af5367f7">More...</a><br /></td></tr>
+<tr class="separator:a59e4dae4d12e86f00b515f15af5367f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7704a97eab382bb95283683b9014494a"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a7704a97eab382bb95283683b9014494a">GetDeviceInstanceUpper</a> () const</td></tr>
+<tr class="memdesc:a7704a97eab382bb95283683b9014494a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance (upper bits) from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a7704a97eab382bb95283683b9014494a">More...</a><br /></td></tr>
+<tr class="separator:a7704a97eab382bb95283683b9014494a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1ac420b837a6a76b81c93b4a032b61"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a4d1ac420b837a6a76b81c93b4a032b61">GetIndustryGroup</a> () const</td></tr>
+<tr class="memdesc:a4d1ac420b837a6a76b81c93b4a032b61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Industry Group from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a4d1ac420b837a6a76b81c93b4a032b61">More...</a><br /></td></tr>
+<tr class="separator:a4d1ac420b837a6a76b81c93b4a032b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076e1b7e8f17d6a731ac60482d2c27a2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a076e1b7e8f17d6a731ac60482d2c27a2">GetManufacturerCode</a> () const</td></tr>
+<tr class="memdesc:a076e1b7e8f17d6a731ac60482d2c27a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Manufacturer Code from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a076e1b7e8f17d6a731ac60482d2c27a2">More...</a><br /></td></tr>
+<tr class="separator:a076e1b7e8f17d6a731ac60482d2c27a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2070692c90c6e0ce1d99be15e95cfa62"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a2070692c90c6e0ce1d99be15e95cfa62">GetName</a> () const</td></tr>
+<tr class="memdesc:a2070692c90c6e0ce1d99be15e95cfa62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Name from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a2070692c90c6e0ce1d99be15e95cfa62">More...</a><br /></td></tr>
+<tr class="separator:a2070692c90c6e0ce1d99be15e95cfa62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45ea5cd4aadb46c7d418e43ebb08d489"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a45ea5cd4aadb46c7d418e43ebb08d489">GetSystemInstance</a> () const</td></tr>
+<tr class="memdesc:a45ea5cd4aadb46c7d418e43ebb08d489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the System Instance from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a45ea5cd4aadb46c7d418e43ebb08d489">More...</a><br /></td></tr>
+<tr class="separator:a45ea5cd4aadb46c7d418e43ebb08d489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d1129e7ea6e96da5f0c18b3966aca64"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a9d1129e7ea6e96da5f0c18b3966aca64">GetUniqueNumber</a> () const</td></tr>
+<tr class="memdesc:a9d1129e7ea6e96da5f0c18b3966aca64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the unique Number from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a9d1129e7ea6e96da5f0c18b3966aca64">More...</a><br /></td></tr>
+<tr class="separator:a9d1129e7ea6e96da5f0c18b3966aca64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e3972ac4924c761e9f1a598c86d5f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a41e3972ac4924c761e9f1a598c86d5f8">IsSame</a> (uint64_t Other)</td></tr>
+<tr class="memdesc:a41e3972ac4924c761e9f1a598c86d5f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two devices are the same, by comparing the device name.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a41e3972ac4924c761e9f1a598c86d5f8">More...</a><br /></td></tr>
+<tr class="separator:a41e3972ac4924c761e9f1a598c86d5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a2d1259206bd793778eaf26d5e1c40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a96a2d1259206bd793778eaf26d5e1c40">SetDeviceClass</a> (unsigned char _DeviceClass)</td></tr>
+<tr class="memdesc:a96a2d1259206bd793778eaf26d5e1c40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Device Class to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a96a2d1259206bd793778eaf26d5e1c40">More...</a><br /></td></tr>
+<tr class="separator:a96a2d1259206bd793778eaf26d5e1c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a73652a503c068253de72ca878883cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a9a73652a503c068253de72ca878883cc">SetDeviceFunction</a> (unsigned char _DeviceFunction)</td></tr>
+<tr class="memdesc:a9a73652a503c068253de72ca878883cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Device Function to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a9a73652a503c068253de72ca878883cc">More...</a><br /></td></tr>
+<tr class="separator:a9a73652a503c068253de72ca878883cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c47bec7b25c2a0785538c21fd24db1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a04c47bec7b25c2a0785538c21fd24db1">SetDeviceInstance</a> (unsigned char _DeviceInstance)</td></tr>
+<tr class="memdesc:a04c47bec7b25c2a0785538c21fd24db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Device Instance to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a04c47bec7b25c2a0785538c21fd24db1">More...</a><br /></td></tr>
+<tr class="separator:a04c47bec7b25c2a0785538c21fd24db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27479ca32a6619ebd86adf4d9cee83d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a27479ca32a6619ebd86adf4d9cee83d3">SetIndustryGroup</a> (unsigned char _IndustryGroup)</td></tr>
+<tr class="memdesc:a27479ca32a6619ebd86adf4d9cee83d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Industry Group to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a27479ca32a6619ebd86adf4d9cee83d3">More...</a><br /></td></tr>
+<tr class="separator:a27479ca32a6619ebd86adf4d9cee83d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada76c57dc06a5b85d3ced3360061de55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#ada76c57dc06a5b85d3ced3360061de55">SetManufacturerCode</a> (uint16_t _ManufacturerCode)</td></tr>
+<tr class="memdesc:ada76c57dc06a5b85d3ced3360061de55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Manufacturer Code to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#ada76c57dc06a5b85d3ced3360061de55">More...</a><br /></td></tr>
+<tr class="separator:ada76c57dc06a5b85d3ced3360061de55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20df0d2b190ab13c841c91ef67efb3d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a20df0d2b190ab13c841c91ef67efb3d2">SetName</a> (uint64_t _Name)</td></tr>
+<tr class="memdesc:a20df0d2b190ab13c841c91ef67efb3d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Name to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a20df0d2b190ab13c841c91ef67efb3d2">More...</a><br /></td></tr>
+<tr class="separator:a20df0d2b190ab13c841c91ef67efb3d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add89d904f296935bc54138cc18e6dec7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#add89d904f296935bc54138cc18e6dec7">SetSystemInstance</a> (unsigned char _SystemInstance)</td></tr>
+<tr class="memdesc:add89d904f296935bc54138cc18e6dec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the System Instance to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#add89d904f296935bc54138cc18e6dec7">More...</a><br /></td></tr>
+<tr class="separator:add89d904f296935bc54138cc18e6dec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef034facbb230f671b2766688dccc1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a7ef034facbb230f671b2766688dccc1a">SetUniqueNumber</a> (uint32_t _UniqueNumber)</td></tr>
+<tr class="memdesc:a7ef034facbb230f671b2766688dccc1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a unique Number to the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a7ef034facbb230f671b2766688dccc1a">More...</a><br /></td></tr>
+<tr class="separator:a7ef034facbb230f671b2766688dccc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a847f56e2608bb69008a7162be5a2872d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html">tUnionDeviceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html#a847f56e2608bb69008a7162be5a2872d">DeviceInformation</a></td></tr>
+<tr class="memdesc:a847f56e2608bb69008a7162be5a2872d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union that contains all the Device Information <br  />
+  <a href="classt_n_m_e_a2000_1_1t_device_information.html#a847f56e2608bb69008a7162be5a2872d">More...</a><br /></td></tr>
+<tr class="separator:a847f56e2608bb69008a7162be5a2872d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Class that holds all the device informations and several helper functions to that. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00293">293</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aeeb02545cbf3942ee32fd6e9989d4569" name="aeeb02545cbf3942ee32fd6e9989d4569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeeb02545cbf3942ee32fd6e9989d4569">&#9670;&nbsp;</a></span>tDeviceInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tNMEA2000::tDeviceInformation::tDeviceInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new empty Device Information object. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00354">354</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="acba2e23e3f008c0e55bf178ce482f747" name="acba2e23e3f008c0e55bf178ce482f747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acba2e23e3f008c0e55bf178ce482f747">&#9670;&nbsp;</a></span>GetDeviceClass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetDeviceClass </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Device Class from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char -&gt; Device class code, <a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#a4383b2a765403bf917e0ecb44b8cf9b4">tDeviceInformation::tUnionDeviceInformation::DeviceClass</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00429">429</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="aa442e11242a5f4fe074f1ea6fe957b13" name="aa442e11242a5f4fe074f1ea6fe957b13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa442e11242a5f4fe074f1ea6fe957b13">&#9670;&nbsp;</a></span>GetDeviceFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetDeviceFunction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Device Function from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char -&gt; Device function code, <a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#ad66f06f56ebac043149ffe3dfb14834d">tDeviceInformation::tUnionDeviceInformation::DeviceFunction</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00415">415</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a3ea7ca9b93558b804a59e856963453d3" name="a3ea7ca9b93558b804a59e856963453d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ea7ca9b93558b804a59e856963453d3">&#9670;&nbsp;</a></span>GetDeviceInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetDeviceInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Device Instance from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00390">390</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a59e4dae4d12e86f00b515f15af5367f7" name="a59e4dae4d12e86f00b515f15af5367f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59e4dae4d12e86f00b515f15af5367f7">&#9670;&nbsp;</a></span>GetDeviceInstanceLower()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetDeviceInstanceLower </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Device Instance (lower bits) from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00396">396</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a7704a97eab382bb95283683b9014494a" name="a7704a97eab382bb95283683b9014494a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7704a97eab382bb95283683b9014494a">&#9670;&nbsp;</a></span>GetDeviceInstanceUpper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetDeviceInstanceUpper </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Device Instance (upper bits) from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00401">401</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a4d1ac420b837a6a76b81c93b4a032b61" name="a4d1ac420b837a6a76b81c93b4a032b61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d1ac420b837a6a76b81c93b4a032b61">&#9670;&nbsp;</a></span>GetIndustryGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetIndustryGroup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Industry Group from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00441">441</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a076e1b7e8f17d6a731ac60482d2c27a2" name="a076e1b7e8f17d6a731ac60482d2c27a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a076e1b7e8f17d6a731ac60482d2c27a2">&#9670;&nbsp;</a></span>GetManufacturerCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tNMEA2000::tDeviceInformation::GetManufacturerCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Manufacturer Code from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>uint16_t </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00378">378</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a2070692c90c6e0ce1d99be15e95cfa62" name="a2070692c90c6e0ce1d99be15e95cfa62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2070692c90c6e0ce1d99be15e95cfa62">&#9670;&nbsp;</a></span>GetName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t tNMEA2000::tDeviceInformation::GetName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Name from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>uint64_t </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00458">458</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a45ea5cd4aadb46c7d418e43ebb08d489" name="a45ea5cd4aadb46c7d418e43ebb08d489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45ea5cd4aadb46c7d418e43ebb08d489">&#9670;&nbsp;</a></span>GetSystemInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char tNMEA2000::tDeviceInformation::GetSystemInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the System Instance from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00453">453</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a9d1129e7ea6e96da5f0c18b3966aca64" name="a9d1129e7ea6e96da5f0c18b3966aca64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d1129e7ea6e96da5f0c18b3966aca64">&#9670;&nbsp;</a></span>GetUniqueNumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tNMEA2000::tDeviceInformation::GetUniqueNumber </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the unique Number from the Device Information. </p>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00366">366</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a41e3972ac4924c761e9f1a598c86d5f8" name="a41e3972ac4924c761e9f1a598c86d5f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41e3972ac4924c761e9f1a598c86d5f8">&#9670;&nbsp;</a></span>IsSame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tNMEA2000::tDeviceInformation::IsSame </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>Other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if two devices are the same, by comparing the device name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Other</td><td>Name of th other device </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00470">470</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a96a2d1259206bd793778eaf26d5e1c40" name="a96a2d1259206bd793778eaf26d5e1c40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96a2d1259206bd793778eaf26d5e1c40">&#9670;&nbsp;</a></span>SetDeviceClass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetDeviceClass </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_DeviceClass</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Device Class to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_DeviceClass</td><td>Device class code, <a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#a4383b2a765403bf917e0ecb44b8cf9b4">tDeviceInformation::tUnionDeviceInformation::DeviceClass</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00422">422</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a9a73652a503c068253de72ca878883cc" name="a9a73652a503c068253de72ca878883cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a73652a503c068253de72ca878883cc">&#9670;&nbsp;</a></span>SetDeviceFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetDeviceFunction </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_DeviceFunction</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Device Function to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_DeviceFunction</td><td>Device function code, <a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#ad66f06f56ebac043149ffe3dfb14834d">tDeviceInformation::tUnionDeviceInformation::DeviceFunction</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00408">408</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a04c47bec7b25c2a0785538c21fd24db1" name="a04c47bec7b25c2a0785538c21fd24db1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c47bec7b25c2a0785538c21fd24db1">&#9670;&nbsp;</a></span>SetDeviceInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetDeviceInstance </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_DeviceInstance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Device Instance to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_DeviceInstance</td><td>Instance for the device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00384">384</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a27479ca32a6619ebd86adf4d9cee83d3" name="a27479ca32a6619ebd86adf4d9cee83d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27479ca32a6619ebd86adf4d9cee83d3">&#9670;&nbsp;</a></span>SetIndustryGroup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetIndustryGroup </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_IndustryGroup</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Industry Group to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_IndustryGroup</td><td>Industry Group </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00435">435</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="ada76c57dc06a5b85d3ced3360061de55" name="ada76c57dc06a5b85d3ced3360061de55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada76c57dc06a5b85d3ced3360061de55">&#9670;&nbsp;</a></span>SetManufacturerCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetManufacturerCode </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>_ManufacturerCode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Manufacturer Code to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_ManufacturerCode</td><td>Manufacturer Code (max 11bits) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00372">372</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a20df0d2b190ab13c841c91ef67efb3d2" name="a20df0d2b190ab13c841c91ef67efb3d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20df0d2b190ab13c841c91ef67efb3d2">&#9670;&nbsp;</a></span>SetName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetName </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>_Name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Name to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Name</td><td>Nmae of the device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00463">463</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="add89d904f296935bc54138cc18e6dec7" name="add89d904f296935bc54138cc18e6dec7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add89d904f296935bc54138cc18e6dec7">&#9670;&nbsp;</a></span>SetSystemInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetSystemInstance </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_SystemInstance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the System Instance to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_SystemInstance</td><td>System Instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00447">447</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a7ef034facbb230f671b2766688dccc1a" name="a7ef034facbb230f671b2766688dccc1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ef034facbb230f671b2766688dccc1a">&#9670;&nbsp;</a></span>SetUniqueNumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tNMEA2000::tDeviceInformation::SetUniqueNumber </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>_UniqueNumber</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set a unique Number to the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_UniqueNumber</td><td>a unique number for the device (max 21.bits) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00360">360</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a847f56e2608bb69008a7162be5a2872d" name="a847f56e2608bb69008a7162be5a2872d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a847f56e2608bb69008a7162be5a2872d">&#9670;&nbsp;</a></span>DeviceInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html">tUnionDeviceInformation</a> tNMEA2000::tDeviceInformation::DeviceInformation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Union that contains all the Device Information <br  />
+ </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00348">348</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li><a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a></li><li class="navelem"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html">tDeviceInformation</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

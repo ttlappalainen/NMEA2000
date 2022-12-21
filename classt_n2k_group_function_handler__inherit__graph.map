@@ -1,0 +1,8 @@
+<map id="tN2kGroupFunctionHandler" name="tN2kGroupFunctionHandler">
+<area shape="rect" id="node1" title="Handler class for Group Functions." alt="" coords="5,143,185,170"/>
+<area shape="rect" id="node2" href="$classt_n2k_group_function_handler_for_p_g_n126464.html" title="Default Group Function Handler for PGN 126464 &#45; &quot;PGN List &#45; Transmit/Receive PGNs group function&quot;." alt="" coords="233,5,413,47"/>
+<area shape="rect" id="node3" href="$classt_n2k_group_function_handler_for_p_g_n126993.html" title="Default Group Function Handler for PGN 126993 &#45; &quot;Heartbeat&quot;." alt="" coords="233,71,413,112"/>
+<area shape="rect" id="node4" href="$classt_n2k_group_function_handler_for_p_g_n126996.html" title="Default Group Function Handler for PGN 126996 &#45; Product Information." alt="" coords="233,136,413,177"/>
+<area shape="rect" id="node5" href="$classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 &#45; &quot;Configuration Information&quot;." alt="" coords="233,201,413,243"/>
+<area shape="rect" id="node6" href="$classt_n2k_group_function_handler_for_p_g_n60928.html" title="Default Group Function Handler for PGN 60928 &#45; &quot;ISO Address Claim&quot;." alt="" coords="233,267,413,308"/>
+</map>

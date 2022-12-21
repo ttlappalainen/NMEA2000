@@ -1,0 +1,11 @@
+<map id="N2kGroupFunctionDefaultHandlers.h" name="N2kGroupFunctionDefaultHandlers.h">
+<area shape="rect" id="node1" title="The file contains default group function handler classes." alt="" coords="58,5,293,32"/>
+<area shape="rect" id="node2" href="$_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="5,155,196,181"/>
+<area shape="rect" id="node3" href="$_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="170,80,311,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="221,155,282,181"/>
+<area shape="rect" id="node5" href="$_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="307,155,388,181"/>
+<area shape="rect" id="node6" href="$_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="298,229,397,256"/>
+<area shape="rect" id="node7" href="$_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="223,304,299,331"/>
+<area shape="rect" id="node8" title=" " alt="" coords="305,379,369,405"/>
+<area shape="rect" id="node9" title=" " alt="" coords="375,304,443,331"/>
+</map>

@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: NMEA2000_CAN.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n_m_e_a2000___c_a_n_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">NMEA2000_CAN.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Automatic library selection according to the selected board.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>&quot;</code><br />
+<code>#include &lt;SPI.h&gt;</code><br />
+<code>#include &lt;mcp_can.h&gt;</code><br />
+<code>#include &lt;NMEA2000_mcp.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for NMEA2000_CAN.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n_m_e_a2000___c_a_n_8h__incl.png" border="0" usemap="#a_n_m_e_a2000___c_a_n_8h" alt=""/></div>
+<map name="a_n_m_e_a2000___c_a_n_8h" id="a_n_m_e_a2000___c_a_n_8h">
+<area shape="rect" title="Automatic library selection according to the selected board." alt="" coords="312,5,446,32"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="37,229,118,256"/>
+<area shape="rect" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="228,80,327,107"/>
+<area shape="rect" title=" " alt="" coords="352,80,406,107"/>
+<area shape="rect" title=" " alt="" coords="431,80,516,107"/>
+<area shape="rect" title=" " alt="" coords="540,80,671,107"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="151,304,250,331"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="258,379,334,405"/>
+<area shape="rect" title=" " alt="" coords="180,453,244,480"/>
+<area shape="rect" title=" " alt="" coords="166,379,234,405"/>
+<area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="229,229,420,256"/>
+<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="This File contains a CAN message helper class." alt="" coords="23,155,132,181"/>
+<area shape="rect" href="_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="332,304,421,331"/>
+<area shape="rect" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="207,155,348,181"/>
+<area shape="rect" title=" " alt="" coords="410,379,473,405"/>
+<area shape="rect" title=" " alt="" coords="143,229,204,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n_m_e_a2000___c_a_n_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3bc8688d0bc7ea8605025b7204df6e13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>&#160;&#160;&#160;MCP_16MHz</td></tr>
+<tr class="memdesc:a3bc8688d0bc7ea8605025b7204df6e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Clock frequency for the MCP CAN is 16MHz.  <a href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">More...</a><br /></td></tr>
+<tr class="separator:a3bc8688d0bc7ea8605025b7204df6e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1fb716136475e5ca8e4b5dee33893a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a5c1fb716136475e5ca8e4b5dee33893a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of the MCP RX Buffer Size Value of 1 is a small buffer size to save memory.  <a href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">More...</a><br /></td></tr>
+<tr class="separator:a5c1fb716136475e5ca8e4b5dee33893a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cedc3aec3faef9621813e91a828a4c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>&#160;&#160;&#160;0xff</td></tr>
+<tr class="memdesc:a2cedc3aec3faef9621813e91a828a4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of the CAN Interrupt Pin This defines the number of the CAN Interrupt PIN. Default Value 0xff means not Interrupt PIN in use.  <a href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">More...</a><br /></td></tr>
+<tr class="separator:a2cedc3aec3faef9621813e91a828a4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b620e8c35e1d4fb1ca29b5e07954650"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>&#160;&#160;&#160;53</td></tr>
+<tr class="memdesc:a3b620e8c35e1d4fb1ca29b5e07954650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of the SPI ChipSelectPin for the CAN Transceiver This defines the the I/O Pin uses for the Chip Select Line to the corresponding CAN Transceiver.  <a href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">More...</a><br /></td></tr>
+<tr class="separator:a3b620e8c35e1d4fb1ca29b5e07954650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b">USE_MCP_CAN_CLOCK_SET</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of the Clock frequency for the MCP CAN.  <a href="_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b">More...</a><br /></td></tr>
+<tr class="separator:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a507d3f41fcf769863a69d2623048e925"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925">USE_N2K_AVR_CAN</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a507d3f41fcf769863a69d2623048e925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the AVR CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925">More...</a><br /></td></tr>
+<tr class="separator:a507d3f41fcf769863a69d2623048e925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4d481d7c4c5a9f3a5be9424619b1acf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf">USE_N2K_CAN</a>&#160;&#160;&#160;<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#afe903dbc220134563c3f9803e77f7e05">USE_N2K_MCP_CAN</a></td></tr>
+<tr class="memdesc:aa4d481d7c4c5a9f3a5be9424619b1acf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selector for the right board.  <a href="_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf">More...</a><br /></td></tr>
+<tr class="separator:aa4d481d7c4c5a9f3a5be9424619b1acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabcff4d2df0a443621007ba22af572df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#aabcff4d2df0a443621007ba22af572df">USE_N2K_DUE_CAN</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:aabcff4d2df0a443621007ba22af572df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Arduino Due CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#aabcff4d2df0a443621007ba22af572df">More...</a><br /></td></tr>
+<tr class="separator:aabcff4d2df0a443621007ba22af572df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb8b6d1660f9c1f8c4084ae118151004"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#afb8b6d1660f9c1f8c4084ae118151004">USE_N2K_ESP32_CAN</a>&#160;&#160;&#160;7</td></tr>
+<tr class="memdesc:afb8b6d1660f9c1f8c4084ae118151004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the ESP32 CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#afb8b6d1660f9c1f8c4084ae118151004">More...</a><br /></td></tr>
+<tr class="separator:afb8b6d1660f9c1f8c4084ae118151004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4a29257a54225960bc98c4fc2ee3770"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#aa4a29257a54225960bc98c4fc2ee3770">USE_N2K_MBED_CAN</a>&#160;&#160;&#160;6</td></tr>
+<tr class="memdesc:aa4a29257a54225960bc98c4fc2ee3770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the MBED CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#aa4a29257a54225960bc98c4fc2ee3770">More...</a><br /></td></tr>
+<tr class="separator:aa4a29257a54225960bc98c4fc2ee3770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe903dbc220134563c3f9803e77f7e05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#afe903dbc220134563c3f9803e77f7e05">USE_N2K_MCP_CAN</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:afe903dbc220134563c3f9803e77f7e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the mcp_can library.  <a href="_n_m_e_a2000___c_a_n_8h.html#afe903dbc220134563c3f9803e77f7e05">More...</a><br /></td></tr>
+<tr class="separator:afe903dbc220134563c3f9803e77f7e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa98c40acd6d2edf1664fac34474d20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#abfa98c40acd6d2edf1664fac34474d20">USE_N2K_SOCKET_CAN</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:abfa98c40acd6d2edf1664fac34474d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Linux Socket CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#abfa98c40acd6d2edf1664fac34474d20">More...</a><br /></td></tr>
+<tr class="separator:abfa98c40acd6d2edf1664fac34474d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1eba80f6c62866d183dc2ab7de0ee2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#ae1eba80f6c62866d183dc2ab7de0ee2a">USE_N2K_TEENSY_CAN</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ae1eba80f6c62866d183dc2ab7de0ee2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Teensy3.x CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#ae1eba80f6c62866d183dc2ab7de0ee2a">More...</a><br /></td></tr>
+<tr class="separator:ae1eba80f6c62866d183dc2ab7de0ee2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac43f72ea37efeb103e05c793d7d20379"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#ac43f72ea37efeb103e05c793d7d20379">USE_N2K_TEENSYX_CAN</a>&#160;&#160;&#160;8</td></tr>
+<tr class="memdesc:ac43f72ea37efeb103e05c793d7d20379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Teensy4.x CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#ac43f72ea37efeb103e05c793d7d20379">More...</a><br /></td></tr>
+<tr class="separator:ac43f72ea37efeb103e05c793d7d20379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a99f6ed3fa2b0b15f276c856e10a7a3ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td></tr>
+<tr class="separator:a99f6ed3fa2b0b15f276c856e10a7a3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Automatic library selection according to the selected board. </p>
+<p >Just include this &lt;<a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>&gt; to your project and it will automatically select suitable CAN library according to board selected on Arduino development environment. You can still force library by adding one of next defines before including <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define USE_N2K_CAN 1  </span><span class="comment">// for use with SPI and MCP2515 can bus controller</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 2  </span><span class="comment">// for use with due based CAN</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 3  </span><span class="comment">// for use with Teensy 3.1/3.2/3.5/3.6 boards</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 4  </span><span class="comment">// for use with avr boards</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 5  </span><span class="comment">// for use with socketCAN (linux, etc) systems</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 6  </span><span class="comment">// for use with MBED (ARM) systems</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 7  </span><span class="comment">// for use with ESP32</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 8  </span><span class="comment">// for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards</span></div>
+</div><!-- fragment --><p ><b>Depending of your board you will need to also install "driver" libraries:</b> <br  />
+</p>
+<p >see also <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></p>
+<p >Arduino CAN shield (mcp_can) with MCP2515 chip:</p><ul>
+<li><a href="https://github.com/ttlappalainen/CAN_BUS_Shield">https://github.com/ttlappalainen/CAN_BUS_Shield</a></li>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_mcp">https://github.com/ttlappalainen/NMEA2000_mcp</a></li>
+</ul>
+<p >Arduino DUE internal CAN:</p><ul>
+<li><a href="https://github.com/ttlappalainen/due_can">https://github.com/ttlappalainen/due_can</a></li>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_due">https://github.com/ttlappalainen/NMEA2000_due</a></li>
+</ul>
+<p >Teensy 3.2-3.6 internal CAN:</p><ul>
+<li><a href="https://github.com/ttlappalainen/FlexCAN_Library">https://github.com/ttlappalainen/FlexCAN_Library</a></li>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_teensy">https://github.com/ttlappalainen/NMEA2000_teensy</a></li>
+</ul>
+<p >Teensy 4.X internal CAN:</p><ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_Teensyx">https://github.com/ttlappalainen/NMEA2000_Teensyx</a></li>
+</ul>
+<p >ESP32 internal CAN:</p><ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_esp32">https://github.com/ttlappalainen/NMEA2000_esp32</a></li>
+</ul>
+<p >AVR:</p><ul>
+<li><a href="https://github.com/thomasonw/avr_can">https://github.com/thomasonw/avr_can</a></li>
+<li><a href="https://github.com/thomasonw/NMEA2000_avr">https://github.com/thomasonw/NMEA2000_avr</a></li>
+</ul>
+<p >MBED (note that there may be problem with fastpackets on MBED):</p><ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_mbed">https://github.com/thomasonw/NMEA2000_mbed</a></li>
+</ul>
+<p >RPi socket CAN:</p><ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_socketCAN">https://github.com/thomasonw/NMEA2000_socketCAN</a></li>
+</ul>
+<p ><b>There are also library specific defines:</b></p>
+<p >mcp_can:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define N2k_SPI_CS_PIN 53  </span><span class="comment">// Pin for SPI Can Select</span></div>
+<div class="line"><span class="preprocessor">#define N2k_CAN_INT_PIN 21 </span><span class="comment">// Use interrupt  and it is connected to pin 21</span></div>
+<div class="line"><span class="preprocessor">#define USE_MCP_CAN_CLOCK_SET 8  </span><span class="comment">// possible values 8 for 8Mhz and 16 for 16 Mhz clock</span></div>
+</div><!-- fragment --><p >esp32:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define ESP32_CAN_TX_PIN GPIO_NUM_16</span></div>
+<div class="line"><span class="preprocessor">#define ESP32_CAN_RX_PIN GPIO_NUM_4</span></div>
+</div><!-- fragment --><p >Teensy: </p><div class="fragment"><div class="line"><span class="preprocessor">#define NMEA2000_TEENSY_CAN_BUS 1 </span><span class="comment">// Select second CAN bus for Teensy 3.5 or 3.6</span></div>
+</div><!-- fragment --><p >Teensyx:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define NMEA2000_TEENSYX_CAN_BUS tNMEA2000_Teensyx::CAN2 </span><span class="comment">// select CAN bus 2</span></div>
+<div class="line"><span class="preprocessor">#define NMEA2000_TEENSYX_TX_PIN tNMEA2000_Teensyx::pinAlternate </span><span class="comment">// Use selected CAN alternate Tx pin</span></div>
+<div class="line"><span class="preprocessor">#define NMEA2000_TEENSYX_RX_PIN tNMEA2000_Teensyx::pinAlternate </span><span class="comment">// Use selected CAN alternate Rx pin</span></div>
+<div class="line"><span class="preprocessor">#define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X </span><span class="comment">// Force NMEA2000_TEENSYX also for Teensy 3.x boards</span></div>
+</div><!-- fragment --><p >Arduino DUE:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  </span><span class="comment">// Use CAN bus 1 instead of 0 for Arduino DUE</span></div>
+</div><!-- fragment --> 
+<p class="definition">Definition in file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a3bc8688d0bc7ea8605025b7204df6e13" name="a3bc8688d0bc7ea8605025b7204df6e13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bc8688d0bc7ea8605025b7204df6e13">&#9670;&nbsp;</a></span>MCP_CAN_CLOCK_SET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MCP_CAN_CLOCK_SET&#160;&#160;&#160;MCP_16MHz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Clock frequency for the MCP CAN is 16MHz. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00334">334</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="a5c1fb716136475e5ca8e4b5dee33893a" name="a5c1fb716136475e5ca8e4b5dee33893a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1fb716136475e5ca8e4b5dee33893a">&#9670;&nbsp;</a></span>MCP_CAN_RX_BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MCP_CAN_RX_BUFFER_SIZE&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition of the MCP RX Buffer Size Value of 1 is a small buffer size to save memory. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00300">300</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="a2cedc3aec3faef9621813e91a828a4c4" name="a2cedc3aec3faef9621813e91a828a4c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cedc3aec3faef9621813e91a828a4c4">&#9670;&nbsp;</a></span>N2k_CAN_INT_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_CAN_INT_PIN&#160;&#160;&#160;0xff</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition of the CAN Interrupt Pin This defines the number of the CAN Interrupt PIN. Default Value 0xff means not Interrupt PIN in use. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00292">292</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="a3b620e8c35e1d4fb1ca29b5e07954650" name="a3b620e8c35e1d4fb1ca29b5e07954650"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b620e8c35e1d4fb1ca29b5e07954650">&#9670;&nbsp;</a></span>N2k_SPI_CS_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2k_SPI_CS_PIN&#160;&#160;&#160;53</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition of the SPI ChipSelectPin for the CAN Transceiver This defines the the I/O Pin uses for the Chip Select Line to the corresponding CAN Transceiver. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00312">312</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="ab7ed35acf0c04caa35fe6724e8a3882b" name="ab7ed35acf0c04caa35fe6724e8a3882b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7ed35acf0c04caa35fe6724e8a3882b">&#9670;&nbsp;</a></span>USE_MCP_CAN_CLOCK_SET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_MCP_CAN_CLOCK_SET&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition of the Clock frequency for the MCP CAN. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00320">320</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="a507d3f41fcf769863a69d2623048e925" name="a507d3f41fcf769863a69d2623048e925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a507d3f41fcf769863a69d2623048e925">&#9670;&nbsp;</a></span>USE_N2K_AVR_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_AVR_CAN&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the AVR CAN Library. </p>
+<ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_avr">NMEA2000_avr</a> library</li>
+<li><a href="https://github.com/thomasonw/avr_can">avr_can</a> library </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00156">156</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="aa4d481d7c4c5a9f3a5be9424619b1acf" name="aa4d481d7c4c5a9f3a5be9424619b1acf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4d481d7c4c5a9f3a5be9424619b1acf">&#9670;&nbsp;</a></span>USE_N2K_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_CAN&#160;&#160;&#160;<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#afe903dbc220134563c3f9803e77f7e05">USE_N2K_MCP_CAN</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selector for the right board. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00216">216</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="aabcff4d2df0a443621007ba22af572df" name="aabcff4d2df0a443621007ba22af572df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabcff4d2df0a443621007ba22af572df">&#9670;&nbsp;</a></span>USE_N2K_DUE_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_DUE_CAN&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the Arduino Due CAN Library. </p>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_due">NMEA2000_due</a> library</li>
+<li><a href="https://github.com/ttlappalainen/due_can">due_can</a> library </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00141">141</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="afb8b6d1660f9c1f8c4084ae118151004" name="afb8b6d1660f9c1f8c4084ae118151004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb8b6d1660f9c1f8c4084ae118151004">&#9670;&nbsp;</a></span>USE_N2K_ESP32_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_ESP32_CAN&#160;&#160;&#160;7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the ESP32 CAN Library. </p>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_esp32">NMEA2000_esp32</a> library </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00177">177</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="aa4a29257a54225960bc98c4fc2ee3770" name="aa4a29257a54225960bc98c4fc2ee3770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4a29257a54225960bc98c4fc2ee3770">&#9670;&nbsp;</a></span>USE_N2K_MBED_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_MBED_CAN&#160;&#160;&#160;6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the MBED CAN Library. </p>
+<ul>
+<li><a href="https://github.com/thomasonw/NMEA2000_mbed">NMEA2000_mbed</a> library other related libraries. See origin for MBED port on <a href="https://github.com/thomasonw/NMEA2000_mbed">https://github.com/thomasonw/NMEA2000_mbed</a> </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00171">171</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="afe903dbc220134563c3f9803e77f7e05" name="afe903dbc220134563c3f9803e77f7e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe903dbc220134563c3f9803e77f7e05">&#9670;&nbsp;</a></span>USE_N2K_MCP_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_MCP_CAN&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the mcp_can library. </p>
+<p >CAN_BUS_shield libraries will be originally found on <a href="https://github.com/Seeed-Studio/CAN_BUS_Shield">https://github.com/Seeed-Studio/CAN_BUS_Shield</a> There is improved library, which branch can be found on <a href="https://github.com/peppeve/CAN_BUS_Shield">https://github.com/peppeve/CAN_BUS_Shield</a>. <br  />
+ That works also with Maple mini and 8 MHz clock. Hopefully these improvements will be applied to original library </p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00134">134</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="abfa98c40acd6d2edf1664fac34474d20" name="abfa98c40acd6d2edf1664fac34474d20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfa98c40acd6d2edf1664fac34474d20">&#9670;&nbsp;</a></span>USE_N2K_SOCKET_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_SOCKET_CAN&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the Linux Socket CAN Library. </p>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_socketCAN">NMEA2000_socketCAN</a> library. NMEA2000_socketCAN has been originally forked from <a href="https://github.com/thomasonw/NMEA2000_socketCAN">https://github.com/thomasonw/NMEA2000_socketCAN</a> </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00164">164</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="ae1eba80f6c62866d183dc2ab7de0ee2a" name="ae1eba80f6c62866d183dc2ab7de0ee2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1eba80f6c62866d183dc2ab7de0ee2a">&#9670;&nbsp;</a></span>USE_N2K_TEENSY_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_TEENSY_CAN&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the Teensy3.x CAN Library. </p>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_teensy">NMEA2000_teensy</a> library. <br  />
+</li>
+<li><a href="https://github.com/ttlappalainen/FlexCAN_Library">FlexCAN</a> library. <br  />
+</li>
+<li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> ! </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00149">149</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="ac43f72ea37efeb103e05c793d7d20379" name="ac43f72ea37efeb103e05c793d7d20379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac43f72ea37efeb103e05c793d7d20379">&#9670;&nbsp;</a></span>USE_N2K_TEENSYX_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_TEENSYX_CAN&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the Teensy4.x CAN Library. </p>
+<ul>
+<li><a href="https://github.com/ttlappalainen/NMEA2000_Teensyx">NMEA2000_Teensyx</a> library.</li>
+<li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> ! </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00184">184</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a99f6ed3fa2b0b15f276c856e10a7a3ab" name="a99f6ed3fa2b0b15f276c856e10a7a3ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f6ed3fa2b0b15f276c856e10a7a3ab">&#9670;&nbsp;</a></span>NMEA2000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a>&amp; NMEA2000 =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00337">337</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<map id="tN2kDeviceList::tInternalDevice" name="tN2kDeviceList::tInternalDevice">
+<area shape="rect" id="node1" title="This class represents an internal device." alt="" coords="126,288,291,329"/>
+<area shape="rect" id="node2" href="$classt_n_m_e_a2000_1_1t_device.html" title="This class represents a N2k device." alt="" coords="37,199,180,225"/>
+<area shape="rect" id="node3" href="$classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that." alt="" coords="5,109,212,136"/>
+<area shape="rect" id="node4" href="$uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,5,212,47"/>
+<area shape="rect" id="node5" href="$structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information." alt="" coords="204,199,416,225"/>
+</map>

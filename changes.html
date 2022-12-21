@@ -1,0 +1,841 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: Changes to the Library</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('changes.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Changes to the Library </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#autotoc_md131">27.11.2022</a></li>
+<li class="level1"><a href="#autotoc_md132">27.10.2022</a></li>
+<li class="level1"><a href="#autotoc_md133">26.10.2022</a></li>
+<li class="level1"><a href="#autotoc_md134">03.10.2022</a></li>
+<li class="level1"><a href="#autotoc_md135">11.08.2022</a></li>
+<li class="level1"><a href="#autotoc_md136">06.07.2022</a></li>
+<li class="level1"><a href="#autotoc_md137">07.04.2022</a></li>
+<li class="level1"><a href="#autotoc_md138">05.09.2021</a></li>
+<li class="level1"><a href="#autotoc_md139">23.08.2021</a></li>
+<li class="level1"><a href="#autotoc_md140">04.03.2021</a></li>
+<li class="level1"><a href="#autotoc_md141">10.02.2021</a></li>
+<li class="level1"><a href="#autotoc_md142">06.02.2021</a></li>
+<li class="level1"><a href="#autotoc_md143">15.01.2021</a></li>
+<li class="level1"><a href="#autotoc_md144">05.01.2021</a></li>
+<li class="level1"><a href="#autotoc_md145">08.10.2020</a></li>
+<li class="level1"><a href="#autotoc_md146">23.08.2020</a></li>
+<li class="level1"><a href="#autotoc_md147">05.08.2020</a></li>
+<li class="level1"><a href="#autotoc_md148">16.07.2020</a></li>
+<li class="level1"><a href="#autotoc_md149">27.06.2020</a></li>
+<li class="level1"><a href="#autotoc_md150">28.01.2019</a></li>
+<li class="level1"><a href="#autotoc_md151">20.10.2019</a></li>
+<li class="level1"><a href="#autotoc_md152">17.10.2019</a></li>
+<li class="level1"><a href="#autotoc_md153">07.07.2019</a></li>
+<li class="level1"><a href="#autotoc_md154">03.03.2019</a></li>
+<li class="level1"><a href="#autotoc_md155">14.01.2019</a></li>
+<li class="level1"><a href="#autotoc_md156">04.08.2018</a></li>
+<li class="level1"><a href="#autotoc_md157">18.07.2018</a></li>
+<li class="level1"><a href="#autotoc_md158">09.05.2018</a></li>
+<li class="level1"><a href="#autotoc_md159">10.04.2018</a></li>
+<li class="level1"><a href="#autotoc_md160">06.04.2018</a></li>
+<li class="level1"><a href="#autotoc_md161">04.04.2018</a></li>
+<li class="level1"><a href="#autotoc_md162">26.03.2018</a></li>
+<li class="level1"><a href="#autotoc_md163">13.03.2018</a></li>
+<li class="level1"><a href="#autotoc_md164">23.02.2018</a></li>
+<li class="level1"><a href="#autotoc_md165">16.02.2018</a></li>
+<li class="level1"><a href="#autotoc_md166">29.01.2018</a></li>
+<li class="level1"><a href="#autotoc_md167">15.01.2018</a></li>
+<li class="level1"><a href="#autotoc_md168">07.01.2018</a></li>
+<li class="level1"><a href="#autotoc_md169">02.12.2017</a></li>
+<li class="level1"><a href="#autotoc_md170">29.11.2017</a></li>
+<li class="level1"><a href="#autotoc_md171">27.11.2017</a></li>
+<li class="level1"><a href="#autotoc_md172">14.11.2017</a></li>
+<li class="level1"><a href="#autotoc_md173">09.11.2017</a></li>
+<li class="level1"><a href="#autotoc_md174">31.10.2017</a></li>
+<li class="level1"><a href="#autotoc_md175">14.10.2017</a></li>
+<li class="level1"><a href="#autotoc_md176">12.10.2017</a></li>
+<li class="level1"><a href="#autotoc_md177">10.10.2017</a></li>
+<li class="level1"><a href="#autotoc_md178">02.10.2017</a></li>
+<li class="level1"><a href="#autotoc_md179">26.09.2017</a></li>
+<li class="level1"><a href="#autotoc_md180">31.08.2017</a></li>
+<li class="level1"><a href="#autotoc_md181">31.07.2017</a></li>
+<li class="level1"><a href="#autotoc_md182">29.07.2017</a></li>
+<li class="level1"><a href="#autotoc_md183">26.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md184">25.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md185">22.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md186">19.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md187">13.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md188">11.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md189">05.06.2017</a></li>
+<li class="level1"><a href="#autotoc_md190">28.05.2017</a></li>
+<li class="level1"><a href="#autotoc_md191">08.04.2017</a></li>
+<li class="level1"><a href="#autotoc_md192">09.03.2017</a></li>
+<li class="level1"><a href="#autotoc_md193">07.03.2017</a></li>
+<li class="level1"><a href="#autotoc_md194">05.03.2017</a></li>
+<li class="level1"><a href="#autotoc_md195">08.02.2017</a></li>
+<li class="level1"><a href="#autotoc_md196">22.01.2017</a></li>
+<li class="level1"><a href="#autotoc_md197">01.01.2017</a></li>
+<li class="level1"><a href="#autotoc_md198">20.12.2016</a></li>
+<li class="level1"><a href="#autotoc_md199">17.12.2016</a></li>
+<li class="level1"><a href="#autotoc_md200">16.12.2016</a></li>
+<li class="level1"><a href="#autotoc_md201">01.12.2016</a></li>
+<li class="level1"><a href="#autotoc_md202">12.11.2016</a></li>
+<li class="level1"><a href="#autotoc_md203">11.11.2016</a></li>
+<li class="level1"><a href="#autotoc_md204">18.10.2016</a></li>
+<li class="level1"><a href="#autotoc_md205">19.09.2016</a></li>
+<li class="level1"><a href="#autotoc_md206">17.09.2016</a></li>
+<li class="level1"><a href="#autotoc_md207">12.09.2016</a></li>
+<li class="level1"><a href="#autotoc_md208">09.08.2016</a></li>
+<li class="level1"><a href="#autotoc_md209">06.08.2016</a></li>
+<li class="level1"><a href="#autotoc_md210">30.07.2016</a></li>
+<li class="level1"><a href="#autotoc_md211">19.07.2016</a></li>
+<li class="level1"><a href="#autotoc_md212">12.07.2016</a></li>
+<li class="level1"><a href="#autotoc_md213">25.06.2016</a></li>
+<li class="level1"><a href="#autotoc_md214">23.03.2016</a></li>
+<li class="level1"><a href="#autotoc_md215">13.03.2016</a></li>
+<li class="level1"><a href="#autotoc_md216">12.03.2016</a></li>
+<li class="level1"><a href="#autotoc_md217">09.03.2016</a></li>
+<li class="level1"><a href="#autotoc_md218">08.03.2016</a></li>
+<li class="level1"><a href="#autotoc_md219">02.02.2016</a></li>
+<li class="level1"><a href="#autotoc_md220">23.01.2016</a></li>
+<li class="level1"><a href="#autotoc_md221">05.12.2015</a></li>
+</ul>
+</div>
+<div class="textblock"><p ><a class="anchor" id="md_changes"></a> </p>
+<h1><a class="anchor" id="autotoc_md131"></a>
+27.11.2022</h1>
+<ul>
+<li>Updated test and added missing source file, thanks to PeterFromSweden.</li>
+<li>Fixed tN2kBatChem - Added ZnO, noted by matthias-mw</li>
+<li>Added optional SID to SetN2kPGN129039, noted by matthias-mw</li>
+<li>Added N2kts_ShaftSealTemperature, noted by gorlanovmax</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md132"></a>
+27.10.2022</h1>
+<ul>
+<li><em>Compatibility change for PGN 129794 setter function:</em> Replaced tN2kAISTranceiverInfo with tN2kAISTransceiverInformation. tN2kAISTranceiverInfo was duplicate for tN2kAISTransceiverInformation. It has been also removed from <a class="el" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read.">N2kTypes.h</a>.</li>
+<li><em>Compatibility change for PGN 129038 setter function:</em> Added tN2kAISTransceiverInformation as parameter. I pop up that at least some MFD:s does not show class A AIS objects, if transceiver information has not been properly set. + Thanks to usauerbrey.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md133"></a>
+26.10.2022</h1>
+<ul>
+<li>Version confirmed to pass NMEA2000 certification tests.</li>
+<li>Empty incoming frames before starting address claiming on Open.</li>
+<li>Fix: Open returned always false.</li>
+<li>Fix: Group function request turn off transmission for heartbeat (PGN 126993) did no nack.</li>
+<li>Added possibility to select CAN alternative pins for Teensyx.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md134"></a>
+03.10.2022</h1>
+<ul>
+<li><em>Possible compatibility change:</em> <a class="el" href="classt_n2k_group_function_handler.html#ab25065d4fe7b0ace9252a09be88f42d6" title="Get the Request Group Function Transmission Or Priority Error Code object.">tN2kGroupFunctionHandler::GetRequestGroupFunctionTransmissionOrPriorityErrorCode</a> interface has changed. If you have used that, please update interface.</li>
+<li><em>Possible compatibility change:</em> Removed need of delay function on <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7" title="Open the CAN device.">tNMEA2000::Open()</a>. Now it opens CAN commununication and returns true, if that and other configuration succeeds. Final open, when address claiming starts, will be delayed and done by ParseMessages. There is new callback OnOpen, which will be called on initial address claiming started. See &lt;&lt;SetOnOpen,below&gt;&gt;</li>
+<li><em>Possible compatibility change:</em> For linux users removed default dummy tSocketStream serStream; from <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a></li>
+<li><em>Compatibility change:</em> PGN129285 parameter list SetN2kPGN129285 and SetN2kRouteWPInfo has been changed. Compiler could not solve ambiguous problem between compatibility inlines, so users are forced to change to new interface.</li>
+<li>Added [[SetOnOpen]]<a class="el" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e" title="Set OnOpen callback function.">tNMEA2000::SetOnOpen</a> to set callback for communication open. You need this e.g., if you want to synchronize your messages with offsets. See how it has been used e.g., on exmample TemperatureMonitor.</li>
+<li>New module N2kTimer to hide platform dependent <a class="el" href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis()</a>. Module declares scheduler classes to fix problems on simple <a class="el" href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis()</a> testing in case of roll over. Class <a class="el" href="classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending.">tN2kSyncScheduler</a> is for synchronizing message sending. See how it has been used e.g., on example TemperatureMonitor</li>
+<li>Improved: Single test for pending information (tInternalDevice::HasPendingInformation) to avoid multiple tests in every loop.</li>
+<li>Fix: Heartbeat problem caused by <a class="el" href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis()</a> roll over after 49 days.</li>
+<li>Fix: Added missing const modifiers. Thanks alexg-k.</li>
+<li>Fix: Limit SendRxPGNList/SendTxPGNList to avoid crash in case of error.</li>
+<li>Fix: PGN 129285 Waypoint list. Thanks aydosj.</li>
+<li>Added: PGN 127252 Heave. Thanks aydosj.</li>
+<li>Changed some parameter order in classes to save small amount of memory.</li>
+<li>Updated examples TemperatureMonitor, WindMonitor, BatteryMonitor and MessageSender to use <a class="el" href="classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending.">tN2kSyncScheduler</a> and <a class="el" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e" title="Set OnOpen callback function.">tNMEA2000::SetOnOpen</a> for synchronizating messages.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md135"></a>
+11.08.2022</h1>
+<ul>
+<li>Fix: On <a class="el" href="_n2k_group_function_default_handlers_8cpp.html">N2kGroupFunctionDefaultHandlers.cpp</a> <a class="el" href="classt_n2k_group_function_handler_for_p_g_n60928.html" title="Default Group Function Handler for PGN 60928 - &quot;ISO Address Claim&quot;.">tN2kGroupFunctionHandlerForPGN60928</a> unique number length is 3 bytes.</li>
+<li>Fix: On <a class="el" href="_n2k_msg_8cpp.html">N2kMsg.cpp</a> changed round(v/precision) to round((v/precision)), since some system round macro behaved unexpectedly. Thaks to ieb.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md136"></a>
+06.07.2022</h1>
+<ul>
+<li>Fix: use proper array delete operator in RingBuffer, thanks garaminowicz</li>
+<li>Fix: PGN 127251 rate of turn type, thanks BerndCirotzki and for remind speters.</li>
+<li>Fix: PGN 129794 setter.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md137"></a>
+07.04.2022</h1>
+<ul>
+<li>Changed "#include cstring" to "#include string.h" cstring is not available on all environments.</li>
+<li>Fixed proprietary PGN handling on <a class="el" href="_n2k_group_function_8cpp.html">N2kGroupFunction.cpp</a>.</li>
+<li>Fixed <a class="el" href="_n2k_msg_8cpp.html">N2kMsg.cpp</a>:<a class="el" href="_n2k_msg_8cpp.html#a5c1395688a85958d30cfd6e005ce0c59" title="Writes a double signed value into a byte array buffer using 3 bytes.">SetBuf3ByteDouble()</a>. Thanks to mairas.</li>
+<li>Add support for PGN 129041, 130323. Thanks to MattCairns.</li>
+<li>Added support for PGN127237, 127233, 130577 and more detail for 129039. Thanks to aydosj.</li>
+<li>Copyright update.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md138"></a>
+05.09.2021</h1>
+<ul>
+<li>Documentation update.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md139"></a>
+23.08.2021</h1>
+<ul>
+<li>Added manufacturer bits to engine discrete status ( PGN 127489 )</li>
+<li>Added data limitation handling to <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a>. Now overflow values will be sent as overflow. E.g. SetN2kTemperature(N2kMsg,0xff,0,N2kts_MainCabinTemperature,CToKelvin(800)); + will send temperature as 0xfffe, which is NMEA2000 standard way to inform that value is out of range. Library does not yet handle overflow on reading, but it is under construction.</li>
+<li>Fixed PGNs 126992, 128275, 129029 time reading to UDouble</li>
+<li>Added function <a class="el" href="classt_n_m_e_a2000.html#a6cfba67838a78fa29ab2f317313837da" title="Restart the device.">tNMEA2000::Restart()</a>. This is preliminary and may change. Read more info on <a class="el" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library.">NMEA2000.h</a>.</li>
+<li>Modified <a class="el" href="classt_n_m_e_a2000.html#af2eb988973381934c3861b074539d9d0" title="Respond to an Group Function.">tNMEA2000::RespondGroupFunction</a> to allow user add own common group function handler with PGN=0.</li>
+<li>Fixed <a class="el" href="classt_n_m_e_a2000.html#addc7f3340e20105e8f78e6cbd0072772" title="Handles if we get commanded to set a new address.">tNMEA2000::HandleCommandedAddress</a> which should be accepted only by BAM TP.</li>
+<li>Added <a class="el" href="classt_n2k_group_function_handler.html#ac0043135e3095922cc120255572fac85" title="Change the Transmission or Priority error code code for a group function message.">tN2kGroupFunctionHandler::ChangeTransmissionOrPriorityErrorCode</a></li>
+<li>Fixed <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126993.html#aaf62b5e5932dc3e1f5d3bb8efd0e2d21" title="Default request handler for group function requests for PGN.">tN2kGroupFunctionHandlerForPGN126993::HandleRequest</a>. System must not respond to pure 126208 request for 126993. Also TransmissionInterval setting is limited to 1000 - 60000 ms.</li>
+<li>Modified debug messages.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md140"></a>
+04.03.2021</h1>
+<ul>
+<li>Fix for engine discrete status 2.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md141"></a>
+10.02.2021</h1>
+<ul>
+<li>Added definition to <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a> to select CAN device for Arduino DUE</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md142"></a>
+06.02.2021</h1>
+<ul>
+<li>Added handlers for PGN 129540 GNSS satellites in view</li>
+<li>Added new necessary types</li>
+<li>Added SetByte for <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> class.</li>
+<li>Added PGN 129540 handler for test example DataDisplay2</li>
+<li>Redesigned example MessageSender. Now it is more usefull for testing, since each message can be individually enabled/disabled.</li>
+<li>Added PGN 129540 handler for test example MessageSender</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md143"></a>
+15.01.2021</h1>
+<ul>
+<li>Added better inline ParseN2kEngineDynamicParam to N2kMessages</li>
+<li>Copyright update</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md144"></a>
+05.01.2021</h1>
+<ul>
+<li>Added better engine discrete status handling to N2kMessages</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md145"></a>
+08.10.2020</h1>
+<ul>
+<li>Fix for 'memcpy' overflow for float reading on <a class="el" href="_n2k_msg_8cpp.html">N2kMsg.cpp</a></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md146"></a>
+23.08.2020</h1>
+<ul>
+<li>Add support for Teensy 4.x</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md147"></a>
+05.08.2020</h1>
+<ul>
+<li>Add support for Windlass Network Messages PGN 128776, 128777 &amp; 128778 by Paul Reeve</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md148"></a>
+16.07.2020</h1>
+<ul>
+<li>Fixed setting buffered frame length to min instead of max length on <a class="el" href="_n_m_e_a2000_8cpp.html">NMEA2000.cpp</a> SendFrame</li>
+<li>Added NMEA2000::IsProprietaryMessage</li>
+<li>Fixed AddGroupFunctionHandler to allow to add handlers after Open</li>
+<li>Added RemoveGroupFunctionHandler to allow dynamically remove handlers on runtime.</li>
+<li>Added proprietary message handling to <a class="el" href="_n2k_group_function_8cpp.html">N2kGroupFunction.cpp</a></li>
+<li>Improved N2kDeviceList HandleMsg to see devices, which has been off.</li>
+<li>Added FindDeviceByProduct to N2kDeviceList</li>
+<li>Extented list of fast packet messages to all known fast packet messages. This also leads to situation that all fast packet messages are known messages and may effect to setting SetHandleOnlyKnownMessages behaviour. To limit known messages, one should have provided list with SetFastPacketMessages.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md149"></a>
+27.06.2020</h1>
+<ul>
+<li>Fixed PGN 130314 and PGN 130315 pressure type to signed.</li>
+<li>Added pressure enums.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md150"></a>
+28.01.2019</h1>
+<ul>
+<li>NOTE! Compatibility change! PGN 127506 TimeRemaining should have been in seconds as it is SI unit. If you have used that on your code, provide value in seconds. Parse function also return in seconds now.</li>
+<li>Added Capacity parameter to PGN 127506. I did not made overwrite function without due to above change. So it hopefully wakes you up about the changes.</li>
+<li>Fixed MaretronProprietary test on <a class="el" href="_n2k_maretron_8cpp.html">N2kMaretron.cpp</a></li>
+<li>Some comment fixes.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md151"></a>
+20.10.2019</h1>
+<ul>
+<li>Added support for Maretron proprietary PGNs 130823,65286, 65287. See <a class="el" href="_n2k_maretron_8h.html" title="Collection of functions for handling NMEA2000 bus Maretron messages.">N2kMaretron.h</a>. Thanks to Vassilis Bourdakis.</li>
+<li>Added proprietary fast packet message test as default. So now proprietary fast packet messages will be automatically parsed right without need to use ExtendFastPacketMessages</li>
+<li>Fixed strings on product information. Unused characters will be filled with 0xff.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md152"></a>
+17.10.2019</h1>
+<ul>
+<li>Fixed Rate of turn (PGN 127251) and AIS position report ROT (PGN 129038) value multiplier.</li>
+<li>Separated N2k enums to own file <a class="el" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read.">N2kTypes.h</a></li>
+<li>Fixed PGNs 127251, 127258, 130576 length for sending by padding with reserved. Some devices refuces to listen message, if length is wrong.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md153"></a>
+07.07.2019</h1>
+<ul>
+<li>Fixed: PGN 127513 was accidently defined also as single frame message.</li>
+<li>Added: Trip fuel consumption, engine PGN 127497.</li>
+<li>Added: More PGN:s to default fast packet list.</li>
+<li>Updated: Examples MessageSender and DataDisplay2, which can be used for testing messages.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md154"></a>
+03.03.2019</h1>
+<ul>
+<li>Added: Charger status PGN 127507.</li>
+<li>Added: Possibility to delay ISO address claim. Due to some devices CAN priority, it was sent too fast.</li>
+<li>Added: Count for tDeviceList</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md155"></a>
+14.01.2019</h1>
+<ul>
+<li>Fix: Device list handler fix. Some tools may use source 254 and that was checked wrong.</li>
+<li>Fix: Message priorities.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md156"></a>
+04.08.2018</h1>
+<ul>
+<li>Fix: <a class="el" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library.">NMEA2000.h</a>/NMEA2000.cpp, just in parameter N2kSource type change by mrbubble62</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md157"></a>
+18.07.2018</h1>
+<ul>
+<li>Added: <a class="el" href="_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char.">N2kMessagesEnumToStr.h</a> "exhaust gas" string for temperature sources by mrbubble62.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md158"></a>
+09.05.2018</h1>
+<ul>
+<li>Fix: <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>, make ESP32 work with ESP-IDF framework, by Sarfata</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md159"></a>
+10.04.2018</h1>
+<ul>
+<li>Fix: Handling of humidity PGN 130313.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md160"></a>
+06.04.2018</h1>
+<ul>
+<li>Added: Support for ESP32. See also NMEA2000_esp32</li>
+<li>Fix: Changed some names to avoid conflicts with some stupid define macros on some environments.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md161"></a>
+04.04.2018</h1>
+<ul>
+<li>Fix: NextHeartbeatSentTime initial value.</li>
+<li>Added: New example NMEA2000ToNMEA0183. This has been tested on RPi3B, Arduino DUE, Arduino Mega, Teensy.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md162"></a>
+26.03.2018</h1>
+<ul>
+<li>Added: Strings for Magnetic Variation enum by mrbubble62</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md163"></a>
+13.03.2018</h1>
+<ul>
+<li>Added: PGN129033 Local offset</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md164"></a>
+23.02.2018</h1>
+<ul>
+<li>Port config ability for SockeCAN by Al Thomason</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md165"></a>
+16.02.2018</h1>
+<ul>
+<li>SetN2kSource for other devices by jpilet</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md166"></a>
+29.01.2018</h1>
+<ul>
+<li>Added: PGN130576 Small Craft Status / Trim Tab Position definition by Nicholas Agro</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md167"></a>
+15.01.2018</h1>
+<ul>
+<li>Fix: ParseN2kPGN129284, Index was not initialized to 0, which caused unpredictable read.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md168"></a>
+07.01.2018</h1>
+<ul>
+<li>Fix: Fast packet sequence counter must be related to PGN.</li>
+<li>Fix: TP message priorities.</li>
+<li>Fix: On SetDeviceInformationInstances we need to send ISO address claim, not start adress claim.</li>
+<li>Fix: Do not respond any queries during address claim.</li>
+<li>Fix: Fixed some messages default priority.</li>
+<li>Fix: Responce to Complex Group Function requests.</li>
+<li>Fix: Now compiles with different compiler definitions defined on <a class="el" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs.">NMEA2000_CompilerDefns.h</a></li>
+<li>Added: Support for sending messages by using Transport Protocol. This is mandatory for NMEA 2000</li>
+<li>Updated: License to 2018</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md169"></a>
+02.12.2017</h1>
+<ul>
+<li>Changes effect only use of <a class="el" href="classt_n2k_device_list.html" title="class thats holding a list of all devices on the bus">tN2kDeviceList</a> and AttachMsgHandler callbacks.</li>
+<li>Added FindDeviceByIDs to <a class="el" href="classt_n2k_device_list.html" title="class thats holding a list of all devices on the bus">tN2kDeviceList</a></li>
+<li>Fix: Devicelist did not handle right, if device changed its address higher.</li>
+<li>Fix: PNG message handler order problem on <a class="el" href="classt_n_m_e_a2000.html#a41f9389afaaba6eeff8818a7945a9f99" title="Attach a message handler for incoming N2kMessages.">tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler)</a>;</li>
+<li>Fix: If there was NMEA2000 library device with same name, they handshaked both addresses to null. The problem still appears, if both devices will be started at same time. I need to add some random start delay</li>
+<li>Cleaned spaces from end of lines on updated code.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md170"></a>
+29.11.2017</h1>
+<ul>
+<li>Added PGN 128000 Leeway to <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>/.cpp</li>
+<li>Fix: Spelling WaterRefereced -&gt; WaterReferenced on <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>/.cpp</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md171"></a>
+27.11.2017</h1>
+<ul>
+<li>Fix some build errors due to missing include statements (did not affect Arduino, only other platforms)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md172"></a>
+14.11.2017</h1>
+<ul>
+<li>Fix: Default responces to Complex Group Function.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md173"></a>
+09.11.2017</h1>
+<ul>
+<li>Added library.json, thanks for ronzeiller.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md174"></a>
+31.10.2017</h1>
+<ul>
+<li>Fix: fill unused chars on fastpacket messages with 0xff</li>
+<li>Fix: fill unused chars on message fixed sized strings with 0xff. One sample is e.g. PGN 126996, Product Information.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md175"></a>
+14.10.2017</h1>
+<ul>
+<li>Changed <a class="el" href="classt_actisense_reader.html" title="Class for reading Actisense format messages.">tActisenseReader</a> class to handle also Actisense N2k request message types. This type will be used by applications, which sends data through NGT-1.</li>
+<li>Updated related examples ActisenseListener and ActisenseListenerSender.</li>
+<li>Renamed Min/Max to N2kMin/N2kMax, since Due code had definitions for Min/Max</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md176"></a>
+12.10.2017</h1>
+<ul>
+<li>Added PGN validity check to the SendMsg()</li>
+<li>Changed max/min -&gt; own Max/Min. max/min defines does not exist on other systems and Arduino does not have std Algorithm for all boards.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md177"></a>
+10.10.2017</h1>
+<ul>
+<li>Fix: PGN 126992 TimeSource handling.</li>
+<li>Fix: Added missing wind reference type.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md178"></a>
+02.10.2017</h1>
+<ul>
+<li>Added range parameter for depth PGN 128267.</li>
+<li>Added <a class="el" href="_n2k_def_8h.html#adb94fbd930038e1510574dd4bcf07fe1">millis()</a> time stamp to N2kMsg clear text Print.</li>
+<li>Now responces also Group Function request for PGN lists PGN 126464</li>
+<li>Now responces also Group Function request for Product Information PGN 126996</li>
+<li>Now responces also Group Function request for Configuration Information PGN 126998</li>
+<li>Fix: spelling Sertification -&gt; Certification</li>
+<li>Fix: on changing SystemInstance reseted DeviceInstance</li>
+<li>Fix: "Group function" responces according to tests with certified Airmar DST800</li>
+<li>Fix: Address claiming could go up to 253 and did not went to "cannot claim". Now, if address cannot be claimed, goes to "cannot claim state" and prevents all message output except ISO address claim.</li>
+<li>Fix: fast packet response for less than 7 data bytes caused two frames.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md179"></a>
+26.09.2017</h1>
+<ul>
+<li>Fixed PGN 128259 parser SOG data type.</li>
+<li>DataDisplay2 example update.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md180"></a>
+31.08.2017</h1>
+<ul>
+<li>Support for changing configuration information fields InstallationDescription1 and InstallationDescription2 on runtime e.g. with NMEA Reader. Meaning of those fields is define their "installation description". So if you have two engine monitor devices, you can set e.g. InstallationDescription1 field to "Port engine" for one and "Starboard engine" for other. So it is not necessary to hardcode those setting. Of coarse your code must support parameter saving to e.g. EEPROM as with other parameters (see ReadResetInstallationDescriptionChanged, ReadResetAddressChanged and ReadResetDeviceInformationChanged). I have example under construction for handling parameter changes.</li>
+<li>Changed some indexes to size_t. This may effect compatibility, if you have used those functions.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md181"></a>
+31.07.2017</h1>
+<ul>
+<li>New versions of NMEA2000_due and due_can (see. <a href="https://github.com/ttlappalainen/due_can">https://github.com/ttlappalainen/due_can</a>)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md182"></a>
+29.07.2017</h1>
+<ul>
+<li>Fixed setting device instances on N2kGroupFunctionDefaultHandlers</li>
+<li>Fixed wind PGN 130306 output with reserved field.</li>
+<li>New abstract class tNEMA2000:tMsgHandler and functions AttachMsgHandler/DetachMsgHandler. With these you can have multiple handlers. It also allow PGN specific handlers. See how it has been used on example DeviceAnalyzer. Other simple example is under construction.</li>
+<li>New class <a class="el" href="classt_n2k_device_list.html" title="class thats holding a list of all devices on the bus">tN2kDeviceList</a>. See more on library reference and on example DeviceAnalyzer.</li>
+<li>Improved message type checking. This will be done for every message, so speed in important. For Arduino Mega average test time was dropped from about 90 us to 9 us and for Teensy from 3.5 us to 0.9 us.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md183"></a>
+26.06.2017</h1>
+<p >Example updates</p>
+<ul>
+<li>ActisenseListenerSender can be used to listen and send data to NMEA 2000 bus. This is almost same as TeensyActisenseListenerSender, but read and forward ports can be chosen with "#define".</li>
+<li>ActisenseListener uses now SetN2kCANReceiveFrameBufSize.</li>
+<li>Removed FromPCToN2k. ActisenseListenerSender replaces this.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md184"></a>
+25.06.2017</h1>
+<p >Fix and cosmetic changes</p>
+<ul>
+<li>ForwardStream initialization was accidentaly deleted</li>
+<li>Clean code and more debug options.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md185"></a>
+22.06.2017</h1>
+<p >Fix and cosmetic changes</p>
+<ul>
+<li>Crashed, if ForwardStream was not defined. I accidentaly forgot to comment some debug code.</li>
+<li>Definition of tDeviceInformation changed to fixed sized data so that compiler can not mix them.</li>
+<li>Added debug definitions to avoid first bug.</li>
+<li>Some cosmetic changes and tests.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md186"></a>
+19.06.2017</h1>
+<p >Changes due to different revisions of FlexCAN library for Teeansy boards. NOTE! You must update NMEA2000_Teensy library. I also forked and developed FlexCAN library from collin80 and also send pull request for him. Until updated there my fork has more features for use with NMEA2000 library.</p>
+<h1><a class="anchor" id="autotoc_md187"></a>
+13.06.2017</h1>
+<p >NOTE! Some compatibility changes</p>
+<ul>
+<li>!NOTE compatibility change. <code>tProductInformation</code> has been moved inside <code><a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a></code> class. If you have defined <code>tProductInformation</code> to <code>PROGMEM</code> as in example <code>BatteryMonitor</code>, you need to change definition <code>const tProductInformation</code>... to <code>const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information.">tNMEA2000::tProductInformation</a></code>... See example <code>BatteryMonitor</code>.</li>
+<li>Multi device support should work now. So you can show several devices on bus with single hw. See example MultiDevice.</li>
+<li>!NOTE compatibility change. tDeviceInformation has been moved inside <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class. This was used only internally until 11.06.2017 release.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md188"></a>
+11.06.2017</h1>
+<p >Added NMEA 2000 mandatory features. Some bug fixes</p>
+<ul>
+<li>!NOTE compatibility change. PROGMEM configuration information did not work and actually wasted RAM. You should define each configuration information string alone as PROGMEM and call changed SetProgmemConfigurationInformation. See sample BatteryMonitor</li>
+<li>Due to new mandatory features library requires more RAM and program memory. It is possible to squeeze requirements with compiler options. See more info on <a class="el" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs.">NMEA2000_CompilerDefns.h</a>.</li>
+<li>Added new class <a class="el" href="classt_n2k_group_function_handler.html" title="Handler class for Group Functions.">tN2kGroupFunctionHandler</a> (<a class="el" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler.">N2kGroupFunction.h</a>/.cpp) for NMEA 2000 group function (PGN 126208) handling. Group function can be used to e.g. to set "temperature instance" or "set temperature" fields on PGN 130316.</li>
+<li>Added automatic Heartbeat, which is mandatory for certified NMEA 2000 devices. If you do not want it to be sent, you have to set heartbeat interval to 0. Added also function SetHeartbeatInterval, GetHeartbeatInterval and SendHeartbeat.</li>
+<li>Added group function handling for PGN 60928 (ISO Address) and PGN 126993 (Heartbeat). Handlers can be found on N2kGroupFunctionDefaultHandlers module.</li>
+<li>Added functions ReadResetDeviceInformationChanged, SetDeviceInformationInstances, GetDeviceInformation for checking, setting and reading device instance changes. See more info on document.</li>
+<li>Added ISO Multi-packet handling. Changed logic on SetN2kCANBufMsg due this.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md189"></a>
+05.06.2017</h1>
+<ul>
+<li>Added PGN 130314 by sarfata.</li>
+<li>Added PGN 127245 rudder parser</li>
+<li>Fixed Device Information, last bit must be set to 1</li>
+<li>Fixed response to ISO Address Claim request. Seems that all new devices respond allways with broadcast instead of caller address.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md190"></a>
+28.05.2017</h1>
+<ul>
+<li>Changed default NMEA2000 variable definition in <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a> to reference. So now it is possible to refer it in other modules with definition: <div class="fragment"><div class="line"> {code```}</div>
+<div class="line">  extern tNMEA2000 &amp;NMEA2000;</div>
+<div class="line">```endcode</div>
+</div><!-- fragment --></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md191"></a>
+08.04.2017</h1>
+<ul>
+<li>Added Binary status report (PGN 127501) handling. See updated examples MessageSender and DataDisplay2.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md192"></a>
+09.03.2017</h1>
+<ul>
+<li>Added PGN 129539 support and PGN 129283, 129284 parsers by denravonska.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md193"></a>
+07.03.2017</h1>
+<ul>
+<li>Debug mode check for DeviceReady and ParseMessages.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md194"></a>
+05.03.2017</h1>
+<ul>
+<li>RPi socketCAN auto selection and MBED compiler portability fix by thomasonw.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md195"></a>
+08.02.2017</h1>
+<ul>
+<li>Fixed Heading PGN 127250 parsing</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md196"></a>
+22.01.2017</h1>
+<ul>
+<li>Replace pointer casting with memcpy to avoid unaligned access, and add endian support. Thanks to denravonska.</li>
+<li>Handle for PGN 65240 "Commanded address". E.g. diagnostic device may command your device to change address.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md197"></a>
+01.01.2017</h1>
+<ul>
+<li>Document and some example fixes to match library portability changes.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md198"></a>
+20.12.2016</h1>
+<ul>
+<li>Added support for PGN 126464L, PGN List (Transmit and Receive). Library will automatically respond to this message. You need only add message lists and call to methods ExtendTransmitMessages and/or ExtendReceiveMessages. See e.g. example TemperatureMonitor.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md199"></a>
+17.12.2016</h1>
+<ul>
+<li>Fixes to avoid compiler warnings</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md200"></a>
+16.12.2016</h1>
+<ul>
+<li>Portability fixes. Thanks to denravonska and thomasonw!</li>
+<li>NOTE! compatibility issue! There is no more default stream set on library constuctor. So in case you are using forwarding, you need to setup it (like in examples) NMEA2000.SetForwardStream(&amp;Serial);</li>
+<li>This reduces the Arduino dependency, allowing the library to more easily be used on other platforms. Check all changes under <a href="https://github.com/ttlappalainen/NMEA2000/pull/3">https://github.com/ttlappalainen/NMEA2000/pull/3</a></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md201"></a>
+01.12.2016</h1>
+<ul>
+<li>License change to MIT for more permissive</li>
+<li>Also some started to remove platform dependent code.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md202"></a>
+12.11.2016</h1>
+<ul>
+<li>PGN129025 parser added and some fixes by KimBP</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md203"></a>
+11.11.2016</h1>
+<ul>
+<li>Added support for PGN 127258 - magnetic variation by adwuk.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md204"></a>
+18.10.2016</h1>
+<ul>
+<li>Added parsing for PGN 130311 by adwuk. Typo fix for system date comment by sarfata.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md205"></a>
+19.09.2016</h1>
+<ul>
+<li>Lot of testing behind - hopefully works now better.</li>
+<li>NOTE! New method SetN2kCANSendFrameBufSize. Added buffer for frames to be sent. This takes more RAM and may be critical for low RAM systems.</li>
+<li>If frame sending fails, system now buffers frames to be sent automatically and tries to resend them on next call for ParseMessages. With this feature it solved my problem that time to time my MFD could not receive important GNSS or SOG/GOG messages and informed error.</li>
+<li>System now also has more reliable response to the Product Information ISO request (PGN 126998). Unfortunately if your system does not poll often enough incoming messages (ParseMessages), you still may loose the request itself. This is specially the case if you system spends some time reading sensors like 1-wire system. Even with 1-wire asynchronous read, it may spend 10 ms interrupts disabled. Within 10 ms there may be about 30 messages on bus.</li>
+<li>New methods SetConfigurationInformation and SetProgmemConfigurationInformation. System can now also handle Configuration Information ISO request to (PGN 126998). Default configuration information is saved to PROGMEM.</li>
+<li>NOTE! Reload also NMEA2000_due!</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md206"></a>
+17.09.2016</h1>
+<ul>
+<li>Temporary fix for problem to respond product information ISO request.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md207"></a>
+12.09.2016</h1>
+<ul>
+<li>Thanks for people (usauerbrey, OzOns), who noted below problems</li>
+<li>NOTE! If you are using NMEA2000_can, remember to update that too!</li>
+<li>Fix for ISORequest handling. Now responds allways also for broadcasts.</li>
+<li>Some fixes to avoid compiler warnings.</li>
+<li>Fix for parsing PGN 127257/Attitude</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md208"></a>
+09.08.2016</h1>
+<ul>
+<li>NOTE! Fixed PGN 130310, PGN 130311 and added SetHandleOnlyKnownMessages(), which effects backward compatibility. See below.</li>
+<li>NOTE! On PGN 130310 and PGN 130311 description says that "Atmospheric
+  pressure in Pascals. Use function mBarToPascal". There was scaling error and now they works like description. After update you have to provide value on Pascals and really use mBarToPascal, if you have your value in mBar.</li>
+<li>NOTE! Added SetHandleOnlyKnownMessages(). If you have called SetForwardOnlyKnownMessages(true), library did not handle unknown messages. After update, this effects only message forwarding - as it should have been. So call also SetHandleOnlyKnownMessages(true), if you want to disable any handling for unknown messages.</li>
+<li>NMEA 2000 Library reference update.</li>
+<li>Added ExtendSingleFrameMessages and ExtendFastPacketMessages. With these one can own list of known messages so that it is not necessary to duplicate message list as, if used only SetSingleFrameMessages and SetFastPacketMessages.</li>
+<li>Added discrete status flags for transmission parameters (PGN 127493), thanks for testing Jason.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md209"></a>
+06.08.2016</h1>
+<ul>
+<li>Added SetISORqstHandler for setting handler for ISO requests. Thanks thomasonw.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md210"></a>
+30.07.2016</h1>
+<ul>
+<li>NMEA 2000 Library reference update.</li>
+<li>Added example TeensyActisenseListenerSender. Example contains code, schematics and document.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md211"></a>
+19.07.2016</h1>
+<ul>
+<li>Fixed discrete status on engine dynamic parameters (PGN 127489), thanks Jason.</li>
+<li>Added new PGN 127257, vessel attitude. Only sending has been tested with NMEA Reader</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md212"></a>
+12.07.2016</h1>
+<ul>
+<li>Added to API &ndash; Optional message lists by thomasonw</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md213"></a>
+25.06.2016</h1>
+<ul>
+<li>Corrected Battery Current in ParseN2kPGN127508 by thomasonw.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md214"></a>
+23.03.2016</h1>
+<ul>
+<li>Additional PGN 129038, PGN 129039, PGN 129285, PGN 130074 support by adwuk.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md215"></a>
+13.03.2016</h1>
+<ul>
+<li>Fix of using PROGMEM. Now also product information defined to PROGMEM works right.</li>
+<li>Fix of using PROGMEM. Still does not work right with product information in PROGMEM. So all changes after 09.03 are still under validation.</li>
+<li>More memory optimization - thanks for thomasonw. Constant message strings has been marked with <a class="el" href="_n2k_def_8h.html#a0e3009529aac180ed5f48296d6670d6b">F(...)</a> moving them to flash instead of RAM.</li>
+</ul>
+<p >Note also that there is new function <code>void tNMEA2000::SetProductInformation(const tProductInformation *_ProductInformation);</code> So one can save memory by defining product information to flash by using syntax:</p>
+<div class="fragment"><div class="line">const tProductInformation BatteryMonitorProductInformation PROGMEM={</div>
+<div class="line">1300,               // N2kVersion</div>
+<div class="line">...</div>
+</div><!-- fragment --><p >See example BatteryMonitor.ino</p>
+<h1><a class="anchor" id="autotoc_md216"></a>
+12.03.2016</h1>
+<ul>
+<li>Memory tuning. Currently multi device and user definable message filters has not been implemented, so I changed buffer sizes to minimum.</li>
+<li>There is also new function void tNMEA2000::SetN2kCANMsgBufSize(const unsigned
+char _MaxN2kCANMsgs); to define buffer size for received N2k messages. Note that library has to collect fast packet frames, which may arrive fragmented from different devices, so as default this buffer size has been set to 5. If your device is only sending some data (mode is <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a>), you do not need to catch all fast packet messages (if any), so you can set buffer size smaller.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md217"></a>
+09.03.2016</h1>
+<ul>
+<li>Additional PGN 127250, PGN 128275 Support by adwuk.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md218"></a>
+08.03.2016</h1>
+<ul>
+<li>AVR CAN support by thomasonw.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md219"></a>
+02.02.2016</h1>
+<ul>
+<li>NOTE! Updates, which effects backward compatibility. See list below.</li>
+<li>PGN 127489, SetN2kPGN127489 EngineOilTemp and EngineCoolantTemp is in Kelvins as in other temperature functions. So add for call to this function CToKelvin(...)</li>
+<li>Some function names withing N2kMessages have been changed. Change function names listed below! + SetN2kPGNSystemTime -&gt; SetN2kSystemTime + ParseN2kPGNSystemTime -&gt; ParseN2kSystemTime + SetN2kPGNTrueHeading -&gt; SetN2kTrueHeading + SetN2kPGNMagneticHeading -&gt; SetN2kMagneticHeading</li>
+<li>Variable types has been changed on some functions in N2kMessages. So when you get an compiler error about functions in N2kMessages, check carefully all parameter definitions for function from <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>.</li>
+<li>If you do not have value for some parameter for functions in N2kMessages, use related N2kxxxxNA constant defined in <a class="el" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message.">N2kMsg.h</a>. So e.g. if you only have wind speed, call + SetN2kWindSpeed(N2kMsg, 1, ReadWindSpeed(),N2kDoubleNA,N2kWind_Apprent);</li>
+<li>If you are reading values from N2k bus, you can now check does some value exist by using function N2kIsNA. So if you e.g. call + ParseN2kOutsideEnvironmentalParameters(N2kMsg,SID,WaterTemperature,OutsideAmbientAirTemperature,AtmosphericPressure); + then check pressure value with + if ( !N2kIsNA(AtmosphericPressure) ) { // It is available, so we can show it!</li>
+<li>Added reference document to the documents, which hopefully helps to get started.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md220"></a>
+23.01.2016</h1>
+<ul>
+<li>Added PGN 127493 support. NMEA2000_mcp has now interrupt support. Some other fixes.</li>
+<li>Added some comments to samples and several new message readers. Also added support for 130316 extended temperature. Added new include <a class="el" href="_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char.">N2kMessagesEnumToStr.h</a> for translating library enums to clear text. This is now just for preliminary so I may changes texts in coming future. Added also new examples DataDisplay2.ini and MessageSender.ino. They are extended versions of DataDisplay.ino and TemperatureMonitor.ino.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md221"></a>
+05.12.2015</h1>
+<ul>
+<li>Added <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a> and some fixes. Library has been originally developed with Arduino Software 1.6.5 On Arduino Software 1.6.6 it is possible to include libraries within included files, so now it is possible to just include one file <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>, which automatically selects right CAN library according. So you can have same code for different hw. Currently supported CAN libraries are mcp_can, due_can and teensy. Note! <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a> is now used on examples TemperatureMonitor and WindMonitor! </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

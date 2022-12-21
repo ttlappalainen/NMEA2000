@@ -1,0 +1,1289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: N2kMessagesEnumToStr.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n2k_messages_enum_to_str_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">N2kMessagesEnumToStr.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>This File contains functions to convert enums from <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a> to const char.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for N2kMessagesEnumToStr.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n2k_messages_enum_to_str_8h__incl.png" border="0" usemap="#a_n2k_messages_enum_to_str_8h" alt=""/></div>
+<map name="a_n2k_messages_enum_to_str_8h" id="a_n2k_messages_enum_to_str_8h">
+<area shape="rect" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="265,5,446,32"/>
+<area shape="rect" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="297,80,413,107"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="165,155,247,181"/>
+<area shape="rect" title=" " alt="" coords="231,379,295,405"/>
+<area shape="rect" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="351,155,442,181"/>
+<area shape="rect" title=" " alt="" coords="466,155,530,181"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="115,229,214,256"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="5,304,81,331"/>
+<area shape="rect" title=" " alt="" coords="157,304,225,331"/>
+<area shape="rect" href="_n_m_e_a2000_std_types_8h.html" title="NMEA2000 standard type definitions." alt="" coords="352,229,505,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n2k_messages_enum_to_str_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:adf16e727d1c8ec7a57200a30378707d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#adf16e727d1c8ec7a57200a30378707d0">MakeN2kEnumTypeToStrFunc</a>(enumType,  strs)</td></tr>
+<tr class="memdesc:adf16e727d1c8ec7a57200a30378707d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro function for converting various N2k Enums to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#adf16e727d1c8ec7a57200a30378707d0">More...</a><br /></td></tr>
+<tr class="separator:adf16e727d1c8ec7a57200a30378707d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a797e243ad9bfb9ba79c6a3133186abe7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a797e243ad9bfb9ba79c6a3133186abe7">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a050047529ca3e7d013a22edac7a9f1bb">tN2kBatChemStrs</a>)</td></tr>
+<tr class="memdesc:a797e243ad9bfb9ba79c6a3133186abe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a797e243ad9bfb9ba79c6a3133186abe7">More...</a><br /></td></tr>
+<tr class="separator:a797e243ad9bfb9ba79c6a3133186abe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2e363b6e7775ec45bc179439a344fce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#af2e363b6e7775ec45bc179439a344fce">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#ab44d8db79f7acbb38db316edf9416651">tN2kBatEqSupportStrs</a>)</td></tr>
+<tr class="memdesc:af2e363b6e7775ec45bc179439a344fce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#af2e363b6e7775ec45bc179439a344fce">More...</a><br /></td></tr>
+<tr class="separator:af2e363b6e7775ec45bc179439a344fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af995706d1b8bdd2e69137bce0402d1a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#af995706d1b8bdd2e69137bce0402d1a4">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#ac661e3fa54e8fd90fd3d242b3691bbf7">tN2kBatNomVoltStrs</a>)</td></tr>
+<tr class="memdesc:af995706d1b8bdd2e69137bce0402d1a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#af995706d1b8bdd2e69137bce0402d1a4">More...</a><br /></td></tr>
+<tr class="separator:af995706d1b8bdd2e69137bce0402d1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bbd0036f78cfd538ba43a3215ff4f15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a4bbd0036f78cfd538ba43a3215ff4f15">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a35f202ae477a42755ff3b780de250a79">tN2kBatTypeStrs</a>)</td></tr>
+<tr class="memdesc:a4bbd0036f78cfd538ba43a3215ff4f15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a4bbd0036f78cfd538ba43a3215ff4f15">More...</a><br /></td></tr>
+<tr class="separator:a4bbd0036f78cfd538ba43a3215ff4f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab57e5bcfbd933e37518f0043edb1a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#afab57e5bcfbd933e37518f0043edb1a3">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#abeace36be54a1f4d4ccbece68a30b454">tN2kDCTypeStrs</a>)</td></tr>
+<tr class="memdesc:afab57e5bcfbd933e37518f0043edb1a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#afab57e5bcfbd933e37518f0043edb1a3">More...</a><br /></td></tr>
+<tr class="separator:afab57e5bcfbd933e37518f0043edb1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555552661823b9b6ae10b69f2115e9aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a555552661823b9b6ae10b69f2115e9aa">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a1f3f9118506dc33e54fe7bea11eed580">tN2kGNSSmethodStrs</a>)</td></tr>
+<tr class="memdesc:a555552661823b9b6ae10b69f2115e9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a555552661823b9b6ae10b69f2115e9aa">More...</a><br /></td></tr>
+<tr class="separator:a555552661823b9b6ae10b69f2115e9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed87806a76ca684bf36eb792178a0548"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#aed87806a76ca684bf36eb792178a0548">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a49a6ed2f41ce1d649a8908a6019568b2">tN2kGNSStypeStrs</a>)</td></tr>
+<tr class="memdesc:aed87806a76ca684bf36eb792178a0548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#aed87806a76ca684bf36eb792178a0548">More...</a><br /></td></tr>
+<tr class="separator:aed87806a76ca684bf36eb792178a0548"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611445be4f7798860f31b14022b22a4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a611445be4f7798860f31b14022b22a4b">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a29145ae17d689e005348b5f08c6aa30c">tN2kHeadingReferenceStrs</a>)</td></tr>
+<tr class="memdesc:a611445be4f7798860f31b14022b22a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a611445be4f7798860f31b14022b22a4b">More...</a><br /></td></tr>
+<tr class="separator:a611445be4f7798860f31b14022b22a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58a3a74041f5af16d0c94b2af52672f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a58a3a74041f5af16d0c94b2af52672f5">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a4ad5b1af66b20c6bb6a47ee3cb6b3c86">tN2kHumidityStrs</a>)</td></tr>
+<tr class="memdesc:a58a3a74041f5af16d0c94b2af52672f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a58a3a74041f5af16d0c94b2af52672f5">More...</a><br /></td></tr>
+<tr class="separator:a58a3a74041f5af16d0c94b2af52672f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b5665f94b3df95727dbb8ba3530c5b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a4b5665f94b3df95727dbb8ba3530c5b2">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">tN2kSpeedWaterReferenceTypeStrs</a>)</td></tr>
+<tr class="memdesc:a4b5665f94b3df95727dbb8ba3530c5b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a4b5665f94b3df95727dbb8ba3530c5b2">More...</a><br /></td></tr>
+<tr class="separator:a4b5665f94b3df95727dbb8ba3530c5b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14cc01f4ae9ebb745797617defd576ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a14cc01f4ae9ebb745797617defd576ea">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a96f0449a86f7a0dcaec9babb7858bf69">tN2kOnOffStrs</a>)</td></tr>
+<tr class="memdesc:a14cc01f4ae9ebb745797617defd576ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a14cc01f4ae9ebb745797617defd576ea">More...</a><br /></td></tr>
+<tr class="separator:a14cc01f4ae9ebb745797617defd576ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79ff0e08f5470c21737a357651e4c63d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a79ff0e08f5470c21737a357651e4c63d">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a06b09ebcecd7eab6150a3c7ae4aa6a3f">tN2kPressureStrs</a>)</td></tr>
+<tr class="memdesc:a79ff0e08f5470c21737a357651e4c63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a79ff0e08f5470c21737a357651e4c63d">More...</a><br /></td></tr>
+<tr class="separator:a79ff0e08f5470c21737a357651e4c63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd5888d0926d2db8e0d72ef7ea2b1787"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#acd5888d0926d2db8e0d72ef7ea2b1787">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a622788ef4480ccc716555ec523f34ccf">tN2kRudderDirectionOrderStrs</a>)</td></tr>
+<tr class="memdesc:acd5888d0926d2db8e0d72ef7ea2b1787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#acd5888d0926d2db8e0d72ef7ea2b1787">More...</a><br /></td></tr>
+<tr class="separator:acd5888d0926d2db8e0d72ef7ea2b1787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b55c8279f2400983f7333dedb6fde26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a2b55c8279f2400983f7333dedb6fde26">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">tN2kSpeedWaterReferenceTypeStrs</a>)</td></tr>
+<tr class="memdesc:a2b55c8279f2400983f7333dedb6fde26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a2b55c8279f2400983f7333dedb6fde26">More...</a><br /></td></tr>
+<tr class="separator:a2b55c8279f2400983f7333dedb6fde26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22be271e3a6014138f34d81ea917fe8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a22be271e3a6014138f34d81ea917fe8d">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#ae84811c0b1365c7452c9242075f1a8c0">tN2kTempSourceStrs</a>)</td></tr>
+<tr class="memdesc:a22be271e3a6014138f34d81ea917fe8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a22be271e3a6014138f34d81ea917fe8d">More...</a><br /></td></tr>
+<tr class="separator:a22be271e3a6014138f34d81ea917fe8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a699cef5966cf47915723b34ac8551382"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a699cef5966cf47915723b34ac8551382">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#adbcba6f7eb93757bc51661f770bfcc51">tN2kTimeSourceStrs</a>)</td></tr>
+<tr class="memdesc:a699cef5966cf47915723b34ac8551382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a699cef5966cf47915723b34ac8551382">More...</a><br /></td></tr>
+<tr class="separator:a699cef5966cf47915723b34ac8551382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831d73acbc3784db69e48e2c5c4248b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a831d73acbc3784db69e48e2c5c4248b6">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#abe4c6fac85ae9f196eb1e2317933be3f">tN2kTransmissionGearStrs</a>)</td></tr>
+<tr class="memdesc:a831d73acbc3784db69e48e2c5c4248b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a831d73acbc3784db69e48e2c5c4248b6">More...</a><br /></td></tr>
+<tr class="separator:a831d73acbc3784db69e48e2c5c4248b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173deb1e0a62341de6ccb6895e77c20f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a173deb1e0a62341de6ccb6895e77c20f">MakeN2kEnumTypeToStrFunc</a> (<a class="el" href="group__group__msg_types.html#gaf6a4cf563abea3f9d3a1addb314b2dd1">tN2kXTEMode</a>, <a class="el" href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">tN2kXTEModeStrs</a>)</td></tr>
+<tr class="memdesc:a173deb1e0a62341de6ccb6895e77c20f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converting the N2k enum <a class="el" href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">tN2kXTEModeStrs</a> to a const char.  <a href="_n2k_messages_enum_to_str_8h.html#a173deb1e0a62341de6ccb6895e77c20f">More...</a><br /></td></tr>
+<tr class="separator:a173deb1e0a62341de6ccb6895e77c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f28ddab7c08db270fbf0cec785a98b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ad9f28ddab7c08db270fbf0cec785a98b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ad9f28ddab7c08db270fbf0cec785a98b">PrintN2kEnumType</a> (T a, Stream *OutputStream, bool addLF=true)</td></tr>
+<tr class="memdesc:ad9f28ddab7c08db270fbf0cec785a98b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print function for the enum values.  <a href="_n2k_messages_enum_to_str_8h.html#ad9f28ddab7c08db270fbf0cec785a98b">More...</a><br /></td></tr>
+<tr class="separator:ad9f28ddab7c08db270fbf0cec785a98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a1c8deee1c5f98997e348a95d1f5a4ccf"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a1c8deee1c5f98997e348a95d1f5a4ccf">N2kEnumTypeEmpty</a> =&quot;&quot;</td></tr>
+<tr class="memdesc:a1c8deee1c5f98997e348a95d1f5a4ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default value if no string representation is found.  <a href="_n2k_messages_enum_to_str_8h.html#a1c8deee1c5f98997e348a95d1f5a4ccf">More...</a><br /></td></tr>
+<tr class="separator:a1c8deee1c5f98997e348a95d1f5a4ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a050047529ca3e7d013a22edac7a9f1bb"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a050047529ca3e7d013a22edac7a9f1bb">tN2kBatChemStrs</a> [] = { &quot;lead acid&quot;, &quot;LiIon&quot;, &quot;NiCad&quot;, &quot;NiMh&quot;}</td></tr>
+<tr class="memdesc:a050047529ca3e7d013a22edac7a9f1bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kBatChem  <a href="_n2k_messages_enum_to_str_8h.html#a050047529ca3e7d013a22edac7a9f1bb">More...</a><br /></td></tr>
+<tr class="separator:a050047529ca3e7d013a22edac7a9f1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab44d8db79f7acbb38db316edf9416651"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ab44d8db79f7acbb38db316edf9416651">tN2kBatEqSupportStrs</a> [] = { &quot;no&quot;, &quot;yes&quot;, &quot;error&quot;}</td></tr>
+<tr class="memdesc:ab44d8db79f7acbb38db316edf9416651"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kBatEqSupport  <a href="_n2k_messages_enum_to_str_8h.html#ab44d8db79f7acbb38db316edf9416651">More...</a><br /></td></tr>
+<tr class="separator:ab44d8db79f7acbb38db316edf9416651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac661e3fa54e8fd90fd3d242b3691bbf7"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ac661e3fa54e8fd90fd3d242b3691bbf7">tN2kBatNomVoltStrs</a> [] = { &quot;6V&quot;, &quot;12V&quot;, &quot;24V&quot;, &quot;32V&quot;, &quot;62V&quot;, &quot;42V&quot;, &quot;48V&quot;}</td></tr>
+<tr class="memdesc:ac661e3fa54e8fd90fd3d242b3691bbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kBatNomVolt  <a href="_n2k_messages_enum_to_str_8h.html#ac661e3fa54e8fd90fd3d242b3691bbf7">More...</a><br /></td></tr>
+<tr class="separator:ac661e3fa54e8fd90fd3d242b3691bbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f202ae477a42755ff3b780de250a79"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a35f202ae477a42755ff3b780de250a79">tN2kBatTypeStrs</a> [] = { &quot;flooded&quot;, &quot;gel&quot;, &quot;AGM&quot;}</td></tr>
+<tr class="memdesc:a35f202ae477a42755ff3b780de250a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kBatType  <a href="_n2k_messages_enum_to_str_8h.html#a35f202ae477a42755ff3b780de250a79">More...</a><br /></td></tr>
+<tr class="separator:a35f202ae477a42755ff3b780de250a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeace36be54a1f4d4ccbece68a30b454"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#abeace36be54a1f4d4ccbece68a30b454">tN2kDCTypeStrs</a> [] = { &quot;battery&quot;, &quot;altenator&quot;, &quot;converter&quot;, &quot;solar cell&quot;, &quot;wind generator&quot;}</td></tr>
+<tr class="memdesc:abeace36be54a1f4d4ccbece68a30b454"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kDCType  <a href="_n2k_messages_enum_to_str_8h.html#abeace36be54a1f4d4ccbece68a30b454">More...</a><br /></td></tr>
+<tr class="separator:abeace36be54a1f4d4ccbece68a30b454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f3f9118506dc33e54fe7bea11eed580"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a1f3f9118506dc33e54fe7bea11eed580">tN2kGNSSmethodStrs</a> [] = { &quot;no GNSS&quot;, &quot;GNSS fix&quot;, &quot;DGNSS&quot;, &quot;precise GNSS&quot; }</td></tr>
+<tr class="memdesc:a1f3f9118506dc33e54fe7bea11eed580"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kGNSSmethod  <a href="_n2k_messages_enum_to_str_8h.html#a1f3f9118506dc33e54fe7bea11eed580">More...</a><br /></td></tr>
+<tr class="separator:a1f3f9118506dc33e54fe7bea11eed580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a6ed2f41ce1d649a8908a6019568b2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a49a6ed2f41ce1d649a8908a6019568b2">tN2kGNSStypeStrs</a> [] = { &quot;GPS&quot;, &quot;GLONASS&quot;, &quot;GPS+GLONASS&quot;, &quot;GPS+SBAS/WAAS&quot;, &quot;GPS+SBAS/WAAS+GLONASS&quot;, &quot;Chayka&quot;, &quot;integrated&quot;, &quot;surveyed&quot;, &quot;Galileo&quot; }</td></tr>
+<tr class="memdesc:a49a6ed2f41ce1d649a8908a6019568b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kGNSStype  <a href="_n2k_messages_enum_to_str_8h.html#a49a6ed2f41ce1d649a8908a6019568b2">More...</a><br /></td></tr>
+<tr class="separator:a49a6ed2f41ce1d649a8908a6019568b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29145ae17d689e005348b5f08c6aa30c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a29145ae17d689e005348b5f08c6aa30c">tN2kHeadingReferenceStrs</a> [] = { &quot;true&quot;, &quot;magnetic&quot; }</td></tr>
+<tr class="memdesc:a29145ae17d689e005348b5f08c6aa30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kHeadingReference  <a href="_n2k_messages_enum_to_str_8h.html#a29145ae17d689e005348b5f08c6aa30c">More...</a><br /></td></tr>
+<tr class="separator:a29145ae17d689e005348b5f08c6aa30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad5b1af66b20c6bb6a47ee3cb6b3c86"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a4ad5b1af66b20c6bb6a47ee3cb6b3c86">tN2kHumidityStrs</a> [] = { &quot;inside&quot;, &quot;outside&quot; }</td></tr>
+<tr class="memdesc:a4ad5b1af66b20c6bb6a47ee3cb6b3c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kHumiditySource  <a href="_n2k_messages_enum_to_str_8h.html#a4ad5b1af66b20c6bb6a47ee3cb6b3c86">More...</a><br /></td></tr>
+<tr class="separator:a4ad5b1af66b20c6bb6a47ee3cb6b3c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf769c0c9f208d2e8ee5d8eb7d23b6fc"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#acf769c0c9f208d2e8ee5d8eb7d23b6fc">tN2kMagneticVariationStrs</a> [] = { &quot;Manual&quot;,&quot;Automatic Chart&quot;,&quot;Automatic Table&quot;,&quot;Automatic Calculation&quot;,&quot;WMM 2000&quot;,&quot;WMM 2005&quot;,&quot;WMM 2010&quot;,&quot;WMM 2015&quot;,&quot;WMM 2020&quot; }</td></tr>
+<tr class="memdesc:acf769c0c9f208d2e8ee5d8eb7d23b6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kMagneticVariation  <a href="_n2k_messages_enum_to_str_8h.html#acf769c0c9f208d2e8ee5d8eb7d23b6fc">More...</a><br /></td></tr>
+<tr class="separator:acf769c0c9f208d2e8ee5d8eb7d23b6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96f0449a86f7a0dcaec9babb7858bf69"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a96f0449a86f7a0dcaec9babb7858bf69">tN2kOnOffStrs</a> [] = { &quot;0&quot;, &quot;1&quot;, &quot;err&quot;, &quot;NA&quot; }</td></tr>
+<tr class="memdesc:a96f0449a86f7a0dcaec9babb7858bf69"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kOnOff  <a href="_n2k_messages_enum_to_str_8h.html#a96f0449a86f7a0dcaec9babb7858bf69">More...</a><br /></td></tr>
+<tr class="separator:a96f0449a86f7a0dcaec9babb7858bf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b09ebcecd7eab6150a3c7ae4aa6a3f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a06b09ebcecd7eab6150a3c7ae4aa6a3f">tN2kPressureStrs</a> [] = { &quot;atmospheric&quot;, &quot;water&quot;, &quot;steam&quot;, &quot;compressed air&quot;, &quot;hydraulic&quot;, &quot;filter&quot;, &quot;altimete setting&quot;, &quot;oil&quot;, &quot;fuel&quot; }</td></tr>
+<tr class="memdesc:a06b09ebcecd7eab6150a3c7ae4aa6a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kPressureSource  <a href="_n2k_messages_enum_to_str_8h.html#a06b09ebcecd7eab6150a3c7ae4aa6a3f">More...</a><br /></td></tr>
+<tr class="separator:a06b09ebcecd7eab6150a3c7ae4aa6a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a622788ef4480ccc716555ec523f34ccf"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a622788ef4480ccc716555ec523f34ccf">tN2kRudderDirectionOrderStrs</a> [] = { &quot;no direction order&quot;, &quot;move to starboard&quot;, &quot;move to port&quot; }</td></tr>
+<tr class="memdesc:a622788ef4480ccc716555ec523f34ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kRudderDirectionOrder  <a href="_n2k_messages_enum_to_str_8h.html#a622788ef4480ccc716555ec523f34ccf">More...</a><br /></td></tr>
+<tr class="separator:a622788ef4480ccc716555ec523f34ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a003a957783acb2b44044dcc069e9d6bd"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">tN2kSpeedWaterReferenceTypeStrs</a> [] = {&quot;Paddle wheel&quot;,&quot;Pitot tube&quot;,&quot;Doppler&quot;,&quot;Correlation (ultra sound)&quot;,&quot;Electro Magnetic&quot;}</td></tr>
+<tr class="memdesc:a003a957783acb2b44044dcc069e9d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kSpeedWaterReferenceType  <a href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">More...</a><br /></td></tr>
+<tr class="separator:a003a957783acb2b44044dcc069e9d6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae84811c0b1365c7452c9242075f1a8c0"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ae84811c0b1365c7452c9242075f1a8c0">tN2kTempSourceStrs</a> []</td></tr>
+<tr class="memdesc:ae84811c0b1365c7452c9242075f1a8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kTempSource  <a href="_n2k_messages_enum_to_str_8h.html#ae84811c0b1365c7452c9242075f1a8c0">More...</a><br /></td></tr>
+<tr class="separator:ae84811c0b1365c7452c9242075f1a8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbcba6f7eb93757bc51661f770bfcc51"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#adbcba6f7eb93757bc51661f770bfcc51">tN2kTimeSourceStrs</a> [] = { &quot;GPS&quot;, &quot;GLONASS&quot;, &quot;radio station&quot;, &quot;local cesium clock&quot;, &quot;local rubidium clock&quot;, &quot;local crystal clock&quot; }</td></tr>
+<tr class="memdesc:adbcba6f7eb93757bc51661f770bfcc51"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kTimeSource  <a href="_n2k_messages_enum_to_str_8h.html#adbcba6f7eb93757bc51661f770bfcc51">More...</a><br /></td></tr>
+<tr class="separator:adbcba6f7eb93757bc51661f770bfcc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe4c6fac85ae9f196eb1e2317933be3f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#abe4c6fac85ae9f196eb1e2317933be3f">tN2kTransmissionGearStrs</a> [] = { &quot;forward&quot;, &quot;neutral&quot;, &quot;reverse&quot;, &quot;unknown&quot;}</td></tr>
+<tr class="memdesc:abe4c6fac85ae9f196eb1e2317933be3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kTransmissionGear  <a href="_n2k_messages_enum_to_str_8h.html#abe4c6fac85ae9f196eb1e2317933be3f">More...</a><br /></td></tr>
+<tr class="separator:abe4c6fac85ae9f196eb1e2317933be3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af61ed821ed778828635efa8b22152b2e"><td class="memItemLeft" align="right" valign="top">const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">tN2kXTEModeStrs</a> [] = { &quot;Autonomous&quot;, &quot;Differential&quot;, &quot;Estimated&quot;, &quot;Simulator&quot; }</td></tr>
+<tr class="memdesc:af61ed821ed778828635efa8b22152b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">string representation of the N2k enum tN2kXTEModeStrs  <a href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">More...</a><br /></td></tr>
+<tr class="separator:af61ed821ed778828635efa8b22152b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >This File contains functions to convert enums from <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a> to const char. </p>
+<p >This is collection of functions for handling enums of NMEA2000 bus messages. There are basically 2 functions in the library to convert enums derived from N2kMessages to const char *:</p>
+<h4><a class="anchor" id="autotoc_md222"></a>
+const char * N2kEnumTypeToStr(enumType enumVal)</h4>
+<p >This functions returns a const char * value thats representing the given enum Value. By detecting the enumType, the right text output is chosen.</p>
+<h4><a class="anchor" id="autotoc_md223"></a>
+void PrintN2kEnumType (T a, Stream *OutputStream, bool addLF=true)</h4>
+<p >This prints the corresponding text output to the given output stream.</p>
+<dl class="section note"><dt>Note</dt><dd>If you do not need enums in clear text, you do not need this library. </dd></dl>
+
+<p class="definition">Definition in file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="adf16e727d1c8ec7a57200a30378707d0" name="adf16e727d1c8ec7a57200a30378707d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf16e727d1c8ec7a57200a30378707d0">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MakeN2kEnumTypeToStrFunc</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">enumType, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">strs&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> * N2kEnumTypeToStr(enumType enumVal) { \</div>
+<div class="line">  if ( enumVal&lt;(<span class="keyword">sizeof</span>(strs)/<span class="keyword">sizeof</span>(<span class="keyword">const</span> <span class="keywordtype">char</span> *)) ) { \</div>
+<div class="line">    return strs[enumVal]; \</div>
+<div class="line">  } <span class="keywordflow">else</span> { <span class="keywordflow">return</span> <a class="code hl_variable" href="_n2k_messages_enum_to_str_8h.html#a1c8deee1c5f98997e348a95d1f5a4ccf">N2kEnumTypeEmpty</a>; }\</div>
+<div class="line">}</div>
+<div class="ttc" id="a_n2k_messages_enum_to_str_8h_html_a1c8deee1c5f98997e348a95d1f5a4ccf"><div class="ttname"><a href="_n2k_messages_enum_to_str_8h.html#a1c8deee1c5f98997e348a95d1f5a4ccf">N2kEnumTypeEmpty</a></div><div class="ttdeci">const char * N2kEnumTypeEmpty</div><div class="ttdoc">Default value if no string representation is found.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_messages_enum_to_str_8h_source.html#l00055">N2kMessagesEnumToStr.h:55</a></div></div>
+</div><!-- fragment -->
+<p>Macro function for converting various N2k Enums to a const char. </p>
+<p >This generic macro defines a way to use a specific version of <b>N2kEnumTypeToStr(enumType enumVal)</b> depending on which enumType is given as parameter.</p>
+<p >In NMEA2000 messages there are several enumerations defined and used for the states of different systems. E.g tN2kBatType holds all the available battery types like "flooded", "gel", "AGM". If you need the "real" values of these enums written to a string (e.g. for debugging), you can use these functions.</p>
+<h3><a class="anchor" id="autotoc_md224"></a>
+Usage of the function N2kEnumTypeToStr(enumType enumVal):</h3>
+<div class="fragment"><div class="line"><a class="code hl_enumeration" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> batCem = <a class="code hl_enumvalue" href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a333a131d41ecddb1bfe78b0b223358f1">N2kDCbt_Gel</a>;</div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* tmp;</div>
+<div class="line">tmp = N2kEnumTypeToStr(batCem);</div>
+<div class="line"> </div>
+<div class="line">Serial.print(tmp);     <span class="comment">// Output to serial =&gt;  Gel</span></div>
+<div class="ttc" id="a_n2k_types_8h_html_gab1fb3a15dd2280870f83241c69aa6536a333a131d41ecddb1bfe78b0b223358f1"><div class="ttname"><a href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a333a131d41ecddb1bfe78b0b223358f1">N2kDCbt_Gel</a></div><div class="ttdeci">@ N2kDCbt_Gel</div><div class="ttdoc">battery type is GEL</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_types_8h_source.html#l00308">N2kTypes.h:308</a></div></div>
+<div class="ttc" id="agroup__group__msg_types_html_gab1fb3a15dd2280870f83241c69aa6536"><div class="ttname"><a href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a></div><div class="ttdeci">tN2kBatType</div><div class="ttdoc">Enumeration of Battery types according to PGN 127513.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_types_8h_source.html#l00306">N2kTypes.h:306</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00102">102</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a797e243ad9bfb9ba79c6a3133186abe7" name="a797e243ad9bfb9ba79c6a3133186abe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a797e243ad9bfb9ba79c6a3133186abe7">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[1/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a050047529ca3e7d013a22edac7a9f1bb">tN2kBatChemStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a> to a const char. </p>
+
+</div>
+</div>
+<a id="af2e363b6e7775ec45bc179439a344fce" name="af2e363b6e7775ec45bc179439a344fce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2e363b6e7775ec45bc179439a344fce">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[2/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ab44d8db79f7acbb38db316edf9416651">tN2kBatEqSupportStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a> to a const char. </p>
+
+</div>
+</div>
+<a id="af995706d1b8bdd2e69137bce0402d1a4" name="af995706d1b8bdd2e69137bce0402d1a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af995706d1b8bdd2e69137bce0402d1a4">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[3/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ac661e3fa54e8fd90fd3d242b3691bbf7">tN2kBatNomVoltStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a4bbd0036f78cfd538ba43a3215ff4f15" name="a4bbd0036f78cfd538ba43a3215ff4f15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bbd0036f78cfd538ba43a3215ff4f15">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[4/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a35f202ae477a42755ff3b780de250a79">tN2kBatTypeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> to a const char. </p>
+
+</div>
+</div>
+<a id="afab57e5bcfbd933e37518f0043edb1a3" name="afab57e5bcfbd933e37518f0043edb1a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afab57e5bcfbd933e37518f0043edb1a3">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[5/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#abeace36be54a1f4d4ccbece68a30b454">tN2kDCTypeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a555552661823b9b6ae10b69f2115e9aa" name="a555552661823b9b6ae10b69f2115e9aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a555552661823b9b6ae10b69f2115e9aa">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[6/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a1f3f9118506dc33e54fe7bea11eed580">tN2kGNSSmethodStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a> to a const char. </p>
+
+</div>
+</div>
+<a id="aed87806a76ca684bf36eb792178a0548" name="aed87806a76ca684bf36eb792178a0548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed87806a76ca684bf36eb792178a0548">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[7/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a49a6ed2f41ce1d649a8908a6019568b2">tN2kGNSStypeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a611445be4f7798860f31b14022b22a4b" name="a611445be4f7798860f31b14022b22a4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611445be4f7798860f31b14022b22a4b">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[8/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a29145ae17d689e005348b5f08c6aa30c">tN2kHeadingReferenceStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a58a3a74041f5af16d0c94b2af52672f5" name="a58a3a74041f5af16d0c94b2af52672f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a3a74041f5af16d0c94b2af52672f5">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[9/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a4ad5b1af66b20c6bb6a47ee3cb6b3c86">tN2kHumidityStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a4b5665f94b3df95727dbb8ba3530c5b2" name="a4b5665f94b3df95727dbb8ba3530c5b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b5665f94b3df95727dbb8ba3530c5b2">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[10/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">tN2kSpeedWaterReferenceTypeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a14cc01f4ae9ebb745797617defd576ea" name="a14cc01f4ae9ebb745797617defd576ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14cc01f4ae9ebb745797617defd576ea">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[11/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a96f0449a86f7a0dcaec9babb7858bf69">tN2kOnOffStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a79ff0e08f5470c21737a357651e4c63d" name="a79ff0e08f5470c21737a357651e4c63d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79ff0e08f5470c21737a357651e4c63d">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[12/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a06b09ebcecd7eab6150a3c7ae4aa6a3f">tN2kPressureStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a> to a const char. </p>
+
+</div>
+</div>
+<a id="acd5888d0926d2db8e0d72ef7ea2b1787" name="acd5888d0926d2db8e0d72ef7ea2b1787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd5888d0926d2db8e0d72ef7ea2b1787">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[13/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a622788ef4480ccc716555ec523f34ccf">tN2kRudderDirectionOrderStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a2b55c8279f2400983f7333dedb6fde26" name="a2b55c8279f2400983f7333dedb6fde26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b55c8279f2400983f7333dedb6fde26">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[14/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#a003a957783acb2b44044dcc069e9d6bd">tN2kSpeedWaterReferenceTypeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a22be271e3a6014138f34d81ea917fe8d" name="a22be271e3a6014138f34d81ea917fe8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22be271e3a6014138f34d81ea917fe8d">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[15/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#ae84811c0b1365c7452c9242075f1a8c0">tN2kTempSourceStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a699cef5966cf47915723b34ac8551382" name="a699cef5966cf47915723b34ac8551382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a699cef5966cf47915723b34ac8551382">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[16/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#adbcba6f7eb93757bc51661f770bfcc51">tN2kTimeSourceStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a831d73acbc3784db69e48e2c5c4248b6" name="a831d73acbc3784db69e48e2c5c4248b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a831d73acbc3784db69e48e2c5c4248b6">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[17/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#abe4c6fac85ae9f196eb1e2317933be3f">tN2kTransmissionGearStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a> to a const char. </p>
+
+</div>
+</div>
+<a id="a173deb1e0a62341de6ccb6895e77c20f" name="a173deb1e0a62341de6ccb6895e77c20f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a173deb1e0a62341de6ccb6895e77c20f">&#9670;&nbsp;</a></span>MakeN2kEnumTypeToStrFunc() <span class="overload">[18/18]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MakeN2kEnumTypeToStrFunc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gaf6a4cf563abea3f9d3a1addb314b2dd1">tN2kXTEMode</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">tN2kXTEModeStrs</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converting the N2k enum <a class="el" href="_n2k_messages_enum_to_str_8h.html#af61ed821ed778828635efa8b22152b2e">tN2kXTEModeStrs</a> to a const char. </p>
+
+</div>
+</div>
+<a id="ad9f28ddab7c08db270fbf0cec785a98b" name="ad9f28ddab7c08db270fbf0cec785a98b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f28ddab7c08db270fbf0cec785a98b">&#9670;&nbsp;</a></span>PrintN2kEnumType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void PrintN2kEnumType </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Stream *&#160;</td>
+          <td class="paramname"><em>OutputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>addLF</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print function for the enum values. </p>
+<p >This function template generation an text output to the defined stream. Corresponding to the type of the enum value, the correct function (and therefor output text) is chosen.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the enum </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>enum value </td></tr>
+    <tr><td class="paramname">OutputStream</td><td>stream handler for the output </td></tr>
+    <tr><td class="paramname">addLF</td><td>add a line feed (default = true) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00069">69</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a1c8deee1c5f98997e348a95d1f5a4ccf" name="a1c8deee1c5f98997e348a95d1f5a4ccf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c8deee1c5f98997e348a95d1f5a4ccf">&#9670;&nbsp;</a></span>N2kEnumTypeEmpty</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* N2kEnumTypeEmpty =&quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default value if no string representation is found. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00055">55</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a050047529ca3e7d013a22edac7a9f1bb" name="a050047529ca3e7d013a22edac7a9f1bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a050047529ca3e7d013a22edac7a9f1bb">&#9670;&nbsp;</a></span>tN2kBatChemStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kBatChemStrs[] = { &quot;lead acid&quot;, &quot;LiIon&quot;, &quot;NiCad&quot;, &quot;NiMh&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kBatChem </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00187">187</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="ab44d8db79f7acbb38db316edf9416651" name="ab44d8db79f7acbb38db316edf9416651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab44d8db79f7acbb38db316edf9416651">&#9670;&nbsp;</a></span>tN2kBatEqSupportStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kBatEqSupportStrs[] = { &quot;no&quot;, &quot;yes&quot;, &quot;error&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kBatEqSupport </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00169">169</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="ac661e3fa54e8fd90fd3d242b3691bbf7" name="ac661e3fa54e8fd90fd3d242b3691bbf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac661e3fa54e8fd90fd3d242b3691bbf7">&#9670;&nbsp;</a></span>tN2kBatNomVoltStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kBatNomVoltStrs[] = { &quot;6V&quot;, &quot;12V&quot;, &quot;24V&quot;, &quot;32V&quot;, &quot;62V&quot;, &quot;42V&quot;, &quot;48V&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kBatNomVolt </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00178">178</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a35f202ae477a42755ff3b780de250a79" name="a35f202ae477a42755ff3b780de250a79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f202ae477a42755ff3b780de250a79">&#9670;&nbsp;</a></span>tN2kBatTypeStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kBatTypeStrs[] = { &quot;flooded&quot;, &quot;gel&quot;, &quot;AGM&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kBatType </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00160">160</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="abeace36be54a1f4d4ccbece68a30b454" name="abeace36be54a1f4d4ccbece68a30b454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeace36be54a1f4d4ccbece68a30b454">&#9670;&nbsp;</a></span>tN2kDCTypeStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kDCTypeStrs[] = { &quot;battery&quot;, &quot;altenator&quot;, &quot;converter&quot;, &quot;solar cell&quot;, &quot;wind generator&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kDCType </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00196">196</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f3f9118506dc33e54fe7bea11eed580" name="a1f3f9118506dc33e54fe7bea11eed580"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f3f9118506dc33e54fe7bea11eed580">&#9670;&nbsp;</a></span>tN2kGNSSmethodStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kGNSSmethodStrs[] = { &quot;no GNSS&quot;, &quot;GNSS fix&quot;, &quot;DGNSS&quot;, &quot;precise GNSS&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kGNSSmethod </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00141">141</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a49a6ed2f41ce1d649a8908a6019568b2" name="a49a6ed2f41ce1d649a8908a6019568b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a6ed2f41ce1d649a8908a6019568b2">&#9670;&nbsp;</a></span>tN2kGNSStypeStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kGNSStypeStrs[] = { &quot;GPS&quot;, &quot;GLONASS&quot;, &quot;GPS+GLONASS&quot;, &quot;GPS+SBAS/WAAS&quot;, &quot;GPS+SBAS/WAAS+GLONASS&quot;, &quot;Chayka&quot;, &quot;integrated&quot;, &quot;surveyed&quot;, &quot;Galileo&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kGNSStype </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00132">132</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a29145ae17d689e005348b5f08c6aa30c" name="a29145ae17d689e005348b5f08c6aa30c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29145ae17d689e005348b5f08c6aa30c">&#9670;&nbsp;</a></span>tN2kHeadingReferenceStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kHeadingReferenceStrs[] = { &quot;true&quot;, &quot;magnetic&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kHeadingReference </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00112">112</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a4ad5b1af66b20c6bb6a47ee3cb6b3c86" name="a4ad5b1af66b20c6bb6a47ee3cb6b3c86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ad5b1af66b20c6bb6a47ee3cb6b3c86">&#9670;&nbsp;</a></span>tN2kHumidityStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kHumidityStrs[] = { &quot;inside&quot;, &quot;outside&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kHumiditySource </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00232">232</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="acf769c0c9f208d2e8ee5d8eb7d23b6fc" name="acf769c0c9f208d2e8ee5d8eb7d23b6fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf769c0c9f208d2e8ee5d8eb7d23b6fc">&#9670;&nbsp;</a></span>tN2kMagneticVariationStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kMagneticVariationStrs[] = { &quot;Manual&quot;,&quot;Automatic Chart&quot;,&quot;Automatic Table&quot;,&quot;Automatic Calculation&quot;,&quot;WMM 2000&quot;,&quot;WMM 2005&quot;,&quot;WMM 2010&quot;,&quot;WMM 2015&quot;,&quot;WMM 2020&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kMagneticVariation </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00260">260</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a96f0449a86f7a0dcaec9babb7858bf69" name="a96f0449a86f7a0dcaec9babb7858bf69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f0449a86f7a0dcaec9babb7858bf69">&#9670;&nbsp;</a></span>tN2kOnOffStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kOnOffStrs[] = { &quot;0&quot;, &quot;1&quot;, &quot;err&quot;, &quot;NA&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kOnOff </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00214">214</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a06b09ebcecd7eab6150a3c7ae4aa6a3f" name="a06b09ebcecd7eab6150a3c7ae4aa6a3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06b09ebcecd7eab6150a3c7ae4aa6a3f">&#9670;&nbsp;</a></span>tN2kPressureStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kPressureStrs[] = { &quot;atmospheric&quot;, &quot;water&quot;, &quot;steam&quot;, &quot;compressed air&quot;, &quot;hydraulic&quot;, &quot;filter&quot;, &quot;altimete setting&quot;, &quot;oil&quot;, &quot;fuel&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kPressureSource </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00223">223</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a622788ef4480ccc716555ec523f34ccf" name="a622788ef4480ccc716555ec523f34ccf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a622788ef4480ccc716555ec523f34ccf">&#9670;&nbsp;</a></span>tN2kRudderDirectionOrderStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kRudderDirectionOrderStrs[] = { &quot;no direction order&quot;, &quot;move to starboard&quot;, &quot;move to port&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kRudderDirectionOrder </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00241">241</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="a003a957783acb2b44044dcc069e9d6bd" name="a003a957783acb2b44044dcc069e9d6bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a003a957783acb2b44044dcc069e9d6bd">&#9670;&nbsp;</a></span>tN2kSpeedWaterReferenceTypeStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kSpeedWaterReferenceTypeStrs[] = {&quot;Paddle wheel&quot;,&quot;Pitot tube&quot;,&quot;Doppler&quot;,&quot;Correlation (ultra sound)&quot;,&quot;Electro Magnetic&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kSpeedWaterReferenceType </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00250">250</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="ae84811c0b1365c7452c9242075f1a8c0" name="ae84811c0b1365c7452c9242075f1a8c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae84811c0b1365c7452c9242075f1a8c0">&#9670;&nbsp;</a></span>tN2kTempSourceStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kTempSourceStrs[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= { <span class="stringliteral">&quot;sea&quot;</span>, <span class="stringliteral">&quot;outside&quot;</span>, <span class="stringliteral">&quot;inside&quot;</span>, <span class="stringliteral">&quot;engine room&quot;</span>, <span class="stringliteral">&quot;main cabin&quot;</span>, <span class="stringliteral">&quot;live well&quot;</span>, <span class="stringliteral">&quot;bait well&quot;</span>, <span class="stringliteral">&quot;refridgeration&quot;</span>,</div>
+<div class="line">                                     <span class="stringliteral">&quot;heating system&quot;</span>, <span class="stringliteral">&quot;dew point&quot;</span>, <span class="stringliteral">&quot;apparent wind chill&quot;</span>, <span class="stringliteral">&quot;theoretical wind chill&quot;</span>, <span class="stringliteral">&quot;heat index&quot;</span>, <span class="stringliteral">&quot;freezer&quot;</span>, <span class="stringliteral">&quot;exhaust gas&quot;</span>}</div>
+</div><!-- fragment -->
+<p>string representation of the N2k enum tN2kTempSource </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00150">150</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="adbcba6f7eb93757bc51661f770bfcc51" name="adbcba6f7eb93757bc51661f770bfcc51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbcba6f7eb93757bc51661f770bfcc51">&#9670;&nbsp;</a></span>tN2kTimeSourceStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kTimeSourceStrs[] = { &quot;GPS&quot;, &quot;GLONASS&quot;, &quot;radio station&quot;, &quot;local cesium clock&quot;, &quot;local rubidium clock&quot;, &quot;local crystal clock&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kTimeSource </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00122">122</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="abe4c6fac85ae9f196eb1e2317933be3f" name="abe4c6fac85ae9f196eb1e2317933be3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe4c6fac85ae9f196eb1e2317933be3f">&#9670;&nbsp;</a></span>tN2kTransmissionGearStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* tN2kTransmissionGearStrs[] = { &quot;forward&quot;, &quot;neutral&quot;, &quot;reverse&quot;, &quot;unknown&quot;}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kTransmissionGear </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00205">205</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+<a id="af61ed821ed778828635efa8b22152b2e" name="af61ed821ed778828635efa8b22152b2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af61ed821ed778828635efa8b22152b2e">&#9670;&nbsp;</a></span>tN2kXTEModeStrs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* const tN2kXTEModeStrs[] = { &quot;Autonomous&quot;, &quot;Differential&quot;, &quot;Estimated&quot;, &quot;Simulator&quot; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>string representation of the N2k enum tN2kXTEModeStrs </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_enum_to_str_8h_source.html#l00269">269</a> of file <a class="el" href="_n2k_messages_enum_to_str_8h_source.html">N2kMessagesEnumToStr.h</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n2k_messages_enum_to_str_8h.html">N2kMessagesEnumToStr.h</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

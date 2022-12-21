@@ -1,0 +1,25 @@
+var classt_n_m_e_a2000_1_1t_device_information =
+[
+    [ "tUnionDeviceInformation", "uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html", "uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information" ],
+    [ "tDeviceInformation", "classt_n_m_e_a2000_1_1t_device_information.html#aeeb02545cbf3942ee32fd6e9989d4569", null ],
+    [ "GetDeviceClass", "classt_n_m_e_a2000_1_1t_device_information.html#acba2e23e3f008c0e55bf178ce482f747", null ],
+    [ "GetDeviceFunction", "classt_n_m_e_a2000_1_1t_device_information.html#aa442e11242a5f4fe074f1ea6fe957b13", null ],
+    [ "GetDeviceInstance", "classt_n_m_e_a2000_1_1t_device_information.html#a3ea7ca9b93558b804a59e856963453d3", null ],
+    [ "GetDeviceInstanceLower", "classt_n_m_e_a2000_1_1t_device_information.html#a59e4dae4d12e86f00b515f15af5367f7", null ],
+    [ "GetDeviceInstanceUpper", "classt_n_m_e_a2000_1_1t_device_information.html#a7704a97eab382bb95283683b9014494a", null ],
+    [ "GetIndustryGroup", "classt_n_m_e_a2000_1_1t_device_information.html#a4d1ac420b837a6a76b81c93b4a032b61", null ],
+    [ "GetManufacturerCode", "classt_n_m_e_a2000_1_1t_device_information.html#a076e1b7e8f17d6a731ac60482d2c27a2", null ],
+    [ "GetName", "classt_n_m_e_a2000_1_1t_device_information.html#a2070692c90c6e0ce1d99be15e95cfa62", null ],
+    [ "GetSystemInstance", "classt_n_m_e_a2000_1_1t_device_information.html#a45ea5cd4aadb46c7d418e43ebb08d489", null ],
+    [ "GetUniqueNumber", "classt_n_m_e_a2000_1_1t_device_information.html#a9d1129e7ea6e96da5f0c18b3966aca64", null ],
+    [ "IsSame", "classt_n_m_e_a2000_1_1t_device_information.html#a41e3972ac4924c761e9f1a598c86d5f8", null ],
+    [ "SetDeviceClass", "classt_n_m_e_a2000_1_1t_device_information.html#a96a2d1259206bd793778eaf26d5e1c40", null ],
+    [ "SetDeviceFunction", "classt_n_m_e_a2000_1_1t_device_information.html#a9a73652a503c068253de72ca878883cc", null ],
+    [ "SetDeviceInstance", "classt_n_m_e_a2000_1_1t_device_information.html#a04c47bec7b25c2a0785538c21fd24db1", null ],
+    [ "SetIndustryGroup", "classt_n_m_e_a2000_1_1t_device_information.html#a27479ca32a6619ebd86adf4d9cee83d3", null ],
+    [ "SetManufacturerCode", "classt_n_m_e_a2000_1_1t_device_information.html#ada76c57dc06a5b85d3ced3360061de55", null ],
+    [ "SetName", "classt_n_m_e_a2000_1_1t_device_information.html#a20df0d2b190ab13c841c91ef67efb3d2", null ],
+    [ "SetSystemInstance", "classt_n_m_e_a2000_1_1t_device_information.html#add89d904f296935bc54138cc18e6dec7", null ],
+    [ "SetUniqueNumber", "classt_n_m_e_a2000_1_1t_device_information.html#a7ef034facbb230f671b2766688dccc1a", null ],
+    [ "DeviceInformation", "classt_n_m_e_a2000_1_1t_device_information.html#a847f56e2608bb69008a7162be5a2872d", null ]
+];

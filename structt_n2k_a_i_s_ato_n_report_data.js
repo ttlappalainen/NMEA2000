@@ -1,0 +1,25 @@
+var structt_n2k_a_i_s_ato_n_report_data =
+[
+    [ "tN2kAISAtoNReportData", "structt_n2k_a_i_s_ato_n_report_data.html#ad81f7a0b9dec0137bf7c1d9c200af9ce", null ],
+    [ "SetAtoNName", "structt_n2k_a_i_s_ato_n_report_data.html#add17d1ea8ce4020fd6c09450a5cedbe6", null ],
+    [ "Accuracy", "structt_n2k_a_i_s_ato_n_report_data.html#af597381141d73a920480d4aeca11c4ff", null ],
+    [ "AISTransceiverInformation", "structt_n2k_a_i_s_ato_n_report_data.html#adc682098f4690ea8b8dc5b70466a0a6b", null ],
+    [ "AssignedModeFlag", "structt_n2k_a_i_s_ato_n_report_data.html#aa98285c0750c2e6a4f58eac428dc0304", null ],
+    [ "AtoNName", "structt_n2k_a_i_s_ato_n_report_data.html#a71792320177ecd49386ac26678d10d14", null ],
+    [ "AtoNStatus", "structt_n2k_a_i_s_ato_n_report_data.html#a8f5bc292df2103993bca4e52f32291a1", null ],
+    [ "AtoNType", "structt_n2k_a_i_s_ato_n_report_data.html#a78ec4d4d6f15acba15f6b880378d1754", null ],
+    [ "Beam", "structt_n2k_a_i_s_ato_n_report_data.html#a5888e25727dc1a53e9e9da3b312aed31", null ],
+    [ "GNSSType", "structt_n2k_a_i_s_ato_n_report_data.html#a0cdd4b233cfbe7770e51e6ec663308d7", null ],
+    [ "Latitude", "structt_n2k_a_i_s_ato_n_report_data.html#a83cd03bce02c4098aba8055d465fdcd0", null ],
+    [ "Length", "structt_n2k_a_i_s_ato_n_report_data.html#a38b56fc776d254280aa03535175a4d05", null ],
+    [ "Longitude", "structt_n2k_a_i_s_ato_n_report_data.html#ae8001bad1e8c55ec72e56323be5408f8", null ],
+    [ "MessageID", "structt_n2k_a_i_s_ato_n_report_data.html#aeab21867283f232161e6d59803bf08a9", null ],
+    [ "OffPositionIndicator", "structt_n2k_a_i_s_ato_n_report_data.html#a1ee9d3a4946deafe6b032b3c9edf2cad", null ],
+    [ "PositionReferenceStarboard", "structt_n2k_a_i_s_ato_n_report_data.html#a57585d50a6bc806e1b6980b5e9a39396", null ],
+    [ "PositionReferenceTrueNorth", "structt_n2k_a_i_s_ato_n_report_data.html#a639a1920344aed6d291b2427ce51d0ca", null ],
+    [ "RAIM", "structt_n2k_a_i_s_ato_n_report_data.html#ac33fb720895d8bb67395068aa435e3b6", null ],
+    [ "Repeat", "structt_n2k_a_i_s_ato_n_report_data.html#ac7f95d724182053e3da28c6d4dadf090", null ],
+    [ "Seconds", "structt_n2k_a_i_s_ato_n_report_data.html#ab7cfbca8972090ddab4899761d3adf38", null ],
+    [ "UserID", "structt_n2k_a_i_s_ato_n_report_data.html#a92c856eea7686268774c5c4e3c90c331", null ],
+    [ "VirtualAtoNFlag", "structt_n2k_a_i_s_ato_n_report_data.html#a8d950446cfc42df160b5011040d5367a", null ]
+];

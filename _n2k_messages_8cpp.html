@@ -1,0 +1,888 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: N2kMessages.cpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n2k_messages_8cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">N2kMessages.cpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for N2kMessages.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n2k_messages_8cpp__incl.png" border="0" usemap="#a_n2k_messages_8cpp" alt=""/></div>
+<map name="a_n2k_messages_8cpp" id="a_n2k_messages_8cpp">
+<area shape="rect" title=" " alt="" coords="379,5,510,32"/>
+<area shape="rect" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="339,80,455,107"/>
+<area shape="rect" title=" " alt="" coords="466,155,530,181"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="165,155,247,181"/>
+<area shape="rect" title=" " alt="" coords="231,379,295,405"/>
+<area shape="rect" href="_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="351,155,442,181"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="115,229,214,256"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="5,304,81,331"/>
+<area shape="rect" title=" " alt="" coords="157,304,225,331"/>
+<area shape="rect" href="_n_m_e_a2000_std_types_8h.html" title="NMEA2000 standard type definitions." alt="" coords="352,229,505,256"/>
+</map>
+</div>
+</div>
+<p><a href="_n2k_messages_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:abe6d8f74d5eab444d5e36d6f331aead2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#abe6d8f74d5eab444d5e36d6f331aead2">MaxSatelliteInfoCount</a>&#160;&#160;&#160;18</td></tr>
+<tr class="separator:abe6d8f74d5eab444d5e36d6f331aead2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga2d304ac27b9a270d13e1c2574eac460c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga2d304ac27b9a270d13e1c2574eac460c">AppendN2kPGN129285</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t ID, const char *Name, double Latitude, double Longitude)</td></tr>
+<tr class="memdesc:ga2d304ac27b9a270d13e1c2574eac460c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append another Waypoint to PGN 129285 "Route/WP information".  <a href="group__group__msg_set_up.html#ga2d304ac27b9a270d13e1c2574eac460c">More...</a><br /></td></tr>
+<tr class="separator:ga2d304ac27b9a270d13e1c2574eac460c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e08c74b8bab0fb36549572659a32f1a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga9e08c74b8bab0fb36549572659a32f1a">AppendN2kPGN129540</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, const <a class="el" href="structt_satellite_info.html">tSatelliteInfo</a> &amp;SatelliteInfo)</td></tr>
+<tr class="memdesc:ga9e08c74b8bab0fb36549572659a32f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a new satellite info to PGN 129540 Message "GNSS Satellites in View".  <a href="group__group__msg_set_up.html#ga9e08c74b8bab0fb36549572659a32f1a">More...</a><br /></td></tr>
+<tr class="separator:ga9e08c74b8bab0fb36549572659a32f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcad876e1fee14b6483a55b897b1e63e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gadcad876e1fee14b6483a55b897b1e63e">AppendN2kPGN130074</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t ID, char *Name, double Latitude, double Longitude)</td></tr>
+<tr class="memdesc:gadcad876e1fee14b6483a55b897b1e63e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a Waypoint to PGN 130074 Message " Route and WP Service - 
+       WP List - WP Name &amp; Position".  <a href="group__group__msg_set_up.html#gadcad876e1fee14b6483a55b897b1e63e">More...</a><br /></td></tr>
+<tr class="separator:gadcad876e1fee14b6483a55b897b1e63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a538e0b6d6675b8dce3bb406cd8275"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#ab7a538e0b6d6675b8dce3bb406cd8275">N2kGetStatusOnBinaryStatus</a> (<a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> BankStatus, uint8_t ItemIndex)</td></tr>
+<tr class="memdesc:ab7a538e0b6d6675b8dce3bb406cd8275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get single status to full binary bank status.  <a href="_n2k_messages_8cpp.html#ab7a538e0b6d6675b8dce3bb406cd8275">More...</a><br /></td></tr>
+<tr class="separator:ab7a538e0b6d6675b8dce3bb406cd8275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c520b228034049b63aeedf9c1128b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#a32c520b228034049b63aeedf9c1128b1">N2kSetStatusBinaryOnStatus</a> (<a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> &amp;BankStatus, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> ItemStatus, uint8_t ItemIndex)</td></tr>
+<tr class="memdesc:a32c520b228034049b63aeedf9c1128b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set single status to full binary bank status.  <a href="_n2k_messages_8cpp.html#a32c520b228034049b63aeedf9c1128b1">More...</a><br /></td></tr>
+<tr class="separator:a32c520b228034049b63aeedf9c1128b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b509b3f1edb05f35e3c56e5c3f9537d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga8b509b3f1edb05f35e3c56e5c3f9537d">ParseN2kPGN126992</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, uint16_t &amp;SystemDate, double &amp;SystemTime, <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> &amp;TimeSource)</td></tr>
+<tr class="memdesc:ga8b509b3f1edb05f35e3c56e5c3f9537d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the Content of a PGN126992 Message - "System date/time".  <a href="group__group__msg_parsers.html#ga8b509b3f1edb05f35e3c56e5c3f9537d">More...</a><br /></td></tr>
+<tr class="separator:ga8b509b3f1edb05f35e3c56e5c3f9537d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga823a92e4ac25ca2f7433198d8041f1b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga823a92e4ac25ca2f7433198d8041f1b4">ParseN2kPGN127233</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, uint32_t &amp;MobEmitterId, <a class="el" href="group__group__msg_types.html#ga8b6a1fbd879b0ffc011cc14896abf33c">tN2kMOBStatus</a> &amp;MOBStatus, double &amp;ActivationTime, <a class="el" href="group__group__msg_types.html#ga5a2a9a35649031cdeebd0df5ac413227">tN2kMOBPositionSource</a> &amp;PositionSource, uint16_t &amp;PositionDate, double &amp;PositionTime, double &amp;Latitude, double &amp;Longitude, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;COGReference, double &amp;COG, double &amp;SOG, uint32_t &amp;MMSI, <a class="el" href="group__group__msg_types.html#ga6dabae21fc4a6b2f22a328332139580c">tN2kMOBEmitterBatteryStatus</a> &amp;MOBEmitterBatteryStatus)</td></tr>
+<tr class="memdesc:ga823a92e4ac25ca2f7433198d8041f1b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the Content of Message PGN127233 "Man Overboard Notification".  <a href="group__group__msg_parsers.html#ga823a92e4ac25ca2f7433198d8041f1b4">More...</a><br /></td></tr>
+<tr class="separator:ga823a92e4ac25ca2f7433198d8041f1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4890094a6b2bd51a13a9e25724ae934a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga4890094a6b2bd51a13a9e25724ae934a">ParseN2kPGN127237</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;RudderLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;OffHeadingLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;OffTrackLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Override, <a class="el" href="group__group__msg_types.html#ga8101d2e7e0c51a15bd5d107900f6d1d8">tN2kSteeringMode</a> &amp;SteeringMode, <a class="el" href="group__group__msg_types.html#ga6f360c10d61b4c8559979a1a447222f0">tN2kTurnMode</a> &amp;TurnMode, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;HeadingReference, <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> &amp;CommandedRudderDirection, double &amp;CommandedRudderAngle, double &amp;HeadingToSteerCourse, double &amp;Track, double &amp;RudderLimit, double &amp;OffHeadingLimit, double &amp;RadiusOfTurnOrder, double &amp;RateOfTurnOrder, double &amp;OffTrackLimit, double &amp;VesselHeading)</td></tr>
+<tr class="memdesc:ga4890094a6b2bd51a13a9e25724ae934a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the Content of Message PGN127237 "Heading/Track control".  <a href="group__group__msg_parsers.html#ga4890094a6b2bd51a13a9e25724ae934a">More...</a><br /></td></tr>
+<tr class="separator:ga4890094a6b2bd51a13a9e25724ae934a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f191debcfe182e31f7afd7bf85c274a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga6f191debcfe182e31f7afd7bf85c274a">ParseN2kPGN127245</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, double &amp;RudderPosition, unsigned char &amp;Instance, <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> &amp;RudderDirectionOrder, double &amp;AngleOrder)</td></tr>
+<tr class="memdesc:ga6f191debcfe182e31f7afd7bf85c274a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN127245 "Rudder".  <a href="group__group__msg_parsers.html#ga6f191debcfe182e31f7afd7bf85c274a">More...</a><br /></td></tr>
+<tr class="separator:ga6f191debcfe182e31f7afd7bf85c274a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66dc93185e680ab607e1925baca8ae5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga66dc93185e680ab607e1925baca8ae5c">ParseN2kPGN127250</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;Heading, double &amp;Deviation, double &amp;Variation, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;ref)</td></tr>
+<tr class="memdesc:ga66dc93185e680ab607e1925baca8ae5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing Content of Message PGN 127250 "Vessel Heading".  <a href="group__group__msg_parsers.html#ga66dc93185e680ab607e1925baca8ae5c">More...</a><br /></td></tr>
+<tr class="separator:ga66dc93185e680ab607e1925baca8ae5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29629fc2f0ae2ee01d3f077a25680bbf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga29629fc2f0ae2ee01d3f077a25680bbf">ParseN2kPGN127251</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;RateOfTurn)</td></tr>
+<tr class="memdesc:ga29629fc2f0ae2ee01d3f077a25680bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN127251 "Rate of Turn".  <a href="group__group__msg_parsers.html#ga29629fc2f0ae2ee01d3f077a25680bbf">More...</a><br /></td></tr>
+<tr class="separator:ga29629fc2f0ae2ee01d3f077a25680bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee23b0f6b4cae453954f87f960f0a913"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaee23b0f6b4cae453954f87f960f0a913">ParseN2kPGN127252</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;Heave, double &amp;Delay, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884">tN2kDelaySource</a> &amp;DelaySource)</td></tr>
+<tr class="memdesc:gaee23b0f6b4cae453954f87f960f0a913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN127252 "Heave".  <a href="group__group__msg_parsers.html#gaee23b0f6b4cae453954f87f960f0a913">More...</a><br /></td></tr>
+<tr class="separator:gaee23b0f6b4cae453954f87f960f0a913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb0d330f638fd3e0bdc5743b2f8e4c14"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gafb0d330f638fd3e0bdc5743b2f8e4c14">ParseN2kPGN127257</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;Yaw, double &amp;Pitch, double &amp;Roll)</td></tr>
+<tr class="memdesc:gafb0d330f638fd3e0bdc5743b2f8e4c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127257 "Attitude".  <a href="group__group__msg_parsers.html#gafb0d330f638fd3e0bdc5743b2f8e4c14">More...</a><br /></td></tr>
+<tr class="separator:gafb0d330f638fd3e0bdc5743b2f8e4c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6847f5efd4415ee81cfdc483b91c1a80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga6847f5efd4415ee81cfdc483b91c1a80">ParseN2kPGN127258</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a> &amp;Source, uint16_t &amp;DaysSince1970, double &amp;Variation)</td></tr>
+<tr class="memdesc:ga6847f5efd4415ee81cfdc483b91c1a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127258 "Magnetic Variation".  <a href="group__group__msg_parsers.html#ga6847f5efd4415ee81cfdc483b91c1a80">More...</a><br /></td></tr>
+<tr class="separator:ga6847f5efd4415ee81cfdc483b91c1a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga334806d744bda1633c10428c677a6e9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga334806d744bda1633c10428c677a6e9b">ParseN2kPGN127488</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;EngineInstance, double &amp;EngineSpeed, double &amp;EngineBoostPressure, int8_t &amp;EngineTiltTrim)</td></tr>
+<tr class="memdesc:ga334806d744bda1633c10428c677a6e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127488 "Engine parameters rapid".  <a href="group__group__msg_parsers.html#ga334806d744bda1633c10428c677a6e9b">More...</a><br /></td></tr>
+<tr class="separator:ga334806d744bda1633c10428c677a6e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b4fbb900abdfd222badaa6e0b382904"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga8b4fbb900abdfd222badaa6e0b382904">ParseN2kPGN127489</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;EngineInstance, double &amp;EngineOilPress, double &amp;EngineOilTemp, double &amp;EngineCoolantTemp, double &amp;AltenatorVoltage, double &amp;FuelRate, double &amp;EngineHours, double &amp;EngineCoolantPress, double &amp;EngineFuelPress, int8_t &amp;EngineLoad, int8_t &amp;EngineTorque, <a class="el" href="group__group__msg_types.html#gac7b6b25ca78367369def8bfe36423ff6">tN2kEngineDiscreteStatus1</a> &amp;Status1, <a class="el" href="group__group__msg_types.html#gaf4342d4abb905fcfb042c7c4e2d57e4f">tN2kEngineDiscreteStatus2</a> &amp;Status2)</td></tr>
+<tr class="memdesc:ga8b4fbb900abdfd222badaa6e0b382904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127489 "Engine parameters dynamic".  <a href="group__group__msg_parsers.html#ga8b4fbb900abdfd222badaa6e0b382904">More...</a><br /></td></tr>
+<tr class="separator:ga8b4fbb900abdfd222badaa6e0b382904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ac160529cbcd06a5082ab3183abc05f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga7ac160529cbcd06a5082ab3183abc05f">ParseN2kPGN127493</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;EngineInstance, <a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a> &amp;TransmissionGear, double &amp;OilPressure, double &amp;OilTemperature, unsigned char &amp;DiscreteStatus1)</td></tr>
+<tr class="memdesc:ga7ac160529cbcd06a5082ab3183abc05f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127493 "Transmission parameters, 
+       dynamic".  <a href="group__group__msg_parsers.html#ga7ac160529cbcd06a5082ab3183abc05f">More...</a><br /></td></tr>
+<tr class="separator:ga7ac160529cbcd06a5082ab3183abc05f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9823503bcbb68aa015ecc056f5be74be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga9823503bcbb68aa015ecc056f5be74be">ParseN2kPGN127497</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;EngineInstance, double &amp;TripFuelUsed, double &amp;FuelRateAverage, double &amp;FuelRateEconomy, double &amp;InstantaneousFuelEconomy)</td></tr>
+<tr class="memdesc:ga9823503bcbb68aa015ecc056f5be74be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127497 "Trip Parameters, Engine".  <a href="group__group__msg_parsers.html#ga9823503bcbb68aa015ecc056f5be74be">More...</a><br /></td></tr>
+<tr class="separator:ga9823503bcbb68aa015ecc056f5be74be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37f2046bc1378b19dc5635d5046709e7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga37f2046bc1378b19dc5635d5046709e7">ParseN2kPGN127501</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;DeviceBankInstance, <a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> &amp;BankStatus)</td></tr>
+<tr class="memdesc:ga37f2046bc1378b19dc5635d5046709e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127501 Message "Universal Binary
+Status Report".  <a href="group__group__msg_parsers.html#ga37f2046bc1378b19dc5635d5046709e7">More...</a><br /></td></tr>
+<tr class="separator:ga37f2046bc1378b19dc5635d5046709e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad362c699d0992bbb9d06f442933f75a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gad362c699d0992bbb9d06f442933f75a1">ParseN2kPGN127501</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;DeviceBankInstance, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Status1, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Status2, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Status3, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Status4)</td></tr>
+<tr class="memdesc:gad362c699d0992bbb9d06f442933f75a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 127501 Message "Universal Binary
+Status Report".  <a href="group__group__msg_parsers.html#gad362c699d0992bbb9d06f442933f75a1">More...</a><br /></td></tr>
+<tr class="separator:gad362c699d0992bbb9d06f442933f75a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a1079d88c850a0e7bcf423906f91b52"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga0a1079d88c850a0e7bcf423906f91b52">ParseN2kPGN127505</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;Instance, <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> &amp;FluidType, double &amp;Level, double &amp;Capacity)</td></tr>
+<tr class="memdesc:ga0a1079d88c850a0e7bcf423906f91b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 127505 "Fluid level".  <a href="group__group__msg_parsers.html#ga0a1079d88c850a0e7bcf423906f91b52">More...</a><br /></td></tr>
+<tr class="separator:ga0a1079d88c850a0e7bcf423906f91b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e933ad9ed3200ca2149ce45f830973f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#a1e933ad9ed3200ca2149ce45f830973f">ParseN2kPGN127506</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;DCInstance, <a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a> &amp;DCType, uint8_t &amp;StateOfCharge, uint8_t &amp;StateOfHealth, double &amp;TimeRemaining, double &amp;RippleVoltage, double &amp;Capacity)</td></tr>
+<tr class="separator:a1e933ad9ed3200ca2149ce45f830973f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga935b302ef78d4946bdb53eca0651fb03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga935b302ef78d4946bdb53eca0651fb03">ParseN2kPGN127507</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;Instance, unsigned char &amp;BatteryInstance, <a class="el" href="group__group__msg_types.html#ga30c2d8d084d6ec9d9115dded189470f5">tN2kChargeState</a> &amp;ChargeState, <a class="el" href="group__group__msg_types.html#ga0c142dce99c98d79265651d5cf7679af">tN2kChargerMode</a> &amp;ChargerMode, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;Enabled, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> &amp;EqualizationPending, double &amp;EqualizationTimeRemaining)</td></tr>
+<tr class="memdesc:ga935b302ef78d4946bdb53eca0651fb03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 127507 "DC Charger Status".  <a href="group__group__msg_parsers.html#ga935b302ef78d4946bdb53eca0651fb03">More...</a><br /></td></tr>
+<tr class="separator:ga935b302ef78d4946bdb53eca0651fb03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa5ebe5f666cdf57401c2eda5d7d5dc1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaaa5ebe5f666cdf57401c2eda5d7d5dc1">ParseN2kPGN127508</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;BatteryInstance, double &amp;BatteryVoltage, double &amp;BatteryCurrent, double &amp;BatteryTemperature, unsigned char &amp;SID)</td></tr>
+<tr class="memdesc:gaaa5ebe5f666cdf57401c2eda5d7d5dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 127508 "Battery Status".  <a href="group__group__msg_parsers.html#gaaa5ebe5f666cdf57401c2eda5d7d5dc1">More...</a><br /></td></tr>
+<tr class="separator:gaaa5ebe5f666cdf57401c2eda5d7d5dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44f24a92b76bbdb619aec1ab81019b7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga44f24a92b76bbdb619aec1ab81019b7f">ParseN2kPGN127513</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;BatInstance, <a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> &amp;BatType, <a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a> &amp;SupportsEqual, <a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a> &amp;BatNominalVoltage, <a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a> &amp;BatChemistry, double &amp;BatCapacity, int8_t &amp;BatTemperatureCoefficient, double &amp;PeukertExponent, int8_t &amp;ChargeEfficiencyFactor)</td></tr>
+<tr class="memdesc:ga44f24a92b76bbdb619aec1ab81019b7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 127513 "Battery 
+Configuration Status".  <a href="group__group__msg_parsers.html#ga44f24a92b76bbdb619aec1ab81019b7f">More...</a><br /></td></tr>
+<tr class="separator:ga44f24a92b76bbdb619aec1ab81019b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfb3faa740d7e4f6bceba243e2723b7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gadfb3faa740d7e4f6bceba243e2723b7e">ParseN2kPGN128000</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;Leeway)</td></tr>
+<tr class="memdesc:gadfb3faa740d7e4f6bceba243e2723b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 128000 "Nautical Leeway Angle".  <a href="group__group__msg_parsers.html#gadfb3faa740d7e4f6bceba243e2723b7e">More...</a><br /></td></tr>
+<tr class="separator:gadfb3faa740d7e4f6bceba243e2723b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d8e625789a861b110353c230134ffd7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga9d8e625789a861b110353c230134ffd7">ParseN2kPGN128259</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;WaterReferenced, double &amp;GroundReferenced, <a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a> &amp;SWRT)</td></tr>
+<tr class="memdesc:ga9d8e625789a861b110353c230134ffd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 128259 "Boat Speed, Water
+       Referenced".  <a href="group__group__msg_parsers.html#ga9d8e625789a861b110353c230134ffd7">More...</a><br /></td></tr>
+<tr class="separator:ga9d8e625789a861b110353c230134ffd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga225cec518a369cea4bff4e1edd72a42b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga225cec518a369cea4bff4e1edd72a42b">ParseN2kPGN128267</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;DepthBelowTransducer, double &amp;Offset, double &amp;Range)</td></tr>
+<tr class="memdesc:ga225cec518a369cea4bff4e1edd72a42b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 128267 "Water depth".  <a href="group__group__msg_parsers.html#ga225cec518a369cea4bff4e1edd72a42b">More...</a><br /></td></tr>
+<tr class="separator:ga225cec518a369cea4bff4e1edd72a42b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b3df863cee4b47de7700d9d0ca2b375"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga8b3df863cee4b47de7700d9d0ca2b375">ParseN2kPGN128275</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t &amp;DaysSince1970, double &amp;SecondsSinceMidnight, uint32_t &amp;Log, uint32_t &amp;TripLog)</td></tr>
+<tr class="memdesc:ga8b3df863cee4b47de7700d9d0ca2b375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 128275 "Distance log".  <a href="group__group__msg_parsers.html#ga8b3df863cee4b47de7700d9d0ca2b375">More...</a><br /></td></tr>
+<tr class="separator:ga8b3df863cee4b47de7700d9d0ca2b375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18f6969c8da3da57a6740feda66f4d4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga18f6969c8da3da57a6740feda66f4d4f">ParseN2kPGN128776</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;WindlassIdentifier, <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31">tN2kWindlassDirectionControl</a> &amp;WindlassDirectionControl, unsigned char &amp;SpeedControl, <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353">tN2kSpeedType</a> &amp;SpeedControlType, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> &amp;AnchorDockingControl, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> &amp;PowerEnable, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> &amp;MechanicalLock, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> &amp;DeckAndAnchorWash, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> &amp;AnchorLight, double &amp;CommandTimeout, <a class="el" href="group__group__msg_types.html#gacfbec09dfa969bf2318b09e5dcc5c1df">tN2kWindlassControlEvents</a> &amp;WindlassControlEvents)</td></tr>
+<tr class="memdesc:ga18f6969c8da3da57a6740feda66f4d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 128776 "Anchor Windlass
+       Control Status".  <a href="group__group__msg_parsers.html#ga18f6969c8da3da57a6740feda66f4d4f">More...</a><br /></td></tr>
+<tr class="separator:ga18f6969c8da3da57a6740feda66f4d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2044470893e2341b8f757bad5fbe4cc2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga2044470893e2341b8f757bad5fbe4cc2">ParseN2kPGN128777</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;WindlassIdentifier, double &amp;RodeCounterValue, double &amp;WindlassLineSpeed, <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36">tN2kWindlassMotionStates</a> &amp;WindlassMotionStatus, <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348">tN2kRodeTypeStates</a> &amp;RodeTypeStatus, <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5">tN2kAnchorDockingStates</a> &amp;AnchorDockingStatus, <a class="el" href="group__group__msg_types.html#ga09adfaf14dc13e4e27a9411c8e11b9c6">tN2kWindlassOperatingEvents</a> &amp;WindlassOperatingEvents)</td></tr>
+<tr class="memdesc:ga2044470893e2341b8f757bad5fbe4cc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 128777 "Anchor Windlass
+       Operating Status".  <a href="group__group__msg_parsers.html#ga2044470893e2341b8f757bad5fbe4cc2">More...</a><br /></td></tr>
+<tr class="separator:ga2044470893e2341b8f757bad5fbe4cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga799fb3e0c6062d126da2a7ce4ac93885"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga799fb3e0c6062d126da2a7ce4ac93885">ParseN2kPGN128778</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;WindlassIdentifier, double &amp;TotalMotorTime, double &amp;ControllerVoltage, double &amp;MotorCurrent, <a class="el" href="group__group__msg_types.html#ga37cfc2a84d15e17ae74964b28338613f">tN2kWindlassMonitoringEvents</a> &amp;WindlassMonitoringEvents)</td></tr>
+<tr class="memdesc:ga799fb3e0c6062d126da2a7ce4ac93885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN128778 "Anchor Windlass
+       Monitoring Status".  <a href="group__group__msg_parsers.html#ga799fb3e0c6062d126da2a7ce4ac93885">More...</a><br /></td></tr>
+<tr class="separator:ga799fb3e0c6062d126da2a7ce4ac93885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga174bf4e659f80789db377b290433ad99"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga174bf4e659f80789db377b290433ad99">ParseN2kPGN129025</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, double &amp;Latitude, double &amp;Longitude)</td></tr>
+<tr class="memdesc:ga174bf4e659f80789db377b290433ad99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of PGN 129025 "Position, Rapid Update".  <a href="group__group__msg_parsers.html#ga174bf4e659f80789db377b290433ad99">More...</a><br /></td></tr>
+<tr class="separator:ga174bf4e659f80789db377b290433ad99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f253723e2ab66d06b2c33c320e4f3ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga6f253723e2ab66d06b2c33c320e4f3ed">ParseN2kPGN129026</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;ref, double &amp;COG, double &amp;SOG)</td></tr>
+<tr class="memdesc:ga6f253723e2ab66d06b2c33c320e4f3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of PGN 129026 "COG SOG rapid update".  <a href="group__group__msg_parsers.html#ga6f253723e2ab66d06b2c33c320e4f3ed">More...</a><br /></td></tr>
+<tr class="separator:ga6f253723e2ab66d06b2c33c320e4f3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9202c293c04534cc737971c4645617d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#a9202c293c04534cc737971c4645617d8">ParseN2kPGN129029</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, uint16_t &amp;DaysSince1970, double &amp;SecondsSinceMidnight, double &amp;Latitude, double &amp;Longitude, double &amp;Altitude, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a> &amp;GNSSmethod, uint8_t &amp;nSatellites, double &amp;HDOP, double &amp;PDOP, double &amp;GeoidalSeparation, uint8_t &amp;nReferenceStations, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;ReferenceStationType, uint16_t &amp;ReferenceSationID, double &amp;AgeOfCorrection)</td></tr>
+<tr class="separator:a9202c293c04534cc737971c4645617d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4cd772fc4498ee6d555cbf1e1acc797c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga4cd772fc4498ee6d555cbf1e1acc797c">ParseN2kPGN129033</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t &amp;DaysSince1970, double &amp;SecondsSinceMidnight, int16_t &amp;LocalOffset)</td></tr>
+<tr class="memdesc:ga4cd772fc4498ee6d555cbf1e1acc797c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129033 "Date,Time &amp; Local offset".  <a href="group__group__msg_parsers.html#ga4cd772fc4498ee6d555cbf1e1acc797c">More...</a><br /></td></tr>
+<tr class="separator:ga4cd772fc4498ee6d555cbf1e1acc797c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade6ade90379991b54f2445fec7f435d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gade6ade90379991b54f2445fec7f435d6">ParseN2kPGN129038</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, double &amp;Latitude, double &amp;Longitude, bool &amp;Accuracy, bool &amp;RAIM, uint8_t &amp;Seconds, double &amp;COG, double &amp;SOG, double &amp;Heading, double &amp;ROT, <a class="el" href="group__group__msg_types.html#gab46a3ab176299c0d16320449b9ca61f8">tN2kAISNavStatus</a> &amp;NavStatus)</td></tr>
+<tr class="memdesc:gade6ade90379991b54f2445fec7f435d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129038 "AIS position reports 
+       for Class A".  <a href="group__group__msg_parsers.html#gade6ade90379991b54f2445fec7f435d6">More...</a><br /></td></tr>
+<tr class="separator:gade6ade90379991b54f2445fec7f435d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a94564088c252d3db90fd5f4e0ed1f9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga1a94564088c252d3db90fd5f4e0ed1f9">ParseN2kPGN129039</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, double &amp;Latitude, double &amp;Longitude, bool &amp;Accuracy, bool &amp;RAIM, uint8_t &amp;Seconds, double &amp;COG, double &amp;SOG, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISTransceiverInformation, double &amp;Heading, <a class="el" href="group__group__msg_types.html#ga83ba87b4811d1e75daa47358bee034b8">tN2kAISUnit</a> &amp;Unit, bool &amp;Display, bool &amp;DSC, bool &amp;Band, bool &amp;Msg22, <a class="el" href="group__group__msg_types.html#ga15e6ecae32fe7903ff0bfea36775181e">tN2kAISMode</a> &amp;Mode, bool &amp;State)</td></tr>
+<tr class="memdesc:ga1a94564088c252d3db90fd5f4e0ed1f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129039 "AIS position reports
+       for Class B".  <a href="group__group__msg_parsers.html#ga1a94564088c252d3db90fd5f4e0ed1f9">More...</a><br /></td></tr>
+<tr class="separator:ga1a94564088c252d3db90fd5f4e0ed1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7f8e88eb5b2c431dc62ef6be4197877"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gad7f8e88eb5b2c431dc62ef6be4197877">ParseN2kPGN129041</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="structt_n2k_a_i_s_ato_n_report_data.html">tN2kAISAtoNReportData</a> &amp;N2kData)</td></tr>
+<tr class="memdesc:gad7f8e88eb5b2c431dc62ef6be4197877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129041 "AIS Aids to
+       Navigation (AtoN) Report".  <a href="group__group__msg_parsers.html#gad7f8e88eb5b2c431dc62ef6be4197877">More...</a><br /></td></tr>
+<tr class="separator:gad7f8e88eb5b2c431dc62ef6be4197877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80bc30bf5abb21103ae1055fabd3caab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga80bc30bf5abb21103ae1055fabd3caab">ParseN2kPGN129283</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#gaf6a4cf563abea3f9d3a1addb314b2dd1">tN2kXTEMode</a> &amp;XTEMode, bool &amp;NavigationTerminated, double &amp;XTE)</td></tr>
+<tr class="memdesc:ga80bc30bf5abb21103ae1055fabd3caab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of Message PGN 129283 Message "Cross Track Error".  <a href="group__group__msg_parsers.html#ga80bc30bf5abb21103ae1055fabd3caab">More...</a><br /></td></tr>
+<tr class="separator:ga80bc30bf5abb21103ae1055fabd3caab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa92c11a0eb560f9fdc879894e857de48"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaa92c11a0eb560f9fdc879894e857de48">ParseN2kPGN129284</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;BearingReference, bool &amp;PerpendicularCrossed, bool &amp;ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> &amp;CalculationType, double &amp;ETATime, int16_t &amp;ETADate, double &amp;BearingOriginToDestinationWaypoint, double &amp;BearingPositionToDestinationWaypoint, uint8_t &amp;OriginWaypointNumber, uint8_t &amp;DestinationWaypointNumber, double &amp;DestinationLatitude, double &amp;DestinationLongitude, double &amp;WaypointClosingVelocity)</td></tr>
+<tr class="memdesc:gaa92c11a0eb560f9fdc879894e857de48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129284 "Navigation Data".  <a href="group__group__msg_parsers.html#gaa92c11a0eb560f9fdc879894e857de48">More...</a><br /></td></tr>
+<tr class="separator:gaa92c11a0eb560f9fdc879894e857de48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48746810ae70280198d37a50bae763bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga48746810ae70280198d37a50bae763bf">ParseN2kPgn129539</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a> &amp;DesiredMode, <a class="el" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a> &amp;ActualMode, double &amp;HDOP, double &amp;VDOP, double &amp;TDOP)</td></tr>
+<tr class="memdesc:ga48746810ae70280198d37a50bae763bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129539 "GNSS DOP data".  <a href="group__group__msg_parsers.html#ga48746810ae70280198d37a50bae763bf">More...</a><br /></td></tr>
+<tr class="separator:ga48746810ae70280198d37a50bae763bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3472b7dcf7ece7265708e20ee8bcf78a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga3472b7dcf7ece7265708e20ee8bcf78a">ParseN2kPGN129540</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t SVIndex, <a class="el" href="structt_satellite_info.html">tSatelliteInfo</a> &amp;SatelliteInfo)</td></tr>
+<tr class="memdesc:ga3472b7dcf7ece7265708e20ee8bcf78a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129540 "GNSS Satellites in View".  <a href="group__group__msg_parsers.html#ga3472b7dcf7ece7265708e20ee8bcf78a">More...</a><br /></td></tr>
+<tr class="separator:ga3472b7dcf7ece7265708e20ee8bcf78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dbd7233a8e289095e5479aae2127319"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga6dbd7233a8e289095e5479aae2127319">ParseN2kPGN129540</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1">tN2kRangeResidualMode</a> &amp;Mode, uint8_t &amp;NumberOfSVs)</td></tr>
+<tr class="memdesc:ga6dbd7233a8e289095e5479aae2127319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129540 "GNSS Satellites in View".  <a href="group__group__msg_parsers.html#ga6dbd7233a8e289095e5479aae2127319">More...</a><br /></td></tr>
+<tr class="separator:ga6dbd7233a8e289095e5479aae2127319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0466b88325e5d6440221f868b6dff8ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga0466b88325e5d6440221f868b6dff8ec">ParseN2kPGN129794</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint32_t &amp;IMOnumber, char *Callsign, char *Name, uint8_t &amp;VesselType, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint16_t &amp;ETAdate, double &amp;ETAtime, double &amp;Draught, char *Destination, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> &amp;DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISinfo)</td></tr>
+<tr class="memdesc:ga0466b88325e5d6440221f868b6dff8ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129794 "AIS static data class A".  <a href="group__group__msg_parsers.html#ga0466b88325e5d6440221f868b6dff8ec">More...</a><br /></td></tr>
+<tr class="separator:ga0466b88325e5d6440221f868b6dff8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1394e40e0e184fe9965fec81f52c11bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga1394e40e0e184fe9965fec81f52c11bc">ParseN2kPGN129802</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;SourceID, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISTransceiverInformation, char *SafetyRelatedText, size_t &amp;SafetyRelatedTextMaxSize)</td></tr>
+<tr class="memdesc:ga1394e40e0e184fe9965fec81f52c11bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the Content of a PGN129802 Message - "AIS Safety Related 
+Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe9965fec81f52c11bc">More...</a><br /></td></tr>
+<tr class="separator:ga1394e40e0e184fe9965fec81f52c11bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17043280910eb290a64f5ca40de8772b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b">ParseN2kPGN129809</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, char *Name)</td></tr>
+<tr class="memdesc:ga17043280910eb290a64f5ca40de8772b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129809 "AIS static data
+       class B part A".  <a href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b">More...</a><br /></td></tr>
+<tr class="separator:ga17043280910eb290a64f5ca40de8772b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62">ParseN2kPGN129810</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint8_t &amp;VesselType, char *Vendor, char *Callsign, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint32_t &amp;MothershipID)</td></tr>
+<tr class="memdesc:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129810 "AIS static data
+       class B part B".  <a href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62">More...</a><br /></td></tr>
+<tr class="separator:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga312bf9c8c53d076be8de22eca21283f5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga312bf9c8c53d076be8de22eca21283f5">ParseN2kPGN130306</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;WindSpeed, double &amp;WindAngle, <a class="el" href="group__group__msg_types.html#ga7e2df5fcd75db7834060bc276d1b741f">tN2kWindReference</a> &amp;WindReference)</td></tr>
+<tr class="memdesc:ga312bf9c8c53d076be8de22eca21283f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130306 "Wind Data".  <a href="group__group__msg_parsers.html#ga312bf9c8c53d076be8de22eca21283f5">More...</a><br /></td></tr>
+<tr class="separator:ga312bf9c8c53d076be8de22eca21283f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9089c1876a2fe48cef33227468af8870"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga9089c1876a2fe48cef33227468af8870">ParseN2kPGN130310</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;WaterTemperature, double &amp;OutsideAmbientAirTemperature, double &amp;AtmosphericPressure)</td></tr>
+<tr class="memdesc:ga9089c1876a2fe48cef33227468af8870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130310 "Environmental Parameters - DEPRECATED".  <a href="group__group__msg_parsers.html#ga9089c1876a2fe48cef33227468af8870">More...</a><br /></td></tr>
+<tr class="separator:ga9089c1876a2fe48cef33227468af8870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga239910c2f1c3c12e2757d5483f206190"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga239910c2f1c3c12e2757d5483f206190">ParseN2kPGN130311</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> &amp;TempSource, double &amp;Temperature, <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> &amp;HumiditySource, double &amp;Humidity, double &amp;AtmosphericPressure)</td></tr>
+<tr class="memdesc:ga239910c2f1c3c12e2757d5483f206190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130311 "Environmental Parameters - DEPRECATED".  <a href="group__group__msg_parsers.html#ga239910c2f1c3c12e2757d5483f206190">More...</a><br /></td></tr>
+<tr class="separator:ga239910c2f1c3c12e2757d5483f206190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadce9a2ba5a8ad2556db551856dbfabad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gadce9a2ba5a8ad2556db551856dbfabad">ParseN2kPGN130312</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;TempInstance, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> &amp;TempSource, double &amp;ActualTemperature, double &amp;SetTemperature)</td></tr>
+<tr class="memdesc:gadce9a2ba5a8ad2556db551856dbfabad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130312 "Temperature - DEPRECATED".  <a href="group__group__msg_parsers.html#gadce9a2ba5a8ad2556db551856dbfabad">More...</a><br /></td></tr>
+<tr class="separator:gadce9a2ba5a8ad2556db551856dbfabad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf5416c2f4a50f72a5965e7c02d4a6e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gabf5416c2f4a50f72a5965e7c02d4a6e4">ParseN2kPGN130313</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;HumidityInstance, <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> &amp;HumiditySource, double &amp;ActualHumidity, double &amp;SetHumidity)</td></tr>
+<tr class="memdesc:gabf5416c2f4a50f72a5965e7c02d4a6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130313 "Humidity".  <a href="group__group__msg_parsers.html#gabf5416c2f4a50f72a5965e7c02d4a6e4">More...</a><br /></td></tr>
+<tr class="separator:gabf5416c2f4a50f72a5965e7c02d4a6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga905d3291368c34a244980380836b5ffa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga905d3291368c34a244980380836b5ffa">ParseN2kPGN130314</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;PressureInstance, <a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a> &amp;PressureSource, double &amp;ActualPressure)</td></tr>
+<tr class="memdesc:ga905d3291368c34a244980380836b5ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130314 "Actual Pressure".  <a href="group__group__msg_parsers.html#ga905d3291368c34a244980380836b5ffa">More...</a><br /></td></tr>
+<tr class="separator:ga905d3291368c34a244980380836b5ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96aaf91c99a9a9a6a8514a4862c6029f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga96aaf91c99a9a9a6a8514a4862c6029f">ParseN2kPGN130316</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, unsigned char &amp;TempInstance, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> &amp;TempSource, double &amp;ActualTemperature, double &amp;SetTemperature)</td></tr>
+<tr class="memdesc:ga96aaf91c99a9a9a6a8514a4862c6029f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130316 "Temperature, 
+       Extended Range".  <a href="group__group__msg_parsers.html#ga96aaf91c99a9a9a6a8514a4862c6029f">More...</a><br /></td></tr>
+<tr class="separator:ga96aaf91c99a9a9a6a8514a4862c6029f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76838c715ab88c8345e837f419a5eb99"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga76838c715ab88c8345e837f419a5eb99">ParseN2kPGN130323</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="structt_n2k_meteorlogical_station_data.html">tN2kMeteorlogicalStationData</a> &amp;N2kData)</td></tr>
+<tr class="memdesc:ga76838c715ab88c8345e837f419a5eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130323 "Meterological Station Data".  <a href="group__group__msg_parsers.html#ga76838c715ab88c8345e837f419a5eb99">More...</a><br /></td></tr>
+<tr class="separator:ga76838c715ab88c8345e837f419a5eb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f334adfcd294d95cd4aa520d6cb12d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga2f334adfcd294d95cd4aa520d6cb12d4">ParseN2kPGN130576</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int8_t &amp;PortTrimTab, int8_t &amp;StbdTrimTab)</td></tr>
+<tr class="memdesc:ga2f334adfcd294d95cd4aa520d6cb12d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130576 "Trim Tab Status".  <a href="group__group__msg_parsers.html#ga2f334adfcd294d95cd4aa520d6cb12d4">More...</a><br /></td></tr>
+<tr class="separator:ga2f334adfcd294d95cd4aa520d6cb12d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b7ff26772c3f96dea119adc12eedd64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga4b7ff26772c3f96dea119adc12eedd64">ParseN2kPGN130577</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028">tN2kDataMode</a> &amp;DataMode, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> &amp;CogReference, unsigned char &amp;SID, double &amp;COG, double &amp;SOG, double &amp;Heading, double &amp;SpeedThroughWater, double &amp;Set, double &amp;Drift)</td></tr>
+<tr class="memdesc:ga4b7ff26772c3f96dea119adc12eedd64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130577 "Direction Data".  <a href="group__group__msg_parsers.html#ga4b7ff26772c3f96dea119adc12eedd64">More...</a><br /></td></tr>
+<tr class="separator:ga4b7ff26772c3f96dea119adc12eedd64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga333ebc64cfa9725432c21a5001a46573"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga333ebc64cfa9725432c21a5001a46573">SetN2kPGN126992</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, uint16_t SystemDate, double SystemTime, <a class="el" href="group__group__msg_types.html#ga30a60f42828cc285a520e3a26d5a6645">tN2kTimeSource</a> TimeSource)</td></tr>
+<tr class="memdesc:ga333ebc64cfa9725432c21a5001a46573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN126992 Message "System date/time".  <a href="group__group__msg_set_up.html#ga333ebc64cfa9725432c21a5001a46573">More...</a><br /></td></tr>
+<tr class="separator:ga333ebc64cfa9725432c21a5001a46573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0745362d010c308e8c28edc9ab04ed5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gab0745362d010c308e8c28edc9ab04ed5">SetN2kPGN127233</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, uint32_t MobEmitterId, <a class="el" href="group__group__msg_types.html#ga8b6a1fbd879b0ffc011cc14896abf33c">tN2kMOBStatus</a> MOBStatus, double ActivationTime, <a class="el" href="group__group__msg_types.html#ga5a2a9a35649031cdeebd0df5ac413227">tN2kMOBPositionSource</a> PositionSource, uint16_t PositionDate, double PositionTime, double Latitude, double Longitude, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> COGReference, double COG, double SOG, uint32_t MMSI, <a class="el" href="group__group__msg_types.html#ga6dabae21fc4a6b2f22a328332139580c">tN2kMOBEmitterBatteryStatus</a> MOBEmitterBatteryStatus)</td></tr>
+<tr class="memdesc:gab0745362d010c308e8c28edc9ab04ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN127233 Message "Man Overboard Notification".  <a href="group__group__msg_set_up.html#gab0745362d010c308e8c28edc9ab04ed5">More...</a><br /></td></tr>
+<tr class="separator:gab0745362d010c308e8c28edc9ab04ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6d5a6397d49eecbab461ddb1861eb23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gac6d5a6397d49eecbab461ddb1861eb23">SetN2kPGN127237</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> RudderLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> OffHeadingLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> OffTrackLimitExceeded, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Override, <a class="el" href="group__group__msg_types.html#ga8101d2e7e0c51a15bd5d107900f6d1d8">tN2kSteeringMode</a> SteeringMode, <a class="el" href="group__group__msg_types.html#ga6f360c10d61b4c8559979a1a447222f0">tN2kTurnMode</a> TurnMode, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> HeadingReference, <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> CommandedRudderDirection, double CommandedRudderAngle, double HeadingToSteerCourse, double Track, double RudderLimit, double OffHeadingLimit, double RadiusOfTurnOrder, double RateOfTurnOrder, double OffTrackLimit, double VesselHeading)</td></tr>
+<tr class="memdesc:gac6d5a6397d49eecbab461ddb1861eb23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN127237 Message "Heading/Track control".  <a href="group__group__msg_set_up.html#gac6d5a6397d49eecbab461ddb1861eb23">More...</a><br /></td></tr>
+<tr class="separator:gac6d5a6397d49eecbab461ddb1861eb23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05cdd4fa3c946475f0cb07c2d4fcac77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga05cdd4fa3c946475f0cb07c2d4fcac77">SetN2kPGN127245</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, double RudderPosition, unsigned char Instance, <a class="el" href="group__group__msg_types.html#ga3b3d52b25e9585adc2dfbc2d8ff37bc8">tN2kRudderDirectionOrder</a> RudderDirectionOrder, double AngleOrder)</td></tr>
+<tr class="memdesc:ga05cdd4fa3c946475f0cb07c2d4fcac77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN127245 Message "Rudder".  <a href="group__group__msg_set_up.html#ga05cdd4fa3c946475f0cb07c2d4fcac77">More...</a><br /></td></tr>
+<tr class="separator:ga05cdd4fa3c946475f0cb07c2d4fcac77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga854211cd421da9de14615fc5aaa5ec95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga854211cd421da9de14615fc5aaa5ec95">SetN2kPGN127250</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double Heading, double Deviation, double Variation, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> ref)</td></tr>
+<tr class="memdesc:ga854211cd421da9de14615fc5aaa5ec95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN127250 Message "Vessel Heading".  <a href="group__group__msg_set_up.html#ga854211cd421da9de14615fc5aaa5ec95">More...</a><br /></td></tr>
+<tr class="separator:ga854211cd421da9de14615fc5aaa5ec95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadc4805250d37d950805c076ad0537d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaadc4805250d37d950805c076ad0537d8">SetN2kPGN127251</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double RateOfTurn)</td></tr>
+<tr class="memdesc:gaadc4805250d37d950805c076ad0537d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127251 Message "Rate of Turn".  <a href="group__group__msg_set_up.html#gaadc4805250d37d950805c076ad0537d8">More...</a><br /></td></tr>
+<tr class="separator:gaadc4805250d37d950805c076ad0537d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28c071fd9eb5030eccd26afacd2dc7d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga28c071fd9eb5030eccd26afacd2dc7d2">SetN2kPGN127252</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double Heave, double Delay, <a class="el" href="group__group__msg_types.html#ga851033c0988bb1f058836950f92a3884">tN2kDelaySource</a> DelaySource)</td></tr>
+<tr class="memdesc:ga28c071fd9eb5030eccd26afacd2dc7d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127252 Message "Heave".  <a href="group__group__msg_set_up.html#ga28c071fd9eb5030eccd26afacd2dc7d2">More...</a><br /></td></tr>
+<tr class="separator:ga28c071fd9eb5030eccd26afacd2dc7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e96f43f1b60f9aa0d79a87dca8cc7df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga7e96f43f1b60f9aa0d79a87dca8cc7df">SetN2kPGN127257</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double Yaw, double Pitch, double Roll)</td></tr>
+<tr class="memdesc:ga7e96f43f1b60f9aa0d79a87dca8cc7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127257 Message "Attitude".  <a href="group__group__msg_set_up.html#ga7e96f43f1b60f9aa0d79a87dca8cc7df">More...</a><br /></td></tr>
+<tr class="separator:ga7e96f43f1b60f9aa0d79a87dca8cc7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb6a04108da4cd653a68668ff9478f81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaeb6a04108da4cd653a68668ff9478f81">SetN2kPGN127258</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#ga320323d038dcec3a2009a48c745edd6c">tN2kMagneticVariation</a> Source, uint16_t DaysSince1970, double Variation)</td></tr>
+<tr class="memdesc:gaeb6a04108da4cd653a68668ff9478f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127258 Message "Magnetic Variation".  <a href="group__group__msg_set_up.html#gaeb6a04108da4cd653a68668ff9478f81">More...</a><br /></td></tr>
+<tr class="separator:gaeb6a04108da4cd653a68668ff9478f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga651cf42dfceee790e0640a0ca5e13a46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga651cf42dfceee790e0640a0ca5e13a46">SetN2kPGN127488</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char EngineInstance, double EngineSpeed, double EngineBoostPressure, int8_t EngineTiltTrim)</td></tr>
+<tr class="memdesc:ga651cf42dfceee790e0640a0ca5e13a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127488 Message "Engine parameters rapid".  <a href="group__group__msg_set_up.html#ga651cf42dfceee790e0640a0ca5e13a46">More...</a><br /></td></tr>
+<tr class="separator:ga651cf42dfceee790e0640a0ca5e13a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d5d2ce7426ff06a0e0114812f1ed1a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga3d5d2ce7426ff06a0e0114812f1ed1a3">SetN2kPGN127489</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char EngineInstance, double EngineOilPress, double EngineOilTemp, double EngineCoolantTemp, double AltenatorVoltage, double FuelRate, double EngineHours, double EngineCoolantPress, double EngineFuelPress, int8_t EngineLoad, int8_t EngineTorque, <a class="el" href="group__group__msg_types.html#gac7b6b25ca78367369def8bfe36423ff6">tN2kEngineDiscreteStatus1</a> Status1, <a class="el" href="group__group__msg_types.html#gaf4342d4abb905fcfb042c7c4e2d57e4f">tN2kEngineDiscreteStatus2</a> Status2)</td></tr>
+<tr class="memdesc:ga3d5d2ce7426ff06a0e0114812f1ed1a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127489 Message "Engine parameters dynamic".  <a href="group__group__msg_set_up.html#ga3d5d2ce7426ff06a0e0114812f1ed1a3">More...</a><br /></td></tr>
+<tr class="separator:ga3d5d2ce7426ff06a0e0114812f1ed1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66446c041aeeb2f20d323c9dbd9945a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga66446c041aeeb2f20d323c9dbd9945a1">SetN2kPGN127493</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char EngineInstance, <a class="el" href="group__group__msg_types.html#ga5d4d08a6e1a5c19215dac98773275320">tN2kTransmissionGear</a> TransmissionGear, double OilPressure, double OilTemperature, unsigned char DiscreteStatus1)</td></tr>
+<tr class="memdesc:ga66446c041aeeb2f20d323c9dbd9945a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127493 Message "Transmission parameters, dynamic".  <a href="group__group__msg_set_up.html#ga66446c041aeeb2f20d323c9dbd9945a1">More...</a><br /></td></tr>
+<tr class="separator:ga66446c041aeeb2f20d323c9dbd9945a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36e5ff6ba3839ea99a6a3318d4b1e9db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga36e5ff6ba3839ea99a6a3318d4b1e9db">SetN2kPGN127497</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char EngineInstance, double TripFuelUsed, double FuelRateAverage, double FuelRateEconomy, double InstantaneousFuelEconomy)</td></tr>
+<tr class="memdesc:ga36e5ff6ba3839ea99a6a3318d4b1e9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127497 Message "Trip Parameters, Engine".  <a href="group__group__msg_set_up.html#ga36e5ff6ba3839ea99a6a3318d4b1e9db">More...</a><br /></td></tr>
+<tr class="separator:ga36e5ff6ba3839ea99a6a3318d4b1e9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81d28f3032e1bf0dd9e0bbeb923e5f6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga81d28f3032e1bf0dd9e0bbeb923e5f6f">SetN2kPGN127501</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char DeviceBankInstance, <a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> BankStatus)</td></tr>
+<tr class="memdesc:ga81d28f3032e1bf0dd9e0bbeb923e5f6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127501 Message "Universal Binary Status Report".  <a href="group__group__msg_set_up.html#ga81d28f3032e1bf0dd9e0bbeb923e5f6f">More...</a><br /></td></tr>
+<tr class="separator:ga81d28f3032e1bf0dd9e0bbeb923e5f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf497e0514ad1adcd7fbeb59ae0923ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gabf497e0514ad1adcd7fbeb59ae0923ca">SetN2kPGN127501</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char DeviceBankInstance, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Status1, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Status2, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Status3, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Status4)</td></tr>
+<tr class="memdesc:gabf497e0514ad1adcd7fbeb59ae0923ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127501 Message "Universal Binary Status Report".  <a href="group__group__msg_set_up.html#gabf497e0514ad1adcd7fbeb59ae0923ca">More...</a><br /></td></tr>
+<tr class="separator:gabf497e0514ad1adcd7fbeb59ae0923ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada10397def0d8ad93454ff6df4c22f3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gada10397def0d8ad93454ff6df4c22f3c">SetN2kPGN127505</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Instance, <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> FluidType, double Level, double Capacity)</td></tr>
+<tr class="memdesc:gada10397def0d8ad93454ff6df4c22f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127505 Message "Fluid level".  <a href="group__group__msg_set_up.html#gada10397def0d8ad93454ff6df4c22f3c">More...</a><br /></td></tr>
+<tr class="separator:gada10397def0d8ad93454ff6df4c22f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06d10826cd050b8a3f057040c93a3902"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_messages_8cpp.html#a06d10826cd050b8a3f057040c93a3902">SetN2kPGN127506</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char DCInstance, <a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a> DCType, uint8_t StateOfCharge, uint8_t StateOfHealth, double TimeRemaining, double RippleVoltage, double Capacity)</td></tr>
+<tr class="separator:a06d10826cd050b8a3f057040c93a3902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga73e090094aa8f6b1bbecdc4dadf0ef29">SetN2kPGN127507</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Instance, unsigned char BatteryInstance, <a class="el" href="group__group__msg_types.html#ga30c2d8d084d6ec9d9115dded189470f5">tN2kChargeState</a> ChargeState, <a class="el" href="group__group__msg_types.html#ga0c142dce99c98d79265651d5cf7679af">tN2kChargerMode</a> ChargerMode, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Enabled, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> EqualizationPending, double EqualizationTimeRemaining)</td></tr>
+<tr class="memdesc:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127507 Message "DC Charger Status".  <a href="group__group__msg_set_up.html#ga73e090094aa8f6b1bbecdc4dadf0ef29">More...</a><br /></td></tr>
+<tr class="separator:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaeda826f71a7a8ba344d223a14be0d01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaaeda826f71a7a8ba344d223a14be0d01">SetN2kPGN127508</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent, double BatteryTemperature, unsigned char SID)</td></tr>
+<tr class="memdesc:gaaeda826f71a7a8ba344d223a14be0d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127508 Message "Battery Status".  <a href="group__group__msg_set_up.html#gaaeda826f71a7a8ba344d223a14be0d01">More...</a><br /></td></tr>
+<tr class="separator:gaaeda826f71a7a8ba344d223a14be0d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga9b5aa4d7ccb8450dbfd85a4501e443d3">SetN2kPGN127513</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char BatInstance, <a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> BatType, <a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a> SupportsEqual, <a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a> BatNominalVoltage, <a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a> BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient, double PeukertExponent, int8_t ChargeEfficiencyFactor)</td></tr>
+<tr class="memdesc:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127513 Message "Battery Configuration Status".  <a href="group__group__msg_set_up.html#ga9b5aa4d7ccb8450dbfd85a4501e443d3">More...</a><br /></td></tr>
+<tr class="separator:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefa07acf63c32dfdc2a5c1362e431af9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaefa07acf63c32dfdc2a5c1362e431af9">SetN2kPGN128000</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double Leeway)</td></tr>
+<tr class="memdesc:gaefa07acf63c32dfdc2a5c1362e431af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128000 Message "Nautical Leeway Angle".  <a href="group__group__msg_set_up.html#gaefa07acf63c32dfdc2a5c1362e431af9">More...</a><br /></td></tr>
+<tr class="separator:gaefa07acf63c32dfdc2a5c1362e431af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fab1f2e6129777a1f02b65dd8252eb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga4fab1f2e6129777a1f02b65dd8252eb7">SetN2kPGN128259</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double WaterReferenced, double GroundReferenced, <a class="el" href="group__group__msg_types.html#gababa4fa7b370393ba663c3eb26efd342">tN2kSpeedWaterReferenceType</a> SWRT)</td></tr>
+<tr class="memdesc:ga4fab1f2e6129777a1f02b65dd8252eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128259 Message "Boat Speed, Water Referenced".  <a href="group__group__msg_set_up.html#ga4fab1f2e6129777a1f02b65dd8252eb7">More...</a><br /></td></tr>
+<tr class="separator:ga4fab1f2e6129777a1f02b65dd8252eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd084c2430621c6e25cc549bb4ecd3b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gadd084c2430621c6e25cc549bb4ecd3b0">SetN2kPGN128267</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DepthBelowTransducer, double Offset, double Range)</td></tr>
+<tr class="memdesc:gadd084c2430621c6e25cc549bb4ecd3b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128267 Message "Water depth".  <a href="group__group__msg_set_up.html#gadd084c2430621c6e25cc549bb4ecd3b0">More...</a><br /></td></tr>
+<tr class="separator:gadd084c2430621c6e25cc549bb4ecd3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ac9f103487722815cfc617031fb6982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga7ac9f103487722815cfc617031fb6982">SetN2kPGN128275</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog)</td></tr>
+<tr class="memdesc:ga7ac9f103487722815cfc617031fb6982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128275 Message "Distance log".  <a href="group__group__msg_set_up.html#ga7ac9f103487722815cfc617031fb6982">More...</a><br /></td></tr>
+<tr class="separator:ga7ac9f103487722815cfc617031fb6982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07e1e3ea8e9c6982a3d45f7a880096b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga07e1e3ea8e9c6982a3d45f7a880096b7">SetN2kPGN128776</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char WindlassIdentifier, <a class="el" href="group__group__msg_types.html#gaf338271ac220b2b8f5594caf6ce70a31">tN2kWindlassDirectionControl</a> WindlassDirectionControl, unsigned char SpeedControl, <a class="el" href="group__group__msg_types.html#gad29092cc71c83d37eebd0e5c6994c353">tN2kSpeedType</a> SpeedControlType, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> AnchorDockingControl, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> PowerEnable, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> MechanicalLock, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> DeckAndAnchorWash, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> AnchorLight, double CommandTimeout, const <a class="el" href="group__group__msg_types.html#gacfbec09dfa969bf2318b09e5dcc5c1df">tN2kWindlassControlEvents</a> &amp;WindlassControlEvents)</td></tr>
+<tr class="memdesc:ga07e1e3ea8e9c6982a3d45f7a880096b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128776 Message "Anchor Windlass Control Status".  <a href="group__group__msg_set_up.html#ga07e1e3ea8e9c6982a3d45f7a880096b7">More...</a><br /></td></tr>
+<tr class="separator:ga07e1e3ea8e9c6982a3d45f7a880096b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5873a493fcd667e46bbc691d5344d69e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga5873a493fcd667e46bbc691d5344d69e">SetN2kPGN128777</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char WindlassIdentifier, double RodeCounterValue, double WindlassLineSpeed, <a class="el" href="group__group__msg_types.html#gae12f69d3e7352ea6a531314ea0cc8d36">tN2kWindlassMotionStates</a> WindlassMotionStatus, <a class="el" href="group__group__msg_types.html#ga07fe8ae611b7fa9c40426670c46a2348">tN2kRodeTypeStates</a> RodeTypeStatus, <a class="el" href="group__group__msg_types.html#ga41041126ffc78860caa451e87a19c7e5">tN2kAnchorDockingStates</a> AnchorDockingStatus, const <a class="el" href="group__group__msg_types.html#ga09adfaf14dc13e4e27a9411c8e11b9c6">tN2kWindlassOperatingEvents</a> &amp;WindlassOperatingEvents)</td></tr>
+<tr class="memdesc:ga5873a493fcd667e46bbc691d5344d69e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128777 Message "Anchor Windlass Operating Status".  <a href="group__group__msg_set_up.html#ga5873a493fcd667e46bbc691d5344d69e">More...</a><br /></td></tr>
+<tr class="separator:ga5873a493fcd667e46bbc691d5344d69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga467e3c4e5b806f017f160b3a4b24a8b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga467e3c4e5b806f017f160b3a4b24a8b2">SetN2kPGN128778</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char WindlassIdentifier, double TotalMotorTime, double ControllerVoltage, double MotorCurrent, const <a class="el" href="group__group__msg_types.html#ga37cfc2a84d15e17ae74964b28338613f">tN2kWindlassMonitoringEvents</a> &amp;WindlassMonitoringEvents)</td></tr>
+<tr class="memdesc:ga467e3c4e5b806f017f160b3a4b24a8b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 128778Message "Anchor Windlass Monitoring Status".  <a href="group__group__msg_set_up.html#ga467e3c4e5b806f017f160b3a4b24a8b2">More...</a><br /></td></tr>
+<tr class="separator:ga467e3c4e5b806f017f160b3a4b24a8b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae24a0e78242c2bc067941f31ac9bb8ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gae24a0e78242c2bc067941f31ac9bb8ca">SetN2kPGN129025</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, double Latitude, double Longitude)</td></tr>
+<tr class="memdesc:gae24a0e78242c2bc067941f31ac9bb8ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129025 Message "Position, Rapid Update".  <a href="group__group__msg_set_up.html#gae24a0e78242c2bc067941f31ac9bb8ca">More...</a><br /></td></tr>
+<tr class="separator:gae24a0e78242c2bc067941f31ac9bb8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6c545df6a538b54ffb31ca20db29453"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaa6c545df6a538b54ffb31ca20db29453">SetN2kPGN129026</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> ref, double COG, double SOG)</td></tr>
+<tr class="memdesc:gaa6c545df6a538b54ffb31ca20db29453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129026 Message "COG SOG rapid update".  <a href="group__group__msg_set_up.html#gaa6c545df6a538b54ffb31ca20db29453">More...</a><br /></td></tr>
+<tr class="separator:gaa6c545df6a538b54ffb31ca20db29453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16b4cf5864e5a3748b4068c0fc521bb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga16b4cf5864e5a3748b4068c0fc521bb1">SetN2kPGN129029</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, uint16_t DaysSince1970, double SecondsSinceMidnight, double Latitude, double Longitude, double Altitude, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> GNSStype, <a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a> GNSSmethod, unsigned char nSatellites, double HDOP, double PDOP, double GeoidalSeparation, unsigned char nReferenceStations, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> ReferenceStationType, uint16_t ReferenceSationID, double AgeOfCorrection)</td></tr>
+<tr class="memdesc:ga16b4cf5864e5a3748b4068c0fc521bb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129029 Message "GNSS Position Data".  <a href="group__group__msg_set_up.html#ga16b4cf5864e5a3748b4068c0fc521bb1">More...</a><br /></td></tr>
+<tr class="separator:ga16b4cf5864e5a3748b4068c0fc521bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabae42cc4f7dfca302a009d44908514ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gabae42cc4f7dfca302a009d44908514ec">SetN2kPGN129033</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, int16_t LocalOffset)</td></tr>
+<tr class="memdesc:gabae42cc4f7dfca302a009d44908514ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129033 Message "Date,Time &amp; Local offset".  <a href="group__group__msg_set_up.html#gabae42cc4f7dfca302a009d44908514ec">More...</a><br /></td></tr>
+<tr class="separator:gabae42cc4f7dfca302a009d44908514ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4f5739ade300902858c062daf1044de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gad4f5739ade300902858c062daf1044de">SetN2kPGN129038</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t UserID, double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> AISTransceiverInformation, double Heading, double ROT, <a class="el" href="group__group__msg_types.html#gab46a3ab176299c0d16320449b9ca61f8">tN2kAISNavStatus</a> NavStatus)</td></tr>
+<tr class="memdesc:gad4f5739ade300902858c062daf1044de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129038 Message "AIS position reports for Class A".  <a href="group__group__msg_set_up.html#gad4f5739ade300902858c062daf1044de">More...</a><br /></td></tr>
+<tr class="separator:gad4f5739ade300902858c062daf1044de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4cb9ec1b12f6892a533d9c3ff1dfb808"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga4cb9ec1b12f6892a533d9c3ff1dfb808">SetN2kPGN129039</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t UserID, double Latitude, double Longitude, bool Accuracy, bool RAIM, uint8_t Seconds, double COG, double SOG, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> AISTransceiverInformation, double Heading, <a class="el" href="group__group__msg_types.html#ga83ba87b4811d1e75daa47358bee034b8">tN2kAISUnit</a> Unit, bool Display, bool DSC, bool Band, bool Msg22, <a class="el" href="group__group__msg_types.html#ga15e6ecae32fe7903ff0bfea36775181e">tN2kAISMode</a> Mode, bool State, unsigned char SID)</td></tr>
+<tr class="memdesc:ga4cb9ec1b12f6892a533d9c3ff1dfb808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129039 Message "AIS position reports for Class B".  <a href="group__group__msg_set_up.html#ga4cb9ec1b12f6892a533d9c3ff1dfb808">More...</a><br /></td></tr>
+<tr class="separator:ga4cb9ec1b12f6892a533d9c3ff1dfb808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad37276fda23d6c050c0eafe04a6b9053"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gad37276fda23d6c050c0eafe04a6b9053">SetN2kPGN129041</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, const <a class="el" href="structt_n2k_a_i_s_ato_n_report_data.html">tN2kAISAtoNReportData</a> &amp;N2kData)</td></tr>
+<tr class="memdesc:gad37276fda23d6c050c0eafe04a6b9053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129041 Message "AIS Aids to Navigation (AtoN) Report".  <a href="group__group__msg_set_up.html#gad37276fda23d6c050c0eafe04a6b9053">More...</a><br /></td></tr>
+<tr class="separator:gad37276fda23d6c050c0eafe04a6b9053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6860148a966e80d1db34ea56b85db53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gad6860148a966e80d1db34ea56b85db53">SetN2kPGN129283</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#gaf6a4cf563abea3f9d3a1addb314b2dd1">tN2kXTEMode</a> XTEMode, bool NavigationTerminated, double XTE)</td></tr>
+<tr class="memdesc:gad6860148a966e80d1db34ea56b85db53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129283 Message "Cross Track Error".  <a href="group__group__msg_set_up.html#gad6860148a966e80d1db34ea56b85db53">More...</a><br /></td></tr>
+<tr class="separator:gad6860148a966e80d1db34ea56b85db53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7e5f5c663afa028f30f895f50afba54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaf7e5f5c663afa028f30f895f50afba54">SetN2kPGN129284</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> BearingReference, bool PerpendicularCrossed, bool ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> CalculationType, double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint, uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity)</td></tr>
+<tr class="memdesc:gaf7e5f5c663afa028f30f895f50afba54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129284 Message "Navigation Data".  <a href="group__group__msg_set_up.html#gaf7e5f5c663afa028f30f895f50afba54">More...</a><br /></td></tr>
+<tr class="separator:gaf7e5f5c663afa028f30f895f50afba54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab20482cbb7555b03d2784429ffa234b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaab20482cbb7555b03d2784429ffa234b">SetN2kPGN129285</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route, <a class="el" href="group__group__msg_types.html#ga2fe61775899a8c487358880611fec512">tN2kNavigationDirection</a> NavDirection, const char *RouteName, <a class="el" href="group__group__msg_types.html#ga9b3af1938b0500dabdd11de87fa577d4">tN2kGenericStatusPair</a> SupplementaryData)</td></tr>
+<tr class="memdesc:gaab20482cbb7555b03d2784429ffa234b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129285 Message "Route/WP information".  <a href="group__group__msg_set_up.html#gaab20482cbb7555b03d2784429ffa234b">More...</a><br /></td></tr>
+<tr class="separator:gaab20482cbb7555b03d2784429ffa234b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga526577486ab226a54890365cc4094496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga526577486ab226a54890365cc4094496">SetN2kPGN129539</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a> DesiredMode, <a class="el" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a> ActualMode, double HDOP, double VDOP, double TDOP)</td></tr>
+<tr class="memdesc:ga526577486ab226a54890365cc4094496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129539 Message "GNSS DOP data".  <a href="group__group__msg_set_up.html#ga526577486ab226a54890365cc4094496">More...</a><br /></td></tr>
+<tr class="separator:ga526577486ab226a54890365cc4094496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0777897e14fe643f19afb53fd7114867"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga0777897e14fe643f19afb53fd7114867">SetN2kPGN129540</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1">tN2kRangeResidualMode</a> Mode)</td></tr>
+<tr class="memdesc:ga0777897e14fe643f19afb53fd7114867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129540 Message "GNSS Satellites in View".  <a href="group__group__msg_set_up.html#ga0777897e14fe643f19afb53fd7114867">More...</a><br /></td></tr>
+<tr class="separator:ga0777897e14fe643f19afb53fd7114867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadba785c8d759f66b3073f267b9d64d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaadba785c8d759f66b3073f267b9d64d8">SetN2kPGN129794</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t UserID, uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length, double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime, double Draught, char *Destination, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> AISinfo)</td></tr>
+<tr class="memdesc:gaadba785c8d759f66b3073f267b9d64d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129794 Message "AIS static data class A".  <a href="group__group__msg_set_up.html#gaadba785c8d759f66b3073f267b9d64d8">More...</a><br /></td></tr>
+<tr class="separator:gaadba785c8d759f66b3073f267b9d64d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae9a7618d6bc5251a80f7a204d749525"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaae9a7618d6bc5251a80f7a204d749525">SetN2kPGN129802</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t SourceID, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> AISTransceiverInformation, char *SafetyRelatedText)</td></tr>
+<tr class="memdesc:gaae9a7618d6bc5251a80f7a204d749525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN129802 Message "AIS Safety Related Broadcast Message".  <a href="group__group__msg_set_up.html#gaae9a7618d6bc5251a80f7a204d749525">More...</a><br /></td></tr>
+<tr class="separator:gaae9a7618d6bc5251a80f7a204d749525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcd11fe6e3eda6f1bf8cd4f16e7a7aec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gabcd11fe6e3eda6f1bf8cd4f16e7a7aec">SetN2kPGN129809</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t UserID, char *Name)</td></tr>
+<tr class="memdesc:gabcd11fe6e3eda6f1bf8cd4f16e7a7aec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129809 Message "AIS static data class B part A".  <a href="group__group__msg_set_up.html#gabcd11fe6e3eda6f1bf8cd4f16e7a7aec">More...</a><br /></td></tr>
+<tr class="separator:gabcd11fe6e3eda6f1bf8cd4f16e7a7aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga567d880c51e68a02b104feadfbfb73d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga567d880c51e68a02b104feadfbfb73d7">SetN2kPGN129810</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> Repeat, uint32_t UserID, uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam, double PosRefStbd, double PosRefBow, uint32_t MothershipID)</td></tr>
+<tr class="memdesc:ga567d880c51e68a02b104feadfbfb73d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129810 Message "AIS static data class B part B".  <a href="group__group__msg_set_up.html#ga567d880c51e68a02b104feadfbfb73d7">More...</a><br /></td></tr>
+<tr class="separator:ga567d880c51e68a02b104feadfbfb73d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf27ed74d09284893b8c37e0dca5671a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaf27ed74d09284893b8c37e0dca5671a6">SetN2kPGN130074</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t Start, uint16_t NumWaypoints, uint16_t Database)</td></tr>
+<tr class="memdesc:gaf27ed74d09284893b8c37e0dca5671a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130074 Message " Route and WP Service - WP List - 
+       WP Name &amp; Position".  <a href="group__group__msg_set_up.html#gaf27ed74d09284893b8c37e0dca5671a6">More...</a><br /></td></tr>
+<tr class="separator:gaf27ed74d09284893b8c37e0dca5671a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dca3e1aed795b9f865a955bf4182df3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga5dca3e1aed795b9f865a955bf4182df3">SetN2kPGN130306</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, <a class="el" href="group__group__msg_types.html#ga7e2df5fcd75db7834060bc276d1b741f">tN2kWindReference</a> WindReference)</td></tr>
+<tr class="memdesc:ga5dca3e1aed795b9f865a955bf4182df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130306 Message "Wind Data".  <a href="group__group__msg_set_up.html#ga5dca3e1aed795b9f865a955bf4182df3">More...</a><br /></td></tr>
+<tr class="separator:ga5dca3e1aed795b9f865a955bf4182df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99b0879b5dbc0098043d894c093c7267"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga99b0879b5dbc0098043d894c093c7267">SetN2kPGN130310</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double WaterTemperature, double OutsideAmbientAirTemperature, double AtmosphericPressure)</td></tr>
+<tr class="memdesc:ga99b0879b5dbc0098043d894c093c7267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130310 Message " Environmental Parameters - DEPRECATED".  <a href="group__group__msg_set_up.html#ga99b0879b5dbc0098043d894c093c7267">More...</a><br /></td></tr>
+<tr class="separator:ga99b0879b5dbc0098043d894c093c7267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a1935adef8cafa34ed1690617a0917c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga2a1935adef8cafa34ed1690617a0917c">SetN2kPGN130311</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> TempSource, double Temperature, <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> HumiditySource, double Humidity, double AtmosphericPressure)</td></tr>
+<tr class="memdesc:ga2a1935adef8cafa34ed1690617a0917c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130311 Message "Environmental Parameters - DEPRECATED".  <a href="group__group__msg_set_up.html#ga2a1935adef8cafa34ed1690617a0917c">More...</a><br /></td></tr>
+<tr class="separator:ga2a1935adef8cafa34ed1690617a0917c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef9a284c90a7111c3e8964fc40bf7df7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaef9a284c90a7111c3e8964fc40bf7df7">SetN2kPGN130312</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char TempInstance, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> TempSource, double ActualTemperature, double SetTemperature)</td></tr>
+<tr class="memdesc:gaef9a284c90a7111c3e8964fc40bf7df7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130312 Message "Temperature - DEPRECATED".  <a href="group__group__msg_set_up.html#gaef9a284c90a7111c3e8964fc40bf7df7">More...</a><br /></td></tr>
+<tr class="separator:gaef9a284c90a7111c3e8964fc40bf7df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9ba00ed5a859e5b21947ffc2a9327a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gad9ba00ed5a859e5b21947ffc2a9327a3">SetN2kPGN130313</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char HumidityInstance, <a class="el" href="group__group__msg_types.html#gae0192b5ddd2902009e5f324689fe2d90">tN2kHumiditySource</a> HumiditySource, double ActualHumidity, double SetHumidity)</td></tr>
+<tr class="memdesc:gad9ba00ed5a859e5b21947ffc2a9327a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130313 Message "Humidity".  <a href="group__group__msg_set_up.html#gad9ba00ed5a859e5b21947ffc2a9327a3">More...</a><br /></td></tr>
+<tr class="separator:gad9ba00ed5a859e5b21947ffc2a9327a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cace165c65f67eca5c71837cfac1a70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga0cace165c65f67eca5c71837cfac1a70">SetN2kPGN130314</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char PressureInstance, <a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a> PressureSource, double ActualPressure)</td></tr>
+<tr class="memdesc:ga0cace165c65f67eca5c71837cfac1a70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130314 Message "Actual Pressure".  <a href="group__group__msg_set_up.html#ga0cace165c65f67eca5c71837cfac1a70">More...</a><br /></td></tr>
+<tr class="separator:ga0cace165c65f67eca5c71837cfac1a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9830e9dddd5e5447676a6ac9aba50f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gae9830e9dddd5e5447676a6ac9aba50f4">SetN2kPGN130315</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char PressureInstance, <a class="el" href="group__group__msg_types.html#gaea827abbd807a9e6c0bebf49ce656ed2">tN2kPressureSource</a> PressureSource, double SetPressure)</td></tr>
+<tr class="memdesc:gae9830e9dddd5e5447676a6ac9aba50f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130315 Message "Set Pressure".  <a href="group__group__msg_set_up.html#gae9830e9dddd5e5447676a6ac9aba50f4">More...</a><br /></td></tr>
+<tr class="separator:gae9830e9dddd5e5447676a6ac9aba50f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac68b7a47b5c54c4df406a3b323d0a6f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gac68b7a47b5c54c4df406a3b323d0a6f5">SetN2kPGN130316</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, unsigned char TempInstance, <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> TempSource, double ActualTemperature, double SetTemperature)</td></tr>
+<tr class="memdesc:gac68b7a47b5c54c4df406a3b323d0a6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130316 Message "Temperature, Extended Range".  <a href="group__group__msg_set_up.html#gac68b7a47b5c54c4df406a3b323d0a6f5">More...</a><br /></td></tr>
+<tr class="separator:gac68b7a47b5c54c4df406a3b323d0a6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa71e1ec8be7c3f1adeb7766fe32963da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaa71e1ec8be7c3f1adeb7766fe32963da">SetN2kPGN130323</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, const <a class="el" href="structt_n2k_meteorlogical_station_data.html">tN2kMeteorlogicalStationData</a> &amp;N2kData)</td></tr>
+<tr class="memdesc:gaa71e1ec8be7c3f1adeb7766fe32963da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130323 Message "Meterological Station Data".  <a href="group__group__msg_set_up.html#gaa71e1ec8be7c3f1adeb7766fe32963da">More...</a><br /></td></tr>
+<tr class="separator:gaa71e1ec8be7c3f1adeb7766fe32963da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f71bda73faa29453e6a98590a5e3667"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga2f71bda73faa29453e6a98590a5e3667">SetN2kPGN130576</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, int8_t PortTrimTab, int8_t StbdTrimTab)</td></tr>
+<tr class="memdesc:ga2f71bda73faa29453e6a98590a5e3667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130576 Message "Trim Tab Status".  <a href="group__group__msg_set_up.html#ga2f71bda73faa29453e6a98590a5e3667">More...</a><br /></td></tr>
+<tr class="separator:ga2f71bda73faa29453e6a98590a5e3667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddc6776cafdc65e9abb4cc22ddea9d5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaddc6776cafdc65e9abb4cc22ddea9d5d">SetN2kPGN130577</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, <a class="el" href="group__group__msg_types.html#ga64396d290128543a10f29a721f629028">tN2kDataMode</a> DataMode, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> CogReference, unsigned char SID, double COG, double SOG, double Heading, double SpeedThroughWater, double Set, double Drift)</td></tr>
+<tr class="memdesc:gaddc6776cafdc65e9abb4cc22ddea9d5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 130577 Message "Direction Data".  <a href="group__group__msg_set_up.html#gaddc6776cafdc65e9abb4cc22ddea9d5d">More...</a><br /></td></tr>
+<tr class="separator:gaddc6776cafdc65e9abb4cc22ddea9d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="abe6d8f74d5eab444d5e36d6f331aead2" name="abe6d8f74d5eab444d5e36d6f331aead2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe6d8f74d5eab444d5e36d6f331aead2">&#9670;&nbsp;</a></span>MaxSatelliteInfoCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MaxSatelliteInfoCount&#160;&#160;&#160;18</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l01228">1228</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ab7a538e0b6d6675b8dce3bb406cd8275" name="ab7a538e0b6d6675b8dce3bb406cd8275"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7a538e0b6d6675b8dce3bb406cd8275">&#9670;&nbsp;</a></span>N2kGetStatusOnBinaryStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> N2kGetStatusOnBinaryStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a>&#160;</td>
+          <td class="paramname"><em>BankStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ItemIndex</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get single status to full binary bank status. </p>
+<p >This helper function gets a single item statue <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> out of a 64bit (8byte) bank status value. The bank status can carry up to 28 individual item states.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">BankStatus</td><td>64bit full bank status <a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> </td></tr>
+    <tr><td class="paramname">ItemIndex</td><td>index of the item [1 .. 28]</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>tN2kOnOff Status of an individual item</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__msg_parsers.html#gad362c699d0992bbb9d06f442933f75a1" title="Parsing the content of Message PGN 127501 Message &quot;Universal Binary Status Report&quot;.">ParseN2kPGN127501</a> or <a class="el" href="group__group__msg_parsers.html#ga3a2f1575cb61286c03c38e6ff72248ee" title="Parsing the content of a &quot;Universal Binary Status Report&quot; message - PGN 127501.">ParseN2kBinaryStatus</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l00560">560</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a32c520b228034049b63aeedf9c1128b1" name="a32c520b228034049b63aeedf9c1128b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c520b228034049b63aeedf9c1128b1">&#9670;&nbsp;</a></span>N2kSetStatusBinaryOnStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void N2kSetStatusBinaryOnStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> &amp;&#160;</td>
+          <td class="paramname"><em>BankStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a>&#160;</td>
+          <td class="paramname"><em>ItemStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ItemIndex</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set single status to full binary bank status. </p>
+<p >This helper function sets a single item statue <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> in a 64bit (8byte) bank status value. The bank status can carry up to 28 individual item states.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">BankStatus</td><td>64bit full bank status <a class="el" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> </td></tr>
+    <tr><td class="paramname">ItemStatus</td><td>individual item status </td></tr>
+    <tr><td class="paramname">ItemIndex</td><td>index of the item [1 .. 28] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l00568">568</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1e933ad9ed3200ca2149ce45f830973f" name="a1e933ad9ed3200ca2149ce45f830973f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e933ad9ed3200ca2149ce45f830973f">&#9670;&nbsp;</a></span>ParseN2kPGN127506()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ParseN2kPGN127506 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>SID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>DCInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a> &amp;&#160;</td>
+          <td class="paramname"><em>DCType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>StateOfCharge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>StateOfHealth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>TimeRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>RippleVoltage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>Capacity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l00679">679</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9202c293c04534cc737971c4645617d8" name="a9202c293c04534cc737971c4645617d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9202c293c04534cc737971c4645617d8">&#9670;&nbsp;</a></span>ParseN2kPGN129029()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ParseN2kPGN129029 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char &amp;&#160;</td>
+          <td class="paramname"><em>SID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;&#160;</td>
+          <td class="paramname"><em>DaysSince1970</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>SecondsSinceMidnight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>Latitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>Longitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>Altitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;&#160;</td>
+          <td class="paramname"><em>GNSStype</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga5d2068cf598e5b52b7f552473246e001">tN2kGNSSmethod</a> &amp;&#160;</td>
+          <td class="paramname"><em>GNSSmethod</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>nSatellites</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>HDOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>PDOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>GeoidalSeparation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>nReferenceStations</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;&#160;</td>
+          <td class="paramname"><em>ReferenceStationType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t &amp;&#160;</td>
+          <td class="paramname"><em>ReferenceSationID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>AgeOfCorrection</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l01137">1137</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a06d10826cd050b8a3f057040c93a3902" name="a06d10826cd050b8a3f057040c93a3902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d10826cd050b8a3f057040c93a3902">&#9670;&nbsp;</a></span>SetN2kPGN127506()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SetN2kPGN127506 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;&#160;</td>
+          <td class="paramname"><em>N2kMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>SID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>DCInstance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__group__msg_types.html#ga60a7fbbb637e2eed35ca0014458e4466">tN2kDCType</a>&#160;</td>
+          <td class="paramname"><em>DCType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>StateOfCharge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>StateOfHealth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>TimeRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>RippleVoltage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>Capacity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8cpp_source.html#l00664">664</a> of file <a class="el" href="_n2k_messages_8cpp_source.html">N2kMessages.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n2k_messages_8cpp.html">N2kMessages.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

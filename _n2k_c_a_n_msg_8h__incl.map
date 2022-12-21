@@ -1,0 +1,8 @@
+<map id="N2kCANMsg.h" name="N2kCANMsg.h">
+<area shape="rect" id="node1" title="This File contains a CAN message helper class." alt="" coords="75,5,185,32"/>
+<area shape="rect" id="node2" href="$_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="89,80,171,107"/>
+<area shape="rect" id="node3" href="$_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="81,155,179,181"/>
+<area shape="rect" id="node4" href="$_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="5,229,81,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="87,304,151,331"/>
+<area shape="rect" id="node6" title=" " alt="" coords="157,229,225,256"/>
+</map>

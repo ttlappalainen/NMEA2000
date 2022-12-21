@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['unicnumberandmancode_0',['UnicNumberAndManCode',['../uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html#a50e5548bf56167690c1cdaeaf13dac67',1,'tNMEA2000::tDeviceInformation::tUnionDeviceInformation']]],
+  ['updateaddressclaimendsource_1',['UpdateAddressClaimEndSource',['../classt_n_m_e_a2000_1_1t_internal_device.html#a08cf97fc8d7bb983287ad78fecd61532',1,'tNMEA2000::tInternalDevice']]],
+  ['updatehaspendinginformation_2',['UpdateHasPendingInformation',['../classt_n_m_e_a2000_1_1t_internal_device.html#a7cc9e26149f28e869d234a45af474148',1,'tNMEA2000::tInternalDevice']]],
+  ['updatenexttime_3',['UpdateNextTime',['../classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6',1,'tN2kSyncScheduler']]],
+  ['usagestatus_4',['UsageStatus',['../structt_satellite_info.html#a76d29a539c08bae995fb32c69e8d20ca',1,'tSatelliteInfo']]],
+  ['use_5fmcp_5fcan_5fclock_5fset_5',['USE_MCP_CAN_CLOCK_SET',['../_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5favr_5fcan_6',['USE_N2K_AVR_CAN',['../_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fcan_7',['USE_N2K_CAN',['../_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fdue_5fcan_8',['USE_N2K_DUE_CAN',['../_n_m_e_a2000___c_a_n_8h.html#aabcff4d2df0a443621007ba22af572df',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fesp32_5fcan_9',['USE_N2K_ESP32_CAN',['../_n_m_e_a2000___c_a_n_8h.html#afb8b6d1660f9c1f8c4084ae118151004',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fmbed_5fcan_10',['USE_N2K_MBED_CAN',['../_n_m_e_a2000___c_a_n_8h.html#aa4a29257a54225960bc98c4fc2ee3770',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fmcp_5fcan_11',['USE_N2K_MCP_CAN',['../_n_m_e_a2000___c_a_n_8h.html#afe903dbc220134563c3f9803e77f7e05',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fsocket_5fcan_12',['USE_N2K_SOCKET_CAN',['../_n_m_e_a2000___c_a_n_8h.html#abfa98c40acd6d2edf1664fac34474d20',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fteensy_5fcan_13',['USE_N2K_TEENSY_CAN',['../_n_m_e_a2000___c_a_n_8h.html#ae1eba80f6c62866d183dc2ab7de0ee2a',1,'NMEA2000_CAN.h']]],
+  ['use_5fn2k_5fteensyx_5fcan_14',['USE_N2K_TEENSYX_CAN',['../_n_m_e_a2000___c_a_n_8h.html#ac43f72ea37efeb103e05c793d7d20379',1,'NMEA2000_CAN.h']]],
+  ['userid_15',['UserID',['../structt_n2k_a_i_s_ato_n_report_data.html#a92c856eea7686268774c5c4e3c90c331',1,'tN2kAISAtoNReportData']]]
+];

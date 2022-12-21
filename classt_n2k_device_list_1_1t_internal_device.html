@@ -1,0 +1,2393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: tN2kDeviceList::tInternalDevice Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classt_n2k_device_list_1_1t_internal_device.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classt_n2k_device_list_1_1t_internal_device-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tN2kDeviceList::tInternalDevice Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>This class represents an internal device.  
+ <a href="classt_n2k_device_list_1_1t_internal_device.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for tN2kDeviceList::tInternalDevice:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_n2k_device_list_1_1t_internal_device__inherit__graph.png" border="0" usemap="#at_n2k_device_list_1_1t_internal_device_inherit__map" alt="Inheritance graph"/></div>
+<map name="at_n2k_device_list_1_1t_internal_device_inherit__map" id="at_n2k_device_list_1_1t_internal_device_inherit__map">
+<area shape="rect" title="This class represents an internal device." alt="" coords="5,80,171,121"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_device.html" title="This class represents a N2k device." alt="" coords="17,5,159,32"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for tN2kDeviceList::tInternalDevice:</div>
+<div class="dyncontent">
+<div class="center"><img src="classt_n2k_device_list_1_1t_internal_device__coll__graph.png" border="0" usemap="#at_n2k_device_list_1_1t_internal_device_coll__map" alt="Collaboration graph"/></div>
+<map name="at_n2k_device_list_1_1t_internal_device_coll__map" id="at_n2k_device_list_1_1t_internal_device_coll__map">
+<area shape="rect" title="This class represents an internal device." alt="" coords="126,288,291,329"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_device.html" title="This class represents a N2k device." alt="" coords="37,199,180,225"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that." alt="" coords="5,109,212,136"/>
+<area shape="rect" href="uniont_n_m_e_a2000_1_1t_device_information_1_1t_union_device_information.html" title="Union that holds the device informations." alt="" coords="5,5,212,47"/>
+<area shape="rect" href="structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information." alt="" coords="204,199,416,225"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9caeabecca1feb0e457b2bef7b24132f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a9caeabecca1feb0e457b2bef7b24132f">tInternalDevice</a> (uint64_t _Name, uint8_t _Source=255)</td></tr>
+<tr class="memdesc:a9caeabecca1feb0e457b2bef7b24132f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Internal Device object.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a9caeabecca1feb0e457b2bef7b24132f">More...</a><br /></td></tr>
+<tr class="separator:a9caeabecca1feb0e457b2bef7b24132f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f6f1253ec0d5101e045c1a3a33c998"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ab3f6f1253ec0d5101e045c1a3a33c998">~tInternalDevice</a> ()</td></tr>
+<tr class="memdesc:ab3f6f1253ec0d5101e045c1a3a33c998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Internal Device object Clean up all the memory.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ab3f6f1253ec0d5101e045c1a3a33c998">More...</a><br /></td></tr>
+<tr class="separator:ab3f6f1253ec0d5101e045c1a3a33c998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc">ClearConfigurationInformationLoaded</a> ()</td></tr>
+<tr class="memdesc:a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the Configuration Information Loaded values of the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc">More...</a><br /></td></tr>
+<tr class="separator:a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9813a7d9bcc0c20646c7967577eda995"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a9813a7d9bcc0c20646c7967577eda995">ClearPGNListLoaded</a> ()</td></tr>
+<tr class="memdesc:a9813a7d9bcc0c20646c7967577eda995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the PGN List Loaded values of the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a9813a7d9bcc0c20646c7967577eda995">More...</a><br /></td></tr>
+<tr class="separator:a9813a7d9bcc0c20646c7967577eda995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8818fabd8ba03e38aa3a375c59642fed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a8818fabd8ba03e38aa3a375c59642fed">ClearProductInformation</a> ()</td></tr>
+<tr class="memdesc:a8818fabd8ba03e38aa3a375c59642fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the Product Information the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a8818fabd8ba03e38aa3a375c59642fed">More...</a><br /></td></tr>
+<tr class="separator:a8818fabd8ba03e38aa3a375c59642fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace9b588172b6d74492fd1fa622e72fa5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ace9b588172b6d74492fd1fa622e72fa5">ClearProductInformationLoaded</a> ()</td></tr>
+<tr class="memdesc:ace9b588172b6d74492fd1fa622e72fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the Product Information Loaded values of the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ace9b588172b6d74492fd1fa622e72fa5">More...</a><br /></td></tr>
+<tr class="separator:ace9b588172b6d74492fd1fa622e72fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f86384c30e139279355ba54994bda3"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ad6f86384c30e139279355ba54994bda3">GetCertificationLevel</a> () const</td></tr>
+<tr class="memdesc:ad6f86384c30e139279355ba54994bda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Certification Level of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ad6f86384c30e139279355ba54994bda3">More...</a><br /></td></tr>
+<tr class="separator:ad6f86384c30e139279355ba54994bda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc0d0115c2b496e3ba700cfc99e70c2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a9fc0d0115c2b496e3ba700cfc99e70c2">GetInstallationDescription1</a> ()</td></tr>
+<tr class="memdesc:a9fc0d0115c2b496e3ba700cfc99e70c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Installation Description 1 of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a9fc0d0115c2b496e3ba700cfc99e70c2">More...</a><br /></td></tr>
+<tr class="separator:a9fc0d0115c2b496e3ba700cfc99e70c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a3982d295829d8e8cc6b0aa359bf48f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a2a3982d295829d8e8cc6b0aa359bf48f">GetInstallationDescription1</a> () const</td></tr>
+<tr class="memdesc:a2a3982d295829d8e8cc6b0aa359bf48f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Installation Description 1 of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a2a3982d295829d8e8cc6b0aa359bf48f">More...</a><br /></td></tr>
+<tr class="separator:a2a3982d295829d8e8cc6b0aa359bf48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a638f855c1bd6d3a0da2f5de0985f7c74"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a638f855c1bd6d3a0da2f5de0985f7c74">GetInstallationDescription2</a> ()</td></tr>
+<tr class="memdesc:a638f855c1bd6d3a0da2f5de0985f7c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Installation Description 2 of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a638f855c1bd6d3a0da2f5de0985f7c74">More...</a><br /></td></tr>
+<tr class="separator:a638f855c1bd6d3a0da2f5de0985f7c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f64a4aca1ce493afee605846f08911e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a3f64a4aca1ce493afee605846f08911e">GetInstallationDescription2</a> () const</td></tr>
+<tr class="memdesc:a3f64a4aca1ce493afee605846f08911e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Installation Description 2 of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a3f64a4aca1ce493afee605846f08911e">More...</a><br /></td></tr>
+<tr class="separator:a3f64a4aca1ce493afee605846f08911e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1534f42b7b6a8b1f43ecdf667273f771"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a1534f42b7b6a8b1f43ecdf667273f771">GetLoadEquivalency</a> () const</td></tr>
+<tr class="memdesc:a1534f42b7b6a8b1f43ecdf667273f771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Load Equivalency (x * 50 mA) of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a1534f42b7b6a8b1f43ecdf667273f771">More...</a><br /></td></tr>
+<tr class="separator:a1534f42b7b6a8b1f43ecdf667273f771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f8ea6da126cdf969296298a795713d0"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a5f8ea6da126cdf969296298a795713d0">GetManufacturerInformation</a> ()</td></tr>
+<tr class="memdesc:a5f8ea6da126cdf969296298a795713d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Manufacturer Information of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a5f8ea6da126cdf969296298a795713d0">More...</a><br /></td></tr>
+<tr class="separator:a5f8ea6da126cdf969296298a795713d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69936e9a3b869e2c9618b0692a19c1b1"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a69936e9a3b869e2c9618b0692a19c1b1">GetManufacturerInformation</a> () const</td></tr>
+<tr class="memdesc:a69936e9a3b869e2c9618b0692a19c1b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Manufacturer Information of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a69936e9a3b869e2c9618b0692a19c1b1">More...</a><br /></td></tr>
+<tr class="separator:a69936e9a3b869e2c9618b0692a19c1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4e5d67de31a637f55c7bcde7533a2a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aae4e5d67de31a637f55c7bcde7533a2a">GetModelID</a> () const</td></tr>
+<tr class="memdesc:aae4e5d67de31a637f55c7bcde7533a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Model ID of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aae4e5d67de31a637f55c7bcde7533a2a">More...</a><br /></td></tr>
+<tr class="separator:aae4e5d67de31a637f55c7bcde7533a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6424a4e70c271499c4c193381f8113e6"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a6424a4e70c271499c4c193381f8113e6">GetModelSerialCode</a> () const</td></tr>
+<tr class="memdesc:a6424a4e70c271499c4c193381f8113e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Model Serial Code of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a6424a4e70c271499c4c193381f8113e6">More...</a><br /></td></tr>
+<tr class="separator:a6424a4e70c271499c4c193381f8113e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4685d73dd5db48e12a45be7076598943"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a4685d73dd5db48e12a45be7076598943">GetModelVersion</a> () const</td></tr>
+<tr class="memdesc:a4685d73dd5db48e12a45be7076598943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Model Version of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a4685d73dd5db48e12a45be7076598943">More...</a><br /></td></tr>
+<tr class="separator:a4685d73dd5db48e12a45be7076598943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae44033c55a66f44a80a37f0c2f9e22cb"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ae44033c55a66f44a80a37f0c2f9e22cb">GetN2kVersion</a> () const</td></tr>
+<tr class="memdesc:ae44033c55a66f44a80a37f0c2f9e22cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the N2k version of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ae44033c55a66f44a80a37f0c2f9e22cb">More...</a><br /></td></tr>
+<tr class="separator:ae44033c55a66f44a80a37f0c2f9e22cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a589f5e36a5d9fc81cdfb194d43bed77f"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a589f5e36a5d9fc81cdfb194d43bed77f">GetProductCode</a> () const</td></tr>
+<tr class="memdesc:a589f5e36a5d9fc81cdfb194d43bed77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Product code of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a589f5e36a5d9fc81cdfb194d43bed77f">More...</a><br /></td></tr>
+<tr class="separator:a589f5e36a5d9fc81cdfb194d43bed77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a491180af32e63e0212accb29c292f6c9"><td class="memItemLeft" align="right" valign="top">const unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a491180af32e63e0212accb29c292f6c9">GetReceivePGNs</a> () const</td></tr>
+<tr class="memdesc:a491180af32e63e0212accb29c292f6c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the received PGNs of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a491180af32e63e0212accb29c292f6c9">More...</a><br /></td></tr>
+<tr class="separator:a491180af32e63e0212accb29c292f6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bc87ee4907243d4d9710995a3fc92c2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a2bc87ee4907243d4d9710995a3fc92c2">GetSwCode</a> () const</td></tr>
+<tr class="memdesc:a2bc87ee4907243d4d9710995a3fc92c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Software Code of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a2bc87ee4907243d4d9710995a3fc92c2">More...</a><br /></td></tr>
+<tr class="separator:a2bc87ee4907243d4d9710995a3fc92c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaec8c080c6ba4c7bb552cbb46873fa2b"><td class="memItemLeft" align="right" valign="top">const unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aaec8c080c6ba4c7bb552cbb46873fa2b">GetTransmitPGNs</a> () const</td></tr>
+<tr class="memdesc:aaec8c080c6ba4c7bb552cbb46873fa2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the transmitted PGNs of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aaec8c080c6ba4c7bb552cbb46873fa2b">More...</a><br /></td></tr>
+<tr class="separator:aaec8c080c6ba4c7bb552cbb46873fa2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00d5fd1991f10c633cdfbd683d4449a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ae00d5fd1991f10c633cdfbd683d4449a">HasConfigurationInformation</a> () const</td></tr>
+<tr class="memdesc:ae00d5fd1991f10c633cdfbd683d4449a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the Configuration Information for the device already been loaded.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ae00d5fd1991f10c633cdfbd683d4449a">More...</a><br /></td></tr>
+<tr class="separator:ae00d5fd1991f10c633cdfbd683d4449a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7812ee6944d1ca2e140732d95655ada3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a7812ee6944d1ca2e140732d95655ada3">HasProductInformation</a> () const</td></tr>
+<tr class="memdesc:a7812ee6944d1ca2e140732d95655ada3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the Product Information for the device already been loaded.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a7812ee6944d1ca2e140732d95655ada3">More...</a><br /></td></tr>
+<tr class="separator:a7812ee6944d1ca2e140732d95655ada3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abd809431e1866319fb9b0d17148cd6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a7abd809431e1866319fb9b0d17148cd6">InitConfigurationInformation</a> (size_t &amp;_ManISize, size_t &amp;_InstDesc1Size, size_t &amp;_InstDesc2Size)</td></tr>
+<tr class="memdesc:a7abd809431e1866319fb9b0d17148cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the Configuration Information of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a7abd809431e1866319fb9b0d17148cd6">More...</a><br /></td></tr>
+<tr class="separator:a7abd809431e1866319fb9b0d17148cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25465db5a1319217299fcd8e471a1ecc"><td class="memItemLeft" align="right" valign="top">unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a25465db5a1319217299fcd8e471a1ecc">InitReceivePGNs</a> (uint8_t count)</td></tr>
+<tr class="memdesc:a25465db5a1319217299fcd8e471a1ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an array for received PGNs This functions frees if needed old reservation and reserves new memory for requested number of PGNs.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a25465db5a1319217299fcd8e471a1ecc">More...</a><br /></td></tr>
+<tr class="separator:a25465db5a1319217299fcd8e471a1ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce431ea7e9b49de12cd1a322d952c23"><td class="memItemLeft" align="right" valign="top">unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a8ce431ea7e9b49de12cd1a322d952c23">InitTransmitPGNs</a> (uint8_t count)</td></tr>
+<tr class="memdesc:a8ce431ea7e9b49de12cd1a322d952c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an array for transmitted PGNs This functions frees if needed old reservation and reserves new memory for requested number of PGNs.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a8ce431ea7e9b49de12cd1a322d952c23">More...</a><br /></td></tr>
+<tr class="separator:a8ce431ea7e9b49de12cd1a322d952c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0eadbbacc972ab53235f17d1832f904"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ac0eadbbacc972ab53235f17d1832f904">IsSameProductInformation</a> (<a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> &amp;Other)</td></tr>
+<tr class="memdesc:ac0eadbbacc972ab53235f17d1832f904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two Product Informations.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ac0eadbbacc972ab53235f17d1832f904">More...</a><br /></td></tr>
+<tr class="separator:ac0eadbbacc972ab53235f17d1832f904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8375968a4df2082d0981c904f52a1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ace8375968a4df2082d0981c904f52a1d">ReadyForRequestConfigurationInformation</a> ()</td></tr>
+<tr class="memdesc:ace8375968a4df2082d0981c904f52a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ready for the next request of Device Configuration Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ace8375968a4df2082d0981c904f52a1d">More...</a><br /></td></tr>
+<tr class="separator:ace8375968a4df2082d0981c904f52a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac5af8d1c96b681d1df072c022319677"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aac5af8d1c96b681d1df072c022319677">ReadyForRequestPGNList</a> ()</td></tr>
+<tr class="memdesc:aac5af8d1c96b681d1df072c022319677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ready for the next request of Device PGN List.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aac5af8d1c96b681d1df072c022319677">More...</a><br /></td></tr>
+<tr class="separator:aac5af8d1c96b681d1df072c022319677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b237a3f628ab82f82e7c93c202ef94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a93b237a3f628ab82f82e7c93c202ef94">ReadyForRequestProductInformation</a> ()</td></tr>
+<tr class="memdesc:a93b237a3f628ab82f82e7c93c202ef94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ready for the next request of Device Product Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a93b237a3f628ab82f82e7c93c202ef94">More...</a><br /></td></tr>
+<tr class="separator:a93b237a3f628ab82f82e7c93c202ef94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54ced0cce34ba325ff3c15861ab29887"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a54ced0cce34ba325ff3c15861ab29887">SetConfigurationInformationRequested</a> ()</td></tr>
+<tr class="memdesc:a54ced0cce34ba325ff3c15861ab29887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the Number of how often the Configuration Information has already been requested and stores the timestamp.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a54ced0cce34ba325ff3c15861ab29887">More...</a><br /></td></tr>
+<tr class="separator:a54ced0cce34ba325ff3c15861ab29887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545ea63d8399ad8b7184ca90a647c342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a545ea63d8399ad8b7184ca90a647c342">SetDeviceInformation</a> (uint64_t _Name)</td></tr>
+<tr class="memdesc:a545ea63d8399ad8b7184ca90a647c342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Device Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a545ea63d8399ad8b7184ca90a647c342">More...</a><br /></td></tr>
+<tr class="separator:a545ea63d8399ad8b7184ca90a647c342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeecc070f8f8b439787c6343c9de89978"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aeecc070f8f8b439787c6343c9de89978">SetNameRequested</a> ()</td></tr>
+<tr class="memdesc:aeecc070f8f8b439787c6343c9de89978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the Number of how often the name has already been requested.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aeecc070f8f8b439787c6343c9de89978">More...</a><br /></td></tr>
+<tr class="separator:aeecc070f8f8b439787c6343c9de89978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed0b4a7ff2dd80989a4279895e9a63a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aed0b4a7ff2dd80989a4279895e9a63a9">SetPGNListRequested</a> ()</td></tr>
+<tr class="memdesc:aed0b4a7ff2dd80989a4279895e9a63a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the Number of how often the PGN List has already been requested and stores the timestamp.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aed0b4a7ff2dd80989a4279895e9a63a9">More...</a><br /></td></tr>
+<tr class="separator:aed0b4a7ff2dd80989a4279895e9a63a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99235f046075e728a1f9326ac6f0b55a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a99235f046075e728a1f9326ac6f0b55a">SetProductInformation</a> (const char *_ModelSerialCode, unsigned short _ProductCode=0xffff, const char *_ModelID=0, const char *_SwCode=0, const char *_ModelVersion=0, unsigned char _LoadEquivalency=0xff, unsigned short _N2kVersion=0xffff, unsigned char _CertificationLevel=0xff)</td></tr>
+<tr class="memdesc:a99235f046075e728a1f9326ac6f0b55a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Product Information of the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a99235f046075e728a1f9326ac6f0b55a">More...</a><br /></td></tr>
+<tr class="separator:a99235f046075e728a1f9326ac6f0b55a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab725d2b46f54bcbaa49e370285cf60b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ab725d2b46f54bcbaa49e370285cf60b0">SetProductInformationRequested</a> ()</td></tr>
+<tr class="memdesc:ab725d2b46f54bcbaa49e370285cf60b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the Number of how often the Product Information has already been requested and stores the timestamp.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ab725d2b46f54bcbaa49e370285cf60b0">More...</a><br /></td></tr>
+<tr class="separator:ab725d2b46f54bcbaa49e370285cf60b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba76070e3821802ab437b2271b54a815"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aba76070e3821802ab437b2271b54a815">SetSource</a> (uint8_t _Source)</td></tr>
+<tr class="memdesc:aba76070e3821802ab437b2271b54a815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Source address of the device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aba76070e3821802ab437b2271b54a815">More...</a><br /></td></tr>
+<tr class="separator:aba76070e3821802ab437b2271b54a815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95dae9be2ba566d9710e024a25b2c324"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a95dae9be2ba566d9710e024a25b2c324">ShouldRequestConfigurationInformation</a> ()</td></tr>
+<tr class="memdesc:a95dae9be2ba566d9710e024a25b2c324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should the Device Configuration Information be requested As long as the device Configuration Information is not set yet and the number of requests is smaller than 4, the name should be requested once more.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a95dae9be2ba566d9710e024a25b2c324">More...</a><br /></td></tr>
+<tr class="separator:a95dae9be2ba566d9710e024a25b2c324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a700789d77231e341fbfdaa0c57ac55a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a700789d77231e341fbfdaa0c57ac55a5">ShouldRequestName</a> ()</td></tr>
+<tr class="memdesc:a700789d77231e341fbfdaa0c57ac55a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should the Device Name be requested As long as the device name is not set yet and the number of requests is smaller than 20, the name should be requested once more.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a700789d77231e341fbfdaa0c57ac55a5">More...</a><br /></td></tr>
+<tr class="separator:a700789d77231e341fbfdaa0c57ac55a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f281ce5cafac7a7b2c70813bf83ef3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a7f281ce5cafac7a7b2c70813bf83ef3a">ShouldRequestPGNList</a> ()</td></tr>
+<tr class="memdesc:a7f281ce5cafac7a7b2c70813bf83ef3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should the Device PGN List be requested As long as the device PGN List is not set yet and the number of requests is smaller than 4, the name should be requested once more.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a7f281ce5cafac7a7b2c70813bf83ef3a">More...</a><br /></td></tr>
+<tr class="separator:a7f281ce5cafac7a7b2c70813bf83ef3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2718d83ff8aed9c8be38c8d546e181f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a2718d83ff8aed9c8be38c8d546e181f6">ShouldRequestProductInformation</a> ()</td></tr>
+<tr class="memdesc:a2718d83ff8aed9c8be38c8d546e181f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should the Device Product Information be requested As long as the device Product Information is not set yet and the number of requests is smaller than 4, the name should be requested once more.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a2718d83ff8aed9c8be38c8d546e181f6">More...</a><br /></td></tr>
+<tr class="separator:a2718d83ff8aed9c8be38c8d546e181f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classt_n_m_e_a2000_1_1t_device"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classt_n_m_e_a2000_1_1t_device')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html">tNMEA2000::tDevice</a></td></tr>
+<tr class="memitem:afa133df79a2aac93d921c77fc5fafd0b inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#afa133df79a2aac93d921c77fc5fafd0b">tDevice</a> (uint64_t _Name, uint8_t _Source=255)</td></tr>
+<tr class="memdesc:afa133df79a2aac93d921c77fc5fafd0b inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Device object.  <a href="classt_n_m_e_a2000_1_1t_device.html#afa133df79a2aac93d921c77fc5fafd0b">More...</a><br /></td></tr>
+<tr class="separator:afa133df79a2aac93d921c77fc5fafd0b inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63c6b6bbe87753f5d540fd18fe3fc1d inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab63c6b6bbe87753f5d540fd18fe3fc1d">~tDevice</a> ()</td></tr>
+<tr class="memdesc:ab63c6b6bbe87753f5d540fd18fe3fc1d inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Device object.  <a href="classt_n_m_e_a2000_1_1t_device.html#ab63c6b6bbe87753f5d540fd18fe3fc1d">More...</a><br /></td></tr>
+<tr class="separator:ab63c6b6bbe87753f5d540fd18fe3fc1d inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cd0d4150d9602e1e4e5a89f1b4529a8 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a7cd0d4150d9602e1e4e5a89f1b4529a8">GetCertificationLevel</a> () const =0</td></tr>
+<tr class="memdesc:a7cd0d4150d9602e1e4e5a89f1b4529a8 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the certification level from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a7cd0d4150d9602e1e4e5a89f1b4529a8">More...</a><br /></td></tr>
+<tr class="separator:a7cd0d4150d9602e1e4e5a89f1b4529a8 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b0e9b53d08a0ff1854f009c6413c038 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a0b0e9b53d08a0ff1854f009c6413c038">GetCreateTime</a> () const</td></tr>
+<tr class="memdesc:a0b0e9b53d08a0ff1854f009c6413c038 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Time of Creation of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a0b0e9b53d08a0ff1854f009c6413c038">More...</a><br /></td></tr>
+<tr class="separator:a0b0e9b53d08a0ff1854f009c6413c038 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefcc0b3553e1cc43bf368731e13e1079 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aefcc0b3553e1cc43bf368731e13e1079">GetDeviceClass</a> () const</td></tr>
+<tr class="memdesc:aefcc0b3553e1cc43bf368731e13e1079 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Class from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#aefcc0b3553e1cc43bf368731e13e1079">More...</a><br /></td></tr>
+<tr class="separator:aefcc0b3553e1cc43bf368731e13e1079 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad165c504704e92e371948e18be2b5495 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ad165c504704e92e371948e18be2b5495">GetDeviceFunction</a> () const</td></tr>
+<tr class="memdesc:ad165c504704e92e371948e18be2b5495 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Function from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#ad165c504704e92e371948e18be2b5495">More...</a><br /></td></tr>
+<tr class="separator:ad165c504704e92e371948e18be2b5495 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5b9676d34308dfad8f767469fdbbc68 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aa5b9676d34308dfad8f767469fdbbc68">GetDeviceInstance</a> () const</td></tr>
+<tr class="memdesc:aa5b9676d34308dfad8f767469fdbbc68 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#aa5b9676d34308dfad8f767469fdbbc68">More...</a><br /></td></tr>
+<tr class="separator:aa5b9676d34308dfad8f767469fdbbc68 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741a22882e2a9aa48041ab429d177776 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a741a22882e2a9aa48041ab429d177776">GetDeviceInstanceLower</a> () const</td></tr>
+<tr class="memdesc:a741a22882e2a9aa48041ab429d177776 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance (lower bits) from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a741a22882e2a9aa48041ab429d177776">More...</a><br /></td></tr>
+<tr class="separator:a741a22882e2a9aa48041ab429d177776 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f89c9e39504c98befd83deeee5f334 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a72f89c9e39504c98befd83deeee5f334">GetDeviceInstanceUpper</a> () const</td></tr>
+<tr class="memdesc:a72f89c9e39504c98befd83deeee5f334 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Instance (upper bits) from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a72f89c9e39504c98befd83deeee5f334">More...</a><br /></td></tr>
+<tr class="separator:a72f89c9e39504c98befd83deeee5f334 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43e56bfcf814cd89901c6fbe988794e1 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a43e56bfcf814cd89901c6fbe988794e1">GetIndustryGroup</a> () const</td></tr>
+<tr class="memdesc:a43e56bfcf814cd89901c6fbe988794e1 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Industry Group from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a43e56bfcf814cd89901c6fbe988794e1">More...</a><br /></td></tr>
+<tr class="separator:a43e56bfcf814cd89901c6fbe988794e1 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af930a87a4677a81e4f569c96206b4b89 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#af930a87a4677a81e4f569c96206b4b89">GetInstallationDescription1</a> () const</td></tr>
+<tr class="memdesc:af930a87a4677a81e4f569c96206b4b89 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the installation description 1 from the configuration information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#af930a87a4677a81e4f569c96206b4b89">More...</a><br /></td></tr>
+<tr class="separator:af930a87a4677a81e4f569c96206b4b89 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea836ce82f96b61da09f1b3c2f1a0b13 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aea836ce82f96b61da09f1b3c2f1a0b13">GetInstallationDescription2</a> () const</td></tr>
+<tr class="memdesc:aea836ce82f96b61da09f1b3c2f1a0b13 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the installation description 2 from the configuration information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#aea836ce82f96b61da09f1b3c2f1a0b13">More...</a><br /></td></tr>
+<tr class="separator:aea836ce82f96b61da09f1b3c2f1a0b13 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87c58a692972bbf77c9f0668e798247 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ac87c58a692972bbf77c9f0668e798247">GetLoadEquivalency</a> () const =0</td></tr>
+<tr class="memdesc:ac87c58a692972bbf77c9f0668e798247 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the load equivalency from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#ac87c58a692972bbf77c9f0668e798247">More...</a><br /></td></tr>
+<tr class="separator:ac87c58a692972bbf77c9f0668e798247 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99d25a7d7e8c7406f65af4d01b44f8d3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a99d25a7d7e8c7406f65af4d01b44f8d3">GetManufacturerCode</a> () const</td></tr>
+<tr class="memdesc:a99d25a7d7e8c7406f65af4d01b44f8d3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Manufacturer Code from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a99d25a7d7e8c7406f65af4d01b44f8d3">More...</a><br /></td></tr>
+<tr class="separator:a99d25a7d7e8c7406f65af4d01b44f8d3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d4cd9be08fc6013ae3b36363749adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc">GetModelID</a> () const =0</td></tr>
+<tr class="memdesc:ab1d4cd9be08fc6013ae3b36363749adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the model ID from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc">More...</a><br /></td></tr>
+<tr class="separator:ab1d4cd9be08fc6013ae3b36363749adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfed65174f87106a283eb32174262adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#abfed65174f87106a283eb32174262adc">GetModelSerialCode</a> () const =0</td></tr>
+<tr class="memdesc:abfed65174f87106a283eb32174262adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the model serial code from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#abfed65174f87106a283eb32174262adc">More...</a><br /></td></tr>
+<tr class="separator:abfed65174f87106a283eb32174262adc inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec9593aa1eab0687e9837e7ee46307e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a7ec9593aa1eab0687e9837e7ee46307e">GetModelVersion</a> () const =0</td></tr>
+<tr class="memdesc:a7ec9593aa1eab0687e9837e7ee46307e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the model version from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a7ec9593aa1eab0687e9837e7ee46307e">More...</a><br /></td></tr>
+<tr class="separator:a7ec9593aa1eab0687e9837e7ee46307e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5b04760d15370c3c133bf1cb65a0c2e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab5b04760d15370c3c133bf1cb65a0c2e">GetN2kVersion</a> () const =0</td></tr>
+<tr class="memdesc:ab5b04760d15370c3c133bf1cb65a0c2e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get N2k Standard version from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#ab5b04760d15370c3c133bf1cb65a0c2e">More...</a><br /></td></tr>
+<tr class="separator:ab5b04760d15370c3c133bf1cb65a0c2e inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e9c38c616b31d12f8f7e796d7f6fe77 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a6e9c38c616b31d12f8f7e796d7f6fe77">GetName</a> () const</td></tr>
+<tr class="memdesc:a6e9c38c616b31d12f8f7e796d7f6fe77 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Name of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a6e9c38c616b31d12f8f7e796d7f6fe77">More...</a><br /></td></tr>
+<tr class="separator:a6e9c38c616b31d12f8f7e796d7f6fe77 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a166c01963e98167bf0e465864f3e246f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a166c01963e98167bf0e465864f3e246f">GetProductCode</a> () const =0</td></tr>
+<tr class="memdesc:a166c01963e98167bf0e465864f3e246f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the product code from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a166c01963e98167bf0e465864f3e246f">More...</a><br /></td></tr>
+<tr class="separator:a166c01963e98167bf0e465864f3e246f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a924436f0c8ef396553cfca2c8ee7e3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a5a924436f0c8ef396553cfca2c8ee7e3">GetReceivePGNs</a> () const</td></tr>
+<tr class="memdesc:a5a924436f0c8ef396553cfca2c8ee7e3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of received PGNs from this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a5a924436f0c8ef396553cfca2c8ee7e3">More...</a><br /></td></tr>
+<tr class="separator:a5a924436f0c8ef396553cfca2c8ee7e3 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d0a76a0389dd4df915ddd99fffa81f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a15d0a76a0389dd4df915ddd99fffa81f">GetSource</a> () const</td></tr>
+<tr class="memdesc:a15d0a76a0389dd4df915ddd99fffa81f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Source Address of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a15d0a76a0389dd4df915ddd99fffa81f">More...</a><br /></td></tr>
+<tr class="separator:a15d0a76a0389dd4df915ddd99fffa81f inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa713ace8e5060fae17b01fc20e3e2f4c inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aa713ace8e5060fae17b01fc20e3e2f4c">GetSwCode</a> () const =0</td></tr>
+<tr class="memdesc:aa713ace8e5060fae17b01fc20e3e2f4c inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Software version code from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#aa713ace8e5060fae17b01fc20e3e2f4c">More...</a><br /></td></tr>
+<tr class="separator:aa713ace8e5060fae17b01fc20e3e2f4c inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e146c6b85b2b87a60bb992e0e99d35 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a64e146c6b85b2b87a60bb992e0e99d35">GetSystemInstance</a> () const</td></tr>
+<tr class="memdesc:a64e146c6b85b2b87a60bb992e0e99d35 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the System Instance from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a64e146c6b85b2b87a60bb992e0e99d35">More...</a><br /></td></tr>
+<tr class="separator:a64e146c6b85b2b87a60bb992e0e99d35 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4708720c4cfe8fdba62ad720db5cff42 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">virtual const unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a4708720c4cfe8fdba62ad720db5cff42">GetTransmitPGNs</a> () const</td></tr>
+<tr class="memdesc:a4708720c4cfe8fdba62ad720db5cff42 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of transmitted PGNs from this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a4708720c4cfe8fdba62ad720db5cff42">More...</a><br /></td></tr>
+<tr class="separator:a4708720c4cfe8fdba62ad720db5cff42 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92fad6f17a5987a6b80ecf5fc1808013 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a92fad6f17a5987a6b80ecf5fc1808013">GetUniqueNumber</a> () const</td></tr>
+<tr class="memdesc:a92fad6f17a5987a6b80ecf5fc1808013 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the unique Number from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a92fad6f17a5987a6b80ecf5fc1808013">More...</a><br /></td></tr>
+<tr class="separator:a92fad6f17a5987a6b80ecf5fc1808013 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0c7ea46a4f9ac4125e07ce88c754bb7 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#af0c7ea46a4f9ac4125e07ce88c754bb7">IsSame</a> (uint64_t Other)</td></tr>
+<tr class="memdesc:af0c7ea46a4f9ac4125e07ce88c754bb7 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two devices are the same, by comparing the device name.  <a href="classt_n_m_e_a2000_1_1t_device.html#af0c7ea46a4f9ac4125e07ce88c754bb7">More...</a><br /></td></tr>
+<tr class="separator:af0c7ea46a4f9ac4125e07ce88c754bb7 inherit pub_methods_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a9012636b5fa1d983f86675d1401eb240"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a9012636b5fa1d983f86675d1401eb240">ConfIRequested</a></td></tr>
+<tr class="memdesc:a9012636b5fa1d983f86675d1401eb240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time for last request on the Config Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a9012636b5fa1d983f86675d1401eb240">More...</a><br /></td></tr>
+<tr class="separator:a9012636b5fa1d983f86675d1401eb240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6ed6cc90eb9ed663e581a3fb634937"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aac6ed6cc90eb9ed663e581a3fb634937">LastMessageTime</a></td></tr>
+<tr class="memdesc:aac6ed6cc90eb9ed663e581a3fb634937"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time of the last message.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aac6ed6cc90eb9ed663e581a3fb634937">More...</a><br /></td></tr>
+<tr class="separator:aac6ed6cc90eb9ed663e581a3fb634937"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c268a15a6188a437c0522e33279fb54"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a5c268a15a6188a437c0522e33279fb54">nConfIRequested</a></td></tr>
+<tr class="memdesc:a5c268a15a6188a437c0522e33279fb54"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many times we have requested the Config information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a5c268a15a6188a437c0522e33279fb54">More...</a><br /></td></tr>
+<tr class="separator:a5c268a15a6188a437c0522e33279fb54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5b87c774eca16f7c5dd3fec978c62e0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ab5b87c774eca16f7c5dd3fec978c62e0">nNameRequested</a></td></tr>
+<tr class="memdesc:ab5b87c774eca16f7c5dd3fec978c62e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many times we have requested the name.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ab5b87c774eca16f7c5dd3fec978c62e0">More...</a><br /></td></tr>
+<tr class="separator:ab5b87c774eca16f7c5dd3fec978c62e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a994056fd528be00af04997a0c9e4ac0f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a994056fd528be00af04997a0c9e4ac0f">nPGNsRequested</a></td></tr>
+<tr class="memdesc:a994056fd528be00af04997a0c9e4ac0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many times we have requested the PGN.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a994056fd528be00af04997a0c9e4ac0f">More...</a><br /></td></tr>
+<tr class="separator:a994056fd528be00af04997a0c9e4ac0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a325cc0a25284af3935cbb30849e562c4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a325cc0a25284af3935cbb30849e562c4">nProdIRequested</a></td></tr>
+<tr class="memdesc:a325cc0a25284af3935cbb30849e562c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many times we have requested the Product information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a325cc0a25284af3935cbb30849e562c4">More...</a><br /></td></tr>
+<tr class="separator:a325cc0a25284af3935cbb30849e562c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeedba5650c26d88b75377c2f74700bd2"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aeedba5650c26d88b75377c2f74700bd2">PGNsRequested</a></td></tr>
+<tr class="memdesc:aeedba5650c26d88b75377c2f74700bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time for last request on the PGN.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aeedba5650c26d88b75377c2f74700bd2">More...</a><br /></td></tr>
+<tr class="separator:aeedba5650c26d88b75377c2f74700bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8caaf3bb4ec845a129f964deb775cac6"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a8caaf3bb4ec845a129f964deb775cac6">ProdIRequested</a></td></tr>
+<tr class="memdesc:a8caaf3bb4ec845a129f964deb775cac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time for last request on the Product Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a8caaf3bb4ec845a129f964deb775cac6">More...</a><br /></td></tr>
+<tr class="separator:a8caaf3bb4ec845a129f964deb775cac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ad27249a51b020e40b0cfd010455299a4"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ad27249a51b020e40b0cfd010455299a4">ConfI</a></td></tr>
+<tr class="memdesc:ad27249a51b020e40b0cfd010455299a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the Config Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ad27249a51b020e40b0cfd010455299a4">More...</a><br /></td></tr>
+<tr class="separator:ad27249a51b020e40b0cfd010455299a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4897803a0fca001736f5d7ce12cbf1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ad4897803a0fca001736f5d7ce12cbf1d">ConfILoaded</a></td></tr>
+<tr class="memdesc:ad4897803a0fca001736f5d7ce12cbf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product Infomation has bee loaded.  <a href="classt_n2k_device_list_1_1t_internal_device.html#ad4897803a0fca001736f5d7ce12cbf1d">More...</a><br /></td></tr>
+<tr class="separator:ad4897803a0fca001736f5d7ce12cbf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d7009ae5d65db775ad1622e1a32b45"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a91d7009ae5d65db775ad1622e1a32b45">ConfISize</a></td></tr>
+<tr class="memdesc:a91d7009ae5d65db775ad1622e1a32b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the Config Information (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#a91d7009ae5d65db775ad1622e1a32b45">More...</a><br /></td></tr>
+<tr class="separator:a91d7009ae5d65db775ad1622e1a32b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a080c0ca24c95b9a5ff3a91d119d283e5"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a080c0ca24c95b9a5ff3a91d119d283e5">InstallationDescription1</a></td></tr>
+<tr class="memdesc:a080c0ca24c95b9a5ff3a91d119d283e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the Installation Description 1.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a080c0ca24c95b9a5ff3a91d119d283e5">More...</a><br /></td></tr>
+<tr class="separator:a080c0ca24c95b9a5ff3a91d119d283e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd437b44f17e7cfe7eab4c8cc7bfdae6"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#afd437b44f17e7cfe7eab4c8cc7bfdae6">InstallationDescription2</a></td></tr>
+<tr class="memdesc:afd437b44f17e7cfe7eab4c8cc7bfdae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the Installation Description 2.  <a href="classt_n2k_device_list_1_1t_internal_device.html#afd437b44f17e7cfe7eab4c8cc7bfdae6">More...</a><br /></td></tr>
+<tr class="separator:afd437b44f17e7cfe7eab4c8cc7bfdae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a245e9011ef1822bd812fa7fc290b6840"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a245e9011ef1822bd812fa7fc290b6840">InstDesc1Size</a></td></tr>
+<tr class="memdesc:a245e9011ef1822bd812fa7fc290b6840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the Installation Description 1 (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#a245e9011ef1822bd812fa7fc290b6840">More...</a><br /></td></tr>
+<tr class="separator:a245e9011ef1822bd812fa7fc290b6840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a547e661ba559813f42aa562a511c262b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a547e661ba559813f42aa562a511c262b">InstDesc2Size</a></td></tr>
+<tr class="memdesc:a547e661ba559813f42aa562a511c262b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the Installation Description 2 (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#a547e661ba559813f42aa562a511c262b">More...</a><br /></td></tr>
+<tr class="separator:a547e661ba559813f42aa562a511c262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4163faddb81c7427b2124a0b21b9cbf"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#ac4163faddb81c7427b2124a0b21b9cbf">ManISize</a></td></tr>
+<tr class="memdesc:ac4163faddb81c7427b2124a0b21b9cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the Manufacturer Information (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#ac4163faddb81c7427b2124a0b21b9cbf">More...</a><br /></td></tr>
+<tr class="separator:ac4163faddb81c7427b2124a0b21b9cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c009973d1e450166bcd6b3ef57acbee"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a6c009973d1e450166bcd6b3ef57acbee">ManufacturerInformation</a></td></tr>
+<tr class="memdesc:a6c009973d1e450166bcd6b3ef57acbee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the Manufacturer Information.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a6c009973d1e450166bcd6b3ef57acbee">More...</a><br /></td></tr>
+<tr class="separator:a6c009973d1e450166bcd6b3ef57acbee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdeb4f0637df08624c13ef20fb1eac1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#acdeb4f0637df08624c13ef20fb1eac1c">ProdI</a></td></tr>
+<tr class="memdesc:acdeb4f0637df08624c13ef20fb1eac1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product Information of this device.  <a href="classt_n2k_device_list_1_1t_internal_device.html#acdeb4f0637df08624c13ef20fb1eac1c">More...</a><br /></td></tr>
+<tr class="separator:acdeb4f0637df08624c13ef20fb1eac1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a333b69151c1b3087d5a783f0438a2f5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a333b69151c1b3087d5a783f0438a2f5e">ProdILoaded</a></td></tr>
+<tr class="memdesc:a333b69151c1b3087d5a783f0438a2f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product Infomation has bee loaded.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a333b69151c1b3087d5a783f0438a2f5e">More...</a><br /></td></tr>
+<tr class="separator:a333b69151c1b3087d5a783f0438a2f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee8ffc34db8433bdffed76d93b19a496"><td class="memItemLeft" align="right" valign="top">unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aee8ffc34db8433bdffed76d93b19a496">ReceivePGNs</a></td></tr>
+<tr class="memdesc:aee8ffc34db8433bdffed76d93b19a496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received PGNs.  <a href="classt_n2k_device_list_1_1t_internal_device.html#aee8ffc34db8433bdffed76d93b19a496">More...</a><br /></td></tr>
+<tr class="separator:aee8ffc34db8433bdffed76d93b19a496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa35d4ba4df39a9a0795cfe5d23c257c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aa35d4ba4df39a9a0795cfe5d23c257c1">ReceivePGNsSize</a></td></tr>
+<tr class="memdesc:aa35d4ba4df39a9a0795cfe5d23c257c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the received PGN (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#aa35d4ba4df39a9a0795cfe5d23c257c1">More...</a><br /></td></tr>
+<tr class="separator:aa35d4ba4df39a9a0795cfe5d23c257c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7679fc9df60732c2b755c6bec1c7fb8e"><td class="memItemLeft" align="right" valign="top">unsigned long *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a7679fc9df60732c2b755c6bec1c7fb8e">TransmitPGNs</a></td></tr>
+<tr class="memdesc:a7679fc9df60732c2b755c6bec1c7fb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmitted PGNs.  <a href="classt_n2k_device_list_1_1t_internal_device.html#a7679fc9df60732c2b755c6bec1c7fb8e">More...</a><br /></td></tr>
+<tr class="separator:a7679fc9df60732c2b755c6bec1c7fb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86960bd38b09646193af150013613303"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a86960bd38b09646193af150013613303">TransmitPGNsSize</a></td></tr>
+<tr class="memdesc:a86960bd38b09646193af150013613303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the transmitted PGN (number of bytes)  <a href="classt_n2k_device_list_1_1t_internal_device.html#a86960bd38b09646193af150013613303">More...</a><br /></td></tr>
+<tr class="separator:a86960bd38b09646193af150013613303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classt_n_m_e_a2000_1_1t_device"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classt_n_m_e_a2000_1_1t_device')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html">tNMEA2000::tDevice</a></td></tr>
+<tr class="memitem:a9a46a63b6e08ffc6c132acbf67b4524e inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a9a46a63b6e08ffc6c132acbf67b4524e">CreateTime</a></td></tr>
+<tr class="memdesc:a9a46a63b6e08ffc6c132acbf67b4524e inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timestamp when this device was created.  <a href="classt_n_m_e_a2000_1_1t_device.html#a9a46a63b6e08ffc6c132acbf67b4524e">More...</a><br /></td></tr>
+<tr class="separator:a9a46a63b6e08ffc6c132acbf67b4524e inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb2c786fa8441cb006574aa252e8b584 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html">tDeviceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#abb2c786fa8441cb006574aa252e8b584">DevI</a></td></tr>
+<tr class="memdesc:abb2c786fa8441cb006574aa252e8b584 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">This object holds all necessary device informations.  <a href="classt_n_m_e_a2000_1_1t_device.html#abb2c786fa8441cb006574aa252e8b584">More...</a><br /></td></tr>
+<tr class="separator:abb2c786fa8441cb006574aa252e8b584 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79c4bc001f109dc96466d7fd6445e381 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a79c4bc001f109dc96466d7fd6445e381">Source</a></td></tr>
+<tr class="memdesc:a79c4bc001f109dc96466d7fd6445e381 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source address on bus for this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a79c4bc001f109dc96466d7fd6445e381">More...</a><br /></td></tr>
+<tr class="separator:a79c4bc001f109dc96466d7fd6445e381 inherit pro_attribs_classt_n_m_e_a2000_1_1t_device"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >This class represents an internal device. </p>
+<p >This class is derived from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html">tNMEA2000::tDevice</a> </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00065">65</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9caeabecca1feb0e457b2bef7b24132f" name="a9caeabecca1feb0e457b2bef7b24132f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9caeabecca1feb0e457b2bef7b24132f">&#9670;&nbsp;</a></span>tInternalDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tN2kDeviceList::tInternalDevice::tInternalDevice </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>_Name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>_Source</em> = <code>255</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new Internal Device object. </p>
+<p >Init all the variables of the Internal device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Name</td><td>Name of the device </td></tr>
+    <tr><td class="paramname">_Source</td><td>Source address of this device on the bus </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8cpp_source.html#l00412">412</a> of file <a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab3f6f1253ec0d5101e045c1a3a33c998" name="ab3f6f1253ec0d5101e045c1a3a33c998"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f6f1253ec0d5101e045c1a3a33c998">&#9670;&nbsp;</a></span>~tInternalDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tN2kDeviceList::tInternalDevice::~tInternalDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroy the Internal Device object Clean up all the memory. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8cpp_source.html#l00423">423</a> of file <a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc" name="a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d4f2f07dc8a5d75ca8b3e2c6ad0d8cc">&#9670;&nbsp;</a></span>ClearConfigurationInformationLoaded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::ClearConfigurationInformationLoaded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the Configuration Information Loaded values of the device. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00369">369</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a9813a7d9bcc0c20646c7967577eda995" name="a9813a7d9bcc0c20646c7967577eda995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9813a7d9bcc0c20646c7967577eda995">&#9670;&nbsp;</a></span>ClearPGNListLoaded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::ClearPGNListLoaded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the PGN List Loaded values of the device. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00399">399</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a8818fabd8ba03e38aa3a375c59642fed" name="a8818fabd8ba03e38aa3a375c59642fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8818fabd8ba03e38aa3a375c59642fed">&#9670;&nbsp;</a></span>ClearProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::ClearProductInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clears the Product Information the device. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00329">329</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ace9b588172b6d74492fd1fa622e72fa5" name="ace9b588172b6d74492fd1fa622e72fa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace9b588172b6d74492fd1fa622e72fa5">&#9670;&nbsp;</a></span>ClearProductInformationLoaded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::ClearProductInformationLoaded </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the Product Information Loaded values of the device. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00326">326</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ad6f86384c30e139279355ba54994bda3" name="ad6f86384c30e139279355ba54994bda3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6f86384c30e139279355ba54994bda3">&#9670;&nbsp;</a></span>GetCertificationLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short tN2kDeviceList::tInternalDevice::GetCertificationLevel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Certification Level of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a7cd0d4150d9602e1e4e5a89f1b4529a8">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00221">221</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a9fc0d0115c2b496e3ba700cfc99e70c2" name="a9fc0d0115c2b496e3ba700cfc99e70c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fc0d0115c2b496e3ba700cfc99e70c2">&#9670;&nbsp;</a></span>GetInstallationDescription1() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * tN2kDeviceList::tInternalDevice::GetInstallationDescription1 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Installation Description 1 of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>char * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00275">275</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a2a3982d295829d8e8cc6b0aa359bf48f" name="a2a3982d295829d8e8cc6b0aa359bf48f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a3982d295829d8e8cc6b0aa359bf48f">&#9670;&nbsp;</a></span>GetInstallationDescription1() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetInstallationDescription1 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Installation Description 1 of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#af930a87a4677a81e4f569c96206b4b89">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00244">244</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a638f855c1bd6d3a0da2f5de0985f7c74" name="a638f855c1bd6d3a0da2f5de0985f7c74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a638f855c1bd6d3a0da2f5de0985f7c74">&#9670;&nbsp;</a></span>GetInstallationDescription2() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * tN2kDeviceList::tInternalDevice::GetInstallationDescription2 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Installation Description 2 of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>char * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00280">280</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a3f64a4aca1ce493afee605846f08911e" name="a3f64a4aca1ce493afee605846f08911e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f64a4aca1ce493afee605846f08911e">&#9670;&nbsp;</a></span>GetInstallationDescription2() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetInstallationDescription2 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Installation Description 2 of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aea836ce82f96b61da09f1b3c2f1a0b13">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00249">249</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a1534f42b7b6a8b1f43ecdf667273f771" name="a1534f42b7b6a8b1f43ecdf667273f771"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1534f42b7b6a8b1f43ecdf667273f771">&#9670;&nbsp;</a></span>GetLoadEquivalency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short tN2kDeviceList::tInternalDevice::GetLoadEquivalency </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Load Equivalency (x * 50 mA) of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ac87c58a692972bbf77c9f0668e798247">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00226">226</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a5f8ea6da126cdf969296298a795713d0" name="a5f8ea6da126cdf969296298a795713d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f8ea6da126cdf969296298a795713d0">&#9670;&nbsp;</a></span>GetManufacturerInformation() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * tN2kDeviceList::tInternalDevice::GetManufacturerInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Manufacturer Information of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>char * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00270">270</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a69936e9a3b869e2c9618b0692a19c1b1" name="a69936e9a3b869e2c9618b0692a19c1b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69936e9a3b869e2c9618b0692a19c1b1">&#9670;&nbsp;</a></span>GetManufacturerInformation() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetManufacturerInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Manufacturer Information of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00239">239</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aae4e5d67de31a637f55c7bcde7533a2a" name="aae4e5d67de31a637f55c7bcde7533a2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4e5d67de31a637f55c7bcde7533a2a">&#9670;&nbsp;</a></span>GetModelID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetModelID </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Model ID of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00201">201</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a6424a4e70c271499c4c193381f8113e6" name="a6424a4e70c271499c4c193381f8113e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6424a4e70c271499c4c193381f8113e6">&#9670;&nbsp;</a></span>GetModelSerialCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetModelSerialCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Model Serial Code of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#abfed65174f87106a283eb32174262adc">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00216">216</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a4685d73dd5db48e12a45be7076598943" name="a4685d73dd5db48e12a45be7076598943"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4685d73dd5db48e12a45be7076598943">&#9670;&nbsp;</a></span>GetModelVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetModelVersion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Model Version of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a7ec9593aa1eab0687e9837e7ee46307e">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00211">211</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ae44033c55a66f44a80a37f0c2f9e22cb" name="ae44033c55a66f44a80a37f0c2f9e22cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae44033c55a66f44a80a37f0c2f9e22cb">&#9670;&nbsp;</a></span>GetN2kVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short tN2kDeviceList::tInternalDevice::GetN2kVersion </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the N2k version of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab5b04760d15370c3c133bf1cb65a0c2e">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00191">191</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a589f5e36a5d9fc81cdfb194d43bed77f" name="a589f5e36a5d9fc81cdfb194d43bed77f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a589f5e36a5d9fc81cdfb194d43bed77f">&#9670;&nbsp;</a></span>GetProductCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short tN2kDeviceList::tInternalDevice::GetProductCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Product code of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a166c01963e98167bf0e465864f3e246f">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00196">196</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a491180af32e63e0212accb29c292f6c9" name="a491180af32e63e0212accb29c292f6c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a491180af32e63e0212accb29c292f6c9">&#9670;&nbsp;</a></span>GetReceivePGNs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned long * tN2kDeviceList::tInternalDevice::GetReceivePGNs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the received PGNs of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const unsigned long * </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a5a924436f0c8ef396553cfca2c8ee7e3">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00291">291</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a2bc87ee4907243d4d9710995a3fc92c2" name="a2bc87ee4907243d4d9710995a3fc92c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bc87ee4907243d4d9710995a3fc92c2">&#9670;&nbsp;</a></span>GetSwCode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * tN2kDeviceList::tInternalDevice::GetSwCode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Software Code of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const char * </dd></dl>
+
+<p>Implements <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#aa713ace8e5060fae17b01fc20e3e2f4c">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00206">206</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aaec8c080c6ba4c7bb552cbb46873fa2b" name="aaec8c080c6ba4c7bb552cbb46873fa2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec8c080c6ba4c7bb552cbb46873fa2b">&#9670;&nbsp;</a></span>GetTransmitPGNs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned long * tN2kDeviceList::tInternalDevice::GetTransmitPGNs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the transmitted PGNs of this device. </p>
+<dl class="section return"><dt>Returns</dt><dd>const unsigned long * </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a4708720c4cfe8fdba62ad720db5cff42">tNMEA2000::tDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00286">286</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ae00d5fd1991f10c633cdfbd683d4449a" name="ae00d5fd1991f10c633cdfbd683d4449a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00d5fd1991f10c633cdfbd683d4449a">&#9670;&nbsp;</a></span>HasConfigurationInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::HasConfigurationInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Has the Configuration Information for the device already been loaded. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00234">234</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a7812ee6944d1ca2e140732d95655ada3" name="a7812ee6944d1ca2e140732d95655ada3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7812ee6944d1ca2e140732d95655ada3">&#9670;&nbsp;</a></span>HasProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::HasProductInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Has the Product Information for the device already been loaded. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00186">186</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a7abd809431e1866319fb9b0d17148cd6" name="a7abd809431e1866319fb9b0d17148cd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7abd809431e1866319fb9b0d17148cd6">&#9670;&nbsp;</a></span>InitConfigurationInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation </td>
+          <td>(</td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>_ManISize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>_InstDesc1Size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t &amp;&#160;</td>
+          <td class="paramname"><em>_InstDesc2Size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the Configuration Information of this device. </p>
+<p >This function gives back an empty string for the Configuration Information. Adequate memory has been allocated and the leading character ('\0' terminators ) have been added.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_ManISize</td><td>Size of the Manufacturer Information </td></tr>
+    <tr><td class="paramname">_InstDesc1Size</td><td>Size of the Install Description 1 </td></tr>
+    <tr><td class="paramname">_InstDesc2Size</td><td>Size of the Install Description 2</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>char* -&gt; empty Configuration Information </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8cpp_source.html#l00430">430</a> of file <a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a25465db5a1319217299fcd8e471a1ecc" name="a25465db5a1319217299fcd8e471a1ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25465db5a1319217299fcd8e471a1ecc">&#9670;&nbsp;</a></span>InitReceivePGNs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long * tN2kDeviceList::tInternalDevice::InitReceivePGNs </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize an array for received PGNs This functions frees if needed old reservation and reserves new memory for requested number of PGNs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of Transmitted PGNs to be handled </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned long * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8cpp_source.html#l00467">467</a> of file <a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8ce431ea7e9b49de12cd1a322d952c23" name="a8ce431ea7e9b49de12cd1a322d952c23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ce431ea7e9b49de12cd1a322d952c23">&#9670;&nbsp;</a></span>InitTransmitPGNs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long * tN2kDeviceList::tInternalDevice::InitTransmitPGNs </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize an array for transmitted PGNs This functions frees if needed old reservation and reserves new memory for requested number of PGNs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of Transmitted PGNs to be handled </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned long * </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8cpp_source.html#l00459">459</a> of file <a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac0eadbbacc972ab53235f17d1832f904" name="ac0eadbbacc972ab53235f17d1832f904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0eadbbacc972ab53235f17d1832f904">&#9670;&nbsp;</a></span>IsSameProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::IsSameProductInformation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> &amp;&#160;</td>
+          <td class="paramname"><em>Other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares two Product Informations. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00358">358</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ace8375968a4df2082d0981c904f52a1d" name="ace8375968a4df2082d0981c904f52a1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8375968a4df2082d0981c904f52a1d">&#9670;&nbsp;</a></span>ReadyForRequestConfigurationInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ReadyForRequestConfigurationInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ready for the next request of Device Configuration Information. </p>
+<p >There must be a minimum interval between two requests for product information. see <a class="el" href="_n2k_device_list_8h.html#a5ee9d9ce13c0d99e9c05de1388c2f64b">N2kDL_TimeBetweenCIRequest</a></p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00389">389</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aac5af8d1c96b681d1df072c022319677" name="aac5af8d1c96b681d1df072c022319677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac5af8d1c96b681d1df072c022319677">&#9670;&nbsp;</a></span>ReadyForRequestPGNList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ReadyForRequestPGNList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ready for the next request of Device PGN List. </p>
+<p >There must be a minimum interval between two requests for product information. see <a class="el" href="_n2k_device_list_8h.html#af4b2d97c72d00bf9c3c5452f79512dca">N2kDL_TimeForFirstRequest</a></p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00423">423</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a93b237a3f628ab82f82e7c93c202ef94" name="a93b237a3f628ab82f82e7c93c202ef94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93b237a3f628ab82f82e7c93c202ef94">&#9670;&nbsp;</a></span>ReadyForRequestProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ReadyForRequestProductInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ready for the next request of Device Product Information. </p>
+<p >There must be a minimum interval between two requests for product information. see <a class="el" href="_n2k_device_list_8h.html#a77cdd6cbc77882f189782c019320aa8b">N2kDL_TimeBetweenPIRequest</a></p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00348">348</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a54ced0cce34ba325ff3c15861ab29887" name="a54ced0cce34ba325ff3c15861ab29887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54ced0cce34ba325ff3c15861ab29887">&#9670;&nbsp;</a></span>SetConfigurationInformationRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetConfigurationInformationRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increments the Number of how often the Configuration Information has already been requested and stores the timestamp. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00394">394</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a545ea63d8399ad8b7184ca90a647c342" name="a545ea63d8399ad8b7184ca90a647c342"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a545ea63d8399ad8b7184ca90a647c342">&#9670;&nbsp;</a></span>SetDeviceInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetDeviceInformation </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>_Name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Device Information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Name</td><td>Name of the device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00150">150</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aeecc070f8f8b439787c6343c9de89978" name="aeecc070f8f8b439787c6343c9de89978"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeecc070f8f8b439787c6343c9de89978">&#9670;&nbsp;</a></span>SetNameRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetNameRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increments the Number of how often the name has already been requested. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00322">322</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aed0b4a7ff2dd80989a4279895e9a63a9" name="aed0b4a7ff2dd80989a4279895e9a63a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed0b4a7ff2dd80989a4279895e9a63a9">&#9670;&nbsp;</a></span>SetPGNListRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetPGNListRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increments the Number of how often the PGN List has already been requested and stores the timestamp. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00413">413</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a99235f046075e728a1f9326ac6f0b55a" name="a99235f046075e728a1f9326ac6f0b55a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99235f046075e728a1f9326ac6f0b55a">&#9670;&nbsp;</a></span>SetProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetProductInformation </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_ModelSerialCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>_ProductCode</em> = <code>0xffff</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_ModelID</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_SwCode</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_ModelVersion</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_LoadEquivalency</em> = <code>0xff</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>_N2kVersion</em> = <code>0xffff</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>_CertificationLevel</em> = <code>0xff</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Product Information of the device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_ModelSerialCode</td><td>Default="". Max 32 chars. Manufacturer's Model serial code </td></tr>
+    <tr><td class="paramname">_ProductCode</td><td>Default=666. Manufacturer's product code </td></tr>
+    <tr><td class="paramname">_ModelID</td><td>Default="". Max 33 chars. Manufacturer's Model ID </td></tr>
+    <tr><td class="paramname">_SwCode</td><td>Default="". Max 40 chars. Manufacturer's software version code </td></tr>
+    <tr><td class="paramname">_ModelVersion</td><td>Default="". Max 24 chars. Manufacturer's Model version </td></tr>
+    <tr><td class="paramname">_LoadEquivalency</td><td>Default=1. x * 50 mA </td></tr>
+    <tr><td class="paramname">_N2kVersion</td><td>Default=1300 </td></tr>
+    <tr><td class="paramname">_CertificationLevel</td><td>Default=1 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00168">168</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ab725d2b46f54bcbaa49e370285cf60b0" name="ab725d2b46f54bcbaa49e370285cf60b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab725d2b46f54bcbaa49e370285cf60b0">&#9670;&nbsp;</a></span>SetProductInformationRequested()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetProductInformationRequested </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increments the Number of how often the Product Information has already been requested and stores the timestamp. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00352">352</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aba76070e3821802ab437b2271b54a815" name="aba76070e3821802ab437b2271b54a815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba76070e3821802ab437b2271b54a815">&#9670;&nbsp;</a></span>SetSource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tN2kDeviceList::tInternalDevice::SetSource </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>_Source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Source address of the device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_Source</td><td>Source address of this device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00143">143</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a95dae9be2ba566d9710e024a25b2c324" name="a95dae9be2ba566d9710e024a25b2c324"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95dae9be2ba566d9710e024a25b2c324">&#9670;&nbsp;</a></span>ShouldRequestConfigurationInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ShouldRequestConfigurationInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Should the Device Configuration Information be requested As long as the device Configuration Information is not set yet and the number of requests is smaller than 4, the name should be requested once more. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00378">378</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a700789d77231e341fbfdaa0c57ac55a5" name="a700789d77231e341fbfdaa0c57ac55a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a700789d77231e341fbfdaa0c57ac55a5">&#9670;&nbsp;</a></span>ShouldRequestName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ShouldRequestName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Should the Device Name be requested As long as the device name is not set yet and the number of requests is smaller than 20, the name should be requested once more. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00318">318</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a7f281ce5cafac7a7b2c70813bf83ef3a" name="a7f281ce5cafac7a7b2c70813bf83ef3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f281ce5cafac7a7b2c70813bf83ef3a">&#9670;&nbsp;</a></span>ShouldRequestPGNList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ShouldRequestPGNList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Should the Device PGN List be requested As long as the device PGN List is not set yet and the number of requests is smaller than 4, the name should be requested once more. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00408">408</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a2718d83ff8aed9c8be38c8d546e181f6" name="a2718d83ff8aed9c8be38c8d546e181f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2718d83ff8aed9c8be38c8d546e181f6">&#9670;&nbsp;</a></span>ShouldRequestProductInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ShouldRequestProductInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Should the Device Product Information be requested As long as the device Product Information is not set yet and the number of requests is smaller than 4, the name should be requested once more. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00338">338</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad27249a51b020e40b0cfd010455299a4" name="ad27249a51b020e40b0cfd010455299a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad27249a51b020e40b0cfd010455299a4">&#9670;&nbsp;</a></span>ConfI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* tN2kDeviceList::tInternalDevice::ConfI</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pointer to the Config Information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00084">84</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ad4897803a0fca001736f5d7ce12cbf1d" name="ad4897803a0fca001736f5d7ce12cbf1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4897803a0fca001736f5d7ce12cbf1d">&#9670;&nbsp;</a></span>ConfILoaded</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ConfILoaded</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Product Infomation has bee loaded. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00073">73</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a9012636b5fa1d983f86675d1401eb240" name="a9012636b5fa1d983f86675d1401eb240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9012636b5fa1d983f86675d1401eb240">&#9670;&nbsp;</a></span>ConfIRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kDeviceList::tInternalDevice::ConfIRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Time for last request on the Config Information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00110">110</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a91d7009ae5d65db775ad1622e1a32b45" name="a91d7009ae5d65db775ad1622e1a32b45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d7009ae5d65db775ad1622e1a32b45">&#9670;&nbsp;</a></span>ConfISize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tN2kDeviceList::tInternalDevice::ConfISize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the Config Information (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00075">75</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a080c0ca24c95b9a5ff3a91d119d283e5" name="a080c0ca24c95b9a5ff3a91d119d283e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a080c0ca24c95b9a5ff3a91d119d283e5">&#9670;&nbsp;</a></span>InstallationDescription1</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* tN2kDeviceList::tInternalDevice::InstallationDescription1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pointer to the Installation Description 1. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00088">88</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="afd437b44f17e7cfe7eab4c8cc7bfdae6" name="afd437b44f17e7cfe7eab4c8cc7bfdae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd437b44f17e7cfe7eab4c8cc7bfdae6">&#9670;&nbsp;</a></span>InstallationDescription2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* tN2kDeviceList::tInternalDevice::InstallationDescription2</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pointer to the Installation Description 2. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00090">90</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a245e9011ef1822bd812fa7fc290b6840" name="a245e9011ef1822bd812fa7fc290b6840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a245e9011ef1822bd812fa7fc290b6840">&#9670;&nbsp;</a></span>InstDesc1Size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tN2kDeviceList::tInternalDevice::InstDesc1Size</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the Installation Description 1 (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00079">79</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a547e661ba559813f42aa562a511c262b" name="a547e661ba559813f42aa562a511c262b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a547e661ba559813f42aa562a511c262b">&#9670;&nbsp;</a></span>InstDesc2Size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tN2kDeviceList::tInternalDevice::InstDesc2Size</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the Installation Description 2 (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00081">81</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aac6ed6cc90eb9ed663e581a3fb634937" name="aac6ed6cc90eb9ed663e581a3fb634937"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac6ed6cc90eb9ed663e581a3fb634937">&#9670;&nbsp;</a></span>LastMessageTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kDeviceList::tInternalDevice::LastMessageTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Time of the last message. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00120">120</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ac4163faddb81c7427b2124a0b21b9cbf" name="ac4163faddb81c7427b2124a0b21b9cbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4163faddb81c7427b2124a0b21b9cbf">&#9670;&nbsp;</a></span>ManISize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t tN2kDeviceList::tInternalDevice::ManISize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the Manufacturer Information (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00077">77</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a6c009973d1e450166bcd6b3ef57acbee" name="a6c009973d1e450166bcd6b3ef57acbee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c009973d1e450166bcd6b3ef57acbee">&#9670;&nbsp;</a></span>ManufacturerInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* tN2kDeviceList::tInternalDevice::ManufacturerInformation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pointer to the Manufacturer Information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00086">86</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a5c268a15a6188a437c0522e33279fb54" name="a5c268a15a6188a437c0522e33279fb54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c268a15a6188a437c0522e33279fb54">&#9670;&nbsp;</a></span>nConfIRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::nConfIRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many times we have requested the Config information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00113">113</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="ab5b87c774eca16f7c5dd3fec978c62e0" name="ab5b87c774eca16f7c5dd3fec978c62e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5b87c774eca16f7c5dd3fec978c62e0">&#9670;&nbsp;</a></span>nNameRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::nNameRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many times we have requested the name. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00103">103</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a994056fd528be00af04997a0c9e4ac0f" name="a994056fd528be00af04997a0c9e4ac0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994056fd528be00af04997a0c9e4ac0f">&#9670;&nbsp;</a></span>nPGNsRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::nPGNsRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many times we have requested the PGN. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00117">117</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a325cc0a25284af3935cbb30849e562c4" name="a325cc0a25284af3935cbb30849e562c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a325cc0a25284af3935cbb30849e562c4">&#9670;&nbsp;</a></span>nProdIRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::nProdIRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many times we have requested the Product information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00108">108</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aeedba5650c26d88b75377c2f74700bd2" name="aeedba5650c26d88b75377c2f74700bd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeedba5650c26d88b75377c2f74700bd2">&#9670;&nbsp;</a></span>PGNsRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kDeviceList::tInternalDevice::PGNsRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Time for last request on the PGN. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00115">115</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="acdeb4f0637df08624c13ef20fb1eac1c" name="acdeb4f0637df08624c13ef20fb1eac1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdeb4f0637df08624c13ef20fb1eac1c">&#9670;&nbsp;</a></span>ProdI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html">tNMEA2000::tProductInformation</a> tN2kDeviceList::tInternalDevice::ProdI</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Product Information of this device. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00070">70</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a333b69151c1b3087d5a783f0438a2f5e" name="a333b69151c1b3087d5a783f0438a2f5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a333b69151c1b3087d5a783f0438a2f5e">&#9670;&nbsp;</a></span>ProdILoaded</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tN2kDeviceList::tInternalDevice::ProdILoaded</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Product Infomation has bee loaded. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00068">68</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a8caaf3bb4ec845a129f964deb775cac6" name="a8caaf3bb4ec845a129f964deb775cac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8caaf3bb4ec845a129f964deb775cac6">&#9670;&nbsp;</a></span>ProdIRequested</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long tN2kDeviceList::tInternalDevice::ProdIRequested</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Time for last request on the Product Information. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00105">105</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aee8ffc34db8433bdffed76d93b19a496" name="aee8ffc34db8433bdffed76d93b19a496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee8ffc34db8433bdffed76d93b19a496">&#9670;&nbsp;</a></span>ReceivePGNs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long* tN2kDeviceList::tInternalDevice::ReceivePGNs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Received PGNs. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00099">99</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="aa35d4ba4df39a9a0795cfe5d23c257c1" name="aa35d4ba4df39a9a0795cfe5d23c257c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa35d4ba4df39a9a0795cfe5d23c257c1">&#9670;&nbsp;</a></span>ReceivePGNsSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::ReceivePGNsSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the received PGN (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00097">97</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a7679fc9df60732c2b755c6bec1c7fb8e" name="a7679fc9df60732c2b755c6bec1c7fb8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7679fc9df60732c2b755c6bec1c7fb8e">&#9670;&nbsp;</a></span>TransmitPGNs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long* tN2kDeviceList::tInternalDevice::TransmitPGNs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transmitted PGNs. </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00095">95</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<a id="a86960bd38b09646193af150013613303" name="a86960bd38b09646193af150013613303"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86960bd38b09646193af150013613303">&#9670;&nbsp;</a></span>TransmitPGNsSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t tN2kDeviceList::tInternalDevice::TransmitPGNsSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Size of the transmitted PGN (number of bytes) </p>
+
+<p class="definition">Definition at line <a class="el" href="_n2k_device_list_8h_source.html#l00093">93</a> of file <a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li><a class="el" href="_n2k_device_list_8h_source.html">N2kDeviceList.h</a></li>
+<li><a class="el" href="_n2k_device_list_8cpp_source.html">N2kDeviceList.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classt_n2k_device_list.html">tN2kDeviceList</a></li><li class="navelem"><a class="el" href="classt_n2k_device_list_1_1t_internal_device.html">tInternalDevice</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

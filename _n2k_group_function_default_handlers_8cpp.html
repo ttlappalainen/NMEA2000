@@ -1,0 +1,543 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: N2kGroupFunctionDefaultHandlers.cpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_n2k_group_function_default_handlers_8cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">N2kGroupFunctionDefaultHandlers.cpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="_n2k_group_function_default_handlers_8h_source.html">N2kGroupFunctionDefaultHandlers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for N2kGroupFunctionDefaultHandlers.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n2k_group_function_default_handlers_8cpp__incl.png" border="0" usemap="#a_n2k_group_function_default_handlers_8cpp" alt=""/></div>
+<map name="a_n2k_group_function_default_handlers_8cpp" id="a_n2k_group_function_default_handlers_8cpp">
+<area shape="rect" title=" " alt="" coords="87,5,335,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,69,107"/>
+<area shape="rect" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes." alt="" coords="93,80,328,107"/>
+<area shape="rect" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="352,80,451,107"/>
+<area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="7,229,198,256"/>
+<area shape="rect" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="161,155,303,181"/>
+<area shape="rect" title=" " alt="" coords="223,229,284,256"/>
+<area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="353,229,434,256"/>
+<area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="356,304,455,331"/>
+<area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="458,379,534,405"/>
+<area shape="rect" title=" " alt="" coords="425,453,489,480"/>
+<area shape="rect" title=" " alt="" coords="314,379,382,405"/>
+<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="This File contains a CAN message helper class." alt="" coords="327,155,436,181"/>
+<area shape="rect" href="_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="530,304,619,331"/>
+<area shape="rect" title=" " alt="" coords="610,379,673,405"/>
+</map>
+</div>
+</div>
+<p><a href="_n2k_group_function_default_handlers_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a26e10c68016cb2eafa79638b1813fd9a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a26e10c68016cb2eafa79638b1813fd9a">N2kPGN126996_LoadEquivalency_field</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:a26e10c68016cb2eafa79638b1813fd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad737533ebc425e3c8c264e3a6b16c41f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#ad737533ebc425e3c8c264e3a6b16c41f">N2kPGN126996_ManufacturersModelID_field</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ad737533ebc425e3c8c264e3a6b16c41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86e91a941ca56ab2fd9ace636774b296"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a86e91a941ca56ab2fd9ace636774b296">N2kPGN126996_ManufacturersModelSerialCode_field</a>&#160;&#160;&#160;6</td></tr>
+<tr class="separator:a86e91a941ca56ab2fd9ace636774b296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a790cf187f5fb37fc858f8e78c9e57f89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a790cf187f5fb37fc858f8e78c9e57f89">N2kPGN126996_ManufacturersModelVersion_field</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:a790cf187f5fb37fc858f8e78c9e57f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b6293e88a82bd9a2591442c2857962"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a55b6293e88a82bd9a2591442c2857962">N2kPGN126996_ManufacturersSoftwareVersionCode_field</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a55b6293e88a82bd9a2591442c2857962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c9ba4e988eebd8d0a51a2a885414619"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a5c9ba4e988eebd8d0a51a2a885414619">N2kPGN126996_NMEA2000CertificationLevel_field</a>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:a5c9ba4e988eebd8d0a51a2a885414619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dad86dcaf1faf2e600900c9e57a6f76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a7dad86dcaf1faf2e600900c9e57a6f76">N2kPGN126996_NMEA2000DatabaseVersion_field</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a7dad86dcaf1faf2e600900c9e57a6f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d0163b3d475b233888d39f83b527726"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a9d0163b3d475b233888d39f83b527726">N2kPGN126996_NMEAManufacturersProductCode_field</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a9d0163b3d475b233888d39f83b527726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f599cf546e807ae2eeba0d287fd2d66"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a8f599cf546e807ae2eeba0d287fd2d66">N2kPGN126998_InstallationDescription1_field</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a8f599cf546e807ae2eeba0d287fd2d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac336237aac469a4e45803eca5a1d910c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#ac336237aac469a4e45803eca5a1d910c">N2kPGN126998_InstallationDescription2_field</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:ac336237aac469a4e45803eca5a1d910c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0efdfea1c768c18ccd352bdb87056ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#ad0efdfea1c768c18ccd352bdb87056ad">N2kPGN126998_ManufacturerInformation_field</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ad0efdfea1c768c18ccd352bdb87056ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1582147bf6c71bbd6083a52bea9171a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#aa1582147bf6c71bbd6083a52bea9171a">N2kPGN60928_DeviceClass_field</a>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:aa1582147bf6c71bbd6083a52bea9171a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ca82406aed1c0f1fefad1f9a1e1509a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a0ca82406aed1c0f1fefad1f9a1e1509a">N2kPGN60928_DeviceFunction_field</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:a0ca82406aed1c0f1fefad1f9a1e1509a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9679051eb55b36a7a726cfde1c5e4e83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a9679051eb55b36a7a726cfde1c5e4e83">N2kPGN60928_DeviceInstanceLower_field</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:a9679051eb55b36a7a726cfde1c5e4e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00462fe9d9979909a3a9d9d266218666"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a00462fe9d9979909a3a9d9d266218666">N2kPGN60928_DeviceInstanceUpper_field</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:a00462fe9d9979909a3a9d9d266218666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6dac5e274dfdf43b8ca13cf07b08677"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#ab6dac5e274dfdf43b8ca13cf07b08677">N2kPGN60928_IndustryGroup_field</a>&#160;&#160;&#160;9</td></tr>
+<tr class="separator:ab6dac5e274dfdf43b8ca13cf07b08677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55dc15b97643c2f3509023aec9cd01e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a55dc15b97643c2f3509023aec9cd01e6">N2kPGN60928_ISOSelfConfigurable_field</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:a55dc15b97643c2f3509023aec9cd01e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b648c50f09db860b9b00b3abd9bb876"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a3b648c50f09db860b9b00b3abd9bb876">N2kPGN60928_ManufacturerCode_field</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a3b648c50f09db860b9b00b3abd9bb876"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b7d08d48cc4de96fbe34edb751fc7ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a3b7d08d48cc4de96fbe34edb751fc7ef">N2kPGN60928_Reserved_field</a>&#160;&#160;&#160;6</td></tr>
+<tr class="separator:a3b7d08d48cc4de96fbe34edb751fc7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67ee58e0b93509b0a80233d6fff87dd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a67ee58e0b93509b0a80233d6fff87dd0">N2kPGN60928_SystemInstance_field</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:a67ee58e0b93509b0a80233d6fff87dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209bea7264b6dd9dd2d382d3c4e7dae0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html#a209bea7264b6dd9dd2d382d3c4e7dae0">N2kPGN60928_UniqueNumber_field</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a209bea7264b6dd9dd2d382d3c4e7dae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a26e10c68016cb2eafa79638b1813fd9a" name="a26e10c68016cb2eafa79638b1813fd9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26e10c68016cb2eafa79638b1813fd9a">&#9670;&nbsp;</a></span>N2kPGN126996_LoadEquivalency_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_LoadEquivalency_field&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00264">264</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad737533ebc425e3c8c264e3a6b16c41f" name="ad737533ebc425e3c8c264e3a6b16c41f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad737533ebc425e3c8c264e3a6b16c41f">&#9670;&nbsp;</a></span>N2kPGN126996_ManufacturersModelID_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_ManufacturersModelID_field&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00259">259</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a86e91a941ca56ab2fd9ace636774b296" name="a86e91a941ca56ab2fd9ace636774b296"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86e91a941ca56ab2fd9ace636774b296">&#9670;&nbsp;</a></span>N2kPGN126996_ManufacturersModelSerialCode_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_ManufacturersModelSerialCode_field&#160;&#160;&#160;6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00262">262</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a790cf187f5fb37fc858f8e78c9e57f89" name="a790cf187f5fb37fc858f8e78c9e57f89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a790cf187f5fb37fc858f8e78c9e57f89">&#9670;&nbsp;</a></span>N2kPGN126996_ManufacturersModelVersion_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_ManufacturersModelVersion_field&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00261">261</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a55b6293e88a82bd9a2591442c2857962" name="a55b6293e88a82bd9a2591442c2857962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b6293e88a82bd9a2591442c2857962">&#9670;&nbsp;</a></span>N2kPGN126996_ManufacturersSoftwareVersionCode_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_ManufacturersSoftwareVersionCode_field&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00260">260</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5c9ba4e988eebd8d0a51a2a885414619" name="a5c9ba4e988eebd8d0a51a2a885414619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c9ba4e988eebd8d0a51a2a885414619">&#9670;&nbsp;</a></span>N2kPGN126996_NMEA2000CertificationLevel_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_NMEA2000CertificationLevel_field&#160;&#160;&#160;7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00263">263</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7dad86dcaf1faf2e600900c9e57a6f76" name="a7dad86dcaf1faf2e600900c9e57a6f76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dad86dcaf1faf2e600900c9e57a6f76">&#9670;&nbsp;</a></span>N2kPGN126996_NMEA2000DatabaseVersion_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_NMEA2000DatabaseVersion_field&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00257">257</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9d0163b3d475b233888d39f83b527726" name="a9d0163b3d475b233888d39f83b527726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d0163b3d475b233888d39f83b527726">&#9670;&nbsp;</a></span>N2kPGN126996_NMEAManufacturersProductCode_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126996_NMEAManufacturersProductCode_field&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00258">258</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8f599cf546e807ae2eeba0d287fd2d66" name="a8f599cf546e807ae2eeba0d287fd2d66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f599cf546e807ae2eeba0d287fd2d66">&#9670;&nbsp;</a></span>N2kPGN126998_InstallationDescription1_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126998_InstallationDescription1_field&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00365">365</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac336237aac469a4e45803eca5a1d910c" name="ac336237aac469a4e45803eca5a1d910c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac336237aac469a4e45803eca5a1d910c">&#9670;&nbsp;</a></span>N2kPGN126998_InstallationDescription2_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126998_InstallationDescription2_field&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00366">366</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad0efdfea1c768c18ccd352bdb87056ad" name="ad0efdfea1c768c18ccd352bdb87056ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0efdfea1c768c18ccd352bdb87056ad">&#9670;&nbsp;</a></span>N2kPGN126998_ManufacturerInformation_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN126998_ManufacturerInformation_field&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00367">367</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa1582147bf6c71bbd6083a52bea9171a" name="aa1582147bf6c71bbd6083a52bea9171a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1582147bf6c71bbd6083a52bea9171a">&#9670;&nbsp;</a></span>N2kPGN60928_DeviceClass_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_DeviceClass_field&#160;&#160;&#160;7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00034">34</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0ca82406aed1c0f1fefad1f9a1e1509a" name="a0ca82406aed1c0f1fefad1f9a1e1509a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ca82406aed1c0f1fefad1f9a1e1509a">&#9670;&nbsp;</a></span>N2kPGN60928_DeviceFunction_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_DeviceFunction_field&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00032">32</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9679051eb55b36a7a726cfde1c5e4e83" name="a9679051eb55b36a7a726cfde1c5e4e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9679051eb55b36a7a726cfde1c5e4e83">&#9670;&nbsp;</a></span>N2kPGN60928_DeviceInstanceLower_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_DeviceInstanceLower_field&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00030">30</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a00462fe9d9979909a3a9d9d266218666" name="a00462fe9d9979909a3a9d9d266218666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00462fe9d9979909a3a9d9d266218666">&#9670;&nbsp;</a></span>N2kPGN60928_DeviceInstanceUpper_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_DeviceInstanceUpper_field&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00031">31</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab6dac5e274dfdf43b8ca13cf07b08677" name="ab6dac5e274dfdf43b8ca13cf07b08677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6dac5e274dfdf43b8ca13cf07b08677">&#9670;&nbsp;</a></span>N2kPGN60928_IndustryGroup_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_IndustryGroup_field&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00036">36</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a55dc15b97643c2f3509023aec9cd01e6" name="a55dc15b97643c2f3509023aec9cd01e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55dc15b97643c2f3509023aec9cd01e6">&#9670;&nbsp;</a></span>N2kPGN60928_ISOSelfConfigurable_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_ISOSelfConfigurable_field&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00037">37</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3b648c50f09db860b9b00b3abd9bb876" name="a3b648c50f09db860b9b00b3abd9bb876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b648c50f09db860b9b00b3abd9bb876">&#9670;&nbsp;</a></span>N2kPGN60928_ManufacturerCode_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_ManufacturerCode_field&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00029">29</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3b7d08d48cc4de96fbe34edb751fc7ef" name="a3b7d08d48cc4de96fbe34edb751fc7ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b7d08d48cc4de96fbe34edb751fc7ef">&#9670;&nbsp;</a></span>N2kPGN60928_Reserved_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_Reserved_field&#160;&#160;&#160;6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00033">33</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a67ee58e0b93509b0a80233d6fff87dd0" name="a67ee58e0b93509b0a80233d6fff87dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67ee58e0b93509b0a80233d6fff87dd0">&#9670;&nbsp;</a></span>N2kPGN60928_SystemInstance_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_SystemInstance_field&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00035">35</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a209bea7264b6dd9dd2d382d3c4e7dae0" name="a209bea7264b6dd9dd2d382d3c4e7dae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a209bea7264b6dd9dd2d382d3c4e7dae0">&#9670;&nbsp;</a></span>N2kPGN60928_UniqueNumber_field</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N2kPGN60928_UniqueNumber_field&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html#l00028">28</a> of file <a class="el" href="_n2k_group_function_default_handlers_8cpp_source.html">N2kGroupFunctionDefaultHandlers.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_n2k_group_function_default_handlers_8cpp.html">N2kGroupFunctionDefaultHandlers.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

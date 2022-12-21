@@ -1,0 +1,12 @@
+<map id="NMEA2000_CompilerDefns.h" name="NMEA2000_CompilerDefns.h">
+<area shape="rect" id="node1" title="Specific compiler definition to adapt the library to your needs." alt="" coords="294,5,485,32"/>
+<area shape="rect" id="node2" href="$_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="427,80,568,107"/>
+<area shape="rect" id="node4" href="$_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes." alt="" coords="189,155,424,181"/>
+<area shape="rect" id="node7" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="448,155,547,181"/>
+<area shape="rect" id="node3" href="$_n2k_group_function_8cpp.html" title=" " alt="" coords="713,229,868,256"/>
+<area shape="rect" id="node5" href="$_n2k_group_function_default_handlers_8cpp.html" title=" " alt="" coords="5,229,253,256"/>
+<area shape="rect" id="node6" href="$_n_m_e_a2000_8cpp.html" title=" " alt="" coords="277,229,389,256"/>
+<area shape="rect" id="node8" href="$_n2k_device_list_8h.html" title="This File contains a." alt="" coords="413,229,531,256"/>
+<area shape="rect" id="node10" href="$_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="556,229,689,256"/>
+<area shape="rect" id="node9" href="$_n2k_device_list_8cpp.html" title=" " alt="" coords="406,304,538,331"/>
+</map>
