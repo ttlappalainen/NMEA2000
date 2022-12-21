@@ -537,7 +537,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a1cc5777a190fa72862224166b1240f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all data bytes of the multi packet message has been send successful.  <a href="classt_n_m_e_a2000.html#a1cc5777a190fa72862224166b1240f3b">More...</a><br /></td></tr>
 <tr class="separator:a1cc5777a190fa72862224166b1240f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7dbb8a8e30a3926b5a2076e441d80eb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#ac7dbb8a8e30a3926b5a2076e441d80eb">InitCANFrameBuffers</a> ()</td></tr>
-<tr class="memdesc:ac7dbb8a8e30a3926b5a2076e441d80eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise CAN Frame buffers.  <a href="classt_n_m_e_a2000.html#ac7dbb8a8e30a3926b5a2076e441d80eb">More...</a><br /></td></tr>
+<tr class="memdesc:ac7dbb8a8e30a3926b5a2076e441d80eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize CAN Frame buffers.  <a href="classt_n_m_e_a2000.html#ac7dbb8a8e30a3926b5a2076e441d80eb">More...</a><br /></td></tr>
 <tr class="separator:ac7dbb8a8e30a3926b5a2076e441d80eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18db43d43c08c5aebc91fbab249439a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a18db43d43c08c5aebc91fbab249439a8">InitDevices</a> ()</td></tr>
 <tr class="memdesc:a18db43d43c08c5aebc91fbab249439a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize all devices.  <a href="classt_n_m_e_a2000.html#a18db43d43c08c5aebc91fbab249439a8">More...</a><br /></td></tr>
@@ -555,7 +555,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a68580599d81b21ef5f598f41c09ea004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if this PNG is a fast packet message.  <a href="classt_n_m_e_a2000.html#a68580599d81b21ef5f598f41c09ea004">More...</a><br /></td></tr>
 <tr class="separator:a68580599d81b21ef5f598f41c09ea004"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6e746a5ea7de05c02fd56488ea1a0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a3c6e746a5ea7de05c02fd56488ea1a0b">IsInitialized</a> ()</td></tr>
-<tr class="memdesc:a3c6e746a5ea7de05c02fd56488ea1a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the CAN BUS is already initialised.  <a href="classt_n_m_e_a2000.html#a3c6e746a5ea7de05c02fd56488ea1a0b">More...</a><br /></td></tr>
+<tr class="memdesc:a3c6e746a5ea7de05c02fd56488ea1a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the CAN BUS is already initialized.  <a href="classt_n_m_e_a2000.html#a3c6e746a5ea7de05c02fd56488ea1a0b">More...</a><br /></td></tr>
 <tr class="separator:a3c6e746a5ea7de05c02fd56488ea1a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a036fe26544030720e760c305f1405b7b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a036fe26544030720e760c305f1405b7b">IsMySource</a> (unsigned char Source)</td></tr>
 <tr class="memdesc:a036fe26544030720e760c305f1405b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the source belongs to a device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a>.  <a href="classt_n_m_e_a2000.html#a036fe26544030720e760c305f1405b7b">More...</a><br /></td></tr>
@@ -2999,7 +2999,7 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Initialise CAN Frame buffers. </p>
+<p>Initialize CAN Frame buffers. </p>
 <p >This will be called on <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a> before any other initialization. Inherit this, if buffers can be set for the driver and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. </p>
 
 <p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01141">1141</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
@@ -3261,7 +3261,7 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Determines if the CAN BUS is already initialised. </p>
+<p>Determines if the CAN BUS is already initialized. </p>
 <dl class="section return"><dt>Returns</dt><dd>true </dd>
 <dd>
 false </dd></dl>
