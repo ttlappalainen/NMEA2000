@@ -1810,6 +1810,10 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
  * \brief Parse the content of a PGN 127502 (Switch Bank Control) message.
  * \ingroup group_msgParsers
  * 
+ * Review \ref N2kGetStatusOnBinaryStatus and the documentation of tN2kOnOff
+ * for information on how to process the bank status data returned by this
+ * function.
+ * 
  * \note This PGN is deprecated by NMEA and modern switch bank devices may
  *       well not support it, favouring PGN 126208 Command Group Function.
  *  
@@ -1821,7 +1825,6 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
  * \param BankStatus          The binary status component of the switchbank
  *                            control containing the commanded state of channels
  *                            on the target switchbank.
- *                            \ref N2kGetStatusOnBinaryStatus
  * 
  * \return true               Parsing of PGN Message successful
  * \return false              Parsing of PGN Message aborted
@@ -1851,8 +1854,13 @@ inline bool ParseN2kSwitchbankControl(const tN2kMsg &N2kMsg, unsigned char &Targ
  * channels which you intend to operate. Channels in which you have no
  * interest should not be commanded but set not available.
  * 
- * Review \ref N2kSetStatusOnBinaryStatus and the documentation of tN2kOnOff
- * for information on how to set up bank status.
+ * Review \ref N2kResetBinaryStatus, \ref N2kSetStatusOnBinaryStatus and the
+ * documentation of tN2kOnOff for information on how to set up bank status.
+ * 
+ * Remember as well, that transmission of a PGN 127502 message is equivalent
+ * to issuing a command, so do not send the same message repeatdly: once should
+ * be enough. You can always check that the target switchbank has responded
+ * by checking its PGN 127501 broadcasts.
  * 
  * \note This PGN is deprecated by NMEA and modern switch bank devices may
  *       well not support it, favouring PGN 126208 Command Group Function.
