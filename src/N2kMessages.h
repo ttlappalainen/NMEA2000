@@ -1807,9 +1807,12 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
 }
 
 /************************************************************************//**
- * \brief Parse the content of a PGN 127502 (Switch Bank Control) message
+ * \brief Parse the content of a PGN 127502 (Switch Bank Control) message.
  * \ingroup group_msgParsers
  * 
+ * \note This PGN is deprecated by NMEA and modern switch bank devices may
+ *       well not support it, favouring PGN 126208 Command Group Function.
+ *  
  * \param N2kMsg              Reference to the N2kMsg object to be parsed. If
  *                            this contains a valid PGN 127502 message then
  *                            the following return values will be set. 
@@ -1842,13 +1845,24 @@ inline bool ParseN2kSwitchbankControl(const tN2kMsg &N2kMsg, unsigned char &Targ
  * 
  * Command channel states on a remote switch bank. Up to 28 remote binary
  * states can be controlled.
+ * 
+ * When you create a tN2kBinaryStatus object for use with this function
+ * you should ensure that you only command (that is set ON or OFF) those
+ * channels which you intend to operate. Channels in which you have no
+ * interest should not be commanded but set not available.
+ * 
+ * Review \ref N2kSetStatusOnBinaryStatus and the documentation of tN2kOnOff
+ * for information on how to set up bank status.
+ * 
+ * \note This PGN is deprecated by NMEA and modern switch bank devices may
+ *       well not support it, favouring PGN 126208 Command Group Function.
  *
  * \param N2kMsg              Reference to an N2kMsg Object which will be
  *                            configured for sending on the NMEA bus. 
  * \param DeviceBankInstance  Instance number of the target switchbank (i.e.
  *                            the device to be controlled).
  * \param BankStatus          Full bank status containing the channel states
- *                            to to be commanded on the remote switchbank.
+ *                            to be commanded on the remote switchbank.
  *                            \ref N2kGetStatusOnBinaryStatus
  */
 void SetN2kPGN127502(tN2kMsg &N2kMsg, unsigned char TargetBankInstance, tN2kBinaryStatus BankStatus);
