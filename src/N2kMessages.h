@@ -1807,6 +1807,86 @@ inline bool ParseN2kBinaryStatus(const tN2kMsg &N2kMsg, unsigned char &DeviceBan
 }
 
 /************************************************************************//**
+ * \brief Parse the content of a PGN 127502 (Switch Bank Control) message.
+ * \ingroup group_msgParsers
+ * 
+ * Review \ref N2kGetStatusOnBinaryStatus and the documentation of tN2kOnOff
+ * for information on how to process the bank status data returned by this
+ * function.
+ * 
+ * \note This PGN is deprecated by NMEA and modern switch bank devices may
+ *       well not support it, favouring PGN 126208 Command Group Function.
+ *  
+ * \param N2kMsg              Reference to the N2kMsg object to be parsed. If
+ *                            this contains a valid PGN 127502 message then
+ *                            the following return values will be set. 
+ * \param TargetBankInstance  Instance number of the switchbank that was
+ *                            targetted by this switchbank control message.
+ * \param BankStatus          The binary status component of the switchbank
+ *                            control containing the commanded state of channels
+ *                            on the target switchbank.
+ * 
+ * \return true               Parsing of PGN Message successful
+ * \return false              Parsing of PGN Message aborted
+ */
+bool ParseN2kPGN127502(const tN2kMsg &N2kMsg, unsigned char &TargetBankInstance, tN2kBinaryStatus &BankStatus);
+
+/************************************************************************//**
+ * \brief Parse PGN 127502 "Switch Bank Control" message.
+ * \ingroup group_msgSetUp
+ * 
+ * Alias of \ref ParseN2kPGN127502. This alias was introduced to improve the
+ * readability of the source code.
+ */
+inline bool ParseN2kSwitchbankControl(const tN2kMsg &N2kMsg, unsigned char &TargetBankInstance, tN2kBinaryStatus &BankStatus) {
+  return ParseN2kPGN127502(N2kMsg, TargetBankInstance, BankStatus);
+}
+
+/************************************************************************//**
+ * \brief Set up PGN 127502 "Switch Bank Control" message.
+ * \ingroup group_msgSetUp
+ * 
+ * Command channel states on a remote switch bank. Up to 28 remote binary
+ * states can be controlled.
+ * 
+ * When you create a tN2kBinaryStatus object for use with this function
+ * you should ensure that you only command (that is set ON or OFF) those
+ * channels which you intend to operate. Channels in which you have no
+ * interest should not be commanded but set not available.
+ * 
+ * Review \ref N2kResetBinaryStatus, \ref N2kSetStatusOnBinaryStatus and the
+ * documentation of tN2kOnOff for information on how to set up bank status.
+ * 
+ * Remember as well, that transmission of a PGN 127502 message is equivalent
+ * to issuing a command, so do not send the same message repeatdly: once should
+ * be enough. You can always check that the target switchbank has responded
+ * by checking its PGN 127501 broadcasts.
+ * 
+ * \note This PGN is deprecated by NMEA and modern switch bank devices may
+ *       well not support it, favouring PGN 126208 Command Group Function.
+ *
+ * \param N2kMsg              Reference to an N2kMsg Object which will be
+ *                            configured for sending on the NMEA bus. 
+ * \param DeviceBankInstance  Instance number of the target switchbank (i.e.
+ *                            the device to be controlled).
+ * \param BankStatus          Full bank status containing the channel states
+ *                            to be commanded on the remote switchbank.
+ *                            \ref N2kGetStatusOnBinaryStatus
+ */
+void SetN2kPGN127502(tN2kMsg &N2kMsg, unsigned char TargetBankInstance, tN2kBinaryStatus BankStatus);
+
+/************************************************************************//**
+ * \brief Set up PGN 127502 "Switch Bank Control" message.
+ * \ingroup group_msgSetUp
+ * 
+ * Alias of \ref SetN2kPGN127502. This alias was introduced to improve the
+ * readability of the source code.
+ */
+inline void SetN2kSwitchbankControl(tN2kMsg &N2kMsg, unsigned char TargetBankInstance, tN2kBinaryStatus BankStatus) {
+	SetN2kPGN127502(N2kMsg, TargetBankInstance, BankStatus);
+}
+
+/************************************************************************//**
  * \brief Setting up PGN 127505 Message "Fluid level"
  * \ingroup group_msgSetUp
  * 

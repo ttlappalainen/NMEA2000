@@ -633,6 +633,29 @@ bool ParseN2kPGN127501(const tN2kMsg &N2kMsg, unsigned char &DeviceBankInstance,
 }
 
 //*****************************************************************************
+// PGN 127502 - Switch Bank Control
+
+bool ParseN2kPGN127502(const tN2kMsg &N2kMsg, unsigned char &TargetBankInstance, tN2kBinaryStatus &BankStatus) {
+  if (N2kMsg.PGN!=127502L) return false;
+
+  int Index=0;
+  BankStatus=N2kMsg.GetUInt64(Index);
+  TargetBankInstance = BankStatus & 0xff;
+  BankStatus>>=8;
+
+  return true;
+}
+
+//*****************************************************************************
+
+void SetN2kPGN127502(tN2kMsg &N2kMsg, unsigned char TargetBankInstance, tN2kBinaryStatus BankStatus) {
+  N2kMsg.SetPGN(127502L);
+  N2kMsg.Priority=3;
+	BankStatus = (BankStatus << 8) | TargetBankInstance;
+	N2kMsg.AddUInt64(BankStatus);
+}
+
+//*****************************************************************************
 // Fluid level
 void SetN2kPGN127505(tN2kMsg &N2kMsg, unsigned char Instance, tN2kFluidType FluidType, double Level, double Capacity) {
     N2kMsg.SetPGN(127505L);
