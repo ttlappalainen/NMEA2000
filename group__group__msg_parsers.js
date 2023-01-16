@@ -56,6 +56,7 @@ var group__group__msg_parsers =
     [ "ParseN2kPGN127497", "group__group__msg_parsers.html#ga9823503bcbb68aa015ecc056f5be74be", null ],
     [ "ParseN2kPGN127501", "group__group__msg_parsers.html#ga37f2046bc1378b19dc5635d5046709e7", null ],
     [ "ParseN2kPGN127501", "group__group__msg_parsers.html#gad362c699d0992bbb9d06f442933f75a1", null ],
+    [ "ParseN2kPGN127502", "group__group__msg_parsers.html#gaaadc96fd7fd3b4ccc942704c103d444a", null ],
     [ "ParseN2kPGN127505", "group__group__msg_parsers.html#ga0a1079d88c850a0e7bcf423906f91b52", null ],
     [ "ParseN2kPGN127506", "group__group__msg_parsers.html#gac9fd4fcb39317cf75aba6795aa0835f1", null ],
     [ "ParseN2kPGN127507", "group__group__msg_parsers.html#ga935b302ef78d4946bdb53eca0651fb03", null ],
