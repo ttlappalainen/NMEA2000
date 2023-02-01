@@ -1,6 +1,6 @@
 /* N2kMessages.h
  * 
- * Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -40,8 +40,8 @@
  *
  * The content of the PGNs is specified by the NMEA2000 Standard under
  * 
- * - https://www.nmea.org/Assets/july%202010%20nmea2000_v1-301_app_b_pgn_field_list.pdf
- * - https://www.nmea.org/Assets/20151026%20nmea%202000%20pgn_website_description_list.pdf
+ * - https://web.archive.org/web/20220515054117/https://www.nmea.org/Assets/july%202010%20nmea2000_v1-301_app_b_pgn_field_list.pdf
+ * - https://web.archive.org/web/20200918140201/https://www.nmea.org/Assets/20151026%20nmea%202000%20pgn_website_description_list.pdf
  * 
  * If you do not send anything to NMEA2000 bus, you do not need this library.
  * Funtions for BUS handling PGN:s like 60928 "ISO Address Claim" has been
@@ -2299,7 +2299,7 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
  * related PGN’s from the same source address. When no linkage exists,
  * the value of the SID shall be set to 255
  * 
- * [NMEA2000 document](https://www.nmea.org/Assets/20170204%20nmea%202000%20leeway%20pgn%20final.pdf)
+ * [NMEA2000 document](https://web.archive.org/web/20170609074636/https://www.nmea.org/Assets/20170204%20nmea%202000%20leeway%20pgn%20final.pdf)
  * \param N2kMsg    Reference to a N2kMsg Object, 
  *                  Output: NMEA2000 message ready to be send.
  * \param SID       Sequence ID. If your device is e.g. boat speed and

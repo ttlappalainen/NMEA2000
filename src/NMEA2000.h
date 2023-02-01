@@ -3,7 +3,7 @@
  *
  * The MIT License
  *
- * Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -315,13 +315,13 @@ public:
         unsigned char DeviceInstance;
         /** \brief  Device function code 
          * 
-         * see for Details: [NMEA2000 Device and Function Codes](https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
+         * see for Details: [NMEA2000 Device and Function Codes](https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
          * 
         */
         unsigned char DeviceFunction;
         /** \brief  Device class 
          * 
-         * see for Details: [NMEA2000 Device and Function Codes](https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
+         * see for Details: [NMEA2000 Device and Function Codes](https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
          * 
          */
         unsigned char DeviceClass;
@@ -1150,8 +1150,8 @@ protected:
      *  - Industrie Group Code = 4  ==> Marine
      * 
      * \sa
-     *  - http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-     *  - http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
+     *  - https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+     *  - https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
      */
     void InitDevices();
     /*********************************************************************//**
@@ -1324,7 +1324,7 @@ protected:
      * \brief Respond to an Group Function
      *
      * 
-     * Document https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+     * Document https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
      * defines that systems should respond to NMEA Request/Command/Acknowledge 
      * group function PGN 126208. Here we first call callback and if that will 
      * not handle function, we use default handler.
@@ -1339,7 +1339,7 @@ protected:
     /*********************************************************************//**
      * \brief Handles a Group Function
      * 
-     * Document https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+     * Document https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
      * defines that systems should respond to NMEA Request/Command/Acknowledge 
      * group function PGN 126208. On the document it is not clear can request 
      * be send as broadcast, so we handle it, if we can.
@@ -2157,13 +2157,13 @@ public:
      *                          Each device from same manufacturer should 
      *                          have unique number.
      * \param _DeviceFunction   Default=130, PC Gateway. See codes on 
-     *  http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+     *  https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
      * \param _DeviceClass      Default=25, Inter/Intranetwork Device. 
      *                          See codes on 
-     * http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+     * https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
      * \param _ManufacturerCode Default=2046. Maximum 2046. See the 
      *                          list of codes on 
-     * http://www.nmea.org/Assets/20140409%20nmea%202000%20registration%20list.pdf
+     * https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
      * \param _IndustryGroup    Default=4, Marine.
      * \param iDev    index of the device on \ref Devices
      */
@@ -2314,7 +2314,7 @@ public:
      * \brief Set the Heartbeat Interval and Offset for a device
      * 
      * According to document [NMEA Heartbeat Corrigendum] 
-     * (https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
+     * (https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
      * all NMEA devices shall transmit heartbeat PGN 126993. With this 
      * function you can set transmission interval in ms (range 1000-655320ms
      * , default 60000). Set <1000 to disable it.

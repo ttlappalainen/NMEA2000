@@ -1,7 +1,7 @@
 /*
  * N2kGroupFunction.h
 
- * Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,7 @@
  * 
  * \todo Please double check and give maybe some more context
  * 
- * \sa [NMEA2000 Documentation PGN 126208 ] (https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
+ * \sa [NMEA2000 Documentation PGN 126208 ] (https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
  * ********************************************************************/
 
 #ifndef _N2kGroupFunction_H_

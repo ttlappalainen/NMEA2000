@@ -254,7 +254,7 @@ bus will be connected with drop cables. There are lot of good documents availabl
 Look e.g. Proper NMEA 2000 Installation by NMEA organization, Complete guide to
 building an NMEA2000 network by Actisense, Network Installation guide by Maretron.
 
-- [2012 ibex full  nmea installation.pdf>](https://www.nmea.org/Assets/2012%20ibex%20full%20%20nmea%20installation.pdf)
+- [2012 ibex full  nmea installation.pdf>](https://web.archive.org/web/20190602112104/https://www.nmea.org/Assets/2012%20ibex%20full%20%20nmea%20installation.pdf)
 - [complete-guide-to-building-an-nmea-2000-network](https://actisense.com/complete-guide-to-building-an-nmea-2000-network/)
 - [Network Installation Guide.pdf](https://www.maretron.com/products/pdf/Network%20Installation%20Guide.pdf)
 

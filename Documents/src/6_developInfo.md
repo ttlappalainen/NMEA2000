@@ -140,4 +140,4 @@ There is a way to download the full documentation to your local PC. Go to [githu
 ### Automatic Documentation Deployment with github ACTION
 
 In order to keep the documentation always up to date there is a github workflow in place which always get triggered when new changes were pushed to the master branch. The workflow is written in the file "./github/workflows/doxygen-gh-pages.yml"
-It generates the html documentation and push it to the branch "gh-pages". The "gh-pages" branch is the published under <https://matthias-mw.github.io/NMEA2000/>
+It generates the html documentation and push it to the branch "gh-pages". The "gh-pages" branch is the published under <https://ttlappalainen.github.io/NMEA2000/>

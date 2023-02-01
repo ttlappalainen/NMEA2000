@@ -3,7 +3,7 @@
  *
  * The MIT License
  *
- * Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -57,7 +57,7 @@
  * are Request Parameters that can be used to control the expected response
  * to requests for this PGN.
  * 
- * [See document] (http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf)
+ * [See document] (https://web.archive.org/web/20150910070107/http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf)
  *
  */
 class tN2kGroupFunctionHandlerForPGN60928 : public tN2kGroupFunctionHandler {
@@ -110,7 +110,7 @@ class tN2kGroupFunctionHandlerForPGN126464 : public tN2kGroupFunctionHandler {
  * network. Reception of this PGN may also be used to maintain an address
  * to NAME association table within the receiving device.
  * 
- * [See document](https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
+ * [See document](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
  * 
  */
 class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {

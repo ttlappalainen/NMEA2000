@@ -1,5 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 01.02.2023
+
+- Copyright update.
+- Document update. Still some lost NMEA document.
+
 ## 21.12.2022
 
 - Creating Doxygen based documentation for the library. There will be more documentation updating in future, 

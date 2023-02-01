@@ -664,7 +664,7 @@ behavior for providing configuration information.
 
 ##### SetHeartbeatInterval
 
-According to document [20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf](https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf) all NMEA devices shall
+According to document [20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf) all NMEA devices shall
 transmit heartbeat PGN 126993. With this function you can set transmission interval in ms
 (range 1000-655320 ms, default 60000). Set <1000 to disable it. You can temporary change
 interval by setting SetAsDefault parameter to false. Then you can restore default interval

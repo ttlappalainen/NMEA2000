@@ -1,7 +1,7 @@
 /*
 NMEA2000.cpp
 
-Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -671,9 +671,9 @@ void tNMEA2000::InitDevices() {
     Devices[0].ProductInformation=&DefProductInformation;
     for ( int i=0; i<DeviceCount; i++) { // Initialize all devices with some value
       SetDeviceInformation(1+i, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
-                           130, // PC Gateway. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-                           25, // Inter/Intranetwork Device. See codes on http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
-                           2046,  // Maximum 2046. See the list of codes on http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
+                           130, // PC Gateway. See codes on https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                           25, // Inter/Intranetwork Device. See codes on https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
+                           2046,  // Maximum 2046. See the list of codes on https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf
                            4,  // Marine
                            i
                           );
@@ -2297,7 +2297,7 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 //*****************************************************************************
-// Document https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+// Document https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
 // defines that systems should respond to NMEA Request/Command/Acknowledge group function PGN 126208.
 // Here we first call callback and if that will not handle function, we use default handler.
 void tNMEA2000::RespondGroupFunction(const tN2kMsg &N2kMsg, tN2kGroupFunctionCode GroupFunctionCode, unsigned long PGNForGroupFunction, int iDev) {
@@ -2319,7 +2319,7 @@ void tNMEA2000::RespondGroupFunction(const tN2kMsg &N2kMsg, tN2kGroupFunctionCod
 }
 
 //*****************************************************************************
-// Document https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
+// Document https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf
 // defines that systems should respond to NMEA Request/Command/Acknowledge group function PGN 126208.
 // On the document it is not clear can request be send as broadcast, so we handle it, if we can.
 void tNMEA2000::HandleGroupFunction(const tN2kMsg &N2kMsg) {

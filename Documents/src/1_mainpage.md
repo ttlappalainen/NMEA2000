@@ -33,13 +33,13 @@ each hardware setup need a specific \ref secHWlib
 
 \section secRef References
 
-- [NMEA2000 Standard](https://nmea.org/content/STANDARDS/NMEA_2000)
-- [List of NMEA 2000 registered devices](https://www.nmea.org/Assets/20190614%200183%20manufacturer%20codes.pdf)
-- [List of NMEA 2000 registrated companies](https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
-- [Device class and function codes](http://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
-- [ISO address claim](http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf)
-- [Group function PGN 126208 handling](https://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
-- [Heartbeat PGN 126993](https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
+- [NMEA2000 Standard](https://www.nmea.org/nmea-2000.html)
+- [List of NMEA 2000 registered devices](https://web.nmea.org/products/search)
+- [List of NMEA 2000 registrated companies](https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf)
+- [Device class and function codes](https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
+- [ISO address claim](https://web.archive.org/web/20150910070107/http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf)
+- [Group function PGN 126208 handling](https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
+- [Heartbeat PGN 126993](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
 
 ### Thanks
 

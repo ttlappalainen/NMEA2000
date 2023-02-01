@@ -1,7 +1,7 @@
 /*
  * N2kMaretron.h
  * 
- * Copyright (c) 2019-2022 Vassilis Bourdakis,
+ * Copyright (c) 2019-2023 Vassilis Bourdakis,
  *                        Timo Lappalainen, Kave Oy, www.kave.fi, 
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
