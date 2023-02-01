@@ -558,7 +558,7 @@ SendConfigurationInformation</h4>
 <p >This is automatically used by class. You only need to use this, if you want to write your own behavior for providing configuration information.</p>
 <h4><a class="anchor" id="autotoc_md62"></a>
 SetHeartbeatInterval</h4>
-<p >According to document <a href="https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf">20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf</a> all NMEA devices shall transmit heartbeat PGN 126993. With this function you can set transmission interval in ms (range 1000-655320 ms, default 60000). Set &lt;1000 to disable it. You can temporary change interval by setting SetAsDefault parameter to false. Then you can restore default interval with interval parameter value 0xfffffffe</p>
+<p >According to document <a href="https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf">20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf</a> all NMEA devices shall transmit heartbeat PGN 126993. With this function you can set transmission interval in ms (range 1000-655320 ms, default 60000). Set &lt;1000 to disable it. You can temporary change interval by setting SetAsDefault parameter to false. Then you can restore default interval with interval parameter value 0xfffffffe</p>
 <h4><a class="anchor" id="autotoc_md63"></a>
 GetHeartbeatInterval</h4>
 <p >Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found if a changed value should be saved for next startup or not like address.</p>
