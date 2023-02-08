@@ -1,5 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 08.02.2023
+
+- Fixed priority setting on SetN2kPGN130577.
+- Fixed "set temperature" field to unsigned on ParseN2kPGN130316 and SetN2kPGN130316.
+
 ## 01.02.2023
 
 - Copyright update.
