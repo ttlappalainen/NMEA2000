@@ -509,3 +509,64 @@ TEST_CASE("PGN129802 AIS Safety Related Broadcast Message")
      REQUIRE(strcmp(SafetyRelatedText_TX,SafetyRelatedText_RX) == 0);
    }
 }
+
+TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
+{
+  const int numItems = 28; // each Bank can contain up to 28 Items
+  tN2kMsg N2kMsg;
+  tN2kBinaryStatus switchBank_init, switchBank_expect, switchBank_actual;
+  tN2kOnOff itemStatus_expect[numItems];
+  N2kResetBinaryStatus(switchBank_init);
+  N2kResetBinaryStatus(switchBank_expect);
+  N2kResetBinaryStatus(switchBank_actual);
+  for (int i = 0; i < numItems; i++)
+  {
+    itemStatus_expect[i] = ((i+1) & 1) ? (N2kOnOff_On) : (N2kOnOff_Off); // every even switch off, every odd switch on
+    N2kSetStatusBinaryOnStatus(switchBank_expect, itemStatus_expect[i], i + 1);
+  }
+
+  SECTION("BinaryStatus helper functions work properly")
+  {  
+    for (int i = 0; i < numItems; i++)
+    {
+      tN2kOnOff itemStatus_actual = N2kGetStatusOnBinaryStatus(switchBank_init, i + 1);
+      REQUIRE(itemStatus_actual == N2kOnOff_Unavailable); // initial value, all set to "unavailable"
+    }
+    for (int i = 0; i < numItems; i++)
+    {
+      tN2kOnOff itemStatus_actual = N2kGetStatusOnBinaryStatus(switchBank_expect, i + 1);
+      REQUIRE(itemStatus_actual == itemStatus_expect[i]);
+    }
+  }
+
+  const uint8_t bankNo_expect = 3;
+  uint8_t bankNo_actual = 0;
+
+  SetN2kBinaryStatus(N2kMsg, bankNo_expect, switchBank_expect); //PGN127501
+  ParseN2kBinaryStatus(N2kMsg, bankNo_actual, switchBank_actual); //PGN127501
+
+  SECTION("PGN127501 parsed values match set values")
+  {
+    REQUIRE(bankNo_expect == bankNo_actual);
+    for (int i = 0; i < numItems; i++)
+    {
+      tN2kOnOff itemStatus_actual = N2kGetStatusOnBinaryStatus(switchBank_actual, i + 1);
+      REQUIRE(itemStatus_actual == itemStatus_expect[i]);
+    }
+  }
+
+  N2kResetBinaryStatus(switchBank_actual);
+  bankNo_actual = 0;
+  SetN2kSwitchbankControl(N2kMsg, bankNo_expect, switchBank_expect); //PGN127502
+  ParseN2kSwitchbankControl(N2kMsg, bankNo_actual, switchBank_actual); //PGN127502
+
+  SECTION("PGN127502 parsed values match set values")
+  {
+    REQUIRE(bankNo_expect == bankNo_actual);
+    for (int i = 0; i < numItems; i++)
+    {
+      tN2kOnOff itemStatus_actual = N2kGetStatusOnBinaryStatus(switchBank_actual, i + 1);
+      REQUIRE(itemStatus_actual == itemStatus_expect[i]);
+    }
+  }
+}
