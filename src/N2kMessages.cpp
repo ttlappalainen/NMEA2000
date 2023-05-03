@@ -569,9 +569,9 @@ void N2kSetStatusBinaryOnStatus(tN2kBinaryStatus &BankStatus, tN2kOnOff ItemStat
 	ItemIndex--;
 	if (ItemIndex>27) return;
 
-  tN2kBinaryStatus Mask = ~(3 << (2*ItemIndex));
+  tN2kBinaryStatus Mask = ~((tN2kBinaryStatus)3 << (2*ItemIndex));
 
-	BankStatus = (BankStatus & Mask) | (ItemStatus << (2*ItemIndex));
+	BankStatus = (BankStatus & Mask) | ((tN2kBinaryStatus)ItemStatus << (2*ItemIndex));
 }
 
 //*****************************************************************************
