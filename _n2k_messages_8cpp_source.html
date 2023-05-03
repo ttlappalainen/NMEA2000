@@ -687,9 +687,9 @@ $(document).ready(function(){initNavTree('_n2k_messages_8cpp_source.html',''); i
 <div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>    ItemIndex--;</div>
 <div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>    <span class="keywordflow">if</span> (ItemIndex&gt;27) <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span> </div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>  <a class="code hl_typedef" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> Mask = ~(3 &lt;&lt; (2*ItemIndex));</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>  <a class="code hl_typedef" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a> Mask = ~((<a class="code hl_typedef" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a>)3 &lt;&lt; (2*ItemIndex));</div>
 <div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span> </div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>    BankStatus = (BankStatus &amp; Mask) | (ItemStatus &lt;&lt; (2*ItemIndex));</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>    BankStatus = (BankStatus &amp; Mask) | ((<a class="code hl_typedef" href="_n2k_messages_8h.html#ac02a3f47ffdbeaec255d7aafe1b32713">tN2kBinaryStatus</a>)ItemStatus &lt;&lt; (2*ItemIndex));</div>
 <div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>}</div>
 <div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span> </div>
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="comment">//*****************************************************************************</span></div>
