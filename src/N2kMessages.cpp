@@ -1186,6 +1186,10 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
     // Note that we return real number of stations, but we only have variabes for one.
     vi=N2kMsg.Get2ByteUInt(Index); ReferenceStationType=(tN2kGNSStype)(vi & 0x0f); ReferenceSationID=(vi>>4);
     AgeOfCorrection=N2kMsg.Get2ByteUDouble(0.01,Index);
+  } else {
+    ReferenceStationType = N2kGNSSt_GPS;
+    ReferenceSationID = N2kInt16NA;
+    AgeOfCorrection = N2kDoubleNA;
   }
 
   return true;
