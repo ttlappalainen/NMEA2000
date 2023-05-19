@@ -232,7 +232,6 @@ TEST_CASE("PGN129041 AIS AtoN Navigation Report")
 
   SetN2kAISAtoNReport(N2kMsg, data_tx);
 
-  char AtoNName_RX[34];
   tN2kAISAtoNReportData data_rx;
   ParseN2kAISAtoNReport(N2kMsg, data_rx);
 
@@ -469,7 +468,6 @@ TEST_CASE("PGN129285 Route/WP information")
    uint16_t Database = 2;
    uint16_t Route = 3;
    tN2kNavigationDirection NavDirectiont =  N2kdir_reverse;
-   bool SupplementaryData = true;
    const char* RouteName = "test route";
 
    SetN2kPGN129285(N2kMsg1, Start, Database, Route, NavDirectiont, (char*)RouteName, N2kDD002_Yes );
