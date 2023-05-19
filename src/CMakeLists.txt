@@ -22,7 +22,7 @@
 #  THE SOFTWARE.
 
 
-add_library(nmea2000
+set(srcs
   N2kMsg.cpp
   N2kStream.cpp
   N2kMessages.cpp
@@ -30,7 +30,15 @@ add_library(nmea2000
   Seasmart.cpp
 )
 
-target_include_directories(nmea2000
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}
-)
+if(ESP_PLATFORM)
+  # using this library as a component in an ESP-IDF project
+
+else()
+  # probably running unit tests with catch on a host
+  add_library(nmea2000 ${srcs})
+
+  target_include_directories(nmea2000
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+  )
+endif()

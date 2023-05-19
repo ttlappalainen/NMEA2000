@@ -21,17 +21,25 @@
 #  THE SOFTWARE.
 
 cmake_minimum_required(VERSION 3.0)
-project(NMEA2000)
 
-add_compile_options(
-  -Wall
-  -Werror
-  -std=c++11
-  -g
-)
 
-enable_testing()
+if(ESP_PLATFORM)
+  # using this library as a component in an ESP-IDF project
+  idf_component_register(SRC_DIRS src INCLUDE_DIRS src)
 
-add_subdirectory(src)
-add_subdirectory(third-party/catch)
-add_subdirectory(test)
+else() 
+  # probably running unit tests with catch on a host
+  project(NMEA2000)
+  add_compile_options(
+    -Wall
+    -Werror
+    -std=c++11
+    -g
+  )
+  
+  enable_testing()
+  add_subdirectory(src)
+  add_subdirectory(third-party/catch)
+  add_subdirectory(test)
+endif()
+
