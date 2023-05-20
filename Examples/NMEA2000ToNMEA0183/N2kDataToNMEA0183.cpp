@@ -160,11 +160,15 @@ unsigned char nReferenceStations;
 tN2kGNSStype ReferenceStationType;
 uint16_t ReferenceSationID;
 double AgeOfCorrection;
+tNMEA0183Msg NMEA0183Msg;
 
   if ( ParseN2kGNSS(N2kMsg,SID,DaysSince1970,SecondsSinceMidnight,Latitude,Longitude,Altitude,GNSStype,GNSSmethod,
                     nSatellites,HDOP,PDOP,GeoidalSeparation,
                     nReferenceStations,ReferenceStationType,ReferenceSationID,AgeOfCorrection) ) {
     LastPositionTime=millis();
+    if (NMEA0183SetGGA(NMEA0183Msg, SecondsSinceMidnight, Latitude, Longitude, static_cast<uint32_t>(GNSSmethod), nSatellites, HDOP, Altitude, GeoidalSeparation, AgeOfCorrection, ReferenceSationID== N2kInt16NA ? NMEA0183UInt32NA : ReferenceSationID)) {
+        SendMessage(NMEA0183Msg);
+    }
   }
 }
 
