@@ -3157,6 +3157,10 @@ inline void SetN2kGNSS(tN2kMsg &N2kMsg, unsigned char SID, uint16_t DaysSince197
  * This parameter group conveys a comprehensive set of Global Navigation 
  * Satellite System (GNSS) parameters, including position information.
  * 
+ * The parameters passed to ReferenceStationType, ReferenceStationID and
+ * AgeOfCorrection are set to N2kGNSSt_GPS, N2kInt16NA and N2kDoubleNA
+ * respectively, when there are no reference stations present in the message.
+ *
  * \param N2kMsg      Reference to a N2kMsg Object, 
  * \param SID         Sequence ID. If your device is e.g. boat speed and
  *                    heading at same time, you can set same SID for

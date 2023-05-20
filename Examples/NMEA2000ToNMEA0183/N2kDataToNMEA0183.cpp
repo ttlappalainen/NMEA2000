@@ -32,6 +32,7 @@ const double radToDeg=180.0/M_PI;
 //*****************************************************************************
 void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
   switch (N2kMsg.PGN) {
+    case 126992UL: HandleSystemDateTime(N2kMsg);
     case 127250UL: HandleHeading(N2kMsg);
     case 127258UL: HandleVariation(N2kMsg);
     case 128259UL: HandleBoatSpeed(N2kMsg);
@@ -56,6 +57,29 @@ void tN2kDataToNMEA0183::Update() {
 void tN2kDataToNMEA0183::SendMessage(const tNMEA0183Msg &NMEA0183Msg) {
   if ( pNMEA0183!=0 ) pNMEA0183->SendMessage(NMEA0183Msg);
   if ( SendNMEA0183MessageCallback!=0 ) SendNMEA0183MessageCallback(NMEA0183Msg);
+}
+
+//*****************************************************************************
+void tN2kDataToNMEA0183::HandleSystemDateTime(const tN2kMsg& N2kMsg) {
+unsigned char SID;
+uint16_t SystemDate;
+double SystemTime;
+tN2kTimeSource TimeSource;
+tNMEA0183Msg NMEA0183Msg;
+
+  if (ParseN2kSystemTime(N2kMsg, SID, SystemDate, SystemTime, TimeSource)) {
+      time_t t = tNMEA0183Msg::daysToTime_t(SystemDate);
+      tmElements_t tm;
+      tNMEA0183Msg::breakTime(t, tm);
+      int GPSDay = tNMEA0183Msg::GetDay(tm);
+      int GPSMonth = tNMEA0183Msg::GetMonth(tm);
+      int GPSYear = tNMEA0183Msg::GetYear(tm);
+      int LZD = 0;
+      int LZMD = 0;
+      if (NMEA0183SetZDA(NMEA0183Msg, SystemTime, GPSDay, GPSMonth, GPSYear, LZD, LZMD, "GP")) {
+          SendMessage(NMEA0183Msg);
+      }
+  }
 }
 
 //*****************************************************************************
@@ -160,11 +184,15 @@ unsigned char nReferenceStations;
 tN2kGNSStype ReferenceStationType;
 uint16_t ReferenceSationID;
 double AgeOfCorrection;
+tNMEA0183Msg NMEA0183Msg;
 
   if ( ParseN2kGNSS(N2kMsg,SID,DaysSince1970,SecondsSinceMidnight,Latitude,Longitude,Altitude,GNSStype,GNSSmethod,
                     nSatellites,HDOP,PDOP,GeoidalSeparation,
                     nReferenceStations,ReferenceStationType,ReferenceSationID,AgeOfCorrection) ) {
     LastPositionTime=millis();
+    if (NMEA0183SetGGA(NMEA0183Msg, SecondsSinceMidnight, Latitude, Longitude, static_cast<uint32_t>(GNSSmethod), nSatellites, HDOP, Altitude, GeoidalSeparation, AgeOfCorrection, ReferenceSationID== N2kInt16NA ? NMEA0183UInt32NA : ReferenceSationID)) {
+        SendMessage(NMEA0183Msg);
+    }
   }
 }
 
