@@ -53,6 +53,7 @@ protected:
   tSendNMEA0183MessageCallback SendNMEA0183MessageCallback;
 
 protected:
+  void HandleSystemDateTime(const tN2kMsg& N2kMsg); // 126992
   void HandleHeading(const tN2kMsg &N2kMsg); // 127250
   void HandleVariation(const tN2kMsg &N2kMsg); // 127258
   void HandleBoatSpeed(const tN2kMsg &N2kMsg); // 128259

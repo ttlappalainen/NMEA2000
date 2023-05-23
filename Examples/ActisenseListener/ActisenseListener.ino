@@ -10,6 +10,10 @@
 #include <Arduino.h>
 #include <NMEA2000_CAN.h>
 
+#ifndef LED_BUILTIN
+  #define LED_BUILTIN 0xff
+#endif
+
 // Forward declarations for led blinking
 void LedOn(unsigned long OnTime);
 void UpdateLedState();
@@ -17,7 +21,7 @@ void HandleNMEA2000Msg(const tN2kMsg &N2kMsg);
 
 //*****************************************************************************
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
+  if ( LED_BUILTIN!=0xff ) pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
   NMEA2000.SetN2kCANMsgBufSize(8);
   NMEA2000.SetN2kCANReceiveFrameBufSize(100);
@@ -45,7 +49,7 @@ unsigned long TurnLedOnTime=millis()+LedBlinkTime;
 
 //*****************************************************************************
 void LedOn(unsigned long OnTime) {
-  digitalWrite(LED_BUILTIN, HIGH);
+  if ( LED_BUILTIN!=0xff ) digitalWrite(LED_BUILTIN, HIGH);
   TurnLedOffTime=millis()+OnTime;
   TurnLedOnTime=0;
 }
@@ -53,7 +57,7 @@ void LedOn(unsigned long OnTime) {
 //*****************************************************************************
 void UpdateLedState() {
   if ( TurnLedOffTime>0 && TurnLedOffTime<millis() ) {
-    digitalWrite(LED_BUILTIN, LOW);
+    if ( LED_BUILTIN!=0xff ) digitalWrite(LED_BUILTIN, LOW);
     TurnLedOffTime=0;
     TurnLedOnTime=millis()+LedBlinkTime;
   }
