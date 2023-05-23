@@ -22,12 +22,11 @@
 
 cmake_minimum_required(VERSION 3.0)
 
-
 if(ESP_PLATFORM)
   # using this library as a component in an ESP-IDF project
-  idf_component_register(SRC_DIRS src INCLUDE_DIRS src)
+  idf_component_register(SRC_DIRS src INCLUDE_DIRS src REQUIRES esp_timer driver)
 
-else() 
+else()
   # probably running unit tests with catch on a host
   project(NMEA2000)
   add_compile_options(
@@ -36,10 +35,9 @@ else()
     -std=c++11
     -g
   )
-  
+
   enable_testing()
   add_subdirectory(src)
   add_subdirectory(third-party/catch)
   add_subdirectory(test)
 endif()
-
