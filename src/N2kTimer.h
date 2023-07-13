@@ -93,7 +93,7 @@
  * \return true    when T1<T2
  * \return false 
  */
-inline bool N2kIsTimeBefore(uint32_t T1, uint32_t T2) { return (T2-T1)<LONG_MAX; }
+inline bool N2kIsTimeBefore(uint32_t T1, uint32_t T2) { return (T2-T1)<INT32_MAX; }
 
 /************************************************************************//**
  * \brief Has time elapsed since start
@@ -109,7 +109,7 @@ inline bool N2kIsTimeBefore(uint32_t T1, uint32_t T2) { return (T2-T1)<LONG_MAX;
  * \return false 
  */
 inline bool N2kHasElapsed(uint32_t Start, uint32_t Elapsed, uint32_t Now=N2kMillis()) { 
-  return Now-(Start+Elapsed)<LONG_MAX; 
+  return Now-(Start+Elapsed)<INT32_MAX; 
 }
 
 /************************************************************************//**
@@ -333,7 +333,7 @@ public:
     #if defined(N2kUse64bitSchedulerTime)
     return N2kMillis64()>NextTime;
     #else
-    return !IsDisabled() && ( N2kMillis()-NextTime<LONG_MAX );
+    return !IsDisabled() && ( N2kMillis()-NextTime<INT32_MAX );
     #endif
   }
 
