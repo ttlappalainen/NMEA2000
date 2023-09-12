@@ -105,6 +105,7 @@ var group__group__core =
         [ "GetInstallationDescription2", "classt_n_m_e_a2000_1_1t_device.html#aea836ce82f96b61da09f1b3c2f1a0b13", null ],
         [ "GetLoadEquivalency", "classt_n_m_e_a2000_1_1t_device.html#ac87c58a692972bbf77c9f0668e798247", null ],
         [ "GetManufacturerCode", "classt_n_m_e_a2000_1_1t_device.html#a99d25a7d7e8c7406f65af4d01b44f8d3", null ],
+        [ "GetManufacturerInformation", "classt_n_m_e_a2000_1_1t_device.html#a63ef1fc733d6fd0ac9db2a6f6ec30460", null ],
         [ "GetModelID", "classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc", null ],
         [ "GetModelSerialCode", "classt_n_m_e_a2000_1_1t_device.html#abfed65174f87106a283eb32174262adc", null ],
         [ "GetModelVersion", "classt_n_m_e_a2000_1_1t_device.html#a7ec9593aa1eab0687e9837e7ee46307e", null ],

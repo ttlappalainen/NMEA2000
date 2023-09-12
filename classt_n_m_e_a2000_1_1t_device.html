@@ -189,6 +189,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a99d25a7d7e8c7406f65af4d01b44f8d3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a99d25a7d7e8c7406f65af4d01b44f8d3">GetManufacturerCode</a> () const</td></tr>
 <tr class="memdesc:a99d25a7d7e8c7406f65af4d01b44f8d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Manufacturer Code from the Device Information.  <a href="classt_n_m_e_a2000_1_1t_device.html#a99d25a7d7e8c7406f65af4d01b44f8d3">More...</a><br /></td></tr>
 <tr class="separator:a99d25a7d7e8c7406f65af4d01b44f8d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63ef1fc733d6fd0ac9db2a6f6ec30460"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#a63ef1fc733d6fd0ac9db2a6f6ec30460">GetManufacturerInformation</a> () const</td></tr>
+<tr class="memdesc:a63ef1fc733d6fd0ac9db2a6f6ec30460"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the manufacturer information from the configuration information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#a63ef1fc733d6fd0ac9db2a6f6ec30460">More...</a><br /></td></tr>
+<tr class="separator:a63ef1fc733d6fd0ac9db2a6f6ec30460"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1d4cd9be08fc6013ae3b36363749adc"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc">GetModelID</a> () const =0</td></tr>
 <tr class="memdesc:ab1d4cd9be08fc6013ae3b36363749adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the model ID from the product information of this device.  <a href="classt_n_m_e_a2000_1_1t_device.html#ab1d4cd9be08fc6013ae3b36363749adc">More...</a><br /></td></tr>
 <tr class="separator:ab1d4cd9be08fc6013ae3b36363749adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -589,7 +592,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a2a3982d295829d8e8cc6b0aa359bf48f">tN2kDeviceList::tInternalDevice</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00594">594</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00597">597</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -620,7 +623,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a3f64a4aca1ce493afee605846f08911e">tN2kDeviceList::tInternalDevice</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00597">597</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00600">600</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -680,6 +683,37 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00526">526</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+
+</div>
+</div>
+<a id="a63ef1fc733d6fd0ac9db2a6f6ec30460" name="a63ef1fc733d6fd0ac9db2a6f6ec30460"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63ef1fc733d6fd0ac9db2a6f6ec30460">&#9670;&nbsp;</a></span>GetManufacturerInformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const char * tNMEA2000::tDevice::GetManufacturerInformation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the manufacturer information from the configuration information of this device. </p>
+
+<p>Reimplemented in <a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a69936e9a3b869e2c9618b0692a19c1b1">tN2kDeviceList::tInternalDevice</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00594">594</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -885,7 +919,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#a491180af32e63e0212accb29c292f6c9">tN2kDeviceList::tInternalDevice</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00602">602</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00605">605</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +1038,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classt_n2k_device_list_1_1t_internal_device.html#aaec8c080c6ba4c7bb552cbb46873fa2b">tN2kDeviceList::tInternalDevice</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00600">600</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00603">603</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>

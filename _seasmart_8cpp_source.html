@@ -218,92 +218,93 @@ $(document).ready(function(){initNavTree('_seasmart_8cpp_source.html',''); initR
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment"> * Returns true if successful, false otherwise.</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">  102</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n, uint32_t &amp;value) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="keywordflow">if</span> (strlen(s) &lt; 2*n) {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  }</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; 2*n; i++) {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">if</span> (!isxdigit(s[i])) {</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  }</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="keywordtype">char</span> sNumber[2*n + 1];</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  strncpy(sNumber, s, <span class="keyword">sizeof</span>(sNumber));</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  sNumber[<span class="keyword">sizeof</span>(sNumber) - 1] = 0;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  value = strtol(sNumber, 0, 16);</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">  120</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">SeasmartToN2k</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *buffer, uint32_t &amp;timestamp, <a class="code hl_class" href="classt_n2k_msg.html">tN2kMsg</a> &amp;msg) {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  msg.<a class="code hl_function" href="classt_n2k_msg.html#a97d5b6696759b5a0ae8f4788d4853f13">Clear</a>();</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="keyword">const</span> <span class="keywordtype">char</span> *s = buffer;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="keywordflow">if</span> (strncmp(<span class="stringliteral">&quot;$PCDIN,&quot;</span>, s, 6) != 0) {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  }</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  s += 7;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  uint32_t pgnHigh;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  uint32_t pgnLow;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, pgnHigh)) {</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  }</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  s += 2;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 2, pgnLow)) {</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  }</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  s += 5;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">PGN</a> = (pgnHigh &lt;&lt; 16) + pgnLow;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 4, timestamp)) {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  }</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  s += 9;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  uint32_t source;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, source)) {</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  }</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#a6e9f41914d2a260868981e3cd6d4fc37">Source</a> = source;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  s += 3;</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  <span class="keywordtype">int</span> dataLen = 0;</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  <span class="keywordflow">while</span> (s[dataLen] != 0 &amp;&amp; s[dataLen] != <span class="charliteral">&#39;*&#39;</span>) {</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    dataLen++;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  }</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  <span class="keywordflow">if</span> (dataLen % 2 != 0) {</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  }</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  dataLen /= 2;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> = dataLen;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  <span class="keywordflow">if</span> (msg.<a class="code hl_variable" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> &gt; msg.<a class="code hl_variable" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a>) {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; dataLen; i++) {</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    uint32_t byte;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, <span class="keywordtype">byte</span>)) {</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    }</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    msg.<a class="code hl_variable" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>[i] = byte;</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    s += 2;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  }</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  <span class="comment">// Skip the terminating &#39;*&#39; which marks beginning of checksum</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  s += 1;</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  uint32_t checksum;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, checksum)) {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  }</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  <span class="keywordflow">if</span> (checksum != <a class="code hl_function" href="_seasmart_8cpp.html#a9754815597a949dad615aec886f28a54">nmea_compute_checksum</a>(buffer)) {</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  }</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>}</div>
-<div class="ttc" id="a_seasmart_8cpp_html_a2a2c7295dedb57a75413e236b9efb144"><div class="ttname"><a href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">SeasmartToN2k</a></div><div class="ttdeci">bool SeasmartToN2k(const char *buffer, uint32_t &amp;timestamp, tN2kMsg &amp;msg)</div><div class="ttdoc">Converts a null terminated $PCDIN NMEA sentence into a tN2kMsg.</div><div class="ttdef"><b>Definition:</b> <a href="_seasmart_8cpp_source.html#l00120">Seasmart.cpp:120</a></div></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  value=(uint32_t)(-1); <span class="comment">// required to avoid warning about uninitialized variable.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="keywordflow">if</span> (strlen(s) &lt; 2*n) {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; 2*n; i++) {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordflow">if</span> (!isxdigit(s[i])) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordtype">char</span> sNumber[2*n + 1];</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  strncpy(sNumber, s, <span class="keyword">sizeof</span>(sNumber));</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  sNumber[<span class="keyword">sizeof</span>(sNumber) - 1] = 0;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  value = strtol(sNumber, 0, 16);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>}</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">  121</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">SeasmartToN2k</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *buffer, uint32_t &amp;timestamp, <a class="code hl_class" href="classt_n2k_msg.html">tN2kMsg</a> &amp;msg) {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  msg.<a class="code hl_function" href="classt_n2k_msg.html#a97d5b6696759b5a0ae8f4788d4853f13">Clear</a>();</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="keyword">const</span> <span class="keywordtype">char</span> *s = buffer;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="keywordflow">if</span> (strncmp(<span class="stringliteral">&quot;$PCDIN,&quot;</span>, s, 6) != 0) {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  s += 7;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  uint32_t pgnHigh;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  uint32_t pgnLow;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, pgnHigh)) {</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  s += 2;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 2, pgnLow)) {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  }</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  s += 5;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#af53cd136e372778a85807e82f7b61238">PGN</a> = (pgnHigh &lt;&lt; 16) + pgnLow;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 4, timestamp)) {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  s += 9;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  uint32_t source;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, source)) {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#a6e9f41914d2a260868981e3cd6d4fc37">Source</a> = source;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  s += 3;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  <span class="keywordtype">int</span> dataLen = 0;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="keywordflow">while</span> (s[dataLen] != 0 &amp;&amp; s[dataLen] != <span class="charliteral">&#39;*&#39;</span>) {</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    dataLen++;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  }</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <span class="keywordflow">if</span> (dataLen % 2 != 0) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  dataLen /= 2;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  msg.<a class="code hl_variable" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> = dataLen;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  <span class="keywordflow">if</span> (msg.<a class="code hl_variable" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a> &gt; msg.<a class="code hl_variable" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a>) {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; dataLen; i++) {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    uint32_t byte;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, <span class="keywordtype">byte</span>)) {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    msg.<a class="code hl_variable" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>[i] = byte;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    s += 2;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  <span class="comment">// Skip the terminating &#39;*&#39; which marks beginning of checksum</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  s += 1;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  uint32_t checksum;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a>(s, 1, checksum)) {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  <span class="keywordflow">if</span> (checksum != <a class="code hl_function" href="_seasmart_8cpp.html#a9754815597a949dad615aec886f28a54">nmea_compute_checksum</a>(buffer)) {</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>}</div>
+<div class="ttc" id="a_seasmart_8cpp_html_a2a2c7295dedb57a75413e236b9efb144"><div class="ttname"><a href="_seasmart_8cpp.html#a2a2c7295dedb57a75413e236b9efb144">SeasmartToN2k</a></div><div class="ttdeci">bool SeasmartToN2k(const char *buffer, uint32_t &amp;timestamp, tN2kMsg &amp;msg)</div><div class="ttdoc">Converts a null terminated $PCDIN NMEA sentence into a tN2kMsg.</div><div class="ttdef"><b>Definition:</b> <a href="_seasmart_8cpp_source.html#l00121">Seasmart.cpp:121</a></div></div>
 <div class="ttc" id="a_seasmart_8cpp_html_a3750632ed3d1d4b6aa79dd517d21b829"><div class="ttname"><a href="_seasmart_8cpp.html#a3750632ed3d1d4b6aa79dd517d21b829">N2kToSeasmart</a></div><div class="ttdeci">size_t N2kToSeasmart(const tN2kMsg &amp;msg, uint32_t timestamp, char *buffer, size_t size)</div><div class="ttdoc">Converts a tN2kMsg into a $PCDIN NMEA sentence.</div><div class="ttdef"><b>Definition:</b> <a href="_seasmart_8cpp_source.html#l00067">Seasmart.cpp:67</a></div></div>
 <div class="ttc" id="a_seasmart_8cpp_html_a39fa2e8e998de4e17811ac5a1bf807cf"><div class="ttname"><a href="_seasmart_8cpp.html#a39fa2e8e998de4e17811ac5a1bf807cf">append2Bytes</a></div><div class="ttdeci">static int append2Bytes(char *s, uint16_t i)</div><div class="ttdef"><b>Definition:</b> <a href="_seasmart_8cpp_source.html#l00039">Seasmart.cpp:39</a></div></div>
 <div class="ttc" id="a_seasmart_8cpp_html_a4633ad0288549c8b633971f211cd8573"><div class="ttname"><a href="_seasmart_8cpp.html#a4633ad0288549c8b633971f211cd8573">readNHexByte</a></div><div class="ttdeci">static bool readNHexByte(const char *s, unsigned int n, uint32_t &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="_seasmart_8cpp_source.html#l00102">Seasmart.cpp:102</a></div></div>
