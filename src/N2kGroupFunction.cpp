@@ -295,7 +295,7 @@ bool tN2kGroupFunctionHandler::ParseCommandParams(const tN2kMsg &N2kMsg,
                                uint8_t &NumberOfParameterPairs) {
   if (N2kMsg.PGN!=126208L) return false;
   int Index=N2kgf_OffsetToParams;
-  PrioritySetting=N2kMsg.GetByte(Index);
+  PrioritySetting=N2kMsg.GetByte(Index) & 0x0f;
   NumberOfParameterPairs=N2kMsg.GetByte(Index);
 
   return true;

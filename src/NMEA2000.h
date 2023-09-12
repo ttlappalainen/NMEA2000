@@ -589,6 +589,9 @@ public:
       virtual unsigned short GetLoadEquivalency() const=0;
 
       // Configuration information
+      /** \brief Get the manufacturer information from the configuration 
+       * information of this device*/
+      virtual const char * GetManufacturerInformation() const { return 0; }
       /** \brief Get the installation description 1 from the configuration 
        * information of this device*/
       virtual const char * GetInstallationDescription1() const { return 0; }

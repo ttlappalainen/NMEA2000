@@ -1,5 +1,31 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 12.09.2023
+
+- Fixed priority setting on N2kGroupFunction tN2kGroupFunctionHandler::ParseCommandParams
+- Fixed inline void SetN2kPGN129285 on N2kMessages.h to avoid conflict
+- Fixed readNHexByte on SeaSmart.cpp to avoid warning.
+- Restored dropped GetManufacturerInformation() definition to tNMEA2000::tDevice
+- Fix comment for 127233L on NMEA2000.cpp
+
+## 25.07.2023
+
+- Changed INT32_MAX instead of LONG_MAX on N2kTimer.h by Sam Meredith
+- CMakeLists update by phatpaul
+- Cleaner CMakeLists.txt by Paul Abbott
+- Example ActisenseListener update
+
+## 20.05.2023
+
+- Example N2kDataToNMEA0183 update by Andrei Errapart
+
+## 19.05.2023
+
+- Catch update to version 2.13.10 by Andrei Errapart
+- Fix N2kMessages/ ParsePGN129029 initialize reference station variables t NA, if no reference station by Andrei Errapart
+- CMakeLists compatible as ESP-IDF by Paul Abbott
+- N2kCANMsg.h: Changed #include <N2kMSG.h> to use quotes.
+
 ## 08.02.2023
 
 - Fixed priority setting on SetN2kPGN130577.

@@ -4093,7 +4093,8 @@ inline void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, 
                         bool NavDirection, bool SupplementaryData, char* RouteName)
 {
    tN2kNavigationDirection NavDirection1 = NavDirection?N2kdir_reverse:N2kdir_forward;
-	SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection1, (uint8_t)SupplementaryData, RouteName);
+   tN2kGenericStatusPair N2kSupplementaryData = SupplementaryData?N2kDD002_Yes:N2kDD002_No;
+	SetN2kPGN129285(N2kMsg, Start, Database, Route, NavDirection1, RouteName, N2kSupplementaryData);
 }                        
 
 /************************************************************************//**

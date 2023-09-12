@@ -336,7 +336,7 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 126986L: Alert Configuration, pri=2, period=NA
  *          - 126987L: Alert Threshold, pri=2, period=NA
  *          - 126988L: Alert Value, pri=2, period=10000
- *          - 127233L: Alert Value, pri=3, period=NA
+ *          - 127233L: Man Overboard Notification(MOB), pri=3, period=NA
  *          - 127237L: Heading/Track control, pri=2, period=250
  *          - 127489L: Engine parameters dynamic, pri=2, period=500
  *          - 127496L: Trip fuel consumption, vessel, pri=5, period=1000
@@ -430,7 +430,7 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 126986L: // Alert Configuration, pri=2, period=NA
                                       case 126987L: // Alert Threshold, pri=2, period=NA
                                       case 126988L: // Alert Value, pri=2, period=10000
-                                      case 127233L: // Alert Value, pri=3, period=NA
+                                      case 127233L: // Man Overboard Notification(MOB), pri=3, period=NA
                                       case 127237L: // Heading/Track control, pri=2, period=250
                                       case 127489L: // Engine parameters dynamic, pri=2, period=500
                                       case 127496L: // Trip fuel consumption, vessel, pri=5, period=1000
