@@ -386,12 +386,12 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
          * \return true 
          * \return false 
          */
-        bool ReadyForRequestConfigurationInformation() { return ( ShouldRequestConfigurationInformation() && millis()-ConfIRequested>N2kDL_TimeBetweenCIRequest && millis()-GetCreateTime()>N2kDL_TimeForFirstRequest ); }
+        bool ReadyForRequestConfigurationInformation() { return ( ShouldRequestConfigurationInformation() && N2kMillis()-ConfIRequested>N2kDL_TimeBetweenCIRequest && N2kMillis()-GetCreateTime()>N2kDL_TimeForFirstRequest ); }
         /****************************************************************//**
          * \brief Increments the Number of how often the Configuration 
          *        Information has already been requested and stores the 
          *        timestamp*/
-        void SetConfigurationInformationRequested() { ConfIRequested=millis(); nConfIRequested++; }
+        void SetConfigurationInformationRequested() { ConfIRequested=N2kMillis(); nConfIRequested++; }
 
         /****************************************************************//**
          *  \brief  Resets the PGN List Loaded values of 
