@@ -1,5 +1,9 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 04.10.2023
+
+- Fix use N2kMillis instead of millis on N2kDeviceList by nicklasb.
+
 ## 12.09.2023
 
 - Fixed priority setting on N2kGroupFunction tN2kGroupFunctionHandler::ParseCommandParams
