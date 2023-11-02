@@ -39,6 +39,7 @@
   #define USE_N2K_CAN 6  // for use with MBED (ARM) systems
   #define USE_N2K_CAN 7  // for use with ESP32
   #define USE_N2K_CAN 8  // for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards
+  #define USE_N2K_CAN 9  // for use with Arduino CAN API (e.g. UNO R4 or Portenta C33)
   \endcode
 
   <b>Depending of your board you will need to also install "driver" libraries:</b>  
@@ -183,6 +184,12 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
  */
 #define USE_N2K_TEENSYX_CAN 8 
 
+/*********************************************************************//**
+ * \brief Use the Official Arduino CAN Library
+- [NMEA2000_ArduinoCAN](https://github.com/jboynes/NMEA2000_ArduinoCAN) library.
+ */
+#define USE_N2K_ARDUINO_CAN 9
+
 
 /***********************************************************************//**
   \def USE_N2K_CAN
@@ -212,6 +219,8 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
 #define USE_N2K_CAN USE_N2K_ESP32_CAN
 #elif defined(__IMXRT1062__)
 #define USE_N2K_CAN USE_N2K_TEENSYX_CAN
+#elif defined(ARDUINO_UNOWIFIR4) || defined(ARDUINO_MINIMA)
+#define USE_N2K_CAN USE_N2K_ARDUINO_CAN
 #else
 #define USE_N2K_CAN USE_N2K_MCP_CAN
 #endif
@@ -267,6 +276,10 @@ tmbedStream serStream;
 #elif USE_N2K_CAN == USE_N2K_ESP32_CAN
 #include <NMEA2000_esp32.h>       // https://github.com/ttlappalainen/NMEA2000_esp32
 tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
+
+#elif USE_N2K_CAN == USE_N2K_ARDUINO_CAN
+#include <NMEA2000_ArduinoCAN.h>
+tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
