@@ -5,6 +5,7 @@ var _n_m_e_a2000___c_a_n_8h =
     [ "N2k_CAN_INT_PIN", "_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4", null ],
     [ "N2k_SPI_CS_PIN", "_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650", null ],
     [ "USE_MCP_CAN_CLOCK_SET", "_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b", null ],
+    [ "USE_N2K_ARDUINO_CAN", "_n_m_e_a2000___c_a_n_8h.html#a0c6b26de487c2eed2d3ce67ec7fab4c6", null ],
     [ "USE_N2K_AVR_CAN", "_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925", null ],
     [ "USE_N2K_CAN", "_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf", null ],
     [ "USE_N2K_DUE_CAN", "_n_m_e_a2000___c_a_n_8h.html#aabcff4d2df0a443621007ba22af572df", null ],

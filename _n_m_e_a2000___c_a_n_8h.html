@@ -170,6 +170,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b">USE_MCP_CAN_CLOCK_SET</a>&#160;&#160;&#160;16</td></tr>
 <tr class="memdesc:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of the Clock frequency for the MCP CAN.  <a href="_n_m_e_a2000___c_a_n_8h.html#ab7ed35acf0c04caa35fe6724e8a3882b">More...</a><br /></td></tr>
 <tr class="separator:ab7ed35acf0c04caa35fe6724e8a3882b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6b26de487c2eed2d3ce67ec7fab4c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a0c6b26de487c2eed2d3ce67ec7fab4c6">USE_N2K_ARDUINO_CAN</a>&#160;&#160;&#160;9</td></tr>
+<tr class="memdesc:a0c6b26de487c2eed2d3ce67ec7fab4c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Official Arduino CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#a0c6b26de487c2eed2d3ce67ec7fab4c6">More...</a><br /></td></tr>
+<tr class="separator:a0c6b26de487c2eed2d3ce67ec7fab4c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a507d3f41fcf769863a69d2623048e925"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925">USE_N2K_AVR_CAN</a>&#160;&#160;&#160;4</td></tr>
 <tr class="memdesc:a507d3f41fcf769863a69d2623048e925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the AVR CAN Library.  <a href="_n_m_e_a2000___c_a_n_8h.html#a507d3f41fcf769863a69d2623048e925">More...</a><br /></td></tr>
 <tr class="separator:a507d3f41fcf769863a69d2623048e925"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,6 +217,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#define USE_N2K_CAN 6  </span><span class="comment">// for use with MBED (ARM) systems</span></div>
 <div class="line"><span class="preprocessor">#define USE_N2K_CAN 7  </span><span class="comment">// for use with ESP32</span></div>
 <div class="line"><span class="preprocessor">#define USE_N2K_CAN 8  </span><span class="comment">// for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards</span></div>
+<div class="line"><span class="preprocessor">#define USE_N2K_CAN 9  </span><span class="comment">// for use with Arduino CAN API (e.g. UNO R4 or Portenta C33)</span></div>
 </div><!-- fragment --><p ><b>Depending of your board you will need to also install "driver" libraries:</b> <br  />
 </p>
 <p >see also <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></p>
@@ -278,7 +282,7 @@ Variables</h2></td></tr>
 
 <p>The Clock frequency for the MCP CAN is 16MHz. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00334">334</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00347">347</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -296,7 +300,7 @@ Variables</h2></td></tr>
 
 <p>Definition of the MCP RX Buffer Size Value of 1 is a small buffer size to save memory. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00300">300</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00313">313</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -314,7 +318,7 @@ Variables</h2></td></tr>
 
 <p>Definition of the CAN Interrupt Pin This defines the number of the CAN Interrupt PIN. Default Value 0xff means not Interrupt PIN in use. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00292">292</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00305">305</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +336,7 @@ Variables</h2></td></tr>
 
 <p>Definition of the SPI ChipSelectPin for the CAN Transceiver This defines the the I/O Pin uses for the Chip Select Line to the corresponding CAN Transceiver. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00312">312</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00325">325</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -350,7 +354,28 @@ Variables</h2></td></tr>
 
 <p>Definition of the Clock frequency for the MCP CAN. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00320">320</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00333">333</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+
+</div>
+</div>
+<a id="a0c6b26de487c2eed2d3ce67ec7fab4c6" name="a0c6b26de487c2eed2d3ce67ec7fab4c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c6b26de487c2eed2d3ce67ec7fab4c6">&#9670;&nbsp;</a></span>USE_N2K_ARDUINO_CAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USE_N2K_ARDUINO_CAN&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the Official Arduino CAN Library. </p>
+<ul>
+<li><a href="https://github.com/jboynes/NMEA2000_ArduinoCAN">NMEA2000_ArduinoCAN</a> library. </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00191">191</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -372,7 +397,7 @@ Variables</h2></td></tr>
 <li><a href="https://github.com/thomasonw/avr_can">avr_can</a> library </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00156">156</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00157">157</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -390,7 +415,7 @@ Variables</h2></td></tr>
 
 <p>Selector for the right board. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00216">216</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00225">225</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -412,7 +437,7 @@ Variables</h2></td></tr>
 <li><a href="https://github.com/ttlappalainen/due_can">due_can</a> library </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00141">141</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00142">142</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -433,7 +458,7 @@ Variables</h2></td></tr>
 <li><a href="https://github.com/ttlappalainen/NMEA2000_esp32">NMEA2000_esp32</a> library </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00177">177</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00178">178</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -454,7 +479,7 @@ Variables</h2></td></tr>
 <li><a href="https://github.com/thomasonw/NMEA2000_mbed">NMEA2000_mbed</a> library other related libraries. See origin for MBED port on <a href="https://github.com/thomasonw/NMEA2000_mbed">https://github.com/thomasonw/NMEA2000_mbed</a> </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00171">171</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00172">172</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -474,7 +499,7 @@ Variables</h2></td></tr>
 <p >CAN_BUS_shield libraries will be originally found on <a href="https://github.com/Seeed-Studio/CAN_BUS_Shield">https://github.com/Seeed-Studio/CAN_BUS_Shield</a> There is improved library, which branch can be found on <a href="https://github.com/peppeve/CAN_BUS_Shield">https://github.com/peppeve/CAN_BUS_Shield</a>. <br  />
  That works also with Maple mini and 8 MHz clock. Hopefully these improvements will be applied to original library </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00134">134</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00135">135</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -495,7 +520,7 @@ Variables</h2></td></tr>
 <li><a href="https://github.com/ttlappalainen/NMEA2000_socketCAN">NMEA2000_socketCAN</a> library. NMEA2000_socketCAN has been originally forked from <a href="https://github.com/thomasonw/NMEA2000_socketCAN">https://github.com/thomasonw/NMEA2000_socketCAN</a> </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00164">164</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00165">165</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -520,7 +545,7 @@ Variables</h2></td></tr>
 <li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> ! </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00149">149</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00150">150</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -542,7 +567,7 @@ Variables</h2></td></tr>
 <li>Remember also install <a href="https://www.pjrc.com/teensy/td_download.html">Teensyduino</a> ! </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00184">184</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00185">185</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
@@ -559,7 +584,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00337">337</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html#l00350">350</a> of file <a class="el" href="_n_m_e_a2000___c_a_n_8h_source.html">NMEA2000_CAN.h</a>.</p>
 
 </div>
 </div>
