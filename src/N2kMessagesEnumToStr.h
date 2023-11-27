@@ -147,7 +147,9 @@ MakeN2kEnumTypeToStrFunc(tN2kGNSSmethod,tN2kGNSSmethodStrs);
 /************************************************************************//**
  * \brief string representation of the N2k enum tN2kFluidType
  */
-const char* tN2kFluidTypeStrs[] = { "Fuel", "Water", "Gray water", "Live well", "Oil", "Black water", "Error", "Unavailable"};
+const char* tN2kFluidTypeStrs[] = { "Fuel", "Water", "Gray water", "Live well", "Oil", "Black water", "Gasoline Fuel", 
+                                    "Reserved", "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",
+                                    "Error", "Unavailable",};
 /************************************************************************//**
  * \brief Converting the N2k enum \ref tN2kFluidType to a const char
  */
