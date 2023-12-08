@@ -93,8 +93,10 @@ bus and it does not connect to ground from another path like through sensor.
 - Devices with onboard temperature, humidity or atmospheric pressure sensors. E.g., device
   with 1-wire temperature sensor DS18S20 or DHT11 humidity sensor can be made with
   unisolated tranceiver.
-- Devices with other isolated sensors like pressure, ultrasonic, hall effect current
-  etc. Those must get power from your board and their body must be isolated from their ground.
+- Devices with other sensors like pressure using BMP280 via I<sup>2</sup>C, ultrasonic tank measurement, 
+  hall effect current, etc. particular care must be made so that the sensor does not connect to ground in
+  any other than getting power from your board. **Even their bodies must be strictly isolate so that they cannot create a separate path to
+  ground.**
 - Devices reading bus and converting data to WiFi.
 - Devices with digital input or output as far you use isolation on I/O side. E.g.,
   optoisolators for input and relays for output.
