@@ -1,5 +1,17 @@
 # Changes to the Library {#changes}
 \tableofcontents
+## 08.12.2023
+
+- Added entertainment fastpacket PGNs to fastpacket list.
+- Added electric fastpcket PGNs 127490, 127491, 127494, 127495 to fastpacket list.
+- Added elevator fastpacket PGN 128538 to fastpacket list.
+- Moved FindSourceDeviceIndex to public
+- Added IsOpen
+- Added GetForwardStream
+- Document update by trixpan
+- Added fluid type enum to N2kMessagesEnumToStr.h
+- Added support for NMEA2000_ArduinoCAN to NMEA2000_CAN.h by jboynes
+
 ## 04.10.2023
 
 - Fix use N2kMillis instead of millis on N2kDeviceList by nicklasb.

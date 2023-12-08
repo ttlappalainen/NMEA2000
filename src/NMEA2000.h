@@ -732,14 +732,22 @@ protected:
 
   /************************************************************************//**
    * \enum    tOpenState
-   * \brief   State of ...
+   * \brief   Library open state.
    *
-   * \todo Finalize Description....
+   * Open state is internal library open state used to avoid anu blocking call.
    */
   typedef enum {
+                  /** Open has not yet been called. Buffers are still uninitialized.
+                  */
                   os_None			  ///< State none
+                  /** Trying to open CAN driver.
+                  */
                   ,os_OpenCAN		///< State Open CAN
+                  /** CAN driver open succeed. Wait CAN driver stabilize.
+                  */
                   ,os_WaitOpen	///< State Wait Open
+                  /** Open and running.
+                  */
                   ,os_Open			///< State Open
                } tOpenState;
 
@@ -1418,14 +1426,6 @@ protected:
     bool IsMySource(unsigned char Source);
 
     /**********************************************************************//**
-     * \brief Finds a device on \ref Devices by its source address
-     *
-     * \param Source Source address of the device
-     * \return int DeviceIndex, not found = -1
-     */
-    int FindSourceDeviceIndex(unsigned char Source);
-
-    /**********************************************************************//**
      * \brief Get the Sequence Counter for the PGN
      *
      * \param PGN     PGN
@@ -1684,6 +1684,14 @@ public:
      */
     tNMEA2000();
 
+    /**********************************************************************//**
+     * \brief Finds a device on \ref Devices by its source address
+     *
+     * \param Source Source address of the device
+     * \return int DeviceIndex, not found = -1
+     */
+    int FindSourceDeviceIndex(unsigned char Source) const;
+
     /*********************************************************************//**
      * \brief Set the Device Counter
      *
@@ -1699,8 +1707,6 @@ public:
      *                      \ref Devices
      */
     void SetDeviceCount(const uint8_t _DeviceCount);
-
-    // 
 
     /*********************************************************************//**
      * \brief Set the maximum buffersize of \ref N2kCANMsgBuf
@@ -2432,6 +2438,13 @@ public:
     void SetForwardStream(N2kStream* _stream) { ForwardStream=_stream; }
 
     /*********************************************************************//**
+     * \brief Read current Forward Stream object
+     * 
+     * \return current Forward Stream object or 0 if not set. 
+     */
+    N2kStream* GetForwardStream() const { return ForwardStream; }
+
+    /*********************************************************************//**
      * \brief Open the CAN device
      *
      * You can call this on Setup(). It will be called anyway automatically 
@@ -2444,6 +2457,14 @@ public:
      * \return false 
      */
     bool Open();
+
+    /*********************************************************************//**
+     * \brief Test is NMEA2000 open and running.
+     * 
+     * \return true 
+     * \return false 
+     */
+    inline bool IsOpen() const { return OpenState==os_Open; }
 
     /*********************************************************************//**
      * \brief Restart the device
@@ -2482,7 +2503,11 @@ public:
      * See example TemperatureMonitor.ino.
      * 
      * \param N2kMsg          Reference to a N2kMsg Object
-     * \param DeviceIndex     index of the device on \ref Devices
+     * \param DeviceIndex     index of the device on \ref Devices \n
+     *                        Setting DeviceIndex to -1 forces library
+     *                        to use source address of N2kMsg instead of
+     *                        device source address. This is usefull with
+     *                        e.g., passthrough gateway devices.     
      * \return true         -> Success
      * \return false 
      */

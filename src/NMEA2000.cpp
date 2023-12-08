@@ -112,11 +112,11 @@ void N2kPrintFreeMemory(const char *Source) {
 #define MaxHeartbeatInterval 655320UL
 
 /** \brief Max frames, which can be received at time */
-#define TP_MAX_FRAMES 5 
+#define TP_MAX_FRAMES 5
 /** \brief Multi packet connection management, TP.CM */
-#define TP_CM 60416L 
+#define TP_CM 60416L
 /** \brief Multi packet data transfer */
-#define TP_DT 60160L 
+#define TP_DT 60160L
 /** \brief Multi packet connection management, Broadcast Announce Message */
 #define TP_CM_BAM    32
 /** \brief Multi packet connection management, Request To Send */
@@ -130,13 +130,13 @@ void N2kPrintFreeMemory(const char *Source) {
 
 /** \brief Already in one or more connection managed sessions and cannot 
  * support another */
-#define TP_CM_AbortBusy 1	
+#define TP_CM_AbortBusy 1
 /** \brief System resources were needed for another task so this connection 
  * managed session was terminated */
-#define TP_CM_AbortNoResources 2	
+#define TP_CM_AbortNoResources 2
 /** \brief A timeout occurred and this is the connection abort to close the s
  * ession */
-#define TP_CM_AbortTimeout 3 
+#define TP_CM_AbortTimeout 3
 
 /************************************************************************//**
  * \
@@ -339,6 +339,10 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 127233L: Man Overboard Notification(MOB), pri=3, period=NA
  *          - 127237L: Heading/Track control, pri=2, period=250
  *          - 127489L: Engine parameters dynamic, pri=2, period=500
+ *          - 127490L: Electric Drive Status (Dynamic), pri=1, period=1500
+ *          - 127491L: Electric Energy Storage Status (Dynamic), pri=7, period=1500
+ *          - 127494L: Electric Drive Information, pri=4, period=NA
+ *          - 127495L: Electric Energy Storage Information, pri=6, period=NA
  *          - 127496L: Trip fuel consumption, vessel, pri=5, period=1000
  *          - 127497L: Trip fuel consumption, engine, pri=5, period=1000
  *          - 127498L: Engine parameters static, pri=5, period=NA
@@ -353,7 +357,8 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 127513L: Battery configuration status, pri=6, period=NA
  *          - 127514L: AGS Status, pri=6, period=1500
  *          - 128275L: Distance log, pri=6, period=1000
- *          - 128520L: Tracked Target Data, pri=2, period=1000
+ *          - 128520L: Tracked target data, pri=2, period=1000
+ *          - 128538L: Elevator car status, pri=6, period=100
  *          - 129029L: GNSS Position Data, pri=3, period=1000
  *          - 129038L: AIS Class A Position Report, pri=4, period=NA
  *          - 129039L: AIS Class B Position Report, pri=4, period=NA
@@ -420,7 +425,18 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 130567L: Watermaker Input Setting and Status, pri=6, period=2500
  *          - 130577L: Direction Data PGN, pri=3, period=1000
  *          - 130578L: Vessel Speed Components, pri=2, period=250
- * \return false 
+ *          - 130569L: Current File and Status, pri=6, period=500
+ *          - 130570L: Library Data File, pri=6, period=NA
+ *          - 130571L: Library Data Group, pri=6, period=NA
+ *          - 130572L: Library Data Search, pri=6, period=NA
+ *          - 130573L: Supported Source Data, pri=6, period=NA
+ *          - 130574L: Supported Zone Data, pri=6, period=NA
+ *          - 130580L: System Configuration Status, pri=6, period=NA
+ *          - 130581L: Zone Configuration Status, pri=6, period=NA
+ *          - 130583L: Available Audio EQ Presets, pri=6, period=NA
+ *          - 130584L: Bluetooth Devices, pri=6, period=NA
+ *          - 130586L: Zone Configuration Status, pri=6, period=NA
+* \return false 
  */
 bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {
@@ -433,6 +449,10 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 127233L: // Man Overboard Notification(MOB), pri=3, period=NA
                                       case 127237L: // Heading/Track control, pri=2, period=250
                                       case 127489L: // Engine parameters dynamic, pri=2, period=500
+                                      case 127490L: // Electric Drive Status (Dynamic), pri=1, period=1500 
+                                      case 127491L: // Electric Energy Storage Status (Dynamic), pri=7, period=1500
+                                      case 127494L: // Electric Drive Information, pri=4, period=NA
+                                      case 127495L: // Electric Energy Storage Information, pri=6, period=NA
                                       case 127496L: // Trip fuel consumption, vessel, pri=5, period=1000
                                       case 127497L: // Trip fuel consumption, engine, pri=5, period=1000
                                       case 127498L: // Engine parameters static, pri=5, period=NA
@@ -448,6 +468,7 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 127514L: // AGS Status, pri=6, period=1500
                                       case 128275L: // Distance log, pri=6, period=1000
                                       case 128520L: // Tracked Target Data, pri=2, period=1000
+                                      case 128538L: // Elevator car status, pri=6, period=100
                                       case 129029L: // GNSS Position Data, pri=3, period=1000
                                       case 129038L: // AIS Class A Position Report, pri=4, period=NA
                                       case 129039L: // AIS Class B Position Report, pri=4, period=NA
@@ -514,6 +535,18 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 130567L: // Watermaker Input Setting and Status, pri=6, period=2500
                                       case 130577L: // Direction Data PGN, pri=3, period=1000
                                       case 130578L: // Vessel Speed Components, pri=2, period=250
+                                      // Entertainment PGNs
+                                      case 130569L: // Current File and Status, pri=6, period=500
+                                      case 130570L: // Library Data File, pri=6, period=NA
+                                      case 130571L: // Library Data Group, pri=6, period=NA
+                                      case 130572L: // Library Data Search, pri=6, period=NA
+                                      case 130573L: // Supported Source Data, pri=6, period=NA
+                                      case 130574L: // Supported Zone Data, pri=6, period=NA
+                                      case 130580L: // System Configuration Status, pri=6, period=NA
+                                      case 130581L: // Zone Configuration Status, pri=6, period=NA
+                                      case 130583L: // Available Audio EQ Presets, pri=6, period=NA
+                                      case 130584L: // Bluetooth Devices, pri=6, period=NA
+                                      case 130586L: // Zone Configuration Status, pri=6, period=NA
                                       return true;
                                   }
                                   return false;
@@ -2009,7 +2042,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
 }
 
 //*****************************************************************************
- int tNMEA2000::FindSourceDeviceIndex(unsigned char Source) {
+ int tNMEA2000::FindSourceDeviceIndex(unsigned char Source) const {
    int i=DeviceCount;
 
      if ( Source<=253 ) {
