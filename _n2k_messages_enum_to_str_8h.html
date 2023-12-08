@@ -280,10 +280,10 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >This File contains functions to convert enums from <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a> to const char. </p>
 <p >This is collection of functions for handling enums of NMEA2000 bus messages. There are basically 2 functions in the library to convert enums derived from N2kMessages to const char *:</p>
-<h4><a class="anchor" id="autotoc_md231"></a>
+<h4><a class="anchor" id="autotoc_md232"></a>
 const char * N2kEnumTypeToStr(enumType enumVal)</h4>
 <p >This functions returns a const char * value thats representing the given enum Value. By detecting the enumType, the right text output is chosen.</p>
-<h4><a class="anchor" id="autotoc_md232"></a>
+<h4><a class="anchor" id="autotoc_md233"></a>
 void PrintN2kEnumType (T a, Stream *OutputStream, bool addLF=true)</h4>
 <p >This prints the corresponding text output to the given output stream.</p>
 <dl class="section note"><dt>Note</dt><dd>If you do not need enums in clear text, you do not need this library. </dd></dl>
@@ -325,7 +325,7 @@ void PrintN2kEnumType (T a, Stream *OutputStream, bool addLF=true)</h4>
 <p>Macro function for converting various N2k Enums to a const char. </p>
 <p >This generic macro defines a way to use a specific version of <b>N2kEnumTypeToStr(enumType enumVal)</b> depending on which enumType is given as parameter.</p>
 <p >In NMEA2000 messages there are several enumerations defined and used for the states of different systems. E.g tN2kBatType holds all the available battery types like "flooded", "gel", "AGM". If you need the "real" values of these enums written to a string (e.g. for debugging), you can use these functions.</p>
-<h3><a class="anchor" id="autotoc_md233"></a>
+<h3><a class="anchor" id="autotoc_md234"></a>
 Usage of the function N2kEnumTypeToStr(enumType enumVal):</h3>
 <div class="fragment"><div class="line"><a class="code hl_enumeration" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> batCem = <a class="code hl_enumvalue" href="_n2k_types_8h.html#gab1fb3a15dd2280870f83241c69aa6536a333a131d41ecddb1bfe78b0b223358f1">N2kDCbt_Gel</a>;</div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span>* tmp;</div>

@@ -46,8 +46,8 @@ var searchData=
   ['copyprogmemconfigurationinformationtolocal_43',['CopyProgmemConfigurationInformationToLocal',['../classt_n_m_e_a2000.html#ae98acb667695dc2b5dbb65721a1f217d',1,'tNMEA2000']]],
   ['copyprogmemstring_44',['CopyProgmemString',['../_n_m_e_a2000_8cpp.html#ad642d761f60d509c69bb47b85d1a9c69',1,'NMEA2000.cpp']]],
   ['coulombtoah_45',['CoulombToAh',['../_n2k_messages_8h.html#aa14ad9b5b95319be715db097454771ae',1,'N2kMessages.h']]],
-  ['count_46',['count',['../classt_ring_buffer.html#a4daf53062a32f57678d73bf1cd201378',1,'tRingBuffer::count()'],['../classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0',1,'tPriorityRingBuffer::count()']]],
-  ['count_47',['Count',['../classt_n2k_device_list.html#a4f523fb8f2e032d4426c78270bd40b99',1,'tN2kDeviceList']]],
+  ['count_46',['Count',['../classt_n2k_device_list.html#a4f523fb8f2e032d4426c78270bd40b99',1,'tN2kDeviceList']]],
+  ['count_47',['count',['../classt_ring_buffer.html#a4daf53062a32f57678d73bf1cd201378',1,'tRingBuffer::count()'],['../classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0',1,'tPriorityRingBuffer::count()']]],
   ['createtime_48',['CreateTime',['../classt_n_m_e_a2000_1_1t_device.html#a9a46a63b6e08ffc6c132acbf67b4524e',1,'tNMEA2000::tDevice']]],
   ['ctokelvin_49',['CToKelvin',['../_n2k_messages_8h.html#a186587bc824ba3b8e9997c652cdcfb74',1,'N2kMessages.h']]]
 ];

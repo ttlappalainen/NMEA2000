@@ -231,12 +231,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a086b323eef22300d02c9437686324902"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">ExtendTransmitMessages</a> (const unsigned long *_SingleFrameMessages, int iDev=0)</td></tr>
 <tr class="memdesc:a086b323eef22300d02c9437686324902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extend the list of Transmitted Messages.  <a href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">More...</a><br /></td></tr>
 <tr class="separator:a086b323eef22300d02c9437686324902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac427676acb8f8a15c89999e496981718"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#ac427676acb8f8a15c89999e496981718">FindSourceDeviceIndex</a> (unsigned char Source) const</td></tr>
+<tr class="memdesc:ac427676acb8f8a15c89999e496981718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a> by its source address.  <a href="classt_n_m_e_a2000.html#ac427676acb8f8a15c89999e496981718">More...</a><br /></td></tr>
+<tr class="separator:ac427676acb8f8a15c89999e496981718"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a401d13e5ca1d03656b61fa1ec841cfba"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a401d13e5ca1d03656b61fa1ec841cfba">GetCertificationLevel</a> (int iDev=0) const</td></tr>
 <tr class="memdesc:a401d13e5ca1d03656b61fa1ec841cfba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Certification Level of the device.  <a href="classt_n_m_e_a2000.html#a401d13e5ca1d03656b61fa1ec841cfba">More...</a><br /></td></tr>
 <tr class="separator:a401d13e5ca1d03656b61fa1ec841cfba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a254973b61424c1303c6f3c38dcabe9aa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html">tDeviceInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a254973b61424c1303c6f3c38dcabe9aa">GetDeviceInformation</a> (int iDev=0)</td></tr>
 <tr class="memdesc:a254973b61424c1303c6f3c38dcabe9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Device Information.  <a href="classt_n_m_e_a2000.html#a254973b61424c1303c6f3c38dcabe9aa">More...</a><br /></td></tr>
 <tr class="separator:a254973b61424c1303c6f3c38dcabe9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58469d21f6ef23c021d12b0516e2fadc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_n2k_stream.html">N2kStream</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a58469d21f6ef23c021d12b0516e2fadc">GetForwardStream</a> () const</td></tr>
+<tr class="memdesc:a58469d21f6ef23c021d12b0516e2fadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read current Forward Stream object.  <a href="classt_n_m_e_a2000.html#a58469d21f6ef23c021d12b0516e2fadc">More...</a><br /></td></tr>
+<tr class="separator:a58469d21f6ef23c021d12b0516e2fadc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fb1b392658f77da619fda7af2d1ec66"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a6fb1b392658f77da619fda7af2d1ec66">GetHeartbeatInterval</a> (int iDev=0)</td></tr>
 <tr class="memdesc:a6fb1b392658f77da619fda7af2d1ec66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Heartbeat Interval of a device.  <a href="classt_n_m_e_a2000.html#a6fb1b392658f77da619fda7af2d1ec66">More...</a><br /></td></tr>
 <tr class="separator:a6fb1b392658f77da619fda7af2d1ec66"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,6 +285,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4ca1e433eb4a1963afdf063786919c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#ae4ca1e433eb4a1963afdf063786919c1">GetSwCode</a> (char *buf, size_t max_len, int iDev=0) const</td></tr>
 <tr class="memdesc:ae4ca1e433eb4a1963afdf063786919c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Sw Code of the device.  <a href="classt_n_m_e_a2000.html#ae4ca1e433eb4a1963afdf063786919c1">More...</a><br /></td></tr>
 <tr class="separator:ae4ca1e433eb4a1963afdf063786919c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d1460355268ad28b3759e011575972"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a92d1460355268ad28b3759e011575972">IsOpen</a> () const</td></tr>
+<tr class="memdesc:a92d1460355268ad28b3759e011575972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test is NMEA2000 open and running.  <a href="classt_n_m_e_a2000.html#a92d1460355268ad28b3759e011575972">More...</a><br /></td></tr>
+<tr class="separator:a92d1460355268ad28b3759e011575972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a115f4c388508453cd3c8e1de24280a77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a115f4c388508453cd3c8e1de24280a77">IsTxPGN</a> (unsigned long PGN, int iDev=0)</td></tr>
 <tr class="memdesc:a115f4c388508453cd3c8e1de24280a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if this message is a Transmit message of this device.  <a href="classt_n_m_e_a2000.html#a115f4c388508453cd3c8e1de24280a77">More...</a><br /></td></tr>
 <tr class="separator:a115f4c388508453cd3c8e1de24280a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -450,7 +459,7 @@ Protected Types</h2></td></tr>
 , <a class="el" href="classt_n_m_e_a2000.html#a826b2c23ecfab80b2968dc33ecff35a8ad1d199268699b20e3b23e528029b6dfe">os_WaitOpen</a>
 , <a class="el" href="classt_n_m_e_a2000.html#a826b2c23ecfab80b2968dc33ecff35a8a463a23bd80038eea845918a4f8e83f35">os_Open</a>
  }</td></tr>
-<tr class="memdesc:a826b2c23ecfab80b2968dc33ecff35a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of ...  <a href="classt_n_m_e_a2000.html#a826b2c23ecfab80b2968dc33ecff35a8">More...</a><br /></td></tr>
+<tr class="memdesc:a826b2c23ecfab80b2968dc33ecff35a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Library open state.  <a href="classt_n_m_e_a2000.html#a826b2c23ecfab80b2968dc33ecff35a8">More...</a><br /></td></tr>
 <tr class="separator:a826b2c23ecfab80b2968dc33ecff35a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
@@ -476,9 +485,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa09664f367d192c9e025aebffc1f7601"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#aa09664f367d192c9e025aebffc1f7601">FindFreeCANMsgIndex</a> (unsigned long PGN, unsigned char Source, unsigned char Destination, bool TPMsg, uint8_t &amp;MsgIndex)</td></tr>
 <tr class="memdesc:aa09664f367d192c9e025aebffc1f7601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find index for free space for a message on <a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">N2kCANMsgBuf</a>.  <a href="classt_n_m_e_a2000.html#aa09664f367d192c9e025aebffc1f7601">More...</a><br /></td></tr>
 <tr class="separator:aa09664f367d192c9e025aebffc1f7601"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9304276a54fe58c9474365469e51ca4c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a9304276a54fe58c9474365469e51ca4c">FindSourceDeviceIndex</a> (unsigned char Source)</td></tr>
-<tr class="memdesc:a9304276a54fe58c9474365469e51ca4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a> by its source address.  <a href="classt_n_m_e_a2000.html#a9304276a54fe58c9474365469e51ca4c">More...</a><br /></td></tr>
-<tr class="separator:a9304276a54fe58c9474365469e51ca4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59f7e3329d76f95000c2306182391d38"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n_m_e_a2000.html#a59f7e3329d76f95000c2306182391d38">ForwardEnabled</a> () const</td></tr>
 <tr class="memdesc:a59f7e3329d76f95000c2306182391d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is message forwarding enabled.  <a href="classt_n_m_e_a2000.html#a59f7e3329d76f95000c2306182391d38">More...</a><br /></td></tr>
 <tr class="separator:a59f7e3329d76f95000c2306182391d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -832,14 +838,17 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>State of ... </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Finalize Description.... </dd></dl>
+<p>Library open state. </p>
+<p >Open state is internal library open state used to avoid anu blocking call. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a826b2c23ecfab80b2968dc33ecff35a8a5a87654952ce1196e64592d2249e1c65" name="a826b2c23ecfab80b2968dc33ecff35a8a5a87654952ce1196e64592d2249e1c65"></a>os_None&#160;</td><td class="fielddoc"><p >State none. </p>
+<p >Open has not yet been called. Buffers are still uninitialized. Trying to open CAN driver. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a826b2c23ecfab80b2968dc33ecff35a8aa3bf41cb9ddec2cdf847d025007f1d7e" name="a826b2c23ecfab80b2968dc33ecff35a8aa3bf41cb9ddec2cdf847d025007f1d7e"></a>os_OpenCAN&#160;</td><td class="fielddoc"><p >State Open CAN. </p>
+<p >CAN driver open succeed. Wait CAN driver stabilize. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a826b2c23ecfab80b2968dc33ecff35a8ad1d199268699b20e3b23e528029b6dfe" name="a826b2c23ecfab80b2968dc33ecff35a8ad1d199268699b20e3b23e528029b6dfe"></a>os_WaitOpen&#160;</td><td class="fielddoc"><p >State Wait Open. </p>
+<p >Open and running. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a826b2c23ecfab80b2968dc33ecff35a8a463a23bd80038eea845918a4f8e83f35" name="a826b2c23ecfab80b2968dc33ecff35a8a463a23bd80038eea845918a4f8e83f35"></a>os_Open&#160;</td><td class="fielddoc"><p >State Open. </p>
 </td></tr>
@@ -868,7 +877,7 @@ Static Protected Attributes</h2></td></tr>
 <p>Construct a new NMEA2000 object. </p>
 <p >Initialize all the attributes of the class </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00613">613</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00646">646</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -897,7 +906,7 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02658">2658</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02691">2691</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -927,7 +936,7 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02593">2593</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02626">2626</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1131,7 +1140,7 @@ false -&gt; there is no space in the queue </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01529">1529</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01562">1562</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1178,7 +1187,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00590">590</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00623">623</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1233,7 +1242,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00607">607</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00640">640</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1263,7 +1272,7 @@ false </dd></dl>
 <p>Copy Configuration Information to local memory. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb">SetConfigurationInformation</a>, <a class="el" href="classt_n_m_e_a2000.html#a247b2da90d6e052b9c775a281bc1ab8f">SetInstallationDescription1</a> and <a class="el" href="classt_n_m_e_a2000.html#adba185ea0bb09107842dd3041707407e">SetInstallationDescription2</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00975">975</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01008">1008</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1302,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02618">2618</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02651">2651</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1332,7 +1341,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02677">2677</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02702">2702</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1368,7 +1377,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01899">1899</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01932">1932</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1401,7 +1410,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01111">1111</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01144">1144</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1439,7 +1448,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
 <div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a06317d52aad397b03b12875bf1833a04">ExtendReceiveMessages</a>(ReceivedMessages);</div>
 <div class="ttc" id="a_n2k_def_8h_html_a75acaba9e781937468d0911423bc0c35"><div class="ttname"><a href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a></div><div class="ttdeci">#define PROGMEM</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_def_8h_source.html#l00045">N2kDef.h:45</a></div></div>
 <div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a99f6ed3fa2b0b15f276c856e10a7a3ab"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a></div><div class="ttdeci">tNMEA2000 &amp; NMEA2000</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00350">NMEA2000_CAN.h:350</a></div></div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_a06317d52aad397b03b12875bf1833a04"><div class="ttname"><a href="classt_n_m_e_a2000.html#a06317d52aad397b03b12875bf1833a04">tNMEA2000::ExtendReceiveMessages</a></div><div class="ttdeci">void ExtendReceiveMessages(const unsigned long *_FastPacketMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Received Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01123">NMEA2000.cpp:1123</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a06317d52aad397b03b12875bf1833a04"><div class="ttname"><a href="classt_n_m_e_a2000.html#a06317d52aad397b03b12875bf1833a04">tNMEA2000::ExtendReceiveMessages</a></div><div class="ttdeci">void ExtendReceiveMessages(const unsigned long *_FastPacketMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Received Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01156">NMEA2000.cpp:1156</a></div></div>
 </div><!-- fragment --><p >System should respond to PGN 126464 request with messages the system transmits and receives. The library will automatically respond with system the messages it uses. With this method you can add messages, which your own code sends</p>
 <dl class="section note"><dt>Note</dt><dd>that this is valid only for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1450,7 +1459,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01123">1123</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01156">1156</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1482,7 +1491,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
 </dl>
 <dl class="section see"><dt>See also</dt><dd>see <a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">SetSingleFrameMessages</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01106">1106</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01139">1139</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1518,7 +1527,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">unsigned</span> TransmitMessages[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={130310L,130311L,130312L,0};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">ExtendTransmitMessages</a>(TransmitMessages);</div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_a086b323eef22300d02c9437686324902"><div class="ttname"><a href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">tNMEA2000::ExtendTransmitMessages</a></div><div class="ttdeci">void ExtendTransmitMessages(const unsigned long *_SingleFrameMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Transmitted Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01116">NMEA2000.cpp:1116</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a086b323eef22300d02c9437686324902"><div class="ttname"><a href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">tNMEA2000::ExtendTransmitMessages</a></div><div class="ttdeci">void ExtendTransmitMessages(const unsigned long *_SingleFrameMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Transmitted Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01149">NMEA2000.cpp:1149</a></div></div>
 </div><!-- fragment --><p >System should respond to PGN 126464 request with messages the system transmits and receives. The library will automatically respond with system the messages it handles internally. With this method you can add messages, which your own code sends</p>
 <dl class="section note"><dt>Note</dt><dd>that this is valid only for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1529,7 +1538,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01116">1116</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01149">1149</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1598,32 +1607,24 @@ Currently subsequent calls will override previously set list.</dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01584">1584</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01617">1617</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a9304276a54fe58c9474365469e51ca4c" name="a9304276a54fe58c9474365469e51ca4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9304276a54fe58c9474365469e51ca4c">&#9670;&nbsp;</a></span>FindSourceDeviceIndex()</h2>
+<a id="ac427676acb8f8a15c89999e496981718" name="ac427676acb8f8a15c89999e496981718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac427676acb8f8a15c89999e496981718">&#9670;&nbsp;</a></span>FindSourceDeviceIndex()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int tNMEA2000::FindSourceDeviceIndex </td>
           <td>(</td>
           <td class="paramtype">unsigned char&#160;</td>
           <td class="paramname"><em>Source</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Finds a device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a> by its source address. </p>
@@ -1635,7 +1636,7 @@ Currently subsequent calls will override previously set list.</dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int DeviceIndex, not found = -1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02012">2012</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02045">2045</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1705,7 +1706,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02042">2042</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02075">2075</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1742,7 +1743,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02028">2028</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02061">2061</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1870,7 +1871,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00947">947</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00980">980</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -1911,7 +1912,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>const <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tDeviceInformation</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02218">2218</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02224">2224</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1948,7 +1949,37 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>size_t </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00766">766</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00799">799</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a58469d21f6ef23c021d12b0516e2fadc" name="a58469d21f6ef23c021d12b0516e2fadc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58469d21f6ef23c021d12b0516e2fadc">&#9670;&nbsp;</a></span>GetForwardStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_n2k_stream.html">N2kStream</a> * tNMEA2000::GetForwardStream </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read current Forward Stream object. </p>
+<dl class="section return"><dt>Returns</dt><dd>current Forward Stream object or 0 if not set. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02445">2445</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1986,7 +2017,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint_32 -&gt; Device heartbeat interval in ms </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02346">2346</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02352">2352</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -2024,7 +2055,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint_32 -&gt; Device heartbeat Offset in ms </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02357">2357</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02363">2363</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -2063,7 +2094,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01009">1009</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01042">1042</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2102,7 +2133,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01018">1018</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01051">1051</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2132,7 +2163,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned char </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00961">961</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00994">994</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2171,7 +2202,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01027">1027</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01060">1060</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2217,7 +2248,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00883">883</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00916">916</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2263,7 +2294,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00931">931</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00964">964</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2309,7 +2340,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00915">915</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00948">948</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2350,7 +2381,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned char -&gt; Address of the device </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02609">2609</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02634">2634</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -2379,7 +2410,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00855">855</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00888">888</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2426,7 +2457,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02462">2462</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02495">2495</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2456,7 +2487,7 @@ false </dd></dl>
 <p>Get the Next Free CAN Frame from <a class="el" href="classt_n_m_e_a2000.html#afc3a2dd4532d2e529fdb5e648e5c301c">CANSendFrameBuf</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>tCANSendFrame* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01367">1367</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01400">1400</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2485,7 +2516,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>unsigned short </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00869">869</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00902">902</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2525,7 +2556,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>const <a class="el" href="structt_n_m_e_a2000_1_1t_product_information.html" title="Structure that holds all the product information.">tNMEA2000::tProductInformation</a>* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00844">844</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00877">877</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2573,7 +2604,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int Sequence Counter, non valid iDEV = 0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00784">784</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00817">817</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2619,7 +2650,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00899">899</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00932">932</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2655,7 +2686,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02417">2417</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02450">2450</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2710,7 +2741,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02405">2405</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02438">2438</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2747,7 +2778,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02325">2325</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02358">2358</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2783,7 +2814,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02380">2380</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02413">2413</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2820,7 +2851,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02283">2283</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02316">2316</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2933,7 +2964,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02493">2493</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02526">2526</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -2972,7 +3003,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01731">1731</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01764">1764</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3002,7 +3033,7 @@ false </dd></dl>
 <p>Initialize CAN Frame buffers. </p>
 <p >This will be called on <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a> before any other initialization. Inherit this, if buffers can be set for the driver and you want to change size of library send frame buffer size. See e.g. NMEA2000_teensy.cpp. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01141">1141</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01174">1174</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3044,7 +3075,7 @@ false </dd></dl>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00663">663</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00696">696</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3115,7 +3146,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02364">2364</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02397">2397</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3154,7 +3185,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02764">2764</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02789">2789</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -3194,7 +3225,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01522">1522</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01555">1555</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3234,7 +3265,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01502">1502</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01535">1535</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3266,7 +3297,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01165">1165</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01173">1173</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -3305,7 +3336,39 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02023">2023</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02056">2056</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a92d1460355268ad28b3759e011575972" name="a92d1460355268ad28b3759e011575972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92d1460355268ad28b3759e011575972">&#9670;&nbsp;</a></span>IsOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tNMEA2000::IsOpen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Test is NMEA2000 open and running. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02467">2467</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -3351,7 +3414,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00536">536</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00569">569</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3425,7 +3488,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00828">828</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00861">861</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3604,7 +3667,7 @@ template&lt;typename T &gt; </div>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01153">1153</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01186">1186</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3630,7 +3693,7 @@ false </dd></dl>
 Even if you only send e.g. temperature to the bus, you should call this so the node will automatically inform about itself to others. Take care that your loop to call <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">ParseMessages()</a> does not have long delays.</dd></dl>
 <p>See example TemperatureMonitor.ino. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02527">2527</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02560">2560</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3659,7 +3722,7 @@ Even if you only send e.g. temperature to the bus, you should call this so the n
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02446">2446</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02479">2479</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3687,7 +3750,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02454">2454</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02487">2487</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3711,7 +3774,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01036">1036</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01069">1069</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3739,7 +3802,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02640">2640</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02673">2673</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3801,7 +3864,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02303">2303</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02336">2336</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3857,7 +3920,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02247">2247</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02280">2280</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3880,7 +3943,7 @@ false </dd></dl>
 <p >This is preliminary function for e.g. battery powered or devices, which may go to sleep or of the bus in any way. Function is under development.</p>
 <dl class="section note"><dt>Note</dt><dd>At the moment this functions just restarts the IsoAddressClaim </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01214">1214</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01247">1247</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3916,7 +3979,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02570">2570</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02603">2603</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3948,7 +4011,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02210">2210</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02243">2243</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -3998,7 +4061,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02214">2214</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02247">2247</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4063,7 +4126,7 @@ false </dd></dl>
 <dd>
 false -&gt; failed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01285">1285</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01318">1318</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4095,7 +4158,7 @@ false -&gt; failed </dd></dl>
 <dd>
 false -&gt; Message could not be send out </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01268">1268</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01301">1301</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4124,7 +4187,7 @@ false -&gt; Message could not be send out </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01346">1346</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01379">1379</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4152,7 +4215,7 @@ false -&gt; Message could not be send out </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01338">1338</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01371">1371</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4199,7 +4262,7 @@ false -&gt; Message could not be send out </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02047">2047</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02080">2080</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4241,7 +4304,9 @@ false -&gt; Message could not be send out </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object </td></tr>
-    <tr><td class="paramname">DeviceIndex</td><td>index of the device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a> </td></tr>
+    <tr><td class="paramname">DeviceIndex</td><td>index of the device on <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">Devices</a> <br  />
+ Setting DeviceIndex to -1 forces library to use source address of N2kMsg instead of device source address. This is usefull with e.g., passthrough gateway devices. <br  />
+ </td></tr>
   </table>
   </dd>
 </dl>
@@ -4249,7 +4314,7 @@ false -&gt; Message could not be send out </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01400">1400</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01433">1433</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4279,7 +4344,7 @@ false </dd></dl>
 <p>Send ISO AddressClaim, Product Information and Config Information. </p>
 <p >Currently Product Information and Configuration Information will we pended on ISO request. This is because specially for broadcasted response it may take a while, when higher priority devices sends their response. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classt_n_m_e_a2000.html#a561a8cdcb18ef59dc9ef3d93a26d4e36">SendIsoAddressClaim()</a>, <a class="el" href="classt_n_m_e_a2000.html#ac6ba6daeaea5ec94f7ce3920ca622e2b">SendProductInformation()</a>, <a class="el" href="classt_n_m_e_a2000.html#a33b6fab401d849b834c16de03d5e37a3">SendConfigurationInformation()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01381">1381</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01414">1414</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4315,7 +4380,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01906">1906</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01939">1939</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4347,7 +4412,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02168">2168</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02201">2201</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4397,7 +4462,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02172">2172</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02205">2205</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4444,7 +4509,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02111">2111</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02144">2144</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4506,7 +4571,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01692">1692</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01725">1725</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4546,7 +4611,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01618">1618</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01651">1651</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4615,7 +4680,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01657">1657</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01690">1690</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4684,7 +4749,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01675">1675</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01708">1708</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4723,7 +4788,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01637">1637</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01670">1670</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4763,7 +4828,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01712">1712</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01745">1745</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4810,7 +4875,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02078">2078</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02111">2111</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4865,7 +4930,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00597">597</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00630">630</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4914,7 +4979,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00717">717</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00750">750</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4945,7 +5010,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01497">1497</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01530">1530</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -4976,7 +5041,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00657">657</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00690">690</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5049,7 +5114,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01046">1046</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01079">1079</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5105,7 +5170,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01063">1063</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01096">1096</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5136,7 +5201,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01101">1101</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01134">1134</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5176,7 +5241,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02712">2712</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02737">2737</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5213,7 +5278,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02724">2724</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02749">2749</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5251,7 +5316,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02432">2432</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02438">2438</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5288,7 +5353,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02691">2691</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02716">2716</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5328,7 +5393,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02420">2420</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02426">2426</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5366,7 +5431,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02741">2741</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02766">2766</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5402,7 +5467,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01333">1333</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01366">1366</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5450,7 +5515,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01306">1306</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01339">1339</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5479,7 +5544,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00990">990</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01023">1023</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5508,7 +5573,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01000">1000</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01033">1033</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5539,7 +5604,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02634">2634</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02667">2667</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5581,7 +5646,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01130">1130</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01163">1163</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5612,7 +5677,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02588">2588</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02621">2621</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5668,7 +5733,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t -&gt; Index of the CAN message on <a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">N2kCANMsgBuf</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01927">1927</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01960">1960</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5705,7 +5770,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01722">1722</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01728">1728</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5742,7 +5807,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01753">1753</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01759">1759</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5779,7 +5844,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01742">1742</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01748">1748</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -5822,7 +5887,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02438">2438</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02471">2471</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5845,7 +5910,7 @@ false </dd></dl>
 <p>Set OnOpen callback function. </p>
 <p >This will be called, when communication really opens and starts initial address claiming. You can use this to init your message sending to syncronize them with e.g., heartbeat </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02583">2583</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02616">2616</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5935,7 +6000,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00698">698</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00731">731</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -5976,7 +6041,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00689">689</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00722">722</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6025,7 +6090,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00755">755</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l00788">788</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6048,7 +6113,7 @@ false </dd></dl>
 <p>Set the list of known Single Frame Messages. </p>
 <p >Call these if you wish to override the default message packets supported. Pointers must be in PROGMEM</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="classt_n_m_e_a2000.html#aad9427bcaff498b0a59545a488dc0295">SingleFrameMessages</a>[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={......L,0};</div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_aad9427bcaff498b0a59545a488dc0295"><div class="ttname"><a href="classt_n_m_e_a2000.html#aad9427bcaff498b0a59545a488dc0295">tNMEA2000::SingleFrameMessages</a></div><div class="ttdeci">const unsigned long * SingleFrameMessages[N2kMessageGroups]</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00965">NMEA2000.h:965</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_aad9427bcaff498b0a59545a488dc0295"><div class="ttname"><a href="classt_n_m_e_a2000.html#aad9427bcaff498b0a59545a488dc0295">tNMEA2000::SingleFrameMessages</a></div><div class="ttdeci">const unsigned long * SingleFrameMessages[N2kMessageGroups]</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00973">NMEA2000.h:973</a></div></div>
 </div><!-- fragment --><p >As a default library has a list of known messages. With this function user can override default list of single frame messages.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -6057,7 +6122,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01096">1096</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01129">1129</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6086,7 +6151,7 @@ false </dd></dl>
 
 <p>Starting the ISO Address Claim for all devices. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02356">2356</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02389">2389</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6122,7 +6187,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02343">2343</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02376">2376</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6172,7 +6237,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01876">1876</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01909">1909</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6250,7 +6315,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01736">1736</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l01769">1769</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
 </div>
 </div>
@@ -6277,7 +6342,7 @@ false </dd></dl>
 
 <p>Flag that the address has changed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00950">950</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00958">958</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6303,7 +6368,7 @@ false </dd></dl>
 
 <p>Buffer for ssend out CAN messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00997">997</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01005">1005</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6328,9 +6393,9 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Index for the CAN message Send buffer. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>Please double check Docu </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Please double check Docu </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01009">1009</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01017">1017</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6355,9 +6420,9 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Index for the CAN message Send buffer. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Please double check Docu </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Please double check Docu </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01005">1005</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01013">1013</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6383,7 +6448,7 @@ false </dd></dl>
 
 <p>Configuration Information of the device. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00963">963</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00971">971</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6409,7 +6474,7 @@ false </dd></dl>
 
 <p>Attribute that holds the actual Debug Mode (default = md_none) </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00930">930</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00938">938</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6435,7 +6500,7 @@ false </dd></dl>
 
 <p>Number of devices. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00957">957</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00965">965</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6461,7 +6526,7 @@ false </dd></dl>
 
 <p>Flag that the device information has changed. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00952">952</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00960">960</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6487,7 +6552,7 @@ false </dd></dl>
 
 <p>Pointer to a buffer for all internal devices. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00955">955</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00963">963</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6511,7 +6576,7 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00966">966</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00974">974</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6537,7 +6602,7 @@ false </dd></dl>
 
 <p>Actual message forward operation mode (default = all messages - also system and own) </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00939">939</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00947">947</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6563,7 +6628,7 @@ false </dd></dl>
 
 <p>Actual stream to be used for forward messaging. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00941">941</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00949">949</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6589,7 +6654,7 @@ false </dd></dl>
 
 <p>Actual message forward type (default = fwdt_Actisense) </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00936">936</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00944">944</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6615,7 +6680,7 @@ false </dd></dl>
 
 <p>Forward mode bit: -&gt; If set, forward is enabled. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00916">916</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00924">924</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6641,7 +6706,7 @@ false </dd></dl>
 
 <p>Forward mode bit: -&gt; Only known messages will be forwarded. System messages will be forwarded according its own bit. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00921">921</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00929">929</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6667,7 +6732,7 @@ false </dd></dl>
 
 <p>Forward mode bit: -&gt; Forward also all messages, what this device will send. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00924">924</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00932">932</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6693,7 +6758,7 @@ false </dd></dl>
 
 <p>Forward mode bit: -&gt; System messages will be forwarded. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00918">918</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00926">926</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6719,7 +6784,7 @@ false </dd></dl>
 
 <p>Forward mode bit: -&gt; Only known messages will be handled. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00926">926</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00934">934</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6771,7 +6836,7 @@ false </dd></dl>
 
 <p>Handler callbacks for 'ISORequest' messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01022">1022</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01030">1030</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6797,7 +6862,7 @@ false </dd></dl>
 
 <p>Pointer to a buffer for local Configuration Information. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00961">961</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00969">969</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6824,7 +6889,7 @@ false </dd></dl>
 <p>Max number received CAN messages that can go to the buffer. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classt_n_m_e_a2000.html#ac7dbb8a8e30a3926b5a2076e441d80eb">InitCANFrameBuffers()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01013">1013</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01021">1021</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6851,7 +6916,7 @@ false </dd></dl>
 <p>Max number of send out CAN messages that can go to the buffer <a class="el" href="classt_n_m_e_a2000.html#afc3a2dd4532d2e529fdb5e648e5c301c">CANSendFrameBuf</a>. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classt_n_m_e_a2000.html#ac7dbb8a8e30a3926b5a2076e441d80eb">InitCANFrameBuffers()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01001">1001</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01009">1009</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6877,7 +6942,7 @@ false </dd></dl>
 
 <p>Max number CAN messages that can go to the buffer <a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">N2kCANMsgBuf</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00994">994</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01002">1002</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6903,7 +6968,7 @@ false </dd></dl>
 
 <p>Handler callbacks for normal messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01020">1020</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01028">1028</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6929,7 +6994,7 @@ false </dd></dl>
 
 <p>Pointer to a buffer for Message Handlers. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00943">943</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00951">951</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6955,7 +7020,7 @@ false </dd></dl>
 
 <p>Buffer for received messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00991">991</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00999">999</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -6981,7 +7046,7 @@ false </dd></dl>
 
 <p>Actual operation mode of this device (default = N2km_ListenOnly) </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00934">934</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00942">942</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -7006,9 +7071,9 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>??? </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Better documentation needed </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>Better documentation needed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01017">1017</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01025">1025</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -7033,7 +7098,7 @@ false </dd></dl>
 </div><div class="memdoc">
 <p >Open the Scheduler </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00946">946</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00954">954</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -7058,7 +7123,7 @@ false </dd></dl>
 </div><div class="memdoc">
 <p >State of the .... </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00948">948</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00956">956</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -7084,7 +7149,7 @@ false </dd></dl>
 
 <p>Pointer to Buffer for GRoup Function Handlers. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01026">1026</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l01034">1034</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -7108,7 +7173,7 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00965">965</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00973">973</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
