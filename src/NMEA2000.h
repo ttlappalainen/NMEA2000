@@ -3,7 +3,7 @@
  *
  * The MIT License
  *
- * Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -1055,6 +1055,7 @@ protected:
      * \return false  -> there is no space in the queue
     */
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
+
     /*********************************************************************//**
      * \brief Open the CAN Interface
      * 
@@ -1070,8 +1071,8 @@ protected:
      * \return false  -> currently prevent accidental by second instance. 
      *                   Maybe possible in future.
      */
-
     virtual bool CANOpen()=0;
+
     /*********************************************************************//**
      * \brief Get a CAN Frame
      * 
@@ -1087,7 +1088,6 @@ protected:
      * \return false  -> 
      */
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
-
     
     /*********************************************************************//**
      * \brief Initialize CAN Frame buffers

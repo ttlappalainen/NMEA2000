@@ -1,7 +1,7 @@
 /*
   RingBuffer.tpp  (RingBuffer template code)
 
-  Copyright (c) 2020-2023 Timo Lappalainen
+  Copyright (c) 2020-2024 Timo Lappalainen
 
   The MIT License
 
@@ -115,6 +115,49 @@ bool tRingBuffer<T>::read(T &val) {
   tail = (tail + 1) % size;
 
   return (true);
+}
+
+// *****************************************************************************
+template<typename T>
+T *tRingBuffer<T>::getAddRef() {
+  T *ret=0;
+
+  uint16_t nextEntry = (head + 1) % size;
+
+  // Check if the ring buffer is full
+  if ( nextEntry == tail ) return ret;
+
+  ret=&(buffer[head]);
+
+  // Bump the head to point to the next free entry
+  head = nextEntry;
+
+  return ret;
+}
+
+// *****************************************************************************
+template<typename T>
+const T *tRingBuffer<T>::getReadRef() {
+  // Check if the ring buffer has data available
+  if ( isEmpty() ) return 0;
+
+  T *ret=&(buffer[tail]);
+
+  // Bump the tail pointer
+  tail = (tail + 1) % size;
+
+  return ret;
+}
+
+// *****************************************************************************
+template<typename T>
+T *tRingBuffer<T>::peek() {
+  // Check if the ring buffer has data available
+  if ( isEmpty() ) return 0;
+
+  T *ret=&(buffer[tail]);
+
+  return ret;
 }
 
 //==============================================================================

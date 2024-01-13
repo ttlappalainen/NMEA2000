@@ -1,7 +1,7 @@
 /*
 NMEA2000.cpp
 
-Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -267,7 +267,7 @@ bool IsFastPacketSystemMessage(unsigned long PGN) {
  *              - 130312L: Temperature, pri=5, period=2000
  *              - 130313L: Humidity, pri=5, period=2000
  *              - 130314L: Pressure, pri=5, period=2000
- *              - 130316L: Temperature extended range, pri=5, period=NA
+ *              - 130316L: Temperature extended range, pri=5, period=2000
  *              - 130576L: Small Craft Status (Trim Tab position), pri=2, period=200
  * 
  * 
@@ -297,7 +297,7 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 130312L: // Temperature, pri=5, period=2000
                                       case 130313L: // Humidity, pri=5, period=2000
                                       case 130314L: // Pressure, pri=5, period=2000
-                                      case 130316L: // Temperature extended range, pri=5, period=NA
+                                      case 130316L: // Temperature extended range, pri=5, period=2000
                                       case 130576L: // Small Craft Status (Trim Tab position), pri=2, period=200
                                       return true;
                                   }
@@ -436,7 +436,7 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 130583L: Available Audio EQ Presets, pri=6, period=NA
  *          - 130584L: Bluetooth Devices, pri=6, period=NA
  *          - 130586L: Zone Configuration Status, pri=6, period=NA
-* \return false 
+ * \return false 
  */
 bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                   switch (PGN) {

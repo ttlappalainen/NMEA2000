@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -1224,7 +1224,7 @@ void SetN2kPGN129539(tN2kMsg& N2kMsg, unsigned char SID, tN2kGNSSDOPmode Desired
     N2kMsg.SetPGN(129539L);
     N2kMsg.Priority = 6;
     N2kMsg.AddByte(SID);
-    N2kMsg.AddByte(((DesiredMode & 0x07) << 5) | ((ActualMode & 0x07) << 2));
+    N2kMsg.AddByte( 0xc0 | ( (ActualMode & 0x07) << 3 ) | (DesiredMode & 0x07) );
     N2kMsg.Add2ByteDouble(HDOP, 0.01);
     N2kMsg.Add2ByteDouble(VDOP, 0.01);
     N2kMsg.Add2ByteDouble(TDOP, 0.01);
@@ -1241,8 +1241,8 @@ bool ParseN2kPgn129539(const tN2kMsg& N2kMsg, unsigned char& SID, tN2kGNSSDOPmod
 
     SID = N2kMsg.GetByte(Index);
     modes = N2kMsg.GetByte(Index);
-    DesiredMode = (tN2kGNSSDOPmode)((modes >> 5) & 0x07);
-    ActualMode = (tN2kGNSSDOPmode)(modes & 0x07);
+    DesiredMode = (tN2kGNSSDOPmode)( modes & 0x07 );
+    ActualMode = (tN2kGNSSDOPmode)( (modes>>3) & 0x07 );
     HDOP = N2kMsg.Get2ByteDouble(0.01, Index);
     VDOP = N2kMsg.Get2ByteDouble(0.01, Index);
     TDOP = N2kMsg.Get2ByteDouble(0.01, Index);

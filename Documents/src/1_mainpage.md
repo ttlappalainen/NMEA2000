@@ -54,7 +54,7 @@ project.
 I also thank for anybody who has extended library with new PGNs or processor
 support.
 
-\copyright Copyright (c) 2015-2022 Timo Lappalainen, Kave Oy, www.kave.fi
+\copyright Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
 
 ### MIT license
 

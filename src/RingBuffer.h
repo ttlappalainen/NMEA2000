@@ -1,7 +1,7 @@
 /*
  * RingBuffer.h
  *
- * Copyright (c) 2020-2023 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2020-2024 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -155,7 +155,8 @@ public:
   uint16_t count();
 
   /************************************************************************//**
-   * \brief Get pointer to next add item if available
+   * \brief Get pointer to next add item if available. Write pointer
+   *        will be incremented.
    * \return T* 
    */
   T *getAddRef();
@@ -170,11 +171,19 @@ public:
   bool add(const T &val);
 
   /************************************************************************//**
-   * \brief Get pointer to next read item if available
+   * \brief Get pointer to next read item if available. Read pointer
+   *        will be inremented.
    * \return const T* 
    */
   const T *getReadRef();
 
+  /************************************************************************//**
+   * \brief Get pointer to next read item if available. Does not affect
+   *        to read pointer.
+   * \return const T* 
+   */
+  T *peek();
+  
   /************************************************************************//**
    * \brief Reads a value from the ring buffer
    *

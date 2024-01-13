@@ -231,6 +231,8 @@ so it depends of your buffer size how long it will take.
 - CAN controller broken
 - Invalid configuration settings for external CAN controller (MCP2515/mcp_can)
 - Invalid CAN Tx/Rx pins connected. (Teensy 3.5, 3.6, 4.0, 4.1)
+- Invalid CAN Tx/Rx pin definition e.g., with ESP32. Check that you used driver default pins,
+  have proper definitions prior including driver or define pins on driver constructor.
 - Wrong logic levels on tranceiver or external CAN controller (CAN bus shield).
 - Isolated receiver like MFD NMEA2000 not powered.
 - Tranceiver set to disabled state.

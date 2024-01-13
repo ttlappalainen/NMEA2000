@@ -1,7 +1,7 @@
 /*
 N2kMaretron.cpp
 
-Copyright (c) 2019-2023 Vassilis Bourdakis,
+Copyright (c) 2019-2024 Vassilis Bourdakis,
                         Timo Lappalainen, Kave Oy, www.kave.fi, 
 
 Authors  Vassilis Bourdakis

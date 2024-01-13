@@ -1,5 +1,14 @@
 # Changes to the Library {#changes}
 \tableofcontents
+
+## 13.01.2024
+
+- Fixed PGN129539 reader and parser.
+- Added #include "N2kTypes.h" to N2kMaretron.h
+- Fixed PGN130316 default period information
+- Added missing methods to tRingBuffer template
+- Updated copyright
+
 ## 08.12.2023
 
 - Added entertainment fastpacket PGNs to fastpacket list.
