@@ -144,10 +144,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4daf53062a32f57678d73bf1cd201378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of Entries in the ring buffer.  <a href="classt_ring_buffer.html#a4daf53062a32f57678d73bf1cd201378">More...</a><br /></td></tr>
 <tr class="separator:a4daf53062a32f57678d73bf1cd201378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34d6e08fc19b6d820aad6c35d1d86a66"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#a34d6e08fc19b6d820aad6c35d1d86a66">getAddRef</a> ()</td></tr>
-<tr class="memdesc:a34d6e08fc19b6d820aad6c35d1d86a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to next add item if available.  <a href="classt_ring_buffer.html#a34d6e08fc19b6d820aad6c35d1d86a66">More...</a><br /></td></tr>
+<tr class="memdesc:a34d6e08fc19b6d820aad6c35d1d86a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to next add item if available. Write pointer will be incremented.  <a href="classt_ring_buffer.html#a34d6e08fc19b6d820aad6c35d1d86a66">More...</a><br /></td></tr>
 <tr class="separator:a34d6e08fc19b6d820aad6c35d1d86a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdc058cbc237d9d23f61e8cd374c6b6f"><td class="memItemLeft" align="right" valign="top">const T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#abdc058cbc237d9d23f61e8cd374c6b6f">getReadRef</a> ()</td></tr>
-<tr class="memdesc:abdc058cbc237d9d23f61e8cd374c6b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to next read item if available.  <a href="classt_ring_buffer.html#abdc058cbc237d9d23f61e8cd374c6b6f">More...</a><br /></td></tr>
+<tr class="memdesc:abdc058cbc237d9d23f61e8cd374c6b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to next read item if available. Read pointer will be inremented.  <a href="classt_ring_buffer.html#abdc058cbc237d9d23f61e8cd374c6b6f">More...</a><br /></td></tr>
 <tr class="separator:abdc058cbc237d9d23f61e8cd374c6b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0394394ef1e515f5410309c0cd637669"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#a0394394ef1e515f5410309c0cd637669">getSize</a> () const</td></tr>
 <tr class="memdesc:a0394394ef1e515f5410309c0cd637669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Size of the ring buffer.  <a href="classt_ring_buffer.html#a0394394ef1e515f5410309c0cd637669">More...</a><br /></td></tr>
@@ -155,6 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44c351b48c9387b570df889a5a779f9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#a44c351b48c9387b570df889a5a779f9a">isEmpty</a> () const</td></tr>
 <tr class="memdesc:a44c351b48c9387b570df889a5a779f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the ring buffer is empty.  <a href="classt_ring_buffer.html#a44c351b48c9387b570df889a5a779f9a">More...</a><br /></td></tr>
 <tr class="separator:a44c351b48c9387b570df889a5a779f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4acc31ebdcf5a49a8f777c38dcaa6d3"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#ab4acc31ebdcf5a49a8f777c38dcaa6d3">peek</a> ()</td></tr>
+<tr class="memdesc:ab4acc31ebdcf5a49a8f777c38dcaa6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to next read item if available. Does not affect to read pointer.  <a href="classt_ring_buffer.html#ab4acc31ebdcf5a49a8f777c38dcaa6d3">More...</a><br /></td></tr>
+<tr class="separator:ab4acc31ebdcf5a49a8f777c38dcaa6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a272d57a65fae40944706c82f5b3653db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html#a272d57a65fae40944706c82f5b3653db">read</a> (T &amp;val)</td></tr>
 <tr class="memdesc:a272d57a65fae40944706c82f5b3653db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a value from the ring buffer.  <a href="classt_ring_buffer.html#a272d57a65fae40944706c82f5b3653db">More...</a><br /></td></tr>
 <tr class="separator:a272d57a65fae40944706c82f5b3653db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -340,7 +343,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get pointer to next add item if available. </p>
+<p>Get pointer to next add item if available. Write pointer will be incremented. </p>
 <dl class="section return"><dt>Returns</dt><dd>T* </dd></dl>
 
 </div>
@@ -362,7 +365,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get pointer to next read item if available. </p>
+<p>Get pointer to next read item if available. Read pointer will be inremented. </p>
 <dl class="section return"><dt>Returns</dt><dd>const T* </dd></dl>
 
 </div>
@@ -420,6 +423,28 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>true </dd>
 <dd>
 false </dd></dl>
+
+</div>
+</div>
+<a id="ab4acc31ebdcf5a49a8f777c38dcaa6d3" name="ab4acc31ebdcf5a49a8f777c38dcaa6d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4acc31ebdcf5a49a8f777c38dcaa6d3">&#9670;&nbsp;</a></span>peek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="classt_ring_buffer.html">tRingBuffer</a>&lt; T &gt;::peek </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get pointer to next read item if available. Does not affect to read pointer. </p>
+<dl class="section return"><dt>Returns</dt><dd>const T* </dd></dl>
 
 </div>
 </div>

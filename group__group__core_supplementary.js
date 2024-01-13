@@ -106,6 +106,7 @@ var group__group__core_supplementary =
       [ "getReadRef", "classt_ring_buffer.html#abdc058cbc237d9d23f61e8cd374c6b6f", null ],
       [ "getSize", "classt_ring_buffer.html#a0394394ef1e515f5410309c0cd637669", null ],
       [ "isEmpty", "classt_ring_buffer.html#a44c351b48c9387b570df889a5a779f9a", null ],
+      [ "peek", "classt_ring_buffer.html#ab4acc31ebdcf5a49a8f777c38dcaa6d3", null ],
       [ "read", "classt_ring_buffer.html#a272d57a65fae40944706c82f5b3653db", null ],
       [ "buffer", "classt_ring_buffer.html#a6e8d4c6bf6bb501643dadbd3a113a2bd", null ],
       [ "head", "classt_ring_buffer.html#a8e19193226d2a6f3e6aa368728b35cc8", null ],

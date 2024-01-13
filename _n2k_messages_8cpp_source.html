@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('_n2k_messages_8cpp_source.html',''); i
 <a href="_n2k_messages_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">N2kMessages.cpp</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"></span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">Copyright (c) 2015-2023 Timo Lappalainen, Kave Oy, www.kave.fi</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"></span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">Permission is hereby granted, free of charge, to any person obtaining a copy of</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">this software and associated documentation files (the &quot;Software&quot;), to deal in</span></div>
@@ -1342,7 +1342,7 @@ $(document).ready(function(){initNavTree('_n2k_messages_8cpp_source.html',''); i
 <div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#aa7b36bf88a96fcad78cdd07eed95e517">SetPGN</a>(129539L);</div>
 <div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>    N2kMsg.<a class="code hl_variable" href="classt_n2k_msg.html#a7645bd9aec82bc0263d421cb307852e4">Priority</a> = 6;</div>
 <div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(SID);</div>
-<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(((DesiredMode &amp; 0x07) &lt;&lt; 5) | ((ActualMode &amp; 0x07) &lt;&lt; 2));</div>
+<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>( 0xc0 | ( (ActualMode &amp; 0x07) &lt;&lt; 3 ) | (DesiredMode &amp; 0x07) );</div>
 <div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4e94130675970b0aeb5a4d7cc472cd24">Add2ByteDouble</a>(HDOP, 0.01);</div>
 <div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4e94130675970b0aeb5a4d7cc472cd24">Add2ByteDouble</a>(VDOP, 0.01);</div>
 <div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4e94130675970b0aeb5a4d7cc472cd24">Add2ByteDouble</a>(TDOP, 0.01);</div>
@@ -1359,8 +1359,8 @@ $(document).ready(function(){initNavTree('_n2k_messages_8cpp_source.html',''); i
 <div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span> </div>
 <div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>    SID = N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#aacc7803b444c8cba9b08a335987f1171">GetByte</a>(Index);</div>
 <div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>    modes = N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#aacc7803b444c8cba9b08a335987f1171">GetByte</a>(Index);</div>
-<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    DesiredMode = (<a class="code hl_enumeration" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a>)((modes &gt;&gt; 5) &amp; 0x07);</div>
-<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>    ActualMode = (<a class="code hl_enumeration" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a>)(modes &amp; 0x07);</div>
+<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    DesiredMode = (<a class="code hl_enumeration" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a>)( modes &amp; 0x07 );</div>
+<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>    ActualMode = (<a class="code hl_enumeration" href="group__group__msg_types.html#ga95bb0c22b8d09ab7e9993d0927b7a1fb">tN2kGNSSDOPmode</a>)( (modes&gt;&gt;3) &amp; 0x07 );</div>
 <div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>    HDOP = N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a6d1237035c9d1701626680c6aa5c6478">Get2ByteDouble</a>(0.01, Index);</div>
 <div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>    VDOP = N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a6d1237035c9d1701626680c6aa5c6478">Get2ByteDouble</a>(0.01, Index);</div>
 <div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span>    TDOP = N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a6d1237035c9d1701626680c6aa5c6478">Get2ByteDouble</a>(0.01, Index);</div>

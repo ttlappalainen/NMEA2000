@@ -258,6 +258,7 @@ Most common hardware errors</h1>
 <li>CAN controller broken</li>
 <li>Invalid configuration settings for external CAN controller (MCP2515/mcp_can)</li>
 <li>Invalid CAN Tx/Rx pins connected. (Teensy 3.5, 3.6, 4.0, 4.1)</li>
+<li>Invalid CAN Tx/Rx pin definition e.g., with ESP32. Check that you used driver default pins, have proper definitions prior including driver or define pins on driver constructor.</li>
 <li>Wrong logic levels on tranceiver or external CAN controller (CAN bus shield).</li>
 <li>Isolated receiver like MFD NMEA2000 not powered.</li>
 <li>Tranceiver set to disabled state.</li>

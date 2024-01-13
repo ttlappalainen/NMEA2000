@@ -184,7 +184,7 @@ Example of ring buffer usage</h1>
 <div class="line">  CANMessages.add(msgOut);</div>
 <div class="line">  releaseData();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasst_priority_ring_buffer_html"><div class="ttname"><a href="classt_priority_ring_buffer.html">tPriorityRingBuffer</a></div><div class="ttdoc">Template Class that holds simple data structures with given priorities in a ring buffer.</div><div class="ttdef"><b>Definition:</b> <a href="_ring_buffer_8h_source.html#l00206">RingBuffer.h:206</a></div></div>
+<div class="ttc" id="aclasst_priority_ring_buffer_html"><div class="ttname"><a href="classt_priority_ring_buffer.html">tPriorityRingBuffer</a></div><div class="ttdoc">Template Class that holds simple data structures with given priorities in a ring buffer.</div><div class="ttdef"><b>Definition:</b> <a href="_ring_buffer_8h_source.html#l00215">RingBuffer.h:215</a></div></div>
 </div><!-- fragment --><p >As an alternative if you want to avoid data copying twice, you can request reference to next data to be saved and copy data directly to it.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> SendMessage() {</div>
 <div class="line">  tCANData *msgOut;</div>
@@ -197,7 +197,7 @@ Example of ring buffer usage</h1>
 <div class="line">  releaseData();</div>
 <div class="line">}</div>
 </div><!-- fragment --><p ><a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds simple data structures with given priorities in a ring buffer.">tPriorityRingBuffer</a> is similar as <a class="el" href="classt_ring_buffer.html" title="Template Class that holds simple data structures in a ring buffer.">tRingBuffer</a>, but it extends functionality with item priority. When you add items to buffer, you can give them priority and when you read them, highest priority item will be read out first.</p>
-<h3><a class="anchor" id="autotoc_md235"></a>
+<h3><a class="anchor" id="autotoc_md236"></a>
 Debugging</h3>
 <p >To improve the debugging of the module there is the possibility to enable some print out to the DebugStream</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define RING_BUFFER_ERROR_DEBUG</span></div>
@@ -219,7 +219,7 @@ Debugging</h3>
 
 <p>Constant for an invalid priority reference. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00211">211</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00220">220</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -237,7 +237,7 @@ Debugging</h3>
 
 <p>Constant for an invalid index reference for the buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00209">209</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00218">218</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
