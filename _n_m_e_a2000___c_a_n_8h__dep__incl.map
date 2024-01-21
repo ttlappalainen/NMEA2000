@@ -1,0 +1,6 @@
+<map id="NMEA2000_CAN.h" name="NMEA2000_CAN.h">
+<area shape="rect" id="node1" title="Automatic library selection according to the selected board." alt="" coords="173,5,307,32"/>
+<area shape="rect" id="node2" href="$_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList." alt="" coords="5,80,136,107"/>
+<area shape="rect" id="node3" href="$_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="161,80,319,107"/>
+<area shape="rect" id="node4" href="$_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="344,80,459,107"/>
+</map>

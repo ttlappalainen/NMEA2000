@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['groupdef_2edox_0',['groupdef.dox',['../groupdef_8dox.html',1,'']]]
+  ['deviceanalyzer_2eino_0',['DeviceAnalyzer.ino',['../_device_analyzer_8ino.html',1,'']]]
 ];

@@ -148,9 +148,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_n2k_messages_8h__dep__incl.png" border="0" usemap="#a_n2k_messages_8hdep" alt=""/></div>
 <map name="a_n2k_messages_8hdep" id="a_n2k_messages_8hdep">
-<area shape="rect" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="102,5,218,32"/>
+<area shape="rect" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="290,5,406,32"/>
 <area shape="rect" href="_n2k_messages_8cpp.html" title=" " alt="" coords="5,80,136,107"/>
 <area shape="rect" href="_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="160,80,341,107"/>
+<area shape="rect" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="366,80,525,107"/>
+<area shape="rect" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="549,80,664,107"/>
 </map>
 </div>
 </div>
@@ -793,9 +795,9 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <tr class="memitem:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga73e090094aa8f6b1bbecdc4dadf0ef29">SetN2kPGN127507</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char Instance, unsigned char BatteryInstance, <a class="el" href="group__group__msg_types.html#ga30c2d8d084d6ec9d9115dded189470f5">tN2kChargeState</a> ChargeState, <a class="el" href="group__group__msg_types.html#ga0c142dce99c98d79265651d5cf7679af">tN2kChargerMode</a> ChargerMode=<a class="el" href="_n2k_types_8h.html#ga0c142dce99c98d79265651d5cf7679afa7c67a335f373430a446ec4c793dbe619">N2kCM_Standalone</a>, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> Enabled=<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8babd4abbd7d032ce6c788b16ce09be4c4b">N2kOnOff_On</a>, <a class="el" href="group__group__msg_types.html#ga6faddb97b85e2205c3c76a561b48de8b">tN2kOnOff</a> EqualizationPending=<a class="el" href="_n2k_types_8h.html#ga6faddb97b85e2205c3c76a561b48de8baa43583342c9dac7e107efc2b239a0dc2">N2kOnOff_Unavailable</a>, double EqualizationTimeRemaining=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
 <tr class="memdesc:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127507 Message "DC Charger Status".  <a href="group__group__msg_set_up.html#ga73e090094aa8f6b1bbecdc4dadf0ef29">More...</a><br /></td></tr>
 <tr class="separator:ga73e090094aa8f6b1bbecdc4dadf0ef29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaeda826f71a7a8ba344d223a14be0d01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaaeda826f71a7a8ba344d223a14be0d01">SetN2kPGN127508</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>, double BatteryTemperature=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>, unsigned char SID=1)</td></tr>
-<tr class="memdesc:gaaeda826f71a7a8ba344d223a14be0d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127508 Message "Battery Status".  <a href="group__group__msg_set_up.html#gaaeda826f71a7a8ba344d223a14be0d01">More...</a><br /></td></tr>
-<tr class="separator:gaaeda826f71a7a8ba344d223a14be0d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga959eb9eaad2fba38f216ebf465970a7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga959eb9eaad2fba38f216ebf465970a7a">SetN2kPGN127508</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char BatteryInstance, double BatteryVoltage, double BatteryCurrent=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>, double BatteryTemperature=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>, unsigned char SID=0xff)</td></tr>
+<tr class="memdesc:ga959eb9eaad2fba38f216ebf465970a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127508 Message "Battery Status".  <a href="group__group__msg_set_up.html#ga959eb9eaad2fba38f216ebf465970a7a">More...</a><br /></td></tr>
+<tr class="separator:ga959eb9eaad2fba38f216ebf465970a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga9b5aa4d7ccb8450dbfd85a4501e443d3">SetN2kPGN127513</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char BatInstance, <a class="el" href="group__group__msg_types.html#gab1fb3a15dd2280870f83241c69aa6536">tN2kBatType</a> BatType, <a class="el" href="group__group__msg_types.html#gadca5f1106aa9e8e84ad7a75986a5f7eb">tN2kBatEqSupport</a> SupportsEqual, <a class="el" href="group__group__msg_types.html#ga236f04b90b570bf56b96f1d9c4ca587a">tN2kBatNomVolt</a> BatNominalVoltage, <a class="el" href="group__group__msg_types.html#gab176017bf781c4cc22bfa340a3b43e0a">tN2kBatChem</a> BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient, double PeukertExponent, int8_t ChargeEfficiencyFactor)</td></tr>
 <tr class="memdesc:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 127513 Message "Battery Configuration Status".  <a href="group__group__msg_set_up.html#ga9b5aa4d7ccb8450dbfd85a4501e443d3">More...</a><br /></td></tr>
 <tr class="separator:ga9b5aa4d7ccb8450dbfd85a4501e443d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -991,7 +993,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>64bit Binary Status value of a full bank status, that can handle up to 28 item states in one value. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__msg_parsers.html#gad362c699d0992bbb9d06f442933f75a1" title="Parsing the content of Message PGN 127501 Message &quot;Universal Binary Status Report&quot;.">ParseN2kPGN127501</a> or <a class="el" href="group__group__msg_parsers.html#ga3a2f1575cb61286c03c38e6ff72248ee" title="Parsing the content of a &quot;Universal Binary Status Report&quot; message - PGN 127501.">ParseN2kBinaryStatus</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l01612">1612</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l01589">1589</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +1072,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Append a new satellite info to Message "GNSS Satellites in View" - PGN 129540. </p>
 <p >Alias of PGN 129540. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_set_up.html#ga9e08c74b8bab0fb36549572659a32f1a">AppendN2kPGN129540</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04290">4290</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04196">4196</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -1556,7 +1558,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l01639">1639</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l01616">1616</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -1662,7 +1664,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "COG SOG Rapid Update" message - PGN 129026. </p>
 <p >Alias of PGN 129026. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga6f253723e2ab66d06b2c33c320e4f3ed">ParseN2kPGN129026</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l03087">3087</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l03015">3015</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>

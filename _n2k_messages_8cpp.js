@@ -79,7 +79,7 @@ var _n2k_messages_8cpp =
     [ "SetN2kPGN127505", "group__group__msg_set_up.html#gada10397def0d8ad93454ff6df4c22f3c", null ],
     [ "SetN2kPGN127506", "_n2k_messages_8cpp.html#a06d10826cd050b8a3f057040c93a3902", null ],
     [ "SetN2kPGN127507", "group__group__msg_set_up.html#ga73e090094aa8f6b1bbecdc4dadf0ef29", null ],
-    [ "SetN2kPGN127508", "group__group__msg_set_up.html#gaaeda826f71a7a8ba344d223a14be0d01", null ],
+    [ "SetN2kPGN127508", "group__group__msg_set_up.html#ga959eb9eaad2fba38f216ebf465970a7a", null ],
     [ "SetN2kPGN127513", "group__group__msg_set_up.html#ga9b5aa4d7ccb8450dbfd85a4501e443d3", null ],
     [ "SetN2kPGN128000", "group__group__msg_set_up.html#gaefa07acf63c32dfdc2a5c1362e431af9", null ],
     [ "SetN2kPGN128259", "group__group__msg_set_up.html#ga4fab1f2e6129777a1f02b65dd8252eb7", null ],

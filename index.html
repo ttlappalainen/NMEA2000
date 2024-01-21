@@ -116,24 +116,24 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">NMEA2000 library for C++ </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="mainpage"></a> Object oriented NMEA2000 library for Teensy, ESP, Arduino, MBED and Rasberry type Boards. These board types has been tested, but library can be used also in other systems by writing compatible CAN driver and wrapper for other hw specific functions.</p>
-<p >Library gives you easy way to make different kind of NMEA2000 bus devices like sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays, NMEA2000-&gt;PC interface (like Actisense NGT1), NMEA0183-&gt;NMEA2000 or NMEA2000-&gt;NMEA0183 converter.</p>
-<p >Library fulfills NMEA 2000 mandatory functions and behavior. Devices using library can pass NMEA2000 certification tests. Library has been used in several commercial certified products.</p>
+<div class="textblock"><p ><a class="anchor" id="mainpage"></a> NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements (see <a class="el" href="md_7_glossary.html#secRefNMEA2000Certification">NMEA2000 certification</a>) leaving only interesting data handling for developer. <b>Library has been used in several commercial certified NMEA2000 devices.</b></p>
+<p >Library provides you easy way to make different kind of NMEA2000 bus devices like sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,NMEA2000-&gt;PC interface (like Actisense NGT1), NMEA0183-&gt;NMEA2000 or NMEA2000-&gt;NMEA0183 converter.</p>
+<p >I started library development on 2015 for Arduino based boards. Since that as far as I know it has been used and tested with Teensy, ESP, some Arduino, MBED and Rasberry Boards, but library can be used also in other systems by writing compatible CAN "driver" and necessary classes for other hw specific functions.</p>
 <p >If you are familiar with library, here is quick link to <a class="el" href="changes.html">Changes to the Library</a>.</p>
 <dl class="section warning"><dt>Warning</dt><dd>First of all - as normal - you can use library but there is not any guarantee and you use it with your own risk! You connect your hardware always with your own risk. I wrote this documentation to help to connect own hardware to NMEA2000 bus. I do not take any responsible of any errors in document or any possible damages caused to your devices.</dd></dl>
 <p><b>About library documentation</b></p>
-<p >This is a new doxygen generated documentation designed by Matthias Werner - great thanks to him for excellent work. Many parts are still based on my original documentation, which I created at beginning of the library. After several years experience I see a need for several updates. So the documentation project will continue with checking and updating. For more details see <a class="el" href="md_6_develop_info.html#libDocuGen">Library document generation</a></p>
+<p >Great thanks to Matthias Werner for excellent original library documentation work. As my knowledge of NMEA2000 has been improved a lot since 2015, boards and breakboards has been changed I'll try to update document as necessary and keep it up to date. Also I hope that other developers will inform me errors, bad language, ununderstandable text, better links etc. to keep document usable.</p>
+<p >Document will be automatically created in combination of document sources and code sources. For more details see <a class="el" href="md_6_develop_info.html#libDocuGen">Library document generation</a> .</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Recommended hardware</h1>
 <p >See this for <a class="el" href="page_h_w_set_up.html#secTRecHW">Recommended hardware</a> and please read document <a class="el" href="page_h_w_set_up.html">Setting Up Hardware Environment</a> before purchasing any hardware.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Hardware depended libraries</h1>
-<p >each hardware setup need a specific <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></p>
+<p >Each hardware setup need a specific <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></p>
 <h1><a class="anchor" id="secRef"></a>
 References</h1>
 <ul>
 <li><a href="https://www.nmea.org/nmea-2000.html">NMEA2000 Standard</a></li>
-<li><a href="https://web.nmea.org/products/search">List of NMEA 2000 registered devices</a></li>
 <li><a href="https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf">List of NMEA 2000 registrated companies</a></li>
 <li><a href="https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&amp;%20function%20codes%20v%202.00.pdf">Device class and function codes</a></li>
 <li><a href="https://web.archive.org/web/20150910070107/http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf">ISO address claim</a></li>

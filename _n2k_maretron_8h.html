@@ -254,7 +254,7 @@ Functions</h2></td></tr>
 <p>Parsing the content of Maretron Message "Fluid Flow Rate" - PGN 65286. </p>
 <p >Alias of PGN 65286. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#af512ac42af6e829f0434bb6c7e3edab7">ParseN2kMaretronPGN65286</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00228">228</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00218">218</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>
@@ -314,7 +314,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">TempInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">TempSource</td><td>Source of the temperature, see <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> </td></tr>
     <tr><td class="paramname">ActualTemperature</td><td>Temperature in K. Use function CToKelvin, if you want to use °C. </td></tr>
@@ -381,7 +381,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">FlowRateInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">FluidFlowRate</td><td>This field is used to indicate the rate of fluid flow in units litres/hour.</td></tr>
@@ -447,7 +447,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">VolumeInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">TripVolume</td><td>This field is used to indicate the trip volume units of litres.</td></tr>
@@ -523,7 +523,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of Maretron Message "Temperature High Range" - PGN 130823. </p>
 <p >Alias of PGN 130823. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#a0a3ab721707c4f513ba698273d76a285">ParseN2kMaretronPGN130823</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00139">139</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00134">134</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>
@@ -582,7 +582,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of Maretron Message "Trip Volume" - PGN 65287. </p>
 <p >Alias of PGN 65287. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#abf090b7848f5d80673ec80e01be91670">ParseN2kMaretronPGN65287</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00315">315</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00300">300</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>
@@ -641,7 +641,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Maretron Message "Fluid Flow Rate" - PGN 65286. </p>
 <p >Alias of PGN 65286. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#a1faac95f61b95c6fcb74a9e6c06314b6">SetN2kMaretronPGN65286</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00182">182</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00176">176</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>
@@ -701,7 +701,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">TempInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">TempSource</td><td>Source of the temperature, see <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> </td></tr>
     <tr><td class="paramname">ActualTemperature</td><td>Temperature in K. Use function CToKelvin, if you want to use °C. </td></tr>
@@ -765,7 +767,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">FlowRateInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">FluidFlowRate</td><td>This field is used to indicate the rate of fluid flow in units litres/hour. </td></tr>
@@ -828,7 +832,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">VolumeInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">TripVolume</td><td>This field is used to indicate the trip volume units of litres. </td></tr>
@@ -901,7 +907,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Maretron Message "Temperature High Range" - PGN 130823. </p>
 <p >Alias of PGN 130823. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#af5afcc3ce346572bf136b84d801303ed">SetN2kMaretronPGN130823</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00090">90</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00089">89</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>
@@ -960,7 +966,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Maretron Message "Trip Volume" - PGN 65287. </p>
 <p >Alias of PGN 65287. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n2k_maretron_8h.html#a329731ca2da374ea96f9648894de1f0b">SetN2kMaretronPGN65287</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00270">270</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_maretron_8h_source.html#l00259">259</a> of file <a class="el" href="_n2k_maretron_8h_source.html">N2kMaretron.h</a>.</p>
 
 </div>
 </div>

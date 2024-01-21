@@ -148,10 +148,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2a4b0bd7c748798de68549fb90a01f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if still message handling is needed.  <a href="classt_actisense_reader.html#a2a4b0bd7c748798de68549fb90a01f5d">More...</a><br /></td></tr>
 <tr class="separator:a2a4b0bd7c748798de68549fb90a01f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9965bb37f4372c99da831975e6b05026"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a9965bb37f4372c99da831975e6b05026">IsStart</a> (char ch)</td></tr>
-<tr class="memdesc:a9965bb37f4372c99da831975e6b05026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if character is start.  <a href="classt_actisense_reader.html#a9965bb37f4372c99da831975e6b05026">More...</a><br /></td></tr>
+<tr class="memdesc:a9965bb37f4372c99da831975e6b05026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if character is start of Actisense format.  <a href="classt_actisense_reader.html#a9965bb37f4372c99da831975e6b05026">More...</a><br /></td></tr>
 <tr class="separator:a9965bb37f4372c99da831975e6b05026"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac252eabd1ae7dbc380b2014a3c7c242"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242">ParseMessages</a> ()</td></tr>
-<tr class="memdesc:aac252eabd1ae7dbc380b2014a3c7c242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse messages.  <a href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242">More...</a><br /></td></tr>
+<tr class="memdesc:aac252eabd1ae7dbc380b2014a3c7c242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse messages from stream.  <a href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242">More...</a><br /></td></tr>
 <tr class="separator:aac252eabd1ae7dbc380b2014a3c7c242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43cfbf44f9a4b4f5b97145668751374a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#a43cfbf44f9a4b4f5b97145668751374a">SetDefaultSource</a> (unsigned char source)</td></tr>
 <tr class="memdesc:a43cfbf44f9a4b4f5b97145668751374a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default source address for the messages.  <a href="classt_actisense_reader.html#a43cfbf44f9a4b4f5b97145668751374a">More...</a><br /></td></tr>
@@ -169,7 +169,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:ab85258a6c11ed3da4cececf66aebfab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new Byte to the buffer.  <a href="classt_actisense_reader.html#ab85258a6c11ed3da4cececf66aebfab5">More...</a><br /></td></tr>
 <tr class="separator:ab85258a6c11ed3da4cececf66aebfab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b67f887f3f5045220548107f6bb361"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#ad4b67f887f3f5045220548107f6bb361">CheckMessage</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
-<tr class="memdesc:ad4b67f887f3f5045220548107f6bb361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a message is valide.  <a href="classt_actisense_reader.html#ad4b67f887f3f5045220548107f6bb361">More...</a><br /></td></tr>
+<tr class="memdesc:ad4b67f887f3f5045220548107f6bb361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks is Actisense message read from stream valid and builds <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> message from it.  <a href="classt_actisense_reader.html#ad4b67f887f3f5045220548107f6bb361">More...</a><br /></td></tr>
 <tr class="separator:ad4b67f887f3f5045220548107f6bb361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abab06ffc7dd4499b5059bb413b797b2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_actisense_reader.html#abab06ffc7dd4499b5059bb413b797b2a">ClearBuffer</a> ()</td></tr>
 <tr class="memdesc:abab06ffc7dd4499b5059bb413b797b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer.  <a href="classt_actisense_reader.html#abab06ffc7dd4499b5059bb413b797b2a">More...</a><br /></td></tr>
@@ -206,10 +206,10 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class for reading Actisense format messages. </p>
-<p >This is class for reading Actisense format messages from given stream.</p>
+<p >This is class for reading Actisense format messages from given stream and convert it to <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a>. Converted <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> message can be then sent to the NMEA2000 bus with <a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000::SendMsg()</a>;</p>
 <dl class="section note"><dt>Note</dt><dd>There is an unresolved problem to use programming port with reading data. Read works fine for a while, but then stops. With e.g. Arduino Due USB port there is no problem. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00054">54</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00057">57</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a703dee87b012a47077c0f84d280e17e1" name="a703dee87b012a47077c0f84d280e17e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a703dee87b012a47077c0f84d280e17e1">&#9670;&nbsp;</a></span>tActisenseReader()</h2>
@@ -264,9 +264,13 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; Success </dd>
-<dd>
-false -&gt; Buffer is full </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Success </td></tr>
+    <tr><td class="paramname">false</td><td>Buffer is full </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00047">47</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
 
@@ -296,22 +300,21 @@ false -&gt; Buffer is full </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Checks if a message is valide. </p>
+<p>Checks is Actisense message read from stream valid and builds <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> message from it. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object <br  />
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a destination <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> Object <br  />
  </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true <br  />
- </dd>
-<dd>
-false -&gt; Length does not match. Add type, length and crc </dd>
-<dd>
-false -&gt; Checksum does not match </dd>
-<dd>
-false -&gt; data length greater then <a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751" title="Maximum number of bytes that can be stored in the data buffer With fast packet the first frame can ha...">tN2kMsg::MaxDataLen</a> </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Message is valid. Message has been copied to N2kMsg </td></tr>
+    <tr><td class="paramname">false</td><td>Length does not match, checksum does not match or data length greater than <a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751" title="Maximum number of bytes that can be stored in the data buffer With fast packet the first frame can ha...">tN2kMsg::MaxDataLen</a> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00063">63</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
 
@@ -373,19 +376,22 @@ false -&gt; data length greater then <a class="el" href="classt_n2k_msg.html#a6f
 </div><div class="memdoc">
 
 <p>Read Actisense formatted NMEA2000 message from stream. </p>
-<p >You can either call this or ParseMessages periodically.</p>
-<p >Read Actisense formatted NMEA2000 message from stream Actisense Format: &lt;10&gt;&lt;02&gt;&lt;93&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;source (1)&gt;&lt;time (4)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; or &lt;10&gt;&lt;02&gt;&lt;94&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; </p><dl class="params"><dt>Parameters</dt><dd>
+<p >GetMessageFromStream is nonblocking function and returns false, if there is no message available. You can either call this or <a class="el" href="classt_actisense_reader.html#aac252eabd1ae7dbc380b2014a3c7c242" title="Parse messages from stream.">ParseMessages()</a> periodically.</p>
+<p >Function reads Actisense formatted NMEA2000 message from stream Actisense Format: &lt;10&gt;&lt;02&gt;&lt;93&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;source (1)&gt;&lt;time (4)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; or &lt;10&gt;&lt;02&gt;&lt;94&gt;&lt;length (1)&gt;&lt;priority (1)&gt;&lt;PGN (3)&gt;&lt;destination (1)&gt;&lt;len (1)&gt;&lt;data (len)&gt;&lt;CRC (1)&gt;&lt;10&gt;&lt;03&gt; </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object <br  />
  </td></tr>
-    <tr><td class="paramname">ReadOut</td><td><br  />
-</td></tr>
+    <tr><td class="paramname">ReadOut</td><td>Parameter is designed to be used if stream has multiprotocol data.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true </dd>
-<dd>
-false -&gt; if (ReadStream==0) </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>for new message received. </td></tr>
+    <tr><td class="paramname">false</td><td>if (ReadStream==0) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00110">110</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
 
@@ -415,11 +421,16 @@ false -&gt; if (ReadStream==0) </dd></dl>
 </div><div class="memdoc">
 
 <p>Indicates if still message handling is needed. </p>
-<dl class="section return"><dt>Returns</dt><dd>true </dd>
-<dd>
-false </dd></dl>
+<p >Function is designed to be used if stream has multiprotocol data.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td></td></tr>
+    <tr><td class="paramname">false</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00186">186</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00196">196</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -439,16 +450,21 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if character is start. </p>
+<p>Checks if character is start of Actisense format. </p>
+<p >Function is designed to be used if stream has multiprotocol data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ch</td><td>character </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; if (ch==Escape) </dd>
-<dd>
-false </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if (ch==Escape) </td></tr>
+    <tr><td class="paramname">false</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00100">100</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
 
@@ -469,8 +485,9 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Parse messages. </p>
-<p >Set message handler with SetMsgHandler and then call this periodically or use GetMessageFromStream </p>
+<p>Parse messages from stream. </p>
+<p >Call this periodically on loop as fast as possible. Function is nonblocking and reads data from stream as it is available.</p>
+<p >To handle received messages set message handler with <a class="el" href="classt_actisense_reader.html#a7f476677b4973320543fd9dda26e108f" title="Set the Msg Handler object.">SetMsgHandler()</a>. On message handler call <a class="el" href="classt_actisense_reader.html#a4d60abae0039ce1d23261c7a71385faa" title="Read Actisense formatted NMEA2000 message from stream.">GetMessageFromStream()</a> to read arrived message. </p>
 
 <p class="definition">Definition at line <a class="el" href="_actisense_reader_8cpp_source.html#l00183">183</a> of file <a class="el" href="_actisense_reader_8cpp_source.html">ActisenseReader.cpp</a>.</p>
 
@@ -509,7 +526,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00133">133</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00134">134</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -538,7 +555,7 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Set the Msg Handler object. </p>
-<p >Set message handler to be used in ParseMessages, when message has been received.</p>
+<p >Set message handler to be used as callback within ParseMessages, when new message has been received. On message handler call <a class="el" href="classt_actisense_reader.html#a4d60abae0039ce1d23261c7a71385faa" title="Read Actisense formatted NMEA2000 message from stream.">GetMessageFromStream()</a> to read arrived message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_MsgHandler</td><td>{type} </td></tr>
@@ -546,7 +563,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00179">179</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00186">186</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -583,7 +600,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00122">122</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00123">123</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -610,7 +627,7 @@ false </dd></dl>
 
 <p>Sum of all bytes is used as kind of check sum. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00066">66</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00069">69</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -636,7 +653,7 @@ false </dd></dl>
 
 <p>Default source of the N2k message. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00072">72</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00075">75</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -662,7 +679,7 @@ false </dd></dl>
 
 <p>Escape character has been received. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00064">64</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00067">67</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -688,7 +705,7 @@ false </dd></dl>
 
 <p>Buffer for incoming messages from stream. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00068">68</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00071">71</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +729,7 @@ false </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00078">78</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00081">81</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -738,7 +755,7 @@ false </dd></dl>
 
 <p>A Message is coming. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00062">62</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00065">65</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -764,7 +781,7 @@ false </dd></dl>
 
 <p>Current write position inside the buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00070">70</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00073">73</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -790,7 +807,7 @@ false </dd></dl>
 
 <p>Stream to read from. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00076">76</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00079">79</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>
@@ -816,7 +833,7 @@ false </dd></dl>
 
 <p>Start of text has been received. </p>
 
-<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00060">60</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_actisense_reader_8h_source.html#l00063">63</a> of file <a class="el" href="_actisense_reader_8h_source.html">ActisenseReader.h</a>.</p>
 
 </div>
 </div>

@@ -117,47 +117,119 @@ $(document).ready(function(){initNavTree('md_7_glossary.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md124">NMEA2000 instances</a><ul><li class="level2"><a href="#autotoc_md125">Different types of instances</a><ul><li class="level3"><a href="#autotoc_md126">Device instance</a></li>
-<li class="level3"><a href="#autotoc_md127">Data instances</a></li>
-<li class="level3"><a href="#autotoc_md128">System instance</a></li>
+<ul><li class="level1"><a href="#secRefTermNAME">NAME</a></li>
+<li class="level1"><a href="#secRefTermAddressClaiming">Address claiming</a></li>
+<li class="level1"><a href="#autotoc_md170">NMEA2000 instances</a><ul><li class="level2"><a href="#autotoc_md171">Different types of instances</a><ul><li class="level3"><a href="#autotoc_md172">Device instance</a></li>
+<li class="level3"><a href="#autotoc_md173">Data instances</a></li>
+<li class="level3"><a href="#autotoc_md174">System instance</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md129">Sequence ID</a></li>
-<li class="level1"><a href="#autotoc_md130">Manufacturer Code</a></li>
-<li class="level1"><a href="#autotoc_md131">Relation between CAN ID and NMEA2000</a></li>
+<li class="level1"><a href="#secRefTermSID">SID</a></li>
+<li class="level1"><a href="#secRefTermManufacturerCode">Manufacturer Code</a></li>
+<li class="level1"><a href="#secRefNMEA2000Certification">NMEA2000 certification</a></li>
+<li class="level1"><a href="#autotoc_md175">Relation between CAN ID and NMEA2000</a></li>
+<li class="level1"><a href="#secRefMfgCodes">List of registered manufacturer codes</a></li>
 </ul>
 </div>
-<div class="textblock"><h1><a class="anchor" id="autotoc_md124"></a>
+<div class="textblock"><h1><a class="anchor" id="secRefTermNAME"></a>
+NAME</h1>
+<p >On NMEA2000 NAME (written all capital) means data defined by device information. Since device information will be sent by PGN 60928, NAME is also 8 byte content of than message. NAME can be used to identify devices sending some information. For this reason it is important that NAME is unique for all devices on the bus.</p>
+<p >Normally unique number and manufacturer code within device information should be enough to define unique device. Some manufactures does not do that and their devices may require modification for device instance when same devices appears on the bus.</p>
+<p >Safest way to fullfill unique NAME requirement is to keep unique number unique. For commercial production that requires some kind of register for manufactured devices.</p>
+<p >On library you set device information by using function <a class="el" href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5" title="Set the Device Information. See also NAME.">tNMEA2000::SetDeviceInformation</a> and if necessary with function <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances</a>.</p>
+<h1><a class="anchor" id="secRefTermAddressClaiming"></a>
+Address claiming</h1>
+<p >NMEA2000 bus can have maximum 252 devices. Each device will get device source address (0-251), which can be predefined on device start, but may be changed by address claiming at any time.</p>
+<p >On start device starts address claiming using previously saved source address by sending its <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a> to the bus by using message ISO address claim PGN 60928. If there is no other device using same source address, device can start normal operation after 250 ms delay. If there is another device using same address there are two possible cases.</p><ol type="1">
+<li>Other device NAME has lower priority, so it will increment its own address and start address claiming. This device can keep its source address.</li>
+<li>Other device NAME has higher priority and responds with ISO address claim. This device will increment its source address and start address claiming again with new address.</li>
+</ol>
+<p >If bus is full of devices, devices with lowest priority will get source address 254 and they can not send anything to bus.</p>
+<p >Library takes care of address claiming and required silence delay automatically. To get information possible source address changes, use funtion <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a>.</p>
+<h1><a class="anchor" id="autotoc_md170"></a>
 NMEA2000 instances</h1>
 <p >Instances are used in an NMEA 2000 network to identify multiple similar products connected on the same network.</p>
 <p >As an example, take a system with two battery monitors (one for the main battery bank, and another for the hydraulic-thruster bank) and also a Quattro inverter/charger. All three of those devices will send their battery voltage measurements out on the N2K network. For the displays to show these values at the right place, they need to know which voltage belongs to what battery. That is what instances are for.</p>
-<h2><a class="anchor" id="autotoc_md125"></a>
+<h2><a class="anchor" id="autotoc_md171"></a>
 Different types of instances</h2>
-<p >There various types of instances, and for marine systems are two that matter: the <b>Device instance</b>, <b>Data instance</b> and <b>System instance</b>. Device and System instance is stored in <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tNMEA2000::tDeviceInformation</a>.</p>
-<h3><a class="anchor" id="autotoc_md126"></a>
+<p >There are various types of instances: <b>Device instance</b>, <b>Data instance</b> and <b>System instance</b>. Device and System instance is stored in <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tNMEA2000::tDeviceInformation</a> and so they are also part of <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a>. See also <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances</a>.</p>
+<h3><a class="anchor" id="autotoc_md172"></a>
 Device instance</h3>
-<p >The device instance is sent in PGN 60928, ISO Address Claim, as a combined field of Device Instance Lower (ISO ECU Instance) and Device Instance Upper (ISO Function Instance). The Device instance is e.G used by Victron chargers (Skylla-i/-IP44, VE.Can MPPTs) to configure them in the same group and synchronize them.</p>
-<h3><a class="anchor" id="autotoc_md127"></a>
+<p >The device instance is sent in PGN 60928, ISO Address Claim, as a combined field of Device Instance Lower (ISO ECU Instance) and Device Instance Upper (ISO Function Instance). The Device instance is e.g., used by Victron chargers (Skylla-i/-IP44, VE.Can MPPTs) to configure them in the same group and synchronize them.</p>
+<h3><a class="anchor" id="autotoc_md173"></a>
 Data instances</h3>
-<p >These instances belong to data on the bus (e.G. Battery Instance, DC Detailed Instance, Switch bank instance, etc.) and are embedded in the different PGN’s. For changing these instances through a complex write, PGN 126208, Complex Request Group Function Code 5, write fields.</p>
-<h3><a class="anchor" id="autotoc_md128"></a>
+<p >These instances belong to data on the bus (e.g., Battery Instance, DC Detailed Instance, Switch bank instance, etc.) and are embedded in the different PGN’s. For changing these instances through a complex write, PGN 126208, Complex Request Group Function Code 5, write fields.</p>
+<h3><a class="anchor" id="autotoc_md174"></a>
 System instance</h3>
-<p >The system instance is also sent in PGN 60928, field 8.</p>
+<p >The system instance is also sent in PGN 60928, field 8. System instance indicates device occurence in other like redundant or parallel NMEA2000 networks. For small and simple vessels this is always 0.</p>
 <dl class="section see"><dt>See also</dt><dd><ul>
 <li><a href="https://www.victronenergy.com/upload/documents/Technical-Information-Data-communication-with-Victron-Energy-products_EN.pdf">Victron Technical-Information-Data-communication</a></li>
 <li><a href="https://www.victronenergy.com/live/ve.can:changing_nmea2000_instances">Victron changing NMEA2000 Instances</a></li>
 </ul>
 </dd></dl>
-<h1><a class="anchor" id="autotoc_md129"></a>
-Sequence ID</h1>
-<p >SID – The sequence identifier field is used to tie related PGNs together. For example, the GPS200 will transmit identical SIDs for 126992 (System Time), 128259 (Speed), 129026 (COG and SOG, Rapid Update), 129029 (GNSS Position Data), 129539 (GNSS DOPs), and 129540 (GNSS Satellites in View) to indicate that the readings are linked together (i.e., the data from each PGN was taken at the same time although they are reported at slightly different times).</p>
-<h1><a class="anchor" id="autotoc_md130"></a>
+<h1><a class="anchor" id="secRefTermSID"></a>
+SID</h1>
+<p >The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. In other words same SID in different PGNs sent by same device defines that values on PGN:s has been sampled or calculated at same time. Devices reading those messages can use in calculations PGNs data provided with same SID and get more accurate results.</p>
+<p >For example, the GPS200 will transmit identical SIDs for 126992 (System Time), 128259 (Speed), 129026 (COG and SOG, Rapid Update), 129029 (GNSS Position Data), 129539 (GNSS DOPs), and 129540 (GNSS Satellites in View) to indicate that the readings are linked together (i.e., the data from each PGN was taken at the same time although they are reported at slightly different times).</p>
+<p >E.g., with temperature data I do not see any use for SID. Temperature changes are normally anyway slow and 1.5-2 s difference on sampling does not have meaningfull effect. I would also think that there is no device using SID for temperature, pressure and humidity data.</p>
+<p >On sending in most cases you can use just 0xff for SID. On receiving you can normally just forget it.</p>
+<p >If you like to use SID, you have to increase value synchronized with sampling and sending. SID value has to be on range 0-252. 255 (0xff) means data not available and 253-254 are reserved. So use it e.g., with code </p><div class="fragment"><div class="line">If you e.g., sample your multisensor every 2 s, </div>
+<div class="line">but PGNs will be sent every 1 s you can increase SID after each sampling and there would be </div>
+<div class="line">2 sends having same SID indicating that they have been sampled at same time.</div>
+<div class="line">If you instead sample faster than send, you have to increase SID after all related messages</div>
+<div class="line">has been sent. It would be even more complex if your devices a lot different messages and their</div>
+<div class="line">sampling is grouped and requires different SID. Then you have to also take care that messages</div>
+<div class="line">which are not linked to each other never has same SID.</div>
+<div class="line"> </div>
+<div class="line">If you use multitasking system, you should also lock data </div>
+<div class="line">during sampling and sending so that they would not change during task. If you e.g., </div>
+<div class="line">have task sending sensor values from some kind of globals, both task should use some </div>
+<div class="line">data locking system:</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Sampling task:</div>
+<div class="line"> </div>
+<div class="line">```shell</div>
+<div class="line">SampleSensors(Sensor1,Sensor2);</div>
+<div class="line">LockSend();</div>
+<div class="line">Sensor1Out=Sensor1;</div>
+<div class="line">Sensor2Out=Sensor2;</div>
+<div class="line">SensorsSID++; if ( SensorsSID&gt;252 ) SensorsSID=0;</div>
+<div class="line">ReleaseSend();</div>
+</div><!-- fragment --><p >Sending task:</p>
+<div class="fragment"><div class="line">LockSend();</div>
+<div class="line">double S1=Sensor1Out;</div>
+<div class="line">double S2=Sensor2Out;</div>
+<div class="line">SID=SensorsSID;</div>
+<div class="line">ReleaseSend();</div>
+<div class="line">SendSensorsData(SID,S1,S2);</div>
+</div><!-- fragment --><h1><a class="anchor" id="secRefTermManufacturerCode"></a>
 Manufacturer Code</h1>
-<p >The Manufacturer Code is part of the <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tNMEA2000::tDeviceInformation</a> which is mandatory for each NMEA2000 device.</p>
-<p ><a href="https://www.nmea.org/Assets/20190623%20manu%20code%20and%20product%20code.pdf">List of all Manufacturer Codes</a></p>
-<h1><a class="anchor" id="autotoc_md131"></a>
+<p >The Manufacturer Code is part of the <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a> (see <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tNMEA2000::tDeviceInformation</a>). Manufacturer code is mandatory for each NMEA2000 device and it has to be requested from NMEA organization.</p>
+<p >Note that NMEA2000 devices does not have way to request manufacturer name. Manufacturer code is link to hardcoded name. So if you have old MFD and sersor from new manufacturer, sensor will be listed with name "unknown manufacturer".</p>
+<p >Some manufacturers hardcodes which manufacturer sensors they accept. So in case e.g., MFD document claims to support e.g., PGN 130316, but sensor data will not be shown or not shown properly, check your MFD manufacturer that your sensor manufacturer is listed in their database. As opposite if you make device for your own vessel only, you can setup your device to use accepted manufacturer code.</p>
+<p ><a class="el" href="md_7_glossary.html#secRefMfgCodes">List of registered manufacturer codes</a></p>
+<h1><a class="anchor" id="secRefNMEA2000Certification"></a>
+NMEA2000 certification</h1>
+<p >I have advertised library to be certification ready. There are some functionalities left for developer, since there is no common way do that. Good example is saving possibly changed source address or device/system instances. It is developer responsibility to choose method for saving. It can be e.g., EEPROM, file, flash. To fullfill all certification requirements you have to add some functionality.</p><ul>
+<li>Your device has to be electrically isolated as I have descibed on <a class="el" href="page_h_w_set_up.html">Setting Up Hardware Environment</a>.</li>
+<li>Save device source address and restore it on startup by using saved value on <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867" title="Set the library mode.">tNMEA2000::SetMode()</a>. Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a>.</li>
+<li>Save device and system instances and restore them on startup with function <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances()</a>.Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24" title="Check if this device has changed its DeviceInstances or SystemInstance.">tNMEA2000::ReadResetDeviceInformationChanged()</a>.</li>
+<li>Write ISO request handler to respond requests for all PGNs you are transmitting. Register handler with <a class="el" href="classt_n_m_e_a2000.html#a1a3c14ee0a90bcdee2c2d8446db00805" title="Set the message handler for incoming ISO Requests.">tNMEA2000::SetISORqstHandler()</a>.</li>
+<li>Inherit <a class="el" href="classt_n2k_group_function_handler.html" title="Base handler class for Group Functions.">tN2kGroupFunctionHandler</a> and write handler, which responds all messages your device is transmitting. You can write own handler for all your messages or write common handler. See <a class="el" href="_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class.">N2kGroupFunction.h</a>. Note that if you accept message period or offset change, you should also save them and restore them on startup. Also if you handle PGN data instance change, you need to save that too.</li>
+<li>Save both installation descriptions and restore them on startup with function <a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb" title="Set the Configuration Information of this device.">tNMEA2000::SetConfigurationInformation()</a>. Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a" title="Check if this device has changed its Install Description.">tNMEA2000::ReadResetInstallationDescriptionChanged()</a>.</li>
+</ul>
+<p >For commercial certified devices you need also (prices at 2024 are for members):</p><ul>
+<li>Join as member to NMEA organization - new member 475 $, yearly renewal 300 $.</li>
+<li>Request <a class="el" href="md_7_glossary.html#secRefTermManufacturerCode">Manufacturer Code</a> from NMEA organization - 1200 $.</li>
+<li>Request ProductCode from NMEA organization - 450 $.</li>
+<li>Run certification tests for you device. For that you need specific certification tool. You can ask help from me. Costs depends of certification test provider - I know some providers. Costs 500 $ - 2000 $.</li>
+<li>Certification verification - 850 $.</li>
+</ul>
+<p >So total costs for certified device for new member is about 4000 $.</p>
+<h1><a class="anchor" id="autotoc_md175"></a>
 Relation between CAN ID and NMEA2000</h1>
 <p >The SAE J1939 protocol requires a specific format for the CAN message’s identifer. The ID can consist of 11 bits, or optionally 29 bits in the extended format. At NMEA2000 only the extended format ist supported.</p>
 <div class="image">
@@ -171,7 +243,413 @@ Relation between CAN ID and NMEA2000</h1>
 <li>PDU Specific (15-8) - the address of the message’s destination device</li>
 <li>Source Address (7-0) - the address of the message’s source device</li>
 </ul>
-<dl class="section see"><dt>See also</dt><dd><a href="https://www.csselectronics.com/pages/j1939-pgn-conversion-tool">J1939 PGN vs. 29-Bit CAN ID - Online Converter</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.csselectronics.com/pages/j1939-pgn-conversion-tool">J1939 PGN vs. 29-Bit CAN ID - Online Converter</a></dd></dl>
+<h1><a class="anchor" id="secRefMfgCodes"></a>
+List of registered manufacturer codes</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Code   </th><th class="markdownTableHeadNone">Manufacturer name    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">78   </td><td class="markdownTableBodyNone">Fw Murphy    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">80   </td><td class="markdownTableBodyNone">Twin Disc    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">85   </td><td class="markdownTableBodyNone">Kohler Power Systems    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">88   </td><td class="markdownTableBodyNone">Hemisphere    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">116   </td><td class="markdownTableBodyNone">BEP Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">135   </td><td class="markdownTableBodyNone">Airmar    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">137   </td><td class="markdownTableBodyNone">Maretron    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">140   </td><td class="markdownTableBodyNone">Lowrance    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">144   </td><td class="markdownTableBodyNone">Mercury Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">147   </td><td class="markdownTableBodyNone">Nautibus Electronic Gmbh    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">148   </td><td class="markdownTableBodyNone">Blue Water Data    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">154   </td><td class="markdownTableBodyNone">Westerbeke    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">161   </td><td class="markdownTableBodyNone">Offshore Systems UK    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">163   </td><td class="markdownTableBodyNone">Evinrude/Brp Bombardier    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">165   </td><td class="markdownTableBodyNone">CPAC Systems Ab    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">168   </td><td class="markdownTableBodyNone">Xantrex Technology    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">172   </td><td class="markdownTableBodyNone">Yanmar Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">174   </td><td class="markdownTableBodyNone">Ab Volvo/Volvo Penta    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">176   </td><td class="markdownTableBodyNone">Carling Technologies    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">185   </td><td class="markdownTableBodyNone">Beede Electrical    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">192   </td><td class="markdownTableBodyNone">Floscan Instrument Co., Inc.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">193   </td><td class="markdownTableBodyNone">Nobeltec    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">198   </td><td class="markdownTableBodyNone">Mystic Valley Communications    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">199   </td><td class="markdownTableBodyNone">Actia Corporation    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">201   </td><td class="markdownTableBodyNone">Disenos Y Technologia    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">211   </td><td class="markdownTableBodyNone">Digital Switching Systems    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">215   </td><td class="markdownTableBodyNone">Xintex/Atena    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">224   </td><td class="markdownTableBodyNone">Emmi Network    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">228   </td><td class="markdownTableBodyNone">Zf Marine Electronics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">229   </td><td class="markdownTableBodyNone">Garmin    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">233   </td><td class="markdownTableBodyNone">Yacht Monitoring Solutions    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">235   </td><td class="markdownTableBodyNone">Sailormade Marine Telemetry    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">243   </td><td class="markdownTableBodyNone">Eride    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">257   </td><td class="markdownTableBodyNone">Honda Motor Company    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">272   </td><td class="markdownTableBodyNone">Groco    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">273   </td><td class="markdownTableBodyNone">Actisense    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">274   </td><td class="markdownTableBodyNone">Amphenol Ltw Technology    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">275   </td><td class="markdownTableBodyNone">Navico    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">283   </td><td class="markdownTableBodyNone">Hamilton Jet    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">285   </td><td class="markdownTableBodyNone">Sea Recovery    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">286   </td><td class="markdownTableBodyNone">Coelmo Srl Italy    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">295   </td><td class="markdownTableBodyNone">BEP Marine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">299   </td><td class="markdownTableBodyNone">Garmin    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">304   </td><td class="markdownTableBodyNone">Trigentic/EmpirBus    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">305   </td><td class="markdownTableBodyNone">Novatel    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">306   </td><td class="markdownTableBodyNone">Sleipner Motor As    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">307   </td><td class="markdownTableBodyNone">Mbw Technologies    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">315   </td><td class="markdownTableBodyNone">ICOM    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">328   </td><td class="markdownTableBodyNone">Qwerty    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">329   </td><td class="markdownTableBodyNone">Dief    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">341   </td><td class="markdownTableBodyNone">Böning Automationstechnologie GmbH    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">345   </td><td class="markdownTableBodyNone">Korea Maritime University    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">351   </td><td class="markdownTableBodyNone">Thrane And Thrane    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">355   </td><td class="markdownTableBodyNone">Mastervolt    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">356   </td><td class="markdownTableBodyNone">Fischer Panda Generators    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">358   </td><td class="markdownTableBodyNone">Victron Energy    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">370   </td><td class="markdownTableBodyNone">Rolls Royce Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">373   </td><td class="markdownTableBodyNone">Electronic Design    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">374   </td><td class="markdownTableBodyNone">Northern Lights    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">378   </td><td class="markdownTableBodyNone">Glendinning    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">381   </td><td class="markdownTableBodyNone">B&amp;G    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">384   </td><td class="markdownTableBodyNone">Rose Point Navigation Systems    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">385   </td><td class="markdownTableBodyNone">Johnson Outdoors Marine Electronics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">394   </td><td class="markdownTableBodyNone">Capi 2    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">396   </td><td class="markdownTableBodyNone">Beyond Measure    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">400   </td><td class="markdownTableBodyNone">Livorsi Marine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">404   </td><td class="markdownTableBodyNone">ComNav    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">419   </td><td class="markdownTableBodyNone">Fusion Electronics    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">421   </td><td class="markdownTableBodyNone">Standard Horizon    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">422   </td><td class="markdownTableBodyNone">True Heading    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">426   </td><td class="markdownTableBodyNone">Egersund Marine Electronics As    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">427   </td><td class="markdownTableBodyNone">Em-Trak Marine Electronics Ltd    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">431   </td><td class="markdownTableBodyNone">Tohatsu Co Jp    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">437   </td><td class="markdownTableBodyNone">Digital Yacht    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">438   </td><td class="markdownTableBodyNone">Comar Systems Limited    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">440   </td><td class="markdownTableBodyNone">Cummins    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">443   </td><td class="markdownTableBodyNone">VDO    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">451   </td><td class="markdownTableBodyNone">Parker Hannifin    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">459   </td><td class="markdownTableBodyNone">Alltek Marine Electronics Corp    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">460   </td><td class="markdownTableBodyNone">San Giorgio S.E.I.N.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">466   </td><td class="markdownTableBodyNone">Veethree Electronics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">467   </td><td class="markdownTableBodyNone">Humminbird Marine Electronics    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">470   </td><td class="markdownTableBodyNone">SI-TEX Marine Electronics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">471   </td><td class="markdownTableBodyNone">Sea Cross Marine Ab    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">475   </td><td class="markdownTableBodyNone">GME/Standard Communications    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">476   </td><td class="markdownTableBodyNone">Humminbird Marine Electronics    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">478   </td><td class="markdownTableBodyNone">Ocean Sat Bv    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">481   </td><td class="markdownTableBodyNone">Chetco Digitial Instruments    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">493   </td><td class="markdownTableBodyNone">Watcheye    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">499   </td><td class="markdownTableBodyNone">Lcj Capteurs    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">502   </td><td class="markdownTableBodyNone">Attwood Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">503   </td><td class="markdownTableBodyNone">Naviop S.R.L.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">504   </td><td class="markdownTableBodyNone">Vesper Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">510   </td><td class="markdownTableBodyNone">Marinesoft Co. LTD    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">517   </td><td class="markdownTableBodyNone">NoLand Engineering    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">518   </td><td class="markdownTableBodyNone">Transas USA    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">529   </td><td class="markdownTableBodyNone">National Instruments Korea    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">532   </td><td class="markdownTableBodyNone">Onwa Marine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">540   </td><td class="markdownTableBodyNone">Webasto    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">571   </td><td class="markdownTableBodyNone">Marinecraft Co.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">573   </td><td class="markdownTableBodyNone">McMurdo Group    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">578   </td><td class="markdownTableBodyNone">Advansea    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">579   </td><td class="markdownTableBodyNone">KVH    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">580   </td><td class="markdownTableBodyNone">San Jose Technology    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">583   </td><td class="markdownTableBodyNone">Yacht Control    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">586   </td><td class="markdownTableBodyNone">Suzuki Motor Corporation    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">591   </td><td class="markdownTableBodyNone">USCG    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">595   </td><td class="markdownTableBodyNone">ShipModul    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">600   </td><td class="markdownTableBodyNone">Aquatic AV    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">605   </td><td class="markdownTableBodyNone">Aventics GmbH    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">606   </td><td class="markdownTableBodyNone">Intellian    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">612   </td><td class="markdownTableBodyNone">SamwonIT    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">614   </td><td class="markdownTableBodyNone">Arlt Tecnologies    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">637   </td><td class="markdownTableBodyNone">Bavaria Yacts    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">641   </td><td class="markdownTableBodyNone">Diverse Yacht Services    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">644   </td><td class="markdownTableBodyNone">KUS Manufacturer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">645   </td><td class="markdownTableBodyNone">Garmin    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">658   </td><td class="markdownTableBodyNone">Shenzhen Jiuzhou Himunication    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">688   </td><td class="markdownTableBodyNone">Rockford Corporation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">704   </td><td class="markdownTableBodyNone">JL Audio    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">715   </td><td class="markdownTableBodyNone">Autonnic    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">717   </td><td class="markdownTableBodyNone">Yacht Devices    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">734   </td><td class="markdownTableBodyNone">REAP Systems    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">735   </td><td class="markdownTableBodyNone">Au Electronics Group    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">739   </td><td class="markdownTableBodyNone">LxNav    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">740   </td><td class="markdownTableBodyNone">JL Audio    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">743   </td><td class="markdownTableBodyNone">DaeMyung Elevator    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">744   </td><td class="markdownTableBodyNone">Woosung    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">773   </td><td class="markdownTableBodyNone">Clarion US    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">776   </td><td class="markdownTableBodyNone">HMI Systems    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">777   </td><td class="markdownTableBodyNone">Ocean Signal    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">778   </td><td class="markdownTableBodyNone">Seekeeper    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">781   </td><td class="markdownTableBodyNone">Poly Planar    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">785   </td><td class="markdownTableBodyNone">Fischer Panda DE    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">795   </td><td class="markdownTableBodyNone">Broyda Industries    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">796   </td><td class="markdownTableBodyNone">Canadian Automotive    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">797   </td><td class="markdownTableBodyNone">Tides Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">798   </td><td class="markdownTableBodyNone">Lumishore    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">799   </td><td class="markdownTableBodyNone">Still Water Designs and Audto    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">802   </td><td class="markdownTableBodyNone">SPBI SA Ets BJTechnologie    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">803   </td><td class="markdownTableBodyNone">Gill Sensors    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">811   </td><td class="markdownTableBodyNone">Blue Water Desalination    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">815   </td><td class="markdownTableBodyNone">Flir Systems    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">824   </td><td class="markdownTableBodyNone">Undheim Systems    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">838   </td><td class="markdownTableBodyNone">TeamSurv    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">844   </td><td class="markdownTableBodyNone">Fell Marine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">847   </td><td class="markdownTableBodyNone">Oceanvolt    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">862   </td><td class="markdownTableBodyNone">Prospec    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">868   </td><td class="markdownTableBodyNone">Data Panel Corp    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">890   </td><td class="markdownTableBodyNone">L3 Technologies Maritime Systems    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">894   </td><td class="markdownTableBodyNone">Rhodan Marine Systems    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">896   </td><td class="markdownTableBodyNone">Nexfour Solutions    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">905   </td><td class="markdownTableBodyNone">ASA Electronics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">909   </td><td class="markdownTableBodyNone">Marines Co (South Korea)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">911   </td><td class="markdownTableBodyNone">Nautic-On, A Brunswick Company    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">930   </td><td class="markdownTableBodyNone">Ecotronix Corp    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">944   </td><td class="markdownTableBodyNone">Zonisa Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">951   </td><td class="markdownTableBodyNone">Exor International S.p.A.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">962   </td><td class="markdownTableBodyNone">Timbolier Industries    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">968   </td><td class="markdownTableBodyNone">Cox Powertrain    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">969   </td><td class="markdownTableBodyNone">Blue Sea    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">981   </td><td class="markdownTableBodyNone">Kobelt    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1008   </td><td class="markdownTableBodyNone">Lintest SmartBoat    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1011   </td><td class="markdownTableBodyNone">Soundmax    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1020   </td><td class="markdownTableBodyNone">Onyx Marine Automation s.r.l    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1021   </td><td class="markdownTableBodyNone">Entratech    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1022   </td><td class="markdownTableBodyNone">ITC Inc.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1023   </td><td class="markdownTableBodyNone">PEAK-System Technik GmbH    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1029   </td><td class="markdownTableBodyNone">The Marine Guardian LLC    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1034   </td><td class="markdownTableBodyNone">Siren Marine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1047   </td><td class="markdownTableBodyNone">Sonic Corporation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1051   </td><td class="markdownTableBodyNone">ProNav    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1053   </td><td class="markdownTableBodyNone">Stillwater Designs / Kicker    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1059   </td><td class="markdownTableBodyNone">Boatrax    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1062   </td><td class="markdownTableBodyNone">ComNav    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1065   </td><td class="markdownTableBodyNone">CALYPSO Instruments    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1066   </td><td class="markdownTableBodyNone">Spot Zero Water    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1070   </td><td class="markdownTableBodyNone">Quick-teck Electronics Ltd    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1075   </td><td class="markdownTableBodyNone">Uniden America    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1083   </td><td class="markdownTableBodyNone">Nauticoncept    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1084   </td><td class="markdownTableBodyNone">Shadow-Caster LED lighting LLC    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1088   </td><td class="markdownTableBodyNone">E-T-A Circuit Breakers    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1092   </td><td class="markdownTableBodyNone">Scheiber    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1095   </td><td class="markdownTableBodyNone">Wetsounds    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1140   </td><td class="markdownTableBodyNone">Across Ocean Systems Ltd.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1305   </td><td class="markdownTableBodyNone">Dragonfly Energy    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1850   </td><td class="markdownTableBodyNone">Teleflex    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1851   </td><td class="markdownTableBodyNone">Raymarine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1852   </td><td class="markdownTableBodyNone">Navionics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1853   </td><td class="markdownTableBodyNone">Japan Radio Co    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1854   </td><td class="markdownTableBodyNone">Northstar Technologies    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1855   </td><td class="markdownTableBodyNone">Furuno    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1856   </td><td class="markdownTableBodyNone">Trimble    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1857   </td><td class="markdownTableBodyNone">Simrad - Navico    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1858   </td><td class="markdownTableBodyNone">Litton    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1859   </td><td class="markdownTableBodyNone">Kvasar Ab    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1860   </td><td class="markdownTableBodyNone">Mmp    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1861   </td><td class="markdownTableBodyNone">Vector Cantech    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1862   </td><td class="markdownTableBodyNone">Sanshin Industries/Yamaha Marine    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1863   </td><td class="markdownTableBodyNone">Faria Instruments   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

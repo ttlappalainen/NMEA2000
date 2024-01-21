@@ -118,92 +118,55 @@ $(document).ready(function(){initNavTree('pg_lib_ref.html',''); initResizable();
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#autotoc_md4">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md5">Start from scratch and make your first NMEA2000 device</a></li>
-<li class="level1"><a href="#autotoc_md6">Preparing to use NMEA2000 library</a></li>
-<li class="level1"><a href="#autotoc_md7">Try NMEA2000 library with TemperatureMonitor example</a><ul><li class="level2"><a href="#autotoc_md8">Try on PC only</a></li>
-<li class="level2"><a href="#autotoc_md9">A bit deeper look in to the TemperatureMonitor example</a><ul><li class="level3"><a href="#autotoc_md10">Change to use read real data</a></li>
-<li class="level3"><a href="#autotoc_md11">Remove unnecessary messages</a></li>
-<li class="level3"><a href="#autotoc_md12">Change the device information</a></li>
+<li class="level1"><a href="#autotoc_md5">History</a></li>
+<li class="level1"><a href="#autotoc_md6">Start from scratch and make your first NMEA2000 device with Arduino IDE</a></li>
+<li class="level1"><a href="#autotoc_md7">Preparing to use NMEA2000 library</a></li>
+<li class="level1"><a href="#autotoc_md8">Try NMEA2000 library with TemperatureMonitor example</a><ul><li class="level2"><a href="#autotoc_md9">Try on PC only</a></li>
+<li class="level2"><a href="#autotoc_md10">A bit deeper look in to the TemperatureMonitor example</a><ul><li class="level3"><a href="#autotoc_md11">Change to use read real data</a></li>
+<li class="level3"><a href="#autotoc_md12">Remove unnecessary messages</a></li>
+<li class="level3"><a href="#autotoc_md13">Change the device and product information</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md13">Connecting your sample device to the NMEA2000 bus</a></li>
-<li class="level2"><a href="#autotoc_md14">Try NMEA2000 library with WindMonitor example</a></li>
+<li class="level2"><a href="#autotoc_md14">Connecting your sample device to the NMEA2000 bus</a></li>
+<li class="level2"><a href="#autotoc_md15">Try NMEA2000 library with WindMonitor example</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md15">Arduino Programming IDE</a><ul><li class="level2"><a href="#autotoc_md16">Getting started with Arduino Programming IDE</a></li>
-<li class="level2"><a href="#autotoc_md17">Arduino Libraries</a></li>
-<li class="level2"><a href="#autotoc_md18">Importing library from zip</a></li>
-<li class="level2"><a href="#autotoc_md19">Importing libraries from GitHub</a></li>
+<li class="level1"><a href="#autotoc_md16">Arduino Programming IDE</a><ul><li class="level2"><a href="#autotoc_md17">Getting started with Arduino Programming IDE</a></li>
+<li class="level2"><a href="#autotoc_md18">Arduino Libraries</a></li>
+<li class="level2"><a href="#autotoc_md19">Importing library from zip</a></li>
+<li class="level2"><a href="#autotoc_md20">Importing libraries from GitHub</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md20">NMEA2000 library reference</a><ul><li class="level2"><a href="#autotoc_md21">Relevant Classes</a><ul><li class="level3"><a href="#autotoc_md22">Abstract base class tNMEA2000</a></li>
-<li class="level3"><a href="#autotoc_md23">Abstract base class tNMEA2000::tMsgHandler</a></li>
-<li class="level3"><a href="#autotoc_md24">Inherited classes according to your Board</a><ul><li class="level4"><a href="#autotoc_md25">Inherited class tNMEA2000_mcp</a></li>
-<li class="level4"><a href="#autotoc_md26">Inherited class tNMEA2000_due</a></li>
-<li class="level4"><a href="#autotoc_md27">Inherited class tNMEA2000_teensy</a></li>
-<li class="level4"><a href="#autotoc_md28">Inherited class tNMEA2000_esp32</a></li>
-<li class="level4"><a href="#autotoc_md29">Inherited class tNMEA2000_avr</a></li>
+<li class="level1"><a href="#autotoc_md21">NMEA2000 library reference</a><ul><li class="level2"><a href="#autotoc_md22">Relevant Classes</a><ul><li class="level3"><a href="#autotoc_md23">Abstract base class tNMEA2000</a></li>
+<li class="level3"><a href="#autotoc_md24">Abstract base class tNMEA2000::tMsgHandler</a></li>
+<li class="level3"><a href="#autotoc_md25">Inherited classes according to your Board</a><ul><li class="level4"><a href="#autotoc_md26">Inherited class tNMEA2000_mcp</a></li>
+<li class="level4"><a href="#autotoc_md27">Inherited class tNMEA2000_due</a></li>
+<li class="level4"><a href="#autotoc_md28">Inherited class tNMEA2000_teensy</a></li>
+<li class="level4"><a href="#autotoc_md29">Inherited class tNMEA2000_Teensyx</a></li>
+<li class="level4"><a href="#autotoc_md30">Inherited class tNMEA2000_esp32</a></li>
+<li class="level4"><a href="#autotoc_md31">Inherited class tNMEA2000_avr</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#autotoc_md30">Message container class tN2kMsg</a></li>
-<li class="level3"><a href="#autotoc_md31">Group function (PGN 126208) handler class tN2kGroupFunctionHandler</a></li>
-<li class="level3"><a href="#autotoc_md32">Inherited group function handler tN2kGroupFunctionHandlerForPGN60928</a></li>
-<li class="level3"><a href="#autotoc_md33">Device list collector class tN2kDeviceList</a></li>
+<li class="level3"><a href="#autotoc_md32">Message container class tN2kMsg</a></li>
+<li class="level3"><a href="#autotoc_md33">Group function (PGN 126208) handler class tN2kGroupFunctionHandler</a></li>
+<li class="level3"><a href="#autotoc_md34">Device list collector class tN2kDeviceList</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md34">Using tNMEA2000</a><ul><li class="level3"><a href="#autotoc_md35">Device modes</a><ul><li class="level4"><a href="#autotoc_md36">tNMEA2000::N2km_ListenOnly</a></li>
-<li class="level4"><a href="#autotoc_md37">tNMEA2000::N2km_NodeOnly</a></li>
-<li class="level4"><a href="#autotoc_md38">tNMEA2000::N2km_ListenAndNode</a></li>
-<li class="level4"><a href="#autotoc_md39">tNMEA2000::N2km_SendOnly</a></li>
-<li class="level4"><a href="#autotoc_md40">tNMEA2000::N2km_ListenAndSend</a></li>
+<li class="level2"><a href="#autotoc_md35">Using tNMEA2000</a><ul><li class="level3"><a href="#autotoc_md36">Device modes</a><ul><li class="level4"><a href="#autotoc_md37">tNMEA2000::N2km_ListenOnly</a></li>
+<li class="level4"><a href="#autotoc_md38">tNMEA2000::N2km_NodeOnly</a></li>
+<li class="level4"><a href="#autotoc_md39">tNMEA2000::N2km_ListenAndNode</a></li>
+<li class="level4"><a href="#autotoc_md40">tNMEA2000::N2km_SendOnly</a></li>
+<li class="level4"><a href="#autotoc_md41">tNMEA2000::N2km_ListenAndSend</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#autotoc_md41">Message forwarding</a></li>
-<li class="level3"><a href="#autotoc_md42">Debug mode</a></li>
+<li class="level3"><a href="#secMessageforwarding">Message forwarding</a></li>
+<li class="level3"><a href="#descDebugMode">Debug mode</a></li>
 <li class="level3"><a href="#descMultiDeviceSupport">Multi device support</a></li>
-<li class="level3"><a href="#autotoc_md43">Member functions</a><ul><li class="level4"><a href="#autotoc_md44">SetDeviceCount</a></li>
-<li class="level4"><a href="#autotoc_md45">SetN2kCANMsgBufSize</a></li>
-<li class="level4"><a href="#autotoc_md46">SetN2kCANSendFrameBufSize</a></li>
-<li class="level4"><a href="#autotoc_md47">SetProductInformation</a></li>
-<li class="level4"><a href="#autotoc_md48">SetDeviceInformation</a></li>
-<li class="level4"><a href="#autotoc_md49">SetDeviceInformationInstances</a></li>
-<li class="level4"><a href="#autotoc_md50">GetDeviceInformation</a></li>
-<li class="level4"><a href="#autotoc_md51">SetConfigurationInformation</a></li>
-<li class="level4"><a href="#autotoc_md52">SetProgmemConfigurationInformation</a></li>
-<li class="level4"><a href="#autotoc_md53">SetSingleFrameMessages</a></li>
-<li class="level4"><a href="#autotoc_md54">SetFastPacketMessages</a></li>
-<li class="level4"><a href="#autotoc_md55">ExtendSingleFrameMessages</a></li>
-<li class="level4"><a href="#autotoc_md56">ExtendFastPacketMessages</a></li>
-<li class="level4"><a href="#autotoc_md57">ExtendTransmitMessages</a></li>
-<li class="level4"><a href="#autotoc_md58">ExtendReceiveMessages</a></li>
-<li class="level4"><a href="#autotoc_md59">SendIsoAddressClaim</a></li>
-<li class="level4"><a href="#autotoc_md60">SendProductInformation</a></li>
-<li class="level4"><a href="#autotoc_md61">SendConfigurationInformation</a></li>
-<li class="level4"><a href="#autotoc_md62">SetHeartbeatInterval</a></li>
-<li class="level4"><a href="#autotoc_md63">GetHeartbeatInterval</a></li>
-<li class="level4"><a href="#autotoc_md64">SendHeartbeat</a></li>
-<li class="level4"><a href="#autotoc_md65">SetMode</a></li>
-<li class="level4"><a href="#autotoc_md66">SetForwardType</a></li>
-<li class="level4"><a href="#autotoc_md67">SetForwardStream</a></li>
-<li class="level4"><a href="#autotoc_md68">Open</a></li>
-<li class="level4"><a href="#autotoc_md69">SendMsg</a></li>
-<li class="level4"><a href="#autotoc_md70">ParseMessages</a></li>
-<li class="level4"><a href="#autotoc_md71">SetMsgHandler</a></li>
-<li class="level4"><a href="#autotoc_md72">AttachMsgHandler</a></li>
-<li class="level4"><a href="#autotoc_md73">DetachMsgHandler</a></li>
-<li class="level4"><a href="#autotoc_md74">SetISORqstHandler</a></li>
-<li class="level4"><a href="#autotoc_md75">GetN2kSource</a></li>
-<li class="level4"><a href="#autotoc_md76">SetN2kSource</a></li>
-<li class="level4"><a href="#autotoc_md77">ReadResetAddressChanged</a></li>
-<li class="level4"><a href="#autotoc_md78">ReadResetDeviceInformationChanged</a></li>
-<li class="level4"><a href="#autotoc_md79">EnableForward</a></li>
-<li class="level4"><a href="#autotoc_md80">SetForwardSystemMessages</a></li>
-<li class="level4"><a href="#autotoc_md81">SetForwardOnlyKnownMessages</a></li>
-<li class="level4"><a href="#autotoc_md82">SetForwardOwnMessages</a></li>
-<li class="level4"><a href="#autotoc_md83">SetHandleOnlyKnownMessages</a></li>
-<li class="level4"><a href="#autotoc_md84">SetDebugMode</a></li>
+<li class="level3"><a href="#descRunningLibrary">Running library</a><ul><li class="level4"><a href="#autotoc_md42">Some timing examples</a></li>
+<li class="level4"><a href="#descSystemMessages">System messages and library internal functionality</a></li>
 </ul>
 </li>
+<li class="level3"><a href="#autotoc_md43">Member functions</a></li>
 </ul>
 </li>
 </ul>
@@ -213,9 +176,17 @@ $(document).ready(function(){initNavTree('pg_lib_ref.html',''); initResizable();
 <div class="textblock"><p ><a class="anchor" id="md_2_libRef"></a></p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Introduction</h1>
-<p >NMEA2000 is object oriented C++ library, which should make it simple to develop own NMEA2000 based devices. I created it because I wanted to get rid of limitations of expensive devices on market. With my first own device on my yacht, I could replace three devices – NMEA0183 combiner, NMEA0183-&gt;NMEA2000 Converter, NMEA2000-&gt;PC converter - with single Arduino Due board and few extra chips. To use NMEA2000 library you need basic skills for programming. I also try to write simple instructions to start from scratch. Even I have been doing sw and hw development for years, it took some time to dig information from internet to get started with Arduino and do simple tasks like installing library. For using NMEA2000 library I prefer Teensy 3.2, 3.5, 4.0, 4.1 or ESP32 with MCP2562 chip. For simple things Arduino Mega with CANBUS shield or schematics found under <a href="https://github.com/ttlappalainen/NMEA2000/tree/master/Documents">documents</a> is ok. I have not tested smaller boards and I prefer to forget any board less than 8 kB RAM.</p>
+<p >NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements (see <a class="el" href="md_7_glossary.html#secRefNMEA2000Certification">NMEA2000 certification</a>) leaving only interesting data handling for developer. <b>Library has been used in several commercial certified NMEA2000 devices.</b></p>
+<p >To use NMEA2000 library you need basic skills for programming. For beginners I have tried to write simple instructions to start from scratch with Arduino IDE. When I started library development and even I had been doing sw and hw development for years, it took some time to dig information from internet to get started with Arduino based boards and do even simple tasks like installing library.</p>
+<p >For using NMEA2000 library I prefer Teensy 4.0, 4.1, (or 3.2, 3.5, 3.6 which are end of life) or ESP32 with isolated ISO1050 or unisolated MCP2562 chip. For experienced users and big projects RPi can be also used.</p>
+<p >For simple things Arduino Mega with CANBUS shield or schematics found under <a href="https://github.com/ttlappalainen/NMEA2000/tree/master/Documents">documents</a> is ok. I have not tested smaller boards and I prefer to forget any board less than 8 kB RAM.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
-Start from scratch and make your first NMEA2000 device</h1>
+History</h1>
+<p >I started library development 2015 because I wanted to get rid of limitations of expensive devices on market. Also those did not had features I wanted. With my first own device for my yacht, I replaced three devices – NMEA0183 combiner, NMEA0183-&gt;NMEA2000 Converter, NMEA2000-&gt;PC converter - with single Arduino Due board and few extra chips.</p>
+<p >On 2017 library was chosen for first commercial certified device. Later there has been several other commercial devices using my library. That has also made it important to keep it combatible and ready for certificated devices.</p>
+<p >Since 2015 my personal work has moved more and more towards NMEA2000. I do commercially different NMEA2000 projects and consulting.</p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Start from scratch and make your first NMEA2000 device with Arduino IDE</h1>
 <p >Lets think you have temperature sensor and you like to have it visible on NMEA2000 bus. Here I expect that:</p>
 <ul>
 <li>you already have Arduino Programming IDE installed. If not, do first “5.1 Getting started with Arduino Programming IDE”.</li>
@@ -224,18 +195,18 @@ Start from scratch and make your first NMEA2000 device</h1>
 <li>NOTE! Arduino IDE serial monitor must be closed!</li>
 <li>You have right board selected from IDE Tools-Board” and right COM port selected from IDE Tools-Port:</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Preparing to use NMEA2000 library</h1>
 <p >At first we have to download and install necessary libraries for Arduino and other useful tools. <br  />
  Download and install Arduino libraries according to your hardware see <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a>.</p>
 <p >If you want to read or decode NMEA2000 messages, you can download and install “NMEA Reader”-application from <a href="http://www.actisense.com/media/?product=nmea-reader-and-ebl-reader">http://www.actisense.com/media/?product=nmea-reader-and-ebl-reader</a></p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Try NMEA2000 library with TemperatureMonitor example</h1>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Try on PC only</h2>
 <p >Now we are ready to try sample without N2k bus connection. So you need only Arduino board and PC. No CANBUS shield or extra chips yet!</p>
 <ul>
-<li>Open Example TemperatureMonitor sketch, which came with NMEA2000 library. Select from IDE “Open…”-libraries/NMEA2000-master/Example/TemperatureMonitor/TemperatureMonitor.ino</li>
+<li>Open example <a class="el" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus.">TemperatureMonitor.ino</a> sketch, which came with NMEA2000 library. Select from IDE “Open…”-libraries/NMEA2000-master/Example/TemperatureMonitor/TemperatureMonitor.ino</li>
 <li>uncomment lines</li>
 </ul>
 <div class="fragment"><div class="line"><span class="comment">// Serial.begin(115200);</span></div>
@@ -243,13 +214,13 @@ Try on PC only</h2>
 </div><!-- fragment --><p >and comment line</p>
 <div class="fragment"><div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">EnableForward</a>(<span class="keyword">false</span>);</div>
 <div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a99f6ed3fa2b0b15f276c856e10a7a3ab"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a></div><div class="ttdeci">tNMEA2000 &amp; NMEA2000</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00350">NMEA2000_CAN.h:350</a></div></div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_a1981274e03fd52798eda7302b48ea169"><div class="ttname"><a href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">tNMEA2000::EnableForward</a></div><div class="ttdeci">void EnableForward(bool v=true)</div><div class="ttdoc">Enable message forwarding to stream.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l02702">NMEA2000.h:2702</a></div></div>
-</div><!-- fragment --><p >within setup() function.</p>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a1981274e03fd52798eda7302b48ea169"><div class="ttname"><a href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">tNMEA2000::EnableForward</a></div><div class="ttdeci">void EnableForward(bool v=true)</div><div class="ttdoc">Enable message forwarding to stream.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l02777">NMEA2000.h:2777</a></div></div>
+</div><!-- fragment --><p >within <a class="el" href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup()</a> function.</p>
 <ul>
 <li>If you are using Arduino Mega, uncomment line</li>
 </ul>
 <div class="fragment"><div class="line"><span class="comment">// NMEA2000.SetDebugMode(tNMEA2000::dm_Actisense); </span></div>
-</div><!-- fragment --><p >within setup() function.</p>
+</div><!-- fragment --><p >within <a class="el" href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup()</a> function.</p>
 <p >We need to do this, since Mega board does not have build in CAN bus controller, so the library would fail, when it tries to open CAN on non debug mode.</p>
 <ul>
 <li>Upload sketch to board.</li>
@@ -263,45 +234,46 @@ Try on PC only</h2>
 <div class="line">&quot;Temperature&quot; (PGN 130312)  </div>
 </div><!-- fragment --><p >messages on “NMEA Reader”.</p>
 <dl class="section note"><dt>Note</dt><dd>If you want to upload sketch again to the board, you have to release Arduino programming COM port by selecting port “- NOT SELECTED –“ on “NMEA Reader”.</dd></dl>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 A bit deeper look in to the TemperatureMonitor example</h2>
 <p >First note that if you want to modify and save this sample, you have to save it on other location.</p>
-<h3><a class="anchor" id="autotoc_md10"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 Change to use read real data</h3>
-<p >If you are happy with sending only cabin and water temperatures to the N2k bus, you simply change functions double ReadCabinTemp() and double ReadWaterTemp(). So e.g. if you have sensor providing 10 mV/ °C, you can change the function:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">double</span> ReadCabinTemp() {</div>
+<p >If you are happy with sending only cabin and water temperatures to the N2k bus, you simply change functions double <a class="el" href="_temperature_monitor_8ino.html#a8c0bad38ce2f1d15032eb32fd5e9ca51">ReadCabinTemp()</a> and double <a class="el" href="_temperature_monitor_8ino.html#aa6891c1d6d986bb814a05c54e1b04e10">ReadWaterTemp()</a>. So e.g. if you have sensor providing 10 mV/ °C, you can change the function:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">double</span> <a class="code hl_function" href="_temperature_monitor_8ino.html#a8c0bad38ce2f1d15032eb32fd5e9ca51">ReadCabinTemp</a>() {</div>
 <div class="line"><span class="keywordflow">return</span> (5.0 * analogRead(A0)*100/1024);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >Do the same for ReadWaterTemp() (naturally you have to use other analog input e.g. A1) and you have your own ready NMEA2000 temperature monitor.</p>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<div class="ttc" id="a_temperature_monitor_8ino_html_a8c0bad38ce2f1d15032eb32fd5e9ca51"><div class="ttname"><a href="_temperature_monitor_8ino.html#a8c0bad38ce2f1d15032eb32fd5e9ca51">ReadCabinTemp</a></div><div class="ttdeci">double ReadCabinTemp()</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00087">TemperatureMonitor.ino:87</a></div></div>
+</div><!-- fragment --><p >Do the same for <a class="el" href="_temperature_monitor_8ino.html#aa6891c1d6d986bb814a05c54e1b04e10">ReadWaterTemp()</a> (naturally you have to use other analog input e.g. A1) and you have your own ready NMEA2000 temperature monitor.</p>
+<h3><a class="anchor" id="autotoc_md12"></a>
 Remove unnecessary messages</h3>
 <p >With the library N2k messages will be sent by call NMEA2000.SendMsg(N2kMsg). Before sending you have to setup the variable N2kMsg. In that example it has been done for Temperature message with call:</p>
-<div class="fragment"><div class="line"><a class="code hl_function" href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a>(N2kMsg, 1, 1, <a class="code hl_enumvalue" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kts_MainCabinTemperature</a>, ReadCabinTemp());</div>
+<div class="fragment"><div class="line"><a class="code hl_function" href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a>(N2kMsg, 1, 1, <a class="code hl_enumvalue" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kts_MainCabinTemperature</a>, <a class="code hl_function" href="_temperature_monitor_8ino.html#a8c0bad38ce2f1d15032eb32fd5e9ca51">ReadCabinTemp</a>());</div>
 <div class="ttc" id="a_n2k_types_8h_html_ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce"><div class="ttname"><a href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kts_MainCabinTemperature</a></div><div class="ttdeci">@ N2kts_MainCabinTemperature</div><div class="ttdoc">value is representing a main cabin temperature</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_types_8h_source.html#l00176">N2kTypes.h:176</a></div></div>
-<div class="ttc" id="agroup__group__msg_set_up_html_gaa330e786a6c3fab01b7ee8d8610d2159"><div class="ttname"><a href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a></div><div class="ttdeci">void SetN2kTemperature(tN2kMsg &amp;N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource, double ActualTemperature, double SetTemperature=N2kDoubleNA)</div><div class="ttdoc">Setting up Message &quot;Temperature - DEPRECATED&quot; - PGN 130312.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_messages_8h_source.html#l05065">N2kMessages.h:5065</a></div></div>
+<div class="ttc" id="agroup__group__msg_set_up_html_gaa330e786a6c3fab01b7ee8d8610d2159"><div class="ttname"><a href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a></div><div class="ttdeci">void SetN2kTemperature(tN2kMsg &amp;N2kMsg, unsigned char SID, unsigned char TempInstance, tN2kTempSource TempSource, double ActualTemperature, double SetTemperature=N2kDoubleNA)</div><div class="ttdoc">Setting up Message &quot;Temperature - DEPRECATED&quot; - PGN 130312.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_messages_8h_source.html#l04951">N2kMessages.h:4951</a></div></div>
 </div><!-- fragment --><p >So if you do not need cabin temperature message (PGN 130312), simply delete that call SetN2kTemperature(…) and next call NMEA2000.SendMsg(N2kMsg); Similarly if you do not provide water temperature, delete calls SetN2kOutsideEnvironmentalParameters(…) and call NMEA2000.SendMsg(N2kMsg); after that. <br  />
  Now just upload sketch and open right port to “NMEA Reader” and you should see only "ISO address claim" (PGN 60928) and "Environmental parameters" (PGN 130311) on “NMEA Reader”.</p>
-<h3><a class="anchor" id="autotoc_md12"></a>
-Change the device information</h3>
-<p >On NMEA2000 bus each device will tell to the bus what it is. This can be found on sample under setup() function. Call SetDeviceInformation is important for right functionality on the bus. If you have only this own device on the bus, you can leave it like it is. In other case take deeper look in to the explanation for the function. Note that if you add several own devices to the bus, you have to configure parameters for this function so that each device will get unic “name” as a combination of these parameters. <br  />
- Call SetProductInformation is not so important, but defines nice to know information. If you have some “Multi Function Display” (MFD) on the bus, it will show on the device list information set by this function. So you can e.g. set the “Manufacturer's Model ID” to “Jack’s temperature monitor” and version code and model version as you like, so on your MFD you can see that and choose right device.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Change the device and product information</h3>
+<p >On NMEA2000 bus each device will tell to the bus what it is (see also <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a>). This can be found on sample under <a class="el" href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup()</a> function. Call SetDeviceInformation is important for right functionality on the bus. If you have only this own device on the bus, you can leave it like it is. In other case take deeper look in to the explanation for the function. Note that if you add several own devices to the bus, you have to configure parameters for this function so that each device will get unique <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a> as a combination of these parameters.</p>
+<p >Call SetProductInformation is not so important for own boat, but defines nice to know information. If you have some “Multi Function Display” (MFD) on the bus, it will show on the device list information set by this function. So you can e.g. set the “Manufacturer's Model ID” to “Jack’s temperature monitor” and version code and model version as you like, so on your MFD you can see that and choose right device.</p>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Connecting your sample device to the NMEA2000 bus</h2>
 <p >So now we have sketch, which works on the PC. If your sketch runs and shows information in “NMEA Reader”, it can be easily connected to the N2k bus. For electrical connection you need either CANBUS shield for Arduino Mega or you can build your own shield. You can find more information at <a class="el" href="page_h_w_set_up.html">Setting Up Hardware Environment</a>.</p>
 <p >There is also drawing for Teensy on <a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Examples/TeensyActisenseListenerSender/Documents/Teensy_Actisense_listener_sender_schematics.pdf">Teensy_Actisense_listener_sender_schematics.pdf</a>, which has additional USB with Pololu chip, which is only required for two USB solutions. So Prepare physical connection to the NMEA2000 bus and comment line:</p>
 <div class="fragment"><div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a43fb8be0ab5036dff662192b04d20314">SetDebugMode</a>(<a class="code hl_enumvalue" href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc">tNMEA2000::dm_Actisense</a>);</div>
 <div class="ttc" id="aclasst_n_m_e_a2000_html_a43fb8be0ab5036dff662192b04d20314"><div class="ttname"><a href="classt_n_m_e_a2000.html#a43fb8be0ab5036dff662192b04d20314">tNMEA2000::SetDebugMode</a></div><div class="ttdeci">void SetDebugMode(tDebugMode _dbMode)</div><div class="ttdoc">Set the Debug Mode of the system.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01530">NMEA2000.cpp:1530</a></div></div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc"><div class="ttname"><a href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc">tNMEA2000::dm_Actisense</a></div><div class="ttdeci">@ dm_Actisense</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00715">NMEA2000.h:715</a></div></div>
-</div><!-- fragment --><p >within setup() function, if you have previously uncommented it. Upload the sketch and check the result. <br  />
+<div class="ttc" id="aclasst_n_m_e_a2000_html_ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc"><div class="ttname"><a href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc">tNMEA2000::dm_Actisense</a></div><div class="ttdeci">@ dm_Actisense</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00714">NMEA2000.h:714</a></div></div>
+</div><!-- fragment --><p >within <a class="el" href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup()</a> function, if you have previously uncommented it. Upload the sketch and check the result. <br  />
  On your NMEA2000 “Multi Function Display” (MFD, like Garmin GMI20) add temperature reading visible. For that I can not give more help, since each MFD has different user interface. Now you should see the temperature reading on your MFD.</p>
 <p >If you are not interested in N2k bus messages and you want to add your own debug code, you have to disable message forwarding by uncommenting line:</p>
 <div class="fragment"><div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">EnableForward</a>(<span class="keyword">false</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
 Try NMEA2000 library with WindMonitor example</h2>
-<p >This is exactly same as TemperatureMonitor, but sends wind data to the bus. Only necessary function names has been changed. So follow the “ Try NMEA2000 library with TemperatureMonitor example”.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<p ><a class="el" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus.">WindMonitor.ino</a> is similar as TemperatureMonitor, but sends wind data to the bus. Only necessary function names has been changed. So follow the “Try NMEA2000 library with TemperatureMonitor example”.</p>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Arduino Programming IDE</h1>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Getting started with Arduino Programming IDE</h2>
 <ul>
 <li>Download and install <a href="https://www.arduino.cc/en/Main/Software">Arduino software</a> for suitable OS</li>
@@ -321,7 +293,7 @@ Getting started with Arduino Programming IDE</h2>
 <li>Now you should see board analog pin0 value running on serial monitor.</li>
 </ul>
 <p >Now you are ready for your own developing.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 Arduino Libraries</h2>
 <p >Arduino has both system wide and user libraries.</p>
 <p >Arduino has both system wide and user libraries.</p>
@@ -330,7 +302,7 @@ Arduino Libraries</h2>
 <li>User libraries are visible only for current user and they will be located as default e.g. on Windows OS under "Documents&gt;Arduino&gt;libraries"</li>
 </ul>
 <p >Arduino IDE installation automatically installs system wide libraries. When you add library with Arduino IDE, it will be added as default can make some library visible for all users by moving installed library from your personal libraries to system wide libraries. </p>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Importing library from zip</h2>
 <p >If someone points you direct link as .zip file to Arduino library, you need only:</p>
 <ul>
@@ -339,7 +311,7 @@ Importing library from zip</h2>
 <li>Navigate to you download path and select the .zip file you just downloaded and press Open.</li>
 </ul>
 <p >So now you should have that library on your personal libraries.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 Importing libraries from GitHub</h2>
 <p >Importing library from GitHub is also very simple. So you have heard or found good link to someone GitHub page.</p>
 <ul>
@@ -348,73 +320,88 @@ Importing libraries from GitHub</h2>
 <li>Somewhere on page – currently on right – there is button “Clone or download”. Click that and then on popup button “Download ZIP” and choose “Save to disk” and press “OK”</li>
 <li>Now just follow "Importing library from zip".</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 NMEA2000 library reference</h1>
 <p >NMEA2000 is closed standard. You can buy documents for it for high price. As far as I have understood, then you also accept that you are not allowed to tell any third party about document contents. So all the information and experience I have has been collected from free documents and mostly from OpenSkipper project, which development I have been continued. So there may be errors on library. Anyway have tried to make it simple to use, but still giving “NMEA2000 compatibility”.</p>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 Relevant Classes</h2>
-<h3><a class="anchor" id="autotoc_md22"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Abstract base class tNMEA2000</h3>
 <p >The <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class contains functions for NMEA2000 handling like e.g. sending and reading messages. This is purely an abstract class and to use a real device you must use an appropriate inherited class. Normally you use functions within this class.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
+<h3><a class="anchor" id="autotoc_md24"></a>
 Abstract base class tNMEA2000::tMsgHandler</h3>
 <p >Inherit this class for your own message handler. When new message arrives, all attached handlers, which matches message PGN, will be called by ParseMessages. You can define this handler for single PGN or for all by setting PGN for base class to 0. You can also attach and detach class handler from <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object.</p>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Inherited classes according to your Board</h3>
 <p >There are own inherited class for each CAN interface type. As described below e.g. for Arduino Due you use due_can and NMEA2000_due libraries. Since Arduino IDE 1.6.6 it has been possible to include libraries within other headers, so to use any of currently tested board you can simply add includes</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span></div>
 <div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a></div><div class="ttdoc">Automatic library selection according to the selected board.</div></div>
-</div><!-- fragment --><p >So the "#include &lt;NMEA2000_CAN.h&gt;" will then automatically select right library according to the board you have selected on IDE (see <a class="el" href="_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf">USE_N2K_CAN</a>). If you want strictly control includes or the board will not be right selected by <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>, use includes described on each inherited class or force selection with define before include. E.g.</p>
+</div><!-- fragment --><p >"#include &lt;NMEA2000_CAN.h&gt;" will then automatically select right library according to the board you have selected on IDE (see <a class="el" href="_n_m_e_a2000___c_a_n_8h.html#aa4d481d7c4c5a9f3a5be9424619b1acf">USE_N2K_CAN</a>). If you want strictly control includes or the board will not be selected right by <a class="el" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board.">NMEA2000_CAN.h</a>, use includes described on each inherited class or force selection with define before include. E.g.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#define USE_N2K_CAN 1  </span><span class="comment">// Force mcp_can</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&quot;</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Alle the inherit classes come along with the library according to your hardware setup. see <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></dd></dl>
-<h4><a class="anchor" id="autotoc_md25"></a>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You need to download hardware specific inherit classes separately. See <a class="el" href="get_started.html#secHWlib">Hardware depended libraries</a></dd></dl>
+<h4><a class="anchor" id="autotoc_md26"></a>
 Inherited class tNMEA2000_mcp</h4>
 <p >The tNMEA2000_mcp is class for using library with CANBUS shield or according to schematic <a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoMega_CAN_with_MCP2515_MCP2551.pdf">ArduinoMega_CAN_with_MCP2515_MCP2551.pdf</a>, which I have made for sample. <br  />
  To use this class, you need to include in your project beginning:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;SPI.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;mcp_can.h&gt;</span> </div>
-<div class="line"><span class="preprocessor">#include &quot;NMEA2000_mcp.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_mcp.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#define N2k_SPI_CS_PIN 53  </span><span class="comment">// Pin for SPI Can Select</span></div>
 <div class="line"><span class="preprocessor">#define N2k_CAN_INT_PIN 21 </span><span class="comment">// Use interrupt  and it is connected to pin 21</span></div>
 <div class="line">tNMEA2000_mcp <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>(<a class="code hl_define" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>);</div>
 <div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a3b620e8c35e1d4fb1ca29b5e07954650"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a></div><div class="ttdeci">#define N2k_SPI_CS_PIN</div><div class="ttdoc">Definition of the SPI ChipSelectPin for the CAN Transceiver This defines the the I/O Pin uses for the...</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00325">NMEA2000_CAN.h:325</a></div></div>
+</div><!-- fragment --><p> If you use automatic library selection, you need to any define CS pin (default 53) and interrupt pin (default 21), if they differ from defaults.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#define N2k_SPI_CS_PIN 52  </span><span class="comment">// Pin for SPI Can Select</span></div>
+<div class="line"><span class="preprocessor">#define N2k_CAN_INT_PIN 10 </span><span class="comment">// Use interrupt  and it is connected to pin 21</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span></div>
 </div><!-- fragment --><p >You can find the mcp_can library from <a href="https://github.com/ttlappalainen/CAN_BUS_Shield/archive/master.zip.">https://github.com/ttlappalainen/CAN_BUS_Shield/archive/master.zip.</a> Originally it was developed by SeedStudio <a href="https://github.com/Seeed-Studio/CAN_BUS_Shield">https://github.com/Seeed-Studio/CAN_BUS_Shield</a>. That library was last merged 18.09.2017. I have not yet tested changes after that.</p>
-<h4><a class="anchor" id="autotoc_md26"></a>
+<h4><a class="anchor" id="autotoc_md27"></a>
 Inherited class tNMEA2000_due</h4>
 <p >The tNMEA2000_due class is for using library with Arduino Due, which has internal can bus controller. I personally prefer this board, since it is more powerful. It also has separate USB port. Also the physical interface to the bus is simpler. You can find sample schematic on <a href="https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoDUE_CAN_with_MCP2562.pdf">ArduinoDUE_CAN_with_MCP2562.pdf</a>. <br  />
  To use this class, you need to include in your project beginning:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;due_can.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;NMEA2000_due.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;NMEA2000_due.h&gt;</span></div>
 <div class="line">tNMEA2000_due <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
 </div><!-- fragment --><p >You can find the due_can library from <a href="https://github.com/ttlappalainen/due_can">due_can</a>. That had been originally forked from <a href="https://github.com/collin80/due_can">https://github.com/collin80/due_can</a>, but Collin library has some changes I have not tested.</p>
-<h4><a class="anchor" id="autotoc_md27"></a>
+<h4><a class="anchor" id="autotoc_md28"></a>
 Inherited class tNMEA2000_teensy</h4>
 <p >The tNMEA2000_teensy class is for using library with Teensy 3.2, 3.5, 3.6 boards, which has internal can bus controller. Physical interface is similar as with Arduino Due. <br  />
  To use this class, you need to include in your project beginning:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;NMEA2000_teensy.h&quot;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;NMEA2000_teensy.h&gt;</span></div>
 <div class="line">tNMEA2000_teensy <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md29"></a>
+Inherited class tNMEA2000_Teensyx</h4>
+<p >The tNMEA2000_Teensyx class is for using library with Teensy 3.2, 3.5, 3.6, 4.0, 4.1 boards, which has internal can bus controller. Physical interface is similar as with Arduino Due. <br  />
+ To use this class, you need to include in your project beginning:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;NMEA2000_Teensyx.h&gt;</span></div>
+<div class="line">tNMEA2000_teensy <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
+</div><!-- fragment --><p >At the moment automatic automatic library selection uses as default NMEA2000_teensy.h for Teensy 3.2, 3.5, 3.6. NMEA2000_Teensyx works reliably with old boards too so you can force it for automatic library selection</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X </span><span class="comment">// Force NMEA2000_TEENSYX also for Teensy 3.x boards</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md30"></a>
 Inherited class tNMEA2000_esp32</h4>
 <p >The tNMEA2000_esp32 class is for using library with ESP32 based boards, which has internal can bus controller. Physical interface is similar as with Arduino Due or Teensy. <br  />
  To use this class, you need to include in your project beginning:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;NMEA2000_esp32.h&quot;</span></div>
 <div class="line">tNMEA2000_esp32 <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md29"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md31"></a>
 Inherited class tNMEA2000_avr</h4>
 <p >The tNMEA2000_teensy class is for using library avr based boards. I have not yet experience of them, but thomasonw uses them. To use this class, you need to include in your project beginning:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;NMEA2000_avr.h&quot;</span></div>
 <div class="line">tNMEA2000_avr <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md30"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md32"></a>
 Message container class tN2kMsg</h3>
 <p >This is the class for containing N2k (PGN) message. It contains pure data and functions to handle it. At least for now there is no automated system, which could you easily fill or read data for specific PGN. You have to know the PGN information fields like for NMEA0183 data fields. I and other developers have written functions, which has been defined on <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>, which helps you the fill or read data on <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> object. <br  />
 </p>
 <p >As in example TemperatureMonitor you send PGN 130312 (Temperature) message with simple code:</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classt_n2k_msg.html">tN2kMsg</a> N2kMsg;</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_function" href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a>(N2kMsg, 1, 1, <a class="code hl_enumvalue" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kts_MainCabinTemperature</a>, ReadCabinTemp());</div>
+<div class="line"><a class="code hl_function" href="group__group__msg_set_up.html#gaa330e786a6c3fab01b7ee8d8610d2159">SetN2kTemperature</a>(N2kMsg, 1, 1, <a class="code hl_enumvalue" href="_n2k_types_8h.html#ga8a1e9646b80c46fb414fa44bcfdca828a5b4a39860846300b35236f6b2ddc13ce">N2kts_MainCabinTemperature</a>, <a class="code hl_function" href="_temperature_monitor_8ino.html#a8c0bad38ce2f1d15032eb32fd5e9ca51">ReadCabinTemp</a>());</div>
 <div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b">SendMsg</a>(N2kMsg);</div>
 <div class="ttc" id="aclasst_n2k_msg_html"><div class="ttname"><a href="classt_n2k_msg.html">tN2kMsg</a></div><div class="ttdoc">This class contains all the data of an NMEA2000 message.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_msg_8h_source.html#l00655">N2kMsg.h:656</a></div></div>
 <div class="ttc" id="aclasst_n_m_e_a2000_html_a6d2b2e0ffd57aca912cda44e868cd25b"><div class="ttname"><a href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b">tNMEA2000::SendMsg</a></div><div class="ttdeci">bool SendMsg(const tN2kMsg &amp;N2kMsg, int DeviceIndex=0)</div><div class="ttdoc">Send a N2k message to the bus.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01433">NMEA2000.cpp:1433</a></div></div>
@@ -423,55 +410,59 @@ Message container class tN2kMsg</h3>
 </dd>
 <dd>
 If you need something, which is not already on <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>, I’ll add it there or if you are familiar with NMEA 2000 message structures and Github, you can fork library and add it yourself. So then it is available for anybody.</dd></dl>
-<h3><a class="anchor" id="autotoc_md31"></a>
+<h3><a class="anchor" id="autotoc_md33"></a>
 Group function (PGN 126208) handler class tN2kGroupFunctionHandler</h3>
 <p >NMEA 2000 definition requires than devices should respond group function messages. This class is default handler, which simply responds “unsupported” for all queries. <br  />
  see <a class="el" href="classt_n2k_group_function_handler.html">tN2kGroupFunctionHandler</a></p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>More Details in documentation needed here ....</dd></dl>
-<h3><a class="anchor" id="autotoc_md32"></a>
-Inherited group function handler tN2kGroupFunctionHandlerForPGN60928</h3>
-<p >This class handles mandatory group function requests and commands for PGN 60928. <br  />
- see <a class="el" href="classt_n2k_group_function_handler_for_p_g_n60928.html">tN2kGroupFunctionHandlerForPGN60928</a></p>
-<h3><a class="anchor" id="autotoc_md33"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
 Device list collector class tN2kDeviceList</h3>
-<p >This class can be used to read devices on the connected NMEA 2000 bus. When class has been attached to <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object, it will automatically collect and update information of devices on the bus. On the NMEA 2000 bus all devices (also called nodes) has own source address. This source can change e.g. when new devices will be added. In principle on steady system also source will be same. The safer way is to use device “Name” which should be unique. So if you e.g. have two speed logs and you want to specify the one you want to use, you can use <a class="el" href="classt_n2k_device_list.html" title="class thats holding a list of all devices on the bus">tN2kDeviceList</a> class to search source address for specified name and then read log messages from that source.</p>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<p >This class can be used to read devices on the connected NMEA 2000 bus. When class has been attached to <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object, it will automatically collect and update information of devices on the bus. On the NMEA 2000 bus all devices (also called nodes) has own source address. The source addressmay be changed due to <a class="el" href="md_7_glossary.html#secRefTermAddressClaiming">address claiming</a> on power up or when new device will be added to the bus. For this reason source address can not be used as only filter for similar messages like position data. By using <a class="el" href="classt_n2k_device_list.html" title="Helper class to keep track of all devices on the bus.">tN2kDeviceList</a> source address related to <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a> can be easily found at any time with <a class="el" href="classt_n2k_device_list.html" title="Helper class to keep track of all devices on the bus.">tN2kDeviceList</a> functions.</p>
+<p >In principle on steady system source will stay unchanged. The safer way is to use device <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a> which should be unique. So if you e.g., have two speed logs and you want to specify the one you want to use, you can use <a class="el" href="classt_n2k_device_list.html" title="Helper class to keep track of all devices on the bus.">tN2kDeviceList</a> class to search source address for specified NAME and then read log messages from that source.</p>
+<p >See also example <a class="el" href="_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList.">DeviceAnalyzer.ino</a>.</p>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Using tNMEA2000</h2>
-<p >There are several examples for using library with different functions like for only listen bus data (ActisenseListener.ino), sending temperature (TemperatureMonitor.ino) or wind data (WindMonitor.ino) from your own sources or displaying bus data somehow (DisplayData.ino and DisplayData2.ino). With combination of those or adding NMEA0183 library functions, you can have full control for your N2k bus information. I have already own device, which reads data from old NMEA0183 devices and forwards it to the N2k bus, but same device also forwards data from bus to the PC. It also listens on input pin – MOB and when that is activated, it will start to send route information back to the activation position. I have also temperature and fuel consumption monitors to the N2k bus. <br  />
- So below is short description of member functions, which hopefully gives you better knowledge why something has been used on samples.</p>
-<h3><a class="anchor" id="autotoc_md35"></a>
+<p >There are several examples for using library with different functions like for only listen bus data (ActisenseListener.ino), sending temperature (<a class="el" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus.">TemperatureMonitor.ino</a>) or wind data (<a class="el" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus.">WindMonitor.ino</a>) from your own sources or displaying bus data somehow (DisplayData.ino and DisplayData2.ino).</p>
+<p >Library core has all functionalities to communicate with NMEA2000 bus and <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a> has simple functions to read and set most common messages. And you can add own modules to support missing messages. Rest is up to your imagination.</p>
+<p >Below is short description of member functions, which hopefully gives you better knowledge why something has been used on samples.</p>
+<h3><a class="anchor" id="autotoc_md36"></a>
 Device modes</h3>
-<p >In principle all devices should act as node on N2k bus. But if you are only reading messages on bus, why to tell anybody. So I have defined different modes how <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class behaves.</p>
-<h4><a class="anchor" id="autotoc_md36"></a>
+<p >NMEA2000 defines that all devices should act as node on N2k bus. But if you are only reading messages on bus, why to tell anybody. So I have defined different modes how <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class behaves.</p>
+<h4><a class="anchor" id="autotoc_md37"></a>
 tNMEA2000::N2km_ListenOnly</h4>
 <p >This is default mode. The device simply listens data from bus and forwards it to the forward stream. Look example ActisenseListener, you need only 20 line for making device to read data on N2k bus. <br  />
- Also if you like to make a device, which displays some data on bus on e.g. TFT display, you can use this mode. There is simple example DataDisplay for that.</p>
-<h4><a class="anchor" id="autotoc_md37"></a>
-tNMEA2000::N2km_NodeOnly</h4>
-<p >In this mode device will only send data to the N2k bus. I also automatically informs itself to other devices on the bus and does required address claiming automatically. The device does not send as default anything to any forward stream. <br  />
- Use this mode for device, which simply e.g. reads data from analog or digital input or NMEA0183 bus and sends it to the N2k bus. Look example TemperatureMonitor.</p>
+ Also if you like to make a device, which displays some data on bus on e.g. TFT display, you can use this mode. There is simple example DataDisplay.ino for that.</p>
 <h4><a class="anchor" id="autotoc_md38"></a>
+tNMEA2000::N2km_NodeOnly</h4>
+<p >In this mode device will only send data to the N2k bus. I also automatically informs itself to other devices on the bus and does required operations automatically. The device does not send as default anything to any forward stream. Use this mode for device, which simply e.g. reads data from analog or digital input or NMEA0183 bus and sends it to the N2k bus. Look example <a class="el" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus.">TemperatureMonitor.ino</a>.</p>
+<h4><a class="anchor" id="autotoc_md39"></a>
 tNMEA2000::N2km_ListenAndNode</h4>
 <p >In this mode device works fully to both directions. It also forwards all data from bus to the forward stream, which you can define with function <a class="el" href="classt_n_m_e_a2000.html#a2d9e7390622f0aaa3dd96e753d0f3ab7">tNMEA2000::SetForwardStream</a>.</p>
-<h4><a class="anchor" id="autotoc_md39"></a>
+<h4><a class="anchor" id="autotoc_md40"></a>
 tNMEA2000::N2km_SendOnly</h4>
 <p >In this mode it is like <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a>, but it does not do automatic address claiming and does not forward any messages from N2k bus to stream. So this is useful, if you e.g. have some control pair like autopilot keypad/”control unit” and you want to fool that keypad sends something to the “control unit”. Then you also need to know also source addresses of keypad and “control unit”. <br  />
  I have used this mode e.g. with example ActisenseSender and my NMEA Simulator found on <a href="http://www.kave.fi/Apps/">http://www.kave.fi/Apps/</a> .</p>
-<h4><a class="anchor" id="autotoc_md40"></a>
+<h4><a class="anchor" id="autotoc_md41"></a>
 tNMEA2000::N2km_ListenAndSend</h4>
 <p >This is like the <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0c676880a1c854d91830e5e78415a3e">tNMEA2000::N2km_SendOnly</a> mode, but it also forwards messages from N2k bus to the stream. In this mode one can have invisible gateway device between computer and N2k bus. This mode can be used e.g. if one has a PC application, which is capable to read and send messages in Actisense format to serial port. I have used this mode with example TeensyActisenseListenerSender and Actisense NMEA Reader and NMEA Simulator.</p>
-<h3><a class="anchor" id="autotoc_md41"></a>
+<h3><a class="anchor" id="secMessageforwarding"></a>
 Message forwarding</h3>
-<p >Normally on N2k bus a device either shows data from bus (MFD devices) or sends data to the bus (wind, GPS, temperature etc.). With this library you can also get messages forwarded to the stream. In listen mode, the device will read all messages from N2k bus and forwards all messages to the ForwardStream. For forwarding you have to define a forward stream with function <a class="el" href="classt_n_m_e_a2000.html#a2d9e7390622f0aaa3dd96e753d0f3ab7">tNMEA2000::SetForwardStream</a>. Of course you also need to open a stream first e.g. with Serial.begin(115200); <br  />
+<p >Normally on N2k bus a device either shows data from bus (MFD devices) or sends data to the bus (wind, GPS, temperature etc.). With this library you can also get messages forwarded to the stream. In listen mode, the device will read all messages from N2k bus and forwards them to the ForwardStream. For forwarding you have to define a forward stream with function <a class="el" href="classt_n_m_e_a2000.html#a2d9e7390622f0aaa3dd96e753d0f3ab7">tNMEA2000::SetForwardStream</a>. Of course you also need to open a stream first e.g. with Serial.begin(115200); <br  />
  Messages will be forwarded as default in Actisense format. This is supported by at least some PC chart plotter applications. With default format Actisence “NMEA Reader”, which we used on sample, you can show message data. A better visualizer is OpenSkipper, on which you can tailor your own displays. <br  />
 </p>
-<dl class="section note"><dt>Note</dt><dd>Default own messages send with <a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000.SendMsg</a> will be forwarded even when your device has been set to node only mode. This may disturb your developing, if you e.g. want to write own clear text messages within your code. You can disable that by either:</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>As default own messages send with <a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000::SendMsg</a> will be forwarded even when your device has been set to node only mode. This may disturb your developing, if you e.g. want to write own clear text messages within your code. You can disable that by either:</dd></dl>
 <ul>
 <li>tNMEA2000::EnableForward(false) to disable forwarding totally</li>
 <li>tNMEA2000::SetForwardOwnMessages(false) to disable own messages. But then, if your device is in listen mode, it will still forward messages from bus.</li>
-<li>tNMEA2000::SetForwardOnlyKnownMessages(true) to define that only known messages will be forwarded. The known messages are system messages and listed single frame or fast packet messages. See also <a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a> and <a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</li>
+<li>tNMEA2000::SetForwardOnlyKnownMessages(true) to define that only known messages will be forwarded. The known messages are system messages and listed single frame or fast packet messages. <dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md42"></a>
+</dd></dl>
+</li>
+</ul>
+<h3><a class="anchor" id="descDebugMode"></a>
 Debug mode</h3>
 <p >Debug mode is as default set to <a class="el" href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06ab353e783fc41310b95e0f58cf43450f1">tNMEA2000::dm_None</a>. In other debug modes device will not send anything to the N2k bus. Debug mode <a class="el" href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06a12a7a411e04a7856600454ad61ede1cc">tNMEA2000::dm_Actisense</a> is usefull, if you do not have board with internal CAN bus controller, because in that mode it does not try to open CAN bus during sending message. Instead it simply writes message to the forward stream, which you can read e.g. with “NMEA Reader” and see that your device is sending message right. <br  />
 </p>
@@ -479,200 +470,664 @@ Debug mode</h3>
 </p>
 <h3><a class="anchor" id="descMultiDeviceSupport"></a>
 Multi device support</h3>
-<p >In NMEA 2000 bus you have devices or also called nodes. Normally each physical device is one device on the bus. I have not seen any requirement that a device could not serve as engine information (device class 50 – propulsion) or sensor information (device class 75 - Sensor Communication Interface) interface at same time and just use device class 25 (Inter/Intranetwork Device) and function 132 (Analog to NMEA 2000 Gateway). Anyway I just noticed that e.g. B&amp;G Vulcan 7 chartplotter acts as multi device. I do not know are these devices different chips inside Vulcan or are they within same code as my multi device. <br  />
- If you like show different functions as own device on the bus, you can do that with multi device support. All you need to do is to first set device count (see SetDeviceCount), set device and product information for each device and on sending messages use right device index. See example MultiDevice.</p>
+<p >In NMEA 2000 bus you have devices or also called nodes. Normally each physical device is one device on the bus. I have not seen any requirement that a device could not serve as engine information (device class 50 – propulsion) or sensor information (device class 75 - Sensor Communication Interface) interface at same time and just use device class 25 (Inter/Intranetwork Device) and function 132 (Analog to NMEA 2000 Gateway). Anyway I have found that e.g. B&amp;G Vulcan 7 chartplotter acts as multi device. I do not know are these devices different chips inside Vulcan or are they within same code as my multi device. <br  />
+ If you like show different functions as own device on the bus, you can do that with multi device support. All you need to do is to first set device count (see <a class="el" href="classt_n_m_e_a2000.html#afaee7e8972200217c229b7d471175562" title="Set the count of devices library shows on bus.">tNMEA2000::SetDeviceCount</a>), set device and product information for each device and on sending messages use right device index. See example MultiDevice.</p>
+<h3><a class="anchor" id="descRunningLibrary"></a>
+Running library</h3>
+<p >Library has been designed to work without need for multitasking system. After setup it is critical to call <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages</a> in loop as fast as possible. By that call library handles many basic required features like address claiming, responding to system requests, heartbeat sending etc.</p>
+<p >Fast loop requirement means that you are not allowed to use any delay on your loop or any other library using delay or blocking read. Delays withing loop in worst case causes that other devices on your NMEA2000 bus drops your device from the list and then pops it up again. If you have e.g., configured your MFD to show temperature from your device, it may appear and disappear on the screen.</p>
+<p >A practice has shown that random 10-50 ms delay is acceptable. In average loop time should be less than 2 ms. Also it is important that if you can have up 50 ms random delay, you may get in burst up to 90 frames (=1800 frames/s *0.05 s) during that time. This means that if your receive frame buffer is smaller, your device may loose some critical system messages. In small boat this amount is a bit theory, but anyway there are a lot of large messages just from GPS system so that they may occur time to time at same time. So it is better to prepare your device work in nearly any condition.</p>
+<h4><a class="anchor" id="autotoc_md42"></a>
+Some timing examples</h4>
+<p >If you use DallasTemperature library as default you may block loop up to 700 ms. By using it "asynchronously", delays are smaller and may be acceptable. Best solution would be to use some kind of hardware based library like esp32-owb for ESP32.</p>
+<p >Some ADC libraries blocks loop during conversion, which may be 200-400 ms for high resolution ADC with averaging. ADC:s should be always used so that conversion will be started and then quickly checked, when conversion is ready. Even better if you know conversion time and check it after you expect it should be ready.</p>
+<p >Some displays are very slow for writing. Writing some text may take 100 ms causing too long delay and problems with bus. Depending of library, it may also have some kind of buffering to get write request and flag, when it has been finished without blocking call. If there is not, it is often possible write own higher level buffering, which finally writes to display letter by letter and so spent only short time on each call.</p>
+<p >With serial line use always available and availableForWrite features to avoid blocking. Also it helps if you can define bigger harware buffers.</p>
+<p >In multitasking system someone had defined <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages</a> task time to 100 ms. I do not wonder, if there will random strange problems with that device. 1 ms task time would be acceptable.</p>
+<h4><a class="anchor" id="descSystemMessages"></a>
+System messages and library internal functionality</h4>
+<p >Library has been designed to do automatically as many required features as possible. In this way user can concentrate to his own code and does not need to know everything about NMEA2000 low level. There is several system messages, which are handled automatically and user does not need to take care of.</p>
+<ul>
+<li>PGN 59392 ISO Acknowledgement.<ul>
+<li>Library responds with NAK for unhandled requests.</li>
+</ul>
+</li>
+<li>PGN 59904 ISO Request.<ul>
+<li>Library handles ISO request for system messages.</li>
+<li>For other messages library calls ISORequestHandler. See <a class="el" href="classt_n_m_e_a2000.html#a1a3c14ee0a90bcdee2c2d8446db00805" title="Set the message handler for incoming ISO Requests.">tNMEA2000::SetISORqstHandler</a>.</li>
+</ul>
+</li>
+<li>PGN 60928 ISO Address Claim.<ul>
+<li>Library starts address claiming procedure automatically and handles it completely.</li>
+<li>Library responds as required to others address claiming, if necessary. See also <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged</a>.</li>
+<li>Library handles normal requests and group function requests to change device or system instances. See also <a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24" title="Check if this device has changed its DeviceInstances or SystemInstance.">tNMEA2000::ReadResetDeviceInformationChanged</a>.</li>
+<li>If you need to track devices on the bus e.g., to tie some message to specific device there is automatic module <a class="el" href="classt_n2k_device_list.html" title="Helper class to keep track of all devices on the bus.">tN2kDeviceList</a> to do work for you.</li>
+</ul>
+</li>
+<li>PGN 60416 and PGN 60160 ISO Transport Protocol messages.<ul>
+<li>Library hadles automatically message sending and receiving with ISO TP.</li>
+</ul>
+</li>
+<li>PGN 126208 Group Function message.<ul>
+<li>Library does default handling for system messages.</li>
+<li>For other messages library forwards handling to class inherited from <a class="el" href="classt_n2k_group_function_handler.html" title="Base handler class for Group Functions.">tN2kGroupFunctionHandler</a>. See <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler</a>.</li>
+</ul>
+</li>
+<li>PGN 126464 Receive/Transmit PGN list.<ul>
+<li>Library responds automatically for requested PGN lists. User has to take care that own PGNs has been declared at startup with <a class="el" href="classt_n_m_e_a2000.html#a9f00a2ef1a2e923506133a208bcbcbae" title="Send a list with all supported Transmit messages.">tNMEA2000::SendTxPGNList</a> and <a class="el" href="classt_n_m_e_a2000.html#a9a6499c7ff0814d3a7d74e55874ee379" title="Send a list with all supported Receive messages.">tNMEA2000::SendRxPGNList</a>.</li>
+</ul>
+</li>
+<li>PGN 126993 Heartbeat.<ul>
+<li>Library takes care of heartbeat sending.</li>
+<li>Library also takes care of heartbeat offset/period change requests.</li>
+</ul>
+</li>
+<li>PGN 126996 Product information.<ul>
+<li>Library responds automatically to product information requests. User has to setup product information at device start with <a class="el" href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76" title="Set the Product Information of this device.">tNMEA2000::SetProductInformation</a>.</li>
+</ul>
+</li>
+<li>PGN 126998 Configuration information.<ul>
+<li>Library responds automatically to configuration information requests. User has to setup configuration information at device start with <a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb" title="Set the Configuration Information of this device.">tNMEA2000::SetConfigurationInformation</a>.</li>
+<li>Library also updates Installation Description 1 and 2 on request. See also <a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a" title="Check if this device has changed its Install Description.">tNMEA2000::ReadResetInstallationDescriptionChanged</a>.</li>
+</ul>
+</li>
+</ul>
 <h3><a class="anchor" id="autotoc_md43"></a>
 Member functions</h3>
-<h4><a class="anchor" id="autotoc_md44"></a>
-SetDeviceCount</h4>
-<p >With this function you can enable multi device support. As default there is only one device.</p>
-<dl class="section note"><dt>Note</dt><dd>To enable multi device support, you need to call this before any other <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class function.</dd></dl>
-<h4><a class="anchor" id="autotoc_md45"></a>
-SetN2kCANMsgBufSize</h4>
-<p >With this function you can set size of buffer, where system stores incoming messages. The default size is 5 messages. <br  />
- Some messages are just single frame messages and they will be read in and handled immediately on call to ParseMessages. For multi framed fast packet messages there is no guarantee that all frames will arrive in order. So these messages will be buffered and saved until all frames has been received. If it is not critical to handle all fast packet messages like with N2km_NodeOnly, you can set buffer size smaller like 3 or 2 by calling this before open.</p>
-<h4><a class="anchor" id="autotoc_md46"></a>
-SetN2kCANSendFrameBufSize</h4>
-<p >With this function you can set size of buffer, where system saves frames of messages to be sent. The default size is 40 frames so totally 320 bytes. Call this before any device related function like SetProductInformation. <br  />
- When sending long messages like ProductInformation or GNSS data, there may not be enough low level buffers for sending data successfully. This depends of your hw and device source. Device source has an effect due to priority of getting sending slot on low level device. If your data is critical, use a buffer size, which is large enough. <br  />
- E.g. Product information takes totally 134 bytes. This needs 20 frames. GNSS contains 47 bytes, which needs 7 frames. If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size.</p>
-<h4><a class="anchor" id="autotoc_md47"></a>
-SetProductInformation</h4>
-<p >If you are using device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> or <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>, it would be good that you set this information. With this you can set how e.g. Multi Function Displays (MFD) will show your device information. This is not critical, but nice to have it right. See example TemperatureMonitor.ino.</p>
-<h4><a class="anchor" id="autotoc_md48"></a>
-SetDeviceInformation</h4>
-<p >If you are using device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> or <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>, it is critical that you set this information.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md45"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76" title="Set the Product Information of this device.">tNMEA2000::SetProductInformation</a></h5>
+<p >Set the Product Information of this device. With this function you define how your device will show up for other devices on NMEA2000 bus.</p>
+<p >Define your product information. Defaults will be set on initialization. For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers. LoadEquivalency is multiplication of 50 mA, what your device will take power from NMEA2000 bus. E.g. for Arduino only it can be 1 (=50mA). If your device does not take power from bus, set this to 0.</p>
+<p >If you use device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a4cd03ae74ee5aa6a957d14c523af52d4">tNMEA2000::N2km_ListenOnly</a> or <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6af7e9ed093b1332630ad82fb17f87588d">tNMEA2000::N2km_ListenAndSend</a>, function does not have effect.</p>
+<dl class="section note"><dt>Note</dt><dd>Serial code has length of 32 so just long enough to carry GUID.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_ModelSerialCode</td><td>Default="00000001". Max 32 chars. Manufacturer's Model serial code </td></tr>
+    <tr><td class="paramname">_ProductCode</td><td>Default=666. Manufacturer's product code. For certified devices this number will be given by NMEA organization. </td></tr>
+    <tr><td class="paramname">_ModelID</td><td>Default="Arduino N2k-&gt;PC". Max 33 chars. Manufacturer's Model ID </td></tr>
+    <tr><td class="paramname">_SwCode</td><td>Default="1.0.0.0". Max 40 chars. Manufacturer's software version code </td></tr>
+    <tr><td class="paramname">_ModelVersion</td><td>Default="1.0.0". Max 24 chars. Manufacturer's Model version </td></tr>
+    <tr><td class="paramname">_LoadEquivalency</td><td>Default=1. x * 50 mA </td></tr>
+    <tr><td class="paramname">_N2kVersion</td><td>Default=2101 </td></tr>
+    <tr><td class="paramname">_CertificationLevel</td><td>Default=1 </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md47"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5" title="Set the Device Information. See also NAME.">tNMEA2000::SetDeviceInformation</a></h5>
+<p >Set the Device Information. See also <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a>. If you use device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> or <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>, it is critical that you set this information.</p>
+<p >Device information will be used to choose right address for your device (also called node) on the bus. Each device must have an own address. Library will do this automatically, so it is enough that you call this function on setup to define your device.</p>
+<p >For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.</p>
 <dl class="section note"><dt>Note</dt><dd>You should set information so that it is unique over the world! Well if you are making device only for your own yacht N2k bus, it is enough to be unique there. So e.g. if you have two temperature monitors made by this library, you have to set at least first parameter UniqueNumber different for both of them. <br  />
 </dd></dl>
-<p>Device information will be used to choose right address for your device (also called node) on the bus. Each device must have an own address. Library will do this automatically, so it is enough that you call this function on setup to define your device.</p>
-<h4><a class="anchor" id="autotoc_md49"></a>
-SetDeviceInformationInstances</h4>
-<p >With this function you can set device instance lower, device instance upper and system instance values.</p>
-<h4><a class="anchor" id="autotoc_md50"></a>
-GetDeviceInformation</h4>
-<p >With this function you can read current device information. Normally device information contains what you have set during initializing with SetDeviceInformation and SetDeviceInformationInstances functions.</p>
-<dl class="section note"><dt>Note</dt><dd>device information instances can be changed by the NMEA 2000 group function by e.g. using system configuration device. So you should time to time check if they have changed and save changed data to e.g. EEPROM for use on startup. <br  />
+<p>I just decided to use number below for ManufacturerCode as Open Source devices - this is not any number given by NMEA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_UniqueNumber</td><td>Default=1. 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number. </td></tr>
+    <tr><td class="paramname">_DeviceFunction</td><td>Default=130, PC Gateway. See codes on <a href="https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf">https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&amp;%20function%20codes%20v%202.00.pdf</a> </td></tr>
+    <tr><td class="paramname">_DeviceClass</td><td>Default=25, Inter/Intranetwork Device. See codes on <a href="https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf">https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&amp;%20function%20codes%20v%202.00.pdf</a> </td></tr>
+    <tr><td class="paramname">_ManufacturerCode</td><td>Default=2046. Maximum 2046. See the list of codes on <a href="https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf">https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf</a> </td></tr>
+    <tr><td class="paramname">_IndustryGroup</td><td>Default=4, Marine. </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md49"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances</a></h5>
+<p >Set the Device Information Instances. With this function you can set device instance lower, device instance upper and system instance values.</p>
+<p >For certified devices there is requirement that device instances can be externally changed. Library handles that as default, but developer has to take care that changed instances will be saved and restored on devices start.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24" title="Check if this device has changed its DeviceInstances or SystemInstance.">tNMEA2000::ReadResetDeviceInformationChanged</a></li>
+</ul>
 </dd></dl>
-<p>See <a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24">tNMEA2000::ReadResetDeviceInformationChanged</a></p>
-<h4><a class="anchor" id="autotoc_md51"></a>
-SetConfigurationInformation</h4>
-<p >With this function you can set configuration information, which will be saved on device RAM. As an alternative you can set configuration information saved on progmem with <a class="el" href="classt_n_m_e_a2000.html#aa81ac54c4a8899bc6ee29404a08fefb1">tNMEA2000::SetProgmemConfigurationInformation</a> <br  />
- Configuration information is just some extra information about device and manufacturer. Some MFDs shows it, some does not. E.g. NMEA Reader can show configuration information.</p>
-<h4><a class="anchor" id="autotoc_md52"></a>
-SetProgmemConfigurationInformation</h4>
-<p >With this function you can set configuration information, which will be saved on device program memory. See example BatteryMonitor.ino. <br  />
- As default system has build in configuration information on progmem. If you do not want to have configuration information at all, you can disable it by calling SetConfigurationInformation(0);</p>
-<h4><a class="anchor" id="autotoc_md53"></a>
-SetSingleFrameMessages</h4>
-<p >As a default library has a list of known messages. With this function user can override default list of single frame messages. See also <a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a>.</p>
-<h4><a class="anchor" id="autotoc_md54"></a>
-SetFastPacketMessages</h4>
-<p >As a default library has a list of known messages. With this function user can override default list of fast packet messages. See also <a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>If an incoming fast packet message is not known, it will be treated as single frame message. So if you want to handle unknown fast packet message, you need to duplicate frame collection logic from library to your code. So it is easier to have fast packet messages listed on library, if you want to handle them.</dd></dl>
-<h4><a class="anchor" id="autotoc_md55"></a>
-ExtendSingleFrameMessages</h4>
-<p >As a default library has a list of known messages. With this function user can add own list of known single frame messages.</p>
-<dl class="section note"><dt>Note</dt><dd>Subsequent calls will overwrite the previously set list</dd></dl>
-<h4><a class="anchor" id="autotoc_md56"></a>
-ExtendFastPacketMessages</h4>
-<p >As a default library has a list of known messages. With this function user can add own list of known fast packet messages.</p>
-<dl class="section note"><dt>Note</dt><dd>Currently subsequent calls will override previously set list. <br  />
-</dd>
-<dd>
-If an incoming fast packet message is not known, it will be treated as single frame message. So if you want to handle unknown fast packet message, you need to duplicate frame collection logic from library to your code. So it is easier to have fast packet messages listed on library, if you want to handle them.</dd></dl>
-<h4><a class="anchor" id="autotoc_md57"></a>
-ExtendTransmitMessages</h4>
-<p >System should respond to PGN 126464 request with messages the system transmits and receives. The library will automatically respond with system the messages it uses. With this method you can add messages, which your own code sends</p>
-<dl class="section note"><dt>Note</dt><dd>that this is valid only for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</dd></dl>
-<h4><a class="anchor" id="autotoc_md58"></a>
-ExtendReceiveMessages</h4>
-<p >Method is like <a class="el" href="classt_n_m_e_a2000.html#a086b323eef22300d02c9437686324902">tNMEA2000::ExtendTransmitMessages</a>, but extends messages you code handles.</p>
-<h4><a class="anchor" id="autotoc_md59"></a>
-SendIsoAddressClaim</h4>
-<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for address claiming.</p>
-<h4><a class="anchor" id="autotoc_md60"></a>
-SendProductInformation</h4>
-<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for providing product information.</p>
-<h4><a class="anchor" id="autotoc_md61"></a>
-SendConfigurationInformation</h4>
-<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for providing configuration information.</p>
-<h4><a class="anchor" id="autotoc_md62"></a>
-SetHeartbeatInterval</h4>
-<p >According to document <a href="https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf">20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf</a> all NMEA devices shall transmit heartbeat PGN 126993. With this function you can set transmission interval in ms (range 1000-655320 ms, default 60000). Set &lt;1000 to disable it. You can temporary change interval by setting SetAsDefault parameter to false. Then you can restore default interval with interval parameter value 0xfffffffe</p>
-<h4><a class="anchor" id="autotoc_md63"></a>
-GetHeartbeatInterval</h4>
-<p >Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found if a changed value should be saved for next startup or not like address.</p>
-<h4><a class="anchor" id="autotoc_md64"></a>
-SendHeartbeat</h4>
-<p >Library will automatically send heartbeat, if interval is &gt;0. You can also manually send it any time or force sent, if interval=0;</p>
-<h4><a class="anchor" id="autotoc_md65"></a>
-SetMode</h4>
-<p >With SetMode you can define how your node acts on N2k bus. See <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a> modes. With this function you can also set default address for your device. It is mandatory that once your device has been connected to the bus, it tries always use last used address. Due to address claiming, your device may change its address, when you add new devices to the bus. So you should save last used address to the e.g. EEPROM and on startup read it there and use it as parameter for SetMode. You can check if your address you set originally by SetMode has changed by using function <a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a> and you can read current address by function <a class="el" href="classt_n_m_e_a2000.html#a7e56a37f568be6dc1862eee512ded770">tNMEA2000::GetN2kSource</a>. <br  />
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_DeviceInstanceLower</td><td>0xff means no change </td></tr>
+    <tr><td class="paramname">_DeviceInstanceUpper</td><td><br  />
+ </td></tr>
+    <tr><td class="paramname">_SystemInstance</td><td><br  />
+ </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md51"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a254973b61424c1303c6f3c38dcabe9aa" title="Get the Device Information.">tNMEA2000::GetDeviceInformation</a></h5>
+<p >Get the Device Information. With this function you can read current device information. Normally device information contains what you have set during initializing with <a class="el" href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5">tNMEA2000::SetDeviceInformation</a> and <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335">tNMEA2000::SetDeviceInformationInstances</a> functions.</p>
+<dl class="section note"><dt>Note</dt><dd>Device information instances can be changed by the NMEA 2000 group function by e.g. using system configuration device. So you should time to time check if they have changed and save changed data to e.g. EEPROM for use on startup. <br  />
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24">tNMEA2000::ReadResetDeviceInformationChanged</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>const tDeviceInformation</dd></dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md53"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb" title="Set the Configuration Information of this device.">tNMEA2000::SetConfigurationInformation</a></h5>
+<p >Set the Configuration Information of this device. With this function you can set configuration information for your device.</p>
+<p >Configuration information contains some extra information about device installation and manufacturer. Some MFD shows it, some does not. NMEA Reader can show configuration information. InstallationDescription1 and InstallationDescription2 can be changed as default during runtime by NMEA 2000 group function commands. That can be done e.g. with NMEA Reader. <br  />
 </p>
-<p >So you could do next:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> setup() {</div>
+<dl class="section note"><dt>Note</dt><dd>You can disable configuration information by calling SetProgmemConfigurationInformation(0);</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a7db046fd7bc50a013a7931b1c3b0b0a5">tNMEA2000::GetInstallationDescription1</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#adefc5cb31bfa2f40e6b0145da501e366">tNMEA2000::GetInstallationDescription2</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a">tNMEA2000::ReadResetInstallationDescriptionChanged</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ManufacturerInformation</td><td>Buffer for Manufacturer information. Use e.g., company name and web address. </td></tr>
+    <tr><td class="paramname">InstallationDescription1</td><td>Buffer for Installation Description 1. Installation Description 1 and 2 may be used by device installer e.g., for location of physical device to help to find it. To handle externally updated Installation Description you should listen changes of them. See <a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a" title="Check if this device has changed its Install Description.">tNMEA2000::ReadResetInstallationDescriptionChanged</a> </td></tr>
+    <tr><td class="paramname">InstallationDescription2</td><td>Buffer for Installation Description 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md55"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#aa81ac54c4a8899bc6ee29404a08fefb1" title="Set the Configuration Information located on PROGMEM.">tNMEA2000::SetProgmemConfigurationInformation</a></h5>
+<p >Set the Configuration Information located on PROGMEM. With this function you can set configuration information, which will be saved on device program memory. See example BatteryMonitor.ino.</p>
+<p >This function is usefull only on MCUs with very small RAM. By using PROGMEM, indtallation description can not be changed by group function. <br  />
+</p>
+<p >As default system has build in configuration information on progmem. If you do not want to have configuration information at all, you can disable it by calling SetConfigurationInformation(0);</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ManufacturerInformation</td><td>Buffer for Manufacturer information </td></tr>
+    <tr><td class="paramname">InstallationDescription1</td><td>Buffer for Installation Description 1 </td></tr>
+    <tr><td class="paramname">InstallationDescription2</td><td>Buffer for Installation Description 2</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md57"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867" title="Set the library mode.">tNMEA2000::SetMode</a></h5>
+<p >Set the library mode. With SetMode you can define how your node acts on N2k bus. See <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a> modes.</p>
+<p >With this function you can also set default address for your device. It is mandatory that once your device has been connected to the bus, it tries always use last used address. Due to address claiming, your device may change its source address, when you add new devices to the bus. So you should save last used address to the e.g. EEPROM and on startup read it there and use it as parameter for SetMode. You can check if your address you set originally by SetMode has changed by using function <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a> and you can read current address by function <a class="el" href="classt_n_m_e_a2000.html#a7e56a37f568be6dc1862eee512ded770" title="Read address for current device.">tNMEA2000::GetN2kSource()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>Other than N2km_ListenOnly modes will automatically start initialization and address claim procedure.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_N2kMode</td><td>Mode for this node, see tN2kMode </td></tr>
+    <tr><td class="paramname">_N2kSource</td><td>Source address for this node</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Example how to init and save device source address.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a>() {</div>
 <div class="line">...</div>
 <div class="line">NMEA2000.SetMode(<a class="code hl_enumvalue" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a>,GetLastSavedN2kAddressFromEEPROM());</div>
 <div class="line">...</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">...</div>
-<div class="line">void loop() {</div>
-<div class="line">  SendN2kTemperature();</div>
+<div class="line">void <a class="code hl_function" href="_temperature_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop</a>() {</div>
+<div class="line">  <a class="code hl_function" href="_temperature_monitor_8ino.html#a0b1823a0c542414a27da4e142b7d7dff">SendN2kTemperature</a>();</div>
 <div class="line">  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d">ParseMessages</a>();</div>
 <div class="line">  <span class="keywordflow">if</span> (<a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4">ReadResetAddressChanged</a>() ) {</div>
 <div class="line">    SaveN2kAddressToEEPROM(GetN2kSource());</div>
 <div class="line">  }</div>
 <div class="line">}</div>
+<div class="ttc" id="a_temperature_monitor_8ino_html_a0b1823a0c542414a27da4e142b7d7dff"><div class="ttname"><a href="_temperature_monitor_8ino.html#a0b1823a0c542414a27da4e142b7d7dff">SendN2kTemperature</a></div><div class="ttdeci">void SendN2kTemperature()</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00097">TemperatureMonitor.ino:97</a></div></div>
+<div class="ttc" id="a_temperature_monitor_8ino_html_a4fc01d736fe50cf5b977f755b675f11d"><div class="ttname"><a href="_temperature_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a></div><div class="ttdeci">void setup()</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00048">TemperatureMonitor.ino:48</a></div></div>
+<div class="ttc" id="a_temperature_monitor_8ino_html_afe461d27b9c48d5921c00d521181f12f"><div class="ttname"><a href="_temperature_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop</a></div><div class="ttdeci">void loop()</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00081">TemperatureMonitor.ino:81</a></div></div>
 <div class="ttc" id="aclasst_n_m_e_a2000_html_a19d8850b16c1204911ada74c267a5f6d"><div class="ttname"><a href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d">tNMEA2000::ParseMessages</a></div><div class="ttdeci">void ParseMessages()</div><div class="ttdoc">Parse all incoming Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l02560">NMEA2000.cpp:2560</a></div></div>
-<div class="ttc" id="aclasst_n_m_e_a2000_html_a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18"><div class="ttname"><a href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a></div><div class="ttdeci">@ N2km_NodeOnly</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00684">NMEA2000.h:684</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18"><div class="ttname"><a href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a></div><div class="ttdeci">@ N2km_NodeOnly</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00683">NMEA2000.h:683</a></div></div>
 <div class="ttc" id="aclasst_n_m_e_a2000_html_ad0763a8d6bec7d9dee647e9a695206f4"><div class="ttname"><a href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4">tNMEA2000::ReadResetAddressChanged</a></div><div class="ttdeci">bool ReadResetAddressChanged()</div><div class="ttdoc">Check if this device has changed its address.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l02479">NMEA2000.cpp:2479</a></div></div>
-</div><!-- fragment --><p >See example TemperatureMonitor.ino.</p>
-<h4><a class="anchor" id="autotoc_md66"></a>
-SetForwardType</h4>
-<p >With this function user can set how messages will be forwarded to the stream. Possible values are:</p>
-<ul>
+</div><!-- fragment --><hr  />
+<p> <a class="anchor" id="autotoc_md59"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7" title="Extend the list of Transmitted Messages.">tNMEA2000::ExtendTransmitMessages</a></h5>
+<p >Extend the list of Transmitted Messages. Define list of extra PGNs, what your system will transmit. System messages will be automatically included. Pointers must be in PROGMEM</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="_temperature_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a>[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={130310L,130311L,130312L,0};</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7">ExtendTransmitMessages</a>(<a class="code hl_variable" href="_temperature_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a>);</div>
+<div class="ttc" id="a_n2k_def_8h_html_a75acaba9e781937468d0911423bc0c35"><div class="ttname"><a href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a></div><div class="ttdeci">#define PROGMEM</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_def_8h_source.html#l00045">N2kDef.h:45</a></div></div>
+<div class="ttc" id="a_temperature_monitor_8ino_html_a99a54e36714d9ab35490dc8f2e020d4f"><div class="ttname"><a href="_temperature_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a></div><div class="ttdeci">const unsigned long TransmitMessages[]</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00025">TemperatureMonitor.ino:25</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a6f875d0fcec2c5805d00fd44321a03f7"><div class="ttname"><a href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7">tNMEA2000::ExtendTransmitMessages</a></div><div class="ttdeci">void ExtendTransmitMessages(const unsigned long *_TransmitMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Transmitted Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01149">NMEA2000.cpp:1149</a></div></div>
+</div><!-- fragment --><p >System should respond to PGN 126464 request with messages the system transmits and receives. The library will automatically respond with system the messages it handles internally. With this method you can add messages, which your code will transmit.</p>
+<dl class="section note"><dt>Note</dt><dd>that this is valid only for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_TransmitMessages</td><td>Buffer holding list of extra PGNs device will transmit. </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md61"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a45ddd8fbf70df8de24e865c780c94284" title="Extend the list of Received Messages.">tNMEA2000::ExtendReceiveMessages</a></h5>
+<p >Extend the list of Received Messages. Define list of extra PGNs, what your system will handle. System messages will be automatically included. <br  />
+ Pointers must be in PROGMEM.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">unsigned</span> ReceivedMessages[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={130310L,130311L,130312L,0};</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a45ddd8fbf70df8de24e865c780c94284">ExtendReceiveMessages</a>(ReceivedMessages);</div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a45ddd8fbf70df8de24e865c780c94284"><div class="ttname"><a href="classt_n_m_e_a2000.html#a45ddd8fbf70df8de24e865c780c94284">tNMEA2000::ExtendReceiveMessages</a></div><div class="ttdeci">void ExtendReceiveMessages(const unsigned long *_ReceiveMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Received Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01156">NMEA2000.cpp:1156</a></div></div>
+</div><!-- fragment --><p >System should respond to PGN 126464 request with messages the system transmits and receives. The library will automatically respond with system the messages it uses. With this method you can add messages, which your own will handle.</p>
+<dl class="section note"><dt>Note</dt><dd>that this is valid only for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_ReceiveMessages</td><td>Buffer holding list of extra PGNs device will handle. </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md63"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e" title="Set OnOpen callback function.">tNMEA2000::SetOnOpen</a></h5>
+<p >Set OnOpen callback function. OnOpen will be called, when communication really opens and starts initial address claiming. You can use this to init your message sending to syncronize them with e.g., heartbeat.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md65"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000::SendMsg</a></h5>
+<p >Send a N2k message to the bus. When you want to send some message to the N2k bus, you call this. Before calling SendMsg() you have to prepare <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> type of message e.g. by using PGN specific function in <a class="el" href="_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.">N2kMessages.h</a>. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>As default <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object is as default in <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a4cd03ae74ee5aa6a957d14c523af52d4">tNMEA2000::N2km_ListenOnly</a> mode. So if you want to send messages, you have to set right mode in setup with <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867" title="Set the library mode.">tNMEA2000::SetMode()</a>.</dd></dl>
+<p>The function returns true, if the message was sent successfully, otherwise it return false. SendMsg may fail, if there is not room for message frames on sending buffer or device is not open. <br  />
+ SendMsg does not always send message immediately. If lower level sending function fails, SendMsg will buffer message frames and try to send them on next call to SendMsg or ParseMessages. So to have reliable sending, you need a sending buffer, which is large enough. <br  />
+</p>
+<p >See example <a class="el" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus.">TemperatureMonitor.ino</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object </td></tr>
+    <tr><td class="paramname">DeviceIndex</td><td>index of the device on Devices <br  />
+ Setting DeviceIndex to -1 forces library to use source address of N2kMsg instead of device source address. This is usefull with e.g., passthrough gateway devices. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Success </td></tr>
+    <tr><td class="paramname">false</td><td>Open has not finished. Address claiming has not finished. There is no more room on send buffer, which may be caused by too small send buffer or CAN controller can not sent messages bus.</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md67"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages</a></h5>
+<p >Parse all incoming Messages. You have to call this periodically on <a class="el" href="_temperature_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop()</a>to handle N2k messages, otherwise <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object will not work at all.</p>
+<dl class="section note"><dt>Note</dt><dd>Do not use delay() on your <a class="el" href="_temperature_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop()</a>. Also take care that any library you use does not use delay() internally.</dd></dl>
+<p>With NMEA2000 library you should use only nonblocking calls/libraries in your loop. Any library you use, should work asynchronously and not cause long delays on loop. Randomly caused 10-40 ms delays are acceptable. E.g., simple ADC conversion may block loop for 300 ms, which you will then see by other device dropping your device from the list.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="pg_lib_ref.html#descRunningLibrary">Running library</a>.</li>
+</ul>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Even if you only send e.g. temperature to the bus, you should call this so the node will automatically inform about itself to others.</dd></dl>
+<p>See example <a class="el" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus.">TemperatureMonitor.ino</a>.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md69"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a2b1d83c0992c9eef88867723f634c883" title="Set the message handler for incoming NMEA2000 messages.">tNMEA2000::SetMsgHandler</a></h5>
+<p >Set the message handler for incoming NMEA2000 messages. If you want to do something with messages read from N2k bus, easiest is to set message handler, which will be then called by ParseMessages for each new message.</p>
+<p >If you have LCD display on your device and you want to show e.g., fluid level on it, create message handler, parse fluid level messages and draw value to display.</p>
+<p >See example DataDisplay.ino or DataDisplay2.ino</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MsgHandler</td><td>Old style - callback function pointer</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md71"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a41f9389afaaba6eeff8818a7945a9f99" title="Attach a message handler for incoming N2kMessages.">tNMEA2000::AttachMsgHandler</a></h5>
+<p >Attach a message handler for incoming N2kMessages. <a class="el" href="classt_n_m_e_a2000.html#a2b1d83c0992c9eef88867723f634c883">tNMEA2000::SetMsgHandler</a> allows you to define only one handler to your system. If you like to do it by using classes, I prefer to use AttachMsgHandler. In this way you can e.g. define own class for each PGN and attach/detach them within your program.</p>
+<p >Example NMEA2000ToNMEA0183 uses AttachMsgHandler. Due to logic it still has single class and so handles all PGNs.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae93cb420bf0b8608a3b78edcad1c154b">tNMEA2000::DetachMsgHandler</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MsgHandler</td><td>Message handler</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md73"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ae93cb420bf0b8608a3b78edcad1c154b" title="Detach a message handler for incoming N2kMessages.">tNMEA2000::DetachMsgHandler</a></h5>
+<p >Detach a message handler for incoming N2kMessages. With DetachMsgHandler you can remove your handler from the handler stack. This is useful, if you do not want to handle some messages anymore.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a41f9389afaaba6eeff8818a7945a9f99">tNMEA2000::AttachMsgHandler</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MsgHandler</td><td>Message handler</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md75"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a1a3c14ee0a90bcdee2c2d8446db00805" title="Set the message handler for incoming ISO Requests.">tNMEA2000::SetISORqstHandler</a></h5>
+<p >Set the message handler for incoming ISO Requests. Devices on N2k bus may request PGN from your device. Certified devices should respond to requests to any transmit PGN listed. Write your own request handler and set it with this function.</p>
+<p >The handler will be called by <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages</a>, if there is ISO request. <br  />
+</p>
+<dl class="section note"><dt>Note</dt><dd>When you send request message with <a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000::SendMsg</a> and it fails, it is your responsibility to take care of sending response again later. If your sending buffer is large enough, it is very uncommon that <a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send a N2k message to the bus.">tNMEA2000::SendMsg</a> fails.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ISORequestHandler</td><td>Message handler</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md77"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a7e56a37f568be6dc1862eee512ded770" title="Read address for current device.">tNMEA2000::GetN2kSource</a></h5>
+<p >Read address for current device. With this function you can get you device current source address on the N2k bus. <br  />
+</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">DeviceIndex</td><td>index of the device on Devices </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned char -&gt; Address of the device</dd></dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md79"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65" title="Set source for the given device.">tNMEA2000::SetN2kSource</a></h5>
+<p >Set source for the given device. With this function you can set you device source address on the N2k bus. This is meant to be use for multi device on basic configuration to restore source address changed by address claiming. <br  />
+</p>
+<p >This function has to be called after <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode()</a> and before <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a></p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_iAddr</td><td>Address of the device </td></tr>
+    <tr><td class="paramname">_iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md81"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged</a></h5>
+<p >Check if this device has changed its address. With this function you can check has your device address you initiated with SetMode been changed after last call.</p>
+<dl class="section note"><dt>Note</dt><dd>For certified NMEA 2000 devices it is mandatory save changed address to e.g. EEPROM, for use in next startup. <br  />
+</dd></dl>
+<p>When you call this, <a class="el" href="classt_n_m_e_a2000.html#a42e5cb9ae374b21f1233314c843d27d7">tNMEA2000::AddressChanged</a> will be reset. Anyway, if system for some reason needs to change its address again, <a class="el" href="classt_n_m_e_a2000.html#a42e5cb9ae374b21f1233314c843d27d7">tNMEA2000::AddressChanged</a> will be set. So you can e.g. in every 10 min check has address changed and if it has, save it.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></li>
+</ul>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Some device source address changed. Read new values and save them. </td></tr>
+    <tr><td class="paramname">false</td><td>Nothing changed, no further actions required.</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md83"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24" title="Check if this device has changed its DeviceInstances or SystemInstance.">tNMEA2000::ReadResetDeviceInformationChanged</a></h5>
+<p >Check if this device has changed its DeviceInstances or SystemInstance. With this function you can check has your device device instances or system instances changed.</p>
+<dl class="section note"><dt>Note</dt><dd>For certified NMEA 2000 devices it is mandatory save changed info to e.g. EEPROM, for initialize them in next startup. <br  />
+</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335">tNMEA2000::SetDeviceInformationInstances</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a254973b61424c1303c6f3c38dcabe9aa">tNMEA2000::GetDeviceInformation</a></li>
+</ul>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Some device information changed. Read new values and save them. </td></tr>
+    <tr><td class="paramname">false</td><td>Nothing changed, no further actions required.</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md85"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a" title="Check if this device has changed its Install Description.">tNMEA2000::ReadResetInstallationDescriptionChanged</a></h5>
+<p >Check if this device has changed its Install Description. </p><dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a7db046fd7bc50a013a7931b1c3b0b0a5">tNMEA2000::GetInstallationDescription1</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#adefc5cb31bfa2f40e6b0145da501e366">tNMEA2000::GetInstallationDescription2</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb">tNMEA2000::SetConfigurationInformation</a></li>
+</ul>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Installation description changed. Read new values and save them. </td></tr>
+    <tr><td class="paramname">false</td><td>Nothing changed, no further actions required.</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md87"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#afaee7e8972200217c229b7d471175562" title="Set the count of devices library shows on bus.">tNMEA2000::SetDeviceCount</a></h5>
+<p >Set the count of devices library shows on bus. With this function you can enable multi device support. As default there is only one device.</p>
+<dl class="section note"><dt>Note</dt><dd>To enable multi device support, you need to call this before any other <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> class function.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="pg_lib_ref.html#descMultiDeviceSupport">Multi device support</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_DeviceCount</td><td>Maximum number of devices that can be hold in Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md89"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a3d14fbb4a2758cea27c8fa1b06712c62" title="Set incoming CAN message (tNMEA2000::N2kCANMsgBuf) buffersize.">tNMEA2000::SetN2kCANMsgBufSize</a></h5>
+<p >Set incoming CAN message (<a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">tNMEA2000::N2kCANMsgBuf</a>) buffersize. With this function you can set size of buffer, where system stores incoming messages. The default size is 5 messages. Some messages are just single frame messages and they will be read in and handled immediately on call to ParseMessages. For multi framed fast packet messages there is no guarantee that all frames will arrive in order. So these messages will be buffered and saved until all frames has been received. If it is not critical to handle all fast packet messages like with N2km_NodeOnly, you can set buffer size smaller like 3 or 2 by calling this before <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MaxN2kCANMsgs</td><td>Number of CAN messages that can be stored in <a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">tNMEA2000::N2kCANMsgBuf</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md91"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a5e09e469c4126963e26802c4541117bb" title="Set CAN send frame (CANSendFrameBuf) buffersize.">tNMEA2000::SetN2kCANSendFrameBufSize</a></h5>
+<p >Set CAN send frame (CANSendFrameBuf) buffersize. With this function you can set size of buffer, where system saves frames of messages to be sent.</p>
+<p >When sending long messages like ProductInformation or GNSS data, there may not be enough buffers for successfully send data. This depends of your hw and device source. Device source has effect due to priority of getting sending slot. If your data is critical, use buffer size, which is large enough (default 40 frames).</p>
+<p >E.g. Product information takes totally 134 bytes. This needs 20 frames. If you also send GNSS 47 bytes=7 frames. If you want to be sure that both will be sent on any situation, you need at least 27 frame buffer size. If you use this function, call it once before <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a> and before any device related function like <a class="el" href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76" title="Set the Product Information of this device.">tNMEA2000::SetProductInformation</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MaxCANSendFrames</td><td>Maximum number of CAN messages that can be stored in <a class="el" href="classt_n_m_e_a2000.html#afc3a2dd4532d2e529fdb5e648e5c301c">tNMEA2000::CANSendFrameBuf</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md93"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a944240f03999812fc365a00bc2b37d47" title="Set the maximum buffersize for received CAN messages.">tNMEA2000::SetN2kCANReceiveFrameBufSize</a></h5>
+<p >Set the maximum buffersize for received CAN messages. Some CAN drivers allows interrupted receive frame buffering. You can set receive buffer size with this function. If you use this function, call it once before <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a>;</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_MaxCANReceiveFrames</td><td>{type}</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md95"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640" title="Set the list of known Single Frame Messages.">tNMEA2000::SetSingleFrameMessages</a></h5>
+<p >Set the list of known Single Frame Messages. Call these if you wish to override the default message packets supported. Pointers must be in PROGMEM</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">unsigned</span> SingleFrameMessages[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={......L,0};</div>
+</div><!-- fragment --><p >As a default library has a list of known messages. With this function user can override default list of single frame messages.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a>.</li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_SingleFrameMessages</td><td>Buffer holding single frame messages</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md97"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3" title="Set the list of known Fast Packet Messages.">tNMEA2000::SetFastPacketMessages</a></h5>
+<p >Set the list of known Fast Packet Messages. Call these if you wish to override the default message packets supported. Pointers must be in PROGMEM</p>
+<p >As a default library has a list of known messages. With this function user can override default list of fast packet messages.</p>
+<dl class="section note"><dt>Note</dt><dd>If an incoming fast packet message is not known, it will be treated as single frame message. So if you want to handle unknown fast packet message, you need to duplicate frame collection logic from library to your code. So it is easier to have fast packet messages listed on library, if you want to handle them.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_FastPacketMessages</td><td>Buffer holding fast packet messages</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md99"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851" title="Set the list of known Extended Single Frame Messages.">tNMEA2000::ExtendSingleFrameMessages</a></h5>
+<p >Set the list of known Extended Single Frame Messages. Call these if you wish to add own list of supported message packets. Pointers must be in PROGMEM</p>
+<p >As a default library has a list of known messages. With this function user can add own list of known single frame messages.</p>
+<dl class="section note"><dt>Note</dt><dd>Currently subsequent calls will override previously set list.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li>SetSingleFrameMessages</li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_SingleFrameMessages</td><td>Buffer holding single frame messages</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md101"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe" title="Set the list of known Extended Fast Packet Messages.">tNMEA2000::ExtendFastPacketMessages</a></h5>
+<p >Set the list of known Extended Fast Packet Messages. Call these if you wish to extent list of fast packet messages. Pointers must be in PROGMEM</p>
+<p >As a default library has a list of known messages. With this function user can extent default list of fast packet messages.</p>
+<dl class="section note"><dt>Note</dt><dd>If an incoming fast packet message is not known, it will be treated as single frame message. So if you want to handle unknown fast packet message, you need to duplicate frame collection logic from library to your code. So it is easier to have fast packet messages listed on library, if you want to handle them.</dd>
+<dd>
+Currently subsequent calls will override previously set list.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a>.</li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_FastPacketMessages</td><td>Buffer holding extended fast packet messages</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md103"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a561a8cdcb18ef59dc9ef3d93a26d4e36" title="Send an IsoAddressClaim message.">tNMEA2000::SendIsoAddressClaim</a></h5>
+<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for address claiming.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md105"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ac6ba6daeaea5ec94f7ce3920ca622e2b" title="Send a Product Information message.">tNMEA2000::SendProductInformation</a></h5>
+<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for providing product information.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md107"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a33b6fab401d849b834c16de03d5e37a3" title="Send a Config Information message.">tNMEA2000::SendConfigurationInformation</a></h5>
+<p >This is automatically used by class. You only need to use this, if you want to write your own behavior for providing configuration information.</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md109"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a856d0935f458556c9c9471772b00a047" title="Set the Heartbeat Interval and Offset for a device.">tNMEA2000::SetHeartbeatIntervalAndOffset</a></h5>
+<p >Set the Heartbeat Interval and Offset for a device. According to document <a href="https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf">NMEA Heartbeat Corrigendum</a> all NMEA devices shall transmit heartbeat PGN 126993. With this function you can set transmission interval in ms (range 1000-655320ms , default 60000). Set &lt;1000 to disable it. You can temporally change interval by setting SetAsDefault parameter to false. Then you can restore default interval with interval parameter value 0xfffffffe</p>
+<p >Function allows to set interval over 60 s or 0 to disable sending for test purposes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interval</td><td>Heartbeat Interval in ms </td></tr>
+    <tr><td class="paramname">offset</td><td>Heartbeat Offset in ms </td></tr>
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md111"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a6fb1b392658f77da619fda7af2d1ec66" title="Get the Heartbeat Interval of a device.">tNMEA2000::GetHeartbeatInterval</a></h5>
+<p >Get the Heartbeat Interval of a device. Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found should changed value be saved for next startup or not.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iDev</td><td>index of the device on Devices </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint_32 -&gt; Device heartbeat interval in ms</dd></dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md113"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a0722fbc4d1f41f54b77bdeee31daa292" title="Send heartbeat for specific device.">tNMEA2000::SendHeartbeat</a></h5>
+<p >Library will automatically send heartbeat, if interval is &gt;0. You can also manually send it any time or force sent, if interval=0;</p>
+<hr  />
+<p> <a class="anchor" id="autotoc_md115"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#af8e42fa479186803223f48f6b5e761c3" title="Set the Forward Streaming Type.">tNMEA2000::SetForwardType</a></h5>
+<p >Set the Forward Streaming Type. With this function user can set how messages will be forwarded to the stream. Possible values are:</p><ul>
 <li><a class="el" href="classt_n_m_e_a2000.html#a61a89a29106cc1b3ff6d8b1bfbbc6cabade8c6866ae9d5992c217b5bce4b139d7">tNMEA2000::fwdt_Actisense</a> (default) forwards messages is Actisense format. Some navigation softwares can read this format.</li>
 <li><a class="el" href="classt_n_m_e_a2000.html#a61a89a29106cc1b3ff6d8b1bfbbc6caba8f0e6b11905fdbf0c47e3315597e79fc">tNMEA2000::fwdt_Text</a> forwards messages to output port in clear text. I see this useful only for testing with normal serial monitors.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md67"></a>
-SetForwardStream</h4>
-<p >As default, forward stream has been set to null. For e.g. Arduino Due you can set it to SerialUSB, so you can use Serial for other things. You can of coarse use any stream available on your device. <br  />
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fwdType</td><td>Format type see <a class="el" href="classt_n_m_e_a2000.html#a61a89a29106cc1b3ff6d8b1bfbbc6cab">tNMEA2000::tForwardType</a>, default = fwdt_Actisense</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md117"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a2d9e7390622f0aaa3dd96e753d0f3ab7" title="Set the Forward Stream object.">tNMEA2000::SetForwardStream</a></h5>
+<p >Set the Forward Stream object. As default, forward stream has been set to null. For e.g. Arduino Due you can set it to SerialUSB, so you can use Serial for other things. You can of coarse use any stream available on your device. <br  />
  See example ActisenseListenerSender.ino.</p>
-<h4><a class="anchor" id="autotoc_md68"></a>
-Open</h4>
-<p >You can call this on Setup(). It will be called anyway automatically by first call of ParseMessages().</p>
-<h4><a class="anchor" id="autotoc_md69"></a>
-SendMsg</h4>
-<p >When you want to send some message to the N2k bus, you call this. Before calling you have to prepare <a class="el" href="classt_n2k_msg.html" title="This class contains all the data of an NMEA2000 message.">tN2kMsg</a> type of message e.g. by using some function in N2kMessages. <br  />
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_stream</td><td>Stream to be used for message forwarding</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md119"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7" title="Open the CAN device.">tNMEA2000::Open</a></h5>
+<p >Open the CAN device. You can call this on Setup(). It will be called anyway automatically by first call of <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages()</a>. When system is finally opened, OnOpen callback will be executed. See <a class="el" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e">tNMEA2000::SetOnOpen</a></p>
+<dl class="section note"><dt>Note</dt><dd>After <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7" title="Open the CAN device.">tNMEA2000::Open()</a> you should start loop <a class="el" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d" title="Parse all incoming Messages.">tNMEA2000::ParseMessages()</a> without delays. If you e.g., call first <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7" title="Open the CAN device.">tNMEA2000::Open()</a> and then start to read configuration from slow flash, address claiming will not work properly.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td></td></tr>
+    <tr><td class="paramname">false</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md121"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169" title="Enable message forwarding to stream.">tNMEA2000::EnableForward</a></h5>
+<p >Enable message forwarding to stream. Set true as default. With this you can control if bus messages will be forwarded to forward stream. <br  />
 </p>
-<dl class="section note"><dt>Note</dt><dd>As default <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object is as default in <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a4cd03ae74ee5aa6a957d14c523af52d4">tNMEA2000::N2km_ListenOnly</a> mode. So if you want to send messages, you have to set right mode in Setup().</dd></dl>
-<p>The function returns true, if the message was sent successfully, otherwise it return false. SendMsg may fail, if there is not room for message frames on sending buffer or device is not open. <br  />
- SendMsg does not always send message immediately. If lower level sending function fails, SendMsg will buffer message frames and try to send them on next call to SendMsg or ParseMessages. So to have reliable sending, you need a sending buffer, which is large enough. <br  />
- See example TemperatureMonitor.ino.</p>
-<h4><a class="anchor" id="autotoc_md70"></a>
-ParseMessages</h4>
-<p >You have to call this periodically on loop(), otherwise <a class="el" href="classt_n_m_e_a2000.html" title="NMEA2000 device class definition.">tNMEA2000</a> object will not work at all.</p>
-<dl class="section note"><dt>Note</dt><dd>It is not good practice to have any delay() on your loop(), since then also handling of this will be delayed.</dd></dl>
-<p>See example TemperatureMonitor.ino.</p>
-<h4><a class="anchor" id="autotoc_md71"></a>
-SetMsgHandler</h4>
-<p >If you want to do something with messages read from N2k bus, easiest is to set message handler, which will be then called by ParseMessages, if there are new messages. This is the case e.g. if you have LCD display on your Arduino and you want to show some fluid level on it. <br  />
- See example DataDisplay.ino or DataDisplay2.ino</p>
-<h4><a class="anchor" id="autotoc_md72"></a>
-AttachMsgHandler</h4>
-<p >SetMsgHandler allows you to define only one handler to your system. If you like to do it by using classes, I prefer to use AttachMsgHandler. In this way you can e.g. define own class for each PGN and attach/detach them within your program. Example NMEA2000ToNMEA0183 uses AttachMsgHandler. Due to logic it still has single class and so handles all PGNs.</p>
-<h4><a class="anchor" id="autotoc_md73"></a>
-DetachMsgHandler</h4>
-<p >With DetachMsgHandler you can remove your handler from the handler stack. This is useful, if you do not want to handle some messages anymore.</p>
-<h4><a class="anchor" id="autotoc_md74"></a>
-SetISORqstHandler</h4>
-<p >Devices on N2k bus may request from your device if it can handle requested PGN. If you want to respond for ISO request, you should set this handler. The handler will be called by ParseMessages, if there is ISO request. <br  />
-</p>
-<dl class="section note"><dt>Note</dt><dd>When you send request message with SendMsg and it fails, it is your responsibility to take care of sending response again later. If your sending buffer is large enough, it is very uncommon that SendMsg fails.</dd></dl>
-<h4><a class="anchor" id="autotoc_md75"></a>
-GetN2kSource</h4>
-<p >With this function you can get you device current address on the N2k bus. <br  />
- See <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a> and <a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></p>
-<h4><a class="anchor" id="autotoc_md76"></a>
-SetN2kSource</h4>
-<p >With this function you can set you device current address on the N2k bus. This is meant to be use for multi device on basic configuration to restore source address changed by address claiming. <br  />
- See <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a> and <a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></p>
-<h4><a class="anchor" id="autotoc_md77"></a>
-ReadResetAddressChanged</h4>
-<p >With this function you can check has your device address you initiated with SetMode been changed after last call. For certified NMEA 2000 devices it is mandatory save changed address to e.g. EEPROM, for use in next startup. <br  />
- See <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a> and <a class="el" href="classt_n_m_e_a2000.html#ae4ce4bfc4f7f4f7eb211569124cf1f65">tNMEA2000::SetN2kSource</a></p>
-<h4><a class="anchor" id="autotoc_md78"></a>
-ReadResetDeviceInformationChanged</h4>
-<p >With this function you can check has your device device instances or system instances changed. For certified NMEA 2000 devices it is mandatory save changed info to e.g. EEPROM, for initialize them in next startup. <br  />
-</p>
-<p >See <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335">tNMEA2000::SetDeviceInformationInstances</a> and <a class="el" href="classt_n_m_e_a2000.html#a254973b61424c1303c6f3c38dcabe9aa">tNMEA2000::GetDeviceInformation</a></p>
-<h4><a class="anchor" id="autotoc_md79"></a>
-EnableForward</h4>
-<p >Set true as default. With this you can control if bus messages will be forwarded to forward stream. <br  />
-</p>
-<p >see </p><dl class="section see"><dt>See also</dt><dd>Message forwarding.</dd></dl>
-<h4><a class="anchor" id="autotoc_md80"></a>
-SetForwardSystemMessages</h4>
-<p >Set true as default. With this you can control if system messages like address claiming, device information will be forwarded to forward stream. <br  />
- If you set this false, system messages will not be forwarded to the stream.</p>
-<h4><a class="anchor" id="autotoc_md81"></a>
-SetForwardOnlyKnownMessages</h4>
-<p >Set false as default. With this you can control if unknown messages will be forwarded to forward stream. If you set this true, all unknown message will not be forwarded to the stream.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="pg_lib_ref.html#secMessageforwarding">Message forwarding</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Enable, default = true</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md123"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a205933011fd3895e30d134016a086faa" title="Enable System Messages for forwarding.">tNMEA2000::SetForwardSystemMessages</a></h5>
+<p >Enable System Messages for forwarding. Set true as default. With this you can control if system messages like address claiming, device information will be forwarded to forward stream. If you set this false, system messages will not be forwarded to the stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Enable, default = true</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md125"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a36a00385b554ec225cab2819f6371d8f" title="Enable Only Known Messages for forwarding.">tNMEA2000::SetForwardOnlyKnownMessages</a></h5>
+<p >Enable Only Known Messages for forwarding. Set false as default. With this you can control if unknown messages will be forwarded to forward stream. If you set this true, all unknown message will not be forwarded to the stream.</p>
 <dl class="section note"><dt>Note</dt><dd>This does not effect for own messages. Known messages are listed on library. <br  />
 </dd></dl>
-<p>See <a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a> and <a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</p>
-<h4><a class="anchor" id="autotoc_md82"></a>
-SetForwardOwnMessages</h4>
-<p >Set true as default. With this you can control if messages your device sends to bus will be forwarded to forward stream.</p>
-<h4><a class="anchor" id="autotoc_md83"></a>
-SetHandleOnlyKnownMessages</h4>
-<p >Set false as default. With this you can control if unknown messages will be handled at all. Known messages are listed on library.</p>
-<p >See <a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a>, <a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a> and <a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a>.</p>
-<h4><a class="anchor" id="autotoc_md84"></a>
-SetDebugMode</h4>
-<p >If you do not have physical N2k bus connection and you like to test your board without even CAN controller, you can use this function. <br  />
- see </p><dl class="section see"><dt>See also</dt><dd>Debug mode. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Enable, default = false</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md127"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a3b1e14f74064caed4c3583bfbbe13134" title="Enable Own Messages for forwarding.">tNMEA2000::SetForwardOwnMessages</a></h5>
+<p >Enable Own Messages for forwarding. Set true as default. With this you can control if messages your device sends to bus will be forwarded to forward stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Enable, default = true</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md129"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#ad19aa8b317d1ecca5992b0e419209909" title="Set the Handle Only Known Messages.">tNMEA2000::SetHandleOnlyKnownMessages</a></h5>
+<p >Set the Handle Only Known Messages. Set false as default. With this you can control if unknown messages will be handled at all. Known messages are listed on library.</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_n_m_e_a2000.html#a237d24922d17de047e1813b712f93640">tNMEA2000::SetSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a04341b0e2045d8988d690f4fe5cb0bc3">tNMEA2000::SetFastPacketMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a18f52350426dd9f49f922a9ee16e2851">tNMEA2000::ExtendSingleFrameMessages</a></li>
+<li><a class="el" href="classt_n_m_e_a2000.html#a94555c94f270052702009d9581f73bfe">tNMEA2000::ExtendFastPacketMessages</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Enable, default = false</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+<p> <a class="anchor" id="autotoc_md131"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a43fb8be0ab5036dff662192b04d20314" title="Set the Debug Mode of the system.">tNMEA2000::SetDebugMode</a></h5>
+<p >Set the Debug Mode of the system. If you do not have physical N2k bus connection and you like to test your board without even CAN controller, you can use this function. <br  />
+</p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="pg_lib_ref.html#descDebugMode">Debug mode</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_dbMode</td><td>Debug mode, see <a class="el" href="classt_n_m_e_a2000.html#ae34b9115f8c45d6622089516a6d62c06">tNMEA2000::tDebugMode</a> </td></tr>
+  </table>
+  </dd>
+</dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

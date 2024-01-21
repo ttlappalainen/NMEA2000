@@ -8,5 +8,6 @@ var searchData=
   ['winddirection_5',['WindDirection',['../structt_n2k_meteorlogical_station_data.html#a27a345a0cc7c498038fb970b5ce0ac89',1,'tN2kMeteorlogicalStationData']]],
   ['windgusts_6',['WindGusts',['../structt_n2k_meteorlogical_station_data.html#a8382f501ef09d1da1c432369b02442fc',1,'tN2kMeteorlogicalStationData']]],
   ['windreference_7',['WindReference',['../structt_n2k_meteorlogical_station_data.html#acf2b448d8aec312ced950bebd2298ceb',1,'tN2kMeteorlogicalStationData']]],
-  ['windspeed_8',['WindSpeed',['../structt_n2k_meteorlogical_station_data.html#a60af71fdd1132eadc6d481b7c38081ce',1,'tN2kMeteorlogicalStationData']]]
+  ['windscheduler_8',['WindScheduler',['../_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca',1,'WindMonitor.ino']]],
+  ['windspeed_9',['WindSpeed',['../structt_n2k_meteorlogical_station_data.html#a60af71fdd1132eadc6d481b7c38081ce',1,'tN2kMeteorlogicalStationData']]]
 ];

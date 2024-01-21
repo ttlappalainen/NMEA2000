@@ -117,13 +117,13 @@ $(document).ready(function(){initNavTree('page_h_w_set_up.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md85">Some terminology</a></li>
+<ul><li class="level1"><a href="#autotoc_md132">Some terminology</a></li>
 <li class="level1"><a href="#secTRecHW">Recommended hardware</a><ul><li class="level2"><a href="#subCANcontr">CAN controller</a></li>
 <li class="level2"><a href="#subCANtrans">CAN Transceiver</a><ul><li class="level3"><a href="#subsubRecTra">Recommended transceiver</a></li>
-<li class="level3"><a href="#subsubUnIso">Unisolated transceiver</a><ul><li class="level4"><a href="#autotoc_md86">Microchip MCP2562</a></li>
+<li class="level3"><a href="#subsubUnIso">Unisolated transceiver</a><ul><li class="level4"><a href="#autotoc_md133">Microchip MCP2562</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#autotoc_md87">Isolated transceiver {subsubIso}</a><ul><li class="level4"><a href="#autotoc_md88">TI ISO1050 Isolated CAN Transceiver</a></li>
+<li class="level3"><a href="#subsubIso">Isolated transceiver</a><ul><li class="level4"><a href="#autotoc_md134">TI ISO1050 Isolated CAN Transceiver</a></li>
 </ul>
 </li>
 </ul>
@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('page_h_w_set_up.html',''); initResizab
 <p >This manual is meant for beginners who starts to build their own devices. There is general information, links and hints about building NMEA2000 network on <a class="el" href="page_h_w_set_up.html#secNMEA2000bus">NMEA2000 bus</a>.</p>
 <p >Since I published NMEA2000 library I had several times guided beginners with hardware problems. In this manual I try to give collected information for recommended and required hardware for making NMEA2000 devices and how to connect them to NMEA2000 bus.</p>
 <dl class="section warning"><dt>Warning</dt><dd>You connect your hardware always with your own risk. I wrote this document in order to help you connecting your own hardware to the NMEA2000 bus. I do not take any responsibility of any errors in the document or any possible damages caused to your devices.</dd></dl>
-<h1><a class="anchor" id="autotoc_md85"></a>
+<h1><a class="anchor" id="autotoc_md132"></a>
 Some terminology</h1>
 <ul>
 <li>Board. Development board like Teensy 3.2, ESP32, Raspberry Pi, Arduino Due etc.</li>
@@ -162,10 +162,10 @@ Some terminology</h1>
 </ul>
 <h1><a class="anchor" id="secTRecHW"></a>
 Recommended hardware</h1>
-<p >I personally prefer to use Teensy 3.2, 3.5, 3.6, 4.0, 4.1 or ESP32 board. Those boards have internal CAN controller and require only either unisolated MCP2562 or isolated ISO1050 transceiver for NMEA2000 connection. With default settings library requires <b>about 23 kB rom and 3.3 kB RAM in normal operation</b>. So you should have <b>at least 8 kB RAM in your processor</b>. If you have Arduino Mega board, it is OK for testing and for small projects, but I do not prefer to buy one for new project. Arduino Due is better, but it is physically bigger and eats more power than Teensies or ESP32. If you have Arduino Uno or any board with less than 8 kB RAM, please read all library issues and Memory requirements on library ReadMe and then forget it. If you anyway want to use it and you have trouble to get it working, please do not set any issues.</p>
+<p >I personally prefer to use Teensy 4.0, 4.1 (or 3.2, 3.5, 3.6 which are at end of life) or ESP32 board. Those boards have internal CAN controller and require only either isolated ISO1050 or unisolated MCP2562 transceiver for NMEA2000 connection. With default settings library requires roughly <b>about 30 kB rom and 4 kB RAM in normal operation</b>. So you should have <b>at least 8 kB RAM in your processor</b>. If you have Arduino Mega board, it is OK for testing and for small projects, but I do not prefer to buy one for new project. Arduino Due is better, but it is physically bigger and eats more power than Teensies or ESP32. If you have Arduino Uno or any board with less than 8 kB RAM, please read all library issues and Memory requirements on library ReadMe and then forget it. If you anyway want to use it and you have trouble to get it working, please do not set any issues.</p>
 <h2><a class="anchor" id="subCANcontr"></a>
 CAN controller</h2>
-<p >Some boards (or processors) have internal CAN controller. In board there will be simply CAN Tx/CAN Rx pins, which often works with 3.3 V levels. Good examples of this kind of boards are recommended Teensy 3.2, 3.5, 3.6, 4.0, 4.1 or ESP32 boards. Arduino DUE has also internal CAN controller. Never connect CAN Tx/CAN Rx pins directly to NMEA2000 bus. If you use board without internal CAN controller or you want to have second CAN controller e.g., for Teensy 3.2 or ESP32, you can use external one. Currently only supported is MCP2515. When you search “CAN bus shield” to buy, you have to take care of:</p>
+<p >Some boards (or processors) have internal CAN controller. In board there will be simply CAN Tx/CAN Rx pins, which often works with 3.3 V levels. Good examples of this kind of boards are recommended Teensy 4.0, 4.1 (or 3.2, 3.5, 3.6 which are at end of life) or ESP32 boards. Arduino DUE has also internal CAN controller. Never connect CAN Tx/CAN Rx pins directly to NMEA2000 bus. If you use board without internal CAN controller or you want to have second CAN controller e.g., for Teensy 3.2 or ESP32, you can use external one. Currently only supported is MCP2515. When you search “CAN bus shield” to buy, you have to take care of:</p>
 <ul>
 <li>Library supports only MCP2515 with either 16 MHz or 8 MHz clock. <b>16 MHz is preferred</b>.</li>
 <li>Check SPI levels on your board. Most shields operate only with 5 V. If your board I/O is only 3.3 V tolerant, you should find shield with 3.3 V transceiver. MCP2551 or TJA1050 will not work.</li>
@@ -176,7 +176,7 @@ CAN Transceiver</h2>
 <p >CAN controller takes care of CAN (or NMEA2000) bus communication. To connect it to the bus, you need some CAN transceiver. The transceiver has two tasks. Receiving: it converts the data stream from CAN bus levels to levels that the CAN controller uses. It usually has protective circuitry to protect the CAN controller. Transmitting: it converts the data stream from the CAN controller to CAN bus levels.</p>
 <h3><a class="anchor" id="subsubRecTra"></a>
 Recommended transceiver</h3>
-<p >I recommend either unisolated MCP2562 or isolated ISO1050 transceiver. MCP2562 operates with 5 V and it has own pin to define Tx/Rx logic levels for 3.3 V devices. ISO1050 has own power pin for both sides so it also works with any logic levels. There is lot of issues with SN65HVD230 transceiver. If you use that, please do not open issue – it is not library problem.</p>
+<p >I recommend either isolated ISO1050 or unisolated MCP2562 transceiver. ISO1050 has own power pin for both sides so it also works with any logic levels. MCP2562 operates with 5 V and it has own pin to define Tx/Rx logic levels for 3.3 V devices. There is lot of issues with SN65HVD230 transceiver. If you use that, please do not open issue – it is not library problem.</p>
 <p >I do not know why there has been so much problems with SN65HVD230 - according datasheet it should be fine. I have had problems with MCP2562 only twice. Once I mixed Vdd and Vcc - worked fine after connected them right. Another time I connected STBY pin to Vdd, which puts chip to stand by.</p>
 <dl class="section note"><dt>Note</dt><dd><b>This is very important.</b> <br  />
  If you use unisolated tranceiver like MCP2562, you may cause ground loop in your boat. Ground loops may generate other weird problems. You can read more about it e.g., from Ground loop in Wikipedia <a href="https://en.wikipedia.org/wiki/Ground_loop_(electricity)">https://en.wikipedia.org/wiki/Ground_loop_(electricity)</a>. <br  />
@@ -191,7 +191,7 @@ Unisolated transceiver</h3>
 <li>Devices with digital input or output as far you use isolation on I/O side. E.g., optoisolators for input and relays for output.</li>
 </ul>
 <p >In any case devices with unisolated tranceiver must be powered from NMEA2000 bus and they <b>can not be connected to unisolated sensors.</b> If you program unisolated device through USB connector with laptop, you are in safe when laptop is powered only by batteries. USB will connect your laptop ground to NMEA2000 bus ground, but since laptop is only battery powered, it is “floating” system. If you connect charger to your laptop same time, then it depends of charger do you have ground loop or not. Since this is just temporary connection, it should be OK.</p>
-<h4><a class="anchor" id="autotoc_md86"></a>
+<h4><a class="anchor" id="autotoc_md133"></a>
 Microchip MCP2562</h4>
 <p >The MCP2561/2 is a high-speed CAN, fault-tolerant device that serves as the interface between a CAN protocol controller and the physical bus. The MCP2561/2 device provides differential transmit and receive capability for the CAN protocol controller, and is fully compatible with the ISO-11898-2 and ISO-11898-5 standards. It will operate at speeds of up to 1 Mb/s.</p>
 <p >Typically, each node in a CAN system must have a device to convert the digital signals generated by a CAN controller to signals suitable for transmission over the bus cabling (differential output). It also provides a buffer between the CAN controller and the high-voltage spikes that can be generated on the CAN bus by outside sources (EMI, ESD, electrical transients, etc.).</p>
@@ -199,10 +199,10 @@ Microchip MCP2562</h4>
 <img src="MCP2562.png" alt=""/>
 </div>
 <p ><a href="http://ww1.microchip.com/downloads/en/devicedoc/20005167c.pdf">MCHP 2562 Datasheet</a></p>
-<h3><a class="anchor" id="autotoc_md87"></a>
-Isolated transceiver {subsubIso}</h3>
+<h3><a class="anchor" id="subsubIso"></a>
+Isolated transceiver</h3>
 <p >Isolated tranceiver has either optical or galvanic (ISO1050) isolation. Those has to be powered from both sides with isolated power, so you need also at least two power supplies. You must take care that both sides will also have always separate grounds and they do not touch in any way. Isolated device is safest solution in all cases.</p>
-<h4><a class="anchor" id="autotoc_md88"></a>
+<h4><a class="anchor" id="autotoc_md134"></a>
 TI ISO1050 Isolated CAN Transceiver</h4>
 <p >The ISO1050 is a galvanically isolated CAN transceiver that meets the specifications of the ISO11898-2 standard. The device has the logic input and output buffers separated by a silicon oxide (SiO2) insulation barrier that provides galvanic isolation of up to 5000 VRMS for ISO1050DW and 2500 VRMS for ISO1050DUB. Used in conjunction with isolated power supplies, the device prevents noise currents on a data bus or other circuits from entering the local ground and interfering with or damaging sensitive circuitry. As a CAN transceiver, the device provides differential transmit capability to the bus and differential receive capability to a CAN controller at signaling rates up to 1 megabit per second (Mbps). The device is designed for operation in especially harsh environments, and it features cross-wire, overvoltage and loss of ground protection from –27 V to 40 V and overtemperature shutdown, as well as –12-V to 12-V common-mode range. The ISO1050 is characterized for operation over the ambient temperature range of –55°C to 105°C.</p>
 <div class="image">
@@ -265,7 +265,7 @@ Most common hardware errors</h1>
 </ul>
 <h1><a class="anchor" id="secNMEA2000bus"></a>
 NMEA2000 bus</h1>
-<p >NMEA_2000 bus is electrically CAN bus. NMEA2000 protocol is based on SAE_J1939, with specific messages for the marine environment. The one important thing differing from CAN is that bus speed is fixed to 250kb. On CAN bus it can be up to 1 Mb or even variable. If you are interested, dig more information from internet. NMEA2000 bus is like ethernet so that you can have multiple devices on same bus, they all can send information to the bus and there is no bus master device. The biggest difference to traditional NMEA0183 connection is that only one device can send data.</p>
+<p >NMEA_2000 bus is electrically CAN bus. NMEA2000 protocol is based on SAE_J1939, with specific messages for the marine environment. The one important thing differing from CAN is that bus speed is fixed to 250kb. On CAN bus it can be up to 1 Mb or even variable. If you are interested, dig more information from internet. NMEA2000 bus is like ethernet so that you can have multiple devices on same bus, they all can send information to the bus and there is no bus master device. The biggest difference to traditional NMEA0183 connection is that on NMEA0183 only one device can send data.</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/NMEA_2000">NMEA_2000</a></li>
 <li><a href="https://en.wikipedia.org/wiki/SAE_J1939">SAE_J1939</a></li>

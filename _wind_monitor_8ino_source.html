@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.4"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="NMEA2000 C++ library" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<meta property="og:url" content="https://github.com/ttlappalainen/NMEA2000" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="NMEA2000 C++ library" />
+<meta name="twitter:description" content="Library to handle NMEA 2000 Communication written in C++." />
+<!-- END twitter metadata -->
+<title>NMEA2000 Library: WindMonitor.ino Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo_sqare1.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/ttlappalainen/NMEA2000" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_s.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NMEA2000 Library
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Library to handle NMEA 2000 Communication written in C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_wind_monitor_8ino_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">WindMonitor.ino</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_wind_monitor_8ino.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/***********************************************************************/</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">//#define N2k_SPI_CS_PIN 53    // If you use mcp_can and CS pin is not 53, uncomment this and modify definition to match your CS pin.</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">//#define N2k_CAN_INT_PIN 21   // If you use mcp_can and interrupt pin is not 21, uncomment this and modify definition to match your interrupt pin.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">//#define USE_MCP_CAN_CLOCK_SET 8  // If you use mcp_can and your mcp_can shield has 8MHz chrystal, uncomment this.</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">//#define ESP32_CAN_TX_PIN GPIO_NUM_16 // If you use ESP32 and do not have TX on default IO 16, uncomment this and and modify definition to match your CAN TX pin.</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">//#define ESP32_CAN_RX_PIN GPIO_NUM_17 // If you use ESP32 and do not have RX on default IO 4, uncomment this and and modify definition to match your CAN TX pin.</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">//#define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // If you use Arduino DUE and want to use CAN bus 1 instead of 0, uncomment this.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">//#define NMEA2000_TEENSY_CAN_BUS 1 // If you use Teensy 3.5 or 3.6 and want to use second CAN bus, uncomment this.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;<a class="code" href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a>&gt;</span>  <span class="comment">// This will automatically choose right CAN library and create suitable NMEA2000 object</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;<a class="code" href="_n2k_messages_8h.html">N2kMessages.h</a>&gt;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">// List here messages your device will transmit.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">   25</a></span><span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code hl_variable" href="_wind_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a>[] <a class="code hl_define" href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a>={130306L,0};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// Define schedulers for messages. Define schedulers here disabled. Schedulers will be enabled</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">// on OnN2kOpen so they will be synchronized with system.</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">// We use own scheduler for each message so that each can have different offset and period.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// Setup periods according PGN definition (see comments on IsDefaultSingleFrameMessage and</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">// IsDefaultFastPacketMessage) and message first start offsets. Use a bit different offset for</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">// each message so they will not be sent at same time.</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">   33</a></span><a class="code hl_class" href="classt_n2k_sync_scheduler.html">tN2kSyncScheduler</a> <a class="code hl_variable" href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">WindScheduler</a>(<span class="keyword">false</span>,100,500);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// *****************************************************************************</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">// Call back for NMEA2000 open. This will be called, when library starts bus communication.</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">// See NMEA2000.SetOnOpen(OnN2kOpen); on setup()</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a7acaa373becb8ba2fb7a92f6e31c4181">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_wind_monitor_8ino.html#a7acaa373becb8ba2fb7a92f6e31c4181">OnN2kOpen</a>() {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="comment">// Start schedulers now.</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <a class="code hl_variable" href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">WindScheduler</a>.<a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">   43</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_wind_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a>() {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="comment">// Set Product information</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76">SetProductInformation</a>(<span class="stringliteral">&quot;00000002&quot;</span>, <span class="comment">// Manufacturer&#39;s Model serial code</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                                 100, <span class="comment">// Manufacturer&#39;s product code</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                                 <span class="stringliteral">&quot;Simple wind monitor&quot;</span>,  <span class="comment">// Manufacturer&#39;s Model ID</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                                 <span class="stringliteral">&quot;1.2.0.24 (2022-10-01)&quot;</span>,  <span class="comment">// Manufacturer&#39;s Software version code</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                                 <span class="stringliteral">&quot;1.2.0.0 (2022-10-01)&quot;</span> <span class="comment">// Manufacturer&#39;s Model version</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                                 );</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="comment">// Set device information</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5">SetDeviceInformation</a>(1, <span class="comment">// Unique number. Use e.g. Serial number.</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                                130, <span class="comment">// Device function=Atmospheric. See codes on https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&amp;%20function%20codes%20v%202.00.pdf</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                                85, <span class="comment">// Device class=External Environment. See codes on https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&amp;%20function%20codes%20v%202.00.pdf</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                                2046 <span class="comment">// Just choosen free from code list on https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                               );</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="comment">// Uncomment 2 rows below to see, what device will send to bus. Use e.g. OpenSkipper or Actisense NMEA Reader                           </span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="comment">//Serial.begin(115200);</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="comment">//NMEA2000.SetForwardStream(&amp;Serial);</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="comment">// If you want to use simple ascii monitor like Arduino Serial Monitor, uncomment next line</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="comment">//NMEA2000.SetForwardType(tNMEA2000::fwdt_Text); // Show in clear text. Leave uncommented for default Actisense format.</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="comment">// If you also want to see all traffic on the bus use N2km_ListenAndNode instead of N2km_NodeOnly below</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">SetMode</a>(<a class="code hl_enumvalue" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a>,23);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="comment">// NMEA2000.SetDebugMode(tNMEA2000::dm_Actisense); // Uncomment this, so you can test code without CAN bus chips on Arduino Mega</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">EnableForward</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="comment">// Here we tell library, which PGNs we transmit</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7">ExtendTransmitMessages</a>(<a class="code hl_variable" href="_wind_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a>);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="comment">// Define OnOpen call back. This will be called, when CAN is open and system starts address claiming.</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e">SetOnOpen</a>(<a class="code hl_function" href="_wind_monitor_8ino.html#a7acaa373becb8ba2fb7a92f6e31c4181">OnN2kOpen</a>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">Open</a>();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">// *****************************************************************************</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">   76</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_wind_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop</a>() {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <a class="code hl_function" href="_wind_monitor_8ino.html#aec92b73fcd5c02cc1ba69a3ebb44dde3">SendN2kWind</a>();</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d">ParseMessages</a>();</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">// *****************************************************************************</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a0a38e1aefb4962b00381ac10026f20e1">   82</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="_wind_monitor_8ino.html#a0a38e1aefb4962b00381ac10026f20e1">ReadWindAngle</a>() {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="_n2k_messages_8h.html#a2d83e457ec9424ee718131cb42523d0a">DegToRad</a>(50); <span class="comment">// Read here the measured wind angle e.g. from analog input</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment">// *****************************************************************************</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#a2130c4203b31f591e87cef5776799731">   87</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="_wind_monitor_8ino.html#a2130c4203b31f591e87cef5776799731">ReadWindSpeed</a>() {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="keywordflow">return</span> 10.3; <span class="comment">// Read here the wind speed e.g. from analog input</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">// *****************************************************************************</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="_wind_monitor_8ino.html#aec92b73fcd5c02cc1ba69a3ebb44dde3">   92</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_wind_monitor_8ino.html#aec92b73fcd5c02cc1ba69a3ebb44dde3">SendN2kWind</a>() {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <a class="code hl_class" href="classt_n2k_msg.html">tN2kMsg</a> N2kMsg;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <span class="keywordflow">if</span> ( <a class="code hl_variable" href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">WindScheduler</a>.<a class="code hl_function" href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">IsTime</a>() ) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <a class="code hl_variable" href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">WindScheduler</a>.<a class="code hl_function" href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">UpdateNextTime</a>();</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <a class="code hl_function" href="group__group__msg_set_up.html#gae78e6de6adca426675e36ccc4131404b">SetN2kWindSpeed</a>(N2kMsg, 1, <a class="code hl_function" href="_wind_monitor_8ino.html#a2130c4203b31f591e87cef5776799731">ReadWindSpeed</a>(), <a class="code hl_function" href="_wind_monitor_8ino.html#a0a38e1aefb4962b00381ac10026f20e1">ReadWindAngle</a>(),<a class="code hl_enumvalue" href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fad2f77ca5883e0d563b53d3170cdcb3c8">N2kWind_Apprent</a>);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_variable" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a>.<a class="code hl_function" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b">SendMsg</a>(N2kMsg);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="ttc" id="a_n2k_def_8h_html_a75acaba9e781937468d0911423bc0c35"><div class="ttname"><a href="_n2k_def_8h.html#a75acaba9e781937468d0911423bc0c35">PROGMEM</a></div><div class="ttdeci">#define PROGMEM</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_def_8h_source.html#l00045">N2kDef.h:45</a></div></div>
+<div class="ttc" id="a_n2k_messages_8h_html"><div class="ttname"><a href="_n2k_messages_8h.html">N2kMessages.h</a></div><div class="ttdoc">This File contains all SetXXX functions which will be needed to transfer data with a specific PGN.</div></div>
+<div class="ttc" id="a_n2k_messages_8h_html_a2d83e457ec9424ee718131cb42523d0a"><div class="ttname"><a href="_n2k_messages_8h.html#a2d83e457ec9424ee718131cb42523d0a">DegToRad</a></div><div class="ttdeci">double DegToRad(double v)</div><div class="ttdoc">Converting a value from Deg to Rad.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_messages_8h_source.html#l00074">N2kMessages.h:74</a></div></div>
+<div class="ttc" id="a_n2k_types_8h_html_ga7e2df5fcd75db7834060bc276d1b741fad2f77ca5883e0d563b53d3170cdcb3c8"><div class="ttname"><a href="_n2k_types_8h.html#ga7e2df5fcd75db7834060bc276d1b741fad2f77ca5883e0d563b53d3170cdcb3c8">N2kWind_Apprent</a></div><div class="ttdeci">@ N2kWind_Apprent</div><div class="ttdoc">Deprecated - We had the typo in older version of the library.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_types_8h_source.html#l00256">N2kTypes.h:256</a></div></div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html">NMEA2000_CAN.h</a></div><div class="ttdoc">Automatic library selection according to the selected board.</div></div>
+<div class="ttc" id="a_n_m_e_a2000___c_a_n_8h_html_a99f6ed3fa2b0b15f276c856e10a7a3ab"><div class="ttname"><a href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a></div><div class="ttdeci">tNMEA2000 &amp; NMEA2000</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000___c_a_n_8h_source.html#l00350">NMEA2000_CAN.h:350</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a0a38e1aefb4962b00381ac10026f20e1"><div class="ttname"><a href="_wind_monitor_8ino.html#a0a38e1aefb4962b00381ac10026f20e1">ReadWindAngle</a></div><div class="ttdeci">double ReadWindAngle()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00082">WindMonitor.ino:82</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a2130c4203b31f591e87cef5776799731"><div class="ttname"><a href="_wind_monitor_8ino.html#a2130c4203b31f591e87cef5776799731">ReadWindSpeed</a></div><div class="ttdeci">double ReadWindSpeed()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00087">WindMonitor.ino:87</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a4fc01d736fe50cf5b977f755b675f11d"><div class="ttname"><a href="_wind_monitor_8ino.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a></div><div class="ttdeci">void setup()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00043">WindMonitor.ino:43</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a54e8a46e976ffee43f019df65436e9ca"><div class="ttname"><a href="_wind_monitor_8ino.html#a54e8a46e976ffee43f019df65436e9ca">WindScheduler</a></div><div class="ttdeci">tN2kSyncScheduler WindScheduler(false, 100, 500)</div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a7acaa373becb8ba2fb7a92f6e31c4181"><div class="ttname"><a href="_wind_monitor_8ino.html#a7acaa373becb8ba2fb7a92f6e31c4181">OnN2kOpen</a></div><div class="ttdeci">void OnN2kOpen()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00038">WindMonitor.ino:38</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_a99a54e36714d9ab35490dc8f2e020d4f"><div class="ttname"><a href="_wind_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a></div><div class="ttdeci">const unsigned long TransmitMessages[]</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00025">WindMonitor.ino:25</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_aec92b73fcd5c02cc1ba69a3ebb44dde3"><div class="ttname"><a href="_wind_monitor_8ino.html#aec92b73fcd5c02cc1ba69a3ebb44dde3">SendN2kWind</a></div><div class="ttdeci">void SendN2kWind()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00092">WindMonitor.ino:92</a></div></div>
+<div class="ttc" id="a_wind_monitor_8ino_html_afe461d27b9c48d5921c00d521181f12f"><div class="ttname"><a href="_wind_monitor_8ino.html#afe461d27b9c48d5921c00d521181f12f">loop</a></div><div class="ttdeci">void loop()</div><div class="ttdef"><b>Definition:</b> <a href="_wind_monitor_8ino_source.html#l00076">WindMonitor.ino:76</a></div></div>
+<div class="ttc" id="aclasst_n2k_msg_html"><div class="ttname"><a href="classt_n2k_msg.html">tN2kMsg</a></div><div class="ttdoc">This class contains all the data of an NMEA2000 message.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_msg_8h_source.html#l00655">N2kMsg.h:656</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html"><div class="ttname"><a href="classt_n2k_sync_scheduler.html">tN2kSyncScheduler</a></div><div class="ttdoc">Synchronized Scheduler for timed message sending.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00124">N2kTimer.h:124</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_a86577e69bd66bffe6f18a0f619b0731e"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#a86577e69bd66bffe6f18a0f619b0731e">tN2kSyncScheduler::IsTime</a></div><div class="ttdeci">bool IsTime()</div><div class="ttdoc">Check if ít is time.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00181">N2kTimer.h:181</a></div></div>
+<div class="ttc" id="aclasst_n2k_sync_scheduler_html_abb7a77a00739baac72ed2d53833d9ef6"><div class="ttname"><a href="classt_n2k_sync_scheduler.html#abb7a77a00739baac72ed2d53833d9ef6">tN2kSyncScheduler::UpdateNextTime</a></div><div class="ttdeci">void UpdateNextTime()</div><div class="ttdoc">Update the timestamp for NextTime.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_timer_8h_source.html#l00242">N2kTimer.h:242</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a08b0d31c74617227329406d948059a76"><div class="ttname"><a href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76">tNMEA2000::SetProductInformation</a></div><div class="ttdeci">void SetProductInformation(const char *_ModelSerialCode, unsigned short _ProductCode=0xffff, const char *_ModelID=0, const char *_SwCode=0, const char *_ModelVersion=0, unsigned char _LoadEquivalency=0xff, unsigned short _N2kVersion=0xffff, unsigned char _CertificationLevel=0xff, int iDev=0)</div><div class="ttdoc">Set the Product Information of this device.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l00731">NMEA2000.cpp:731</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a1981274e03fd52798eda7302b48ea169"><div class="ttname"><a href="classt_n_m_e_a2000.html#a1981274e03fd52798eda7302b48ea169">tNMEA2000::EnableForward</a></div><div class="ttdeci">void EnableForward(bool v=true)</div><div class="ttdoc">Enable message forwarding to stream.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l02777">NMEA2000.h:2777</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a19d8850b16c1204911ada74c267a5f6d"><div class="ttname"><a href="classt_n_m_e_a2000.html#a19d8850b16c1204911ada74c267a5f6d">tNMEA2000::ParseMessages</a></div><div class="ttdeci">void ParseMessages()</div><div class="ttdoc">Parse all incoming Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l02560">NMEA2000.cpp:2560</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a1cb4d59a06724fcb32c6986b21c526a5"><div class="ttname"><a href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5">tNMEA2000::SetDeviceInformation</a></div><div class="ttdeci">void SetDeviceInformation(unsigned long _UniqueNumber, unsigned char _DeviceFunction=0xff, unsigned char _DeviceClass=0xff, uint16_t _ManufacturerCode=0xffff, unsigned char _IndustryGroup=4, int iDev=0)</div><div class="ttdoc">Set the Device Information. See also NAME.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01079">NMEA2000.cpp:1079</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a5a98e0686a41aed891a62e565060f9f7"><div class="ttname"><a href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open</a></div><div class="ttdeci">bool Open()</div><div class="ttdoc">Open the CAN device.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01186">NMEA2000.cpp:1186</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18"><div class="ttname"><a href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a></div><div class="ttdeci">@ N2km_NodeOnly</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8h_source.html#l00683">NMEA2000.h:683</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a6d2b2e0ffd57aca912cda44e868cd25b"><div class="ttname"><a href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b">tNMEA2000::SendMsg</a></div><div class="ttdeci">bool SendMsg(const tN2kMsg &amp;N2kMsg, int DeviceIndex=0)</div><div class="ttdoc">Send a N2k message to the bus.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01433">NMEA2000.cpp:1433</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a6f875d0fcec2c5805d00fd44321a03f7"><div class="ttname"><a href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7">tNMEA2000::ExtendTransmitMessages</a></div><div class="ttdeci">void ExtendTransmitMessages(const unsigned long *_TransmitMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Transmitted Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01149">NMEA2000.cpp:1149</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_a8ac69d5d7a93a2d2066a7bf4344c6e1e"><div class="ttname"><a href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e">tNMEA2000::SetOnOpen</a></div><div class="ttdeci">void SetOnOpen(void(*_OnOpen)())</div><div class="ttdoc">Set OnOpen callback function.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l02616">NMEA2000.cpp:2616</a></div></div>
+<div class="ttc" id="aclasst_n_m_e_a2000_html_ad43803ecc3b2aeaa5ee633321a6ff867"><div class="ttname"><a href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867">tNMEA2000::SetMode</a></div><div class="ttdeci">void SetMode(tN2kMode _N2kMode, uint8_t _N2kSource=15)</div><div class="ttdoc">Set the library mode.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01163">NMEA2000.cpp:1163</a></div></div>
+<div class="ttc" id="agroup__group__msg_set_up_html_gae78e6de6adca426675e36ccc4131404b"><div class="ttname"><a href="group__group__msg_set_up.html#gae78e6de6adca426675e36ccc4131404b">SetN2kWindSpeed</a></div><div class="ttdeci">void SetN2kWindSpeed(tN2kMsg &amp;N2kMsg, unsigned char SID, double WindSpeed, double WindAngle, tN2kWindReference WindReference)</div><div class="ttdoc">Setting up Message &quot;Wind Data&quot; - PGN 130306.</div><div class="ttdef"><b>Definition:</b> <a href="_n2k_messages_8h_source.html#l04706">N2kMessages.h:4706</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_03680f297d755c096b0a1ead13ee12b7.html">Examples</a></li><li class="navelem"><a class="el" href="dir_83e5851bc933ad505eb1bb0e7fa3c4ba.html">WindMonitor</a></li><li class="navelem"><a class="el" href="_wind_monitor_8ino.html">WindMonitor.ino</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
+</body>
+</html>

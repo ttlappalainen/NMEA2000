@@ -1,7 +1,7 @@
 var searchData=
 [
   ['finddevicebyids_0',['FindDeviceByIDs',['../classt_n2k_device_list.html#a7ce21a82c4087f97d7584ac4b11bad61',1,'tN2kDeviceList']]],
-  ['finddevicebyname_1',['FindDeviceByName',['../classt_n2k_device_list.html#a4fc68059bd10c90cadb9a72c53890b75',1,'tN2kDeviceList']]],
+  ['finddevicebyname_1',['FindDeviceByName',['../classt_n2k_device_list.html#a36808899823d265d6ad699952a1f0009',1,'tN2kDeviceList']]],
   ['finddevicebyproduct_2',['FindDeviceByProduct',['../classt_n2k_device_list.html#a2435140dcff99c2f4cea7598d8a3bee3',1,'tN2kDeviceList']]],
   ['finddevicebysource_3',['FindDeviceBySource',['../classt_n2k_device_list.html#a497458c3545bfa9902174e56f7dadd65',1,'tN2kDeviceList']]],
   ['findfreecanmsgindex_4',['FindFreeCANMsgIndex',['../classt_n_m_e_a2000.html#aa09664f367d192c9e025aebffc1f7601',1,'tNMEA2000']]],

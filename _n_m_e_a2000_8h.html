@@ -139,9 +139,9 @@ Include dependency graph for NMEA2000.h:</div>
 <area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="197,155,388,181"/>
 <area shape="rect" href="_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="130,229,229,256"/>
 <area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="5,155,87,181"/>
-<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="This File contains a CAN message helper class." alt="" coords="27,80,137,107"/>
+<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="File declares tN2kCANMsg class used internally on tNMEA2000." alt="" coords="27,80,137,107"/>
 <area shape="rect" href="_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="335,229,424,256"/>
-<area shape="rect" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="161,80,302,107"/>
+<area shape="rect" href="_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class." alt="" coords="161,80,302,107"/>
 <area shape="rect" href="_n2k_def_8h.html" title="Type definitions and utility macros used in the NMEA2000 libraries." alt="" coords="228,304,304,331"/>
 <area shape="rect" title=" " alt="" coords="195,379,259,405"/>
 <area shape="rect" title=" " alt="" coords="84,304,152,331"/>
@@ -160,7 +160,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" href="_n2k_group_function_default_handlers_8cpp.html" title=" " alt="" coords="333,80,581,107"/>
 <area shape="rect" href="_n_m_e_a2000_8cpp.html" title=" " alt="" coords="605,80,717,107"/>
 <area shape="rect" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="741,80,874,107"/>
+<area shape="rect" href="_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList." alt="" coords="367,155,498,181"/>
 <area shape="rect" href="_n2k_device_list_8cpp.html" title=" " alt="" coords="5,155,137,181"/>
+<area shape="rect" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="647,155,805,181"/>
+<area shape="rect" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="830,155,945,181"/>
 </map>
 </div>
 </div>
@@ -335,7 +338,7 @@ Functions</h2></td></tr>
 
 <p>Intervall for Heartbeat. </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00812">812</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l00811">811</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -596,7 +599,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="afe3510c9b614e5cd7d30c8095882cde0a95f1ae6bcf708ac57445c095d7d999ad" name="afe3510c9b614e5cd7d30c8095882cde0a95f1ae6bcf708ac57445c095d7d999ad"></a>N2kpgnl_receive&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03061">3061</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03139">3139</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -713,9 +716,13 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
-<dd>
-false Parsing of PGN Message aborted </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Parsing of PGN Message successful </td></tr>
+    <tr><td class="paramname">false</td><td>Parsing of PGN Message aborted </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02771">2771</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
@@ -791,9 +798,13 @@ false Parsing of PGN Message aborted </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
-<dd>
-false Parsing of PGN Message aborted </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Parsing of PGN Message successful </td></tr>
+    <tr><td class="paramname">false</td><td>Parsing of PGN Message aborted </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02856">2856</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
@@ -834,9 +845,13 @@ false Parsing of PGN Message aborted </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true Parsing of PGN Message successful </dd>
-<dd>
-false Parsing of PGN Message aborted </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Parsing of PGN Message successful </td></tr>
+    <tr><td class="paramname">false</td><td>Parsing of PGN Message aborted </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8cpp_source.html#l02877">2877</a> of file <a class="el" href="_n_m_e_a2000_8cpp_source.html">NMEA2000.cpp</a>.</p>
 
@@ -879,7 +894,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "ISO request" message - PGN 59904. </p>
 <p >Alias of PGN 59904. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#ab5409c3f185f2955f22257cf5318ea95">ParseN2kPGN59904</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03052">3052</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03130">3130</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -926,7 +941,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "Heartbeat" - PGN 126993. </p>
 <p >Alias of PGN 126993. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a4fae1052033c2b02fbadbb9032d58f2a">SetN2kPGN126993</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03112">3112</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03190">3190</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -985,7 +1000,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "Configuration information" - PGN 126998. </p>
 <p >Alias of PGN 126998. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a50b4dcee1e7adadd00691809e4658f39">SetN2kPGN126998</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02968">2968</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03046">3046</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1041,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "ISO Address Claim" - PGN 60928. </p>
 <p >Alias of PGN 60928. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a43c1cd19678b9e95c2c854d5e59099b4">SetN2kPGN60928</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02875">2875</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02953">2953</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1103,7 +1118,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "ISO Address Claim" - PGN 60928. </p>
 <p >Alias of PGN 60928. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a43c1cd19678b9e95c2c854d5e59099b4">SetN2kPGN60928</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02862">2862</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02940">2940</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1633,7 +1648,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "ISO Acknowledgement" - PGN 59392. </p>
 <p >Alias of PGN 59392. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a9c9b91f17beb9663aa75b63f2e831664">SetN2kPGN59392</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02815">2815</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02893">2893</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1680,7 +1695,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "ISO request" - PGN 59904. </p>
 <p >Alias of PGN 59904. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a8ff5d9b29c69cc09f6b99a8380c642a8">SetN2kPGN59904</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03025">3025</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03103">3103</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1728,7 +1743,7 @@ false Parsing of PGN Message aborted </dd></dl>
        function" - PGN 126464. </p>
 <p >Alias of PGN 126464. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#a6758abf82bbde509d0bb8879b492d9ae">SetN2kPGN126464</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03088">3088</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l03166">3166</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>
@@ -1811,7 +1826,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Setting up Message "Product information" - PGN 126996. </p>
 <p >Alias of PGN 126996. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="_n_m_e_a2000_8h.html#abb8a20b089836b98e226399f1d51a8da">SetN2kPGN126996</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02906">2906</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n_m_e_a2000_8h_source.html#l02984">2984</a> of file <a class="el" href="_n_m_e_a2000_8h_source.html">NMEA2000.h</a>.</p>
 
 </div>
 </div>

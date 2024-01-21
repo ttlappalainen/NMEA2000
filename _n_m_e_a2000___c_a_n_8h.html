@@ -143,11 +143,22 @@ Include dependency graph for NMEA2000_CAN.h:</div>
 <area shape="rect" title=" " alt="" coords="180,453,244,480"/>
 <area shape="rect" title=" " alt="" coords="166,379,234,405"/>
 <area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="229,229,420,256"/>
-<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="This File contains a CAN message helper class." alt="" coords="23,155,132,181"/>
+<area shape="rect" href="_n2k_c_a_n_msg_8h.html" title="File declares tN2kCANMsg class used internally on tNMEA2000." alt="" coords="23,155,132,181"/>
 <area shape="rect" href="_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="332,304,421,331"/>
-<area shape="rect" href="_n2k_group_function_8h.html" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="207,155,348,181"/>
+<area shape="rect" href="_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class." alt="" coords="207,155,348,181"/>
 <area shape="rect" title=" " alt="" coords="410,379,473,405"/>
 <area shape="rect" title=" " alt="" coords="143,229,204,256"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="_n_m_e_a2000___c_a_n_8h__dep__incl.png" border="0" usemap="#a_n_m_e_a2000___c_a_n_8hdep" alt=""/></div>
+<map name="a_n_m_e_a2000___c_a_n_8hdep" id="a_n_m_e_a2000___c_a_n_8hdep">
+<area shape="rect" title="Automatic library selection according to the selected board." alt="" coords="173,5,307,32"/>
+<area shape="rect" href="_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList." alt="" coords="5,80,136,107"/>
+<area shape="rect" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="161,80,319,107"/>
+<area shape="rect" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="344,80,459,107"/>
 </map>
 </div>
 </div>
@@ -203,7 +214,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a99f6ed3fa2b0b15f276c856e10a7a3ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td></tr>
+<tr class="memitem:a99f6ed3fa2b0b15f276c856e10a7a3ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_device_analyzer_8ino.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td></tr>
 <tr class="separator:a99f6ed3fa2b0b15f276c856e10a7a3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -579,7 +590,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a>&amp; NMEA2000 =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td>
+          <td class="memname"><a class="el" href="classt_n_m_e_a2000.html">tNMEA2000</a>&amp; NMEA2000 =*(new tNMEA2000_mcp(<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3b620e8c35e1d4fb1ca29b5e07954650">N2k_SPI_CS_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a3bc8688d0bc7ea8605025b7204df6e13">MCP_CAN_CLOCK_SET</a>,<a class="el" href="_device_analyzer_8ino.html#a2cedc3aec3faef9621813e91a828a4c4">N2k_CAN_INT_PIN</a>,<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a5c1fb716136475e5ca8e4b5dee33893a">MCP_CAN_RX_BUFFER_SIZE</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">

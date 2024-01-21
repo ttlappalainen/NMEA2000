@@ -94,7 +94,7 @@ var group__group__helper_class =
       [ "AddDevice", "classt_n2k_device_list.html#add544fd3c3ea24ff54f34e0b11dd559e", null ],
       [ "Count", "classt_n2k_device_list.html#a4f523fb8f2e032d4426c78270bd40b99", null ],
       [ "FindDeviceByIDs", "classt_n2k_device_list.html#a7ce21a82c4087f97d7584ac4b11bad61", null ],
-      [ "FindDeviceByName", "classt_n2k_device_list.html#a4fc68059bd10c90cadb9a72c53890b75", null ],
+      [ "FindDeviceByName", "classt_n2k_device_list.html#a36808899823d265d6ad699952a1f0009", null ],
       [ "FindDeviceByProduct", "classt_n2k_device_list.html#a2435140dcff99c2f4cea7598d8a3bee3", null ],
       [ "FindDeviceBySource", "classt_n2k_device_list.html#a497458c3545bfa9902174e56f7dadd65", null ],
       [ "GetDeviceLastMessageTime", "classt_n2k_device_list.html#a77d9d5437323e020db9eeebe5a10c4f5", null ],

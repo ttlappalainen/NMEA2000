@@ -1,9 +1,11 @@
 <map id="NMEA2000StdTypes.h" name="NMEA2000StdTypes.h">
-<area shape="rect" id="node1" title="NMEA2000 standard type definitions." alt="" coords="43,5,196,32"/>
-<area shape="rect" id="node2" href="$_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="74,80,165,107"/>
+<area shape="rect" id="node1" title="NMEA2000 standard type definitions." alt="" coords="80,5,233,32"/>
+<area shape="rect" id="node2" href="$_n2k_types_8h.html" title="This File contains all specific Enumerations to make NMEA2000 Messages easier for humans to read." alt="" coords="111,80,202,107"/>
 <area shape="rect" id="node3" href="$_n2k_maretron_8cpp.html" title=" " alt="" coords="5,229,127,256"/>
-<area shape="rect" id="node4" href="$_n2k_maretron_8h.html" title="Collection of functions for handling NMEA2000 bus Maretron messages." alt="" coords="66,155,173,181"/>
-<area shape="rect" id="node5" href="$_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="197,155,313,181"/>
-<area shape="rect" id="node6" href="$_n2k_messages_8cpp.html" title=" " alt="" coords="170,229,301,256"/>
-<area shape="rect" id="node7" href="$_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="325,229,506,256"/>
+<area shape="rect" id="node4" href="$_n2k_maretron_8h.html" title="Collection of functions for handling NMEA2000 bus Maretron messages." alt="" coords="103,155,210,181"/>
+<area shape="rect" id="node5" href="$_n2k_messages_8h.html" title="This File contains all SetXXX functions which will be needed to transfer data with a specific PGN." alt="" coords="339,155,455,181"/>
+<area shape="rect" id="node6" href="$_n2k_messages_8cpp.html" title=" " alt="" coords="151,229,282,256"/>
+<area shape="rect" id="node7" href="$_n2k_messages_enum_to_str_8h.html" title="This File contains functions to convert enums from N2kMessages.h to const char." alt="" coords="306,229,487,256"/>
+<area shape="rect" id="node8" href="$_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="512,229,671,256"/>
+<area shape="rect" id="node9" href="$_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="695,229,810,256"/>
 </map>

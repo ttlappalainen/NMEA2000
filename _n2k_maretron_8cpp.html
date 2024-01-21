@@ -242,7 +242,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">TempInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">TempSource</td><td>Source of the temperature, see <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> </td></tr>
     <tr><td class="paramname">ActualTemperature</td><td>Temperature in K. Use function CToKelvin, if you want to use °C. </td></tr>
@@ -309,7 +309,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">FlowRateInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">FluidFlowRate</td><td>This field is used to indicate the rate of fluid flow in units litres/hour.</td></tr>
@@ -375,7 +375,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence ID. Normally you can just forget its value. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. </td></tr>
     <tr><td class="paramname">VolumeInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">TripVolume</td><td>This field is used to indicate the trip volume units of litres.</td></tr>
@@ -446,7 +446,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">TempInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">TempSource</td><td>Source of the temperature, see <a class="el" href="group__group__msg_types.html#ga8a1e9646b80c46fb414fa44bcfdca828">tN2kTempSource</a> </td></tr>
     <tr><td class="paramname">ActualTemperature</td><td>Temperature in K. Use function CToKelvin, if you want to use °C. </td></tr>
@@ -510,7 +512,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">FlowRateInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">FluidFlowRate</td><td>This field is used to indicate the rate of fluid flow in units litres/hour. </td></tr>
@@ -573,7 +577,9 @@ false Parsing of PGN Message aborted </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
-    <tr><td class="paramname">SID</td><td>Sequence ID. If your device is e.g. boat speed and heading at same time, you can set same SID for different messages to link this PGN to other related PGNs. When no linkage exists, the value of the SID shall be set to 255 </td></tr>
+    <tr><td class="paramname">SID</td><td>Sequence identifier. In most cases you can use just 0xff for SID. See <a class="el" href="md_7_glossary.html#secRefTermSID">SID</a>. <br  />
+ <br  />
+ The sequence identifier field is used to tie different PGNs data together to same sampling or calculation time. </td></tr>
     <tr><td class="paramname">VolumeInstance</td><td>This should be unique at least on one device. May be best to have it unique over all devices sending this PGN. </td></tr>
     <tr><td class="paramname">FluidType</td><td>Type of Fluid, see <a class="el" href="group__group__msg_types.html#gaebff1affd21cdcb4962682017d8a18df">tN2kFluidType</a> [possible values for this field include Fuel, Fresh Water, Waste Water, Live Well, Oil, and Black Water] </td></tr>
     <tr><td class="paramname">TripVolume</td><td>This field is used to indicate the trip volume units of litres. </td></tr>

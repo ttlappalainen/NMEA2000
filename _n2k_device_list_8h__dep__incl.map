@@ -1,4 +1,5 @@
 <map id="N2kDeviceList.h" name="N2kDeviceList.h">
-<area shape="rect" id="node1" title="This File contains a." alt="" coords="12,5,131,32"/>
-<area shape="rect" id="node2" href="$_n2k_device_list_8cpp.html" title=" " alt="" coords="5,80,137,107"/>
+<area shape="rect" id="node1" title="This File contains a." alt="" coords="89,5,207,32"/>
+<area shape="rect" id="node2" href="$_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList." alt="" coords="5,80,136,107"/>
+<area shape="rect" id="node3" href="$_n2k_device_list_8cpp.html" title=" " alt="" coords="161,80,293,107"/>
 </map>

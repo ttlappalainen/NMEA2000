@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('_n2k_group_function_8h.html',''); init
 </div><!--header-->
 <div class="contents">
 
-<p>This File contains the definition of the GroupFunctionHandler.  
+<p>Base and default group function PGN 126208 message handler class.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstring&gt;</code><br />
 <code>#include &quot;<a class="el" href="_n_m_e_a2000___compiler_defns_8h_source.html">NMEA2000_CompilerDefns.h</a>&quot;</code><br />
@@ -131,7 +131,7 @@ Include dependency graph for N2kGroupFunction.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_n2k_group_function_8h__incl.png" border="0" usemap="#a_n2k_group_function_8h" alt=""/></div>
 <map name="a_n2k_group_function_8h" id="a_n2k_group_function_8h">
-<area shape="rect" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="116,5,257,32"/>
+<area shape="rect" title="Base and default group function PGN 126208 message handler class." alt="" coords="116,5,257,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,67,107"/>
 <area shape="rect" href="_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="91,80,282,107"/>
 <area shape="rect" href="_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="306,80,387,107"/>
@@ -146,15 +146,18 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_n2k_group_function_8h__dep__incl.png" border="0" usemap="#a_n2k_group_function_8hdep" alt=""/></div>
 <map name="a_n2k_group_function_8hdep" id="a_n2k_group_function_8hdep">
-<area shape="rect" title="This File contains the definition of the GroupFunctionHandler." alt="" coords="172,5,313,32"/>
+<area shape="rect" title="Base and default group function PGN 126208 message handler class." alt="" coords="172,5,313,32"/>
 <area shape="rect" href="_n2k_group_function_8cpp.html" title=" " alt="" coords="5,155,160,181"/>
 <area shape="rect" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes." alt="" coords="125,80,360,107"/>
 <area shape="rect" href="_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="391,80,489,107"/>
 <area shape="rect" href="_n2k_group_function_default_handlers_8cpp.html" title=" " alt="" coords="320,155,568,181"/>
 <area shape="rect" href="_n_m_e_a2000_8cpp.html" title=" " alt="" coords="184,155,296,181"/>
-<area shape="rect" href="_n2k_device_list_8h.html" title="This File contains a." alt="" coords="750,155,869,181"/>
-<area shape="rect" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="592,155,725,181"/>
-<area shape="rect" href="_n2k_device_list_8cpp.html" title=" " alt="" coords="743,229,875,256"/>
+<area shape="rect" href="_n2k_device_list_8h.html" title="This File contains a." alt="" coords="591,155,710,181"/>
+<area shape="rect" href="_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="744,155,877,181"/>
+<area shape="rect" href="_device_analyzer_8ino.html" title="NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList." alt="" coords="585,229,716,256"/>
+<area shape="rect" href="_n2k_device_list_8cpp.html" title=" " alt="" coords="429,229,561,256"/>
+<area shape="rect" href="_temperature_monitor_8ino.html" title="NMEA2000 library example. Send main cabin and water temperatures to the bus." alt="" coords="741,229,899,256"/>
+<area shape="rect" href="_wind_monitor_8ino.html" title="NMEA2000 library example. Send main wind data to the bus." alt="" coords="924,229,1039,256"/>
 </map>
 </div>
 </div>
@@ -163,7 +166,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_group_function_handler.html">tN2kGroupFunctionHandler</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler class for Group Functions.  <a href="classt_n2k_group_function_handler.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base handler class for Group Functions.  <a href="classt_n2k_group_function_handler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -231,9 +234,19 @@ Enumerations</h2></td></tr>
 <tr class="separator:aba86dcb75a6f93dded55b6817627e94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >This File contains the definition of the GroupFunctionHandler. </p>
-<p >Group functions can be used on the bus, to organize the devices on the network (e.g. setting a device’s PGN instances)</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Please double check and give maybe some more context</dd></dl>
+<div class="textblock"><p >Base and default group function PGN 126208 message handler class. </p>
+<p >Group functions can be used for requesting, commanding and cofiguring other bus devices. Example setting depth sounder offset can be done by command group function. This is standard way and other devices should support it. Other common examples are changing device or system information, setting installation description, changing message period.</p>
+<p >There are 7 different group functions defined by first field of PGN 126208</p><ul>
+<li>Request group funtion is used to request specific transmit PGN from device.</li>
+<li>Command group function can be used to command device to change fields.</li>
+<li>Acknowledge group function is respond for for other devices command group function or request, read or write fields group function in case of error.</li>
+<li>Read fields group function is to request specific field from specific PGN from device.</li>
+<li>Read fields reply group function is for responding read fields group function request.</li>
+<li>Write fields group function is to write specific field on specific PGN on device.</li>
+<li>Write fields reply group function is for responding write fields group function.</li>
+</ul>
+<p >Request group function is mandatory for all certified devices. The default handler can only respond "unsupported" to requests other than system PGNs. To fullfill certification requirement developer should inherit base class, write supported functions and register handler class to library with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>. One can find examples for implementation from <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a>. See e.g., <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 - &quot;Configuration Information&quot;.">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
+<p >Library has inherited default handlers for required system PGNs declared in <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a> . Those can be used as sample for other PGN group function handlers.</p>
 <dl class="section see"><dt>See also</dt><dd>[<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> Documentation PGN 126208 ] (<a href="https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf">https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf</a>) </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
@@ -250,7 +263,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00047">47</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00068">68</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -266,7 +279,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00049">49</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00070">70</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -282,7 +295,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00050">50</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00071">71</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -298,7 +311,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00048">48</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00069">69</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -324,7 +337,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee" name="ac314d0f10e98b40e38c24030ab7f29bca5534efacc1840b9cce84042013f250ee"></a>N2kgfc_Command&#160;</td><td class="fielddoc"><p >The Command Group Function message is directed to a specific address, the Global Address (255) shall not be used. This command sets the value of one, some or all parameters in a Parameter Group. The number of parameters to set is in field 5, then follows the field number and the new value repeated for each of them. A Parameter Group may contain one group of parameters out of multiple instances where the instance number of the group is given in one field. A command to set any parameter of such a group must contain the field number and value of the group instance number. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555" name="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555"></a>N2kgfc_Acknowledge&#160;</td><td class="fielddoc"><p >The Acknowledgement reply is transmitted in response to a Request, Command, Read or Write Group Function Message. The Acknowledge Group Function shall be transmitted in response to every Command Message received, indicating acknowledgement or containing the appropriate Error Code. The Acknowledge Group Function is only required in response to a Request, Read orWrite Group Function that cannot be satisfied. The Acknowledge Group function shall transmit all fields applicable to the Group Function being acknowledged, fields where the error does not exist are set to 0x0 (No Error/Acknowledge). </p>
+<tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555" name="ac314d0f10e98b40e38c24030ab7f29bcad925b5de0add0df1dd3b625137f74555"></a>N2kgfc_Acknowledge&#160;</td><td class="fielddoc"><p >The Acknowledgement reply is transmitted in response to a Request, Command, Read or Write Group Function Message. The Acknowledge Group Function shall be transmitted in response to every Command Message received, indicating acknowledgement or containing the appropriate Error Code. The Acknowledge Group Function is only required in response to a Request, Read fields or Write fields Group Function that cannot be satisfied. The Acknowledge Group function shall transmit all fields applicable to the Group Function being acknowledged, fields where the error does not exist are set to 0x0 (No Error/Acknowledge). </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93" name="ac314d0f10e98b40e38c24030ab7f29bcaf96fb538092d8c2fb166e6e1f5641c93"></a>N2kgfc_Read&#160;</td><td class="fielddoc"><p >This Read Fields Group Function provides a means to read specific fields in a PGN. When Field 2 (PGN number) contains a non-proprietary PGN number, field 3, field 4 and field 5 are not included in this message. If the receiver of this message can comply, the receiver will send to the transmitter a Read Fields Reply Group Function. If the receiver cannot comply, an Acknowledge Group Function shall be sent. </p>
 </td></tr>
@@ -336,7 +349,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00064">64</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00085">85</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +384,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00195">195</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00216">216</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -406,7 +419,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00148">148</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00169">169</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +450,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00173">173</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00194">194</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 
 </div>
 </div>
