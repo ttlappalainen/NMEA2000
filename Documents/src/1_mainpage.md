@@ -1,27 +1,21 @@
 # NMEA2000 library for C++ {#mainpage}
-  
-Object oriented NMEA2000 library for Teensy, ESP, Arduino, MBED and Rasberry type Boards.
-These board types has been tested, but library can be used also in other systems by writing
-compatible CAN driver and wrapper for other hw specific functions.
 
-Library gives you easy way to make different kind of NMEA2000 bus devices like
-sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,
-NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.
+NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements (see \ref secRefNMEA2000Certification) leaving only interesting data handling for developer. **Library has been used in several commercial certified NMEA2000 devices.**
 
-Library fulfills NMEA 2000 mandatory functions and behavior. Devices using library can pass NMEA2000
-certification tests. Library has been used in several commercial certified products.
+Library provides you easy way to make different kind of NMEA2000 bus devices like sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.
+
+I started library development on 2015 for Arduino based boards. Since that as far as I know it has been used and tested with Teensy, ESP, some Arduino, MBED and Rasberry Boards, but library can be used also in other systems by writing compatible CAN "driver" and necessary classes for other hw specific functions.
 
 If you are familiar with library, here is quick link to \ref changes.
 
 \warning
-First of all - as normal - you can use library but there is not any guarantee and you use it with your own risk!
-You connect your hardware always with your own risk. I wrote this documentation to help to
-connect own hardware to NMEA2000 bus. I do not take any responsible of any errors in document
-or any possible damages caused to your devices.
+First of all - as normal - you can use library but there is not any guarantee and you use it with your own risk! You connect your hardware always with your own risk. I wrote this documentation to help to connect own hardware to NMEA2000 bus. I do not take any responsible of any errors in document or any possible damages caused to your devices.
 
 **About library documentation**
 
-This is a new doxygen generated documentation designed by Matthias Werner - great thanks to him for excellent work. Many parts are still based on my original documentation, which I created at beginning of the library. After several years experience I see a need for several updates. So the documentation project will continue with checking and updating. For more details see \ref libDocuGen
+Great thanks to Matthias Werner for excellent original library documentation work. As my knowledge of NMEA2000 has been improved a lot since 2015, boards and breakboards has been changed I'll try to update document as necessary and keep it up to date. Also I hope that other developers will inform me errors, bad language, ununderstandable text, better links etc. to keep document usable.
+
+Document will be automatically created in combination of document sources and code sources. For more details see \ref libDocuGen .
 
 ## Recommended hardware
 
@@ -29,12 +23,11 @@ See this for \ref secTRecHW and please read document \ref pageHWSetUp before pur
 
 ## Hardware depended libraries
 
-each hardware setup need a specific \ref secHWlib
+Each hardware setup need a specific \ref secHWlib
 
 \section secRef References
 
 - [NMEA2000 Standard](https://www.nmea.org/nmea-2000.html)
-- [List of NMEA 2000 registered devices](https://web.nmea.org/products/search)
 - [List of NMEA 2000 registrated companies](https://web.archive.org/web/20190529161431/http://www.nmea.org/Assets/20121020%20nmea%202000%20registration%20list.pdf)
 - [Device class and function codes](https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf)
 - [ISO address claim](https://web.archive.org/web/20150910070107/http://www.nmea.org/Assets/20140710%20nmea-2000-060928%20iso%20address%20claim%20pgn%20corrigendum.pdf)

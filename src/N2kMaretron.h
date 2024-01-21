@@ -61,11 +61,10 @@
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID. \n
+ *                        \n
+ *                        The sequence identifier field is used to tie different PGNs data together to same 
+ *                        sampling or calculation time.
  * \param TempInstance    This should be unique at least on one device. May be
  *                        best to have it unique over all devices sending
  *                        this PGN.
@@ -105,11 +104,7 @@ inline void SetN2kMaretronTempHR(tN2kMsg &N2kMsg, unsigned char SID, unsigned ch
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence ID. Normally you can just forget its value. See \ref secRefTermSID.
  * \param TempInstance    This should be unique at least on one device. May be
  *                        best to have it unique over all devices sending
  *                        this PGN.
@@ -154,11 +149,10 @@ inline bool ParseN2kMaretronTempHR(const tN2kMsg &N2kMsg, unsigned char &SID, un
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID. \n
+ *                        \n
+ *                        The sequence identifier field is used to tie different PGNs data together to same 
+ *                        sampling or calculation time.
  * \param FlowRateInstance  This should be unique at least on one device. May
  *                          be best to have it unique over all devices sending
  *                          this PGN.
@@ -197,11 +191,7 @@ inline void SetN2kMaretronFluidFR(tN2kMsg &N2kMsg, unsigned char SID, unsigned c
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence ID. Normally you can just forget its value. See \ref secRefTermSID.
  * \param FlowRateInstance  This should be unique at least on one device. May
  *                          be best to have it unique over all devices sending
  *                          this PGN.
@@ -243,11 +233,10 @@ inline bool ParseN2kMaretronFluidFR(const tN2kMsg &N2kMsg, unsigned char &SID, u
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID. \n
+ *                        \n
+ *                        The sequence identifier field is used to tie different PGNs data together to same 
+ *                        sampling or calculation time.
  * \param VolumeInstance  This should be unique at least on one device. May
  *                        be best to have it unique over all devices sending
  *                        this PGN.
@@ -285,11 +274,7 @@ inline void SetN2kMaretronTripVolume(tN2kMsg &N2kMsg, unsigned char SID, unsigne
  * 
  * \param N2kMsg          Reference to a N2kMsg Object, 
  *                        Output: NMEA2000 message ready to be send.
- * \param SID             Sequence ID. If your device is e.g. boat speed and
- *                        heading at same time, you can set same SID for
- *                        different messages to link this PGN to other related
- *                        PGNs. When no linkage exists, the value of the SID
- *                        shall be set to 255
+ * \param SID             Sequence ID. Normally you can just forget its value. See \ref secRefTermSID.
  * \param VolumeInstance  This should be unique at least on one device. May
  *                        be best to have it unique over all devices sending
  *                        this PGN.

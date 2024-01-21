@@ -298,10 +298,7 @@ enum tN2kDD305 {
 
 /*************************************************************************//**
  * \enum tN2kDD374
- * \brief Enumeration of ....
- * 
- * 
- * \todo Add proper documentation ...
+ * \brief Measurement delay source
  * 
  */
 enum tN2kDD374 {

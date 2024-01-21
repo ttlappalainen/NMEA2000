@@ -23,12 +23,33 @@
 
 /************************************************************************//**
  * \file    N2kGroupFunction.h
- * \brief   This File contains the definition of the GroupFunctionHandler
+ * \brief   Base and default group function PGN 126208 message handler class.
  * 
- * Group functions can be used on the bus, to organize the devices on 
- * the network (e.g. setting a device’s PGN instances)
+ * Group functions can be used for requesting, commanding and cofiguring other
+ * bus devices. Example setting depth sounder offset can be done by command group
+ * function. This is standard way and other devices should support it. Other common
+ * examples are changing device or system information, setting installation description,
+ * changing message period.
  * 
- * \todo Please double check and give maybe some more context
+ * There are 7 different group functions defined by first field of PGN 126208
+ * - Request group funtion is used to request specific transmit PGN from device.
+ * - Command group function can be used to command device to change fields.
+ * - Acknowledge group function is respond for for other devices command group function or
+ *  request, read or write fields group function in case of error.
+ * - Read fields group function is to request specific field from specific PGN from device.
+ * - Read fields reply group function is for responding read fields group function request.
+ * - Write fields group function is to write specific field on specific PGN on device.
+ * - Write fields reply group function is for responding write fields group function.
+ * 
+ * Request group function is mandatory for all certified devices. The default handler can 
+ * only respond "unsupported" to requests other than system PGNs. To fullfill certification
+ * requirement developer should inherit base class, write supported functions and register
+ * handler class to library with tNMEA2000::AddGroupFunctionHandler(). One can find examples for
+ * implementation from N2kGroupFunctionDefaultHandlers.h. See e.g., tN2kGroupFunctionHandlerForPGN126998.
+ * 
+ * Library has inherited default handlers for required system PGNs declared in
+ * N2kGroupFunctionDefaultHandlers.h . Those can be used as sample for other
+ * PGN group function handlers.
  * 
  * \sa [NMEA2000 Documentation PGN 126208 ] (https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf)
  * ********************************************************************/
@@ -90,7 +111,7 @@ enum tN2kGroupFunctionCode {
          * Function shall be transmitted in response to every Command Message 
          * received, indicating acknowledgement or containing the appropriate 
          * Error Code. The Acknowledge Group Function is only required in 
-         * response to a Request, Read orWrite Group Function that cannot be 
+         * response to a Request, Read fields or Write fields Group Function that cannot be 
          * satisfied. The Acknowledge Group function shall transmit all fields 
          * applicable to the Group Function being acknowledged, fields where 
          * the error does not exist are set to 0x0 (No Error/Acknowledge).
@@ -212,23 +233,39 @@ enum tN2kGroupFunctionParameterErrorCode {
 class tNMEA2000;
 /************************************************************************//**
  * \class   tN2kGroupFunctionHandler
- * \brief   Handler class for Group Functions
+ * \brief   Base handler class for Group Functions
  * \ingroup group_coreSupplementary
  * 
  * This class handles all functions which are needed to respond to group 
  * function messages. NMEA 2000 definition requires that devices should 
- * respond group function messages. This class is default handler, which 
- * simply responds “unsupported” for all queries. 
- * 
- * \todo More description is needed, please review
+ * respond group function messages. This class is base class and works also as default handler, which 
+ * simply responds “unsupported” for all group functions. To fullfill certification
+ * requirement developer should inherit this base class, write supported functions and register
+ * handler class to library with tNMEA2000::AddGroupFunctionHandler(). One can find examples for
+ * implementation from N2kGroupFunctionDefaultHandlers.h. See e.g., tN2kGroupFunctionHandlerForPGN126998.
  *
+ * Library has inherited default handlers for required system PGNs declared in
+ * N2kGroupFunctionDefaultHandlers.h . Those can be used as sample for other
+ * PGN group function handlers.
+ * 
+ * NMEA 2000 library calls each registered handler class until some responses to \ref Handle
+ * call true, meaning that it handled request. After get true return libray stops requesting
+ * handling for rest registered handler classes.
+ * 
+ * \note If your device transmits several e.g., 130316, you must handle them with single inherited
+ * handler. This is because e.g., if some device request 130316 from your device without parameters,
+ * you can not return true, since then library does not handle others and you can not return false,
+ * since then at end library responces with default acknowledge group function with "unsupported".
  */
 class tN2kGroupFunctionHandler {
   public:
     /**********************************************************************//**
-     * \brief 
+     * \brief Template class to test does field on group function match to PGN field value
      * 
-     * \todo Add a proper documentation
+     * Some group functions contains filter fields which should match to requested/commanded 
+     * PGN field. E.g., you may receive request group funtion globally addressed (255)
+     * with some group of field filters. Before you respond request all fields must
+     * match to your PGN. See example tN2kGroupFunctionHandlerForPGN126996::HandleRequest().
      * 
      * \tparam T          
      * \param FieldVal 
@@ -246,9 +283,12 @@ class tN2kGroupFunctionHandler {
     }
 
     /*********************************************************************//**
-     * \brief 
+     * \brief Class to test does string field on group function match to PGN field value
      *
-     * \todo Add a proper documentation
+     * Some group functions contains filter fields which should match to requested/commanded 
+     * PGN field. E.g., you may receive request group funtion globally addressed (255)
+     * with some group of field filters. Before you respond request all fields must
+     * match to your PGN. See example tN2kGroupFunctionHandlerForPGN126996::HandleRequest().
      *
      * \param FieldVal {type} 
      * \param MatchVal {type} 
@@ -280,19 +320,25 @@ class tN2kGroupFunctionHandler {
     // virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(uint32_t TransmissionInterval) __attribute__ ((deprecated));
   
     /**********************************************************************//**
-     * \brief Get the Request Group Function Transmission Or Priority Error 
-     *        Code object
+     * \brief Get request group function transmission or priority error code
      * 
-     * This is default handler for Complex Request transmission interval 
-     * setting. Overwrite it, if your PGN will support changing interval.  
-     * If you support changing interval and offset for your PGN, you can
-     * either overwrite function or set UseLimits and provide interval
-     * and offset limits.
+     * Function for resolving transmission or priority error code in tN2kGroupFunctionHandler::HandleRequest
+     * function according requested input and interval/offset limits requested PGN accepts.
+     * Function resolves only error code. If result is N2kgfTPec_Acknowledge you have to
+     * handle also possible change for interval/offset elsewhre on your inherited HandleRequest.
      * 
-     * \note see Code  In NMEA tests "C.3.13.2  Expanded Acknowledgment 
-     * Message Timing" tool is Old and does not know interval 
-     * 0xFFFFFFFE=Restore Default Interval. So to pass that test, that has
-     * to be commented out.
+     * If you support changing for interval and/or offset for your PGN simply use function
+     * as is. If you need to set offset limits set UseIntervalLimits and/or UseOffsetLimits
+     * and provide limits. For special handling you can override function.
+     * 
+     * \note On NMEA certification tests "C.3.13.2  Expanded Acknowledgment 
+     * Message Timing" old tool does not know interval 0xFFFFFFFE=Restore Default Interval
+     * and so fails test. Use new test tool sw version or comment that out.
+     * 
+     * **See example of using function on**
+     *  - \ref tN2kGroupFunctionHandlerForPGN126993::HandleRequest
+     *  - \ref tN2kGroupFunctionHandlerForPGN126996::HandleRequest
+     * 
      *  
      * \param TransmissionInterval    Interval for Transmission
      * \param TransmissionIntervalOffset Offset for Transmission Interval
@@ -302,11 +348,11 @@ class tN2kGroupFunctionHandler {
      * \param UseOffsetLimits         Use Offset limits 
      * \param OffsetMax               Maximum offset
      * 
-     * \return N2kgfTPec_Acknowledge -> if TransmissionInterval = 0xFFFFFFFF 
-     *                                or TransmissionInterval = 0xFFFFFFFE
-     *                                (Restore Default Interval)
-     * \return N2kgfTPec_TransmitIntervalOrPriorityNotSupported -> all other
-     *                                                            intervals
+     * \retval N2kgfTPec_Acknowledge  Both interval or offset are within limits or requested
+     *                                to keep current or restore default.
+     * \retval N2kgfTPec_TransmitIntervalOrPriorityNotSupported For other cases. HandleRequest
+     *                                should not change requested PGN interval or offset and should
+     *                                return acknowledge group function with error code.
      */
      virtual tN2kGroupFunctionTransmissionOrPriorityErrorCode GetRequestGroupFunctionTransmissionOrPriorityErrorCode(
                               uint32_t TransmissionInterval,
@@ -319,21 +365,30 @@ class tN2kGroupFunctionHandler {
                               );
     
     /**********************************************************************//**
-     * \brief Default request handler for group function requests for PGN.
+     * \brief Handle response for request group function.
      *
-     * Default response is "not supported". Certified devices must respond
-     * to requests!
+     * Default response is "not supported". Certified devices must have inherited
+     * handler and respond for requests for all device transmit PGNs.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param TransmissionInterval    Transmission interval [ms]
+     * Use \ref GetRequestGroupFunctionTransmissionOrPriorityErrorCode to get error code
+     * for transmission interval/offset request. If that returns N2kgfTPec_Acknowledge, modify
+     * your PGN transmission interval/offset according to request.
+     * 
+     * Handler must returns true, if it handled request, false otherwise.
+     * 
+     * **See example of overrided handler on**
+     *  - \ref tN2kGroupFunctionHandlerForPGN60928::HandleRequest
+     * 
+     * \param N2kMsg                      Reference to request group function message (PGN 126208)
+     * \param TransmissionInterval        Transmission interval [ms]
      * \param TransmissionIntervalOffset  Offset to the transmission 
      *                                    interval [10ms]
-     * \param NumberOfParameterPairs  Number of parameter pairs contained
-     *                                inside the group function message
+     * \param NumberOfParameterPairs      Number of parameter pairs contained
+     *                                    inside the group function message
      * \param iDev        Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true -> always returns true
+     * \retval true  If request was handled.
+     * \retval false If request was not handled.
      */
     virtual bool HandleRequest(const tN2kMsg &N2kMsg,
                                uint32_t TransmissionInterval,
@@ -342,43 +397,46 @@ class tN2kGroupFunctionHandler {
                                int iDev);
                                
     /**********************************************************************//**
-     * \brief Handle the response to Group Function "Command"
+     * \brief Handle response for command group function
      *
-     * Default response is "not supported". 
+     * Default response is "not supported". If you support command group function
+     * for your transmit PGN, inherit default handler and override HandleCommand for it.
      *  
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param PrioritySetting     Priority Setting
+     * Handler must returns true, if it handled command, false otherwise.
+     *  
+     *  **See example of overrided handler on**
+     *  - \ref tN2kGroupFunctionHandlerForPGN60928::HandleCommand
+     * 
+     * \param N2kMsg                  Reference to command group function message (PGN 126208)
+     * \param PrioritySetting         Priority Setting
      * \param NumberOfParameterPairs  Number of parameter pairs contained
      *                                inside the group function message
      * \param iDev        Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true -> always returns true
+     * \retval true  If command was handled.
+     * \retval false If command was not handled.
      */
     virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
 
     /**********************************************************************//**
-     * \brief Default handle function for Acknowledge a Group Function
+     * \brief Default handle function for acknowledge group function
      * 
      * This function handles Acknowledge group function, which is response 
      * for Request, Command, ReadFields or WriteFields group function. 
      * 
      * \note As default, this simply returns true meaning that received
      *       acknowledge has been handled. So you need to override this,
-     *        if your device will send one of those commands.
+     *       if your device will send one of group functions to other devices.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param PGNErrorCode  PGN Error Code, see 
-     *                      \ref tN2kGroupFunctionPGNErrorCode
-     * \param TransmissionOrPriorityErrorCode   see 
-     *                  \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
+     * \param N2kMsg                     Reference to acknowledge group function message (PGN 126208)
+     * \param PGNErrorCode               PGN Error Code, see \ref tN2kGroupFunctionPGNErrorCode
+     * \param TransmissionOrPriorityErrorCode  see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
      * \param NumberOfParameterPairs     Number of parameter pairs contained
      *                                   inside the group function message
-     * \param iDev        Index off the device in \ref tNMEA2000::Devices
+     * \param iDev                       Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true -> As default, simply return true meaning that received
-     *                acknowledge has been handled
+     * \retval true  If acknowledge was handled.
+     * \retval false If acknowledge was not handled.
      *
      */
     virtual bool HandleAcknowledge(const tN2kMsg &N2kMsg,
@@ -388,24 +446,27 @@ class tN2kGroupFunctionHandler {
                                    int iDev);
 
     /**********************************************************************//**
-     * \brief Handle the response to Group Function "Read Fields"
+     * \brief Handle response for read fields group function
      *
+     * Default response is "not supported". If you support read fields group function
+     * for your transmit PGN, inherit default handler and override HandleReadFields for it.
+     *  
+     * Handler must returns true, if it handled read fields, false otherwise.
      * 
-     * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param ManufacturerCode    Manufacturer Code, This will be set to 
-     *                            0xffff for non-propprietary PNGs
-     * \param IndustryGroup       Industry Group Code, This will be set to 
-     *                            0xff for non-propprietary PNGs
-     * \param UniqueID            Unique ID for the device
+     * \param N2kMsg                   Reference to read fields group function message (PGN 126208)
+     * \param ManufacturerCode         Manufacturer Code, This will be set to 
+     *                                 0xffff for non-propprietary PNGs
+     * \param IndustryGroup            Industry Group Code, This will be set to 
+     *                                 0xff for non-propprietary PNGs
+     * \param UniqueID                 Unique ID for the device
      * \param NumberOfSelectionPairs   Number of Selection pairs contained
      *                                 inside the group function message
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
-     * \param iDev          Index off the device in \ref tNMEA2000::Devices
+     * \param iDev                     Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true   ->  always returns true
+     * \retval true  If read fields was handled.
+     * \retval false If read fields was not handled.
      * 
      */
     virtual bool HandleReadFields(const tN2kMsg &N2kMsg,
@@ -417,25 +478,29 @@ class tN2kGroupFunctionHandler {
                                   int iDev);
     
     /**********************************************************************//**
-     * \brief Handle the response to Group Function "Read Fields Reply"
+     * \brief Handle read fields reply group function
      *
-     * \warning Under construction! No real code inside, always returns true!
+     * \note As default, this simply returns true meaning that received
+     *       read fields reply has been handled. So you need to override this,
+     *       if your device will send read fields group functions to other devices.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
+     * \param N2kMsg        Reference to read fields reply group function message (PGN 126208)
      * \param iDev          Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true -> Always
+     * \retval true  If read fields reply was handled.
+     * \retval false If read fields reply was not handled.
      */
     virtual bool HandleReadFieldsReply(const tN2kMsg &N2kMsg,int iDev);
 
     /**********************************************************************//**
-     * \brief Handle the response to Group Function "Write Fields"
+     * \brief Handle response for write fields group function
      *
+     * Default response is "not supported". If you support write fields group function
+     * for your transmit PGN, inherit default handler and override HandleWriteFields for it.
+     *  
+     * Handler must returns true, if it handled write fields, false otherwise.
      * 
-     * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
+     * \param N2kMsg              Reference to write fields group function message (PGN 126208)
      * \param ManufacturerCode    Manufacturer Code, This will be set to 
      *                            0xffff for non-propprietary PNGs
      * \param IndustryGroup       Industry Group Code, This will be set to 
@@ -447,7 +512,8 @@ class tN2kGroupFunctionHandler {
      *                                 inside the group function message
      * \param iDev          Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true   ->  always returns true
+     * \retval true  If write fields was handled.
+     * \retval false If write fields was not handled.
      * 
      */
     virtual bool HandleWriteFields(const tN2kMsg &N2kMsg,
@@ -459,21 +525,22 @@ class tN2kGroupFunctionHandler {
                                   int iDev);
 
     /**********************************************************************//**
-     * \brief Handle the response to Group Function "Write Fields Reply"
+     * \brief Handle write fields reply group function
      *
-     * \warning Under construction! No real code inside, always returns true!
+     * \note As default, this simply returns true meaning that received
+     *       write fields reply has been handled. So you need to override this,
+     *       if your device will send write fields group functions to other devices.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
+     * \param N2kMsg        Reference to write fields reply group function message (PGN 126208)
      * \param iDev          Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true -> Always
+     * \retval true    Always
      */
     virtual bool HandleWriteFieldsReply(const tN2kMsg &N2kMsg,int iDev);
 
   public:
     /**********************************************************************//**
-     * \brief Construct a new t N2k Group Function Handler object
+     * \brief Construct a new tN2kGroupFunctionHandler object
      *
      * \param _pNMEA2000  Pointer to an NMEA2000 object, see \ref tNMEA2000
      * \param _PGN        Parameter Group Number associated with this 
@@ -482,65 +549,80 @@ class tN2kGroupFunctionHandler {
     tN2kGroupFunctionHandler(tNMEA2000 *_pNMEA2000, unsigned long _PGN);
 
     /**********************************************************************//**
-     * \brief Handle for a Group Function
+     * \brief Handle group function message
+     * 
+     * Function parses group function PGN 126208 and forwards handling to specific
+     * handler like \ref HandleRequest. This simplifies code for user inherited
+     * tN2kGroupFunctionHandler class, since often it is enough just override HandleRequest
+     * and let other handlers use default response.
+     * 
+     * \sa
+     *  - \ref HandleRequest
+     *  - \ref HandleCommand
+     *  - \ref HandleAcknowledge
+     *  - \ref HandleReadFields
+     *  - \ref HandleReadFieldsReply
+     *  - \ref HandleWriteFields
+     *  - \ref HandleWriteFieldsReply
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
+     * \param N2kMsg                Reference to a N2kMsg Object, 
+     *                              This message is an Group function message
      * \param GroupFunctionCode     Code for Group Function, see 
      *                              \ref tN2kGroupFunctionCode
      * \param PGNForGroupFunction    PGN for the Group function
-     * \param iDev          Index off the device in \ref tNMEA2000::Devices
+     * \param iDev                  Index off the device in \ref tNMEA2000::Devices
      * 
-     * \return true   -> Group Function was handled properly 
-     * \return false  -> if (PGN!=PGNForGroupFunction && PGN!=0)
+     * \retval true    Group Function was handled properly 
+     * \retval false   if (PGN!=PGNForGroupFunction && PGN!=0) or group function was not handled.
      */
     virtual bool Handle(const tN2kMsg &N2kMsg, tN2kGroupFunctionCode GroupFunctionCode, unsigned long PGNForGroupFunction, int iDev);
 
     /**********************************************************************//**
-     * \brief Get the PGN for the Group Function out of a n2k message
+     * \brief Get requested/commanded etc. PGN from group function message
      * 
      * This is a static function for PGN 126208 handling. The 
-     * function extracts the PGN (as 3 bytes) from the given 
-     * N2K message.
+     * function reads PGN (as 3 bytes) from the group 
+     * function message.
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \return unsigned long -> PGN for Group Function
+     * \param N2kMsg            Reference to a N2kMsg Object.
+     *                          This message must be PGN 126208 group function message
+     * \return unsigned long -> Requested/commanded etc. PGN for Group Function.
+     *                          If N2kMsg is not PGN 126208, result can be anything.
      */
     static unsigned long GetPGNForGroupFunction(const tN2kMsg &N2kMsg);
 
     /**********************************************************************//**
-     * \brief Parse group function code and PGN from the message
+     * \brief Parse group function code and requested/commanded etc. PGN from group function message
      *
-     * This is a static function for PGN 126208 handling. 
+     * This is a static function for PGN 126208 handling.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
+     * \param N2kMsg              Reference to a N2kMsg Object.
+     *                            This message should be PGN 126208 group function message
      * \param GroupFunctionCode   Group Function Code, see \ref 
      *                            tN2kGroupFunctionCode
      * \param PGNForGroupFunction PGN for the Group function
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false   if (N2kMsg.PGN!=126208L)
      */
     static bool Parse(const tN2kMsg &N2kMsg,
                             tN2kGroupFunctionCode &GroupFunctionCode,
                             unsigned long &PGNForGroupFunction);
 
     /**********************************************************************//**
-     * \brief Parse parameters from group function Request message
+     * \brief Parse parameters from request group function message
      *
-     * This is a static function for PGN 126208 handling. 
+     * This is a static function for PGN 126208 handling.
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param TransmissionInterval    Transmission interval
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param TransmissionInterval     Transmission interval
      * \param TransmissionIntervalOffset Offset to the transmission interval
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false   if (N2kMsg.PGN!=126208L)
      */
     static bool ParseRequestParams(const tN2kMsg &N2kMsg,
                                uint32_t &TransmissionInterval,
@@ -548,69 +630,66 @@ class tN2kGroupFunctionHandler {
                                uint8_t  &NumberOfParameterPairs);
 
     /**********************************************************************//**
-     * \brief Get start Index of pair parameters on the group function 
-     * Request message
+     * \brief Get start Index of pair parameters from request group function message
      *
      * This is a static function for PGN 126208 handling. 
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param Index       Index where the Request Pair Parameters start
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param Index                    Index where the Request Pair Parameters start
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false  if (N2kMsg.PGN!=126208L)
      */
     static bool StartParseRequestPairParameters(const tN2kMsg &N2kMsg, int &Index);
 
     /**********************************************************************//**
-     * \brief Parse parameters from a group function Command message
+     * \brief Parse parameters from command group function message
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param PrioritySetting     Priority setting
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param PrioritySetting          Priority setting
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false   if (N2kMsg.PGN!=126208L)
      */
     static bool ParseCommandParams(const tN2kMsg &N2kMsg,
                                uint8_t &PrioritySetting,
                                uint8_t &NumberOfParameterPairs);
 
     /**********************************************************************//**
-     * \brief Get start Index of pair parameters on the group function 
-     * Command message
+     * \brief Get start Index of pair parameters from command group function message
      *
      * This is a static function for PGN 126208 handling. 
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param Index       Index where the Command Pair Parameters start
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param Index                    Index where the Command Pair Parameters start
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false    if (N2kMsg.PGN!=126208L)
      */
     static bool StartParseCommandPairParameters(const tN2kMsg &N2kMsg, int &Index);
 
     /**********************************************************************//**
-     * \brief Parse parameters from group function acknowledge message
+     * \brief Parse parameters from acknowledge group function message
      *
      * This is a static function for PGN 126208 handling. 
      * 
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param PGNErrorCode  PGN error code, see \ref 
-     *                      tN2kGroupFunctionPGNErrorCode
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param PGNErrorCode             PGN error code, see \ref tN2kGroupFunctionPGNErrorCode
      * \param TransmissionOrPriorityErrorCode Transmission or Priority error
      *     code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false    if (N2kMsg.PGN!=126208L)
      */
     static bool ParseAcknowledgeParams(const tN2kMsg &N2kMsg,
                                tN2kGroupFunctionPGNErrorCode &PGNErrorCode,
@@ -618,38 +697,37 @@ class tN2kGroupFunctionHandler {
                                uint8_t &NumberOfParameterPairs);
 
     /**********************************************************************//**
-     * \brief Get start Index of pair parameters on the group function 
-     * ReadOrWrite message
+     * \brief Get start index of pair parameters on the read or write group function message
      *
-     * This is a static function for PGN 126208 handling. 
+     * This is a static function for PGN 126208 read or write fields group function handling. 
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param Proprietary Group function is proprietary
-     * \param Index       Index where the Command Pair Parameters start
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param Proprietary              Group function is proprietary
+     * \param Index                    Index where the Command Pair Parameters start
      * 
-     * \return true 
+     * \retval true 
      */
     static bool StartParseReadOrWriteParameters(const tN2kMsg &N2kMsg, bool Proprietary, int &Index);
 
     /**********************************************************************//**
-     * \brief Parse parameters from group function ReadOrWrite message
+     * \brief Parse parameters from read or write group function message
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param ManufacturerCode    Manufacturer Code, This will be set to 
-     *                            0xffff for non-propprietary PNGs
-     * \param IndustryGroup       Industry Group Code, This will be set to 
-     *                            0xff for non-propprietary PNGs
-     * \param UniqueID            Unique ID for the device
+     * \param N2kMsg                   Reference to a N2kMsg Object.
+     *                                 This message should be PGN 126208 group function message
+     * \param ManufacturerCode         Manufacturer Code, This will be set to 
+     *                                 0xffff for non-propprietary PNGs
+     * \param IndustryGroup            Industry Group Code, This will be set to 
+     *                                 0xff for non-propprietary PNGs
+     * \param UniqueID                 Unique ID for the device
      * \param NumberOfSelectionPairs   Number of Selection pairs contained
      *                                 inside the group function message
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
      * \param Proprietary Group function is proprietary
      * 
-     * \return true 
-     * \return false -> if (N2kMsg.PGN!=126208L)
+     * \retval true 
+     * \retval false   if (N2kMsg.PGN!=126208L)
      */
     static bool ParseReadOrWriteParams(const tN2kMsg &N2kMsg,
                                uint16_t &ManufacturerCode,
@@ -660,18 +738,20 @@ class tN2kGroupFunctionHandler {
                                bool Proprietary=false);
     
     /**********************************************************************//**
-     * \brief Setting up the group function message for Read Reply
+     * \brief Setup start parameters for read reply group function message
      * 
+     * This is a static function for PGN 126208 read fields group function handling. 
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param Destination address of Destination 
-     * \param PGN         Parameter group Number
-     * \param ManufacturerCode    Manufacturer Code, This will be set to 
-     *                            0xffff for non-propprietary PNGs
-     * \param IndustryGroup       Industry Group Code, This will be set to 
-     *                            0xff for non-propprietary PNGs
-     * \param UniqueID            Unique ID for the device
+     * \param N2kMsg                   Input: Reference to a N2kMsg Object \n
+     *                                 Output: Read reply group function message
+     *                                 prepared with start parameters.
+     * \param Destination              Destination source address 
+     * \param PGN                      PGN handled
+     * \param ManufacturerCode         Manufacturer Code, This will be set to 
+     *                                 0xffff for non-propprietary PNGs
+     * \param IndustryGroup            Industry Group Code, This will be set to 
+     *                                 0xff for non-propprietary PNGs
+     * \param UniqueID                 Unique ID for the device
      * \param NumberOfSelectionPairs   Number of Selection pairs contained
      *                                 inside the group function message
      * \param NumberOfParameterPairs   Number of parameter pairs contained
@@ -687,18 +767,20 @@ class tN2kGroupFunctionHandler {
                                bool Proprietary);
 
     /**********************************************************************//**
-     * \brief Setting up the group function message for Write Reply
+     * \brief Setup start parameters for write reply group function message
      * 
+     * This is a static function for PGN 126208 write fields group function handling. 
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param Destination address of Destination 
-     * \param PGN         Parameter group Number
-     * \param ManufacturerCode    Manufacturer Code, This will be set to 
-     *                            0xffff for non-propprietary PNGs
-     * \param IndustryGroup       Industry Group Code, This will be set to 
-     *                            0xff for non-propprietary PNGs
-     * \param UniqueID            Unique ID for the device
+     * \param N2kMsg                   Input: Reference to a N2kMsg Object \n
+     *                                 Output: Write reply group function message
+     *                                 prepared with start parameters.
+     * \param Destination              Destination source address
+     * \param PGN                      PGN handled
+     * \param ManufacturerCode         Manufacturer Code, This will be set to 
+     *                                 0xffff for non-propprietary PNGs
+     * \param IndustryGroup            Industry Group Code, This will be set to 
+     *                                 0xff for non-propprietary PNGs
+     * \param UniqueID                 Unique ID for the device
      * \param NumberOfSelectionPairs   Number of Selection pairs contained
      *                                 inside the group function message
      * \param NumberOfParameterPairs   Number of parameter pairs contained
@@ -716,14 +798,16 @@ class tN2kGroupFunctionHandler {
     /**********************************************************************//**
      * \brief Setting up the group function message for Acknowledge
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    Output: NMEA2000 message ready to be send.
-     * \param Destination address of Destination 
-     * \param PGN         Parameter group Number
-     * \param PGNErrorCode  PGN error code, see \ref 
-     *                      tN2kGroupFunctionPGNErrorCode
+     * This is a static function for setting up start of PGN 126208 acknowledge group function. 
+     * 
+     * \param N2kMsg                   Input: Reference to a N2kMsg Object \n
+     *                                 Output: Acknowledge group function message
+     *                                 prepared with start parameters.
+     * \param Destination              Destination source address
+     * \param PGN                      PGN handled
+     * \param PGNErrorCode             PGN error code, see \ref tN2kGroupFunctionPGNErrorCode
      * \param TransmissionOrPriorityErrorCode Transmission or Priority error
-     *     code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
+     *                                 code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
      * \param NumberOfParameterPairs   Number of parameter pairs contained
      *                                 inside the group function message
      */
@@ -733,31 +817,42 @@ class tN2kGroupFunctionHandler {
                                          uint8_t NumberOfParameterPairs=0);
 
     /**********************************************************************//**
-     * \brief Change the PGN error code for a group function message
+     * \brief Change the PGN error code for a acknowledge group function message
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param PGNErrorCode  PGN error code, see \ref 
-     *                      tN2kGroupFunctionPGNErrorCode
+     * This is a static function for changing PGN error code of prepared
+     * PGN 126208 acknowledge group function.
+     * 
+     * \param N2kMsg                   Input: Prepared acknowledge group function message \n
+     *                                 Output: Acknowledge group function message
+     *                                 with updated PGN error code.
+     * \param PGNErrorCode  PGN error code, see \ref tN2kGroupFunctionPGNErrorCode
      */
     static void ChangePNGErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunctionPGNErrorCode PGNErrorCode);
 
     /**********************************************************************//**
-     * \brief Change the Transmission or Priority error code code for 
-     *        a group function message
+     * \brief Change transmission interval or priority error code for 
+     *        acknowledge group function message
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
-     * \param TransmissionOrPriorityErrorCode Transmission or Priority error
+     * This is a static function for changing transmission interval or priority error code of prepared
+     * PGN 126208 acknowledge group function.
+     * 
+     * \param N2kMsg                   Input: Prepared acknowledge group function message \n
+     *                                 Output: Acknowledge group function message
+     *                                 with updated transmission interval or priority error code.
+     * \param TransmissionOrPriorityErrorCode Transmission interval or priority error code
      *     code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
      */
     static void ChangeTransmissionOrPriorityErrorCode(tN2kMsg &N2kMsg, tN2kGroupFunctionTransmissionOrPriorityErrorCode TransmissionOrPriorityErrorCode);
 
     /**********************************************************************//**
-     * \brief Add parameter to a Acknowledge group function message
+     * \brief Add parameter error code to acknowledge group function message
      *
-     * \param N2kMsg      Reference to a N2kMsg Object, 
-     *                    This message is an Group function message
+     * This is a static function for adding parameter error code to prepared
+     * PGN 126208 acknowledge group function.
+     * 
+     * \param N2kMsg                   Input: Prepared acknowledge group function message \n
+     *                                 Output: Acknowledge group function message
+     *                                 with added parameter error code.
      * \param ParameterPairIndex Index of the parameter pair
      * \param ErrorCode   Error code to be added to the message
      */
@@ -766,14 +861,17 @@ class tN2kGroupFunctionHandler {
                                          tN2kGroupFunctionParameterErrorCode ErrorCode=N2kgfpec_ReadOrWriteIsNotSupported);
 
     /**********************************************************************//**
-     * \brief Send out an Acknowledge message 
+     * \brief Send out an acknowledge group function message 
+     * 
+     * Function builds simple acknowledge group function message with given parameters.
+     * This is usefull for sending response for no parameters or parameters with same
+     * error code.
      *
-     * \param pNMEA2000     NMEA2000 oject
-     * \param Destination   address of Destination 
-     * \param iDev          Index off the device in \ref tNMEA2000::Devices
-     * \param PGN           Parameter group Number
-     * \param PGNErrorCode  PGN error code, see \ref 
-     *                      tN2kGroupFunctionPGNErrorCode
+     * \param pNMEA2000                NMEA2000 oject
+     * \param Destination              Destination source address
+     * \param iDev                     Index off the device in \ref tNMEA2000::Devices
+     * \param PGN                      PGN handled
+     * \param PGNErrorCode             PGN error code, see \ref tN2kGroupFunctionPGNErrorCode
      * \param TransmissionOrPriorityErrorCode Transmission or Priority error
      *     code, see \ref tN2kGroupFunctionTransmissionOrPriorityErrorCode
      * \param NumberOfParameterPairs   Number of parameter pairs contained

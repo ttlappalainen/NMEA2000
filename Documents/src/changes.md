@@ -1,6 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 21.01.2024
+
+- Document update. Updates on document sources and code sources.
+
 ## 13.01.2024
 
 - Fixed PGN129539 reader and parser.

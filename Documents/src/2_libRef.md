@@ -4,21 +4,25 @@
 
 ## Introduction
 
-NMEA2000 is object oriented C++ library, which should make it simple to develop own NMEA2000
-based devices. I created it because I wanted to get rid of limitations of expensive devices
-on market. With my first own device on my yacht, I could replace three devices – NMEA0183
-combiner, NMEA0183->NMEA2000 Converter, NMEA2000->PC converter - with single Arduino Due
-board and few extra chips.
-To use NMEA2000 library you need basic skills for programming. I also try to write simple
-instructions to start from scratch. Even I have been doing sw and hw development for years,
-it took some time to dig information from internet to get started with Arduino and do
-simple tasks like installing library.
-For using NMEA2000 library I prefer Teensy 3.2, 3.5, 4.0, 4.1 or ESP32 with MCP2562 chip.
+NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements (see \ref secRefNMEA2000Certification) leaving only interesting data handling for developer. **Library has been used in several commercial certified NMEA2000 devices.**
+
+To use NMEA2000 library you need basic skills for programming. For beginners I have tried to write simple instructions to start from scratch with Arduino IDE. When I started library development and even I had been doing sw and hw development for years, it took some time to dig information from internet to get started with Arduino based boards and do even simple tasks like installing library.
+
+For using NMEA2000 library I prefer Teensy 4.0, 4.1, (or 3.2, 3.5, 3.6 which are end of life) or ESP32 with isolated ISO1050 or unisolated MCP2562 chip. For experienced users and big projects RPi can be also used.
+
 For simple things Arduino Mega with CANBUS shield or schematics found
 under [documents](https://github.com/ttlappalainen/NMEA2000/tree/master/Documents) is
 ok. I have not tested smaller boards and I prefer to forget any board less than 8 kB RAM.
 
-## Start from scratch and make your first NMEA2000 device
+## History
+
+I started library development 2015 because I wanted to get rid of limitations of expensive devices on market. Also those did not had features I wanted. With my first own device for my yacht, I replaced three devices – NMEA0183 combiner, NMEA0183->NMEA2000 Converter, NMEA2000->PC converter - with single Arduino Due board and few extra chips.
+
+On 2017 library was chosen for first commercial certified device. Later there has been several other commercial devices using my library. That has also made it important to keep it combatible and ready for certificated devices.
+
+Since 2015 my personal work has moved more and more towards NMEA2000. I do commercially different NMEA2000 projects and consulting.
+
+## Start from scratch and make your first NMEA2000 device with Arduino IDE
 
 Lets think you have temperature sensor and you like to have it visible on NMEA2000 bus.
 Here I expect that:
@@ -45,7 +49,7 @@ If you want to read or decode NMEA2000 messages, you can download and install
 Now we are ready to try sample without N2k bus connection. So you need only Arduino board and
 PC. No CANBUS shield or extra chips yet!
 
-- Open Example TemperatureMonitor sketch, which came with NMEA2000 library. Select from
+- Open example TemperatureMonitor.ino sketch, which came with NMEA2000 library. Select from
   IDE “Open…”-libraries/NMEA2000-master/Example/TemperatureMonitor/TemperatureMonitor.ino
 - uncomment lines
   
@@ -127,17 +131,16 @@ Now just upload sketch and open right port to “NMEA Reader” and you should s
 only "ISO address claim" (PGN 60928) and "Environmental parameters"
 (PGN 130311) on “NMEA Reader”.
 
-#### Change the device information
+#### Change the device and product information
 
-On NMEA2000 bus each device will tell to the bus what it is. This can be found
-on sample under setup() function. Call SetDeviceInformation is important for right
+On NMEA2000 bus each device will tell to the bus what it is (see also \ref secRefTermNAME). This can be found on sample under setup() function. Call SetDeviceInformation is important for right
 functionality on the bus. If you have only this own device on the bus, you can leave
 it like it is. In other case take deeper look in to the explanation for the function.
 Note that if you add several own devices to the bus, you have to configure parameters
-for this function so that each device will get unic “name” as a combination of
-these parameters.  
-Call SetProductInformation is not so important, but defines nice to know information.
-If you have some “Multi Function Display” (MFD) on the bus, it will show on the
+for this function so that each device will get unique \ref secRefTermNAME as a combination of
+these parameters.
+
+Call SetProductInformation is not so important for own boat, but defines nice to know information. If you have some “Multi Function Display” (MFD) on the bus, it will show on the
 device list information set by this function. So you can e.g. set the “Manufacturer's
 Model ID” to “Jack’s temperature monitor” and version code and model version as you
 like, so on your MFD you can see that and choose right device.
@@ -172,8 +175,8 @@ code, you have to disable message forwarding by uncommenting line:
 
 ### Try NMEA2000 library with WindMonitor example
 
-This is exactly same as TemperatureMonitor, but sends wind data to the bus. Only necessary
-function names has been changed. So follow the “ Try NMEA2000 library with
+WindMonitor.ino is similar as TemperatureMonitor, but sends wind data to the bus. Only necessary
+function names has been changed. So follow the “Try NMEA2000 library with
 TemperatureMonitor example”.
 
 ## Arduino Programming IDE
@@ -251,9 +254,7 @@ to make it simple to use, but still giving “NMEA2000 compatibility”.
 
 #### Abstract base class tNMEA2000
 
-The tNMEA2000 class contains functions for NMEA2000 handling like e.g. sending and reading messages.
-This is purely an abstract class and to use a real device you must use an appropriate inherited class.
-Normally you use functions within this class.
+The tNMEA2000 class contains functions for NMEA2000 handling like e.g. sending and reading messages. This is purely an abstract class and to use a real device you must use an appropriate inherited class. Normally you use functions within this class.
 
 #### Abstract base class tNMEA2000::tMsgHandler
 
@@ -270,21 +271,18 @@ within other headers, so to use any of currently tested board you can simply add
 
 ```cpp
   #include <Arduino.h>
-  #include "NMEA2000_CAN.h"
+  #include <NMEA2000_CAN.h>
 ```
 
-So the "#include <NMEA2000_CAN.h>" will then automatically select right library according to the board
-you have selected on IDE (see \ref USE_N2K_CAN). If you want strictly control includes or the board will
-not be right selected by NMEA2000_CAN.h, use includes described on each inherited class or force
-selection with define before include. E.g.
+"#include <NMEA2000_CAN.h>" will then automatically select right library according to the board you have selected on IDE (see \ref USE_N2K_CAN). If you want strictly control includes or the board will not be selected right by NMEA2000_CAN.h, use includes described on each inherited class or force selection with define before include. E.g.
 
 ```cpp
   #include <Arduino.h>
   #define USE_N2K_CAN 1  // Force mcp_can
-  #include "NMEA2000_CAN.h"
+  #include <NMEA2000_CAN.h>
 ```
 
-\note Alle the inherit classes come along with the library according to your hardware setup. see \ref secHWlib
+\note You need to download hardware specific inherit classes separately. See \ref secHWlib
 
 ##### Inherited class tNMEA2000_mcp
 
@@ -295,10 +293,18 @@ To use this class, you need to include  in your project beginning:
 ```cpp
   #include <SPI.h>
   #include <mcp_can.h> 
-  #include "NMEA2000_mcp.h"
+  #include <NMEA2000_mcp.h>
   #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
   #define N2k_CAN_INT_PIN 21 // Use interrupt  and it is connected to pin 21
   tNMEA2000_mcp NMEA2000(N2k_SPI_CS_PIN);
+```
+If you use automatic library selection, you need to any define CS pin (default 53) and interrupt pin (default 21), if they differ from defaults.
+
+```cpp
+  #include <Arduino.h>
+  #define N2k_SPI_CS_PIN 52  // Pin for SPI Can Select
+  #define N2k_CAN_INT_PIN 10 // Use interrupt  and it is connected to pin 21
+  #include <NMEA2000_CAN.h>
 ```
 
 You can find the mcp_can library from <https://github.com/ttlappalainen/CAN_BUS_Shield/archive/master.zip.>
@@ -315,7 +321,7 @@ To use this class, you need to include  in your project beginning:
 
 ```cpp
   #include <due_can.h>
-  #include "NMEA2000_due.h"
+  #include <NMEA2000_due.h>
   tNMEA2000_due NMEA2000;
 ```
 
@@ -330,8 +336,29 @@ can bus controller. Physical interface is similar as with Arduino Due.
 To use this class, you need to include  in your project beginning:
 
 ```cpp
-  #include "NMEA2000_teensy.h"
+  #include <NMEA2000_teensy.h>
   tNMEA2000_teensy NMEA2000;
+```
+
+##### Inherited class tNMEA2000_Teensyx
+
+The tNMEA2000_Teensyx class is for using library with Teensy 3.2, 3.5, 3.6, 4.0, 4.1 boards, which has internal
+can bus controller. Physical interface is similar as with Arduino Due.  
+To use this class, you need to include  in your project beginning:
+
+```cpp
+  #include <NMEA2000_Teensyx.h>
+  tNMEA2000_teensy NMEA2000;
+```
+
+At the moment automatic automatic library selection uses as default NMEA2000_teensy.h for
+Teensy 3.2, 3.5, 3.6. NMEA2000_Teensyx works reliably with old boards too so you can force
+it for automatic library selection
+
+```cpp
+  #include <Arduino.h>
+  #define USE_NMEA2000_TEENSYX_FOR_TEENSY_3X // Force NMEA2000_TEENSYX also for Teensy 3.x boards
+  #include <NMEA2000_CAN.h>
 ```
 
 ##### Inherited class tNMEA2000_esp32
@@ -389,42 +416,31 @@ NMEA 2000 definition requires than devices should respond group function message
 class is default handler, which simply responds “unsupported” for all queries.  
 see \ref tN2kGroupFunctionHandler
 
-\todo More Details in documentation needed here ....
-
-#### Inherited group function handler tN2kGroupFunctionHandlerForPGN60928
-
-This class handles mandatory group function requests and commands for PGN 60928.  
-see \ref tN2kGroupFunctionHandlerForPGN60928
-
 #### Device list collector class tN2kDeviceList
 
-This class can be used to read devices on the connected NMEA 2000 bus. When class has been
-attached to tNMEA2000 object, it will automatically collect and update information of devices on the bus.
-On the NMEA 2000 bus all devices (also called nodes) has own source address. This source can
-change e.g. when new devices will be added. In principle on steady system also source will be
-same. The safer way is to use device “Name” which should be unique. So if you e.g. have two
-speed logs and you want to specify the one you want to use, you can use tN2kDeviceList class
-to search source address for specified name and then read log messages from that source.
+This class can be used to read devices on the connected NMEA 2000 bus. When class has been attached to tNMEA2000 object, it will automatically collect and update information of devices on the bus. On the NMEA 2000 bus all devices (also called nodes) has own source address. The source addressmay be changed due to \ref secRefTermAddressClaiming "address claiming" on power up or when new device will be added to the bus. For this reason source address can not be used as only filter for similar messages like position data. By using tN2kDeviceList source address related to \ref secRefTermNAME can be easily found at any time with tN2kDeviceList functions.
+
+
+In principle on steady system source will stay unchanged. The safer way is to use device \ref secRefTermNAME which should be unique. So if you e.g., have two speed logs and you want to specify the one you want to use, you can use tN2kDeviceList class to search source address for specified NAME and then read log messages from that source.
+
+See also example DeviceAnalyzer.ino.
 
 ### Using tNMEA2000
 
 There are several examples for using library with different functions like for only listen bus
 data (ActisenseListener.ino), sending temperature (TemperatureMonitor.ino) or wind data
 (WindMonitor.ino) from your own sources or displaying bus data somehow (DisplayData.ino
-and DisplayData2.ino). With combination of those or adding NMEA0183 library functions, you
-can have full control for your N2k bus information.
-I have already own device, which reads data from old NMEA0183 devices and forwards it to the
-N2k bus, but same device also forwards data from bus to the PC. It also listens on input
-pin – MOB and when that is activated, it will start to send route information back to
-the activation position. I have also temperature and fuel consumption monitors to the N2k bus.  
-So below is short description of member functions, which hopefully gives you better knowledge
+and DisplayData2.ino).
+
+Library core has all functionalities to communicate with NMEA2000 bus and N2kMessages.h has simple functions to read and set most common messages. And you can add own modules to support missing messages. Rest is up to your imagination.
+
+Below is short description of member functions, which hopefully gives you better knowledge
 why something has been used on samples.
 
 #### Device modes
 
-In principle all devices should act as node on N2k bus. But if you are only reading messages
+NMEA2000 defines that all devices should act as node on N2k bus. But if you are only reading messages
 on bus, why to tell anybody. So I have defined different modes how tNMEA2000 class behaves.
-
 
 ##### tNMEA2000::N2km_ListenOnly
 
@@ -432,15 +448,11 @@ This is default mode. The device simply listens data from bus and forwards it to
 stream. Look example ActisenseListener, you need only 20 line for making device to read data
 on N2k bus.  
 Also if you like to make a device, which displays some data on bus on e.g. TFT display, you can
-use this mode. There is simple example DataDisplay for that.
+use this mode. There is simple example DataDisplay.ino for that.
 
 ##### tNMEA2000::N2km_NodeOnly
 
-In this mode device will only send data to the N2k bus. I also automatically informs itself
-to other devices on the bus and does required address claiming automatically. The device does not
-send as default anything to any forward stream.  
-Use this mode for device, which simply e.g. reads data from analog or digital input or
-NMEA0183 bus and sends it to the N2k bus. Look example TemperatureMonitor.
+In this mode device will only send data to the N2k bus. I also automatically informs itself to other devices on the bus and does required operations automatically. The device does not send as default anything to any forward stream. Use this mode for device, which simply e.g. reads data from analog or digital input or NMEA0183 bus and sends it to the N2k bus. Look example TemperatureMonitor.ino.
 
 ##### tNMEA2000::N2km_ListenAndNode
 
@@ -466,12 +478,12 @@ read and send messages in Actisense format to serial port.
 I have used this mode with example TeensyActisenseListenerSender and Actisense NMEA Reader
 and NMEA Simulator.
 
-#### Message forwarding
+#### Message forwarding {#secMessageforwarding}
 
 Normally on N2k bus a device either shows data from bus (MFD devices) or sends data
 to the bus (wind, GPS, temperature etc.). With this library you can also get messages
 forwarded to the stream. In listen mode, the device will read all messages from N2k bus
-and forwards all messages to the ForwardStream. For forwarding you have to define a
+and forwards them to the ForwardStream. For forwarding you have to define a
 forward stream with function \ref tNMEA2000::SetForwardStream. Of course you also need to
 open a stream first e.g. with Serial.begin(115200);  
 Messages will be forwarded as default in Actisense format. This is supported by at least
@@ -479,19 +491,23 @@ some PC chart plotter applications. With default format Actisence “NMEA Reader
 we used on sample, you can show message data. A better visualizer is OpenSkipper, on which
 you can tailor your own displays.  
 
-\note Default own messages send with tNMEA2000.SendMsg will be forwarded even when your
+\note As default own messages send with tNMEA2000::SendMsg will be forwarded even when your
 device has been set to node only mode. This may disturb your developing, if
 you e.g. want to write own clear text messages within your code. You can disable that by either:
 
-- tNMEA2000::EnableForward(false) to disable forwarding totally
-- tNMEA2000::SetForwardOwnMessages(false) to disable own messages. But then, if your device
+- \ref tNMEA2000::EnableForward(false) to disable forwarding totally
+- \ref tNMEA2000::SetForwardOwnMessages(false) to disable own messages. But then, if your device
   is in listen mode, it will still forward messages from bus.
-- tNMEA2000::SetForwardOnlyKnownMessages(true) to define that only known messages will be
+- \ref tNMEA2000::SetForwardOnlyKnownMessages(true) to define that only known messages will be
   forwarded. The known messages are system messages and listed single frame or fast packet
-  messages. See also \ref tNMEA2000::SetSingleFrameMessages, \ref tNMEA2000::SetFastPacketMessages,
-  \ref tNMEA2000::ExtendSingleFrameMessages and \ref tNMEA2000::ExtendFastPacketMessages.
+  messages. 
+  \sa
+  - \ref tNMEA2000::SetSingleFrameMessages
+  - \ref tNMEA2000::SetFastPacketMessages
+  - \ref tNMEA2000::ExtendSingleFrameMessages
+  - \ref tNMEA2000::ExtendFastPacketMessages.
   
-#### Debug mode
+#### Debug mode {#descDebugMode}
 
 Debug mode is as default set to tNMEA2000::dm_None. In other debug modes device will not
 send anything to the N2k bus.
@@ -510,188 +526,114 @@ In NMEA 2000 bus you have devices or also called nodes. Normally each physical d
 device on the bus. I have not seen any requirement that a device could not serve as engine
 information (device class 50 – propulsion) or sensor information (device class 75 - Sensor
 Communication Interface) interface at same time and just use device class 25 (Inter/Intranetwork
-Device) and function 132 (Analog to NMEA 2000 Gateway). Anyway I just noticed that e.g.
+Device) and function 132 (Analog to NMEA 2000 Gateway). Anyway I have found that e.g.
 B&G Vulcan 7 chartplotter acts as multi device. I do not know are these devices different
 chips inside Vulcan or are they within same code as my multi device.  
 If you like show different functions as own device on the bus, you can do that with multi
-device support. All you need to do is to first set device count (see SetDeviceCount), set
+device support. All you need to do is to first set device count (see tNMEA2000::SetDeviceCount), set
 device and product information for each device and on sending messages use right device
 index. See example MultiDevice.
 
+#### Running library {#descRunningLibrary}
+
+Library has been designed to work without need for multitasking system. After setup it is critical to call tNMEA2000::ParseMessages in loop as fast as possible. By that call library handles many basic required features like address claiming, responding to system requests, heartbeat sending etc.
+
+Fast loop requirement means that you are not allowed to use any delay on your loop or any other library using delay or blocking read. Delays withing loop in worst case causes that other devices on your NMEA2000 bus drops your device from the list and then pops it up again. If you have e.g., configured your MFD to show temperature from your device, it may appear and disappear on the screen.
+
+A practice has shown that random 10-50 ms delay is acceptable. In average loop time should be
+less than 2 ms. Also it is important that if you can have up 50 ms random delay, you may get in burst up to 90 frames (=1800 frames/s *0.05 s) during that time. This means that if your receive frame buffer is smaller, your device may loose some critical system messages. In small boat this amount is a bit theory, but anyway there are a lot of large messages just from GPS system so that they may occur time to time at same time. So it is better to prepare your device work in nearly any condition.
+
+##### Some timing examples
+
+If you use DallasTemperature library as default you may block loop up to 700 ms. By using it "asynchronously", delays are smaller and may be acceptable. Best solution would be to use some kind of hardware based library like esp32-owb for ESP32.
+
+Some ADC libraries blocks loop during conversion, which may be 200-400 ms for high resolution ADC with averaging. ADC:s should be always used so that conversion will be started and then quickly checked, when conversion is ready. Even better if you know conversion time and check it after you expect it should be ready.
+
+Some displays are very slow for writing. Writing some text may take 100 ms causing too long delay and problems with bus. Depending of library, it may also have some kind of buffering to get write request and flag, when it has been finished without blocking call. If there is not, it is often possible write own higher level buffering, which finally writes to display letter by letter and so spent only short time on each call.
+
+With serial line use always available and availableForWrite features to avoid blocking. Also it helps if you can define bigger harware buffers.
+
+In multitasking system someone had defined tNMEA2000::ParseMessages task time to 100 ms. I do not wonder, if there will random strange problems with that device. 1 ms task time would be acceptable.
+
+##### System messages and library internal functionality {#descSystemMessages}
+
+Library has been designed to do automatically as many required features as possible. In this way user can concentrate to his own code and does not need to know everything about NMEA2000 low level. There is several system messages, which are handled automatically and user does not need to take care of.
+
+- PGN 59392 ISO Acknowledgement.
+  + Library responds with NAK for unhandled requests.
+  .
+- PGN 59904 ISO Request.
+  + Library handles ISO request for system messages.
+  + For other messages library calls ISORequestHandler. See tNMEA2000::SetISORqstHandler.
+  .
+- PGN 60928 ISO Address Claim.
+  + Library starts address claiming procedure automatically and handles it completely.
+  + Library responds as required to others address claiming, if necessary. See also tNMEA2000::ReadResetAddressChanged.
+  + Library handles normal requests and group function requests to change device or system instances. See also tNMEA2000::ReadResetDeviceInformationChanged.
+  + If you need to track devices on the bus e.g., to tie some message to specific device there is automatic module tN2kDeviceList to do work for you.
+  .
+- PGN 60416 and PGN 60160 ISO Transport Protocol messages.
+  + Library hadles automatically message sending and receiving with ISO TP.
+  .
+- PGN 126208 Group Function message.
+  + Library does default handling for system messages.
+  + For other messages library forwards handling to class inherited from tN2kGroupFunctionHandler. See tNMEA2000::AddGroupFunctionHandler.
+- PGN 126464 Receive/Transmit PGN list. 
+  + Library responds automatically for requested PGN lists. User has to take care that own PGNs has been declared at startup with tNMEA2000::SendTxPGNList and tNMEA2000::SendRxPGNList.
+- PGN 126993 Heartbeat.
+  + Library takes care of heartbeat sending.
+  + Library also takes care of heartbeat offset/period change requests.
+- PGN 126996 Product information.
+  + Library responds automatically to product information requests. User has to setup product information at device start with tNMEA2000::SetProductInformation.
+- PGN 126998 Configuration information.
+  + Library responds automatically to configuration information requests. User has to setup configuration information at device start with tNMEA2000::SetConfigurationInformation.
+  + Library also updates Installation Description 1 and 2 on request. See also tNMEA2000::ReadResetInstallationDescriptionChanged.
+
 #### Member functions
 
-##### SetDeviceCount
+=======================================
+##### tNMEA2000::SetProductInformation
 
-With this function you can enable multi device support. As default there is only one device.
+\copybrief tNMEA2000::SetProductInformation
+\copydetails tNMEA2000::SetProductInformation
 
-\note To enable multi device support, you need to call this before any other tNMEA2000 class function.
+=======================================
+##### tNMEA2000::SetDeviceInformation
 
-##### SetN2kCANMsgBufSize
+\copybrief tNMEA2000::SetDeviceInformation
+\copydetails tNMEA2000::SetDeviceInformation
 
-With this function you can set size of buffer, where system stores incoming messages. The default
-size is 5 messages.  
-Some messages are just single frame messages and they will be read in and handled immediately on
-call to ParseMessages. For multi framed fast packet messages there is no guarantee that all frames
-will arrive in order. So these messages will be buffered and saved until all frames has been received.
-If it is not critical to handle all fast packet messages like with N2km_NodeOnly, you can set buffer
-size smaller like 3 or 2 by calling this before open.
+=======================================
+##### tNMEA2000::SetDeviceInformationInstances
 
-##### SetN2kCANSendFrameBufSize
+\copybrief tNMEA2000::SetDeviceInformationInstances
+\copydetails tNMEA2000::SetDeviceInformationInstances
 
-With this function you can set size of buffer, where system saves frames of messages to be sent.
-The default size is 40 frames so totally 320 bytes. Call this before any device related function
-like SetProductInformation.  
-When sending long messages like ProductInformation or GNSS data, there may not be enough low level
-buffers for sending data successfully. This depends of your hw and device source. Device source
-has an effect due to priority of getting sending slot on low level device. If your data is critical,
-use a buffer size, which is large enough.  
-E.g. Product information takes totally 134 bytes. This needs 20 frames. GNSS contains 47 bytes,
-which needs 7 frames. If you want to be sure that both will be sent on any situation, you need
-at least 27 frame buffer size.
+=======================================
+##### tNMEA2000::GetDeviceInformation
 
-##### SetProductInformation
+\copybrief tNMEA2000::GetDeviceInformation
+\copydetails tNMEA2000::GetDeviceInformation
 
-If you are using device modes tNMEA2000::N2km_NodeOnly or tNMEA2000::N2km_ListenAndNode, it would
-be good that you set this information. With this you can set how e.g. Multi Function Displays
-(MFD) will show your device information. This is not critical, but nice to have it right.
-See example TemperatureMonitor.ino.
+=======================================
+##### tNMEA2000::SetConfigurationInformation
 
-##### SetDeviceInformation
+\copybrief tNMEA2000::SetConfigurationInformation
+\copydetails tNMEA2000::SetConfigurationInformation
 
-If you are using device modes tNMEA2000::N2km_NodeOnly or tNMEA2000::N2km_ListenAndNode, it is
-critical that you set this information.
+=======================================
+##### tNMEA2000::SetProgmemConfigurationInformation
 
-\note You should set information so that it is unique over the world! Well if
-you are making device only for your own yacht N2k bus, it is enough to be
-unique there. So e.g. if you have two temperature monitors made by this library, you have to set at
-least first parameter UniqueNumber different for both of them.  
+\copybrief tNMEA2000::SetProgmemConfigurationInformation
+\copydetails tNMEA2000::SetProgmemConfigurationInformation
 
-Device information will be used to choose right address for your device (also called node) on
-the bus. Each device must have an own address. Library will do this automatically, so it is enough
-that you call this function on setup to define your device.
+=======================================
+##### tNMEA2000::SetMode
 
-##### SetDeviceInformationInstances
+\copybrief tNMEA2000::SetMode
+\copydetails tNMEA2000::SetMode
 
-With this function you can set device instance lower, device instance upper and system instance values.
-
-##### GetDeviceInformation
-
-With this function you can read current device information. Normally device information contains
-what you have set during initializing with SetDeviceInformation and SetDeviceInformationInstances
-functions.
-
-\note device information instances can be changed by the NMEA 2000 group function by
-e.g. using system configuration device. So you should time to time check if they have changed and
-save changed data to e.g. EEPROM for use on startup.  
-
-See \ref tNMEA2000::ReadResetDeviceInformationChanged
-
-##### SetConfigurationInformation
-
-With this function you can set configuration information, which will be saved on device RAM.
-As an alternative you can set configuration information saved on progmem with
-\ref tNMEA2000::SetProgmemConfigurationInformation  
-Configuration information is just some extra information about device and manufacturer. Some
-MFDs shows it, some does not. E.g. NMEA Reader can show configuration information.
-
-##### SetProgmemConfigurationInformation
-
-With this function you can set configuration information, which will be saved on device program memory.
-See example BatteryMonitor.ino.  
-As default system has build in configuration information on progmem. If you do not want to have
-configuration information at all, you can disable it by calling SetConfigurationInformation(0);
-
-##### SetSingleFrameMessages
-
-As a default library has a list of known messages. With this function user can override default
-list of single frame messages. See also \ref tNMEA2000::ExtendSingleFrameMessages.
-
-##### SetFastPacketMessages
-
-As a default library has a list of known messages. With this function user can override default
-list of fast packet messages. See also \ref tNMEA2000::ExtendFastPacketMessages.
-
-\note If an incoming fast packet message is not known, it will be treated as single frame
-message. So if you want to handle unknown fast packet message, you need to duplicate frame
-collection logic from library to your code. So it is easier to have fast packet messages listed
-on library, if you want to handle them.
-
-##### ExtendSingleFrameMessages
-
-As a default library has a list of known messages. With this function user can add own list of
-known single frame messages.
-
-\note Subsequent calls will overwrite the previously set list
-
-##### ExtendFastPacketMessages
-
-As a default library has a list of known messages. With this function user can add own list of
-known fast packet messages.
-
-\note Currently subsequent calls will override previously set list.  
-
-\note If an incoming fast packet message is not known, it will be treated as single frame
-message. So if you want to handle unknown fast packet message, you need to duplicate frame collection
-logic from library to your code. So it is easier to have fast packet messages listed on library,
-if you want to handle them.
-
-##### ExtendTransmitMessages
-
-System should respond to PGN 126464 request with messages the system transmits and receives. The
-library will automatically respond with system the messages it uses. With this method you can
-add messages, which your own code sends
-
-\note that this is valid only for device modes \ref tNMEA2000::N2km_NodeOnly and \ref tNMEA2000::N2km_ListenAndNode.
-
-##### ExtendReceiveMessages
-
-Method is like \ref tNMEA2000::ExtendTransmitMessages, but extends messages you code handles.
-
-##### SendIsoAddressClaim
-
-This is automatically used by class. You only need to use this, if you want to write your own
-behavior for address claiming.
-
-##### SendProductInformation
-
-This is automatically used by class. You only need to use this, if you want to write your own
-behavior for providing product information.
-
-##### SendConfigurationInformation
-
-This is automatically used by class. You only need to use this, if you want to write your own
-behavior for providing configuration information.
-
-##### SetHeartbeatInterval
-
-According to document [20140102 nmea-2000-126993 heartbeat pgn corrigendum.pdf](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf) all NMEA devices shall
-transmit heartbeat PGN 126993. With this function you can set transmission interval in ms
-(range 1000-655320 ms, default 60000). Set <1000 to disable it. You can temporary change
-interval by setting SetAsDefault parameter to false. Then you can restore default interval
-with interval parameter value 0xfffffffe
-
-##### GetHeartbeatInterval
-
-Heartbeat interval may be changed by e.g. MFD by group function. I have not yet found if a
-changed value should be saved for next startup or not like address.
-
-##### SendHeartbeat
-
-Library will automatically send heartbeat, if interval is >0. You can also manually send it
-any time or force sent, if interval=0;
-
-##### SetMode
-
-With SetMode you can define how your node acts on N2k bus. See \ref tNMEA2000::Devices modes.
-With this function you can also set default address for your device. It is mandatory
-that once your device has been connected to the bus, it tries always use last used address.
-Due to address claiming, your device may change its address, when you add new devices to the bus.
-So you should save last used address to the e.g. EEPROM and on startup read it there and use
-it as parameter for SetMode. You can check if your address you set originally by SetMode
-has changed by using function \ref tNMEA2000::SetN2kSource and you can read current address by
-function \ref tNMEA2000::GetN2kSource.  
-
-So you could do next:
+Example how to init and save device source address.
 
 ```cpp
   void setup() {
@@ -710,144 +652,224 @@ So you could do next:
   }
 ```
 
-See example TemperatureMonitor.ino.
+=======================================
+##### tNMEA2000::ExtendTransmitMessages
 
-##### SetForwardType
+\copybrief tNMEA2000::ExtendTransmitMessages
+\copydetails tNMEA2000::ExtendTransmitMessages
 
-With this function user can set how messages will be forwarded to the stream. Possible values are:
+=======================================
+##### tNMEA2000::ExtendReceiveMessages
 
-- tNMEA2000::fwdt_Actisense (default) forwards messages is Actisense format. Some navigation softwares
-  can read this format.
-- tNMEA2000::fwdt_Text  forwards messages to output port in clear text. I see this useful only for testing
-  with normal serial monitors.
+\copybrief tNMEA2000::ExtendReceiveMessages
+\copydetails tNMEA2000::ExtendReceiveMessages
 
-##### SetForwardStream
+=======================================
+##### tNMEA2000::SetOnOpen
 
-As default, forward stream has been set to null. For e.g. Arduino Due you can set it to SerialUSB,
-so you can use Serial for other things. You can of coarse use any stream available on your device.  
-See example ActisenseListenerSender.ino.
+\copybrief tNMEA2000::SetOnOpen
+\copydetails tNMEA2000::SetOnOpen
 
-##### Open
+=======================================
+##### tNMEA2000::SendMsg
 
-You can call this on Setup(). It will be called anyway automatically by first call of ParseMessages().
+\copybrief tNMEA2000::SendMsg
+\copydetails tNMEA2000::SendMsg
 
-##### SendMsg
+=======================================
+##### tNMEA2000::ParseMessages
 
-When you want to send some message to the N2k bus, you call this. Before calling you have to prepare
-tN2kMsg type of message e.g. by using some function in N2kMessages.  
+\copybrief tNMEA2000::ParseMessages
+\copydetails tNMEA2000::ParseMessages
 
-\note As default tNMEA2000 object is as default in tNMEA2000::N2km_ListenOnly mode. So if
-you want to send messages, you have to set right mode in Setup().
+=======================================
+##### tNMEA2000::SetMsgHandler
 
-The function returns true, if the message was sent successfully, otherwise it return false. SendMsg may fail,
-if there is not room for message frames on sending buffer or device is not open.  
-SendMsg does not always send message immediately. If lower level sending function fails, SendMsg
-will buffer message frames and try to send them on next call to SendMsg or ParseMessages. So
-to have reliable sending, you need a sending buffer, which is large enough.  
-See example TemperatureMonitor.ino.
+\copybrief tNMEA2000::SetMsgHandler
+\copydetails tNMEA2000::SetMsgHandler
 
-##### ParseMessages
+=======================================
+##### tNMEA2000::AttachMsgHandler
 
-You have to call this periodically on loop(), otherwise tNMEA2000 object will not work at all.
+\copybrief tNMEA2000::AttachMsgHandler
+\copydetails tNMEA2000::AttachMsgHandler
 
-\note It is not good practice to have any delay() on your loop(), since then also handling of
-this will be delayed.
+=======================================
+##### tNMEA2000::DetachMsgHandler
 
-See example TemperatureMonitor.ino.
+\copybrief tNMEA2000::DetachMsgHandler
+\copydetails tNMEA2000::DetachMsgHandler
 
-##### SetMsgHandler
+=======================================
+##### tNMEA2000::SetISORqstHandler
 
-If you want to do something with messages read from N2k bus, easiest is to set message handler,
-which will be then called by ParseMessages, if there are new messages. This is the case e.g. if
-you have LCD display on your Arduino and you want to show some fluid level on it.  
-See example DataDisplay.ino or DataDisplay2.ino
+\copybrief tNMEA2000::SetISORqstHandler
+\copydetails tNMEA2000::SetISORqstHandler
 
-##### AttachMsgHandler
+=======================================
+##### tNMEA2000::GetN2kSource
 
-SetMsgHandler allows you to define only one handler to your system. If you like to do it by
-using classes, I prefer to use AttachMsgHandler. In this way you can e.g. define own class for
-each PGN and attach/detach them within your program. Example NMEA2000ToNMEA0183 uses AttachMsgHandler.
-Due to logic it still has single class and so handles all PGNs.
+\copybrief tNMEA2000::GetN2kSource
+\copydetails tNMEA2000::GetN2kSource
 
-##### DetachMsgHandler
+=======================================
+##### tNMEA2000::SetN2kSource
 
-With DetachMsgHandler you can remove your handler from the handler stack. This is useful,
-if you do not want to handle some messages anymore.
+\copybrief tNMEA2000::SetN2kSource
+\copydetails tNMEA2000::SetN2kSource
 
-##### SetISORqstHandler
+=======================================
+##### tNMEA2000::ReadResetAddressChanged
 
-Devices on N2k bus may request from your device if it can handle requested PGN. If you want to
-respond for ISO request, you should set this handler. The handler will be called by ParseMessages,
-if there is ISO request.  
+\copybrief tNMEA2000::ReadResetAddressChanged
+\copydetails tNMEA2000::ReadResetAddressChanged
 
-\note When you send request message with SendMsg and it fails, it is your responsibility
-to take care of sending response again later. If your sending buffer is large enough, it
-is very uncommon that SendMsg fails.
+=======================================
+##### tNMEA2000::ReadResetDeviceInformationChanged
 
-##### GetN2kSource
+\copybrief tNMEA2000::ReadResetDeviceInformationChanged
+\copydetails tNMEA2000::ReadResetDeviceInformationChanged
 
-With this function you can get you device current address on the N2k bus.  
-See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
+=======================================
+##### tNMEA2000::ReadResetInstallationDescriptionChanged
 
-##### SetN2kSource
+\copybrief tNMEA2000::ReadResetInstallationDescriptionChanged
+\copydetails tNMEA2000::ReadResetInstallationDescriptionChanged
 
-With this function you can set you device current address on the N2k bus. This is meant to be
-use for multi device on basic configuration to restore source address changed by address claiming.  
-See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
+=======================================
+##### tNMEA2000::SetDeviceCount
 
-##### ReadResetAddressChanged
+\copybrief tNMEA2000::SetDeviceCount
+\copydetails tNMEA2000::SetDeviceCount
 
-With this function you can check has your device address you initiated with SetMode been
-changed after last call. For certified NMEA 2000 devices it is mandatory save changed address
-to e.g. EEPROM, for use in next startup.  
-See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
+=======================================
+##### tNMEA2000::SetN2kCANMsgBufSize
 
-##### ReadResetDeviceInformationChanged
+\copybrief tNMEA2000::SetN2kCANMsgBufSize
+\copydetails tNMEA2000::SetN2kCANMsgBufSize
 
-With this function you can check has your device device instances or system instances changed.
-For certified NMEA 2000 devices it is mandatory save changed info to e.g. EEPROM, for
-initialize them in next startup.  
+=======================================
+##### tNMEA2000::SetN2kCANSendFrameBufSize
 
-See \ref tNMEA2000::SetDeviceInformationInstances and \ref tNMEA2000::GetDeviceInformation
+\copybrief tNMEA2000::SetN2kCANSendFrameBufSize
+\copydetails tNMEA2000::SetN2kCANSendFrameBufSize
 
-##### EnableForward
+=======================================
+##### tNMEA2000::SetN2kCANReceiveFrameBufSize
 
-Set true as default. With this you can control if bus messages will be forwarded to forward
-stream.  
+\copybrief tNMEA2000::SetN2kCANReceiveFrameBufSize
+\copydetails tNMEA2000::SetN2kCANReceiveFrameBufSize
 
-see \sa Message forwarding.
+=======================================
+##### tNMEA2000::SetSingleFrameMessages
 
-##### SetForwardSystemMessages
+\copybrief tNMEA2000::SetSingleFrameMessages
+\copydetails tNMEA2000::SetSingleFrameMessages
 
-Set true as default. With this you can control if system messages like address
-claiming, device information will be forwarded to forward stream.  
-If you set this false, system messages will not be forwarded to the stream.
+=======================================
+##### tNMEA2000::SetFastPacketMessages
 
-##### SetForwardOnlyKnownMessages
+\copybrief tNMEA2000::SetFastPacketMessages
+\copydetails tNMEA2000::SetFastPacketMessages
 
-Set false as default. With this you can control if unknown messages will be forwarded to
-forward stream. If you set this true, all unknown message will not be forwarded to the stream.
+=======================================
+##### tNMEA2000::ExtendSingleFrameMessages
 
-\note This does not effect for own messages. Known messages are listed on library.  
+\copybrief tNMEA2000::ExtendSingleFrameMessages
+\copydetails tNMEA2000::ExtendSingleFrameMessages
 
-See \ref tNMEA2000::SetSingleFrameMessages, \ref tNMEA2000::SetFastPacketMessages,
-\ref tNMEA2000::ExtendSingleFrameMessages and \ref tNMEA2000::ExtendFastPacketMessages.
+=======================================
+##### tNMEA2000::ExtendFastPacketMessages
 
-##### SetForwardOwnMessages
+\copybrief tNMEA2000::ExtendFastPacketMessages
+\copydetails tNMEA2000::ExtendFastPacketMessages
 
-Set true as default. With this you can control if messages your device sends to bus will be
-forwarded to forward stream.
+=======================================
+##### tNMEA2000::SendIsoAddressClaim
 
-##### SetHandleOnlyKnownMessages
+This is automatically used by class. You only need to use this, if you want to write your own
+behavior for address claiming.
 
-Set false as default. With this you can control if unknown messages will be handled at all.
-Known messages are listed on library.
+=======================================
+##### tNMEA2000::SendProductInformation
 
-See \ref tNMEA2000::SetSingleFrameMessages, \ref tNMEA2000::SetFastPacketMessages,
-\ref tNMEA2000::ExtendSingleFrameMessages and \ref tNMEA2000::ExtendFastPacketMessages.
+This is automatically used by class. You only need to use this, if you want to write your own
+behavior for providing product information.
 
-##### SetDebugMode
+=======================================
+##### tNMEA2000::SendConfigurationInformation
 
-If you do not have physical N2k bus connection and you like to test your board without
-even CAN controller, you can use this function.  
-see \sa Debug mode.
+This is automatically used by class. You only need to use this, if you want to write your own
+behavior for providing configuration information.
+
+=======================================
+##### tNMEA2000::SetHeartbeatIntervalAndOffset
+
+\copybrief tNMEA2000::SetHeartbeatIntervalAndOffset
+\copydetails tNMEA2000::SetHeartbeatIntervalAndOffset
+
+=======================================
+##### tNMEA2000::GetHeartbeatInterval
+
+\copybrief tNMEA2000::GetHeartbeatInterval
+\copydetails tNMEA2000::GetHeartbeatInterval
+
+=======================================
+##### tNMEA2000::SendHeartbeat
+
+Library will automatically send heartbeat, if interval is >0. You can also manually send it
+any time or force sent, if interval=0;
+
+=======================================
+##### tNMEA2000::SetForwardType
+
+\copybrief tNMEA2000::SetForwardType
+\copydetails tNMEA2000::SetForwardType
+
+=======================================
+##### tNMEA2000::SetForwardStream
+
+\copybrief tNMEA2000::SetForwardStream
+\copydetails tNMEA2000::SetForwardStream
+
+=======================================
+##### tNMEA2000::Open
+
+\copybrief tNMEA2000::Open
+\copydetails tNMEA2000::Open
+
+=======================================
+##### tNMEA2000::EnableForward
+
+\copybrief tNMEA2000::EnableForward
+\copydetails tNMEA2000::EnableForward
+
+=======================================
+##### tNMEA2000::SetForwardSystemMessages
+
+\copybrief tNMEA2000::SetForwardSystemMessages
+\copydetails tNMEA2000::SetForwardSystemMessages
+
+=======================================
+##### tNMEA2000::SetForwardOnlyKnownMessages
+
+\copybrief tNMEA2000::SetForwardOnlyKnownMessages
+\copydetails tNMEA2000::SetForwardOnlyKnownMessages
+
+=======================================
+##### tNMEA2000::SetForwardOwnMessages
+
+\copybrief tNMEA2000::SetForwardOwnMessages
+\copydetails tNMEA2000::SetForwardOwnMessages
+
+=======================================
+##### tNMEA2000::SetHandleOnlyKnownMessages
+
+\copybrief tNMEA2000::SetHandleOnlyKnownMessages
+\copydetails tNMEA2000::SetHandleOnlyKnownMessages
+
+=======================================
+##### tNMEA2000::SetDebugMode
+
+\copybrief tNMEA2000::SetDebugMode
+\copydetails tNMEA2000::SetDebugMode

@@ -1,15 +1,10 @@
 = NMEA2000 library for C++ =
 
-Object oriented NMEA2000 library for Teensy, ESP, Arduino, MBED and Rasberry type Boards.
-These board types has been tested, but library can be used also in other systems by writing
-compatible CAN driver and wrapper for other hw specific functions.
+NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements leaving only interesting data handling for developer.  ** Library has been used in several commercial certified NMEA2000 devices. **
 
-Library gives you easy way to make different kind of NMEA2000 bus devices like
-sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,
-NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.
+Library provides you easy way to make different kind of NMEA2000 bus devices like sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.
 
-Library fulfills NMEA 2000 mandatory functions and behaviour. Devices using library can pass NMEA2000
-certification tests. Library has been used in several commercial certified products.
+Library has been originally (2015) developed for Arduino based boards. As far as I know it has been used and tested with Teensy, ESP, some Arduino, MBED and Rasberry Boards, but library can be used also in other systems by writing compatible CAN "driver" and necessary classes for other hw specific functions.
 
 If you are familiar with library, here is quick link to the changes: 
 https://ttlappalainen.github.io/NMEA2000/changes.html

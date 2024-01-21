@@ -114,9 +114,9 @@ tN2kGroupFunctionTransmissionOrPriorityErrorCode tN2kGroupFunctionHandler::GetRe
                               bool UseOffsetLimits,
                               uint16_t OffsetMax
                               ) {
-  // In NMEA tool v2.0 tests "C.3.13.2  Expanded Acknowledgment Message Timing" tool is Old
-  // and does not know interval 0xFFFFFFFE=Restore Default Interval. So to pass
-  // that test, that has to be commented out
+  // On NMEA certification tests "C.3.13.2  Expanded Acknowledgment 
+  // Message Timing" old tool does not know interval 0xFFFFFFFE=Restore Default Interval
+  // and so fails test. Use new test tool sw version or comment that out.
   return ( (TransmissionInterval==0xFFFFFFFF     // No change
             || TransmissionInterval==0xFFFFFFFE  // Restore default
             || TransmissionInterval==0           // Turn off

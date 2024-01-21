@@ -49,8 +49,23 @@
 
 /************************************************************************//**
  * \class   tN2kDeviceList
- * \brief   class thats holding a list of all devices on the bus
+ * \brief   Helper class to keep track of all devices on the bus
  * \ingroup group_helperClass
+ * 
+ * On bus each message contains sender source address. Device source address may be changed
+ * due to \ref secRefTermAddressClaiming "address claiming" on power up or when new device 
+ * will be added to the bus. For this reason source address can not be used as only filter
+ * for similar messages like position data. By using tN2kDeviceList source address related to 
+ * \ref secRefTermNAME can be easily found at any time with FindDeviceByName(). 
+ * With ReadResetIsListUpdated() can be easily checked
+ * is there any changes on device list and then request interesting source address with
+ * FindDeviceByName().
+ * 
+ * Check all search methods:
+ * - FindDeviceByName()
+ * - FindDeviceByIDs()
+ * - FindDeviceByProduct()
+ * - FindDeviceBySource()
  * 
  *  This class is derived from \ref tNMEA2000::tMsgHandler.
  */
@@ -632,18 +647,18 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
 
     // 
     /********************************************************************//**
-     * \brief Find a device in \ref Sources by the name of the device
+     * \brief Find a device in \ref Sources by the NAME of the device
      *
-     * Return device by it's name. Device name is complete device 
+     * Return device by it's NAME. Device NAME is complete device 
      * information data, which is unique for all registered devices and 
-     * should be unique for own made devices on own bus. Name will be 
+     * should be unique for own made devices on own bus. NAME will be 
      * matched according to matching parameter. If there is no device with
-     * given name, function returns null.
+     * given NAME, function returns null.
      * 
-     * \param Name  Name of the device to be searched for
+     * \param NAME  NAME of the device to be searched for
      * \return tN2kDeviceList::tInternalDevice* 
      */
-    const tNMEA2000::tDevice * FindDeviceByName(uint64_t Name) const { return LocalFindDeviceByName(Name); }
+    const tNMEA2000::tDevice * FindDeviceByName(uint64_t NAME) const { return LocalFindDeviceByName(NAME); }
     
     /********************************************************************//**
      * \brief Find a device in \ref Sources by the manufacturer code and

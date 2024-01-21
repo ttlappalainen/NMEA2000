@@ -26,10 +26,8 @@ of any errors in the document or any possible damages caused to your devices.
 
 ## Recommended hardware {#secTRecHW}
 
-I personally prefer to use Teensy 3.2, 3.5, 3.6, 4.0, 4.1 or ESP32 board. Those boards
-have internal CAN controller and require only either unisolated MCP2562 or isolated ISO1050
-transceiver for NMEA2000 connection.
-With default settings library requires **about 23 kB rom and 3.3 kB RAM in normal operation**.
+I personally prefer to use Teensy 4.0, 4.1 (or 3.2, 3.5, 3.6 which are at end of life) or ESP32 board. Those boards have internal CAN controller and require only either isolated ISO1050 or unisolated MCP2562 transceiver for NMEA2000 connection.
+With default settings library requires roughly **about 30 kB rom and 4 kB RAM in normal operation**.
 So you should have **at least 8 kB RAM in your processor**. If you have Arduino Mega board,
 it is OK for testing and for small projects, but I do not prefer to buy one for new project.
 Arduino Due is better, but it is physically bigger and eats more power than Teensies or ESP32.
@@ -41,7 +39,7 @@ and you have trouble to get it working, please do not set any issues.
 
 Some boards (or processors) have internal CAN controller. In board there will be simply
 CAN Tx/CAN Rx pins, which often works with 3.3 V levels. Good examples of this kind of boards
-are recommended Teensy 3.2, 3.5, 3.6, 4.0, 4.1 or ESP32 boards.
+are recommended Teensy 4.0, 4.1 (or 3.2, 3.5, 3.6 which are at end of life) or ESP32 boards.
 Arduino DUE has also internal CAN controller. Never connect CAN Tx/CAN Rx pins directly to
 NMEA2000 bus. If you use board without internal CAN controller or you want to have second CAN
 controller e.g., for Teensy 3.2 or ESP32, you can use external one. Currently only supported is
@@ -65,10 +63,7 @@ controller to CAN bus levels.
 
 #### Recommended transceiver {#subsubRecTra}
 
-I recommend either unisolated MCP2562 or isolated ISO1050 transceiver. MCP2562 operates
-with 5 V and it has own pin to define Tx/Rx logic levels for 3.3 V devices. ISO1050 has own
-power pin for both sides so it also works with any logic levels. There is lot of issues with
-SN65HVD230 transceiver. If you use that, please do not open issue – it is not library problem.
+I recommend either isolated ISO1050  or unisolated MCP2562 transceiver. ISO1050 has own power pin for both sides so it also works with any logic levels. MCP2562 operates with 5 V and it has own pin to define Tx/Rx logic levels for 3.3 V devices. There is lot of issues with SN65HVD230 transceiver. If you use that, please do not open issue – it is not library problem.
 
 I do not know why there has been so much problems with SN65HVD230 - according datasheet it
 should be fine. I have had problems with MCP2562 only twice. Once I mixed Vdd and Vcc - worked
@@ -76,10 +71,7 @@ fine after connected them right. Another time I connected STBY pin to Vdd, which
 
 \note
 **This is very important.**  
-If you use unisolated tranceiver like MCP2562, you may cause
-ground loop in your boat. Ground loops may generate other weird problems. You can read more
-about it e.g., from Ground loop in Wikipedia
-<https://en.wikipedia.org/wiki/Ground_loop_(electricity)>.  
+If you use unisolated tranceiver like MCP2562, you may cause ground loop in your boat. Ground loops may generate other weird problems. You can read more about it e.g., from Ground loop in Wikipedia <https://en.wikipedia.org/wiki/Ground_loop_(electricity)>.  
 If you e.g.,feed NMEA2000 bus on center of the boat and you have unisolated device, which
 also has ground by sensor on front of the boat, you have created ground loop. It may work
 without problems or may not. You may have communication errors etc.
@@ -126,7 +118,7 @@ outside sources (EMI, ESD, electrical transients, etc.).
 
 [MCHP 2562 Datasheet](http://ww1.microchip.com/downloads/en/devicedoc/20005167c.pdf)
 
-#### Isolated transceiver {subsubIso}
+#### Isolated transceiver {#subsubIso}
 
 Isolated tranceiver has either optical or galvanic (ISO1050) isolation. Those has to be
 powered from both sides with isolated power, so you need also at least two power supplies.
@@ -246,7 +238,7 @@ even variable. If you are interested, dig more information from internet.
 NMEA2000 bus is like ethernet so that you can have multiple devices on
 same bus, they all can send information to the bus and there is no bus
 master device. The biggest difference to traditional NMEA0183 connection
-is that only one device can send data.
+is that on NMEA0183 only one device can send data.
 
 - [NMEA_2000](https://en.wikipedia.org/wiki/NMEA_2000)
 - [SAE_J1939](https://en.wikipedia.org/wiki/SAE_J1939)

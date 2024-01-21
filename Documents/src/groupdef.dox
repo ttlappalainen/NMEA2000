@@ -75,3 +75,8 @@
 */
 
 /**    @} */
+
+/** \defgroup group_examples 5 Examples
+    \brief Examples how to use library.
+
+*/

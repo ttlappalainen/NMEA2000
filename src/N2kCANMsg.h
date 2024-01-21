@@ -22,10 +22,9 @@
 
 /*************************************************************************//**
  * \file  N2kCANMsg.h
- * \brief This File contains a CAN message helper class
+ * \brief File declares tN2kCANMsg class used internally on tNMEA2000.
  * 
- * This class is use by the \ref NMEA2000 class in oder to handle the 
- * N2k messages on the can bus.
+ * Class is used by the tNMEA2000 class to handle incoming NMEA2000 messages.
  */
 
 #ifndef _tN2kCANMsg_H_
@@ -35,7 +34,7 @@
 /************************************************************************//**
  * \class tN2kCANMsg
  * 
- * \brief Class to handle CAN messages
+ * \brief Class used internally on tNMEA2000 to handle incoming NMEA2000 messages.
  * \ingroup group_core
  * 
  */

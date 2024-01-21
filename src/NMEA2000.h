@@ -115,10 +115,10 @@
  * 
  * \note Each device on NMEA2000 bus should have own address on range 0-253. 
  * 
- * This class uses J1939 automatic address claiming (or dynamic addressing).
- * So that you can start your device with some address set by method
- * \ref tNMEA2000::SetMode(). It is also important to set your device
- * "name" with method \ref tNMEA2000::SetDeviceInformation() so that 
+ * This class uses J1939 automatic \ref secRefTermAddressClaiming "address claiming" 
+ * (or dynamic addressing). So that you can start your device with some address set by method
+ * \ref SetMode(). It is also important to set your device
+ * \ref secRefTermNAME with method \ref tNMEA2000::SetDeviceInformation() so that 
  * it would be unique.
  * 
  * If you do not set "name" to unique, you devices changes address on start 
@@ -139,12 +139,11 @@ public:
    * 130816 - 131071
    * 
    * \param PGN PGN to be checked
-   * \return true -> for PGNs:
+   * \retval true -> for PGNs:
    *    - 126720L
-   *    - 130816L
-   *    - 131071L
+   *    - 130816L ... 131071L
    *    - 65280L ... 65535L
-   * \return false 
+   * \retval false 
    */
   static bool IsProprietaryMessage(unsigned long PGN);
   /************************************************************************//**
@@ -280,8 +279,8 @@ public:
        * \brief Compares two product information structures
        *
        * \param Other An other product information structure
-       * \return true 
-       * \return false 
+       * \retval true 
+       * \retval false 
        */
       bool IsSame(const tProductInformation &Other);
   };
@@ -462,10 +461,10 @@ public:
      */
     void SetName(uint64_t _Name) { DeviceInformation.Name=_Name; }
     /********************************************************************//**
-     * \brief Check if two devices are the same, by comparing the device name
-     * \param Other Name of th other device
-     * \return true 
-     * \return false 
+     * \brief Check if two devices are the same, by comparing the device NAME
+     * \param Other NAME of the other device
+     * \retval true 
+     * \retval false 
      */
     inline bool IsSame(uint64_t Other) { return GetName()==Other; }
   };
@@ -510,8 +509,8 @@ public:
       /******************************************************************//**
       * \brief Check if two devices are the same, by comparing the device name
       * \param Other Name of th other device
-      * \return true 
-      * \return false 
+      * \retval true 
+      * \retval false 
       */
       inline bool IsSame(uint64_t Other) { return DevI.IsSame(Other); }
       /*******************************************************************//**
@@ -850,8 +849,8 @@ protected:
      * SetPendingIsoAddressClaim, so that \ref SendIsoAddressClaim can 
      * be executed.
      * 
-     * \return true   enough time has passed
-     * \return false 
+     * \retval true   enough time has passed
+     * \retval false 
      */
     bool QueryPendingIsoAddressClaim() { return PendingIsoAddressClaim.IsTime(); }
     /** \brief Resets \ref PendingIsoAddressClaim to zero*/
@@ -874,8 +873,8 @@ protected:
      * SetPendingProductInformation, so that \ref SendProductInformation can 
      * be executed.
      * 
-     * \return true   enough time has passed
-     * \return false 
+     * \retval true   enough time has passed
+     * \retval false 
      */
     bool QueryPendingProductInformation() { return PendingProductInformation.IsTime(); }
 
@@ -896,8 +895,8 @@ protected:
      * SetPendingConfigurationInformation, so that \ref 
      * SendConfigurationInformation can be executed.
      * 
-     * \return true   enough time has passed
-     * \return false 
+     * \retval true   enough time has passed
+     * \retval false 
      */
     bool QueryPendingConfigurationInformation() { return PendingConfigurationInformation.IsTime(); }
     /*********************************************************************//**
@@ -1001,18 +1000,24 @@ protected:
      *          \ref N2kCANMsgBuf */
     uint8_t MaxN2kCANMsgs;
 
-    /** \brief Buffer for ssend out CAN messages */
+    /** \brief Buffer for send out CAN messages
+     * 
+     * CANSendFrameBuf is library internal buffer for frames waiting for sending. If
+     * CanSendFrame() can not send frame, frame will be stored to this buffer and its
+     * sending will be tried again on next ParseMessages() call.
+     * 
+     * If inherited class "driver" has own send buffer, size of CANSendFrameBuf can be
+     * set to minimum 2 on inherited \ref InitCANFrameBuffers(). 
+    */
     tCANSendFrame *CANSendFrameBuf;
     /** \brief Max number of send out CAN messages that can go to the buffer 
      *          \ref CANSendFrameBuf 
      * \sa \ref InitCANFrameBuffers()*/
     uint16_t MaxCANSendFrames;
-    /** \brief  Index for the CAN message Send buffer 
-     * \todo Please double check Docu
+    /** \brief  Next read index for the CAN message Send buffer 
      */
     uint16_t CANSendFrameBufferWrite;
-    /** \brief  Index for the CAN message Send buffer
-     * \todo Please double check Docu
+    /** \brief  Next write index for the CAN message Send buffer
      */
     uint16_t CANSendFrameBufferRead;
     /** \brief Max number received CAN messages that can go to the buffer 
@@ -1020,8 +1025,13 @@ protected:
     */
     uint16_t MaxCANReceiveFrames;
 
-    /** \brief ???
-    * \todo Better documentation needed */
+    /** \brief Callback function, which will be called when library start bus communicaion.
+    * 
+    * OnOpen Will be called when library starts bus communication. At open library first starts
+    * address claming and after it has been accepted, other communication can start.
+    * OnOpen can be used e.g., for message timing synchronization so that every time device starts
+    * messages will have same sent offset. See also SetOnOpen().
+    */
     void (*OnOpen)();
         
     /** \brief Handler callbacks for normal messages */
@@ -1051,8 +1061,8 @@ protected:
      * \param buf       buffer with the payload
      * \param wait_sent   Has the message to wait before sending
      * 
-     * \return true   -> Success
-     * \return false  -> there is no space in the queue
+     * \retval true  Success
+     * \retval false there is no space in the queue
     */
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
 
@@ -1067,9 +1077,9 @@ protected:
      * 
      * \sa \ref secHWlib
      * 
-     * \return true   -> Success
-     * \return false  -> currently prevent accidental by second instance. 
-     *                   Maybe possible in future.
+     * \retval true   Success
+     * \retval false  currently prevent accidental by second instance. 
+     *                Maybe possible in future.
      */
     virtual bool CANOpen()=0;
 
@@ -1084,8 +1094,8 @@ protected:
      * 
      * \sa \ref secHWlib
      * 
-     * \return true   -> Ther is a new frame
-     * \return false  -> 
+     * \retval true   New frame read from buffer.
+     * \retval false  Nothing read. 
      */
     virtual bool CANGetFrame(unsigned long &id, unsigned char &len, unsigned char *buf)=0;
     
@@ -1106,8 +1116,8 @@ protected:
     /**********************************************************************//**
      * \brief Sends pending all frames
      *
-     * \return true   -> Success
-     * \return false  -> Message could not be send out
+     * \retval true   Success
+     * \retval false  Message could not be sent.
      */
     bool SendFrames();
     /**********************************************************************//**
@@ -1121,8 +1131,8 @@ protected:
      * \param buf {type} 
      * \param wait_sent {type} 
      * 
-     * \return true   -> success
-     * \return false  -> failed
+     * \retval true   success
+     * \retval false  failed
      */
     bool SendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true);
 
@@ -1140,8 +1150,10 @@ protected:
      * pended on ISO request. This is because specially for broadcasted 
      * response it may take a while, when higher priority devices sends 
      * their response.
-     * \sa  \ref SendIsoAddressClaim(), \ref SendProductInformation(),
-     *      \ref SendConfigurationInformation()
+     * \sa
+     * - \ref SendIsoAddressClaim()
+     * - \ref SendProductInformation()
+     * - \ref SendConfigurationInformation()
      */
     void SendPendingInformation();
 
@@ -1167,8 +1179,8 @@ protected:
     void InitDevices();
     /*********************************************************************//**
      * \brief Determines if the CAN BUS is already initialized
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsInitialized() { return (N2kCANMsgBuf!=0); }
 
@@ -1229,8 +1241,8 @@ protected:
      * FastPacketMessages[]
      * 
      * \param PGN     PGN to be checked
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsFastPacketPGN(unsigned long PGN);
 
@@ -1242,8 +1254,8 @@ protected:
      * FastPacketMessages[]
      * 
      * \param N2kMsg Reference to a N2kMsg Object
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsFastPacket(const tN2kMsg &N2kMsg);
 
@@ -1261,8 +1273,8 @@ protected:
      * \param PGN             PGN to be checked
      * \param SystemMessage   Flag system message
      * \param FastPacket      Flag fast packet
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool CheckKnownMessage(unsigned long PGN, bool &SystemMessage, bool &FastPacket);
 
@@ -1276,8 +1288,8 @@ protected:
      *      \ref HandleCommandedAddress, \ref HandleCommandedAddress
      * 
      * \param MsgIndex  Message Index on \ref N2kCANMsgBuf
-     * \return true     -> message was handled
-     * \return false 
+     * \retval true    message was handled
+     * \retval false 
      */
     bool HandleReceivedSystemMessage(int MsgIndex);
 
@@ -1377,8 +1389,8 @@ protected:
      * \brief Checks if the IsoAddressClaim is already started
      * 
      * \param iDev          index of the device on \ref Devices
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsAddressClaimStarted(int iDev);
 
@@ -1420,8 +1432,8 @@ protected:
      * \brief Checks if the source belongs to a device on \ref Devices 
      *
      * \param Source Source address
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsMySource(unsigned char Source);
 
@@ -1447,40 +1459,40 @@ protected:
      * \sa  \ref ForwardMode, \ref N2kMode
      * Checks if forwarding i enabled and the node is not \ref N2km_SendOnly
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool ForwardEnabled() const { return ((ForwardMode&FwdModeBit_EnableForward)>0 && (N2kMode!=N2km_SendOnly)); }
     
     /*********************************************************************//**
      * \brief Is forwarding enabled for system messages
      * \sa  \ref ForwardMode
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool ForwardSystemMessages() const { return ((ForwardMode&FwdModeBit_SystemMessages)>0); }
     
     /*********************************************************************//**
      * \brief Is forwarding enabled for known messages only
      * \sa  \ref ForwardMode
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool ForwardOnlyKnownMessages() const { return ((ForwardMode&FwdModeBit_OnlyKnownMessages)>0); }
 
     /*********************************************************************//**
      * \brief Is forwarding enabled for own messages
      * \sa  \ref ForwardMode
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool ForwardOwnMessages() const { return ((ForwardMode&FwdModeBit_OwnMessages)>0); }
 
     /*********************************************************************//**
      * \brief Is handle only known messages enabled
      *
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool HandleOnlyKnownMessages() const { return ((ForwardMode&HandleModeBit_OnlyKnownMessages)>0); }
 
@@ -1499,8 +1511,8 @@ protected:
      *        messages to any destination.
      * 
      * \param Destination  Destination of the received message
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool HandleReceivedMessage(unsigned char Destination) {
       return (/* HandleMessagesToAnyDestination() */ true ||
@@ -1511,8 +1523,8 @@ protected:
     /*********************************************************************//**
      * \brief Returns if this node is active on the bus
      *
-     * \return true ->  if ( \ref N2km_NodeOnly or \ref N2km_ListenAndNode)
-     * \return false 
+     * \retval true if ( \ref N2km_NodeOnly or \ref N2km_ListenAndNode)
+     * \retval false 
      */
     bool IsActiveNode() { return (N2kMode==N2km_NodeOnly || N2kMode==N2km_ListenAndNode); }
 
@@ -1520,16 +1532,16 @@ protected:
      * \brief Checks if the device index on \ref Devices is valid 
      *
      * \param iDev    index of the device on \ref Devices
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
 
     /*********************************************************************//**
      * \brief Checks if the device is ready to send a message
      *
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsReadyToSend() const {
       return ( (OpenState==os_Open || dbMode!=dm_None) &&
@@ -1551,8 +1563,8 @@ protected:
      * \param buf           pointer to a byte buffer for the 
      * \param MsgIndex      MsgIndex for \ref N2kCANMsgBuf
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool TestHandleTPMessage(unsigned long PGN, unsigned char Source, unsigned char Destination,
                              unsigned char len, unsigned char *buf,
@@ -1565,8 +1577,8 @@ protected:
      *
      * \param iDev    index of the device on \ref Devices
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool SendTPCM_BAM(int iDev);
 
@@ -1575,8 +1587,8 @@ protected:
      *
      * \param iDev    index of the device on \ref Devices
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool SendTPCM_RTS(int iDev);
 
@@ -1621,8 +1633,8 @@ protected:
      * 
      * \param iDev    index of the device on \ref Devices
      * 
-     * \return true   Message was send successful
-     * \return false 
+     * \retval true   Message was send successful
+     * \retval false 
      */
     bool SendTPDT(int iDev);
 
@@ -1632,8 +1644,8 @@ protected:
      *
      * \param iDev    index of the device on \ref Devices
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool HasAllTPDTSent(int iDev);
 
@@ -1643,8 +1655,8 @@ protected:
      * \param msg     Reference to a N2kMsg Object
      * \param iDev    index of the device on \ref Devices
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool StartSendTPMessage(const tN2kMsg& msg, int iDev);
 
@@ -1666,8 +1678,10 @@ protected:
     /*********************************************************************//**
      * \brief Copy Configuration Information to local memory
      *
-     * \sa  \ref SetConfigurationInformation, \ref SetInstallationDescription1
-     *      and \ref SetInstallationDescription2
+     * \sa
+     * - \ref SetConfigurationInformation
+     * - \ref SetInstallationDescription1
+     * - \ref SetInstallationDescription2
      */
     void CopyProgmemConfigurationInformationToLocal();
 
@@ -1676,6 +1690,7 @@ protected:
      */
     bool InstallationDescriptionChanged;
 #endif
+
 public:
     /*********************************************************************//**
      * \brief Construct a new NMEA2000 object
@@ -1693,7 +1708,7 @@ public:
     int FindSourceDeviceIndex(unsigned char Source) const;
 
     /*********************************************************************//**
-     * \brief Set the Device Counter
+     * \brief Set the count of devices library shows on bus.
      *
      * With this function you can enable multi device support. As default 
      * there is only one device.
@@ -1703,13 +1718,13 @@ public:
      * 
      * \sa  \ref descMultiDeviceSupport
      * 
-     * \param _DeviceCount  Maximal number of devices that can be hold in 
+     * \param _DeviceCount  Maximum number of devices that can be hold in 
      *                      \ref Devices
      */
     void SetDeviceCount(const uint8_t _DeviceCount);
 
     /*********************************************************************//**
-     * \brief Set the maximum buffersize of \ref N2kCANMsgBuf
+     * \brief Set incoming CAN message (\ref tNMEA2000::N2kCANMsgBuf) buffersize.
      *
      * With this function you can set size of buffer, where system stores 
      * incoming messages. The default size is 5 messages. Some messages are 
@@ -1722,28 +1737,31 @@ public:
      * N2km_NodeOnly, you can set buffer size smaller like 3 or 2 by calling 
      * this before \ref tNMEA2000::Open().
      * 
-     * \param _MaxN2kCANMsgs  Maximal number of CAN messages that can be 
-     *                        stored in \ref N2kCANMsgBuf
+     * \param _MaxN2kCANMsgs  Number of CAN messages that can be 
+     *                        stored in \ref tNMEA2000::N2kCANMsgBuf
      */
     void SetN2kCANMsgBufSize(const uint8_t _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
 
     /*********************************************************************//**
-     * \brief Set the maximum buffersize of \ref CANSendFrameBuf
+     * \brief Set CAN send frame (\ref CANSendFrameBuf) buffersize.
      * 
+     * With this function you can set size of buffer, where system saves frames of messages to be sent.
+     *
      * When sending long messages like ProductInformation or GNSS data, 
      * there may not be enough buffers for successfully send data. This 
      * depends of your hw and device source. Device source has effect due 
      * to priority of getting sending slot. If your data is critical, use 
      * buffer size, which is large enough (default 40 frames).
-     * So e.g. Product information takes totally 134 bytes. This needs 20 
+     *
+     * E.g. Product information takes totally 134 bytes. This needs 20 
      * frames. If you also send GNSS 47 bytes=7 frames.
      * If you want to be sure that both will be sent on any situation, 
      * you need at least 27 frame buffer size.
      * If you use this function, call it once before \ref tNMEA2000::Open() and 
-     * before any device related function like SetProductInformation.
+     * before any device related function like tNMEA2000::SetProductInformation.
      *
-     * \param _MaxCANSendFrames Maximal number of CAN messages that can be 
-     *                          stored in \ref CANSendFrameBuf
+     * \param _MaxCANSendFrames Maximum number of CAN messages that can be 
+     *                          stored in \ref tNMEA2000::CANSendFrameBuf
      */
     virtual void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if ( !IsInitialized() ) { MaxCANSendFrames=_MaxCANSendFrames; }; }
 
@@ -1758,23 +1776,27 @@ public:
      */
     virtual void SetN2kCANReceiveFrameBufSize(const uint16_t _MaxCANReceiveFrames) { if ( !IsInitialized() ) MaxCANReceiveFrames=_MaxCANReceiveFrames; }
 
-    
-
     /*********************************************************************//**
-     * \brief Set the Product Information of this device
+     * \brief Set the Product Information of this device.
+     *
+     * With this function you define how your device will show up for other devices on NMEA2000 bus.
      *
      * Define your product information. Defaults will be set on initialization.
      * For keeping defaults use 0xffff/0xff for int/char values and nul ptr
      * for pointers. LoadEquivalency is multiplication of 50 mA, what your 
-     * device will take power from N2k-bus. E.g. for Arduino only it can 
+     * device will take power from NMEA2000 bus. E.g. for Arduino only it can 
      * be 1 (=50mA). If your device does not take power from bus, set this 
      * to 0.
+     *
+     * If you use device modes tNMEA2000::N2km_ListenOnly or tNMEA2000::N2km_ListenAndSend, function
+     * does not have effect.
      * 
      * \note Serial code has length of 32 so just long enough to carry GUID.
      * 
      * \param _ModelSerialCode      Default="00000001". Max 32 chars. 
      *                              Manufacturer's Model serial code
-     * \param _ProductCode          Default=666. Manufacturer's product code
+     * \param _ProductCode          Default=666. Manufacturer's product code. 
+     *                              For certified devices this number will be given by NMEA organization.
      * \param _ModelID              Default="Arduino N2k->PC". Max 33 chars. 
      *                              Manufacturer's  Model ID
      * \param _SwCode               Default="1.0.0.0". Max 40 chars. 
@@ -1815,7 +1837,9 @@ public:
     /*********************************************************************//**
      * \brief Set the Configuration Information of this device
      *
-     * Configuration information is just some extra information 
+     * With this function you can set configuration information for your device.
+     *
+     * Configuration information contains some extra information 
      * about device installation and manufacturer. Some MFD shows it, some 
      * does not. NMEA Reader can show configuration information.
      * InstallationDescription1 and InstallationDescription2 can be 
@@ -1825,22 +1849,33 @@ public:
      * \note You can disable configuration information by calling 
      * SetProgmemConfigurationInformation(0);
      * 
-     * \param ManufacturerInformation     Buffer for Manufacturer information
-     * \param InstallationDescription1    Buffer for Installation 
-     *                                    Description 1
-     * \param InstallationDescription2    Buffer for Installation 
-     *                                    Description 2
+     * \sa
+     * - \ref tNMEA2000::GetInstallationDescription1
+     * - \ref tNMEA2000::GetInstallationDescription2
+     * - \ref tNMEA2000::ReadResetInstallationDescriptionChanged
+     * 
+     * \param ManufacturerInformation     Buffer for Manufacturer information. 
+     *                                    Use e.g., company name and web address.
+     * \param InstallationDescription1    Buffer for Installation Description 1.
+     *                                    Installation Description 1 and 2 may be used by device installer
+     *                                    e.g., for location of physical device to help to find it.
+     *                                    To handle externally updated Installation Description you should
+     *                                    listen changes of them. See tNMEA2000::ReadResetInstallationDescriptionChanged
+     * \param InstallationDescription2    Buffer for Installation Description 2.
      */
     void SetConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
                                      const char *InstallationDescription2=0);
 
     /*********************************************************************//**
-     * \brief Set the Progmem Configuration Information of this device
+     * \brief Set the Configuration Information located on PROGMEM
      *
      * With this function you can set configuration information, which 
      * will be saved on device program memory.
-     * See example BatteryMonitor.ino.  
+     * See example BatteryMonitor.ino.
+     * 
+     * This function is usefull only on MCUs with very small RAM. By using
+     * PROGMEM, indtallation description can not be changed by group function.  
      * 
      * As default system has build in configuration information on progmem. 
      * If you do not want to have configuration information at all, 
@@ -1863,8 +1898,8 @@ public:
      *
      * \param PGN     PGN to be checked
      * \param iDev    index of the device on \ref Devices
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool IsTxPGN(unsigned long PGN, int iDev=0);
 
@@ -2000,8 +2035,13 @@ public:
     /*********************************************************************//**
      * \brief Check if this device has changed its Install Description
      *
-     * \return true 
-     * \return false 
+     * \sa
+     * - \ref tNMEA2000::GetInstallationDescription1
+     * - \ref tNMEA2000::GetInstallationDescription2
+     * - \ref tNMEA2000::SetConfigurationInformation
+     * 
+     * \retval true    Installation description changed. Read new values and save them.
+     * \retval false   Nothing changed, no further actions required.
      */
     bool ReadResetInstallationDescriptionChanged();
 #endif
@@ -2019,6 +2059,9 @@ public:
      * As a default library has a list of known messages. With this 
      * function user can override default list of single frame messages.
      * 
+     * \sa
+     * - \ref tNMEA2000::ExtendSingleFrameMessages.
+     * 
      * \param _SingleFrameMessages  Buffer holding single frame messages 
      * 
      */
@@ -2032,14 +2075,16 @@ public:
      * 
      * As a default library has a list of known messages. With this 
      * function user can override default list of fast packet messages. 
-     * See also \ref tNMEA2000::ExtendFastPacketMessages.
      * 
      * \note If an incoming fast packet message is not known, it will be 
      * treated as single frame message. So if you want to handle unknown 
      * fast packet message, you need to duplicate frame collection logic 
      * from library to your code. So it is easier to have fast packet 
      * messages listed on library, if you want to handle them.
-
+     *
+     * \sa
+     * - \ref tNMEA2000::ExtendFastPacketMessages.
+     *
      * \param _FastPacketMessages  Buffer holding fast packet messages
      * 
      */
@@ -2056,21 +2101,21 @@ public:
      * 
      * \note Currently subsequent calls will override previously set list.
      * 
-     * \param _SingleFrameMessages  Buffer holding single frame messages
+     * \sa
+     * - \ref SetSingleFrameMessages
      * 
-     * \sa see \ref SetSingleFrameMessages
+     * \param _SingleFrameMessages  Buffer holding single frame messages
      */
     void ExtendSingleFrameMessages(const unsigned long *_SingleFrameMessages);
 
     /*********************************************************************//**
      * \brief Set the list of known Extended Fast Packet Messages
      * 
-     * Call these if you wish to override the default message packets 
-     * supported.  Pointers must be in PROGMEM
+     * Call these if you wish to extent list of fast packet messages. 
+     * Pointers must be in PROGMEM
      * 
      * As a default library has a list of known messages. With this 
-     * function user can override default list of fast packet messages. 
-     * See also \ref tNMEA2000::ExtendFastPacketMessages.
+     * function user can extent default list of fast packet messages. 
      * 
      * \note If an incoming fast packet message is not known, it will be 
      * treated as single frame message. So if you want to handle unknown 
@@ -2080,6 +2125,9 @@ public:
      * 
      * \note Currently subsequent calls will override previously set list.
      * 
+     * \sa
+     * - \ref tNMEA2000::SetFastPacketMessages.
+     * 
      * \param _FastPacketMessages  Buffer holding extended fast packet messages
      * 
      */
@@ -2088,7 +2136,8 @@ public:
     /*********************************************************************//**
      * \brief Extend the list of Transmitted Messages
      * 
-     * Define information about PGNs, what your system can handle.  
+     * Define list of extra PGNs, what your system will transmit. System messages
+     * will be automatically included.
      * Pointers must be in PROGMEM
      * 
      * \code {.cpp}
@@ -2100,22 +2149,23 @@ public:
      * System should respond to PGN 126464 request with messages the 
      * system transmits and receives. The library will automatically respond 
      * with system the messages it handles internally. With this method you 
-     * can add messages, which your own code sends
+     * can add messages, which your code will transmit.
      * 
      * \note that this is valid only for device modes 
      *       \ref tNMEA2000::N2km_NodeOnly and \ref 
      *       tNMEA2000::N2km_ListenAndNode.
      * 
-     * \param _SingleFrameMessages  Buffer holding user code defined transmit messages 
+     * \param _TransmitMessages  Buffer holding list of extra PGNs device will transmit. 
      * \param iDev    index of the device on \ref Devices
      */
-    void ExtendTransmitMessages(const unsigned long *_SingleFrameMessages, int iDev=0);
+    void ExtendTransmitMessages(const unsigned long *_TransmitMessages, int iDev=0);
 
     /*********************************************************************//**
      * \brief Extend the list of Received Messages
      * 
-     * Define information about PGNs, what your system can handle.  
-     * Pointers must be in PROGMEM
+     * Define list of extra PGNs, what your system will handle. System messages
+     * will be automatically included.  
+     * Pointers must be in PROGMEM.
      * 
      * \code {.cpp}
      * const unsigned ReceivedMessages[] PROGMEM={130310L,130311L,130312L,0};
@@ -2126,22 +2176,21 @@ public:
      * System should respond to PGN 126464 request with messages the 
      * system transmits and receives. The library will automatically respond 
      * with system the messages it uses. With this method you can add 
-     * messages, which your own code sends
+     * messages, which your own will handle.
      * 
      * \note that this is valid only for device modes 
      *       \ref tNMEA2000::N2km_NodeOnly and \ref 
      *       tNMEA2000::N2km_ListenAndNode.
      * 
-     * \param _FastPacketMessages  Buffer holding user code defined received messages 
+     * \param _ReceiveMessages  Buffer holding list of extra PGNs device will handle. 
      * \param iDev    index of the device on \ref Devices
      */
-    void ExtendReceiveMessages(const unsigned long *_FastPacketMessages, int iDev=0);
+    void ExtendReceiveMessages(const unsigned long *_ReceiveMessages, int iDev=0);
 
-    
     /*********************************************************************//**
-     * \brief Set the Device Information 
+     * \brief Set the Device Information. See also \ref secRefTermNAME.
      *
-     * If you are using device modes tNMEA2000::N2km_NodeOnly or 
+     * If you use device modes tNMEA2000::N2km_NodeOnly or 
      * tNMEA2000::N2km_ListenAndNode, it is critical that you set this 
      * information.
      * 
@@ -2189,6 +2238,13 @@ public:
      *
      * With this function you can set device instance lower, device 
      * instance upper and system instance values.
+     *
+     * For certified devices there is requirement that device instances can be externally
+     * changed. Library handles that as default, but developer has to take care that
+     * changed instances will be saved and restored on devices start. 
+     * 
+     * \sa
+     * - tNMEA2000::ReadResetDeviceInformationChanged
      * 
      * \param _DeviceInstanceLower  0xff means no change
      * \param _DeviceInstanceUpper  
@@ -2203,11 +2259,11 @@ public:
                               );
 
     /*********************************************************************//**
-     * \brief Get the Device Information 
+     * \brief Get the Device Information.
      * 
      * With this function you can read current device information. Normally 
      * device information contains what you have set during initializing 
-     * with \ref SetDeviceInformation and \ref SetDeviceInformationInstances
+     * with \ref tNMEA2000::SetDeviceInformation and \ref tNMEA2000::SetDeviceInformationInstances
      * functions.
      * 
      * \note Device information instances can be changed by the NMEA 2000 
@@ -2215,7 +2271,8 @@ public:
      * should time to time check if they have changed and save changed 
      * data to e.g. EEPROM for use on startup.  
      * 
-     * See \ref tNMEA2000::ReadResetDeviceInformationChanged
+     * \sa
+     * - \ref tNMEA2000::ReadResetDeviceInformationChanged
      * 
      * \param iDev    index of the device on \ref Devices
      * 
@@ -2245,8 +2302,8 @@ public:
      * \param Destination   Destination address
      * \param DeviceIndex   index of the device on \ref Devices
      * \param UseTP         use multi packet message
-     * \return true         -> Success
-     * \return false 
+     * \retval true         Success
+     * \retval false 
      */
     bool SendProductInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
 
@@ -2259,8 +2316,8 @@ public:
      * \param Destination   Destination address
      * \param DeviceIndex   index of the device on \ref Devices
      * \param UseTP         use multi packet message
-     * \return true         -> Success
-     * \return false 
+     * \retval true         Success
+     * \retval false 
      */
     bool SendConfigurationInformation(unsigned char Destination, int DeviceIndex, bool UseTP);
 
@@ -2299,8 +2356,8 @@ public:
      * you want to write your own behavior for providing product information.
      * 
      * \param DeviceIndex   index of the device on \ref Devices
-     * \return true  ->  Success
-     * \return false 
+     * \retval true         Success
+     * \retval false 
      */
     bool SendProductInformation(int DeviceIndex=0);
 
@@ -2311,8 +2368,8 @@ public:
      * you want to write your own behavior for providing config information.
      * 
      * \param DeviceIndex   index of the device on \ref Devices
-     * \return true         -> Success
-     * \return false 
+     * \retval true         Success
+     * \retval false 
      */
     bool SendConfigurationInformation(int DeviceIndex=0);
 
@@ -2322,8 +2379,7 @@ public:
     /*********************************************************************//**
      * \brief Set the Heartbeat Interval and Offset for a device
      * 
-     * According to document [NMEA Heartbeat Corrigendum] 
-     * (https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
+     * According to document [NMEA Heartbeat Corrigendum](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
      * all NMEA devices shall transmit heartbeat PGN 126993. With this 
      * function you can set transmission interval in ms (range 1000-655320ms
      * , default 60000). Set <1000 to disable it.
@@ -2331,7 +2387,7 @@ public:
      * to false. Then you can restore default interval with interval 
      * parameter value 0xfffffffe
      *
-     * Function allows to set interval over 60 s or 0 to disable sending fr test purposes.
+     * Function allows to set interval over 60 s or 0 to disable sending for test purposes.
      *
      * \param interval      Heartbeat Interval in ms
      * \param offset  		Heartbeat Offset in ms
@@ -2384,7 +2440,7 @@ public:
 #endif
 
     /*********************************************************************//**
-     * \brief Set the Mode object
+     * \brief Set the library mode.
      *
      * With SetMode you can define how your node acts on N2k bus. 
      * See \ref tNMEA2000::Devices modes.
@@ -2392,14 +2448,12 @@ public:
      * With this function you can also set default address for your device. 
      * It is mandatory that once your device has been connected to the bus, 
      * it tries always use last used address. Due to address claiming, your 
-     * device may change its address, when you add new devices to the bus.
+     * device may change its source address, when you add new devices to the bus.
      * So you should save last used address to the e.g. EEPROM and on startup 
      * read it there and use it as parameter for SetMode. You can check if 
      * your address you set originally by SetMode has changed by using 
-     * function \ref tNMEA2000::SetN2kSource and you can read current 
-     * address by function \ref tNMEA2000::GetN2kSource. If you know your
-     * system, define source something other address you allready have on
-     * your bus.
+     * function tNMEA2000::ReadResetAddressChanged() and you can read current 
+     * address by function tNMEA2000::GetN2kSource().
      *
      * \note Other than N2km_ListenOnly modes will automatically start
      * initialization and address claim procedure.
@@ -2420,7 +2474,7 @@ public:
      *    text. I see this useful only for testing with normal serial 
      *    monitors.
      * 
-     * \param fwdType Format type see \ref tForwardType, 
+     * \param fwdType Format type see \ref tNMEA2000::tForwardType, 
      *                default = fwdt_Actisense
      */
     void SetForwardType(tForwardType fwdType) { ForwardType=fwdType; }
@@ -2448,21 +2502,23 @@ public:
      * \brief Open the CAN device
      *
      * You can call this on Setup(). It will be called anyway automatically 
-     * by first call of ParseMessages(). When system is finally opened,
-     * OnOpen callback will be executed. See \ref SetOnOpen
+     * by first call of tNMEA2000::ParseMessages(). When system is finally opened,
+     * OnOpen callback will be executed. See \ref tNMEA2000::SetOnOpen
      * 
-     * \note After Open() you should start loop ParseMessages() without delays.
+     * \note After tNMEA2000::Open() you should start loop tNMEA2000::ParseMessages() without delays.
+     * If you e.g., call first tNMEA2000::Open() and then start to read configuration from slow
+     * flash, address claiming will not work properly.
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     bool Open();
 
     /*********************************************************************//**
      * \brief Test is NMEA2000 open and running.
      * 
-     * \return true 
-     * \return false 
+     * \retval true 
+     * \retval false 
      */
     inline bool IsOpen() const { return OpenState==os_Open; }
 
@@ -2480,16 +2536,13 @@ public:
     /*********************************************************************//**
      * \brief Send a N2k message to the bus
      *
-     * Generate N2k message e.g. by using N2kMessages.h and simply send 
-     * it to the bus.
-     * 
      * When you want to send some message to the N2k bus, you call this. 
-     * Before calling you have to prepare tN2kMsg type of message e.g. by 
-     * using some function in N2kMessages.  
+     * Before calling SendMsg() you have to prepare tN2kMsg type of message e.g. by 
+     * using PGN specific function in N2kMessages.h.  
      * 
      * \note As default tNMEA2000 object is as default in 
      * tNMEA2000::N2km_ListenOnly mode. So if you want to send messages, 
-     * you have to set right mode in Setup().
+     * you have to set right mode in setup with tNMEA2000::SetMode().
      * 
      * The function returns true, if the message was sent successfully, 
      * otherwise it return false. SendMsg may fail, if there is not room 
@@ -2508,8 +2561,11 @@ public:
      *                        to use source address of N2kMsg instead of
      *                        device source address. This is usefull with
      *                        e.g., passthrough gateway devices.     
-     * \return true         -> Success
-     * \return false 
+     * \retval true           Success
+     * \retval false          Open has not finished. Address claiming has not finished.
+     *                         There is no more room on send buffer, which may be caused
+     *                         by too small send buffer or CAN controller can not sent messages
+     *                         bus.
      */
     bool SendMsg(const tN2kMsg &N2kMsg, int DeviceIndex=0);
 
@@ -2519,13 +2575,20 @@ public:
      * You have to call this periodically on loop()to handle N2k messages,
      * otherwise tNMEA2000 object will not work at all.
      * 
-     * \note It is not good practice to have any delay() on your loop(), 
-     * since then also handling of this will be delayed.
+     * \note Do not use delay() on your loop(). Also take care that any
+     * library you use does not use delay() internally.
+     *
+     * With NMEA2000 library you should use only nonblocking calls/libraries in your loop. Any
+     * library you use, should work asynchronously and not cause long delays on loop. Randomly
+     * caused 10-40 ms delays are acceptable. E.g., simple ADC conversion may block loop for
+     * 300 ms, which you will then see by other device dropping your device from the list.
+     *
+     * \sa
+     * - \ref descRunningLibrary.
      * 
      * \note Even if you only send e.g. temperature to the bus, you should 
      * call this so the node will automatically inform about itself to 
-     * others. Take care that your loop to call ParseMessages() does not
-     * have long delays. 
+     * others. 
      * 
      * See example TemperatureMonitor.ino.
      */
@@ -2534,19 +2597,21 @@ public:
     /*********************************************************************//**
      * \brief Set OnOpen callback function
      *
-     * This will be called, when communication really opens
+     * OnOpen will be called, when communication really opens
      * and starts initial address claiming. You can use this to init your message sending
-     * to syncronize them with e.g., heartbeat
+     * to syncronize them with e.g., heartbeat.
      */
     void SetOnOpen(void (*_OnOpen)());
 
     /*********************************************************************//**
-     * \brief Set the message handler for incoming N2kMessages
+     * \brief Set the message handler for incoming NMEA2000 messages.
      *
      * If you want to do something with messages read from N2k bus, easiest 
-     * is to set message handler, which will be then called by ParseMessages, 
-     * if there are new messages. This is the case e.g. if you have LCD 
-     * display on your Arduino and you want to show some fluid level on it.  
+     * is to set message handler, which will be then called by ParseMessages 
+     * for each new message.
+     * 
+     * If you have LCD display on your device and you want to show e.g., fluid level on it,
+     * create message handler, parse fluid level messages and draw value to display.
      * 
      * See example DataDisplay.ino or DataDisplay2.ino
      * 
@@ -2557,13 +2622,16 @@ public:
     /*********************************************************************//**
      * \brief Attach a  message handler for incoming N2kMessages
      * 
-     * \ref SetMsgHandler allows you to define only one handler to your 
+     * \ref tNMEA2000::SetMsgHandler allows you to define only one handler to your 
      * system. If you like to do it by using classes, I prefer to use 
      * AttachMsgHandler. In this way you can e.g. define own class for
      * each PGN and attach/detach them within your program. 
      * 
      * Example NMEA2000ToNMEA0183 uses AttachMsgHandler. Due to logic it 
      * still has single class and so handles all PGNs.
+     * 
+     * \sa
+     * - \ref tNMEA2000::DetachMsgHandler
      * 
      * \param _MsgHandler  Message handler
      */
@@ -2576,7 +2644,8 @@ public:
      * stack. This is useful, if you do not want to handle some messages 
      * anymore.
      * 
-     * \sa \ref AttachMsgHandler
+     * \sa
+     * - \ref tNMEA2000::AttachMsgHandler
      * 
      * \param _MsgHandler Message handler
      */
@@ -2585,15 +2654,16 @@ public:
     /*********************************************************************//**
      * \brief Set the message handler for incoming ISO Requests
      *
-     * Devices on N2k bus may request from your device if it can handle 
-     * requested PGN. If you want to respond for ISO request, you should 
-     * set this handler. The handler will be called by ParseMessages, if 
-     * there is ISO request.  
+     * Devices on N2k bus may request PGN from your device. Certified devices
+     * should respond to requests to any transmit PGN listed. Write your own
+     * request handler and set it with this function.
+     *  
+     * The handler will be called by tNMEA2000::ParseMessages, if there is ISO request.  
      * 
-     * \note When you send request message with SendMsg and it fails, it 
+     * \note When you send request message with tNMEA2000::SendMsg and it fails, it 
      * is your responsibility to take care of sending response again later. 
      * If your sending buffer is large enough, it is very uncommon 
-     * that SendMsg fails.
+     * that tNMEA2000::SendMsg fails.
      * 
      * \param ISORequestHandler Message handler
      */
@@ -2621,12 +2691,12 @@ public:
     /*********************************************************************//**
      * \brief Read address for current device.
      *
-     * With this function you can get you device current address on the 
+     * With this function you can get you device current source address on the 
      * N2k bus.  
      * 
-     * See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
-     * 
-     * \note Multidevice support is under construction.
+     * \sa 
+     * - \ref tNMEA2000::SetMode
+     * - \ref tNMEA2000::SetN2kSource
      * 
      * \param DeviceIndex   index of the device on \ref Devices
      * \return unsigned char -> Address of the device 
@@ -2636,14 +2706,16 @@ public:
     /*********************************************************************//**
      * \brief Set source for the given device
      *
-     * With this function you can set you device current address on the 
+     * With this function you can set you device source address on the 
      * N2k bus. This is meant to be use for multi device on basic 
      * configuration to restore source address changed by address claiming.  
      * 
-     * This function has to be called after \ref SetMode() and before 
-     * \ref Open()
+     * This function has to be called after \ref tNMEA2000::SetMode() and before 
+     * \ref tNMEA2000::Open()
      * 
-     * See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
+     * \sa
+     * - \ref tNMEA2000::SetMode
+     * - \ref tNMEA2000::SetN2kSource
      * 
      * \param _iAddr  Address of the device
      * \param _iDev   index of the device on \ref Devices
@@ -2659,15 +2731,17 @@ public:
      * \note For certified NMEA 2000 devices it is mandatory save changed 
      * address to e.g. EEPROM, for use in next startup.  
      * 
-     * When you call this, \ref AddressChanged will be reset. Anyway, if system 
-     * for some reason needs to change its address again, \ref AddressChanged 
+     * When you call this, \ref tNMEA2000::AddressChanged will be reset. Anyway, if system 
+     * for some reason needs to change its address again, \ref tNMEA2000::AddressChanged 
      * will be set. So you can e.g. in every 10 min check has address 
      * changed and if it has, save it.
      * 
-     * See \ref tNMEA2000::SetMode and \ref tNMEA2000::SetN2kSource
+     * \sa 
+     * - \ref tNMEA2000::SetMode
+     * - \ref tNMEA2000::SetN2kSource
      * 
-     * \return true 
-     * \return false 
+     * \retval true  Some device source address changed. Read new values and save them.
+     * \retval false Nothing changed, no further actions required.
      */
     bool ReadResetAddressChanged();
 
@@ -2681,11 +2755,12 @@ public:
      * \note For certified NMEA 2000 devices it is mandatory save changed 
      * info to e.g. EEPROM, for initialize them in next startup.  
      * 
-     * See \ref tNMEA2000::SetDeviceInformationInstances and 
-     *      \ref tNMEA2000::GetDeviceInformation
+     * \sa 
+     * - \ref tNMEA2000::SetDeviceInformationInstances
+     * - \ref tNMEA2000::GetDeviceInformation
      * 
-     * \return true 
-     * \return false 
+     * \retval true Some device information changed. Read new values and save them.
+     * \retval false Nothing changed, no further actions required.
      */
     bool ReadResetDeviceInformationChanged();
 
@@ -2695,7 +2770,7 @@ public:
      * Set true as default. With this you can control if bus messages 
      * will be forwarded to forward stream.  
      * 
-     * see \sa Message forwarding.
+     * \sa \ref secMessageforwarding.
      * 
      * \param v   Enable, default = true
      */
@@ -2727,10 +2802,11 @@ public:
      * \note This does not effect for own messages. Known messages are 
      * listed on library.  
      * 
-     * See \ref tNMEA2000::SetSingleFrameMessages, 
-     * \ref tNMEA2000::SetFastPacketMessages, 
-     * \ref tNMEA2000::ExtendSingleFrameMessages and 
-     * \ref tNMEA2000::ExtendFastPacketMessages.
+     * \sa 
+     * - \ref tNMEA2000::SetSingleFrameMessages
+     * - \ref tNMEA2000::SetFastPacketMessages
+     * - \ref tNMEA2000::ExtendSingleFrameMessages
+     * - \ref tNMEA2000::ExtendFastPacketMessages
      * 
      * \param v   Enable, default = false
      */      
@@ -2756,10 +2832,11 @@ public:
      * Set false as default. With this you can control if unknown messages 
      * will be handled at all. Known messages are listed on library.
      * 
-     * See \ref tNMEA2000::SetSingleFrameMessages, 
-     * \ref tNMEA2000::SetFastPacketMessages,
-     * \ref tNMEA2000::ExtendSingleFrameMessages and 
-     * \ref tNMEA2000::ExtendFastPacketMessages.
+     * \sa
+     * - \ref tNMEA2000::SetSingleFrameMessages
+     * - \ref tNMEA2000::SetFastPacketMessages
+     * - \ref tNMEA2000::ExtendSingleFrameMessages
+     * - \ref tNMEA2000::ExtendFastPacketMessages
      * 
      * \param v   Enable, default = false
      */
@@ -2773,9 +2850,10 @@ public:
      * If you do not have physical N2k bus connection and you like to test 
      * your board without even CAN controller, you can use this function.  
      * 
-     * see \sa Debug mode.
+     * \sa 
+     * - \ref descDebugMode
      * 
-     * \param _dbMode Debug mode, see \ref tDebugMode
+     * \param _dbMode Debug mode, see \ref tNMEA2000::tDebugMode
      */
     void SetDebugMode(tDebugMode _dbMode);
 
@@ -2783,8 +2861,8 @@ public:
      * \brief Checks if the given Address is a broadcast address
      *
      * \param Source  Source address
-     * \return true 
-     * \return false 
+     * \retval true Source is broadcast address
+     * \retval false Source is not broadcast address
      */
     static bool IsBroadcast(unsigned char Source) { return Source==0xff; }
 
@@ -2932,8 +3010,8 @@ inline void SetN2kProductInformation(tN2kMsg &N2kMsg, unsigned int N2kVersion, u
  * \param CertificationLevel  NMEA 2000 Certification Level
  * \param LoadEquivalency     Load Equivalency
  * 
- * \return true     Parsing of PGN Message successful
- * \return false    Parsing of PGN Message aborted 
+ * \retval true     Parsing of PGN Message successful
+ * \retval false    Parsing of PGN Message aborted 
  */
 bool ParseN2kPGN126996(const tN2kMsg& N2kMsg, unsigned short &N2kVersion, unsigned short &ProductCode,
                      int ModelIDSize, char *ModelID, int SwCodeSize, char *SwCode,
@@ -2993,8 +3071,8 @@ inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
  * \param InstallationDescription2Size Size off Installation Description
  * \param InstallationDescription2    Installation Description, Field 2
  * 
- * \return true     Parsing of PGN Message successful
- * \return false    Parsing of PGN Message aborted 
+ * \retval true     Parsing of PGN Message successful
+ * \retval false    Parsing of PGN Message aborted 
  * 
  */
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
@@ -3037,8 +3115,8 @@ inline void SetN2kPGNISORequest(tN2kMsg &N2kMsg, uint8_t Destination, unsigned l
  * \param N2kMsg        Reference to a N2kMsg Object 
  * \param RequestedPGN  PGN being requested
  * 
- * \return true     Parsing of PGN Message successful
- * \return false    Parsing of PGN Message aborted 
+ * \retval true     Parsing of PGN Message successful
+ * \retval false    Parsing of PGN Message aborted 
  */
 bool ParseN2kPGN59904(const tN2kMsg &N2kMsg, unsigned long &RequestedPGN);
 

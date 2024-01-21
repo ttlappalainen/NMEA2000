@@ -1,3 +1,14 @@
+/***********************************************************************//**
+  \file   DeviceAnalyzer.ino
+  \brief  NMEA2000 library example. Show devices on NMEA2000 bus by using tN2kDeviceList.
+  \ingroup group_examples
+
+  tN2kDeviceList is helper class, which automatically keeps track of devices on the bus.
+  This example simplyt lists all devices on the bus and prints their information by using
+  data collected by tN2kDeviceList.
+
+*/
+
 #include <Arduino.h>
 #define N2k_CAN_INT_PIN 21
 #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object

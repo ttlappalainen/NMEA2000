@@ -1,4 +1,14 @@
-// Demo: NMEA2000 library. Send main wind data to the bus.
+/***********************************************************************//**
+  \file   WindMonitor.ino
+  \brief  NMEA2000 library example. Send main wind data to the bus.
+  \ingroup group_examples
+
+  This simple example sends hardcoded wind angle and speed information
+  to the NMEA2000 bus. To make it working device you need add functionality, which
+  reads real values.
+
+  Example does not fullfill all NMEA2000 requirements.
+*/
 
 #include <Arduino.h>
 //#define N2k_SPI_CS_PIN 53    // If you use mcp_can and CS pin is not 53, uncomment this and modify definition to match your CS pin.

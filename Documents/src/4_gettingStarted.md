@@ -1,69 +1,79 @@
 # Get your Project Started {#getStarted}
 
  \tableofcontents
-    @brief A short introduction how to get started
 
   \section secMem Memory requirements
 
-I have tried to measure memory used by library, but it is not so simple, since
-there are some automated operations.  With version 11.06.2017 I got results:
+Roughly you need at last 8 kB ram and 40 kB ROM to fullfill all required NMEA2000 features with your own logic. Even requirements can be squeezed I do not prefer to do that to avoid unnecessary issues.
+
+With version 11.06.2017 I measured and got results:
 
 - Approximate ROM 26.9 kB
 - Approximate RAM  3.4 kB
 
-This is with simple TemperatureMonitor example. This can be squeezed by
+This was with simple TemperatureMonitor example. This can be squeezed by
 setting:
 
 - Add below to setup() before NMEA2000.Open();
-....
-  NMEA2000.SetN2kCANMsgBufSize(2);
-  NMEA2000.SetN2kCANSendFrameBufSize(15);
-....
+```shell
+  NMEA2000.SetN2kCANMsgBufSize(2);  // This may cause loss of received fast packet messages.
+  NMEA2000.SetN2kCANSendFrameBufSize(15); // This may cause loss of important information to other bus devices.
+```
 
 - Defining ProductInformation to PROGMEM as in BatteryMonitor example.
 - Disabling all extra features. See NMEA2000_CompilerDefns.h
 - Disable interrupt receiving.
 
 With those setting you can go down to appr. 19 kB ROM and 1.9 kB RAM. So for 2
-kB devices like Arduino Uno, there is not much for your own code.
+kB RAM devices like Arduino Uno, there is not much for your own code.
 
 \warning By squeezing memory, library can not fulfill certification requirements anymore.
 
   \section secHWSet Hardware setup
 
-NMEA2000 is inherited from CAN. Many MCUs like Teensy >3.1, ESP32, Arduino Due has already
-CAN controller inside. If your MCU does not have CAN controller inside or you need second
+NMEA2000 is inherited from CAN. Many MCUs like Teensy >3.1, ESP32, Arduino Due has internal
+CAN controller. If your MCU does not have internal CAN controller or you need second
 external CAN controller, you can use e.g. MCP2515 CAN controller, which is supported by
 library (mcp_can).
 
 For final connection to the bus you need CAN bus_transceiver chip. Devices on NMEA2000
-bus should be isolated to avoid ground loops. So if you take power from NMEA2000
-bus and your device is not connected to ground enywhere else, you can use unisolated tranceiver
+bus should be isolated to avoid ground loops. If you take power from NMEA2000
+bus and your device is not connected to ground anywhere else, you can use unisolated tranceiver
 like MCP2551, MCP2562 or SN65HVD234.
 If you instead feed power to your device directly or e.g. use engine own sensors for measuring,
-you have to use isolated tranceivers like ISO1050. Remember also use isolated power supply, if you take power
-from bus and have any unisolated connection to anywhere on your whole system.
+you have to use isolated tranceivers like ISO1050. Remember also use isolated power supply, if you take power from bus and have any unisolated connection to anywhere on your whole system.
 
 Easiest for connecting to NMEA2000 bus is to use some ready shield. For more
 information on how to wire everything to the bus please see \ref pageHWSetUp
 
 ## Breakout Boards
 
-### Teensy 3.2
+I prefer isolated connection NMEA2000 bus. See more \ref subsubIso.
 
-- <https://www.skpang.co.uk/products/teensy-can-bus-breakout-board-include-teensy-3-2>
+For beginner simplest board would be board with MCU (like ESP32 or Teensy 4.0) with isolated transceiver. Unfortunately I have found only one Teensy 4.0 board with unisolated tranceiver. Next simplest is breakout board that fits directly to main board pins, but even those does not exist isolated. But it is not much work to connect 4 wires and use existing isolated board.
 
-### ESP32
 
-- <https://www.tindie.com/products/fusion/can32-an-esp32-dev-board-with-can-bus-v21/>
+### Isolated breakout board
+
+This can be used with any main board having internal CAN controller like Teensy 4.0, 4.1 (or 3.2, 3.5, 3.6 which are at end of life), ESP32 Arduino DUE boards.
+
+- **isolated** <https://copperhilltech.com/isolated-can-bus-breakout-board-3-3-vdc/>
+
+### Teensy 4.0, 4.1
+
+- **unisolated** <https://www.tindie.com/products/fusion/dual-can-bus-adapter-for-teensy-40-41/>
+
+### Teensy 4.0
+
+- **unisolated** <https://copperhilltech.com/teensy-4-0-can-fd-to-usb-converter/>
 
 ### Arduino Due
 
-- <http://skpang.co.uk/catalog/dual-can-bus-interface-for-arduino-due-p-1579.html>
+- **unisolated** <http://skpang.co.uk/catalog/dual-can-bus-interface-for-arduino-due-p-1579.html>
 
 ### Arduino Mega
 
-- <https://wiki.seeedstudio.com/CAN-BUS_Shield_V1.2/>
+- **unisolated** <https://wiki.seeedstudio.com/CAN-BUS_Shield_V2.0/>
   
 Note that there are several different shields for CAN bus available and others may use
 8 MHz chrystal instead of **default 16 MHz chrystal**. This must be set before including NMEA2000_CAN.h
@@ -71,30 +81,31 @@ Note that there are several different shields for CAN bus available and others m
 ## Schematics for standalone CAN transceiver
 
 In case you build your tranceiver connection by yourself there are some connection examples
-under [documents](https://github.com/ttlappalainen/NMEA2000/tree/master/Documents).
+under [documents](https://github.com/ttlappalainen/NMEA2000/tree/master/Documents/Schematics).
 
 ### Teensy 3.2
 
-- [Teensy_Actisense_listener_sender_schematics.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Examples/TeensyActisenseListenerSender/Documents/Teensy_Actisense_listener_sender_schematics.pdf)
+- \ref subTEiso
+- \ref subTEunIso **unisolated**
 
 ### Arduino Due
 
-- [ArduinoDUE_CAN_with_MCP2562.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoDUE_CAN_with_MCP2562.pdf)
-- [ArduinoDue_CAN_with_SN65HVD234.jpg](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoDue_CAN_with_SN65HVD234.jpg)
+- [ArduinoDUE_CAN_with_MCP2562.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Schematics/ArduinoDUE_CAN_with_MCP2562.pdf) **unisolated**
+- [ArduinoDue_CAN_with_SN65HVD234.jpg](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Schematics/ArduinoDue_CAN_with_SN65HVD234.jpg) **unisolated**
 
 ### Arduino Mega
 
-- [ArduinoMega_CAN_with_MCP2515_MCP2551.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ArduinoMega_CAN_with_MCP2515_MCP2551.pdf)
+- [ArduinoMega_CAN_with_MCP2515_MCP2551.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Schematics/ArduinoMega_CAN_with_MCP2515_MCP2551.pdf) **unisolated**
 
 ### ATmegaxxM1
 
-- [ATmegaxxM1 CAN example.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/ATmegaxxM1%20CAN%20example.pdf)
+- [ATmegaxxM1 CAN example.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Schematics/ATmegaxxM1%20CAN%20example.pdf) **unisolated**
 
 Library has been also used with Maple Mini board.
 
 \section secHWlib Hardware depended libraries
 
-You need at least Arduino Software 1.6.6 for this sample. I'll expect you are
+You need at least Arduino Software 1.8.19 for this sample. I'll expect you are
 familiar with Arduino and using libraries. When your Arduino environment is
 ready.
 
@@ -104,17 +115,18 @@ ready.
 @note Take care that you use libraries under my Github, when available! Others may not work right
 with NMEA2000!
 
-### Teensy 4.0/4.1 boards with internal CAN
+### Teensy 4.0/4.1 boards with internal CAN {#subT4Libraries}
 
 - [NMEA2000_Teensyx](https://github.com/ttlappalainen/NMEA2000_Teensyx)  library.
 - Remember also install [Teensyduino](https://www.pjrc.com/teensy/td_download.html) !
 
 CAN library is included to the code so you do not need any extra CAN library with this. NMEA2000_Teensyx
 library will replace NMEA2000_teensy library in future. You can already start to use it with
-all Teensy boards by forcing it with define (see NMEA2000_CAN.h comment). For critical
-projects I prefer to use old library until this has been running under tests for a while.
+all Teensy boards by forcing it with define (see NMEA2000_CAN.h comment).
   
 ### Teensy 3.1/3.2 or 3.5/3.6 board with internal CAN
+
+I prefer to move to use libraries as \ref subT4Libraries and force it by define. Old libraries are still as default.
 
 - [NMEA2000_teensy](https://github.com/ttlappalainen/NMEA2000_teensy) library.  
 - [FlexCAN](https://github.com/ttlappalainen/FlexCAN_Library) library.  
@@ -171,7 +183,7 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
 
 NMEA2000_socketCAN has been originally forked from <https://github.com/thomasonw/NMEA2000_socketCAN>
 
-There is a document [Preparing your Raspberry Pi for the NMEA2000 library.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Preparing%20your%20Raspberry%20Pi%20for%20the%20NMEA2000%20library.pdf) for starting up with RPi.
+There is a document [Preparing your Raspberry Pi for the NMEA2000 library.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Pdf/Preparing%20your%20Raspberry%20Pi%20for%20the%20NMEA2000%20library.pdf) for starting up with RPi.
 Hopefully I have time to write more complete document. There is example NMEA2000ToNMEA0183, which
 has been tested with RPi 3B.
 
@@ -193,9 +205,7 @@ sends it to PC. `NMEA2000/Examples/ArduinoGateway` allows you to mimic Actisense
 NGT-1 and connect e.g. a Raspberry Pi running Signal-K to the NMEA2000 bus with
 an Arduino or Teensy.
 
-# Forcing CAN "driver"
-
-was using Arduino Software older than 1.6.6)
+# Forcing CAN board dependent "driver"
 
 In examples there are simple includes:
 
@@ -204,10 +214,9 @@ In examples there are simple includes:
     #include <NMEA2000_CAN.h>  // This will automatically choose right CAN library and create suitable NMEA2000 object
 ```
 
-If that can not be used (like with Arduino IDE older than 1.6.6) or you would like to control naming and used "driver",
-you can manually include necessary files. Specially if you want to use secondary CAN bus on your system.
+If above can not be used (like with Arduino IDE older than 1.6.6) or you would like to control naming and used "driver", you can manually include necessary files. Specially you need that, if you want to use secondary CAN bus on your system.
 
-## For use with Teensy 4.x (also with 3.1/3.2/3.5/3.6)
+## For use with Teensy 4.x (also with end of life boards 3.1/3.2/3.5/3.6)
 
 Your file should start with:
 
@@ -239,6 +248,8 @@ Your file should start with:
 ```cpp
     #include <N2kMsg.h>
     #include <NMEA2000.h>
+    #define ESP32_CAN_TX_PIN GPIO_NUM_16
+    #define ESP32_CAN_RX_PIN GPIO_NUM_4
     #include <NMEA2000_esp32.h> // https://github.com/ttlappalainen/NMEA2000_esp32
     //
     tNMEA2000_esp32 NMEA2000;

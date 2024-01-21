@@ -23,9 +23,11 @@
 
 /**************************************************************************//**
  * \file  ActisenseReader.h
- * \brief This File contains a class for reading Actisense format messages
+ * \brief File contains declaration for tActisenseReader class for reading Actisense format messages from stream.
  * 
- * This is class for reading Actisense format messages from given stream.
+ * This is class for reading Actisense format messages from given stream and convert
+ * it to tN2kMsg. Converted tN2kMsg message can be then sent to the NMEA2000 bus
+ * with tNMEA2000::SendMsg();
  * 
  * \note There is an unresolved problem to use programming port with reading 
  * data. Read works fine for a while, but then stops. With e.g. Arduino Due
@@ -43,8 +45,9 @@
  * \brief Class for reading Actisense format messages
  * \ingroup group_helperClass
  * 
- * 
- * This is class for reading Actisense format messages from given stream.
+ * This is class for reading Actisense format messages from given stream and convert
+ * it to tN2kMsg. Converted tN2kMsg message can be then sent to the NMEA2000 bus
+ * with tNMEA2000::SendMsg();
  * 
  * \note There is an unresolved problem to use programming port with reading
  * data. Read works fine for a while, but then stops. With e.g. Arduino Due
@@ -82,8 +85,8 @@ protected:
      * \brief Adds a new Byte to the buffer
      *
      * \param NewByte   new Byte to be added
-     * \return true     -> Success
-     * \return false    -> Buffer is full
+     * \retval true     Success
+     * \retval false    Buffer is full
      */
     bool AddByteToBuffer(char NewByte);
     /********************************************************************//**
@@ -92,13 +95,11 @@ protected:
     void ClearBuffer();
     
     /********************************************************************//**
-     * \brief Checks if a message is valide
+     * \brief Checks is Actisense message read from stream valid and builds tN2kMsg message from it.
      *
-     * \param N2kMsg    Reference to a N2kMsg Object  
-     * \return true     
-     * \return false    -> Length does not match. Add type, length and crc
-     * \return false    -> Checksum does not match
-     * \return false    -> data length greater then tN2kMsg::MaxDataLen
+     * \param N2kMsg    Reference to a destination tN2kMsg Object  
+     * \retval true     Message is valid. Message has been copied to N2kMsg
+     * \retval false    Length does not match, checksum does not match or data length greater than tN2kMsg::MaxDataLen
      */
     bool CheckMessage(tN2kMsg &N2kMsg);
 
@@ -135,35 +136,41 @@ public:
     /********************************************************************//**
      * \brief Read Actisense formatted NMEA2000 message from stream
      * 
-     * You can either call this or ParseMessages periodically.
+     * GetMessageFromStream is nonblocking function and returns false, if there is
+     * no message available. You can either call this or ParseMessages() periodically.
      * 
-     * Read Actisense formatted NMEA2000 message from stream
+     * Function reads Actisense formatted NMEA2000 message from stream
      * Actisense Format:
      * <10><02><93><length (1)><priority (1)><PGN (3)><destination (1)><source (1)><time (4)><len (1)><data (len)><CRC (1)><10><03>
      * or
      * <10><02><94><length (1)><priority (1)><PGN (3)><destination (1)><len (1)><data (len)><CRC (1)><10><03>
      * \param N2kMsg    Reference to a N2kMsg Object  
-     * \param ReadOut   
+     * \param ReadOut   Parameter is designed to be used if stream has multiprotocol data.
      * 
-     * \return true 
-     * \return false  -> if (ReadStream==0)
+     * \retval true  for new message received.
+     * \retval false if (ReadStream==0)
      */
     bool GetMessageFromStream(tN2kMsg &N2kMsg, bool ReadOut=true);
 
     /********* **********************************************************//**
-     * \brief Checks if character is start 
+     * \brief Checks if character is start of Actisense format
+     * 
+     * Function is designed to be used if stream has multiprotocol data.
      *
      * \param ch    character
-     * \return true     -> if (ch==Escape)
-     * \return false 
+     * \retval true     if (ch==Escape)
+     * \retval false 
      */
     bool IsStart(char ch);
 
     /********************************************************************//**
-     * \brief Parse messages
+     * \brief Parse messages from stream
      *
-     * Set message handler with SetMsgHandler and then call this 
-     * periodically or use GetMessageFromStream
+     * Call this periodically on loop as fast as possible. Function is nonblocking
+     * and reads data from stream as it is available.
+     * 
+     * To handle received messages set message handler with SetMsgHandler(). On
+     * message handler call GetMessageFromStream() to read arrived message.
      * 
      */
     void ParseMessages();
@@ -171,8 +178,8 @@ public:
     /********************************************************************//**
      * \brief Set the Msg Handler object
      *
-     * Set message handler to be used in ParseMessages, when message has
-     * been received.
+     * Set message handler to be used as callback within ParseMessages, when new message has
+     * been received. On message handler call GetMessageFromStream() to read arrived message.
      * 
      * \param _MsgHandler {type} 
      */
@@ -180,8 +187,11 @@ public:
 
     /** *****************************************************************//**
      * \brief Indicates if still message handling is needed
-     * \return true
-     * \return false
+     * 
+     * Function is designed to be used if stream has multiprotocol data.
+     * 
+     * \retval true
+     * \retval false
      */
     bool Handling() const { return MsgIsComing || EscapeReceived || StartOfTextReceived; }
 };

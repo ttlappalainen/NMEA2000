@@ -1,5 +1,5 @@
 /*
- * N2kTimer.h
+ * N2kTimer.cpp
  * 
  * Copyright (c) 2022-2024 Timo Lappalainen, Kave Oy, www.kave.fi
  *
