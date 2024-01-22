@@ -1231,7 +1231,9 @@ bool tNMEA2000::Open() {
     StartAddressClaim();
     tN2kSyncScheduler::SetSyncOffset();
     if ( OnOpen!=0 ) OnOpen();
+    #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
     SetHeartbeatIntervalAndOffset(DefaultHeartbeatInterval,10000); // Init default hearbeat interval and offset.
+    #endif
   } else {
     unsigned long canId;
     unsigned char len = 0;

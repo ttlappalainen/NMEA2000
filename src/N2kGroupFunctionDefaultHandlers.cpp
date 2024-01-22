@@ -463,7 +463,7 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, 
   tN2kGroupFunctionTransmissionOrPriorityErrorCode pec=N2kgfTPec_Acknowledge;
   tN2kMsg N2kRMsg;
 
- 		if (PrioritySetting != 0x08 || PrioritySetting != 0x0f || PrioritySetting != 0x09) pec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+ 		if ( !(PrioritySetting == 0x08 || PrioritySetting == 0x0f || PrioritySetting == 0x09) ) pec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
 
     SetStartAcknowledge(N2kRMsg,N2kMsg.Source,PGN,
                         N2kgfPGNec_Acknowledge,  // What we actually should response as PGN error, if we have invalid field?

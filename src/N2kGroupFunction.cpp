@@ -175,7 +175,7 @@ bool tN2kGroupFunctionHandler::HandleCommand(const tN2kMsg &N2kMsg, uint8_t Prio
     tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
     tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
 
-		if (PrioritySetting != 0x08 || PrioritySetting != 0x0f || PrioritySetting != 0x09) TORec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+		if ( !(PrioritySetting == 0x08 || PrioritySetting == 0x0f || PrioritySetting == 0x09) ) TORec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
 
     SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
                     PGNec,

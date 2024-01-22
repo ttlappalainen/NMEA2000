@@ -1,6 +1,12 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 22.01.2024
+
+- Fixed compiler error in case #define N2K_NO_HEARTBEAT_SUPPORT 1 has been used.
+- Fixed priority setting test on tN2kGroupFunctionHandler::HandleCommand and tN2kGroupFunctionHandlerForPGN126998::HandleCommand
+- Fixed Mode setting on SetN2kPGN129540
+
 ## 21.01.2024
 
 - Document update. Updates on document sources and code sources.
