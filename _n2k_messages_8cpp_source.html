@@ -1376,7 +1376,7 @@ $(document).ready(function(){initNavTree('_n2k_messages_8cpp_source.html',''); i
 <div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#aa7b36bf88a96fcad78cdd07eed95e517">SetPGN</a>(129540L);</div>
 <div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>    N2kMsg.<a class="code hl_variable" href="classt_n2k_msg.html#a7645bd9aec82bc0263d421cb307852e4">Priority</a>=6;</div>
 <div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(SID);</div>
-<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(0xfc || Mode);</div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(0xfc | (Mode &amp; 0x03) );</div>
 <div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>    N2kMsg.<a class="code hl_function" href="classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c">AddByte</a>(0); <span class="comment">// Init satellite count to 0</span></div>
 <div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>}</div>
 <div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span> </div>
