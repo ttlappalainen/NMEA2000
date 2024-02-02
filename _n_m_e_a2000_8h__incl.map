@@ -1,5 +1,5 @@
 <map id="NMEA2000.h" name="NMEA2000.h">
-<area shape="rect" id="node1" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="235,5,334,32"/>
+<area shape="rect" id="node1" title="This file contains the class tNMEA2000, which consists the main functionality of the library." alt="" coords="235,5,334,32"/>
 <area shape="rect" id="node2" href="$_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="197,155,388,181"/>
 <area shape="rect" id="node3" href="$_n2k_stream_8h.html" title="This File contains an I/O stream used in the NMEA2000 libraries." alt="" coords="130,229,229,256"/>
 <area shape="rect" id="node7" href="$_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="5,155,87,181"/>

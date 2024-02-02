@@ -6,7 +6,7 @@
 <area shape="rect" id="node28" href="$_n2k_timer_8h.html" title="The file contains function and classes for best timing performance." alt="" coords="1205,155,1294,181"/>
 <area shape="rect" id="node3" href="$_actisense_reader_8h.html" title="File contains declaration for tActisenseReader class for reading Actisense format messages from strea..." alt="" coords="924,229,1055,256"/>
 <area shape="rect" id="node5" href="$_n2k_c_a_n_msg_8h.html" title="File declares tN2kCANMsg class used internally on tNMEA2000." alt="" coords="689,229,799,256"/>
-<area shape="rect" id="node6" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="700,304,799,331"/>
+<area shape="rect" id="node6" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which consists the main functionality of the library." alt="" coords="700,304,799,331"/>
 <area shape="rect" id="node13" href="$_n_m_e_a2000___c_a_n_8h.html" title="Automatic library selection according to the selected board." alt="" coords="829,379,963,405"/>
 <area shape="rect" id="node16" href="$_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class." alt="" coords="473,229,615,256"/>
 <area shape="rect" id="node18" href="$_n2k_maretron_8h.html" title="Collection of functions for handling NMEA2000 bus Maretron messages." alt="" coords="155,229,261,256"/>

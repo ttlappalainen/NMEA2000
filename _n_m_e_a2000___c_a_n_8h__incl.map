@@ -1,7 +1,7 @@
 <map id="NMEA2000_CAN.h" name="NMEA2000_CAN.h">
 <area shape="rect" id="node1" title="Automatic library selection according to the selected board." alt="" coords="312,5,446,32"/>
 <area shape="rect" id="node2" href="$_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="37,229,118,256"/>
-<area shape="rect" id="node7" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="228,80,327,107"/>
+<area shape="rect" id="node7" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which consists the main functionality of the library." alt="" coords="228,80,327,107"/>
 <area shape="rect" id="node14" title=" " alt="" coords="352,80,406,107"/>
 <area shape="rect" id="node15" title=" " alt="" coords="431,80,516,107"/>
 <area shape="rect" id="node16" title=" " alt="" coords="540,80,671,107"/>

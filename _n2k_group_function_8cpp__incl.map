@@ -1,7 +1,7 @@
 <map id="N2kGroupFunction.cpp" name="N2kGroupFunction.cpp">
 <area shape="rect" id="node1" title=" " alt="" coords="104,5,259,32"/>
 <area shape="rect" id="node2" href="$_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class." alt="" coords="32,155,173,181"/>
-<area shape="rect" id="node10" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="212,80,311,107"/>
+<area shape="rect" id="node10" href="$_n_m_e_a2000_8h.html" title="This file contains the class tNMEA2000, which consists the main functionality of the library." alt="" coords="212,80,311,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,229,67,256"/>
 <area shape="rect" id="node4" href="$_n_m_e_a2000___compiler_defns_8h.html" title="Specific compiler definition to adapt the library to your needs." alt="" coords="91,229,282,256"/>
 <area shape="rect" id="node5" href="$_n2k_msg_8h.html" title="This File contains the class tN2kMsg and all necessary functions to handle a NMEA2000 Message." alt="" coords="306,229,387,256"/>

@@ -1,5 +1,5 @@
 <map id="NMEA2000.h" name="NMEA2000.h">
-<area shape="rect" id="node1" title="This file contains the class tNMEA2000, which is consists the main functionality of the library." alt="" coords="407,5,506,32"/>
+<area shape="rect" id="node1" title="This file contains the class tNMEA2000, which consists the main functionality of the library." alt="" coords="407,5,506,32"/>
 <area shape="rect" id="node2" href="$_n2k_device_list_8h.html" title="This File contains a." alt="" coords="12,80,131,107"/>
 <area shape="rect" id="node5" href="$_n2k_group_function_8cpp.html" title=" " alt="" coords="154,80,309,107"/>
 <area shape="rect" id="node6" href="$_n2k_group_function_default_handlers_8cpp.html" title=" " alt="" coords="333,80,581,107"/>

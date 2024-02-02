@@ -119,9 +119,9 @@ $(document).ready(function(){initNavTree('md_7_glossary.html',''); initResizable
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#secRefTermNAME">NAME</a></li>
 <li class="level1"><a href="#secRefTermAddressClaiming">Address claiming</a></li>
-<li class="level1"><a href="#autotoc_md170">NMEA2000 instances</a><ul><li class="level2"><a href="#autotoc_md171">Different types of instances</a><ul><li class="level3"><a href="#autotoc_md172">Device instance</a></li>
-<li class="level3"><a href="#autotoc_md173">Data instances</a></li>
-<li class="level3"><a href="#autotoc_md174">System instance</a></li>
+<li class="level1"><a href="#autotoc_md164">NMEA2000 instances</a><ul><li class="level2"><a href="#autotoc_md165">Different types of instances</a><ul><li class="level3"><a href="#autotoc_md166">Device instance</a></li>
+<li class="level3"><a href="#autotoc_md167">Data instances</a></li>
+<li class="level3"><a href="#autotoc_md168">System instance</a></li>
 </ul>
 </li>
 </ul>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('md_7_glossary.html',''); initResizable
 <li class="level1"><a href="#secRefTermSID">SID</a></li>
 <li class="level1"><a href="#secRefTermManufacturerCode">Manufacturer Code</a></li>
 <li class="level1"><a href="#secRefNMEA2000Certification">NMEA2000 certification</a></li>
-<li class="level1"><a href="#autotoc_md175">Relation between CAN ID and NMEA2000</a></li>
+<li class="level1"><a href="#autotoc_md169">Relation between CAN ID and NMEA2000</a></li>
 <li class="level1"><a href="#secRefMfgCodes">List of registered manufacturer codes</a></li>
 </ul>
 </div>
@@ -148,20 +148,20 @@ Address claiming</h1>
 </ol>
 <p >If bus is full of devices, devices with lowest priority will get source address 254 and they can not send anything to bus.</p>
 <p >Library takes care of address claiming and required silence delay automatically. To get information possible source address changes, use funtion <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a>.</p>
-<h1><a class="anchor" id="autotoc_md170"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 NMEA2000 instances</h1>
 <p >Instances are used in an NMEA 2000 network to identify multiple similar products connected on the same network.</p>
 <p >As an example, take a system with two battery monitors (one for the main battery bank, and another for the hydraulic-thruster bank) and also a Quattro inverter/charger. All three of those devices will send their battery voltage measurements out on the N2K network. For the displays to show these values at the right place, they need to know which voltage belongs to what battery. That is what instances are for.</p>
-<h2><a class="anchor" id="autotoc_md171"></a>
+<h2><a class="anchor" id="autotoc_md165"></a>
 Different types of instances</h2>
 <p >There are various types of instances: <b>Device instance</b>, <b>Data instance</b> and <b>System instance</b>. Device and System instance is stored in <a class="el" href="classt_n_m_e_a2000_1_1t_device_information.html" title="Class that holds all the device informations and several helper functions to that.">tNMEA2000::tDeviceInformation</a> and so they are also part of <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a>. See also <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances</a>.</p>
-<h3><a class="anchor" id="autotoc_md172"></a>
+<h3><a class="anchor" id="autotoc_md166"></a>
 Device instance</h3>
 <p >The device instance is sent in PGN 60928, ISO Address Claim, as a combined field of Device Instance Lower (ISO ECU Instance) and Device Instance Upper (ISO Function Instance). The Device instance is e.g., used by Victron chargers (Skylla-i/-IP44, VE.Can MPPTs) to configure them in the same group and synchronize them.</p>
-<h3><a class="anchor" id="autotoc_md173"></a>
+<h3><a class="anchor" id="autotoc_md167"></a>
 Data instances</h3>
 <p >These instances belong to data on the bus (e.g., Battery Instance, DC Detailed Instance, Switch bank instance, etc.) and are embedded in the different PGN’s. For changing these instances through a complex write, PGN 126208, Complex Request Group Function Code 5, write fields.</p>
-<h3><a class="anchor" id="autotoc_md174"></a>
+<h3><a class="anchor" id="autotoc_md168"></a>
 System instance</h3>
 <p >The system instance is also sent in PGN 60928, field 8. System instance indicates device occurence in other like redundant or parallel NMEA2000 networks. For small and simple vessels this is always 0.</p>
 <dl class="section see"><dt>See also</dt><dd><ul>
@@ -215,10 +215,10 @@ Manufacturer Code</h1>
 NMEA2000 certification</h1>
 <p >I have advertised library to be certification ready. There are some functionalities left for developer, since there is no common way do that. Good example is saving possibly changed source address or device/system instances. It is developer responsibility to choose method for saving. It can be e.g., EEPROM, file, flash. To fullfill all certification requirements you have to add some functionality.</p><ul>
 <li>Your device has to be electrically isolated as I have descibed on <a class="el" href="page_h_w_set_up.html">Setting Up Hardware Environment</a>.</li>
-<li>Save device source address and restore it on startup by using saved value on <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867" title="Set the library mode.">tNMEA2000::SetMode()</a>. Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a>.</li>
+<li>Save device source address and restore it on startup by using saved value on <a class="el" href="classt_n_m_e_a2000.html#ad43803ecc3b2aeaa5ee633321a6ff867" title="Set the library mode and start source address.">tNMEA2000::SetMode()</a>. Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#ad0763a8d6bec7d9dee647e9a695206f4" title="Check if this device has changed its address.">tNMEA2000::ReadResetAddressChanged()</a>.</li>
 <li>Save device and system instances and restore them on startup with function <a class="el" href="classt_n_m_e_a2000.html#adbe4ba0aa4cf350a74f8e371b7c6a335" title="Set the Device Information Instances.">tNMEA2000::SetDeviceInformationInstances()</a>.Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#ae3fb4cf2ef6601527153715e8c088e24" title="Check if this device has changed its DeviceInstances or SystemInstance.">tNMEA2000::ReadResetDeviceInformationChanged()</a>.</li>
 <li>Write ISO request handler to respond requests for all PGNs you are transmitting. Register handler with <a class="el" href="classt_n_m_e_a2000.html#a1a3c14ee0a90bcdee2c2d8446db00805" title="Set the message handler for incoming ISO Requests.">tNMEA2000::SetISORqstHandler()</a>.</li>
-<li>Inherit <a class="el" href="classt_n2k_group_function_handler.html" title="Base handler class for Group Functions.">tN2kGroupFunctionHandler</a> and write handler, which responds all messages your device is transmitting. You can write own handler for all your messages or write common handler. See <a class="el" href="_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class.">N2kGroupFunction.h</a>. Note that if you accept message period or offset change, you should also save them and restore them on startup. Also if you handle PGN data instance change, you need to save that too.</li>
+<li>Inherit <a class="el" href="classt_n2k_group_function_handler.html" title="Base handler class for Group Functions.">tN2kGroupFunctionHandler</a> and write handler, which responds all messages your device is transmitting. You can write own handler for all your messages or write common handler. See <a class="el" href="_n2k_group_function_8h.html" title="Base and default group function PGN 126208 message handler class.">N2kGroupFunction.h</a>. Note that if you accept message period or offset change, you should also save them and restore them on startup. Also if you handle PGN data instance change, you need to save that too. Register handler with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>.</li>
 <li>Save both installation descriptions and restore them on startup with function <a class="el" href="classt_n_m_e_a2000.html#af9a5602533a0af28ae483cc1cd0913fb" title="Set the Configuration Information of this device.">tNMEA2000::SetConfigurationInformation()</a>. Track possible changes by using function <a class="el" href="classt_n_m_e_a2000.html#a343eb326c46fd23a03c39f44ee7f838a" title="Check if this device has changed its Install Description.">tNMEA2000::ReadResetInstallationDescriptionChanged()</a>.</li>
 </ul>
 <p >For commercial certified devices you need also (prices at 2024 are for members):</p><ul>
@@ -229,7 +229,7 @@ NMEA2000 certification</h1>
 <li>Certification verification - 850 $.</li>
 </ul>
 <p >So total costs for certified device for new member is about 4000 $.</p>
-<h1><a class="anchor" id="autotoc_md175"></a>
+<h1><a class="anchor" id="autotoc_md169"></a>
 Relation between CAN ID and NMEA2000</h1>
 <p >The SAE J1939 protocol requires a specific format for the CAN message’s identifer. The ID can consist of 11 bits, or optionally 29 bits in the extended format. At NMEA2000 only the extended format ist supported.</p>
 <div class="image">
