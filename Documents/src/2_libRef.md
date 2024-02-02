@@ -437,75 +437,57 @@ Library core has all functionalities to communicate with NMEA2000 bus and N2kMes
 Below is short description of member functions, which hopefully gives you better knowledge
 why something has been used on samples.
 
-#### Device modes
+#### Device modes {#secDeviceModes}
 
-NMEA2000 defines that all devices should act as node on N2k bus. But if you are only reading messages
-on bus, why to tell anybody. So I have defined different modes how tNMEA2000 class behaves.
+For historical reasons library offers several message handling modes. One idea was that CAN controller specific drivers could drop some data handling, but it is not implemented on any of them. Practically only modes
+- N2km_ListenAndNode for real bus devices.
+- N2km_ListenAndSend for message pass trough devices.
 
-##### tNMEA2000::N2km_ListenOnly
+would be enough. 
 
-This is default mode. The device simply listens data from bus and forwards it to the forward
-stream. Look example ActisenseListener, you need only 20 line for making device to read data
-on N2k bus.  
-Also if you like to make a device, which displays some data on bus on e.g. TFT display, you can
-use this mode. There is simple example DataDisplay.ino for that.
+"Listen" in mode definition refers to message forwarding. Mode definitions without "Listen" passes forward functionality. On the other hand forwarding can be enabled or disabled with tNMEA2000::EnableForward(), which then makes other modes less necessary. Also mode can not be changed after open, but forward can be enabled or disabled at any time - this makes listen modes be more usefull. And last since drivers does not limit messages by mode message handlers will be called anyway allowing you to control messages in your code and even build own "message forwarding".
 
-##### tNMEA2000::N2km_NodeOnly
+Although there should be no reason to use other than N2km_ListenAndNode or N2km_ListenAndSend modes, below is table of different modes effect.
+ - Tx = messages can be sent
+ - Rx = messages can be received
+ - Dev = acts as active bus device. Has full functionality like address claiming, heartbeat, response to requests.
+ - Fen = Message forwarding - tNMEA2000::EnableForward() does have effect
+ - S = Setting tNMEA2000::SetForwardSystemMessages does have effect.
 
-In this mode device will only send data to the N2k bus. I also automatically informs itself to other devices on the bus and does required operations automatically. The device does not send as default anything to any forward stream. Use this mode for device, which simply e.g. reads data from analog or digital input or NMEA0183 bus and sends it to the N2k bus. Look example TemperatureMonitor.ino.
+ (x) means that feature is not limited by core library, but could have limit on "driver".
 
-##### tNMEA2000::N2km_ListenAndNode
+| Mode               |  Tx |  Rx | Dev | Fen |  S  |  
+|--------------------|:---:|:---:|:---:|:---:|:---:|
+| N2km_NodeOnly      |  x  |  x  |  x  |     |     |
+| N2km_ListenAndNode |  x  |  x  |  x  |  x  |  x  |
+| N2km_ListenAndSend |  x  |  x  |     |  x  |     |
+| N2km_ListenOnly    |     |  x  |     |  x  |  x  |
+| N2km_SendOnly      |  x  | (x) |     |     |     |
 
-In this mode device works fully to both directions. It also forwards all data from bus to
-the forward stream, which you can define with function \ref tNMEA2000::SetForwardStream.
+NMEA2000 requires that all devices should act as active device (also called node) on the NMEA2000 bus. Total electrical bus load can be then calculated and there will not be any hidden devices. If you take care that bus load will not be exceeded, it should not be risky to make listen only devices for you own boat.
 
-##### tNMEA2000::N2km_SendOnly
-
-In this mode it is like tNMEA2000::N2km_NodeOnly, but it does not do automatic address
-claiming and does not forward any messages from N2k bus to stream. So this is useful,
-if you e.g. have some control pair like autopilot keypad/”control unit” and you want
-to fool that keypad sends something to the “control unit”. Then you also need to know
-also source addresses of keypad and “control unit”.  
-I have used this mode e.g. with example ActisenseSender and my NMEA Simulator found on
-<http://www.kave.fi/Apps/> .
-
-##### tNMEA2000::N2km_ListenAndSend
-
-This is like the tNMEA2000::N2km_SendOnly mode, but it also forwards messages from N2k
-bus to the stream. In this mode one can have invisible gateway device between computer
-and N2k bus. This mode can be used e.g. if one has a PC application, which is capable to
-read and send messages in Actisense format to serial port.
-I have used this mode with example TeensyActisenseListenerSender and Actisense NMEA Reader
-and NMEA Simulator.
+You can set your device mode on setup with function tNMEA2000::SetMode(). See also tNMEA2000::tN2kMode .
 
 #### Message forwarding {#secMessageforwarding}
 
-Normally on N2k bus a device either shows data from bus (MFD devices) or sends data
-to the bus (wind, GPS, temperature etc.). With this library you can also get messages
-forwarded to the stream. In listen mode, the device will read all messages from N2k bus
-and forwards them to the ForwardStream. For forwarding you have to define a
-forward stream with function \ref tNMEA2000::SetForwardStream. Of course you also need to
-open a stream first e.g. with Serial.begin(115200);  
-Messages will be forwarded as default in Actisense format. This is supported by at least
-some PC chart plotter applications. With default format Actisence “NMEA Reader”, which
-we used on sample, you can show message data. A better visualizer is OpenSkipper, on which
-you can tailor your own displays.  
+Message forwarding offers simple way to forward messages to defined stream in Actisense format. I build this functionality inside library to easily analyze bus messages even device does have its own functionality like temperature sensor. Now when I have mostly used ESP32 with WiFi, I can enable forwarding on the fly to UDP stream for any device and use it as analyzer.
 
-\note As default own messages send with tNMEA2000::SendMsg will be forwarded even when your
-device has been set to node only mode. This may disturb your developing, if
-you e.g. want to write own clear text messages within your code. You can disable that by either:
+In any listen mode, the device will read all messages from N2k bus and forwards them to the defined forward stream. For forwarding you just define a forward stream - e.g., serial port, UDP stream - with function \ref tNMEA2000::SetForwardStream and enable forward with \ref tNMEA2000::EnableForward(true). Naturally you also need to open a stream first e.g. with Serial.begin(115200);
+
+Messages will be forwarded as default in Actisense format. This format is supported by at least some PC chart plotter applications. You can show Actisence format messages with “NMEA Reader”, which I refer time to. Best program for bus data analyzing is my NMEA Simulator <http://www.kave.fi/Apps/>. For data visualizer you can use e.g., OpenSkipper, on which you can tailor your own displays.  
+
+If message forwarding is enabled, own messages send with tNMEA2000::SendMsg will be forwarded as default even when your device has been set to node only mode. If this disturbs your developing, if you e.g. want to write own clear text messages within your code, you can disable that by either:
 
 - \ref tNMEA2000::EnableForward(false) to disable forwarding totally
-- \ref tNMEA2000::SetForwardOwnMessages(false) to disable own messages. But then, if your device
-  is in listen mode, it will still forward messages from bus.
-- \ref tNMEA2000::SetForwardOnlyKnownMessages(true) to define that only known messages will be
-  forwarded. The known messages are system messages and listed single frame or fast packet
-  messages. 
-  \sa
-  - \ref tNMEA2000::SetSingleFrameMessages
-  - \ref tNMEA2000::SetFastPacketMessages
-  - \ref tNMEA2000::ExtendSingleFrameMessages
-  - \ref tNMEA2000::ExtendFastPacketMessages.
+- \ref tNMEA2000::SetForwardOwnMessages(false) to disable own message forwarding. In listen mode messages from bus will be still forwarded.
+
+\sa
+  - \ref secDeviceModes
+  - \ref tNMEA2000::SetForwardStream
+  - \ref tNMEA2000::EnableForward
+  - \ref tNMEA2000::SetForwardOwnMessages
+  - \ref tNMEA2000::SetForwardOnlyKnownMessages
+  - \ref tNMEA2000::SetForwardSystemMessages.
   
 #### Debug mode {#descDebugMode}
 
@@ -542,6 +524,11 @@ Fast loop requirement means that you are not allowed to use any delay on your lo
 
 A practice has shown that random 10-50 ms delay is acceptable. In average loop time should be
 less than 2 ms. Also it is important that if you can have up 50 ms random delay, you may get in burst up to 90 frames (=1800 frames/s *0.05 s) during that time. This means that if your receive frame buffer is smaller, your device may loose some critical system messages. In small boat this amount is a bit theory, but anyway there are a lot of large messages just from GPS system so that they may occur time to time at same time. So it is better to prepare your device work in nearly any condition.
+
+\sa
+ - \ref tNMEA2000::ParseMessages
+ - \ref tNMEA2000::SetN2kCANReceiveFrameBufSize()
+ - \ref tNMEA2000::SetN2kCANSendFrameBufSize()
 
 ##### Some timing examples
 

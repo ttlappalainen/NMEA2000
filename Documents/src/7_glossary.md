@@ -120,7 +120,7 @@ I have advertised library to be certification ready. There are some functionalit
 - Save device source address and restore it on startup by using saved value on tNMEA2000::SetMode(). Track possible changes by using function tNMEA2000::ReadResetAddressChanged().
 - Save device and system instances and restore them on startup with function tNMEA2000::SetDeviceInformationInstances().Track possible changes by using function tNMEA2000::ReadResetDeviceInformationChanged().
 - Write ISO request handler to respond requests for all PGNs you are transmitting. Register handler with tNMEA2000::SetISORqstHandler().
-- Inherit tN2kGroupFunctionHandler and write handler, which responds all messages your device is transmitting. You can write own handler for all your messages or write common handler. See N2kGroupFunction.h. Note that if you accept message period or offset change, you should also save them and restore them on startup. Also if you handle PGN data instance change, you need to save that too.
+- Inherit tN2kGroupFunctionHandler and write handler, which responds all messages your device is transmitting. You can write own handler for all your messages or write common handler. See N2kGroupFunction.h. Note that if you accept message period or offset change, you should also save them and restore them on startup. Also if you handle PGN data instance change, you need to save that too. Register handler with tNMEA2000::AddGroupFunctionHandler().
 - Save both installation descriptions and restore them on startup with function tNMEA2000::SetConfigurationInformation(). Track possible changes by using function tNMEA2000::ReadResetInstallationDescriptionChanged().
 
 For commercial certified devices you need also (prices at 2024 are for members):

@@ -1,6 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 02.02.2024
+
+- Document update. Updates on document sources and code sources.
+
 ## 22.01.2024
 
 - Fixed compiler error in case #define N2K_NO_HEARTBEAT_SUPPORT 1 has been used.

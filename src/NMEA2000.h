@@ -25,14 +25,19 @@
 
 /*************************************************************************//**
  * \file  NMEA2000.h
- * \brief This file contains the class tNMEA2000, which is consists the main
+ * \brief This file contains the class tNMEA2000, which consists the main
  *        functionality of the library
  * 
- * With NMEA2000 device class you can send, read and forward messages to 
- * NMEA2000 bus. As default library creates a system, which acts like Actisense 
- * NGT NMEA2000->PC interface forwarding all messages from bus to PC. By 
- * hanging mode to N2km_NodeOnly, one can make e.g. temperature source
- * device to NMEA2000 bus.
+ * With tNMEA2000 class you can easily communicate with NMEA2000 bus.
+ * Library can be used for any kind of NMEA2000 bus device needs from
+ * bus traffic listener to complex MFD system.
+ * 
+ * As default library simply reads all messages from bus and forwards
+ * them to defined forward stream (e.g., Serial) in Actisense format.
+ * Using N2km_ListenAndNode mode, one can make NMEA2000 compatible devices and
+ * even NMEA2000 certified devices by implementing all \ref secRefNMEA2000Certification
+ * requirements. Simple example is bus device, which provides some sensor
+ * like temperature, battery or engine information to the bus to be shown or MFD.
  * 
  * For detailed description see \ref tNMEA2000.
  * 
@@ -104,30 +109,30 @@
 
 /************************************************************************//**
  * \class tNMEA2000
- * \brief NMEA2000 device class definition.
+ * \brief tNMEA2000 device class definition.
  * \ingroup group_core
  * 
- * With NMEA2000 device class you can send, read and forward messages to 
- * NMEA2000 bus. As default library creates a system, which acts like Actisense 
- * NGT NMEA2000->PC interface forwarding all messages from bus to PC. By 
- * hanging mode to N2km_NodeOnly, one can make e.g. temperature source
- * device to NMEA2000 bus.
+ * With tNMEA2000 class you can easily communicate with NMEA2000 bus.
+ * Library can be used for any kind of NMEA2000 bus device needs from
+ * bus traffic listener to complex MFD system.
  * 
- * \note Each device on NMEA2000 bus should have own address on range 0-253. 
+ * As default library simply reads all messages from bus and forwards
+ * them to defined forward stream (e.g., Serial) in Actisense format.
+ * Using N2km_ListenAndNode mode, one can make NMEA2000 compatible devices and
+ * even NMEA2000 certified devices by implementing all \ref secRefNMEA2000Certification
+ * requirements. Simple example is bus device, which provides some sensor
+ * like temperature, battery or engine information to the bus to be shown or MFD.
  * 
- * This class uses J1939 automatic \ref secRefTermAddressClaiming "address claiming" 
- * (or dynamic addressing). So that you can start your device with some address set by method
- * \ref SetMode(). It is also important to set your device
- * \ref secRefTermNAME with method \ref tNMEA2000::SetDeviceInformation() so that 
- * it would be unique.
+ * Class can be used just for reading bus data. More common is to use it as bus device
+ * (also called node). For bus device mode you provide required basic information
+ * about device to class, which then takes care of informing other devices on the bus in
+ * standard way. For other message handling class provides callback methods and method 
+ * to send messages.
  * 
- * If you do not set "name" to unique, you devices changes address on start 
- * randomly. In principle they should still work fine.
- * It is also good idea to save device address to the EEPROM. In this way if 
- * you connect two of your devices to the bus, they will do the automatic 
- * address claiming. If later save address to the EEPROM and use that on next 
- * start, they does not need to change address anymore. See also method 
- * \ref tNMEA2000::ReadResetAddressChanged().
+ * Each device on NMEA2000 bus will have own source address on range 0-251. Class takes
+ * care of \ref secRefTermAddressClaiming "address claiming" (also called dynamic addressing)
+ * without any developer interaction. 
+ * Class also provides \ref descMultiDeviceSupport "multi device support", if that is necessary.
  */
 class tNMEA2000
 {
@@ -668,32 +673,40 @@ public:
   
   /************************************************************************//**
    * \enum    tN2kMode
-   * \brief   System mode. Meaning how the device will behave on the 
+   * \brief   System mode defines how the device will behave on the 
    *          NMEA2000 bus
+   * 
+   * \sa 
+   *  - \ref secDeviceModes
+   *  - \ref tNMEA2000::SetMode()
    */
   typedef enum { 
-            /** Default mode. Listen bus and forwards messages to default 
-             * port in Actisense format. You can not send any data to the bus.
+            /** Default mode. Listen bus and if message forwarding has been
+             * enabled forwards messages to defined stream in Actisense format.
+             * You can not send any data to the bus.
+             * See example DataDisplay.ino.
             */
             N2km_ListenOnly, 
-            /** This is for devices, which only sends data to the bus e.g. 
+            /** In this mode device acts as active bus device like display,
              * RPM or temperature monitor. Remember to set right device 
-             * information first.
+             * information first. Messages will not be forwarded.
+             * Look example TemperatureMonitor.ino.
             */
             N2km_NodeOnly, 
-            /** In this mode, device can be e.g. temperature monitor and 
-             * as N2km_ListenOnly.
+            /** Mode is as N2km_NodeOnly plus you can control
+             * \ref secMessageforwarding "message forwarding".
             */
             N2km_ListenAndNode, 
-            /**  Only for message sending. Device will not inform itself 
+            /** Only for message sending. Device will not inform itself 
              * to the bus. Messages will not be forwarded to the stream.  
              * By setting message handler, you can still read messages 
              * and handle them by yourself.
             */
             N2km_SendOnly,
-            /** Listen bus and forwards messages to default port in 
+            /** Listen bus and forwards messages to given forward stream in 
              * Actisense format. Messages can be send. Device will not 
-             * inform itself to the bus.
+             * inform itself to the bus. This is mode is usable e.g., with
+             * NMEA Simulator <http://www.kave.fi/Apps/>.
             */
             N2km_ListenAndSend 
             } tN2kMode;
@@ -994,34 +1007,56 @@ protected:
     };
 
 protected:
-    /** \brief Buffer for received messages */
+    /** \brief Buffer for receiving messages
+     * \sa
+     *  - \ref MaxN2kCANMsgs
+     *  - \ref tNMEA2000::SetN2kCANMsgBufSize()
+    */
     tN2kCANMsg *N2kCANMsgBuf;
-    /** \brief Max number CAN messages that can go to the buffer 
-     *          \ref N2kCANMsgBuf */
+    /** \brief Size of N2kCANMsgBuf receiving message buffer
+     * \sa 
+     * - \ref N2kCANMsgBuf
+     * - \ref tNMEA2000::SetN2kCANMsgBufSize()
+     */
     uint8_t MaxN2kCANMsgs;
 
-    /** \brief Buffer for send out CAN messages
+    /** \brief Buffer for library send out CAN frames
      * 
      * CANSendFrameBuf is library internal buffer for frames waiting for sending. If
-     * CanSendFrame() can not send frame, frame will be stored to this buffer and its
-     * sending will be tried again on next ParseMessages() call.
+     * CanSendFrame() can not send or buffer frame to driver buffer, frame will be
+     * stored to this buffer and its sending will be tried again on next SendMsg() or
+     * ParseMessages() call.
      * 
-     * If inherited class "driver" has own send buffer, size of CANSendFrameBuf can be
-     * set to minimum 2 on inherited \ref InitCANFrameBuffers(). 
+     * Inherited driver class can split size of MaxCANSendFrames to driver buffer
+     * and library buffer. Inherited class can even disable library buffer.
+     * 
+     * \ref InitCANFrameBuffers(). 
     */
     tCANSendFrame *CANSendFrameBuf;
-    /** \brief Max number of send out CAN messages that can go to the buffer 
-     *          \ref CANSendFrameBuf 
-     * \sa \ref InitCANFrameBuffers()*/
+    /** \brief Size of CANSendFrameBuf or before initialization requested
+     *         total frame buffering size.
+     * 
+     * Member has two function. On setup program can request
+     * \ref tNMEA2000::SetN2kCANSendFrameBufSize, which will be saved to this member.
+     * Inherited tNMEA2000::InitCANFrameBuffers can split size to driver buffer and
+     * library buffer.
+     * 
+     * \sa
+     *  - \ref tNMEA2000::SetN2kCANSendFrameBufSize()
+     *  - \ref CANSendFrameBuf
+     *  - \ref InitCANFrameBuffers()
+     */
     uint16_t MaxCANSendFrames;
-    /** \brief  Next read index for the CAN message Send buffer 
+    /** \brief  Next read index for the library CAN send frame buffer.
      */
     uint16_t CANSendFrameBufferWrite;
-    /** \brief  Next write index for the CAN message Send buffer
+    /** \brief  Next write index for the library CAN send frame buffer.
      */
     uint16_t CANSendFrameBufferRead;
     /** \brief Max number received CAN messages that can go to the buffer 
-     * \sa \ref InitCANFrameBuffers()
+     * \sa
+     *  - \ref tNMEA2000::SetN2kCANReceiveFrameBufSize()
+     *  - \ref InitCANFrameBuffers()
     */
     uint16_t MaxCANReceiveFrames;
 
@@ -1046,11 +1081,10 @@ protected:
 
 protected:
     /*********************************************************************//**
-     * \brief Send a CAN Frame
+     * \brief Abstract class for sending a CAN Frame
      * 
-     * This Virtual function will be overridden by a derived class for 
-     * specific interfaces according to the hardware which is used. 
-     * Currently there are own classes like NMEA2000_Teensyx, NMEA2000_teensy,
+     * Driver writer must override this function for specific CAN interface.
+     * Currently there are driver classes like NMEA2000_Teensyx, NMEA2000_teensy,
      * NMEA2000_esp32, NMEA2000_due, NMEA2000_mcp, NMEA2000_avr, NMEA2000_mbed
      * and NMEA2000_socketCAN.
      * 
@@ -1067,28 +1101,25 @@ protected:
     virtual bool CANSendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true)=0;
 
     /*********************************************************************//**
-     * \brief Open the CAN Interface
+     * \brief Abstract class for initializing and opening CAN interface.
      * 
-     * This Virtual function will be overridden by a derived class for 
-     * specific interfaces according to the hardware which is used. 
-     * Currently there are own classes like NMEA2000_Teensyx, NMEA2000_teensy,
+     * Driver writer must override this function for specific CAN interface.
+     * Currently there are driver classes like NMEA2000_Teensyx, NMEA2000_teensy,
      * NMEA2000_esp32, NMEA2000_due, NMEA2000_mcp, NMEA2000_avr, NMEA2000_mbed
      * and NMEA2000_socketCAN.
      * 
      * \sa \ref secHWlib
      * 
-     * \retval true   Success
-     * \retval false  currently prevent accidental by second instance. 
-     *                Maybe possible in future.
+     * \retval true   Initialize and open success
+     * \retval false  Initialize or open failed.
      */
     virtual bool CANOpen()=0;
 
     /*********************************************************************//**
-     * \brief Get a CAN Frame
+     * \brief Abstract class for reading frame from driver class.
      * 
-     * This Virtual function will be overridden by a derived class for 
-     * specific interfaces according to the hardware which is used. 
-     * Currently there are own classes like NMEA2000_Teensyx, NMEA2000_teensy,
+     * Driver writer must override this function for specific CAN interface.
+     * Currently there are driver classes like NMEA2000_Teensyx, NMEA2000_teensy,
      * NMEA2000_esp32, NMEA2000_due, NMEA2000_mcp, NMEA2000_avr, NMEA2000_mbed
      * and NMEA2000_socketCAN.
      * 
@@ -1103,9 +1134,23 @@ protected:
      * \brief Initialize CAN Frame buffers
      *
      * This will be called on \ref tNMEA2000::Open() before any other 
-     * initialization. Inherit this, if buffers can be set for the driver
-     * and you want to change size of library send frame buffer size. See e.g. 
-     * NMEA2000_teensy.cpp.
+     * initialization.
+     * 
+     * Driver writer must inherit this for low level driver class and create
+     * driver internal send and receive buffers according requested 
+     * MaxCANSendFrames and MaxCANReceiveFrames sizes. Driver class can
+     * handle completely send and receive buffers or after buffers has been
+     * initialized set MaxCANSendFrames for size of library buffer and call
+     * tNMEA2000::InitCANFrameBuffers();
+     * 
+     * Inherited function can also override requested MaxCANSendFrames
+     * and MaxCANReceiveFrames in case they are set e.g., too small or too large.
+     * 
+     * See e.g., tNMEA2000_Teensyx::InitCANFrameBuffers() on NMEA2000_teensyx.cpp.
+     * 
+     * \sa
+     *  - \ref tNMEA2000::SetN2kCANSendFrameBufSize()
+     *  - \ref tNMEA2000::SetN2kCANReceiveFrameBufSize()
      */
     virtual void InitCANFrameBuffers();
 #if defined(DEBUG_NMEA2000_ISR)
@@ -1137,7 +1182,7 @@ protected:
     bool SendFrame(unsigned long id, unsigned char len, const unsigned char *buf, bool wait_sent=true);
 
     /*********************************************************************//**
-     * \brief Get the Next Free CAN Frame  from \ref CANSendFrameBuf
+     * \brief Get the Next Free CAN Frame from \ref CANSendFrameBuf
      * \return tCANSendFrame* 
      */
     tCANSendFrame *GetNextFreeCANSendFrame();
@@ -1284,8 +1329,11 @@ protected:
      * If the node is not \ref N2km_SendOnly or \ref N2km_ListenAndSend this
      * function chooses the correct handler for the given system message.
      * 
-     * \sa  \ref HandleISORequest,  \ref HandleISOAddressClaim,
-     *      \ref HandleCommandedAddress, \ref HandleCommandedAddress
+     * \sa
+     *  - \ref HandleISORequest
+     *  - \ref HandleISOAddressClaim
+     *  - \ref HandleCommandedAddress
+     *  - \ref HandleCommandedAddress
      * 
      * \param MsgIndex  Message Index on \ref N2kCANMsgBuf
      * \retval true    message was handled
@@ -1456,7 +1504,10 @@ protected:
 
     /*********************************************************************//**
      * \brief Is message forwarding enabled
-     * \sa  \ref ForwardMode, \ref N2kMode
+     * \sa
+     *  - \ref ForwardMode
+     *  - \ref N2kMode
+     * 
      * Checks if forwarding i enabled and the node is not \ref N2km_SendOnly
      * 
      * \retval true 
@@ -1538,7 +1589,7 @@ protected:
     bool IsValidDevice(int iDev) const { return (iDev>=0 && iDev<DeviceCount ); }
 
     /*********************************************************************//**
-     * \brief Checks if the device is ready to send a message
+     * \brief Checks if the device is ready to start address claiming.
      *
      * \retval true 
      * \retval false 
@@ -1724,18 +1775,36 @@ public:
     void SetDeviceCount(const uint8_t _DeviceCount);
 
     /*********************************************************************//**
-     * \brief Set incoming CAN message (\ref tNMEA2000::N2kCANMsgBuf) buffersize.
+     * \brief Set incoming CAN message (\ref tNMEA2000::N2kCANMsgBuf) buffer size.
      *
-     * With this function you can set size of buffer, where system stores 
+     * With this function you can set size of buffer, where system builds 
      * incoming messages. The default size is 5 messages. Some messages are 
      * just single frame messages and they will be read in and handled 
-     * immediately on call to ParseMessages. For multi framed fast packet 
-     * messages there is no guarantee that all frames will arrive in order.
-     * So these messages will be buffered and saved until all frames has
-     * been received.
-     * If it is not critical to handle all fast packet messages like with 
-     * N2km_NodeOnly, you can set buffer size smaller like 3 or 2 by calling 
-     * this before \ref tNMEA2000::Open().
+     * immediately on call to ParseMessages. NMEA2000 fast packet message
+     * contains several frames sent sequentially. Anyway there can be other
+     * message frames between fast packet message frames,
+     * so these messages will be buffered and saved until all frames has
+     * been received. NMEA2000 requires that device should be able to read 2
+     * concurrent fast packet and 2 ISO TP message. Since also single frame 
+     * message requires one buffer slot buffer default size has been set to 5.
+     * 
+     * If buffer size is too small, there is risk that all fast packet messages
+     * will not be handled. Even your own logic does not listen any fast packet
+     * messages, internal logic listens group functions PGN 126208, which may
+     * contain inportant requests library should respond. If library does not
+     * respond to all required requests, there is risk that other devices drops
+     * your device information.
+     * 
+     * Since ISO TP messages are rarely used, with buffer size 5 library can
+     * handle 4 concurrent fast packet messages. Due to priorities this is 
+     * enough in most cases. If bus has lot of devices sending fast packets
+     * and you have enough memory on MCU, you can increase buffer size.
+     * Buffer size 10 should be enough even on heavy traffic.
+     * 
+     * Function has to be called before communication opens. See \ref tNMEA2000::Open().
+     * 
+     * Do not mix this with tNMEA2000::SetN2kCANReceiveFrameBufSize(), which
+     * has different meaning.
      * 
      * \param _MaxN2kCANMsgs  Number of CAN messages that can be 
      *                        stored in \ref tNMEA2000::N2kCANMsgBuf
@@ -1743,34 +1812,54 @@ public:
     void SetN2kCANMsgBufSize(const uint8_t _MaxN2kCANMsgs) { if (N2kCANMsgBuf==0) { MaxN2kCANMsgs=_MaxN2kCANMsgs; }; }
 
     /*********************************************************************//**
-     * \brief Set CAN send frame (\ref CANSendFrameBuf) buffersize.
+     * \brief Set CAN send frame buffer size.
      * 
-     * With this function you can set size of buffer, where system saves frames of messages to be sent.
+     * With this function you can set size of buffer, where system saves 
+     * frames of messages to be sent. Given buffer size will be devided
+     * to driver buffer and library buffer. Driver buffer will empty by
+     * driver interrupt and library buffer by call to SendMsg or
+     * ParseMessages, which moves frames to driver buffer. If driver
+     * can handle large buffer, library buffer will be set to minimum.
      *
      * When sending long messages like ProductInformation or GNSS data, 
      * there may not be enough buffers for successfully send data. This 
      * depends of your hw and device source. Device source has effect due 
-     * to priority of getting sending slot. If your data is critical, use 
+     * to priority of getting sending time. If your data is critical, use 
      * buffer size, which is large enough (default 40 frames).
      *
      * E.g. Product information takes totally 134 bytes. This needs 20 
      * frames. If you also send GNSS 47 bytes=7 frames.
      * If you want to be sure that both will be sent on any situation, 
      * you need at least 27 frame buffer size.
+     * 
      * If you use this function, call it once before \ref tNMEA2000::Open() and 
      * before any device related function like tNMEA2000::SetProductInformation.
+     * If you call it later, function has no effect.
      *
-     * \param _MaxCANSendFrames Maximum number of CAN messages that can be 
-     *                          stored in \ref tNMEA2000::CANSendFrameBuf
+     * Driver may override your setting, if you set too small or too large
+     * buffer size. This is driver dependent behaviour.
+     * 
+     * \sa 
+     *  - \ref tNMEA2000::SendMsg
+     *  - \ref tNMEA2000::ParseMessages
+     * 
+     * \param _MaxCANSendFrames Maximum number of CAN frames that can be buffered
+     *                          in \ref tNMEA2000::CANSendFrameBuf
      */
     virtual void SetN2kCANSendFrameBufSize(const uint16_t _MaxCANSendFrames) { if ( !IsInitialized() ) { MaxCANSendFrames=_MaxCANSendFrames; }; }
 
     /*********************************************************************//**
-     * \brief Set the maximum buffersize for received CAN messages
+     * \brief Set CAN receive frame buffer size.
      *
      * Some CAN drivers allows interrupted receive frame buffering. You can 
      * set receive buffer size with this function. If you use this function, 
      * call it once before \ref tNMEA2000::Open();
+     * 
+     * Driver may override your setting, if you set too small or too large
+     * buffer size. This is driver dependent behaviour.
+     * 
+     * \sa
+     *  - \ref tNMEA2000::ParseMessages
      * 
      * \param _MaxCANReceiveFrames {type} 
      */
@@ -1788,8 +1877,8 @@ public:
      * be 1 (=50mA). If your device does not take power from bus, set this 
      * to 0.
      *
-     * If you use device modes tNMEA2000::N2km_ListenOnly or tNMEA2000::N2km_ListenAndSend, function
-     * does not have effect.
+     * If you use device modes tNMEA2000::N2km_ListenOnly, tNMEA2000::N2km_ListenAndSend or
+     * N2km_SendOnly, function does not have effect.
      * 
      * \note Serial code has length of 32 so just long enough to carry GUID.
      * 
@@ -2059,6 +2148,10 @@ public:
      * As a default library has a list of known messages. With this 
      * function user can override default list of single frame messages.
      * 
+     * Known single frame message lists has only effect if you limit handling
+     * with tNMEA2000::HandleOnlyKnownMessages or use message forwarding
+     * and limit it with tNMEA2000::SetForwardOnlyKnownMessages
+     * 
      * \sa
      * - \ref tNMEA2000::ExtendSingleFrameMessages.
      * 
@@ -2074,7 +2167,9 @@ public:
      * supported.  Pointers must be in PROGMEM
      * 
      * As a default library has a list of known messages. With this 
-     * function user can override default list of fast packet messages. 
+     * function user can override default list of fast packet messages.
+     * Build in default list contains all fastpackets found from open
+     * information.
      * 
      * \note If an incoming fast packet message is not known, it will be 
      * treated as single frame message. So if you want to handle unknown 
@@ -2098,6 +2193,10 @@ public:
      * 
      * As a default library has a list of known messages. With this 
      * function user can add own list of known single frame messages.
+     * 
+     * Known single frame message lists has only effect if you limit handling
+     * with tNMEA2000::HandleOnlyKnownMessages or use message forwarding
+     * and limit it with tNMEA2000::SetForwardOnlyKnownMessages
      * 
      * \note Currently subsequent calls will override previously set list.
      * 
@@ -2146,13 +2245,15 @@ public:
      * NMEA2000.ExtendTransmitMessages(TransmitMessages);
      * \endcode
      * 
-     * System should respond to PGN 126464 request with messages the 
-     * system transmits and receives. The library will automatically respond 
-     * with system the messages it handles internally. With this method you 
-     * can add messages, which your code will transmit.
+     * Library responds automatically to PGN 126464 request about transmit or
+     * receive messages. With this function you extend library list of messages
+     * your device own logic sends.
      * 
-     * \note that this is valid only for device modes 
-     *       \ref tNMEA2000::N2km_NodeOnly and \ref 
+     * \note Extending transmit messages is required for \ref secRefNMEA2000Certification,
+     * may be also critical since some devices refuces to handle PGNs from devices,
+     * which does not list them on transmit messages.
+     * 
+     * This has only effect for device modes \ref tNMEA2000::N2km_NodeOnly and \ref 
      *       tNMEA2000::N2km_ListenAndNode.
      * 
      * \param _TransmitMessages  Buffer holding list of extra PGNs device will transmit. 
@@ -2173,13 +2274,13 @@ public:
      * NMEA2000.ExtendReceiveMessages(ReceivedMessages);
      * \endcode
      * 
-     * System should respond to PGN 126464 request with messages the 
-     * system transmits and receives. The library will automatically respond 
-     * with system the messages it uses. With this method you can add 
-     * messages, which your own will handle.
+     * Library responds automatically to PGN 126464 request about transmit or
+     * receive messages. With this function you extend library list of messages
+     * your device own logic listens.
      * 
-     * \note that this is valid only for device modes 
-     *       \ref tNMEA2000::N2km_NodeOnly and \ref 
+     * \note Extending receive messages is required for \ref secRefNMEA2000Certification.
+     * 
+     * This has only effect for device modes \ref tNMEA2000::N2km_NodeOnly and \ref 
      *       tNMEA2000::N2km_ListenAndNode.
      * 
      * \param _ReceiveMessages  Buffer holding list of extra PGNs device will handle. 
@@ -2208,7 +2309,7 @@ public:
      * temperature monitors made by this library, you have to set at 
      * least first parameter UniqueNumber different for both of them.  
      * 
-     * I just decided to use number below for ManufacturerCode as Open 
+     * I just decided to use number one below maximum for ManufacturerCode as Open 
      * Source devices - this is not any number given by NMEA.
      * 
      * \param _UniqueNumber     Default=1. 21 bit resolution, max 2097151. 
@@ -2440,24 +2541,25 @@ public:
 #endif
 
     /*********************************************************************//**
-     * \brief Set the library mode.
+     * \brief Set the library mode and start source address.
      *
-     * With SetMode you can define how your node acts on N2k bus. 
-     * See \ref tNMEA2000::Devices modes.
+     * With SetMode you can define how your node acts on N2k bus and set 
+     * start source address. Source address setting has effect only
+     * on modes N2km_NodeOnly and N2km_ListenAndNode.
      * 
-     * With this function you can also set default address for your device. 
-     * It is mandatory that once your device has been connected to the bus, 
-     * it tries always use last used address. Due to address claiming, your 
+     * NMEA2000 standard requires that once your device has been connected to the bus, 
+     * it uses last used address on next start. Due to address claiming, your 
      * device may change its source address, when you add new devices to the bus.
-     * So you should save last used address to the e.g. EEPROM and on startup 
-     * read it there and use it as parameter for SetMode. You can check if 
+     * So you should save last used address to e.g. EEPROM and on setup 
+     * use it as parameter for SetMode. You can check if 
      * your address you set originally by SetMode has changed by using 
      * function tNMEA2000::ReadResetAddressChanged() and you can read current 
      * address by function tNMEA2000::GetN2kSource().
-     *
-     * \note Other than N2km_ListenOnly modes will automatically start
-     * initialization and address claim procedure.
-     
+     * 
+     * \sa
+     *  - \ref secDeviceModes
+     *  - \ref secRefTermAddressClaiming
+     *      
      * \param _N2kMode    Mode for this node, see \ref tN2kMode
      * \param _N2kSource  Source address for this node
      */
@@ -2534,26 +2636,33 @@ public:
     void Restart();
 
     /*********************************************************************//**
-     * \brief Send a N2k message to the bus
+     * \brief Send message to the NMEA2000 bus.
      *
-     * When you want to send some message to the N2k bus, you call this. 
+     * Call this to send message to NMEA2000 bus.
      * Before calling SendMsg() you have to prepare tN2kMsg type of message e.g. by 
      * using PGN specific function in N2kMessages.h.  
      * 
-     * \note As default tNMEA2000 object is as default in 
+     * \note tNMEA2000 object is as default in 
      * tNMEA2000::N2km_ListenOnly mode. So if you want to send messages, 
      * you have to set right mode in setup with tNMEA2000::SetMode().
      * 
-     * The function returns true, if the message was sent successfully, 
-     * otherwise it return false. SendMsg may fail, if there is not room 
-     * for message frames on sending buffer or device is not open.  
-     * SendMsg does not always send message immediately. If lower level 
-     * sending function fails, SendMsg will buffer message frames and 
-     * try to send them on next call to SendMsg or ParseMessages. So 
-     * to have reliable sending, you need a sending buffer, which is 
-     * large enough.  
+     * The function returns true, if the message was sent or buffered successfully,
+     * otherwise it return false. SendMsg may fail, if there is not room
+     * for message frames on sending buffer, device is not yet open or not ready
+     * to send.
+     * 
+     * If you sent single frame message time to time, it will normally
+     * go directly to CAN controller sent "mailbox", where controller sends it
+     * as soon as it gets time from bus. Sending fastpacket message will always buffer
+     * at least other than first frame. Internally sent buffer is devided to driver
+     * buffer and library buffer. Driver buffer will empty by interrupt and
+     * library buffer on call to SendMsg or ParseMessages, which moves frames to
+     * driver buffer. To have reliable sending, you need a sending buffer, which is
+     * large enough for your device needs. See tNMEA2000::SetN2kCANSendFrameBufSize.
      * 
      * See example TemperatureMonitor.ino.
+     * 
+     * \sa \ref secCommErr
      * 
      * \param N2kMsg          Reference to a N2kMsg Object
      * \param DeviceIndex     index of the device on \ref Devices \n
@@ -2561,7 +2670,7 @@ public:
      *                        to use source address of N2kMsg instead of
      *                        device source address. This is usefull with
      *                        e.g., passthrough gateway devices.     
-     * \retval true           Success
+     * \retval true           Message sent or buffered succesfully.
      * \retval false          Open has not finished. Address claiming has not finished.
      *                         There is no more room on send buffer, which may be caused
      *                         by too small send buffer or CAN controller can not sent messages
@@ -2572,11 +2681,11 @@ public:
     /*********************************************************************//**
      * \brief Parse all incoming Messages
      *
-     * You have to call this periodically on loop()to handle N2k messages,
+     * You have to call this periodically on loop() to handle N2k messages,
      * otherwise tNMEA2000 object will not work at all.
      * 
      * \note Do not use delay() on your loop(). Also take care that any
-     * library you use does not use delay() internally.
+     * library you use does not use delay() or any blocking function internally.
      *
      * With NMEA2000 library you should use only nonblocking calls/libraries in your loop. Any
      * library you use, should work asynchronously and not cause long delays on loop. Randomly
@@ -2584,7 +2693,8 @@ public:
      * 300 ms, which you will then see by other device dropping your device from the list.
      *
      * \sa
-     * - \ref descRunningLibrary.
+     *  - \ref descRunningLibrary.
+     *  - \ref tNMEA2000::SetN2kCANReceiveFrameBufSize()
      * 
      * \note Even if you only send e.g. temperature to the bus, you should 
      * call this so the node will automatically inform about itself to 
