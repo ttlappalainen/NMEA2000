@@ -1,6 +1,15 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 06.02.2024
+
+- Fix tPriorityRingBuffer. It did not freed values properly. tPriorityRingBuffer is used on tNMEA2000_Teensyx driver.
+- Ring buffer documentation update.
+- Fixed SetN2kPGN129284 and ParseN2kPGN129284. Changed OriginWaypointNumber and DestinationWaypointNumber parameter to uint32_t. This causes compatibility issue for users used ParseN2kPGN129284 and they have to update reference parameter type. Also if SetN2kPGN129284 was used with related parameters value N2kUint8NA, they must be updated to use N2kUint32NA
+- Moved OnOpen call on Open after setting Heartbeat interval and offset. If Heartbeat settings were set on OnOpen, settings were reset.
+- Added note to documentation for OnOpen about coming change.
+- Added lightning PGNs to fastpacket list.
+
 ## 02.02.2024
 
 - Document update. Updates on document sources and code sources.

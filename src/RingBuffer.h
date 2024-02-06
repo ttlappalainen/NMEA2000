@@ -25,10 +25,11 @@
  * \file  RingBuffer.h
  * \brief Simple tRingBuffer and tPriorityRingBuffer template classes
  * 
- * With tRingBuffer one can save simple data structures to a ring buffer. 
+ * With tRingBuffer one can save values to a ring buffer. Value can be
+ * simple value or data structure.
  * 
  * \note You have to take care of data locking from other threads 
- * or interrupts for copy time.
+ * or interrupts around calls using buffer handling routines.
  * 
  * \section subSecRBU Example of ring buffer usage
  * 
@@ -53,14 +54,14 @@
  * \endcode
  * 
  * As an alternative if you want to avoid data copying twice, you can
- * request reference to next data to be saved and copy data directly 
+ * request pointer to next value to be saved and copy data directly 
  * to it.
  * 
  * \code
  *  void SendMessage() {
  *    tCANData *msgOut;
  *    lockData();
- *    if ( (msgOut=CANMessages)!=0 ) {
+ *    if ( (msgOut=CANMessages.getAddRef())!=0 ) {
  *      msgOut->id=1;
  *      msgOut->len=1;
  *      msgOut->data[0]=1;
@@ -70,9 +71,10 @@
  * \endcode
  * 
  * tPriorityRingBuffer is similar as tRingBuffer, but it extends 
- * functionality with item priority. When you add items to buffer,
- * you can give them priority and when you read them, highest priority
- * item will be read out first.
+ * functionality with value priority. When you add values to buffer,
+ * you can give them priority and when during read you can define
+ * which priority value should be read out or read highest priority
+ * value.
  * 
  * ### Debugging
  * 
@@ -82,6 +84,7 @@
  * \code
  *  #define RING_BUFFER_ERROR_DEBUG
  *  #define RING_BUFFER_DEBUG
+ *  #define RING_BUFFER_INIT_DEBUG
  * \endcode
  * 
  * 
@@ -93,122 +96,159 @@
 #include <cstdint>
 /************************************************************************//**
  * \class tRingBuffer
- * \brief Template Class that holds simple data structures in a ring buffer
+ * \brief Template Class that holds values in a ring buffer
  * \ingroup group_coreSupplementary
  *
- * With tRingBuffer one can save simple data structures to a ring buffer. 
- * 
- * \sa 
- * \ref subSecRBU
+ * With tRingBuffer one can save values to a ring buffer. Value can be
+ * simple value or data structure.
  * 
  * \note You have to take care of data locking from other threads 
- * or interrupts for copy time.
+ * or interrupts around calls using buffer handling routines.
+ * 
+ * \sa 
+ * - \ref subSecRBU
  * 
  * \tparam T Template used for the class
  */
 template <typename T> class tRingBuffer {
 
 protected:
-  /** \brief Pointer to the buffer in memory*/
+  /** \brief Pointer to the ring buffer of values in memory*/
   T *buffer;
-  /** \brief Index of the first data structure in the ring buffer */
+  /** \brief Index of the first value in the ring buffer */
   uint16_t head;
-  /** \brief Index of the last data structure in the ring buffer */
+  /** \brief Index of the last value in the ring buffer */
   uint16_t tail;
-  /** \brief Number of data structures that can be stored in the ring buffer*/
+  /** \brief Number of values that can be stored in the ring buffer*/
   uint16_t size;
 
 public:
   /************************************************************************//**
-   * \brief Construct a new Ring Buffer object
+   * \brief Construct a new ring buffer object
    * 
-   * A buffer with the corresponding size is allocated inside the memory.
+   * A buffer with the corresponding size of values will be allocated to the memory.
    * 
    * \param _size Size of the ring buffer
    */
   tRingBuffer(uint16_t _size);
   /************************************************************************//**
-   * \brief Destroy the Ring Buffer object
+   * \brief Destroy the ring buffer object
    * 
-   * All Memory will be freed
+   * All memory will be freed
    */
   virtual ~tRingBuffer();
   /************************************************************************//**
-   * \brief Get the Size of the ring buffer
-   * \return uint16_t Size of ring buffer
+   * \brief Get the size of the ring buffer
+   * \retval uint16_t size of ring buffer
    */
   uint16_t getSize() const { return size; }
   /************************************************************************//**
    * \brief Checks if the ring buffer is empty
    *
-   * \return true 
-   * \return false 
+   * \retval true  Buffer is empty
+   * \retval false Buffer has data
    */
   bool isEmpty() const;
   /************************************************************************//**
    * \brief Clears the whole ring buffer */
   void clear();
   /************************************************************************//**
-   * \brief Returns the number of Entries in the ring buffer
-   * \return uint16_t Number of entries
+   * \brief Returns the number of values in the ring buffer
+   * \retval uint16_t Number of values in the ring buffer
    */
   uint16_t count();
 
   /************************************************************************//**
-   * \brief Get pointer to next add item if available. Write pointer
-   *        will be incremented.
-   * \return T* 
+   * \brief Get the pointer to new value added to the ring buffer
+   *
+   * Using getAddRef instead of add saves data copying between values. By using
+   * add, one must first setup value, which will be then copied to buffer
+   * within add. By using getAddRef one can request pointer to next buffer value and
+   * copy data directly to it.
+   * 
+   * \note In multitasking or with interrupts one must take care that buffer
+   * will no be used before data handling has been finished. This 
+   * differs from add, where it is enough to use locking only around calling add.
+   * 
+   * \retval "T *"      Pointer to added new value
+   * \retval 0          Buffer is full
    */
   T *getAddRef();
 
   /************************************************************************//**
    * \brief Adds a new value to the ring buffer
    *
-   * \param val   Value to be added
-   * \return true 
-   * \return false -> ring buffer is already full
+   * \sa 
+   *  - \ref getAddRef
+   * 
+   * \param val         Value to be added
+   * \retval true       Add succeeded
+   * \retval false      Buffer is full
    */
   bool add(const T &val);
 
   /************************************************************************//**
-   * \brief Get pointer to next read item if available. Read pointer
-   *        will be inremented.
-   * \return const T* 
+   * \brief Get the pointer to value read out from the ring buffer
+   *
+   * Using getReadRef instead of read saves data copying between values. By using
+   * read data will be copied to value, which one then may forward
+   * elsewhere. By using getReadRef one can request pointer to value and
+   * forward data directly from it.
+
+   * \note In multitasking or with interrupts one must take care that buffer
+   * will no be used before data handling has been finished. This 
+   * differs from read, where it is enough to use locking only around calling read.
+   * 
+   * \retval "const T*" Pointer to value read out from the ring buffer
+   * \retval 0          No values available
    */
   const T *getReadRef();
 
   /************************************************************************//**
-   * \brief Get pointer to next read item if available. Does not affect
-   *        to read pointer.
-   * \return const T* 
+   * \brief Get pointer to next value to be read out from the ring buffer.
+   *        Function does not read value out from the ring buffer.
+   * 
+   * \retval "const T*" Pointer to value, which would be next read out 
+   *                    from the ring buffer
+   * \retval 0          No values available, buffer is empty.
    */
   T *peek();
   
   /************************************************************************//**
-   * \brief Reads a value from the ring buffer
+   * \brief Reads a value out from the ring buffer
    *
-   * \param val       Reference to the value that have to be read out
-   * \return true     
-   * \return false    -> There is no data available inside the buffer
+   * \sa 
+   *  - \ref getReadRef
+   * 
+   * \param val       Reference to the value read out from the ring buffer
+   * \retval true     Value read out from buffer.
+   *                  Value has been copied to paramater val
+   * \retval false    There is no data available inside the buffer.
+   *                  Parameter val will be unchanged.
    */
   bool read(T &val);
 };
 
 /************************************************************************//**
  * \class tPriorityRingBuffer
- * \brief Template Class that holds simple data structures with given 
+ * \brief Template Class that holds values with given 
  *        priorities in a ring buffer
  * \ingroup group_coreSupplementary
  * 
  * tPriorityRingBuffer is similar as \ref tRingBuffer, but it extends 
- * functionality with item priority. When you add items to buffer,
- * you can give them priority and when you read them, highest priority
- * item will be read out first.
- * \sa 
- * \ref subSecRBU
+ * functionality with value priority. When you add values to the buffer,
+ * you can give them priority. When you read them out you can get highest
+ * priority or request specific priority value.
+ * 
+ * The advantage of tPriorityRingBuffer is that it will reserve one
+ * continuous block for all priorities instead of reserve one buffer for each
+ * priority.
  * 
  * \note You have to take care of data locking from other threads 
- * or interrupts for copy time.
+ * or interrupts around calls using buffer handling routines.
+ * 
+ * \sa 
+ * \ref subSecRBU
  * 
  * \tparam T Template used for the class
  */
@@ -250,39 +290,60 @@ protected:
     void clear() { next=INVALID_RING_REF; last=INVALID_RING_REF; }
   };
 protected:
+  /** \brief Pointer to the ring puffer in memory */
+  tValueSlot *buffer;
+  /** \brief Pointer to priority referencies in buffer */
+  tPriorityRef *priorityReferencies;
   /** \brief Index of the first free index in the ring buffer */
   uint16_t head;
   /** \brief Index of the last occupied index in the ring buffer */
   uint16_t tail;
-  /** \brief Number of data structures that can be stored in the ring buffer*/
+  /** \brief Number of values that can be stored in the ring buffer*/
   uint16_t size;
   /** \brief highest priority possible*/
   uint8_t maxPriorities;
-  /** \brief Pointer to the ring puffer in memory*/
-  tValueSlot *buffer;
-  /** \brief */
-  tPriorityRef *priorityReferencies;
 
 public:
   /************************************************************************//**
-   * \brief Construct a new Priority Ring Buffer object
+   * \brief Construct a new Priority ring buffer object
    *
-   * Allocates all the memory needed and initialize attributes and priorities.
+   * Allocates all the memory needed, initialize attributes and priorities.
    * 
    * \param _size     Size of the ring buffer
    * \param _maxPriorities highest priority possible
    */
   tPriorityRingBuffer(uint16_t _size, uint8_t _maxPriorities=1);
   /************************************************************************//**
-   * \brief Destroy the t Priority Ring Buffer object
+   * \brief Destroy the priority ring buffer object
    * Frees all memory
    */
   virtual ~tPriorityRingBuffer();
 
+  /************************************************************************//**
+   * \brief Get the size of the ring buffer
+   * \retval uint16_t Size of ring buffer
+   */
   uint16_t getSize() const { return size; }
   /************************************************************************//**
-   * \brief Get the Size of the ring buffer
-   * \return uint16_t Size of ring buffer
+   * \brief Get the size of memory required by ring buffer
+   * 
+   * This is static function and can be used to test how much ring buffer
+   * would require memory with given size and count of priorities.
+   * Function can be used e.g., for checking available memory or possible
+   * memory "bank" handling.
+   * 
+   * \return uint32_t Memory required by ring buffer
+   */
+  static uint32_t getMemSize(uint16_t _size, uint8_t _maxPriorities=1);
+  /************************************************************************//**
+   * \brief Check is ring buffer empty
+   * 
+   * Result depends of _priority parameter. If valid priority within
+   * initial _maxPriorities is provided, function returns empty state of
+   * given priority. Otherwise it returns empty state of whole buffer.
+   * 
+   * \param  _priority  Which buffer
+   * \retval bool Buffer empty state
    */
   bool isEmpty(uint8_t _priority=0xff) const;
   /************************************************************************//**
@@ -292,49 +353,92 @@ public:
    * \brief This function does nothing at the moment!*/
   void clean();
   /************************************************************************//**
-   * \brief Returns the number of Entries in the ring buffer
-   * \return uint16_t Number of entries
+   * \brief Returns the number of values in the ring buffer
+   * 
+   * Currently function returns simple buffer count instead of true value
+   * count. Priority ring buffer may have values released between other values.
+   * 
+   * \retval uint16_t Number of values in buffer
    */
   uint16_t count();
   /************************************************************************//**
    * \brief Add a value to the ring buffer with a given priority
    *
+   * \sa 
+   *  - \ref getAddRef
+   * 
    * \param val         Value to be added
    * \param _priority   Priority for the added value (default = 0)
-   * \return true 
-   * \return false  -> ring buffer is already full
+   * \retval true       Add succeeded
+   * \retval false      Buffer is full
    */
   bool add(const T &val, uint8_t _priority=0);
   /************************************************************************//**
-   * \brief Reads a value from the ring buffer
+   * \brief Reads highest priority value out from the ring buffer
    *
-   * \param val       Reference to the value that have to be read out
-   * \return true     
-   * \return false    -> There is no data available inside the buffer
+   * \sa 
+   *  - \ref getReadRef
+   * 
+   * \param val       Reference to the value read out from buffer
+   * \retval true     Value read out from buffer.
+   *                  Value has been copied to paramater val
+   * \retval false    There is no data available inside the buffer.
+   *                  Parameter val will be unchanged.
    */
   bool read(T &val);
 
   /************************************************************************//**
-   * \brief Get the Reference for the next Add 
+   * \brief Get the pointer to new value added to the ring buffer
    *
+   * Using getAddRef instead of add saves data copying between values. By using
+   * add, one must first setup value, which will be then copied to buffer
+   * within add. By using getAddRef one can request pointer to next buffer value and
+   * copy data directly to it.
+   * 
+   * \note In multitasking or with interrupts one must take care that buffer
+   * will no be used before data handling has been finished. This 
+   * differs from add, where it is enough to use locking only around calling add.
+   * 
    * \param _priority Priority for the value (default = 0)
-   * \return T* -> Null, if buffer is full
+   * \retval "T *"      Pointer to added new value
+   * \retval 0          Buffer is full
    */
   T *getAddRef(uint8_t _priority=0);
 
   /************************************************************************//**
-   * \brief Get the Reference for the next Read
+   * \brief Get the pointer to value with given priority read out from the ring buffer
    *
-   * \param _priority Priority for the value
-   * \return const T* 
+   * Using getReadRef instead of read saves data copying between values. By using
+   * read data will be copied to value, which one then may forward
+   * elsewhere. By using getReadRef one can request pointer to value and
+   * forward data directly from it.
+
+   * \note In multitasking or with interrupts one must take care that buffer
+   * will no be used before data handling has been finished. This 
+   * differs from read, where it is enough to use locking only around calling read.
+   * 
+   * \param _priority   Priority for the value read out
+   * \retval "const T*" Pointer to value read out from the ring buffer
+   * \retval 0          No values available with given priority
    */
   const T *getReadRef(uint8_t _priority);
   
   /************************************************************************//**
-   * \brief Get reference to highest available.
+   * \brief Get pointer to highest priority value read out from the the ring buffer.
    *
-   * \param *_priority Priority for the value (default = 0)
-   * \return const T* 
+   * Using getReadRef instead of read saves data copying between values. By using
+   * read data will be copied to value, which one then may forward
+   * elsewhere. By using getReadRef one can request pointer to value and
+   * forward data directly from it.
+
+   * \note In multitasking or with interrupts one must take care that buffer
+   * will no be used before data handling has been finished. This 
+   * differs from read, where it is enough to use locking only around calling read.
+   * 
+   * \param *_priority   Pointer to priority, which will be set to priority
+   *                     of the value readed out.
+   * \retval "const T*"  Pointer to value read out from the ring buffer
+   * \retval 0           No values available.
    */
   const T *getReadRef(uint8_t *_priority=0);
 };

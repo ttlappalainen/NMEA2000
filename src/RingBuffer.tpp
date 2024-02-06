@@ -29,8 +29,9 @@
 
 //#define RING_BUFFER_ERROR_DEBUG
 //#define RING_BUFFER_DEBUG
+//#define RING_BUFFER_INIT_DEBUG
 
-#if defined(RING_BUFFER_DEBUG) || defined(RING_BUFFER_ERROR_DEBUG)
+#if defined(RING_BUFFER_DEBUG) || defined(RING_BUFFER_ERROR_DEBUG) || defined(RING_BUFFER_INIT_DEBUG)
   #include <Arduino.h>
   #ifndef DebugStream
   #define DebugStream Serial
@@ -47,6 +48,12 @@
   # define RingBufferDbgf(fmt, args...)   DebugStream.printf (fmt , ## args)
 #else
   # define RingBufferDbgf(fmt, args...)
+#endif
+
+#if defined(RING_BUFFER_INIT_DEBUG)
+  # define RingBufferInitDbgf(fmt, args...)   DebugStream.printf (fmt , ## args)
+#else
+  # define RingBufferInitDbgf(fmt, args...)
 #endif
 
 
@@ -94,7 +101,7 @@ bool tRingBuffer<T>::add(const T &val) {
   if ( nextEntry == tail ) return false;
 
   // Add the element to the ring
-  memcpy((void *)&(buffer[head]), (void *)&val, sizeof (T));
+  memcpy(&(buffer[head]), &val, sizeof(T));
 
   // Bump the head to point to the next free entry
   head = nextEntry;
@@ -109,7 +116,7 @@ bool tRingBuffer<T>::read(T &val) {
   if ( isEmpty() ) return false;
 
   // copy the message
-  memcpy ((void *)&val, (void *)&buffer[tail], sizeof (T));
+  memcpy(&val, &buffer[tail], sizeof(T));
 
   // Bump the tail pointer
   tail = (tail + 1) % size;
@@ -160,6 +167,8 @@ T *tRingBuffer<T>::peek() {
   return ret;
 }
 
+#define INVALID_PRIORITY 0xff
+
 //==============================================================================
 // class tPriorityRingBuffer
 
@@ -169,9 +178,13 @@ tPriorityRingBuffer<T>::tPriorityRingBuffer(uint16_t _size, uint8_t _maxPrioriti
     head(0), tail(0), size(_size), maxPriorities(_maxPriorities) {
   if ( size<3 ) size=3;
   if ( maxPriorities<1 ) maxPriorities=1;
+  if ( maxPriorities==255 ) maxPriorities=254;
+  RingBufferInitDbgf("tPriorityRingBuffer<T>::tPriorityRingBuffer, size:%u, priorities:%u\n",size,maxPriorities);
+  RingBufferInitDbgf(" - size:%u, priorities:%u, memory required: %u\n",size,maxPriorities,size*sizeof(tValueSlot)+maxPriorities*sizeof(tPriorityRef));
   buffer=new tValueSlot[size];
+  RingBufferInitDbgf(" - ring buffer allocated to %x\n",(uint32_t)buffer);
   priorityReferencies=new tPriorityRef[maxPriorities];
-  RingBufferDbgf("tPriorityRingBuffer<T>::tPriorityRingBuffer, ring buffer initialized size:%u, priorities:%u\n",size,maxPriorities);
+  RingBufferInitDbgf(" - priorityReferencies allocated to %x\n",(uint32_t)priorityReferencies);
 }
 
 // *****************************************************************************
@@ -179,6 +192,16 @@ template<typename T>
 tPriorityRingBuffer<T>::~tPriorityRingBuffer() {
   delete[] buffer;
   delete[] priorityReferencies;
+}
+
+// *****************************************************************************
+template<typename T>
+uint32_t tPriorityRingBuffer<T>::getMemSize(uint16_t _size, uint8_t _maxPriorities) {
+  if ( _size<3 ) _size=3;
+  if ( _maxPriorities<1 ) _maxPriorities=1;
+  if ( _maxPriorities==255 ) _maxPriorities=254;
+
+  return sizeof(::tPriorityRingBuffer<T>)+_size*sizeof(tValueSlot)+_maxPriorities*sizeof(tPriorityRef);
 }
 
 // *****************************************************************************
@@ -201,6 +224,16 @@ void tPriorityRingBuffer<T>::clear() {
 // *****************************************************************************
 template<typename T>
 void tPriorityRingBuffer<T>::clean() {
+}
+
+// *****************************************************************************
+template<typename T>
+uint16_t tPriorityRingBuffer<T>::count() {
+    int32_t entries = head - tail;
+
+    if ( entries < 0 ) entries += size;
+
+    return (uint16_t)entries;
 }
 
 // *****************************************************************************
@@ -284,9 +317,12 @@ const T *tPriorityRingBuffer<T>::getReadRef(uint8_t _priority) {
   }
   // Update tail, if we are removing first
   if ( ref==tail ) {
-    for ( tail = (tail + 1) % size; tail!=head && buffer[tail].next==INVALID_RING_REF; tail = (tail + 1) % size );
+    for ( tail = (tail + 1) % size; 
+          tail!=head && buffer[tail].priority==INVALID_PRIORITY;
+          tail = (tail + 1) % size );
   }
   buffer[ref].next=INVALID_RING_REF; // Release slot
+  buffer[ref].priority=INVALID_PRIORITY;
 
   RingBufferDbgf("tPriorityRingBuffer<T>::getReadRef, read item ref:%u, priority:%u, tail:%u\n",ref,_priority,tail);
 

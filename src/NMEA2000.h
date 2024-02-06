@@ -1066,6 +1066,10 @@ protected:
     * address claming and after it has been accepted, other communication can start.
     * OnOpen can be used e.g., for message timing synchronization so that every time device starts
     * messages will have same sent offset. See also SetOnOpen().
+    *
+    * \note In future OnOpen may be called several times, if communication will be reopened
+    * by \ref Restart or driver error. Developer must take care that possible memory
+    * initializations will be handled properly in case OnOpen is called several times.
     */
     void (*OnOpen)();
         
@@ -2480,19 +2484,19 @@ public:
     /*********************************************************************//**
      * \brief Set the Heartbeat Interval and Offset for a device
      * 
+     * Library will automatically start heartbeat with default interval 60 s
+     * and offset 10 s.
+     * 
      * According to document [NMEA Heartbeat Corrigendum](https://web.archive.org/web/20170609023206/https://www.nmea.org/Assets/20140102%20nmea-2000-126993%20heartbeat%20pgn%20corrigendum.pdf)
-     * all NMEA devices shall transmit heartbeat PGN 126993. With this 
+     * all NMEA devices shall transmit heartbeat PGN 126993. With this
      * function you can set transmission interval in ms (range 1000-655320ms
-     * , default 60000). Set <1000 to disable it.
-     * You can temporally change interval by setting SetAsDefault parameter 
-     * to false. Then you can restore default interval with interval 
-     * parameter value 0xfffffffe
+     * , default 60000). Set interval 0 to disable heartbeat
      *
      * Function allows to set interval over 60 s or 0 to disable sending for test purposes.
      *
-     * \param interval      Heartbeat Interval in ms
-     * \param offset  		Heartbeat Offset in ms
-     * \param iDev          index of the device on \ref Devices
+     * \param interval      Heartbeat Interval in ms. 0xffffffff=keep current, 0xfffffffe=restore default
+     * \param offset  		  Heartbeat Offset in ms. 0xffffffff=keep current, 0xfffffffe=restore default 
+     * \param iDev          Index of the device on \ref Devices or -1 to set for all.
      */
     void SetHeartbeatIntervalAndOffset(uint32_t interval, uint32_t offset=0, int iDev=-1);
     
@@ -2504,7 +2508,7 @@ public:
      * startup or not.
      * 
      * \param iDev          index of the device on \ref Devices
-     * \return uint_32  -> Device heartbeat interval in ms
+     * \retval uint_32      Device heartbeat interval in ms
      */
     uint32_t GetHeartbeatInterval(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 60000; return Devices[iDev].HeartbeatScheduler.GetPeriod(); }
     /*********************************************************************//**
@@ -2515,13 +2519,16 @@ public:
      * startup or not.
      * 
      * \param iDev          index of the device on \ref Devices
-     * \return uint_32  -> Device heartbeat Offset in ms
+     * \retval uint_32      Device heartbeat Offset in ms
      */
     uint32_t GetHeartbeatOffset(int iDev=0) { if (iDev<0 || iDev>=DeviceCount) return 0; return Devices[iDev].HeartbeatScheduler.GetOffset(); }
 	
     /*********************************************************************//**
      * \brief Send heartbeat for specific device.
      * 
+     * Library will automatically send heartbeat, if interval is >0. You 
+     * can also manually send it any time or force sent, if interval=0;
+     *
      * \param iDev          index of the device on \ref Devices
      */
     void SendHeartbeat(int iDev);
@@ -2536,7 +2543,9 @@ public:
      */
     void SendHeartbeat(bool force=false);
 
-    // deprecated! SetAsDefault has no effect. Use function SetHeartbeatIntervalAndOffset.
+    /*********************************************************************//**
+     * \brief Deprecated. Use function \ref SetHeartbeatIntervalAndOffset
+     */
     void SetHeartbeatInterval(unsigned long interval, bool SetAsDefault=true, int iDev=-1) __attribute__ ((deprecated));
 #endif
 
@@ -2710,6 +2719,10 @@ public:
      * OnOpen will be called, when communication really opens
      * and starts initial address claiming. You can use this to init your message sending
      * to syncronize them with e.g., heartbeat.
+     *
+     * \note In future OnOpen may be called several times, if communication will be reopened
+     * by \ref Restart or driver error. Developer must take care that possible memory
+     * initializations will be handled properly in case OnOpen is called several times.
      */
     void SetOnOpen(void (*_OnOpen)());
 

@@ -422,20 +422,27 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 130322L: Current Station Data, pri=6, period=1000
  *          - 130323L: Meteorological Station Data, pri=6, period=1000
  *          - 130324L: Moored Buoy Station Data, pri=6, period=1000
- *          - 130567L: Watermaker Input Setting and Status, pri=6, period=2500
- *          - 130577L: Direction Data PGN, pri=3, period=1000
- *          - 130578L: Vessel Speed Components, pri=2, period=250
- *          - 130569L: Current File and Status, pri=6, period=500
- *          - 130570L: Library Data File, pri=6, period=NA
- *          - 130571L: Library Data Group, pri=6, period=NA
- *          - 130572L: Library Data Search, pri=6, period=NA
- *          - 130573L: Supported Source Data, pri=6, period=NA
- *          - 130574L: Supported Zone Data, pri=6, period=NA
- *          - 130580L: System Configuration Status, pri=6, period=NA
- *          - 130581L: Zone Configuration Status, pri=6, period=NA
- *          - 130583L: Available Audio EQ Presets, pri=6, period=NA
- *          - 130584L: Bluetooth Devices, pri=6, period=NA
- *          - 130586L: Zone Configuration Status, pri=6, period=NA
+ *          - 130330L: Lighting system settings, pri=7, period=NA
+ *          - 130561L: Lighting zone, pri=7, period=NA
+ *          - 130562L: Lighting scene, pri=7, period=NA
+ *          - 130563L: Lighting device, pri=7, period=NA
+ *          - 130564L: Lighting device enumeration, pri=7, period=NA
+ *          - 130565L: Lighting color sequence, pri=7, period=NA
+ *          - 130566L: Lighting program, pri=7, period=NA
+ *          - 130567L: Watermaker input setting and status, pri=6, period=2500
+ *          - 130577L: Direction data PGN, pri=3, period=1000
+ *          - 130578L: Vessel speed components, pri=2, period=250
+ *          - 130569L: Entertainment current file and status, pri=6, period=500
+ *          - 130570L: Entertainment library data file, pri=6, period=NA
+ *          - 130571L: Entertainment library data group, pri=6, period=NA
+ *          - 130572L: Entertainment library data search, pri=6, period=NA
+ *          - 130573L: Entertainment supported source data, pri=6, period=NA
+ *          - 130574L: Entertainment supported zone data, pri=6, period=NA
+ *          - 130580L: Entertainment system configuration status, pri=6, period=NA
+ *          - 130581L: Entertainment zone configuration status, pri=6, period=NA
+ *          - 130583L: Entertainment available dudio EQ presets, pri=6, period=NA
+ *          - 130584L: Entertainment bluetooth devices, pri=6, period=NA
+ *          - 130586L: Entertainment zone configuration status, pri=6, period=NA
  * \return false 
  */
 bool IsDefaultFastPacketMessage(unsigned long PGN) {
@@ -532,6 +539,13 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 130322L: // Current Station Data, pri=6, period=1000
                                       case 130323L: // Meteorological Station Data, pri=6, period=1000
                                       case 130324L: // Moored Buoy Station Data, pri=6, period=1000
+                                      case 130330L: // Lighting system settings, pri=7, period=NA
+                                      case 130561L: // Lighting zone, pri=7, period=NA
+                                      case 130562L: // Lighting scene, pri=7, period=NA
+                                      case 130563L: // Lighting device, pri=7, period=NA
+                                      case 130564L: // Lighting device enumeration, pri=7, period=NA
+                                      case 130565L: // Lighting color sequence, pri=7, period=NA
+                                      case 130566L: // Lighting program, pri=7, period=NA
                                       case 130567L: // Watermaker Input Setting and Status, pri=6, period=2500
                                       case 130577L: // Direction Data PGN, pri=3, period=1000
                                       case 130578L: // Vessel Speed Components, pri=2, period=250
@@ -1230,11 +1244,12 @@ bool tNMEA2000::Open() {
     OpenState=os_Open;
     StartAddressClaim();
     tN2kSyncScheduler::SetSyncOffset();
-    if ( OnOpen!=0 ) OnOpen();
     #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
     SetHeartbeatIntervalAndOffset(DefaultHeartbeatInterval,10000); // Init default hearbeat interval and offset.
     #endif
+    if ( OnOpen!=0 ) OnOpen();
   } else {
+    // Read rubbish out from CAN controller
     unsigned long canId;
     unsigned char len = 0;
     unsigned char buf[8];
