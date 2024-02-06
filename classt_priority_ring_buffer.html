@@ -116,13 +116,14 @@ $(document).ready(function(){initNavTree('classt_priority_ring_buffer.html','');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classt_priority_ring_buffer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">tPriorityRingBuffer&lt; T &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__group__core_supplementary.html">2 Core supplementary</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Template Class that holds simple data structures with given priorities in a ring buffer.  
+<p>Template Class that holds values with given priorities in a ring buffer.  
  <a href="classt_priority_ring_buffer.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>&gt;</code></p>
@@ -131,7 +132,7 @@ Collaboration diagram for tPriorityRingBuffer&lt; T &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classt_priority_ring_buffer__coll__graph.png" border="0" usemap="#at_priority_ring_buffer_3_01_t_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="at_priority_ring_buffer_3_01_t_01_4_coll__map" id="at_priority_ring_buffer_3_01_t_01_4_coll__map">
-<area shape="rect" title="Template Class that holds simple data structures with given priorities in a ring buffer." alt="" coords="65,109,221,136"/>
+<area shape="rect" title="Template Class that holds values with given priorities in a ring buffer." alt="" coords="65,109,221,136"/>
 <area shape="rect" href="structt_priority_ring_buffer_1_1t_value_slot.html" title="Structure that holds the actual value and meta data." alt="" coords="5,5,132,47"/>
 <area shape="rect" href="structt_priority_ring_buffer_1_1t_priority_ref.html" title="Structure handles meta data for each priority." alt="" coords="156,5,283,47"/>
 </map>
@@ -149,10 +150,10 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af1bf7c6b0f703a64fa71a999e1873115"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#af1bf7c6b0f703a64fa71a999e1873115">tPriorityRingBuffer</a> (uint16_t _size, uint8_t _maxPriorities=1)</td></tr>
-<tr class="memdesc:af1bf7c6b0f703a64fa71a999e1873115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Priority Ring Buffer object.  <a href="classt_priority_ring_buffer.html#af1bf7c6b0f703a64fa71a999e1873115">More...</a><br /></td></tr>
+<tr class="memdesc:af1bf7c6b0f703a64fa71a999e1873115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Priority ring buffer object.  <a href="classt_priority_ring_buffer.html#af1bf7c6b0f703a64fa71a999e1873115">More...</a><br /></td></tr>
 <tr class="separator:af1bf7c6b0f703a64fa71a999e1873115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e0618b34273d48d0adaaa161002943"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a79e0618b34273d48d0adaaa161002943">~tPriorityRingBuffer</a> ()</td></tr>
-<tr class="memdesc:a79e0618b34273d48d0adaaa161002943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the t Priority Ring Buffer object Frees all memory.  <a href="classt_priority_ring_buffer.html#a79e0618b34273d48d0adaaa161002943">More...</a><br /></td></tr>
+<tr class="memdesc:a79e0618b34273d48d0adaaa161002943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the priority ring buffer object Frees all memory.  <a href="classt_priority_ring_buffer.html#a79e0618b34273d48d0adaaa161002943">More...</a><br /></td></tr>
 <tr class="separator:a79e0618b34273d48d0adaaa161002943"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d65a6f051f8e9d452be8ef56ff96b49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a9d65a6f051f8e9d452be8ef56ff96b49">add</a> (const T &amp;val, uint8_t _priority=0)</td></tr>
 <tr class="memdesc:a9d65a6f051f8e9d452be8ef56ff96b49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a value to the ring buffer with a given priority.  <a href="classt_priority_ring_buffer.html#a9d65a6f051f8e9d452be8ef56ff96b49">More...</a><br /></td></tr>
@@ -164,25 +165,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2e667019d06a15ac8ddf8d732df61986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the whole ring buffer.  <a href="classt_priority_ring_buffer.html#a2e667019d06a15ac8ddf8d732df61986">More...</a><br /></td></tr>
 <tr class="separator:a2e667019d06a15ac8ddf8d732df61986"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96125b81c3bf4289aee42606fb3ee5e0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0">count</a> ()</td></tr>
-<tr class="memdesc:a96125b81c3bf4289aee42606fb3ee5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of Entries in the ring buffer.  <a href="classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0">More...</a><br /></td></tr>
+<tr class="memdesc:a96125b81c3bf4289aee42606fb3ee5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of values in the ring buffer.  <a href="classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0">More...</a><br /></td></tr>
 <tr class="separator:a96125b81c3bf4289aee42606fb3ee5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaac14529cd5845d9968af93ea5c075fb"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#aaac14529cd5845d9968af93ea5c075fb">getAddRef</a> (uint8_t _priority=0)</td></tr>
-<tr class="memdesc:aaac14529cd5845d9968af93ea5c075fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Reference for the next Add.  <a href="classt_priority_ring_buffer.html#aaac14529cd5845d9968af93ea5c075fb">More...</a><br /></td></tr>
+<tr class="memdesc:aaac14529cd5845d9968af93ea5c075fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to new value added to the ring buffer.  <a href="classt_priority_ring_buffer.html#aaac14529cd5845d9968af93ea5c075fb">More...</a><br /></td></tr>
 <tr class="separator:aaac14529cd5845d9968af93ea5c075fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae60450f5c669165b2b2be8942b03d226"><td class="memItemLeft" align="right" valign="top">const T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#ae60450f5c669165b2b2be8942b03d226">getReadRef</a> (uint8_t *_priority=0)</td></tr>
-<tr class="memdesc:ae60450f5c669165b2b2be8942b03d226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reference to highest available.  <a href="classt_priority_ring_buffer.html#ae60450f5c669165b2b2be8942b03d226">More...</a><br /></td></tr>
+<tr class="memdesc:ae60450f5c669165b2b2be8942b03d226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to highest priority value read out from the the ring buffer.  <a href="classt_priority_ring_buffer.html#ae60450f5c669165b2b2be8942b03d226">More...</a><br /></td></tr>
 <tr class="separator:ae60450f5c669165b2b2be8942b03d226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaea6a710e21f5f6ef30a86a730afd87d"><td class="memItemLeft" align="right" valign="top">const T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#aaea6a710e21f5f6ef30a86a730afd87d">getReadRef</a> (uint8_t _priority)</td></tr>
-<tr class="memdesc:aaea6a710e21f5f6ef30a86a730afd87d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Reference for the next Read.  <a href="classt_priority_ring_buffer.html#aaea6a710e21f5f6ef30a86a730afd87d">More...</a><br /></td></tr>
+<tr class="memdesc:aaea6a710e21f5f6ef30a86a730afd87d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pointer to value with given priority read out from the ring buffer.  <a href="classt_priority_ring_buffer.html#aaea6a710e21f5f6ef30a86a730afd87d">More...</a><br /></td></tr>
 <tr class="separator:aaea6a710e21f5f6ef30a86a730afd87d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2047fced4877721e1d0f0c0278683b3a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a2047fced4877721e1d0f0c0278683b3a">getSize</a> () const</td></tr>
+<tr class="memdesc:a2047fced4877721e1d0f0c0278683b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of the ring buffer.  <a href="classt_priority_ring_buffer.html#a2047fced4877721e1d0f0c0278683b3a">More...</a><br /></td></tr>
 <tr class="separator:a2047fced4877721e1d0f0c0278683b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14bc06e70f0bd20a4ecb60a20596aa67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a14bc06e70f0bd20a4ecb60a20596aa67">isEmpty</a> (uint8_t _priority=0xff) const</td></tr>
-<tr class="memdesc:a14bc06e70f0bd20a4ecb60a20596aa67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Size of the ring buffer.  <a href="classt_priority_ring_buffer.html#a14bc06e70f0bd20a4ecb60a20596aa67">More...</a><br /></td></tr>
+<tr class="memdesc:a14bc06e70f0bd20a4ecb60a20596aa67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check is ring buffer empty.  <a href="classt_priority_ring_buffer.html#a14bc06e70f0bd20a4ecb60a20596aa67">More...</a><br /></td></tr>
 <tr class="separator:a14bc06e70f0bd20a4ecb60a20596aa67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad36d7714ee7d96ca7d3e2a1d167dc8ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#ad36d7714ee7d96ca7d3e2a1d167dc8ff">read</a> (T &amp;val)</td></tr>
-<tr class="memdesc:ad36d7714ee7d96ca7d3e2a1d167dc8ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a value from the ring buffer.  <a href="classt_priority_ring_buffer.html#ad36d7714ee7d96ca7d3e2a1d167dc8ff">More...</a><br /></td></tr>
+<tr class="memdesc:ad36d7714ee7d96ca7d3e2a1d167dc8ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads highest priority value out from the ring buffer.  <a href="classt_priority_ring_buffer.html#ad36d7714ee7d96ca7d3e2a1d167dc8ff">More...</a><br /></td></tr>
 <tr class="separator:ad36d7714ee7d96ca7d3e2a1d167dc8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac96cbedf4ae5f450f4abc71c2544c8c6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#ac96cbedf4ae5f450f4abc71c2544c8c6">getMemSize</a> (uint16_t _size, uint8_t _maxPriorities=1)</td></tr>
+<tr class="memdesc:ac96cbedf4ae5f450f4abc71c2544c8c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of memory required by ring buffer.  <a href="classt_priority_ring_buffer.html#ac96cbedf4ae5f450f4abc71c2544c8c6">More...</a><br /></td></tr>
+<tr class="separator:ac96cbedf4ae5f450f4abc71c2544c8c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -196,9 +204,10 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a2aa5f3d42750f9cade1040c22f4a2f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">highest priority possible  <a href="classt_priority_ring_buffer.html#a2aa5f3d42750f9cade1040c22f4a2f9b">More...</a><br /></td></tr>
 <tr class="separator:a2aa5f3d42750f9cade1040c22f4a2f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176f87590c1b2075c2ef35073b193655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structt_priority_ring_buffer_1_1t_priority_ref.html">tPriorityRef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a176f87590c1b2075c2ef35073b193655">priorityReferencies</a></td></tr>
+<tr class="memdesc:a176f87590c1b2075c2ef35073b193655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to priority referencies in buffer.  <a href="classt_priority_ring_buffer.html#a176f87590c1b2075c2ef35073b193655">More...</a><br /></td></tr>
 <tr class="separator:a176f87590c1b2075c2ef35073b193655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a194d5c6c9fccb4c383253a7f58551c64"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a194d5c6c9fccb4c383253a7f58551c64">size</a></td></tr>
-<tr class="memdesc:a194d5c6c9fccb4c383253a7f58551c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data structures that can be stored in the ring buffer.  <a href="classt_priority_ring_buffer.html#a194d5c6c9fccb4c383253a7f58551c64">More...</a><br /></td></tr>
+<tr class="memdesc:a194d5c6c9fccb4c383253a7f58551c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of values that can be stored in the ring buffer.  <a href="classt_priority_ring_buffer.html#a194d5c6c9fccb4c383253a7f58551c64">More...</a><br /></td></tr>
 <tr class="separator:a194d5c6c9fccb4c383253a7f58551c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab77e3bb17aa319701151169b6540275a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#ab77e3bb17aa319701151169b6540275a">tail</a></td></tr>
 <tr class="memdesc:ab77e3bb17aa319701151169b6540275a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the last occupied index in the ring buffer.  <a href="classt_priority_ring_buffer.html#ab77e3bb17aa319701151169b6540275a">More...</a><br /></td></tr>
@@ -206,9 +215,11 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class tPriorityRingBuffer&lt; T &gt;</div><p >Template Class that holds simple data structures with given priorities in a ring buffer. </p>
-<p ><a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds simple data structures with given priorities in a ring buffer.">tPriorityRingBuffer</a> is similar as <a class="el" href="classt_ring_buffer.html">tRingBuffer</a>, but it extends functionality with item priority. When you add items to buffer, you can give them priority and when you read them, highest priority item will be read out first. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="_ring_buffer_8h.html#subSecRBU">Example of ring buffer usage</a></dd></dl>
-<dl class="section note"><dt>Note</dt><dd>You have to take care of data locking from other threads or interrupts for copy time.</dd></dl>
+class tPriorityRingBuffer&lt; T &gt;</div><p >Template Class that holds values with given priorities in a ring buffer. </p>
+<p ><a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds values with given priorities in a ring buffer.">tPriorityRingBuffer</a> is similar as <a class="el" href="classt_ring_buffer.html">tRingBuffer</a>, but it extends functionality with value priority. When you add values to the buffer, you can give them priority. When you read them out you can get highest priority or request specific priority value.</p>
+<p >The advantage of <a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds values with given priorities in a ring buffer.">tPriorityRingBuffer</a> is that it will reserve one continuous block for all priorities instead of reserve one buffer for each priority.</p>
+<dl class="section note"><dt>Note</dt><dd>You have to take care of data locking from other threads or interrupts around calls using buffer handling routines.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_ring_buffer_8h.html#subSecRBU">Example of ring buffer usage</a></dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Template used for the class </td></tr>
@@ -216,7 +227,7 @@ class tPriorityRingBuffer&lt; T &gt;</div><p >Template Class that holds simple d
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00215">215</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00255">255</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af1bf7c6b0f703a64fa71a999e1873115" name="af1bf7c6b0f703a64fa71a999e1873115"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1bf7c6b0f703a64fa71a999e1873115">&#9670;&nbsp;</a></span>tPriorityRingBuffer()</h2>
@@ -246,8 +257,8 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Construct a new Priority Ring Buffer object. </p>
-<p >Allocates all the memory needed and initialize attributes and priorities.</p>
+<p>Construct a new Priority ring buffer object. </p>
+<p >Allocates all the memory needed, initialize attributes and priorities.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_size</td><td>Size of the ring buffer </td></tr>
@@ -283,7 +294,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Destroy the t Priority Ring Buffer object Frees all memory. </p>
+<p>Destroy the priority ring buffer object Frees all memory. </p>
 
 </div>
 </div>
@@ -317,6 +328,10 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Add a value to the ring buffer with a given priority. </p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_priority_ring_buffer.html#aaac14529cd5845d9968af93ea5c075fb">getAddRef</a></li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>Value to be added </td></tr>
@@ -324,9 +339,13 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true </dd>
-<dd>
-false -&gt; ring buffer is already full </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Add succeeded </td></tr>
+    <tr><td class="paramname">false</td><td>Buffer is full </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -389,8 +408,14 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the number of Entries in the ring buffer. </p>
-<dl class="section return"><dt>Returns</dt><dd>uint16_t Number of entries </dd></dl>
+<p>Returns the number of values in the ring buffer. </p>
+<p >Currently function returns simple buffer count instead of true value count. Priority ring buffer may have values released between other values.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">uint16_t</td><td>Number of values in buffer </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -412,14 +437,64 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get the Reference for the next Add. </p>
+<p>Get the pointer to new value added to the ring buffer. </p>
+<p >Using getAddRef instead of add saves data copying between values. By using add, one must first setup value, which will be then copied to buffer within add. By using getAddRef one can request pointer to next buffer value and copy data directly to it.</p>
+<dl class="section note"><dt>Note</dt><dd>In multitasking or with interrupts one must take care that buffer will no be used before data handling has been finished. This differs from add, where it is enough to use locking only around calling add.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_priority</td><td>Priority for the value (default = 0) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>T* -&gt; Null, if buffer is full </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">T *</td><td>Pointer to added new value </td></tr>
+    <tr><td class="paramname">0</td><td>Buffer is full </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac96cbedf4ae5f450f4abc71c2544c8c6" name="ac96cbedf4ae5f450f4abc71c2544c8c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac96cbedf4ae5f450f4abc71c2544c8c6">&#9670;&nbsp;</a></span>getMemSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t <a class="el" href="classt_priority_ring_buffer.html">tPriorityRingBuffer</a>&lt; T &gt;::getMemSize </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>_maxPriorities</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the size of memory required by ring buffer. </p>
+<p >This is static function and can be used to test how much ring buffer would require memory with given size and count of priorities. Function can be used e.g., for checking available memory or possible memory "bank" handling.</p>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t Memory required by ring buffer </dd></dl>
 
 </div>
 </div>
@@ -441,14 +516,22 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get reference to highest available. </p>
+<p>Get pointer to highest priority value read out from the the ring buffer. </p>
+<p >Using getReadRef instead of read saves data copying between values. By using read data will be copied to value, which one then may forward elsewhere. By using getReadRef one can request pointer to value and forward data directly from it.</p>
+<dl class="section note"><dt>Note</dt><dd>In multitasking or with interrupts one must take care that buffer will no be used before data handling has been finished. This differs from read, where it is enough to use locking only around calling read.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">*_priority</td><td>Priority for the value (default = 0) </td></tr>
+    <tr><td class="paramname">*_priority</td><td>Pointer to priority, which will be set to priority of the value readed out. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>const T* </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">const T*</td><td>Pointer to value read out from the ring buffer </td></tr>
+    <tr><td class="paramname">0</td><td>No values available. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -470,14 +553,22 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get the Reference for the next Read. </p>
+<p>Get the pointer to value with given priority read out from the ring buffer. </p>
+<p >Using getReadRef instead of read saves data copying between values. By using read data will be copied to value, which one then may forward elsewhere. By using getReadRef one can request pointer to value and forward data directly from it.</p>
+<dl class="section note"><dt>Note</dt><dd>In multitasking or with interrupts one must take care that buffer will no be used before data handling has been finished. This differs from read, where it is enough to use locking only around calling read.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_priority</td><td>Priority for the value </td></tr>
+    <tr><td class="paramname">_priority</td><td>Priority for the value read out </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>const T* </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">const T*</td><td>Pointer to value read out from the ring buffer </td></tr>
+    <tr><td class="paramname">0</td><td>No values available with given priority </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -506,7 +597,15 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00282">282</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p>Get the size of the ring buffer. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">uint16_t</td><td>Size of ring buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00326">326</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -528,8 +627,20 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get the Size of the ring buffer. </p>
-<dl class="section return"><dt>Returns</dt><dd>uint16_t Size of ring buffer </dd></dl>
+<p>Check is ring buffer empty. </p>
+<p >Result depends of _priority parameter. If valid priority within initial _maxPriorities is provided, function returns empty state of given priority. Otherwise it returns empty state of whole buffer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_priority</td><td>Which buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">bool</td><td>Buffer empty state </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -551,17 +662,24 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Reads a value from the ring buffer. </p>
+<p>Reads highest priority value out from the ring buffer. </p>
+<dl class="section see"><dt>See also</dt><dd><ul>
+<li><a class="el" href="classt_priority_ring_buffer.html#aaea6a710e21f5f6ef30a86a730afd87d">getReadRef</a></li>
+</ul>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">val</td><td>Reference to the value that have to be read out </td></tr>
+    <tr><td class="paramname">val</td><td>Reference to the value read out from buffer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true <br  />
- </dd>
-<dd>
-false -&gt; There is no data available inside the buffer </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Value read out from buffer. Value has been copied to paramater val </td></tr>
+    <tr><td class="paramname">false</td><td>There is no data available inside the buffer. Parameter val will be unchanged. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -590,7 +708,7 @@ template&lt;typename T &gt; </div>
 
 <p>Pointer to the ring puffer in memory. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00262">262</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00294">294</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -618,7 +736,7 @@ template&lt;typename T &gt; </div>
 
 <p>Index of the first free index in the ring buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00254">254</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00298">298</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -646,7 +764,7 @@ template&lt;typename T &gt; </div>
 
 <p>highest priority possible </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00260">260</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00304">304</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -672,7 +790,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00264">264</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p>Pointer to priority referencies in buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00296">296</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -698,9 +818,9 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Number of data structures that can be stored in the ring buffer. </p>
+<p>Number of values that can be stored in the ring buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00258">258</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00302">302</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -728,7 +848,7 @@ template&lt;typename T &gt; </div>
 
 <p>Index of the last occupied index in the ring buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00256">256</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00300">300</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>

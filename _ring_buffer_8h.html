@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('_ring_buffer_8h.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 
-<p>Simple <a class="el" href="classt_ring_buffer.html" title="Template Class that holds simple data structures in a ring buffer.">tRingBuffer</a> and <a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds simple data structures with given priorities in a ring buffer.">tPriorityRingBuffer</a> template classes.  
+<p>Simple <a class="el" href="classt_ring_buffer.html" title="Template Class that holds values in a ring buffer.">tRingBuffer</a> and <a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds values with given priorities in a ring buffer.">tPriorityRingBuffer</a> template classes.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &quot;RingBuffer.tpp&quot;</code><br />
@@ -140,7 +140,7 @@ Include dependency graph for RingBuffer.h:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html">tPriorityRingBuffer&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template Class that holds simple data structures with given priorities in a ring buffer.  <a href="classt_priority_ring_buffer.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template Class that holds values with given priorities in a ring buffer.  <a href="classt_priority_ring_buffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structt_priority_ring_buffer_1_1t_priority_ref.html">tPriorityRingBuffer&lt; T &gt;::tPriorityRef</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure handles meta data for each priority.  <a href="structt_priority_ring_buffer_1_1t_priority_ref.html#details">More...</a><br /></td></tr>
@@ -149,7 +149,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure that holds the actual value and meta data.  <a href="structt_priority_ring_buffer_1_1t_value_slot.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_ring_buffer.html">tRingBuffer&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template Class that holds simple data structures in a ring buffer.  <a href="classt_ring_buffer.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template Class that holds values in a ring buffer.  <a href="classt_ring_buffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -162,9 +162,9 @@ Macros</h2></td></tr>
 <tr class="separator:a5c6de79769f236ca18dcaa79024b5991"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Simple <a class="el" href="classt_ring_buffer.html" title="Template Class that holds simple data structures in a ring buffer.">tRingBuffer</a> and <a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds simple data structures with given priorities in a ring buffer.">tPriorityRingBuffer</a> template classes. </p>
-<p >With <a class="el" href="classt_ring_buffer.html" title="Template Class that holds simple data structures in a ring buffer.">tRingBuffer</a> one can save simple data structures to a ring buffer.</p>
-<dl class="section note"><dt>Note</dt><dd>You have to take care of data locking from other threads or interrupts for copy time.</dd></dl>
+<div class="textblock"><p >Simple <a class="el" href="classt_ring_buffer.html" title="Template Class that holds values in a ring buffer.">tRingBuffer</a> and <a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds values with given priorities in a ring buffer.">tPriorityRingBuffer</a> template classes. </p>
+<p >With <a class="el" href="classt_ring_buffer.html" title="Template Class that holds values in a ring buffer.">tRingBuffer</a> one can save values to a ring buffer. Value can be simple value or data structure.</p>
+<dl class="section note"><dt>Note</dt><dd>You have to take care of data locking from other threads or interrupts around calls using buffer handling routines.</dd></dl>
 <h1><a class="anchor" id="subSecRBU"></a>
 Example of ring buffer usage</h1>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>tCANData {</div>
@@ -184,24 +184,25 @@ Example of ring buffer usage</h1>
 <div class="line">  CANMessages.add(msgOut);</div>
 <div class="line">  releaseData();</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasst_priority_ring_buffer_html"><div class="ttname"><a href="classt_priority_ring_buffer.html">tPriorityRingBuffer</a></div><div class="ttdoc">Template Class that holds simple data structures with given priorities in a ring buffer.</div><div class="ttdef"><b>Definition:</b> <a href="_ring_buffer_8h_source.html#l00215">RingBuffer.h:215</a></div></div>
-</div><!-- fragment --><p >As an alternative if you want to avoid data copying twice, you can request reference to next data to be saved and copy data directly to it.</p>
+<div class="ttc" id="aclasst_priority_ring_buffer_html"><div class="ttname"><a href="classt_priority_ring_buffer.html">tPriorityRingBuffer</a></div><div class="ttdoc">Template Class that holds values with given priorities in a ring buffer.</div><div class="ttdef"><b>Definition:</b> <a href="_ring_buffer_8h_source.html#l00255">RingBuffer.h:255</a></div></div>
+</div><!-- fragment --><p >As an alternative if you want to avoid data copying twice, you can request pointer to next value to be saved and copy data directly to it.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> SendMessage() {</div>
 <div class="line">  tCANData *msgOut;</div>
 <div class="line">  lockData();</div>
-<div class="line">  <span class="keywordflow">if</span> ( (msgOut=CANMessages)!=0 ) {</div>
+<div class="line">  <span class="keywordflow">if</span> ( (msgOut=CANMessages.getAddRef())!=0 ) {</div>
 <div class="line">    msgOut-&gt;id=1;</div>
 <div class="line">    msgOut-&gt;len=1;</div>
 <div class="line">    msgOut-&gt;data[0]=1;</div>
 <div class="line">  }</div>
 <div class="line">  releaseData();</div>
 <div class="line">}</div>
-</div><!-- fragment --><p ><a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds simple data structures with given priorities in a ring buffer.">tPriorityRingBuffer</a> is similar as <a class="el" href="classt_ring_buffer.html" title="Template Class that holds simple data structures in a ring buffer.">tRingBuffer</a>, but it extends functionality with item priority. When you add items to buffer, you can give them priority and when you read them, highest priority item will be read out first.</p>
-<h3><a class="anchor" id="autotoc_md277"></a>
+</div><!-- fragment --><p ><a class="el" href="classt_priority_ring_buffer.html" title="Template Class that holds values with given priorities in a ring buffer.">tPriorityRingBuffer</a> is similar as <a class="el" href="classt_ring_buffer.html" title="Template Class that holds values in a ring buffer.">tRingBuffer</a>, but it extends functionality with value priority. When you add values to buffer, you can give them priority and when during read you can define which priority value should be read out or read highest priority value.</p>
+<h3><a class="anchor" id="autotoc_md278"></a>
 Debugging</h3>
 <p >To improve the debugging of the module there is the possibility to enable some print out to the DebugStream</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define RING_BUFFER_ERROR_DEBUG</span></div>
 <div class="line"><span class="preprocessor">#define RING_BUFFER_DEBUG</span></div>
+<div class="line"><span class="preprocessor">#define RING_BUFFER_INIT_DEBUG</span></div>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -219,7 +220,7 @@ Debugging</h3>
 
 <p>Constant for an invalid priority reference. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00220">220</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00260">260</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -237,7 +238,7 @@ Debugging</h3>
 
 <p>Constant for an invalid index reference for the buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00218">218</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00258">258</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 
 </div>
 </div>

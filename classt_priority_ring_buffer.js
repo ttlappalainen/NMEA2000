@@ -9,6 +9,7 @@ var classt_priority_ring_buffer =
     [ "clear", "classt_priority_ring_buffer.html#a2e667019d06a15ac8ddf8d732df61986", null ],
     [ "count", "classt_priority_ring_buffer.html#a96125b81c3bf4289aee42606fb3ee5e0", null ],
     [ "getAddRef", "classt_priority_ring_buffer.html#aaac14529cd5845d9968af93ea5c075fb", null ],
+    [ "getMemSize", "classt_priority_ring_buffer.html#ac96cbedf4ae5f450f4abc71c2544c8c6", null ],
     [ "getReadRef", "classt_priority_ring_buffer.html#ae60450f5c669165b2b2be8942b03d226", null ],
     [ "getReadRef", "classt_priority_ring_buffer.html#aaea6a710e21f5f6ef30a86a730afd87d", null ],
     [ "getSize", "classt_priority_ring_buffer.html#a2047fced4877721e1d0f0c0278683b3a", null ],

@@ -274,9 +274,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga96d16a01e7d797c575e6e1598ae50c9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga96d16a01e7d797c575e6e1598ae50c9c">SetN2kMOBNotification</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, uint32_t MobEmitterId, <a class="el" href="group__group__msg_types.html#ga8b6a1fbd879b0ffc011cc14896abf33c">tN2kMOBStatus</a> MOBStatus, double ActivationTime, <a class="el" href="group__group__msg_types.html#ga5a2a9a35649031cdeebd0df5ac413227">tN2kMOBPositionSource</a> PositionSource, uint16_t PositionDate, double PositionTime, double Latitude, double Longitude, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> COGReference, double COG, double SOG, uint32_t MMSI, <a class="el" href="group__group__msg_types.html#ga6dabae21fc4a6b2f22a328332139580c">tN2kMOBEmitterBatteryStatus</a> MOBEmitterBatteryStatus)</td></tr>
 <tr class="memdesc:ga96d16a01e7d797c575e6e1598ae50c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up Message "Man Overboard Notification" - PGN 127233.  <a href="group__group__msg_set_up.html#ga96d16a01e7d797c575e6e1598ae50c9c">More...</a><br /></td></tr>
 <tr class="separator:ga96d16a01e7d797c575e6e1598ae50c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91c729a2e3f2e16484c5d2646de7b9d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga91c729a2e3f2e16484c5d2646de7b9d3">SetN2kNavigationInfo</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> BearingReference, bool PerpendicularCrossed, bool ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> CalculationType, double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint, uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity)</td></tr>
-<tr class="memdesc:ga91c729a2e3f2e16484c5d2646de7b9d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up Message "Navigation Data" - PGN 129284.  <a href="group__group__msg_set_up.html#ga91c729a2e3f2e16484c5d2646de7b9d3">More...</a><br /></td></tr>
-<tr class="separator:ga91c729a2e3f2e16484c5d2646de7b9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297">SetN2kNavigationInfo</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> BearingReference, bool PerpendicularCrossed, bool ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> CalculationType, double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint, uint32_t OriginWaypointNumber, uint32_t DestinationWaypointNumber, double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity)</td></tr>
+<tr class="memdesc:ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up Message "Navigation Data" - PGN 129284.  <a href="group__group__msg_set_up.html#ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297">More...</a><br /></td></tr>
+<tr class="separator:ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3586af539282bfc244944c444495f105"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga3586af539282bfc244944c444495f105">SetN2kOutsideEnvironmentalParameters</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double WaterTemperature, double OutsideAmbientAirTemperature=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>, double AtmosphericPressure=<a class="el" href="_n2k_msg_8h.html#a1dd9684a7dfef4d213cd2a31b3afc0bc">N2kDoubleNA</a>)</td></tr>
 <tr class="memdesc:ga3586af539282bfc244944c444495f105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up Message "Environmental Parameters - DEPRECATED" - PGN 130310.  <a href="group__group__msg_set_up.html#ga3586af539282bfc244944c444495f105">More...</a><br /></td></tr>
 <tr class="separator:ga3586af539282bfc244944c444495f105"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -391,9 +391,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad6860148a966e80d1db34ea56b85db53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gad6860148a966e80d1db34ea56b85db53">SetN2kPGN129283</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, <a class="el" href="group__group__msg_types.html#gaf6a4cf563abea3f9d3a1addb314b2dd1">tN2kXTEMode</a> XTEMode, bool NavigationTerminated, double XTE)</td></tr>
 <tr class="memdesc:gad6860148a966e80d1db34ea56b85db53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129283 Message "Cross Track Error".  <a href="group__group__msg_set_up.html#gad6860148a966e80d1db34ea56b85db53">More...</a><br /></td></tr>
 <tr class="separator:gad6860148a966e80d1db34ea56b85db53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7e5f5c663afa028f30f895f50afba54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gaf7e5f5c663afa028f30f895f50afba54">SetN2kPGN129284</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> BearingReference, bool PerpendicularCrossed, bool ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> CalculationType, double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint, uint8_t OriginWaypointNumber, uint8_t DestinationWaypointNumber, double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity)</td></tr>
-<tr class="memdesc:gaf7e5f5c663afa028f30f895f50afba54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129284 Message "Navigation Data".  <a href="group__group__msg_set_up.html#gaf7e5f5c663afa028f30f895f50afba54">More...</a><br /></td></tr>
-<tr class="separator:gaf7e5f5c663afa028f30f895f50afba54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03670e35a04501b5317bd4b32246a362"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#ga03670e35a04501b5317bd4b32246a362">SetN2kPGN129284</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char SID, double DistanceToWaypoint, <a class="el" href="group__group__msg_types.html#ga14ed764d736a6d1f43e85b5df2acd727">tN2kHeadingReference</a> BearingReference, bool PerpendicularCrossed, bool ArrivalCircleEntered, <a class="el" href="group__group__msg_types.html#ga02c7a0305cd371219c5756503b7b4433">tN2kDistanceCalculationType</a> CalculationType, double ETATime, int16_t ETADate, double BearingOriginToDestinationWaypoint, double BearingPositionToDestinationWaypoint, uint32_t OriginWaypointNumber, uint32_t DestinationWaypointNumber, double DestinationLatitude, double DestinationLongitude, double WaypointClosingVelocity)</td></tr>
+<tr class="memdesc:ga03670e35a04501b5317bd4b32246a362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up PGN 129284 Message "Navigation Data".  <a href="group__group__msg_set_up.html#ga03670e35a04501b5317bd4b32246a362">More...</a><br /></td></tr>
+<tr class="separator:ga03670e35a04501b5317bd4b32246a362"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae590b48d9bdcf6ac759ccc961fc26d73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_set_up.html#gae590b48d9bdcf6ac759ccc961fc26d73">SetN2kPGN129285</a> (<a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route, bool NavDirection, bool SupplementaryData, char *RouteName)</td></tr>
 <tr class="memdesc:gae590b48d9bdcf6ac759ccc961fc26d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting up Message "Route/WP information" - PGN 129285 (for backwards compatibility)  <a href="group__group__msg_set_up.html#gae590b48d9bdcf6ac759ccc961fc26d73">More...</a><br /></td></tr>
 <tr class="separator:gae590b48d9bdcf6ac759ccc961fc26d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3986,8 +3986,8 @@ false aborted </dd></dl>
 
 </div>
 </div>
-<a id="ga91c729a2e3f2e16484c5d2646de7b9d3" name="ga91c729a2e3f2e16484c5d2646de7b9d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga91c729a2e3f2e16484c5d2646de7b9d3">&#9670;&nbsp;</a></span>SetN2kNavigationInfo()</h2>
+<a id="ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297" name="ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1b3f15b9d6b0dabb6e1c1d7eb2ffe297">&#9670;&nbsp;</a></span>SetN2kNavigationInfo()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4064,13 +4064,13 @@ false aborted </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>OriginWaypointNumber</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>DestinationWaypointNumber</em>, </td>
         </tr>
         <tr>
@@ -4105,7 +4105,7 @@ false aborted </dd></dl>
 </div><div class="memdoc">
 
 <p>Setting up Message "Navigation Data" - PGN 129284. </p>
-<p >Alias of PGN 129284. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_set_up.html#gaf7e5f5c663afa028f30f895f50afba54">SetN2kPGN129284</a> </p>
+<p >Alias of PGN 129284. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_set_up.html#ga03670e35a04501b5317bd4b32246a362">SetN2kPGN129284</a> </p>
 
 <p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l03890">3890</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
@@ -7355,8 +7355,8 @@ false aborted </dd></dl>
 
 </div>
 </div>
-<a id="gaf7e5f5c663afa028f30f895f50afba54" name="gaf7e5f5c663afa028f30f895f50afba54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf7e5f5c663afa028f30f895f50afba54">&#9670;&nbsp;</a></span>SetN2kPGN129284()</h2>
+<a id="ga03670e35a04501b5317bd4b32246a362" name="ga03670e35a04501b5317bd4b32246a362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga03670e35a04501b5317bd4b32246a362">&#9670;&nbsp;</a></span>SetN2kPGN129284()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7430,13 +7430,13 @@ false aborted </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>OriginWaypointNumber</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>DestinationWaypointNumber</em>, </td>
         </tr>
         <tr>
