@@ -82,7 +82,7 @@ enum tN2kHeadingReference {
  */
 enum tN2kDistanceCalculationType {
                             N2kdct_GreatCircle=0,     ///< great circle calculation
-                            N2kdct_RhumbLine=1        ///< rhumb ine calculation
+                            N2kdct_RhumbLine=1        ///< rhumb line calculation
                           };
 /*************************************************************************//**
  * \enum  tN2kXTEMode
@@ -114,7 +114,7 @@ enum tN2kGNSStype {
                             N2kGNSSt_Chayka=5,                ///< Russia's Chayka system is like the erstwhile LORAN-C radio navigation architecture
                             N2kGNSSt_integrated=6,            ///< integrated mode
                             N2kGNSSt_surveyed=7,              ///< surveyed mode
-                            N2kGNSSt_Galileo=8                ///< european galileo satellite network
+                            N2kGNSSt_Galileo=8                ///< European Galileo satellite network
                           };
 /*************************************************************************//**
  * \enum tN2kGNSSmethod
@@ -184,7 +184,7 @@ enum tN2kTempSource {
                             N2kts_HeatIndexTemperature=12,                  ///< value is representing a heat index temperature
                             N2kts_FreezerTemperature=13,                    ///< value is representing a freezer temperature
                             N2kts_ExhaustGasTemperature=14,                 ///< value is representing a exhaust gas temperature
-                            N2kts_ShaftSealTemperature=15					///< value is representing a shaft seal temparature
+                            N2kts_ShaftSealTemperature=15					///< value is representing a shaft seal temperature
                           };
 /*************************************************************************//**
  * \enum tN2kHumiditySource
@@ -414,8 +414,8 @@ enum tN2kAISNavStatus {
  * \brief Enumeration of Data Terminal Equipment according to PNG 129794
  */
 enum tN2kAISDTE {
-                            N2kaisdte_Ready=0,      ///< equiment is ready
-                            N2kaisdte_NotReady=1,   ///< equiment is not ready
+                            N2kaisdte_Ready=0,      ///< equipment is ready
+                            N2kaisdte_NotReady=1,   ///< equipment is not ready
                           };
 /*************************************************************************//**
  * \enum tN2kAISUnit
@@ -471,7 +471,7 @@ enum tN2kAISTransceiverInformation {
  * https://www.ngdc.noaa.gov/geomag/WMM/WMM_old_reports.shtml 
  */
 enum tN2kMagneticVariation {
-                            N2kmagvar_Manual=0,     ///< manuel enterd magnetic deviation
+                            N2kmagvar_Manual=0,     ///< manual entered magnetic deviation
                             N2kmagvar_Chart=1,      ///< magnetic deviation derived from the charts
                             N2kmagvar_Table=2,      ///< magnetic deviation derived from a table
                             N2kmagvar_Calc=3,       ///< magnetic deviation calculated
@@ -483,7 +483,7 @@ enum tN2kMagneticVariation {
                           };
 /*************************************************************************//**
  * \enum tN2kOnOff
- * \brief Enumeration of On/Off staus at a NMEA 2000 network
+ * \brief Enumeration of On/Off status at a NMEA 2000 network
  */
 enum tN2kOnOff  {
                             N2kOnOff_Off=0,         ///< No, Off, Disabled
@@ -552,8 +552,8 @@ enum tN2kTurnMode {
  * \brief Enumeration of ManOverBoard state according to PGN127233
  */
 enum tN2kMOBStatus {
-                            MOBEmitterActivated=0,                ///< MOB emitter has triggerd the status
-                            ManualOnBoardMOBButtonActivation=1,   ///< MOB was triggerd manually 
+                            MOBEmitterActivated=0,                ///< MOB emitter has triggered the status
+                            ManualOnBoardMOBButtonActivation=1,   ///< MOB was triggered manually
                             TestMode=2,                           ///< MOB in test mode
                             MOBNotActive=3                        ///< MOB not active
                           };
@@ -563,7 +563,7 @@ enum tN2kMOBStatus {
  */
 enum tN2kMOBPositionSource {
                            PositionEstimatedByVessel=0,           ///< MOB position is estimated by the vessel
-                           PositionReportedByMOBEmitter=1,        ///< MOB position is peported by MOB emitter
+                           PositionReportedByMOBEmitter=1,        ///< MOB position is reported by MOB emitter
                           };
 /*************************************************************************//**
  * \enum tN2kMOBEmitterBatteryStatus

@@ -415,7 +415,7 @@ void SetBufUInt64(uint64_t v, int &index, unsigned char *buf);
 void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool UsePgm=false, unsigned char fillChar=0x0);
 
 /**************************************************************************//**
- * \brief Extracts 2 bytes ouf of the given buffer
+ * \brief Extracts 2 bytes out of the given buffer
  * and converts it to an integer value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -427,7 +427,7 @@ void SetBufStr(const char *str, int len, int &index, unsigned char *buf, bool Us
 int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 
 /**************************************************************************//**
- * \brief Extracts 2 bytes ouf of the given buffer
+ * \brief Extracts 2 bytes out of the given buffer
  * and converts it to an integer value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -439,7 +439,7 @@ int16_t GetBuf2ByteInt(int &index, const unsigned char *buf);
 uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);
 
 /**************************************************************************//**
- * \brief Extracts 3 bytes ouf of the given buffer
+ * \brief Extracts 3 bytes out of the given buffer
  * and converts it to an integer value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -451,7 +451,7 @@ uint16_t GetBuf2ByteUInt(int &index, const unsigned char *buf);
 uint32_t GetBuf3ByteUInt(int &index, const unsigned char *buf);
 
 /**************************************************************************//**
- * \brief Extracts 4 ytes ouf of the given buffer
+ * \brief Extracts 4 bytes out of the given buffer
  * and converts it to an integer value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -463,7 +463,7 @@ uint32_t GetBuf3ByteUInt(int &index, const unsigned char *buf);
 uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf);
 
 /**************************************************************************//**
- * \brief Extracts 8 bytes ouf of the given buffer
+ * \brief Extracts 8 bytes out of the given buffer
  * and converts it to an integer value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -475,7 +475,7 @@ uint32_t GetBuf4ByteUInt(int &index, const unsigned char *buf);
 uint64_t GetBuf8ByteUInt(int &index, const unsigned char *buf);
 
 /**************************************************************************//**
- * \brief Extracts the specified numbers of bytes ouf of the given buffer
+ * \brief Extracts the specified numbers of bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -492,7 +492,7 @@ uint64_t GetBuf8ByteUInt(int &index, const unsigned char *buf);
 double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts 1 byte ouf of the given buffer
+ * \brief Extracts 1 byte out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -509,7 +509,7 @@ double GetBuf1ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 
 /**************************************************************************//**
- * \brief Extracts 2 bytes ouf of the given buffer
+ * \brief Extracts 2 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -526,7 +526,7 @@ double GetBuf1ByteUDouble(double precision, int &index, const unsigned char *buf
 double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts 2 bytes ouf of the given buffer
+ * \brief Extracts 2 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -543,7 +543,7 @@ double GetBuf2ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 
 /**************************************************************************//**
- * \brief Extracts 3 bytes ouf of the given buffer
+ * \brief Extracts 3 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -560,7 +560,7 @@ double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts 4 bytes ouf of the given buffer
+ * \brief Extracts 4 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -577,7 +577,7 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts 4 bytes ouf of the given buffer
+ * \brief Extracts 4 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -594,7 +594,7 @@ double GetBuf4ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf, double def=-1);
 
 /**************************************************************************//**
- * \brief Extracts 8 bytes ouf of the given buffer
+ * \brief Extracts 8 bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -611,7 +611,7 @@ double GetBuf4ByteUDouble(double precision, int &index, const unsigned char *buf
 double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts bytes ouf of the given buffer
+ * \brief Extracts bytes out of the given buffer
  * and converts it to a double value.
  * 
  * The fixed point integer mechanism is used.
@@ -627,7 +627,7 @@ double GetBuf8ByteDouble(double precision, int &index, const unsigned char *buf,
 double GetBufDouble(int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
- * \brief Extracts the specified numbers of bytes ouf of the given buffer
+ * \brief Extracts the specified numbers of bytes out of the given buffer
  * and converts it to an float value.
  * 
  * \param index       position inside the byte array \ref tN2kMsg::Data, getting
@@ -671,7 +671,7 @@ public:
   mutable unsigned char Destination;
   /** \brief Number of bytes already stored in \ref tN2kMsg::Data of this message*/
   int DataLen;
-  /** \brief Byte array which carries oll the data of the NMEA2000 message*/
+  /** \brief Byte array which carries all the data of the NMEA2000 message*/
   unsigned char Data[MaxDataLen];
   /** \brief timestamp (ms since start [max 49days]) of the NMEA2000 message*/
   unsigned long MsgTime;
@@ -753,9 +753,9 @@ public:
 
   /************************************************************************//**
    * \brief Checks if the Message Meta Content is valid
-   * Basic check if the message object is valide, mean datalen >0 and PGN != 0.
-   * \return true   message is valide
-   * \return false  message is not valide
+   * Basic check if the message object is valid, mean datalen >0 and PGN != 0.
+   * \return true   message is valid
+   * \return false  message is not valid
    */
   bool IsValid() const { return (PGN!=0 && DataLen>0); }
 

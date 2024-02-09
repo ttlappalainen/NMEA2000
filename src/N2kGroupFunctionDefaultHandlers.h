@@ -134,7 +134,7 @@ class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {
  * Provides product information onto the network that could be important
  * for determining quality of data coming from this product.
  * 
- * \note This is not mandatory, but prefered
+ * \note This is not mandatory, but preferred
  */
 class tN2kGroupFunctionHandlerForPGN126996 : public tN2kGroupFunctionHandler {
   protected:
@@ -157,7 +157,7 @@ class tN2kGroupFunctionHandlerForPGN126996 : public tN2kGroupFunctionHandler {
  * engine room location) of the device and installation notes (e.g.,
  * calibration data).
  * 
- * \note This is not mandatory, but prefered
+ * \note This is not mandatory, but preferred
  */
 class tN2kGroupFunctionHandlerForPGN126998 : public tN2kGroupFunctionHandler {
   protected:

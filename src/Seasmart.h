@@ -73,7 +73,7 @@ size_t N2kToSeasmart(const tN2kMsg &msg, uint32_t timestamp, char *buffer, size_
  * \param msg         Reference to a N2kMsg Object 
  * 
  * \return true -> Success
- * \return false -> an error occured
+ * \return false -> an error occurred
  */
 bool SeasmartToN2k(const char *buffer, uint32_t &timestamp, tN2kMsg &msg);
 

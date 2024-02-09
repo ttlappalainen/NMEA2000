@@ -147,7 +147,7 @@ bool tN2kGroupFunctionHandler::HandleRequest(const tN2kMsg &N2kMsg,
     tN2kGroupFunctionPGNErrorCode PGNec=(IsTxPGN?N2kgfPGNec_PGNTemporarilyNotAvailable:N2kgfPGNec_PGNNotSupported);
     tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
 
-    if ( PGNec==N2kgfPGNec_PGNNotSupported ) TORec=N2kgfTPec_Acknowledge; // Always acknoledge for unknown PGN.
+    if ( PGNec==N2kgfPGNec_PGNNotSupported ) TORec=N2kgfTPec_Acknowledge; // Always acknowledge for unknown PGN.
     if ( PGNec==N2kgfPGNec_PGNTemporarilyNotAvailable ) {
       if ( TORec==N2kgfTPec_TransmitIntervalOrPriorityNotSupported ) { // Acknowledge PGN for known PGN but for invalid priority
         PGNec=N2kgfPGNec_Acknowledge;

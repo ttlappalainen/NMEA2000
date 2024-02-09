@@ -222,7 +222,7 @@ public:
    * 
    * \param val       Reference to the value read out from the ring buffer
    * \retval true     Value read out from buffer.
-   *                  Value has been copied to paramater val
+   *                  Value has been copied to parameter val
    * \retval false    There is no data available inside the buffer.
    *                  Parameter val will be unchanged.
    */
@@ -264,7 +264,7 @@ protected:
    * \brief   Structure that holds the actual value and meta data
    * 
    * In order to handle all the data entries in the ring buffer with
-   * certain priority some additional meta data has to be stored es well.
+   * certain priority some additional meta data has to be stored as well.
    * 
    */
   struct tValueSlot {
@@ -292,7 +292,7 @@ protected:
 protected:
   /** \brief Pointer to the ring puffer in memory */
   tValueSlot *buffer;
-  /** \brief Pointer to priority referencies in buffer */
+  /** \brief Pointer to priority references in buffer */
   tPriorityRef *priorityReferencies;
   /** \brief Index of the first free index in the ring buffer */
   uint16_t head;
@@ -381,7 +381,7 @@ public:
    * 
    * \param val       Reference to the value read out from buffer
    * \retval true     Value read out from buffer.
-   *                  Value has been copied to paramater val
+   *                  Value has been copied to parameter val
    * \retval false    There is no data available inside the buffer.
    *                  Parameter val will be unchanged.
    */
@@ -436,7 +436,7 @@ public:
    * differs from read, where it is enough to use locking only around calling read.
    * 
    * \param *_priority   Pointer to priority, which will be set to priority
-   *                     of the value readed out.
+   *                     of the value read out.
    * \retval "const T*"  Pointer to value read out from the ring buffer
    * \retval 0           No values available.
    */

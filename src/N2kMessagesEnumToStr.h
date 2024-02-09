@@ -59,7 +59,7 @@ const char *N2kEnumTypeEmpty="";
  * 
  * This function template generation an text output to the defined stream. 
  * Corresponding to the type of the enum value, the correct function (and
- * therefor output text) is chosen.
+ * therefore output text) is chosen.
  * 
  * @tparam T            Type of the enum
  * @param a             enum value

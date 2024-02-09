@@ -49,7 +49,7 @@
  * No measured ram effect. Normally NMEA 2000 devices communicates by using
  * fastpacket.   
  * 
- * \note Be aware that that the ISO Multipacket Support ist mandatory for
+ * \note Be aware that that the ISO Multipacket Support is mandatory for
  * certified NMEA200 devices.
  */
 // #define N2K_NO_ISO_MULTI_PACKET_SUPPORT 1    //Uncomment as needed
@@ -61,7 +61,7 @@
  * instance lower, upper and system instance values.
  * This uses appr. 4 kB of rom and 100 B ram.
  * 
- * \note Be aware that that Group Function Support ist mandatory for
+ * \note Be aware that that Group Function Support is mandatory for
  * certified NMEA200 devices. 
  */
 // #define N2K_NO_GROUP_FUNCTION_SUPPORT 1      //Uncomment as needed
@@ -73,7 +73,7 @@
  * I'll expect it takes time before e.g. MFD:s can rely this. This uses
  * appr. 0.5 kB of rom. No measured ram effect.
  * 
- * \note Be aware that that Heartbeat Support ist mandatory for
+ * \note Be aware that that Heartbeat Support is mandatory for
  * certified NMEA200 devices. 
  */
 // #define N2K_NO_HEARTBEAT_SUPPORT 1          //Uncomment as needed

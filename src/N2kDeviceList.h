@@ -79,12 +79,12 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      */
     class tInternalDevice : public tNMEA2000::tDevice {
     protected:
-      /** \brief Product Infomation has bee loaded */
+      /** \brief Product Information has been loaded */
       bool ProdILoaded;
       /** \brief Product Information of this device*/
       tNMEA2000::tProductInformation ProdI;
 
-      /** \brief Product Infomation has bee loaded */
+      /** \brief Product Information has been loaded */
       bool ConfILoaded;
       /** \brief Size of the Config Information (number of bytes)*/
       uint16_t ConfISize;
@@ -452,9 +452,9 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
 
   protected:
     /********************************************************************//**
-     * \brief Handle Iso Address Claim Message - PGN 60928
+     * \brief Handle ISO Address Claim Message - PGN 60928
      * 
-     * This function handle an iso address claim message. It check whether 
+     * This function handle an ISO address claim message. It checks whether
      * the caller device is already listed at \ref Sources or not.
      * If it is already listed, it checks also if the name at this source 
      * position still matches. When the name doesn't match, it moves the 
@@ -552,11 +552,11 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
     /********************************************************************//**
      * \brief Request the product information of a specific device on the bus
      * 
-     * This function sends out an Iso Request message in order to obtain
+     * This function sends out an ISO Request message in order to obtain
      * more information about a specific device on the bus.
      *
      * \param Source  Destination address of the target device
-     * \return true   -> Message was sended successfully
+     * \return true   -> Message was sent successfully
      * \return false 
      */
     bool RequestProductInformation(uint8_t Source);
@@ -564,22 +564,22 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * \brief Request the configuration information of a specific 
      *        device on the bus
      * 
-     * This function sends out an Iso Request message in order to obtain
+     * This function sends out an ISO Request message in order to obtain
      * more information about a specific device on the bus.
      *
      * \param Source  Destination address of the target device
-     * \return true   -> Message was sended successfully
+     * \return true   -> Message was sent successfully
      * \return false 
      */
     bool RequestConfigurationInformation(uint8_t Source);
     /********************************************************************//**
      * \brief Request the supported PGNs of a specific device on the bus
      * 
-     * This function sends out an Iso Request message in order to obtain
+     * This function sends out an ISO Request message in order to obtain
      * more information about a specific device on the bus.
      *
      * \param Source  Destination address of the target device
-     * \return true   -> Message was sended successfully
+     * \return true   -> Message was sent successfully
      * \return false 
      */
     bool RequestSupportedPGNList(uint8_t Source);
@@ -587,7 +587,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * \brief Request the ISO AddressClaim for a specific device on the bus
      *
      * \param Source  Destination address of the target device
-     * \return true   -> Message was sended successfully
+     * \return true   -> Message was sent successfully
      * \return false 
      */
     bool RequestIsoAddressClaim(uint8_t Source);
@@ -621,7 +621,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * HandleIsoAddressClaim, \ref HandleProductInformation, 
      * \ref HandleConfigurationInformation, \ref HandleSupportedPGNList, 
      * \ref HandleOther) is chosen. 
-     * If ther e is now device with this source address is listed in \ref 
+     * If there is now device with this source address is listed in \ref
      * Sources, a new device is added ( \ref AddDevice).
      *
      * \param N2kMsg    Reference to a N2kMsg Object, 
@@ -633,7 +633,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * \brief Return device by it's bus source address
      * 
      * Return device by it's bus source address. If there is no device 
-     * with given source, function returns nul
+     * with given source, function returns null
      * \param Source  Source address of the device to be searched for
      * \return const tNMEA2000::tDevice* 
      */
