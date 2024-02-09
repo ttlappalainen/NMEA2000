@@ -1,6 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 09.02.2024
+
+- Fix multiple spelling errors in comments. Thanks to garaminowicz.
+
 ## 06.02.2024
 
 - Fix tPriorityRingBuffer. It did not freed values properly. tPriorityRingBuffer is used on tNMEA2000_Teensyx driver.
