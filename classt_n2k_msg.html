@@ -267,7 +267,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a40d6ece47119207a73ac233c32fbcb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if the message is flagged as MultiPacket Message.  <a href="classt_n2k_msg.html#a40d6ece47119207a73ac233c32fbcb59">More...</a><br /></td></tr>
 <tr class="separator:a40d6ece47119207a73ac233c32fbcb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43c64609bc1a0f86ed083b59c1491747"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a43c64609bc1a0f86ed083b59c1491747">IsValid</a> () const</td></tr>
-<tr class="memdesc:a43c64609bc1a0f86ed083b59c1491747"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Message Meta Content is valid Basic check if the message object is valide, mean datalen &gt;0 and PGN != 0.  <a href="classt_n2k_msg.html#a43c64609bc1a0f86ed083b59c1491747">More...</a><br /></td></tr>
+<tr class="memdesc:a43c64609bc1a0f86ed083b59c1491747"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Message Meta Content is valid Basic check if the message object is valid, mean datalen &gt;0 and PGN != 0.  <a href="classt_n2k_msg.html#a43c64609bc1a0f86ed083b59c1491747">More...</a><br /></td></tr>
 <tr class="separator:a43c64609bc1a0f86ed083b59c1491747"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e4eceb30573fc3baa75f0584c0a9001"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a5e4eceb30573fc3baa75f0584c0a9001">Print</a> (<a class="el" href="class_n2k_stream.html">N2kStream</a> *port, bool NoData=false) const</td></tr>
 <tr class="memdesc:a5e4eceb30573fc3baa75f0584c0a9001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print out the whole content of the N2kMsg Object.  <a href="classt_n2k_msg.html#a5e4eceb30573fc3baa75f0584c0a9001">More...</a><br /></td></tr>
@@ -291,7 +291,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a01ad108e237eb28230b45028a2fbc924"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a> [<a class="el" href="classt_n2k_msg.html#a6f739c31a9e35c0b08fc7596cc9b2751">MaxDataLen</a>]</td></tr>
-<tr class="memdesc:a01ad108e237eb28230b45028a2fbc924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte array which carries oll the data of the NMEA2000 message.  <a href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">More...</a><br /></td></tr>
+<tr class="memdesc:a01ad108e237eb28230b45028a2fbc924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte array which carries all the data of the NMEA2000 message.  <a href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">More...</a><br /></td></tr>
 <tr class="separator:a01ad108e237eb28230b45028a2fbc924"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af304b7211179a8216138fe61a1e6be9f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a></td></tr>
 <tr class="memdesc:af304b7211179a8216138fe61a1e6be9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes already stored in <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">tN2kMsg::Data</a> of this message.  <a href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">More...</a><br /></td></tr>
@@ -2228,10 +2228,10 @@ false Message is not a MultiPacket Message </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Checks if the Message Meta Content is valid Basic check if the message object is valide, mean datalen &gt;0 and PGN != 0. </p>
-<dl class="section return"><dt>Returns</dt><dd>true message is valide </dd>
+<p>Checks if the Message Meta Content is valid Basic check if the message object is valid, mean datalen &gt;0 and PGN != 0. </p>
+<dl class="section return"><dt>Returns</dt><dd>true message is valid </dd>
 <dd>
-false message is not valide </dd></dl>
+false message is not valid </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00760">760</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
 
@@ -2494,7 +2494,7 @@ false Index is grater then DataLen </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Byte array which carries oll the data of the NMEA2000 message. </p>
+<p>Byte array which carries all the data of the NMEA2000 message. </p>
 
 <p class="definition">Definition at line <a class="el" href="_n2k_msg_8h_source.html#l00675">675</a> of file <a class="el" href="_n2k_msg_8h_source.html">N2kMsg.h</a>.</p>
 

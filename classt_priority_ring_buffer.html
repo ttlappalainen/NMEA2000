@@ -204,7 +204,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a2aa5f3d42750f9cade1040c22f4a2f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">highest priority possible  <a href="classt_priority_ring_buffer.html#a2aa5f3d42750f9cade1040c22f4a2f9b">More...</a><br /></td></tr>
 <tr class="separator:a2aa5f3d42750f9cade1040c22f4a2f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a176f87590c1b2075c2ef35073b193655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structt_priority_ring_buffer_1_1t_priority_ref.html">tPriorityRef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a176f87590c1b2075c2ef35073b193655">priorityReferencies</a></td></tr>
-<tr class="memdesc:a176f87590c1b2075c2ef35073b193655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to priority referencies in buffer.  <a href="classt_priority_ring_buffer.html#a176f87590c1b2075c2ef35073b193655">More...</a><br /></td></tr>
+<tr class="memdesc:a176f87590c1b2075c2ef35073b193655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to priority references in buffer.  <a href="classt_priority_ring_buffer.html#a176f87590c1b2075c2ef35073b193655">More...</a><br /></td></tr>
 <tr class="separator:a176f87590c1b2075c2ef35073b193655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a194d5c6c9fccb4c383253a7f58551c64"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_priority_ring_buffer.html#a194d5c6c9fccb4c383253a7f58551c64">size</a></td></tr>
 <tr class="memdesc:a194d5c6c9fccb4c383253a7f58551c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of values that can be stored in the ring buffer.  <a href="classt_priority_ring_buffer.html#a194d5c6c9fccb4c383253a7f58551c64">More...</a><br /></td></tr>
@@ -521,7 +521,7 @@ template&lt;typename T &gt; </div>
 <dl class="section note"><dt>Note</dt><dd>In multitasking or with interrupts one must take care that buffer will no be used before data handling has been finished. This differs from read, where it is enough to use locking only around calling read.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">*_priority</td><td>Pointer to priority, which will be set to priority of the value readed out. </td></tr>
+    <tr><td class="paramname">*_priority</td><td>Pointer to priority, which will be set to priority of the value read out. </td></tr>
   </table>
   </dd>
 </dl>
@@ -675,7 +675,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Value read out from buffer. Value has been copied to paramater val </td></tr>
+    <tr><td class="paramname">true</td><td>Value read out from buffer. Value has been copied to parameter val </td></tr>
     <tr><td class="paramname">false</td><td>There is no data available inside the buffer. Parameter val will be unchanged. </td></tr>
   </table>
   </dd>
@@ -790,7 +790,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Pointer to priority referencies in buffer. </p>
+<p>Pointer to priority references in buffer. </p>
 
 <p class="definition">Definition at line <a class="el" href="_ring_buffer_8h_source.html#l00296">296</a> of file <a class="el" href="_ring_buffer_8h_source.html">RingBuffer.h</a>.</p>
 

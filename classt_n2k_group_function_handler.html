@@ -159,7 +159,7 @@ Collaboration diagram for tN2kGroupFunctionHandler:</div>
 <area shape="rect" href="classt_n2k_c_a_n_msg.html" title="Class used internally on tNMEA2000 to handle incoming NMEA2000 messages." alt="" coords="865,412,967,439"/>
 <area shape="rect" href="classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending." alt="" coords="407,509,544,536"/>
 <area shape="rect" href="structt_n_m_e_a2000_1_1t_configuration_information.html" title="Structure that holds the Configuration Information of this device." alt="" coords="827,346,1005,387"/>
-<area shape="rect" href="classt_n_m_e_a2000_1_1t_c_a_n_send_frame.html" title="Structure holds all the data needed for a valide CAN&#45;Message." alt="" coords="817,463,1015,489"/>
+<area shape="rect" href="classt_n_m_e_a2000_1_1t_c_a_n_send_frame.html" title="Structure holds all the data needed for a valid CAN&#45;Message." alt="" coords="817,463,1015,489"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -278,10 +278,10 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Base handler class for Group Functions. </p>
-<p >This class handles all functions which are needed to respond to group function messages. NMEA 2000 definition requires that devices should respond group function messages. This class is base class and works also as default handler, which simply responds “unsupported” for all group functions. To fullfill certification requirement developer should inherit this base class, write supported functions and register handler class to library with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>. One can find examples for implementation from <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a>. See e.g., <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 - &quot;Configuration Information&quot;.">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
+<p >This class handles all functions which are needed to respond to group function messages. NMEA 2000 definition requires that devices should respond group function messages. This class is base class and works also as default handler, which simply responds “unsupported” for all group functions. To fulfill certification requirement developer should inherit this base class, write supported functions and register handler class to library with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>. One can find examples for implementation from <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a>. See e.g., <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 - &quot;Configuration Information&quot;.">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
 <p >Library has inherited default handlers for required system PGNs declared in <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a> . Those can be used as sample for other PGN group function handlers.</p>
-<p >NMEA 2000 library calls each registered handler class until some responses to <a class="el" href="classt_n2k_group_function_handler.html#a6e845df1655bce228cf581a1e8396a45">Handle</a> call true, meaning that it handled request. After get true return libray stops requesting handling for rest registered handler classes.</p>
-<dl class="section note"><dt>Note</dt><dd>If your device transmits several e.g., 130316, you must handle them with single inherited handler. This is because e.g., if some device request 130316 from your device without parameters, you can not return true, since then library does not handle others and you can not return false, since then at end library responces with default acknowledge group function with "unsupported". </dd></dl>
+<p >NMEA 2000 library calls each registered handler class until some responses to <a class="el" href="classt_n2k_group_function_handler.html#a6e845df1655bce228cf581a1e8396a45">Handle</a> call true, meaning that it handled request. After get true return library stops requesting handling for rest registered handler classes.</p>
+<dl class="section note"><dt>Note</dt><dd>If your device transmits several e.g., 130316, you must handle them with single inherited handler. This is because e.g., if some device request 130316 from your device without parameters, you can not return true, since then library does not handle others and you can not return false, since then at end library responses with default acknowledge group function with "unsupported". </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_n2k_group_function_8h_source.html#l00260">260</a> of file <a class="el" href="_n2k_group_function_8h_source.html">N2kGroupFunction.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -582,7 +582,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get request group function transmission or priority error code. </p>
-<p >Function for resolving transmission or priority error code in <a class="el" href="classt_n2k_group_function_handler.html#ad1657de1961b6b980c78b9feabe4fdc0" title="Handle response for request group function.">tN2kGroupFunctionHandler::HandleRequest</a> function according requested input and interval/offset limits requested PGN accepts. Function resolves only error code. If result is N2kgfTPec_Acknowledge you have to handle also possible change for interval/offset elsewhre on your inherited HandleRequest.</p>
+<p >Function for resolving transmission or priority error code in <a class="el" href="classt_n2k_group_function_handler.html#ad1657de1961b6b980c78b9feabe4fdc0" title="Handle response for request group function.">tN2kGroupFunctionHandler::HandleRequest</a> function according requested input and interval/offset limits requested PGN accepts. Function resolves only error code. If result is N2kgfTPec_Acknowledge you have to handle also possible change for interval/offset elsewhere on your inherited HandleRequest.</p>
 <p >If you support changing for interval and/or offset for your PGN simply use function as is. If you need to set offset limits set UseIntervalLimits and/or UseOffsetLimits and provide limits. For special handling you can override function.</p>
 <dl class="section note"><dt>Note</dt><dd>On NMEA certification tests "C.3.13.2  Expanded Acknowledgment 
 Message Timing" old tool does not know interval 0xFFFFFFFE=Restore Default Interval and so fails test. Use new test tool sw version or comment that out.</dd></dl>
@@ -594,8 +594,7 @@ Message Timing" old tool does not know interval 0xFFFFFFFE=Restore Default Inter
   <table class="params">
     <tr><td class="paramname">TransmissionInterval</td><td>Interval for Transmission </td></tr>
     <tr><td class="paramname">TransmissionIntervalOffset</td><td>Offset for Transmission Interval </td></tr>
-    <tr><td class="paramname">UseIntervalLimits</td><td>Use the Intervall limits <br  />
- </td></tr>
+    <tr><td class="paramname">UseIntervalLimits</td><td>Use the Interval limits </td></tr>
     <tr><td class="paramname">IntervalMax</td><td>Maximum Interval </td></tr>
     <tr><td class="paramname">IntervalMin</td><td>Minimum Interval </td></tr>
     <tr><td class="paramname">UseOffsetLimits</td><td>Use Offset limits </td></tr>
@@ -1267,7 +1266,7 @@ Message Timing" old tool does not know interval 0xFFFFFFFE=Restore Default Inter
 </div><div class="memdoc">
 
 <p>Class to test does string field on group function match to PGN field value. </p>
-<p >Some group functions contains filter fields which should match to requested/commanded PGN field. E.g., you may receive request group funtion globally addressed (255) with some group of field filters. Before you respond request all fields must match to your PGN. See example <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126996.html#a9d0dc616734482f7c4105ad423185ad4" title="Handle response for request group function.">tN2kGroupFunctionHandlerForPGN126996::HandleRequest()</a>.</p>
+<p >Some group functions contains filter fields which should match to requested/commanded PGN field. E.g., you may receive request group function globally addressed (255) with some group of field filters. Before you respond request all fields must match to your PGN. See example <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126996.html#a9d0dc616734482f7c4105ad423185ad4" title="Handle response for request group function.">tN2kGroupFunctionHandlerForPGN126996::HandleRequest()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">FieldVal</td><td>{type} </td></tr>
@@ -1337,7 +1336,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Template class to test does field on group function match to PGN field value. </p>
-<p >Some group functions contains filter fields which should match to requested/commanded PGN field. E.g., you may receive request group funtion globally addressed (255) with some group of field filters. Before you respond request all fields must match to your PGN. See example <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126996.html#a9d0dc616734482f7c4105ad423185ad4" title="Handle response for request group function.">tN2kGroupFunctionHandlerForPGN126996::HandleRequest()</a>.</p>
+<p >Some group functions contains filter fields which should match to requested/commanded PGN field. E.g., you may receive request group function globally addressed (255) with some group of field filters. Before you respond request all fields must match to your PGN. See example <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126996.html#a9d0dc616734482f7c4105ad423185ad4" title="Handle response for request group function.">tN2kGroupFunctionHandlerForPGN126996::HandleRequest()</a>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td><br  />
@@ -1782,10 +1781,10 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Send out an acknowledge group function message. </p>
-<p >Function builds simple acknowledge group function message with given parameters. This is usefull for sending response for no parameters or parameters with same error code.</p>
+<p >Function builds simple acknowledge group function message with given parameters. This is useful for sending response for no parameters or parameters with same error code.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pNMEA2000</td><td>NMEA2000 oject </td></tr>
+    <tr><td class="paramname">pNMEA2000</td><td>NMEA2000 object </td></tr>
     <tr><td class="paramname">Destination</td><td>Destination source address </td></tr>
     <tr><td class="paramname">iDev</td><td>Index off the device in <a class="el" href="classt_n_m_e_a2000.html#af9b9fee600114b00f96e1f93cb337085">tNMEA2000::Devices</a> </td></tr>
     <tr><td class="paramname">PGN</td><td>PGN handled </td></tr>

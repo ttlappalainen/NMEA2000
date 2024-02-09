@@ -551,7 +551,7 @@ Member functions</h3>
 <hr  />
 <p> <a class="anchor" id="autotoc_md39"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a08b0d31c74617227329406d948059a76" title="Set the Product Information of this device.">tNMEA2000::SetProductInformation</a></h5>
 <p >Set the Product Information of this device. With this function you define how your device will show up for other devices on NMEA2000 bus.</p>
-<p >Define your product information. Defaults will be set on initialization. For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers. LoadEquivalency is multiplication of 50 mA, what your device will take power from NMEA2000 bus. E.g. for Arduino only it can be 1 (=50mA). If your device does not take power from bus, set this to 0.</p>
+<p >Define your product information. Defaults will be set on initialization. For keeping defaults use 0xffff/0xff for int/char values and null ptr for pointers. LoadEquivalency is multiplication of 50 mA, what your device will take power from NMEA2000 bus. E.g. for Arduino only it can be 1 (=50mA). If your device does not take power from bus, set this to 0.</p>
 <p >If you use device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a4cd03ae74ee5aa6a957d14c523af52d4">tNMEA2000::N2km_ListenOnly</a>, <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6af7e9ed093b1332630ad82fb17f87588d">tNMEA2000::N2km_ListenAndSend</a> or N2km_SendOnly, function does not have effect.</p>
 <dl class="section note"><dt>Note</dt><dd>Serial code has length of 32 so just long enough to carry GUID.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -572,7 +572,7 @@ Member functions</h3>
 <p> <a class="anchor" id="autotoc_md41"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a1cb4d59a06724fcb32c6986b21c526a5" title="Set the Device Information. See also NAME.">tNMEA2000::SetDeviceInformation</a></h5>
 <p >Set the Device Information. See also <a class="el" href="md_7_glossary.html#secRefTermNAME">NAME</a>. If you use device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> or <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>, it is critical that you set this information.</p>
 <p >Device information will be used to choose right address for your device (also called node) on the bus. Each device must have an own address. Library will do this automatically, so it is enough that you call this function on setup to define your device.</p>
-<p >For keeping defaults use 0xffff/0xff for int/char values and nul ptr for pointers.</p>
+<p >For keeping defaults use 0xffff/0xff for int/char values and null ptr for pointers.</p>
 <dl class="section note"><dt>Note</dt><dd>You should set information so that it is unique over the world! Well if you are making device only for your own yacht N2k bus, it is enough to be unique there. So e.g. if you have two temperature monitors made by this library, you have to set at least first parameter UniqueNumber different for both of them. <br  />
 </dd></dl>
 <p>I just decided to use number one below maximum for ManufacturerCode as Open Source devices - this is not any number given by NMEA.</p>
@@ -645,8 +645,7 @@ Member functions</h3>
 <hr  />
 <p> <a class="anchor" id="autotoc_md49"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#aa81ac54c4a8899bc6ee29404a08fefb1" title="Set the Configuration Information located on PROGMEM.">tNMEA2000::SetProgmemConfigurationInformation</a></h5>
 <p >Set the Configuration Information located on PROGMEM. With this function you can set configuration information, which will be saved on device program memory. See example BatteryMonitor.ino.</p>
-<p >This function is usefull only on MCUs with very small RAM. By using PROGMEM, indtallation description can not be changed by group function. <br  />
-</p>
+<p >This function is useful only on MCUs with very small RAM. By using PROGMEM, installation description can not be changed by group function.</p>
 <p >As default system has build in configuration information on progmem. If you do not want to have configuration information at all, you can disable it by calling SetConfigurationInformation(0);</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -703,7 +702,7 @@ Member functions</h3>
 <div class="ttc" id="a_temperature_monitor_8ino_html_a99a54e36714d9ab35490dc8f2e020d4f"><div class="ttname"><a href="_temperature_monitor_8ino.html#a99a54e36714d9ab35490dc8f2e020d4f">TransmitMessages</a></div><div class="ttdeci">const unsigned long TransmitMessages[]</div><div class="ttdef"><b>Definition:</b> <a href="_temperature_monitor_8ino_source.html#l00025">TemperatureMonitor.ino:25</a></div></div>
 <div class="ttc" id="aclasst_n_m_e_a2000_html_a6f875d0fcec2c5805d00fd44321a03f7"><div class="ttname"><a href="classt_n_m_e_a2000.html#a6f875d0fcec2c5805d00fd44321a03f7">tNMEA2000::ExtendTransmitMessages</a></div><div class="ttdeci">void ExtendTransmitMessages(const unsigned long *_TransmitMessages, int iDev=0)</div><div class="ttdoc">Extend the list of Transmitted Messages.</div><div class="ttdef"><b>Definition:</b> <a href="_n_m_e_a2000_8cpp_source.html#l01163">NMEA2000.cpp:1163</a></div></div>
 </div><!-- fragment --><p >Library responds automatically to PGN 126464 request about transmit or receive messages. With this function you extend library list of messages your device own logic sends.</p>
-<dl class="section note"><dt>Note</dt><dd>Extending transmit messages is required for <a class="el" href="md_7_glossary.html#secRefNMEA2000Certification">NMEA2000 certification</a>, may be also critical since some devices refuces to handle PGNs from devices, which does not list them on transmit messages.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Extending transmit messages is required for <a class="el" href="md_7_glossary.html#secRefNMEA2000Certification">NMEA2000 certification</a>, may be also critical since some devices refuses to handle PGNs from devices, which does not list them on transmit messages.</dd></dl>
 <p>This has only effect for device modes <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6a9b42ab0462e8df393c8ce78170926e18">tNMEA2000::N2km_NodeOnly</a> and <a class="el" href="classt_n_m_e_a2000.html#a5af29eea6c5efd234d6f94ff3b6823c6ac0fcabeda748be43650dce09d6fb4d7c">tNMEA2000::N2km_ListenAndNode</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -732,7 +731,7 @@ Member functions</h3>
 </dl>
 <hr  />
 <p> <a class="anchor" id="autotoc_md57"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a8ac69d5d7a93a2d2066a7bf4344c6e1e" title="Set OnOpen callback function.">tNMEA2000::SetOnOpen</a></h5>
-<p >Set OnOpen callback function. OnOpen will be called, when communication really opens and starts initial address claiming. You can use this to init your message sending to syncronize them with e.g., heartbeat.</p>
+<p >Set OnOpen callback function. OnOpen will be called, when communication really opens and starts initial address claiming. You can use this to init your message sending to synchronize them with e.g., heartbeat.</p>
 <dl class="section note"><dt>Note</dt><dd>In future OnOpen may be called several times, if communication will be reopened by Restart or driver error. Developer must take care that possible memory initializations will be handled properly in case OnOpen is called several times.</dd></dl>
 <hr  />
 <p> <a class="anchor" id="autotoc_md59"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a6d2b2e0ffd57aca912cda44e868cd25b" title="Send message to the NMEA2000 bus.">tNMEA2000::SendMsg</a></h5>
@@ -747,14 +746,13 @@ Member functions</h3>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object </td></tr>
     <tr><td class="paramname">DeviceIndex</td><td>index of the device on Devices <br  />
- Setting DeviceIndex to -1 forces library to use source address of N2kMsg instead of device source address. This is usefull with e.g., passthrough gateway devices. <br  />
- </td></tr>
+ Setting DeviceIndex to -1 forces library to use source address of N2kMsg instead of device source address. This is useful with e.g., passthrough gateway devices. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Message sent or buffered succesfully. </td></tr>
+    <tr><td class="paramname">true</td><td>Message sent or buffered successfully. </td></tr>
     <tr><td class="paramname">false</td><td>Open has not finished. Address claiming has not finished. There is no more room on send buffer, which may be caused by too small send buffer or CAN controller can not sent messages bus.</td></tr>
   </table>
   </dd>
@@ -918,7 +916,7 @@ Member functions</h3>
 <hr  />
 <p> <a class="anchor" id="autotoc_md83"></a> </p><h5><a class="el" href="classt_n_m_e_a2000.html#a3d14fbb4a2758cea27c8fa1b06712c62" title="Set incoming CAN message (tNMEA2000::N2kCANMsgBuf) buffer size.">tNMEA2000::SetN2kCANMsgBufSize</a></h5>
 <p >Set incoming CAN message (<a class="el" href="classt_n_m_e_a2000.html#a18e81ce0a8b0183897123694d7c582ca">tNMEA2000::N2kCANMsgBuf</a>) buffer size. With this function you can set size of buffer, where system builds incoming messages. The default size is 5 messages. Some messages are just single frame messages and they will be read in and handled immediately on call to ParseMessages. NMEA2000 fast packet message contains several frames sent sequentially. Anyway there can be other message frames between fast packet message frames, so these messages will be buffered and saved until all frames has been received. NMEA2000 requires that device should be able to read 2 concurrent fast packet and 2 ISO TP message. Since also single frame message requires one buffer slot buffer default size has been set to 5.</p>
-<p >If buffer size is too small, there is risk that all fast packet messages will not be handled. Even your own logic does not listen any fast packet messages, internal logic listens group functions PGN 126208, which may contain inportant requests library should respond. If library does not respond to all required requests, there is risk that other devices drops your device information.</p>
+<p >If buffer size is too small, there is risk that all fast packet messages will not be handled. Even your own logic does not listen any fast packet messages, internal logic listens group functions PGN 126208, which may contain important requests library should respond. If library does not respond to all required requests, there is risk that other devices drops your device information.</p>
 <p >Since ISO TP messages are rarely used, with buffer size 5 library can handle 4 concurrent fast packet messages. Due to priorities this is enough in most cases. If bus has lot of devices sending fast packets and you have enough memory on MCU, you can increase buffer size. Buffer size 10 should be enough even on heavy traffic.</p>
 <p >Function has to be called before communication opens. See <a class="el" href="classt_n_m_e_a2000.html#a5a98e0686a41aed891a62e565060f9f7">tNMEA2000::Open()</a>.</p>
 <p >Do not mix this with <a class="el" href="classt_n_m_e_a2000.html#a944240f03999812fc365a00bc2b37d47" title="Set CAN receive frame buffer size.">tNMEA2000::SetN2kCANReceiveFrameBufSize()</a>, which has different meaning.</p>

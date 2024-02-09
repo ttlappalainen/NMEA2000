@@ -12,5 +12,5 @@
 <area shape="rect" id="node12" href="$classt_n2k_c_a_n_msg.html" title="Class used internally on tNMEA2000 to handle incoming NMEA2000 messages." alt="" coords="865,375,967,401"/>
 <area shape="rect" id="node10" href="$classt_n2k_sync_scheduler.html" title="Synchronized Scheduler for timed message sending." alt="" coords="407,453,544,480"/>
 <area shape="rect" id="node11" href="$structt_n_m_e_a2000_1_1t_configuration_information.html" title="Structure that holds the Configuration Information of this device." alt="" coords="827,309,1005,350"/>
-<area shape="rect" id="node13" href="$classt_n_m_e_a2000_1_1t_c_a_n_send_frame.html" title="Structure holds all the data needed for a valide CAN&#45;Message." alt="" coords="817,425,1015,452"/>
+<area shape="rect" id="node13" href="$classt_n_m_e_a2000_1_1t_c_a_n_send_frame.html" title="Structure holds all the data needed for a valid CAN&#45;Message." alt="" coords="817,425,1015,452"/>
 </map>

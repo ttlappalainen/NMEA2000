@@ -235,7 +235,7 @@ Enumerations</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Base and default group function PGN 126208 message handler class. </p>
-<p >Group functions can be used for requesting, commanding and cofiguring other bus devices. Example setting depth sounder offset can be done by command group function. This is standard way and other devices should support it. Other common examples are changing device or system information, setting installation description, changing message period.</p>
+<p >Group functions can be used for requesting, commanding and configuring other bus devices. Example setting depth sounder offset can be done by command group function. This is standard way and other devices should support it. Other common examples are changing device or system information, setting installation description, changing message period.</p>
 <p >There are 7 different group functions defined by first field of PGN 126208</p><ul>
 <li>Request group funtion is used to request specific transmit PGN from device.</li>
 <li>Command group function can be used to command device to change fields.</li>
@@ -245,7 +245,7 @@ Enumerations</h2></td></tr>
 <li>Write fields group function is to write specific field on specific PGN on device.</li>
 <li>Write fields reply group function is for responding write fields group function.</li>
 </ul>
-<p >Request group function is mandatory for all certified devices. The default handler can only respond "unsupported" to requests other than system PGNs. To fullfill certification requirement developer should inherit base class, write supported functions and register handler class to library with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>. One can find examples for implementation from <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a>. See e.g., <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 - &quot;Configuration Information&quot;.">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
+<p >Request group function is mandatory for all certified devices. The default handler can only respond "unsupported" to requests other than system PGNs. To fulfill certification requirement developer should inherit base class, write supported functions and register handler class to library with <a class="el" href="classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44" title="Add a message handler for incoming Group Function messages.">tNMEA2000::AddGroupFunctionHandler()</a>. One can find examples for implementation from <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a>. See e.g., <a class="el" href="classt_n2k_group_function_handler_for_p_g_n126998.html" title="Default Group Function Handler for PGN 126998 - &quot;Configuration Information&quot;.">tN2kGroupFunctionHandlerForPGN126998</a>.</p>
 <p >Library has inherited default handlers for required system PGNs declared in <a class="el" href="_n2k_group_function_default_handlers_8h.html" title="The file contains default group function handler classes.">N2kGroupFunctionDefaultHandlers.h</a> . Those can be used as sample for other PGN group function handlers.</p>
 <dl class="section see"><dt>See also</dt><dd>[<a class="el" href="_n_m_e_a2000___c_a_n_8h.html#a99f6ed3fa2b0b15f276c856e10a7a3ab">NMEA2000</a> Documentation PGN 126208 ] (<a href="https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf">https://web.archive.org/web/20170609033039/http://www.nmea.org/Assets/20140109%20nmea-2000-corrigendum-tc201401031%20pgn%20126208.pdf</a>) </dd></dl>
 
@@ -368,7 +368,7 @@ Enumerations</h2></td></tr>
 <p>Error Codes Command used by acknowledge group function. </p>
 <p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6" name="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6"></a>N2kgfpec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6" name="a13e3f4a8e8456044e9c9683c4a4cec56a584bffe564200c7124880f4bd2893af6"></a>N2kgfpec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positive, no error </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c" name="a13e3f4a8e8456044e9c9683c4a4cec56a4cba2528c22c8c78883ede6bf62a206c"></a>N2kgfpec_InvalidRequestOrCommandParameterField&#160;</td><td class="fielddoc"><p >Invalid request or command parameter field </p>
 </td></tr>
@@ -403,7 +403,7 @@ Enumerations</h2></td></tr>
 <p>PGN error code used by acknowledge group function. </p>
 <p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135" name="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135"></a>N2kgfPGNec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135" name="a581366a28f5e6d0f779da0f33191629eac031a674db7b847dabf5ccdad80cd135"></a>N2kgfPGNec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positive, no error </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b" name="a581366a28f5e6d0f779da0f33191629eaeb9eacb8013299f16eb9c89cb03f941b"></a>N2kgfPGNec_PGNNotSupported&#160;</td><td class="fielddoc"><p >PGN is not supported </p>
 </td></tr>
@@ -438,7 +438,7 @@ Enumerations</h2></td></tr>
 <p>Error codes Transmit interval used by acknowledge group function. </p>
 <p >This error code carried inside the acknowledge group function gives information, if the Request, Command, Read or Write Group Function Message can be satisfied by the receiving device. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419" name="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419"></a>N2kgfTPec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positiv, no error </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419" name="aba86dcb75a6f93dded55b6817627e94fa6da31ba9f8d963e8f2b568377d730419"></a>N2kgfTPec_Acknowledge&#160;</td><td class="fielddoc"><p >Acknowledge positive, no error </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8" name="aba86dcb75a6f93dded55b6817627e94faa3c9db4584a04b676fb3a20034cc9de8"></a>N2kgfTPec_TransmitIntervalOrPriorityNotSupported&#160;</td><td class="fielddoc"><p >Transmit Interval /Priority not supported </p>
 </td></tr>

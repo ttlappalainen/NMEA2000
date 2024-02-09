@@ -205,7 +205,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a30c4976566653afa4bba9d2fe73e6ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a Configuration Information message - PGN 126998.  <a href="classt_n2k_device_list.html#a30c4976566653afa4bba9d2fe73e6ee9">More...</a><br /></td></tr>
 <tr class="separator:a30c4976566653afa4bba9d2fe73e6ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c0ce3df62c18e5266540395ade82c3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list.html#a4c0ce3df62c18e5266540395ade82c3e">HandleIsoAddressClaim</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
-<tr class="memdesc:a4c0ce3df62c18e5266540395ade82c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle Iso Address Claim Message - PGN 60928.  <a href="classt_n2k_device_list.html#a4c0ce3df62c18e5266540395ade82c3e">More...</a><br /></td></tr>
+<tr class="memdesc:a4c0ce3df62c18e5266540395ade82c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle ISO Address Claim Message - PGN 60928.  <a href="classt_n2k_device_list.html#a4c0ce3df62c18e5266540395ade82c3e">More...</a><br /></td></tr>
 <tr class="separator:a4c0ce3df62c18e5266540395ade82c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10dcd8efb822543434c1f76400858300"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_device_list.html#a10dcd8efb822543434c1f76400858300">HandleOther</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg)</td></tr>
 <tr class="memdesc:a10dcd8efb822543434c1f76400858300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles all Other messages.  <a href="classt_n2k_device_list.html#a10dcd8efb822543434c1f76400858300">More...</a><br /></td></tr>
@@ -539,7 +539,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return device by it's bus source address. </p>
-<p >Return device by it's bus source address. If there is no device with given source, function returns nul </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Return device by it's bus source address. If there is no device with given source, function returns null </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Source</td><td>Source address of the device to be searched for </td></tr>
   </table>
@@ -640,8 +640,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Handle Iso Address Claim Message - PGN 60928. </p>
-<p >This function handle an iso address claim message. It check whether the caller device is already listed at <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a> or not. If it is already listed, it checks also if the name at this source position still matches. When the name doesn't match, it moves the "old" device to a free spot in <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a>.</p>
+<p>Handle ISO Address Claim Message - PGN 60928. </p>
+<p >This function handle an ISO address claim message. It checks whether the caller device is already listed at <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a> or not. If it is already listed, it checks also if the name at this source position still matches. When the name doesn't match, it moves the "old" device to a free spot in <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a>.</p>
 <p >If the caller is completely unknown, a new device will be placed in <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -679,7 +679,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Handle NMEA2000 messages. </p>
-<p >Depending on the message PGN the correct handler (see <a class="el" href="classt_n2k_device_list.html#a4c0ce3df62c18e5266540395ade82c3e">HandleIsoAddressClaim</a>, <a class="el" href="classt_n2k_device_list.html#a09aa2060b89a8357e4e91777c237961c">HandleProductInformation</a>, <a class="el" href="classt_n2k_device_list.html#a30c4976566653afa4bba9d2fe73e6ee9">HandleConfigurationInformation</a>, <a class="el" href="classt_n2k_device_list.html#a122561b21f3a1860e0d338f3a67667c3">HandleSupportedPGNList</a>, <a class="el" href="classt_n2k_device_list.html#a10dcd8efb822543434c1f76400858300">HandleOther</a>) is chosen. If ther e is now device with this source address is listed in <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a>, a new device is added ( <a class="el" href="classt_n2k_device_list.html#add544fd3c3ea24ff54f34e0b11dd559e">AddDevice</a>).</p>
+<p >Depending on the message PGN the correct handler (see <a class="el" href="classt_n2k_device_list.html#a4c0ce3df62c18e5266540395ade82c3e">HandleIsoAddressClaim</a>, <a class="el" href="classt_n2k_device_list.html#a09aa2060b89a8357e4e91777c237961c">HandleProductInformation</a>, <a class="el" href="classt_n2k_device_list.html#a30c4976566653afa4bba9d2fe73e6ee9">HandleConfigurationInformation</a>, <a class="el" href="classt_n2k_device_list.html#a122561b21f3a1860e0d338f3a67667c3">HandleSupportedPGNList</a>, <a class="el" href="classt_n2k_device_list.html#a10dcd8efb822543434c1f76400858300">HandleOther</a>) is chosen. If there is now device with this source address is listed in <a class="el" href="classt_n2k_device_list.html#a4320b6c684c173e841f16f9312916f8e">Sources</a>, a new device is added ( <a class="el" href="classt_n2k_device_list.html#add544fd3c3ea24ff54f34e0b11dd559e">AddDevice</a>).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, </td></tr>
@@ -1039,14 +1039,14 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Request the configuration information of a specific device on the bus. </p>
-<p >This function sends out an Iso Request message in order to obtain more information about a specific device on the bus.</p>
+<p >This function sends out an ISO Request message in order to obtain more information about a specific device on the bus.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Source</td><td>Destination address of the target device </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sended successfully </dd>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sent successfully </dd>
 <dd>
 false </dd></dl>
 
@@ -1085,7 +1085,7 @@ false </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sended successfully </dd>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sent successfully </dd>
 <dd>
 false </dd></dl>
 
@@ -1118,14 +1118,14 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Request the product information of a specific device on the bus. </p>
-<p >This function sends out an Iso Request message in order to obtain more information about a specific device on the bus.</p>
+<p >This function sends out an ISO Request message in order to obtain more information about a specific device on the bus.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Source</td><td>Destination address of the target device </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sended successfully </dd>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sent successfully </dd>
 <dd>
 false </dd></dl>
 
@@ -1158,14 +1158,14 @@ false </dd></dl>
 </div><div class="memdoc">
 
 <p>Request the supported PGNs of a specific device on the bus. </p>
-<p >This function sends out an Iso Request message in order to obtain more information about a specific device on the bus.</p>
+<p >This function sends out an ISO Request message in order to obtain more information about a specific device on the bus.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Source</td><td>Destination address of the target device </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sended successfully </dd>
+<dl class="section return"><dt>Returns</dt><dd>true -&gt; Message was sent successfully </dd>
 <dd>
 false </dd></dl>
 
