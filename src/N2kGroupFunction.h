@@ -25,7 +25,7 @@
  * \file    N2kGroupFunction.h
  * \brief   Base and default group function PGN 126208 message handler class.
  * 
- * Group functions can be used for requesting, commanding and cofiguring other
+ * Group functions can be used for requesting, commanding and configuring other
  * bus devices. Example setting depth sounder offset can be done by command group
  * function. This is standard way and other devices should support it. Other common
  * examples are changing device or system information, setting installation description,
@@ -42,7 +42,7 @@
  * - Write fields reply group function is for responding write fields group function.
  * 
  * Request group function is mandatory for all certified devices. The default handler can 
- * only respond "unsupported" to requests other than system PGNs. To fullfill certification
+ * only respond "unsupported" to requests other than system PGNs. To fulfill certification
  * requirement developer should inherit base class, write supported functions and register
  * handler class to library with tNMEA2000::AddGroupFunctionHandler(). One can find examples for
  * implementation from N2kGroupFunctionDefaultHandlers.h. See e.g., tN2kGroupFunctionHandlerForPGN126998.
@@ -167,7 +167,7 @@ enum tN2kGroupFunctionCode {
  * Message can be satisfied by the receiving device.
  */
 enum tN2kGroupFunctionPGNErrorCode {
-                            /** Acknowledge positiv, no error */
+                            /** Acknowledge positive, no error */
                             N2kgfPGNec_Acknowledge=0,
                             /** PGN is not supported */
                             N2kgfPGNec_PGNNotSupported=1,
@@ -192,7 +192,7 @@ enum tN2kGroupFunctionPGNErrorCode {
  * Message can be satisfied by the receiving device.
  */
 enum tN2kGroupFunctionTransmissionOrPriorityErrorCode {
-                            /** Acknowledge positiv, no error */
+                            /** Acknowledge positive, no error */
                             N2kgfTPec_Acknowledge=0,
                             /** Transmit Interval /Priority not supported */
                             N2kgfTPec_TransmitIntervalOrPriorityNotSupported=1,
@@ -214,7 +214,7 @@ enum tN2kGroupFunctionTransmissionOrPriorityErrorCode {
  * Message can be satisfied by the receiving device.
  */
 enum tN2kGroupFunctionParameterErrorCode {
-                            /** Acknowledge positiv, no error */
+                            /** Acknowledge positive, no error */
                             N2kgfpec_Acknowledge=0,
                             /** Invalid request or command parameter field */
                             N2kgfpec_InvalidRequestOrCommandParameterField=1,
@@ -239,7 +239,7 @@ class tNMEA2000;
  * This class handles all functions which are needed to respond to group 
  * function messages. NMEA 2000 definition requires that devices should 
  * respond group function messages. This class is base class and works also as default handler, which 
- * simply responds “unsupported” for all group functions. To fullfill certification
+ * simply responds “unsupported” for all group functions. To fulfill certification
  * requirement developer should inherit this base class, write supported functions and register
  * handler class to library with tNMEA2000::AddGroupFunctionHandler(). One can find examples for
  * implementation from N2kGroupFunctionDefaultHandlers.h. See e.g., tN2kGroupFunctionHandlerForPGN126998.
@@ -249,13 +249,13 @@ class tNMEA2000;
  * PGN group function handlers.
  * 
  * NMEA 2000 library calls each registered handler class until some responses to \ref Handle
- * call true, meaning that it handled request. After get true return libray stops requesting
+ * call true, meaning that it handled request. After get true return library stops requesting
  * handling for rest registered handler classes.
  * 
  * \note If your device transmits several e.g., 130316, you must handle them with single inherited
  * handler. This is because e.g., if some device request 130316 from your device without parameters,
  * you can not return true, since then library does not handle others and you can not return false,
- * since then at end library responces with default acknowledge group function with "unsupported".
+ * since then at end library responses with default acknowledge group function with "unsupported".
  */
 class tN2kGroupFunctionHandler {
   public:
@@ -263,7 +263,7 @@ class tN2kGroupFunctionHandler {
      * \brief Template class to test does field on group function match to PGN field value
      * 
      * Some group functions contains filter fields which should match to requested/commanded 
-     * PGN field. E.g., you may receive request group funtion globally addressed (255)
+     * PGN field. E.g., you may receive request group function globally addressed (255)
      * with some group of field filters. Before you respond request all fields must
      * match to your PGN. See example tN2kGroupFunctionHandlerForPGN126996::HandleRequest().
      * 
@@ -286,7 +286,7 @@ class tN2kGroupFunctionHandler {
      * \brief Class to test does string field on group function match to PGN field value
      *
      * Some group functions contains filter fields which should match to requested/commanded 
-     * PGN field. E.g., you may receive request group funtion globally addressed (255)
+     * PGN field. E.g., you may receive request group function globally addressed (255)
      * with some group of field filters. Before you respond request all fields must
      * match to your PGN. See example tN2kGroupFunctionHandlerForPGN126996::HandleRequest().
      *
@@ -325,7 +325,7 @@ class tN2kGroupFunctionHandler {
      * Function for resolving transmission or priority error code in tN2kGroupFunctionHandler::HandleRequest
      * function according requested input and interval/offset limits requested PGN accepts.
      * Function resolves only error code. If result is N2kgfTPec_Acknowledge you have to
-     * handle also possible change for interval/offset elsewhre on your inherited HandleRequest.
+     * handle also possible change for interval/offset elsewhere on your inherited HandleRequest.
      * 
      * If you support changing for interval and/or offset for your PGN simply use function
      * as is. If you need to set offset limits set UseIntervalLimits and/or UseOffsetLimits
@@ -342,7 +342,7 @@ class tN2kGroupFunctionHandler {
      *  
      * \param TransmissionInterval    Interval for Transmission
      * \param TransmissionIntervalOffset Offset for Transmission Interval
-     * \param UseIntervalLimits       Use the Intervall limits  
+     * \param UseIntervalLimits       Use the Interval limits
      * \param IntervalMax             Maximum Interval
      * \param IntervalMin             Minimum Interval
      * \param UseOffsetLimits         Use Offset limits 
@@ -864,10 +864,10 @@ class tN2kGroupFunctionHandler {
      * \brief Send out an acknowledge group function message 
      * 
      * Function builds simple acknowledge group function message with given parameters.
-     * This is usefull for sending response for no parameters or parameters with same
+     * This is useful for sending response for no parameters or parameters with same
      * error code.
      *
-     * \param pNMEA2000                NMEA2000 oject
+     * \param pNMEA2000                NMEA2000 object
      * \param Destination              Destination source address
      * \param iDev                     Index off the device in \ref tNMEA2000::Devices
      * \param PGN                      PGN handled

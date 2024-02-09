@@ -196,7 +196,7 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
   \brief Selector for the right board
 */
 
-// Select right CAN according to prosessor
+// Select right CAN according to processor
 #if !defined(USE_N2K_CAN)
 #if  defined(__MBED__)					// Placing mbed 1st in tree, as the following CPUs can also be used in MBED IDE
 #define USE_N2K_CAN USE_N2K_MBED_CAN

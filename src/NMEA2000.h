@@ -55,29 +55,29 @@
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 #include "N2kGroupFunction.h"
 #endif
-/** \brief PGN for an Iso Address Claim message */
+/** \brief PGN for an ISO Address Claim message */
 #define N2kPGNIsoAddressClaim 60928L
 /** \brief PGN for a Production Information message */
 #define N2kPGNProductInformation 126996L
 /** \brief PGN for an Configuration Information message */
 #define N2kPGNConfigurationInformation 126998L
 
-// Document says for leghts 33,40,24,32, but then values
+// Document says for lengths 33,40,24,32, but then values
 // has not been translated right on devices.
 /** \brief Max length of ModelID
- *  Document says for leghts 33 but then values has not
+ *  Document says for length 33 but then values has not
  *  been translated right on devices. */
 #define Max_N2kModelID_len 32
 /** \brief Max length of Software Code
- *  Document says for leghts 40 but then values has not
+ *  Document says for length 40 but then values has not
  *  been translated right on devices. */
 #define Max_N2kSwCode_len 32
 /** \brief Max length of Model Version
- *  Document says for leghts 24 but then values has not
+ *  Document says for length 24 but then values has not
  *  been translated right on devices. */
 #define Max_N2kModelVersion_len 32
 /** \brief Max length of SerialCode
- *  Document says for leghts 32 but then values has not
+ *  Document says for length 32 but then values has not
  *  been translated right on devices. */
 #define Max_N2kModelSerialCode_len 32
 
@@ -93,7 +93,7 @@
  * \brief Max length of Configuration Info Fields
  * 
  * I do not know what standard says about max field length, but according 
- * to tests NMEAReader crashed with lenght >=90. Some device was reported
+ * to tests NMEAReader crashed with length >=90. Some device was reported
  * not to work string length over 70.
  */
 #define Max_N2kConfigurationInfoField_len 71  // 70 + '/0'
@@ -171,7 +171,7 @@ public:
   /************************************************************************//**
    * \brief Setting up a clean Char Buffer
    * 
-   * This functions clears an existiong buffer using \ref ClearCharBuf, 
+   * This functions clears an existing buffer using \ref ClearCharBuf,
    * copies the a string to the char buffer and terminates it with 0.
    *
    * \param str     String 
@@ -208,7 +208,7 @@ public:
    * \struct  tProductInformation
    * \brief   Structure that holds all the product information
    *
-   * It is importend that every device has proper product information 
+   * It is important that every device has proper product information
    * available. This struct holds all the data and provides several 
    * helper functions.
    * 
@@ -243,7 +243,7 @@ public:
       unsigned char LoadEquivalency;
 
       /********************************************************************//**
-       * \brief Set all the product infomation data of the structure
+       * \brief Set all the product information data of the structure
        *
        * \param _ModelSerialCode        Manufacturer's Model serial code,
        *                                default="". Max 32 chars. 
@@ -330,7 +330,7 @@ public:
          */
         unsigned char DeviceClass;
          
-        /** \brief  Industrie Group and System Instance (each 4bits)
+        /** \brief  Industry Group and System Instance (each 4bits)
          * 
          * I found document: 
          * http://www.novatel.com/assets/Documents/Bulletins/apn050.pdf it 
@@ -359,7 +359,7 @@ public:
 
     /*******************************************************************//**
      * \brief Set a unique Number to the Device Information
-     * \param _UniqueNumber   a unique number for the device (max 21.bits)
+     * \param _UniqueNumber   a unique number for the device (max 21 bits)
      */
     void SetUniqueNumber(uint32_t _UniqueNumber) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0xffe00000) | (_UniqueNumber&0x1fffff); }
 
@@ -371,7 +371,7 @@ public:
     
     /*******************************************************************//**
      * \brief Set the Manufacturer Code to the Device Information
-     * \param _ManufacturerCode Manufacturer Code (max 11bits)
+     * \param _ManufacturerCode Manufacturer Code (max 11 bits)
      */
     void SetManufacturerCode(uint16_t _ManufacturerCode) { DeviceInformation.UnicNumberAndManCode=(DeviceInformation.UnicNumberAndManCode&0x1fffff) | (((unsigned long)(_ManufacturerCode&0x7ff))<<21); }
 
@@ -462,7 +462,7 @@ public:
     uint64_t GetName() const { return DeviceInformation.Name; }
     /********************************************************************//**
      * \brief Set the Name to the Device Information
-     * \param _Name  Nmae of the device
+     * \param _Name  Name of the device
      */
     void SetName(uint64_t _Name) { DeviceInformation.Name=_Name; }
     /********************************************************************//**
@@ -513,7 +513,7 @@ public:
       inline uint64_t GetName() const { return DevI.GetName(); }
       /******************************************************************//**
       * \brief Check if two devices are the same, by comparing the device name
-      * \param Other Name of th other device
+      * \param Other Name of the other device
       * \retval true 
       * \retval false 
       */
@@ -719,10 +719,10 @@ public:
             /** Directs data to CAN bus
             */
             dm_None, 
-            /** Directs sended data to serial in clear text format
+            /** Directs sent data to serial in clear text format
             */
             dm_ClearText, 
-            /** Directs sended data to serial as Actisense format.
+            /** Directs sent data to serial as Actisense format.
             */
             dm_Actisense,  
           } tDebugMode;
@@ -746,7 +746,7 @@ protected:
    * \enum    tOpenState
    * \brief   Library open state.
    *
-   * Open state is internal library open state used to avoid anu blocking call.
+   * Open state is internal library open state used to avoid any blocking call.
    */
   typedef enum {
                   /** Open has not yet been called. Buffers are still uninitialized.
@@ -796,10 +796,10 @@ protected:
     /** \brief Timer value for AddressClaim
     */
     tN2kScheduler AddressClaimTimer;
-    /** \brief Pointer to a buffer tha holds all supported transmit 
+    /** \brief Pointer to a buffer that holds all supported transmit
      * PGNs for this device*/
     const unsigned long *TransmitMessages;
-    /** \brief Pointer to a buffer tha holds all supported receive 
+    /** \brief Pointer to a buffer that holds all supported receive
      * PGNs for this device*/
     const unsigned long *ReceiveMessages;
     /** \brief Fast packet PGNs sequence counters*/
@@ -820,7 +820,7 @@ protected:
       uint8_t NextDTSequence;
 #endif
 #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
-	/** \brief Intervall for Heartbeat */
+	/** \brief Interval for Heartbeat */
     #define DefaultHeartbeatInterval 60000
     /** \brief Scheduler for the heartbeat message */
     tN2kSyncScheduler HeartbeatScheduler;
@@ -850,7 +850,7 @@ protected:
 #endif
     }
     /*********************************************************************//**
-     * \brief Set the timestamp for Pending an Iso Address Claim message
+     * \brief Set the timestamp for Pending an ISO Address Claim message
      * \param FromNow   Variable time delay in ms
      * \sa tNMEA2000::SendIsoAddressClaim 
      */
@@ -987,7 +987,7 @@ protected:
 
     /*********************************************************************//**
      * \struct  tCANSendFrame
-     * \brief   Structure holds all the data needed for a valide CAN-Message
+     * \brief   Structure holds all the data needed for a valid CAN-Message
      */
     class tCANSendFrame
     {
@@ -1002,7 +1002,7 @@ protected:
       bool wait_sent;
 
     public:
-      /** Clears all the fieds of the CAN Message */
+      /** Clears all the fields of the CAN Message */
       void Clear() {id=0; len=0; for (int i=0; i<8; i++) { buf[i]=0; } }
     };
 
@@ -1060,10 +1060,10 @@ protected:
     */
     uint16_t MaxCANReceiveFrames;
 
-    /** \brief Callback function, which will be called when library start bus communicaion.
+    /** \brief Callback function, which will be called when library start bus communication.
     * 
     * OnOpen Will be called when library starts bus communication. At open library first starts
-    * address claming and after it has been accepted, other communication can start.
+    * address claiming and after it has been accepted, other communication can start.
     * OnOpen can be used e.g., for message timing synchronization so that every time device starts
     * messages will have same sent offset. See also SetOnOpen().
     *
@@ -1219,7 +1219,7 @@ protected:
      *  - Device Function = 130 ==> PC Gateway 
      *  - Device Class = 25  ==> Inter/Intranetwork Device. 
      *  - Manufacturer Code = 2046  ==> Maximum 2046
-     *  - Industrie Group Code = 4  ==> Marine
+     *  - Industry Group Code = 4  ==> Marine
      * 
      * \sa
      *  - https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
@@ -1311,7 +1311,7 @@ protected:
     /*********************************************************************//**
      * \brief Check if this Message is known to the system
      * 
-     * Determines wether this message is known to the system, either by beeing
+     * Determines whether this message is known to the system, either by being
      * a default, mandatory or system message or this specific message which is
      * listed in \ref SingleFrameMessages \\ \ref FastPacketMessages.
      *
@@ -1372,7 +1372,7 @@ protected:
      *
      * If there is now IsoAdressClaim procedure started for this device, we
      * respond for the requested PGN with sending IsoAddressClaim, Tx/Rx PGN 
-     * lists, Product- / Config informations or an user defined ISORqstHandler.
+     * lists, Product- / Config information or an user defined ISORqstHandler.
      * 
      * If non of this fits the RequestedPGN, we directly respond to the 
      * requester NAK. ( \ref SetN2kPGNISOAcknowledgement)
@@ -1384,7 +1384,7 @@ protected:
     void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
 
     /*********************************************************************//**
-     * \brief Handles an Iso Request
+     * \brief Handles an ISO Request
      * 
      * The function determines if the request is for us (Broadcast message or
      * device in our list) and responds to the request.
@@ -1614,7 +1614,7 @@ protected:
      * \param PGN           PGN 
      * \param Source        Source address 
      * \param Destination   Destination address
-     * \param len           len of the data payload
+     * \param len           length of the data payload
      * \param buf           pointer to a byte buffer for the 
      * \param MsgIndex      MsgIndex for \ref N2kCANMsgBuf
      * 
@@ -1652,7 +1652,7 @@ protected:
      *
      * \param PGN                 PGN  
      * \param Destination         Destination address
-     * \param iDev    index of the device on \ref Devices
+     * \param iDev                index of the device on \ref Devices
      * \param nPackets            Number of packets
      * \param NextPacketNumber    Number of the next packet
      * 
@@ -1664,7 +1664,7 @@ protected:
      *
      * \param PGN                 PGN  
      * \param Destination         Destination address
-     * \param iDev    index of the device on \ref Devices
+     * \param iDev                index of the device on \ref Devices
      * \param nBytes              Number of bytes
      * \param nPackets            Number of packets
      */
@@ -1675,7 +1675,7 @@ protected:
      *
      * \param PGN               PGN  
      * \param Destination       Destination address
-     * \param iDev    index of the device on \ref Devices
+     * \param iDev              index of the device on \ref Devices
      * \param AbortCode         Abort Code 
      */
     void SendTPCM_Abort(unsigned long PGN, unsigned char Destination, int iDev, unsigned char AbortCode);
@@ -1795,7 +1795,7 @@ public:
      * If buffer size is too small, there is risk that all fast packet messages
      * will not be handled. Even your own logic does not listen any fast packet
      * messages, internal logic listens group functions PGN 126208, which may
-     * contain inportant requests library should respond. If library does not
+     * contain important requests library should respond. If library does not
      * respond to all required requests, there is risk that other devices drops
      * your device information.
      * 
@@ -1875,7 +1875,7 @@ public:
      * With this function you define how your device will show up for other devices on NMEA2000 bus.
      *
      * Define your product information. Defaults will be set on initialization.
-     * For keeping defaults use 0xffff/0xff for int/char values and nul ptr
+     * For keeping defaults use 0xffff/0xff for int/char values and null ptr
      * for pointers. LoadEquivalency is multiplication of 50 mA, what your 
      * device will take power from NMEA2000 bus. E.g. for Arduino only it can 
      * be 1 (=50mA). If your device does not take power from bus, set this 
@@ -1921,7 +1921,7 @@ public:
      * \note I have not yet found a way to test is pointer in PROGMEM or not,
      * so this does not work, if you define tProductInformation to RAM.
      * 
-     * \param _ProductInformation   Productinformation, see \ref 
+     * \param _ProductInformation   Product information, see \ref
      *                              tProductInformation
      * \param iDev    index of the device on \ref Devices
      */
@@ -1967,8 +1967,8 @@ public:
      * will be saved on device program memory.
      * See example BatteryMonitor.ino.
      * 
-     * This function is usefull only on MCUs with very small RAM. By using
-     * PROGMEM, indtallation description can not be changed by group function.  
+     * This function is useful only on MCUs with very small RAM. By using
+     * PROGMEM, installation description can not be changed by group function.
      * 
      * As default system has build in configuration information on progmem. 
      * If you do not want to have configuration information at all, 
@@ -2254,7 +2254,7 @@ public:
      * your device own logic sends.
      * 
      * \note Extending transmit messages is required for \ref secRefNMEA2000Certification,
-     * may be also critical since some devices refuces to handle PGNs from devices,
+     * may be also critical since some devices refuses to handle PGNs from devices,
      * which does not list them on transmit messages.
      * 
      * This has only effect for device modes \ref tNMEA2000::N2km_NodeOnly and \ref 
@@ -2305,7 +2305,7 @@ public:
      * you call this function on setup to define your device.
      * 
      * For keeping defaults use 0xffff/0xff for int/char values and 
-     * nul ptr for pointers.
+     * null ptr for pointers.
      * 
      * \note You should set information so that it is unique over the 
      * world! Well if you are making device only for your own yacht N2k 
@@ -2495,7 +2495,7 @@ public:
      * Function allows to set interval over 60 s or 0 to disable sending for test purposes.
      *
      * \param interval      Heartbeat Interval in ms. 0xffffffff=keep current, 0xfffffffe=restore default
-     * \param offset  		  Heartbeat Offset in ms. 0xffffffff=keep current, 0xfffffffe=restore default 
+     * \param offset  		Heartbeat Offset in ms. 0xffffffff=keep current, 0xfffffffe=restore default
      * \param iDev          Index of the device on \ref Devices or -1 to set for all.
      */
     void SetHeartbeatIntervalAndOffset(uint32_t interval, uint32_t offset=0, int iDev=-1);
@@ -2677,9 +2677,9 @@ public:
      * \param DeviceIndex     index of the device on \ref Devices \n
      *                        Setting DeviceIndex to -1 forces library
      *                        to use source address of N2kMsg instead of
-     *                        device source address. This is usefull with
-     *                        e.g., passthrough gateway devices.     
-     * \retval true           Message sent or buffered succesfully.
+     *                        device source address. This is useful with
+     *                        e.g., passthrough gateway devices.
+     * \retval true           Message sent or buffered successfully.
      * \retval false          Open has not finished. Address claiming has not finished.
      *                         There is no more room on send buffer, which may be caused
      *                         by too small send buffer or CAN controller can not sent messages
@@ -2718,7 +2718,7 @@ public:
      *
      * OnOpen will be called, when communication really opens
      * and starts initial address claiming. You can use this to init your message sending
-     * to syncronize them with e.g., heartbeat.
+     * to synchronize them with e.g., heartbeat.
      *
      * \note In future OnOpen may be called several times, if communication will be reopened
      * by \ref Restart or driver error. Developer must take care that possible memory

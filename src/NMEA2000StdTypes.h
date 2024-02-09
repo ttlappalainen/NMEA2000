@@ -37,7 +37,7 @@
  * into corresponding long names (once again, exactly as described by NMEA). 
  * 
  * 
- *  Ressources NMEA 2000 ®  Appendix B.2 -- Data Dictionary
+ *  Resources NMEA 2000 ®  Appendix B.2 -- Data Dictionary
  * 
  *  - https://hobbydocbox.com/Radio/106823300-Data-dictionary-report-by-number-national-marine-electronics-association-nmea-appendix-b-2-data-dictionary.html
  *  - https://www.nmea.org/Assets/20190613%20thruster%20amendment%20128006,%20128007,%20128008.pdf

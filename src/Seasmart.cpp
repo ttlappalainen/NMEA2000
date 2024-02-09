@@ -95,7 +95,7 @@ size_t N2kToSeasmart(const tN2kMsg &msg, uint32_t timestamp, char *buffer, size_
 }
 
 /*
- * Attemts to read n bytes in hexadecimal from input string to value.
+ * Attempts to read n bytes in hexadecimal from input string to value.
  *
  * Returns true if successful, false otherwise.
  */

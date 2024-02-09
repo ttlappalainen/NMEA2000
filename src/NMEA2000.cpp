@@ -108,7 +108,7 @@ void N2kPrintFreeMemory(const char *Source) {
 
 /** \brief Timeout value for the ISO Address Claim in ms*/
 #define N2kAddressClaimTimeout 250
-/** \brief Maximum value for the Iso Heartbeat interval in ms */
+/** \brief Maximum value for the ISO Heartbeat interval in ms */
 #define MaxHeartbeatInterval 655320UL
 
 /** \brief Max frames, which can be received at time */
@@ -134,8 +134,8 @@ void N2kPrintFreeMemory(const char *Source) {
 /** \brief System resources were needed for another task so this connection 
  * managed session was terminated */
 #define TP_CM_AbortNoResources 2
-/** \brief A timeout occurred and this is the connection abort to close the s
- * ession */
+/** \brief A timeout occurred and this is the connection abort to close the
+ * session */
 #define TP_CM_AbortTimeout 3
 
 /************************************************************************//**
@@ -154,7 +154,7 @@ void N2kPrintFreeMemory(const char *Source) {
  * - 126996L Product information, pri=6, period=NA
  * - 126998L Configuration information, pri=6, period=NA
  * 
- * This lis is terminated by 0.
+ * This list is terminated by 0.
  *
  */
 const unsigned long DefTransmitMessages[] PROGMEM = {
@@ -188,7 +188,7 @@ const unsigned long DefTransmitMessages[] PROGMEM = {
  * - 65240L Commanded Address
  * - 126208L NMEA Request/Command/Acknowledge group function
  * 
- * This lis is terminated by 0.
+ * This list is terminated by 0.
  *
  */
 const unsigned long DefReceiveMessages[] PROGMEM = {
@@ -587,7 +587,7 @@ bool tNMEA2000::IsProprietaryMessage(unsigned long PGN) {
 /************************************************************************//**
  * \brief Default Product Information 
  * 
- * This structure holds the default Produkt Information of the device:
+ * This structure holds the default Product Information of the device:
  * 
  * - N2kVersion = 2101
  * - ProductCode = 666
@@ -2321,7 +2321,7 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
         }
 
         tN2kMsg   N2kMsgR;
-        // No user handler, or there was one and it retured FALSE.  Send NAK
+        // No user handler, or there was one and it returned FALSE.  Send NAK
         SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);
         // Direct the response to original requester.
         N2kMsgR.Destination  = N2kMsg.Source;
@@ -2621,9 +2621,9 @@ void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
   if ( MsgHandler!=0 ) MsgHandler(N2kMsg);
 
   tMsgHandler *MsgHandler=MsgHandlers;
-  // Loop through all pgn handlers
+  // Loop through all PGN handlers
   for ( ;MsgHandler!=0 && MsgHandler->GetPGN()==0; MsgHandler=MsgHandler->pNext) MsgHandler->HandleMsg(N2kMsg);
-  // Loop through specific pgn handlers
+  // Loop through specific PGN handlers
   for ( ;MsgHandler!=0 && MsgHandler->GetPGN()<=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
     if ( MsgHandler->GetPGN()==N2kMsg.PGN ) MsgHandler->HandleMsg(N2kMsg);
   }
@@ -2819,7 +2819,7 @@ size_t StrLen(const char *str) {
 }
 
 //*****************************************************************************
-// Configuration information
+// Configuration Information
 void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *ManufacturerInformation,
                      const char *InstallationDescription1,
@@ -2883,7 +2883,7 @@ bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
 }
 
 //*****************************************************************************
-// Iso request
+// ISO Request
 void SetN2kPGN59904(tN2kMsg &N2kMsg, uint8_t Destination, unsigned long RequestedPGN) {
     N2kMsg.SetPGN(59904L);
     N2kMsg.Destination=Destination;

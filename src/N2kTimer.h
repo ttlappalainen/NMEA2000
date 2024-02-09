@@ -29,7 +29,7 @@
  * \brief The file contains function and classes for best timing performance
  * 
  * Module is designed to hide millis() function from library and provide 
- * best performace way for timings.
+ * best performance way for timings.
  * 
  * N2kMillis64() is 64 bit millisecond timer, which practically never
  * roll over.
@@ -139,7 +139,7 @@ public:
    * This function initializes all parameters.
    *
    * \param Enable      default = false
-   * \param _Period     Periode [ms] of the scheduler, default = 0
+   * \param _Period     Period [ms] of the scheduler, default = 0
    * \param _Offset     Offset [ms] of the scheduler, default = 0
    */
   tN2kSyncScheduler(bool Enable=false, uint32_t _Period=0, uint32_t _Offset=0) { 
@@ -338,7 +338,7 @@ public:
   }
 
   /************************************************************************//**
-   * \brief Set Timestamp for next event relativ to now
+   * \brief Set Timestamp for next event relative to now
    *
    * \param _Add Time delay from now for next event
    */
