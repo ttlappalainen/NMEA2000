@@ -209,8 +209,8 @@ void tN2kMsg::AddByte(unsigned char v) {
 }
 
 //*****************************************************************************
-void tN2kMsg::AddStr(const char *str, int len, bool UsePgm) {
-  SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
+void tN2kMsg::AddStr(const char *str, int len, bool UsePgm, unsigned char fillChar) {
+  SetBufStr(str,len,DataLen,Data,UsePgm,fillChar);
 }
 
 //*****************************************************************************
