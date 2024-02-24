@@ -4,7 +4,8 @@
 ## 23.02.2024
 
 - Compatibility change: Parsers ParseN2kPGN129809, ParseN2kPGN129810 and ParseN2kPGN129794 parameter list 
-	Added bufer length fields for Name, Callsign, and Destination
+	Added buffer length fields for Name, Callsign, and Destination
+- Fixed PGN 129809, 129810, 129794 string handling. AIS strings uses @ for padding.
 
 ## 09.02.2024
 
