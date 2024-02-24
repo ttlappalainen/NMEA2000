@@ -946,8 +946,9 @@ public:
   * \param str   String as pointer to a char array
   * \param len   Length of the string
   * \param UsePgm {bool} use the pgm_read_byte function
+  * \param fillChar character to for padding at end of strings
   */
-  void AddStr(const char *str, int len, bool UsePgm=false);
+  void AddStr(const char *str, int len, bool UsePgm=false, unsigned char fillChar=0xff);
 
  /************************************************************************//**
   * \brief Add string value to the buffer

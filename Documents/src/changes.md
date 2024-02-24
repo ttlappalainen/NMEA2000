@@ -1,6 +1,11 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 23.02.2024
+
+- Compatibility change: Parsers ParseN2kPGN129809, ParseN2kPGN129810 and ParseN2kPGN129794 parameter list 
+	Added bufer length fields for Name, Callsign, and Destination
+
 ## 09.02.2024
 
 - Fix multiple spelling errors in comments. Thanks to garaminowicz.

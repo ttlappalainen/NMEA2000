@@ -1621,8 +1621,8 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteUInt(IMOnumber);
-    N2kMsg.AddStr(Callsign, 7);
-    N2kMsg.AddStr(Name, 20);
+    N2kMsg.AddStr(Callsign, 7, false, '@');
+    N2kMsg.AddStr(Name, 20, false, '@');
     N2kMsg.AddByte(VesselType);
     N2kMsg.Add2ByteDouble(Length, 0.1);
     N2kMsg.Add2ByteDouble(Beam, 0.1);
@@ -1631,16 +1631,16 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUInt(ETAdate);
     N2kMsg.Add4ByteUDouble(ETAtime, 0.0001);
     N2kMsg.Add2ByteDouble(Draught, 0.01);
-    N2kMsg.AddStr(Destination, 20);
+    N2kMsg.AddStr(Destination, false, 20, '@');
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
     N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
     N2kMsg.AddByte(0xff);
 }
 
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t &IMOnumber, char *Callsign, char *Name, uint8_t &VesselType, double &Length,
+                        uint32_t &IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize,uint8_t &VesselType, double &Length,
                         double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+                        double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
                         tN2kAISDTE &DTE, tN2kAISTransceiverInformation &AISinfo)
 {
     if (N2kMsg.PGN!=129794L) return false;
@@ -1651,8 +1651,8 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
     UserID=N2kMsg.Get4ByteUInt(Index);
     IMOnumber=N2kMsg.Get4ByteUInt(Index);
-    N2kMsg.GetStr(Callsign, 7, Index);
-    N2kMsg.GetStr(Name, 20, Index);
+    N2kMsg.GetStr(CallsignBufSize, Callsign, 7, '@', Index);
+    N2kMsg.GetStr(NameBufSize, Name, 20, '@', Index);
     VesselType=N2kMsg.GetByte(Index);
     Length=N2kMsg.Get2ByteDouble(0.1, Index);
     Beam=N2kMsg.Get2ByteDouble(0.1, Index);
@@ -1661,7 +1661,7 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     ETAdate=N2kMsg.Get2ByteUInt(Index);
     ETAtime=N2kMsg.Get4ByteUDouble(0.0001, Index);
     Draught=N2kMsg.Get2ByteDouble(0.01, Index);
-    N2kMsg.GetStr(Destination, 20, Index);
+    N2kMsg.GetStr(DestinationBufSize, Destination, 20, '@', Index);
     vb=N2kMsg.GetByte(Index); AISversion=(tN2kAISVersion)(vb & 0x03); GNSStype=(tN2kGNSStype)(vb>>2 & 0x0f); DTE=(tN2kAISDTE)(vb>>6 & 0x01);
     vb=N2kMsg.GetByte(Index); AISinfo=(tN2kAISTransceiverInformation)(vb & 0x1f);
 
@@ -1676,10 +1676,10 @@ void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Priority=6;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
-    N2kMsg.AddStr(Name, 20);
+    N2kMsg.AddStr(Name, 20, false, '@');
 }
 
-bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name)
+bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSize)
 {
     if (N2kMsg.PGN!=129809L) return false;
 
@@ -1688,7 +1688,7 @@ bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
     UserID=N2kMsg.Get4ByteUInt(Index);
-    N2kMsg.GetStr(Name, 20, Index);
+    N2kMsg.GetStr(NameBufSize, Name, 20, '@', Index);
 
     return true;
 }
@@ -1704,8 +1704,8 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.AddByte(VesselType);
-    N2kMsg.AddStr(Vendor, 7);
-    N2kMsg.AddStr(Callsign, 7);
+    N2kMsg.AddStr(Vendor, 7, false, '@');
+    N2kMsg.AddStr(Callsign, 7, false, '@');
     N2kMsg.Add2ByteUDouble(Length, 0.1);
     N2kMsg.Add2ByteUDouble(Beam, 0.1);
     N2kMsg.Add2ByteUDouble(PosRefStbd, 0.1);
@@ -1715,7 +1715,7 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
 }
 
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, char *Callsign, double &Length, double &Beam,
+                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID)
 {
     if (N2kMsg.PGN!=129810L) return false;
@@ -1726,8 +1726,8 @@ bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     vb=N2kMsg.GetByte(Index); MessageID=(vb & 0x3f); Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
     UserID=N2kMsg.Get4ByteUInt(Index);
     VesselType=N2kMsg.GetByte(Index);
-    N2kMsg.GetStr(Vendor, 7, Index);
-    N2kMsg.GetStr(Callsign, 7, Index);
+    N2kMsg.GetStr(VendorBufSize, Vendor, 7, '@', Index);
+    N2kMsg.GetStr(CallsignBufSize, Callsign, 7, '@', Index);
     Length = N2kMsg.Get2ByteUDouble(0.1, Index);
     Beam = N2kMsg.Get2ByteUDouble(0.1, Index);
     PosRefStbd = N2kMsg.Get2ByteUDouble(0.1, Index);
