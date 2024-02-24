@@ -179,9 +179,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4">AddFloat</a> (float v, float UndefVal=<a class="el" href="_n2k_msg_8h.html#ab95c498bff0bb973d532641ca216723e">N2kFloatNA</a>)</td></tr>
 <tr class="memdesc:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add float value to the buffer This method adds a float value to the message buffer using <a class="el" href="_n2k_msg_8h.html#aa5e10e7e62b233b41018ab9c3b907ef2">SetBufFloat</a> The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4">More...</a><br /></td></tr>
 <tr class="separator:a15e6ff99aa27d4ef355cb1248c2402d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a719ea5181274ce242045a46fe7a8af1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c">AddStr</a> (const char *str, int len, bool UsePgm=false)</td></tr>
-<tr class="memdesc:a719ea5181274ce242045a46fe7a8af1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add string value to the buffer The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c">More...</a><br /></td></tr>
-<tr class="separator:a719ea5181274ce242045a46fe7a8af1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4ba32556104d3a10d9c644cca6809a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a1a4ba32556104d3a10d9c644cca6809a">AddStr</a> (const char *str, int len, bool UsePgm=false, unsigned char fillChar=0xff)</td></tr>
+<tr class="memdesc:a1a4ba32556104d3a10d9c644cca6809a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add string value to the buffer The string will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a1a4ba32556104d3a10d9c644cca6809a">More...</a><br /></td></tr>
+<tr class="separator:a1a4ba32556104d3a10d9c644cca6809a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a602a0146af8d99e6c91fd8afd11ec245"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245">AddUInt64</a> (uint64_t v)</td></tr>
 <tr class="memdesc:a602a0146af8d99e6c91fd8afd11ec245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add unsigned integer value to the buffer using 8 bytes The value will be added to the end (indicated by <a class="el" href="classt_n2k_msg.html#af304b7211179a8216138fe61a1e6be9f">DataLen</a>) of the byte array <a class="el" href="classt_n2k_msg.html#a01ad108e237eb28230b45028a2fbc924">Data</a>.  <a href="classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245">More...</a><br /></td></tr>
 <tr class="separator:a602a0146af8d99e6c91fd8afd11ec245"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -986,8 +986,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a719ea5181274ce242045a46fe7a8af1c" name="a719ea5181274ce242045a46fe7a8af1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a719ea5181274ce242045a46fe7a8af1c">&#9670;&nbsp;</a></span>AddStr()</h2>
+<a id="a1a4ba32556104d3a10d9c644cca6809a" name="a1a4ba32556104d3a10d9c644cca6809a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a4ba32556104d3a10d9c644cca6809a">&#9670;&nbsp;</a></span>AddStr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1008,7 +1008,13 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>UsePgm</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>UsePgm</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>fillChar</em> = <code>0xff</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1024,6 +1030,7 @@ Protected Attributes</h2></td></tr>
     <tr><td class="paramname">str</td><td>String as pointer to a char array </td></tr>
     <tr><td class="paramname">len</td><td>Length of the string </td></tr>
     <tr><td class="paramname">UsePgm</td><td>{bool} use the pgm_read_byte function </td></tr>
+    <tr><td class="paramname">fillChar</td><td>character to for padding at end of strings </td></tr>
   </table>
   </dd>
 </dl>

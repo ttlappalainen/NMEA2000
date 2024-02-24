@@ -16,7 +16,7 @@ var classt_n2k_msg =
     [ "AddBuf", "classt_n2k_msg.html#a667f843d629fb485389f40b8bb0bf20e", null ],
     [ "AddByte", "classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c", null ],
     [ "AddFloat", "classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4", null ],
-    [ "AddStr", "classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c", null ],
+    [ "AddStr", "classt_n2k_msg.html#a1a4ba32556104d3a10d9c644cca6809a", null ],
     [ "AddUInt64", "classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245", null ],
     [ "AddVarStr", "classt_n2k_msg.html#a760ba7be88a03a34cd138cac8853ccda", null ],
     [ "CheckDestination", "classt_n2k_msg.html#aa531cb5b3e45a907f77fa3fd8236cc6a", null ],

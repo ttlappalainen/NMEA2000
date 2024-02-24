@@ -139,21 +139,21 @@ Functions</h2></td></tr>
 <tr class="memitem:gafe92399b3783b7bb117ed7f2b190ac5c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gafe92399b3783b7bb117ed7f2b190ac5c">ParseN2kAISClassAPosition</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, double &amp;Latitude, double &amp;Longitude, bool &amp;Accuracy, bool &amp;RAIM, uint8_t &amp;Seconds, double &amp;COG, double &amp;SOG, double &amp;Heading, double &amp;ROT, <a class="el" href="group__group__msg_types.html#gab46a3ab176299c0d16320449b9ca61f8">tN2kAISNavStatus</a> &amp;NavStatus)</td></tr>
 <tr class="memdesc:gafe92399b3783b7bb117ed7f2b190ac5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS position reports for Class A" message - PGN 129038.  <a href="group__group__msg_parsers.html#gafe92399b3783b7bb117ed7f2b190ac5c">More...</a><br /></td></tr>
 <tr class="separator:gafe92399b3783b7bb117ed7f2b190ac5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaff8be7f1277b66078ee16a21a248982f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaff8be7f1277b66078ee16a21a248982f">ParseN2kAISClassAStatic</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint32_t &amp;IMOnumber, char *Callsign, char *Name, uint8_t &amp;VesselType, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint16_t &amp;ETAdate, double &amp;ETAtime, double &amp;Draught, char *Destination, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> &amp;DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISinfo)</td></tr>
-<tr class="memdesc:gaff8be7f1277b66078ee16a21a248982f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class A" message - PGN 129794.  <a href="group__group__msg_parsers.html#gaff8be7f1277b66078ee16a21a248982f">More...</a><br /></td></tr>
-<tr class="separator:gaff8be7f1277b66078ee16a21a248982f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8ece0a3f4938b7b3da84f5dfcf245bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gad8ece0a3f4938b7b3da84f5dfcf245bd">ParseN2kAISClassAStatic</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint32_t &amp;IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &amp;VesselType, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint16_t &amp;ETAdate, double &amp;ETAtime, double &amp;Draught, char *Destination, size_t DestinationBufSize, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> &amp;DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISinfo)</td></tr>
+<tr class="memdesc:gad8ece0a3f4938b7b3da84f5dfcf245bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class A" message - PGN 129794.  <a href="group__group__msg_parsers.html#gad8ece0a3f4938b7b3da84f5dfcf245bd">More...</a><br /></td></tr>
+<tr class="separator:gad8ece0a3f4938b7b3da84f5dfcf245bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93afed30c03278896cfcc829fe949ad5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga93afed30c03278896cfcc829fe949ad5">ParseN2kAISClassBPosition</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, double &amp;Latitude, double &amp;Longitude, bool &amp;Accuracy, bool &amp;RAIM, uint8_t &amp;Seconds, double &amp;COG, double &amp;SOG, double &amp;Heading, <a class="el" href="group__group__msg_types.html#ga83ba87b4811d1e75daa47358bee034b8">tN2kAISUnit</a> &amp;Unit, bool &amp;Display, bool &amp;DSC, bool &amp;Band, bool &amp;Msg22, <a class="el" href="group__group__msg_types.html#ga15e6ecae32fe7903ff0bfea36775181e">tN2kAISMode</a> &amp;Mode, bool &amp;State)</td></tr>
 <tr class="memdesc:ga93afed30c03278896cfcc829fe949ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS position reports for Class B" message - PGN 129039.  <a href="group__group__msg_parsers.html#ga93afed30c03278896cfcc829fe949ad5">More...</a><br /></td></tr>
 <tr class="separator:ga93afed30c03278896cfcc829fe949ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c66d9dfdbc264716fb509a9ae62a2b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga5c66d9dfdbc264716fb509a9ae62a2b4">ParseN2kAISClassBPosition</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, double &amp;Latitude, double &amp;Longitude, bool &amp;Accuracy, bool &amp;RAIM, uint8_t &amp;Seconds, double &amp;COG, double &amp;SOG, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISTransceiverInformation, double &amp;Heading, <a class="el" href="group__group__msg_types.html#ga83ba87b4811d1e75daa47358bee034b8">tN2kAISUnit</a> &amp;Unit, bool &amp;Display, bool &amp;DSC, bool &amp;Band, bool &amp;Msg22, <a class="el" href="group__group__msg_types.html#ga15e6ecae32fe7903ff0bfea36775181e">tN2kAISMode</a> &amp;Mode, bool &amp;State)</td></tr>
 <tr class="memdesc:ga5c66d9dfdbc264716fb509a9ae62a2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS position reports for Class B" message - PGN 129039.  <a href="group__group__msg_parsers.html#ga5c66d9dfdbc264716fb509a9ae62a2b4">More...</a><br /></td></tr>
 <tr class="separator:ga5c66d9dfdbc264716fb509a9ae62a2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a35a903d23ee0e076f770f2f066806e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga7a35a903d23ee0e076f770f2f066806e">ParseN2kAISClassBStaticPartA</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, char *Name)</td></tr>
-<tr class="memdesc:ga7a35a903d23ee0e076f770f2f066806e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class B part A" message - PGN 129809.  <a href="group__group__msg_parsers.html#ga7a35a903d23ee0e076f770f2f066806e">More...</a><br /></td></tr>
-<tr class="separator:ga7a35a903d23ee0e076f770f2f066806e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedb7397998fc5b343d15416a309969fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaedb7397998fc5b343d15416a309969fd">ParseN2kAISClassBStaticPartB</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint8_t &amp;VesselType, char *Vendor, char *Callsign, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint32_t &amp;MothershipID)</td></tr>
-<tr class="memdesc:gaedb7397998fc5b343d15416a309969fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class B part B" message - PGN 129810.  <a href="group__group__msg_parsers.html#gaedb7397998fc5b343d15416a309969fd">More...</a><br /></td></tr>
-<tr class="separator:gaedb7397998fc5b343d15416a309969fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe5bfed82db25cff73061b9b9cd4636d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gabe5bfed82db25cff73061b9b9cd4636d">ParseN2kAISClassBStaticPartA</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, char *Name, size_t NameBufSize)</td></tr>
+<tr class="memdesc:gabe5bfed82db25cff73061b9b9cd4636d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class B part A" message - PGN 129809.  <a href="group__group__msg_parsers.html#gabe5bfed82db25cff73061b9b9cd4636d">More...</a><br /></td></tr>
+<tr class="separator:gabe5bfed82db25cff73061b9b9cd4636d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e96bee567da66aaebc5f9130737b340"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga4e96bee567da66aaebc5f9130737b340">ParseN2kAISClassBStaticPartB</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint8_t &amp;VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint32_t &amp;MothershipID)</td></tr>
+<tr class="memdesc:ga4e96bee567da66aaebc5f9130737b340"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS static data class B part B" message - PGN 129810.  <a href="group__group__msg_parsers.html#ga4e96bee567da66aaebc5f9130737b340">More...</a><br /></td></tr>
+<tr class="separator:ga4e96bee567da66aaebc5f9130737b340"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadda6e2e2f930aedea5748485899e2eb8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gadda6e2e2f930aedea5748485899e2eb8">ParseN2kAISSafetyRelatedBroadcastMsg</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;SourceID, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISTransceiverInformation, char *SafetyRelatedText, size_t &amp;SafetyRelatedTextMaxSize)</td></tr>
 <tr class="memdesc:gadda6e2e2f930aedea5748485899e2eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of a "AIS Safety Related Broadcast Message" message - PGN 129802.  <a href="group__group__msg_parsers.html#gadda6e2e2f930aedea5748485899e2eb8">More...</a><br /></td></tr>
 <tr class="separator:gadda6e2e2f930aedea5748485899e2eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -387,21 +387,21 @@ Configuration Status".  <a href="group__group__msg_parsers.html#ga44f24a92b76bbd
 <tr class="memitem:ga6dbd7233a8e289095e5479aae2127319"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga6dbd7233a8e289095e5479aae2127319">ParseN2kPGN129540</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, <a class="el" href="group__group__msg_types.html#ga618c24960fcbfb338c5d29ef034c5cc1">tN2kRangeResidualMode</a> &amp;Mode, uint8_t &amp;NumberOfSVs)</td></tr>
 <tr class="memdesc:ga6dbd7233a8e289095e5479aae2127319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129540 "GNSS Satellites in View".  <a href="group__group__msg_parsers.html#ga6dbd7233a8e289095e5479aae2127319">More...</a><br /></td></tr>
 <tr class="separator:ga6dbd7233a8e289095e5479aae2127319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0466b88325e5d6440221f868b6dff8ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga0466b88325e5d6440221f868b6dff8ec">ParseN2kPGN129794</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint32_t &amp;IMOnumber, char *Callsign, char *Name, uint8_t &amp;VesselType, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint16_t &amp;ETAdate, double &amp;ETAtime, double &amp;Draught, char *Destination, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> &amp;DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISinfo)</td></tr>
-<tr class="memdesc:ga0466b88325e5d6440221f868b6dff8ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129794 "AIS static data class A".  <a href="group__group__msg_parsers.html#ga0466b88325e5d6440221f868b6dff8ec">More...</a><br /></td></tr>
-<tr class="separator:ga0466b88325e5d6440221f868b6dff8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46593036e0356dd46656a9734a04babb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga46593036e0356dd46656a9734a04babb">ParseN2kPGN129794</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint32_t &amp;IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &amp;VesselType, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint16_t &amp;ETAdate, double &amp;ETAtime, double &amp;Draught, char *Destination, size_t DestinationBufSize, <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;AISversion, <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> &amp;GNSStype, <a class="el" href="group__group__msg_types.html#ga19fcb4aaa8814904b89835d2657bb67e">tN2kAISDTE</a> &amp;DTE, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISinfo)</td></tr>
+<tr class="memdesc:ga46593036e0356dd46656a9734a04babb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129794 "AIS static data class A".  <a href="group__group__msg_parsers.html#ga46593036e0356dd46656a9734a04babb">More...</a><br /></td></tr>
+<tr class="separator:ga46593036e0356dd46656a9734a04babb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1394e40e0e184fe9965fec81f52c11bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga1394e40e0e184fe9965fec81f52c11bc">ParseN2kPGN129802</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;SourceID, <a class="el" href="group__group__msg_types.html#gae7f8142668a3c9396ada7d2e725eb15a">tN2kAISTransceiverInformation</a> &amp;AISTransceiverInformation, char *SafetyRelatedText, size_t &amp;SafetyRelatedTextMaxSize)</td></tr>
 <tr class="memdesc:ga1394e40e0e184fe9965fec81f52c11bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the Content of a PGN129802 Message - "AIS Safety Related 
 Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe9965fec81f52c11bc">More...</a><br /></td></tr>
 <tr class="separator:ga1394e40e0e184fe9965fec81f52c11bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17043280910eb290a64f5ca40de8772b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b">ParseN2kPGN129809</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, char *Name)</td></tr>
-<tr class="memdesc:ga17043280910eb290a64f5ca40de8772b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129809 "AIS static data
-       class B part A".  <a href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b">More...</a><br /></td></tr>
-<tr class="separator:ga17043280910eb290a64f5ca40de8772b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62">ParseN2kPGN129810</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint8_t &amp;VesselType, char *Vendor, char *Callsign, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint32_t &amp;MothershipID)</td></tr>
-<tr class="memdesc:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129810 "AIS static data
-       class B part B".  <a href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62">More...</a><br /></td></tr>
-<tr class="separator:gaed4ec1cfb260fea53a0f0b1bef729c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa2d780d51e04acbbf233377bbf85c97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gafa2d780d51e04acbbf233377bbf85c97">ParseN2kPGN129809</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, char *Name, size_t NameBufSize)</td></tr>
+<tr class="memdesc:gafa2d780d51e04acbbf233377bbf85c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129809 "AIS static data
+       class B part A".  <a href="group__group__msg_parsers.html#gafa2d780d51e04acbbf233377bbf85c97">More...</a><br /></td></tr>
+<tr class="separator:gafa2d780d51e04acbbf233377bbf85c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2294b30167c2842e2f2b751ebb1479f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#gab2294b30167c2842e2f2b751ebb1479f">ParseN2kPGN129810</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, uint8_t &amp;MessageID, <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> &amp;Repeat, uint32_t &amp;UserID, uint8_t &amp;VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &amp;Length, double &amp;Beam, double &amp;PosRefStbd, double &amp;PosRefBow, uint32_t &amp;MothershipID)</td></tr>
+<tr class="memdesc:gab2294b30167c2842e2f2b751ebb1479f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 129810 "AIS static data
+       class B part B".  <a href="group__group__msg_parsers.html#gab2294b30167c2842e2f2b751ebb1479f">More...</a><br /></td></tr>
+<tr class="separator:gab2294b30167c2842e2f2b751ebb1479f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga312bf9c8c53d076be8de22eca21283f5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__msg_parsers.html#ga312bf9c8c53d076be8de22eca21283f5">ParseN2kPGN130306</a> (const <a class="el" href="classt_n2k_msg.html">tN2kMsg</a> &amp;N2kMsg, unsigned char &amp;SID, double &amp;WindSpeed, double &amp;WindAngle, <a class="el" href="group__group__msg_types.html#ga7e2df5fcd75db7834060bc276d1b741f">tN2kWindReference</a> &amp;WindReference)</td></tr>
 <tr class="memdesc:ga312bf9c8c53d076be8de22eca21283f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing the content of message PGN 130306 "Wind Data".  <a href="group__group__msg_parsers.html#ga312bf9c8c53d076be8de22eca21283f5">More...</a><br /></td></tr>
 <tr class="separator:ga312bf9c8c53d076be8de22eca21283f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -648,8 +648,8 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 
 </div>
 </div>
-<a id="gaff8be7f1277b66078ee16a21a248982f" name="gaff8be7f1277b66078ee16a21a248982f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaff8be7f1277b66078ee16a21a248982f">&#9670;&nbsp;</a></span>ParseN2kAISClassAStatic()</h2>
+<a id="gad8ece0a3f4938b7b3da84f5dfcf245bd" name="gad8ece0a3f4938b7b3da84f5dfcf245bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad8ece0a3f4938b7b3da84f5dfcf245bd">&#9670;&nbsp;</a></span>ParseN2kAISClassAStatic()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -696,8 +696,20 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>CallsignBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>Name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>NameBufSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -756,6 +768,12 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>DestinationBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;&#160;</td>
           <td class="paramname"><em>AISversion</em>, </td>
         </tr>
@@ -791,9 +809,9 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 </div><div class="memdoc">
 
 <p>Parsing the content of a "AIS static data class A" message - PGN 129794. </p>
-<p >Alias of PGN 129794. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga0466b88325e5d6440221f868b6dff8ec">ParseN2kPGN129794</a> </p>
+<p >Alias of PGN 129794. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga46593036e0356dd46656a9734a04babb">ParseN2kPGN129794</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04409">4409</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04412">4412</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -1091,8 +1109,8 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 
 </div>
 </div>
-<a id="ga7a35a903d23ee0e076f770f2f066806e" name="ga7a35a903d23ee0e076f770f2f066806e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7a35a903d23ee0e076f770f2f066806e">&#9670;&nbsp;</a></span>ParseN2kAISClassBStaticPartA()</h2>
+<a id="gabe5bfed82db25cff73061b9b9cd4636d" name="gabe5bfed82db25cff73061b9b9cd4636d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabe5bfed82db25cff73061b9b9cd4636d">&#9670;&nbsp;</a></span>ParseN2kAISClassBStaticPartA()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1128,7 +1146,13 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>Name</em>&#160;</td>
+          <td class="paramname"><em>Name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>NameBufSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1144,14 +1168,14 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 </div><div class="memdoc">
 
 <p>Parsing the content of a "AIS static data class B part A" message - PGN 129809. </p>
-<p >Alias of PGN 129809. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b">ParseN2kPGN129809</a> </p>
+<p >Alias of PGN 129809. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#gafa2d780d51e04acbbf233377bbf85c97">ParseN2kPGN129809</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04493">4493</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04497">4497</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
-<a id="gaedb7397998fc5b343d15416a309969fd" name="gaedb7397998fc5b343d15416a309969fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaedb7397998fc5b343d15416a309969fd">&#9670;&nbsp;</a></span>ParseN2kAISClassBStaticPartB()</h2>
+<a id="ga4e96bee567da66aaebc5f9130737b340" name="ga4e96bee567da66aaebc5f9130737b340"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e96bee567da66aaebc5f9130737b340">&#9670;&nbsp;</a></span>ParseN2kAISClassBStaticPartB()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1198,8 +1222,20 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>VendorBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>Callsign</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>CallsignBufSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1245,9 +1281,9 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 </div><div class="memdoc">
 
 <p>Parsing the content of a "AIS static data class B part B" message - PGN 129810. </p>
-<p >Alias of PGN 129810. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62">ParseN2kPGN129810</a> </p>
+<p >Alias of PGN 129810. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#gab2294b30167c2842e2f2b751ebb1479f">ParseN2kPGN129810</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04599">4599</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04605">4605</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -1951,7 +1987,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Direction Data" message - PGN 130577. </p>
 <p >Alias of PGN 130577. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga4b7ff26772c3f96dea119adc12eedd64">ParseN2kPGN130577</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05542">5542</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05548">5548</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -2496,7 +2532,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Environmental Parameters - DEPRECATED" message - PGN 130311. </p>
 <p >Alias of PGN 130311. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga239910c2f1c3c12e2757d5483f206190">ParseN2kPGN130311</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04909">4909</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04915">4915</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -3124,7 +3160,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Humidity" message - PGN 130313. </p>
 <p >Alias of PGN 130313. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga28b731b276aab98488a91fff00f9bd80">ParseN2kPGN130313</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05090">5090</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05096">5096</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -3189,7 +3225,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Humidity" message - PGN 130313. </p>
 <p >Alias of PGN 130313. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga28b731b276aab98488a91fff00f9bd80">ParseN2kPGN130313</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05063">5063</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05069">5069</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -3389,7 +3425,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Meterological Station Data" message - PGN 130323. </p>
 <p >Alias of PGN 130323. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga76838c715ab88c8345e837f419a5eb99">ParseN2kPGN130323</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05407">5407</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05413">5413</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -3692,7 +3728,7 @@ Broadcast Message".  <a href="group__group__msg_parsers.html#ga1394e40e0e184fe99
 <p>Parsing the content of a "Environmental Parameters - DEPRECATED" message - PGN 130310. </p>
 <p >Alias of PGN 130310. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga9089c1876a2fe48cef33227468af8870">ParseN2kPGN130310</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04822">4822</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04828">4828</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -7085,8 +7121,8 @@ false called with wrong message </dd></dl>
 
 </div>
 </div>
-<a id="ga0466b88325e5d6440221f868b6dff8ec" name="ga0466b88325e5d6440221f868b6dff8ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0466b88325e5d6440221f868b6dff8ec">&#9670;&nbsp;</a></span>ParseN2kPGN129794()</h2>
+<a id="ga46593036e0356dd46656a9734a04babb" name="ga46593036e0356dd46656a9734a04babb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga46593036e0356dd46656a9734a04babb">&#9670;&nbsp;</a></span>ParseN2kPGN129794()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7130,8 +7166,20 @@ false called with wrong message </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>CallsignBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>Name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>NameBufSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -7190,6 +7238,12 @@ false called with wrong message </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>DestinationBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> &amp;&#160;</td>
           <td class="paramname"><em>AISversion</em>, </td>
         </tr>
@@ -7232,7 +7286,9 @@ false called with wrong message </dd></dl>
     <tr><td class="paramname">IMOnumber</td><td>Ship identification number by IMO [1 .. 999999999]; 0 = not available = default <br  />
  Not applicable to SAR aircraft </td></tr>
     <tr><td class="paramname">Callsign</td><td>Call Sign - 7x -&gt; 6 bit ASCII characters, </td></tr>
+    <tr><td class="paramname">CallsignBufSize</td><td>size of Callsign buffer </td></tr>
     <tr><td class="paramname">Name</td><td>Name of the vessel; Maximum 20 characters 6 bit ASCII; For SAR aircraft, it should be set to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals the aircraft registration number </td></tr>
+    <tr><td class="paramname">NameBufSize</td><td>size of Name buffer </td></tr>
     <tr><td class="paramname">VesselType</td><td>Vessel Type 0 = not available or no ship = default 1-99 = as defined in § 3.3.2 100-199 = reserved, for regional use 200-255 = reserved, for future use Not applicable to SAR aircraft </td></tr>
     <tr><td class="paramname">Length</td><td>Length/Diameter in meters </td></tr>
     <tr><td class="paramname">Beam</td><td>Beam/Diameter in meters </td></tr>
@@ -7243,6 +7299,7 @@ false called with wrong message </dd></dl>
     <tr><td class="paramname">Draught</td><td>Maximum present static draught </td></tr>
     <tr><td class="paramname">Destination</td><td>Destination - Maximum 20 characters using 6-bit ASCII <br  />
  </td></tr>
+    <tr><td class="paramname">DestinationBufSize</td><td>size of Destination buffer </td></tr>
     <tr><td class="paramname">AISversion</td><td>AIS version, see <a class="el" href="group__group__msg_types.html#gafe82863123cd5621f27436c38fb430c4">tN2kAISVersion</a> </td></tr>
     <tr><td class="paramname">GNSStype</td><td>Type of GNSS, see <a class="el" href="group__group__msg_types.html#gab26b91bc9eb6c85000e2d2e0c1f23394">tN2kGNSStype</a> </td></tr>
     <tr><td class="paramname">DTE</td><td>Data terminal equipment (DTE) ready<ul>
@@ -7342,8 +7399,8 @@ false Parsing of PGN Message aborted</dd></dl>
 
 </div>
 </div>
-<a id="ga17043280910eb290a64f5ca40de8772b" name="ga17043280910eb290a64f5ca40de8772b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga17043280910eb290a64f5ca40de8772b">&#9670;&nbsp;</a></span>ParseN2kPGN129809()</h2>
+<a id="gafa2d780d51e04acbbf233377bbf85c97" name="gafa2d780d51e04acbbf233377bbf85c97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa2d780d51e04acbbf233377bbf85c97">&#9670;&nbsp;</a></span>ParseN2kPGN129809()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7376,7 +7433,13 @@ false Parsing of PGN Message aborted</dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>Name</em>&#160;</td>
+          <td class="paramname"><em>Name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>NameBufSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -7391,7 +7454,7 @@ false Parsing of PGN Message aborted</dd></dl>
 <p >This parameter group is used by Class B "CS" shipborne mobile equipment each time Part A of ITU-R M.1372 Message 24 is received.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://www.itu.int/rec/R-REC-M.1371">ITU-R M.1371</a> </dd>
 <dd>
-<a class="el" href="group__group__msg_set_up.html#ga567d880c51e68a02b104feadfbfb73d7" title="Setting up PGN 129810 Message &quot;AIS static data class B part B&quot;.">SetN2kPGN129810</a> and <a class="el" href="group__group__msg_parsers.html#gaed4ec1cfb260fea53a0f0b1bef729c62" title="Parsing the content of message PGN 129810 &quot;AIS static data        class B part B&quot;.">ParseN2kPGN129810</a></dd></dl>
+<a class="el" href="group__group__msg_set_up.html#ga567d880c51e68a02b104feadfbfb73d7" title="Setting up PGN 129810 Message &quot;AIS static data class B part B&quot;.">SetN2kPGN129810</a> and <a class="el" href="group__group__msg_parsers.html#gab2294b30167c2842e2f2b751ebb1479f" title="Parsing the content of message PGN 129810 &quot;AIS static data        class B part B&quot;.">ParseN2kPGN129810</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
@@ -7399,7 +7462,8 @@ false Parsing of PGN Message aborted</dd></dl>
     <tr><td class="paramname">Repeat</td><td>Repeat indicator, Used by the repeater to indicate how many times a message has been repeated. <br  />
  see <a class="el" href="group__group__msg_types.html#gae803e241caab3b8d2846b5481e78e612">tN2kAISRepeat</a> </td></tr>
     <tr><td class="paramname">UserID</td><td>MMSI Number </td></tr>
-    <tr><td class="paramname">Name</td><td>Name of the vessel; Maximum 20 characters 6 bit ASCII; For SAR aircraft, it should be set to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals the aircraft registration number</td></tr>
+    <tr><td class="paramname">Name</td><td>Name of the vessel; Maximum 20 characters 6 bit ASCII; For SAR aircraft, it should be set to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals the aircraft registration number </td></tr>
+    <tr><td class="paramname">NameBufSize</td><td>size of Name buffer</td></tr>
   </table>
   </dd>
 </dl>
@@ -7411,8 +7475,8 @@ false Parsing of PGN Message aborted </dd></dl>
 
 </div>
 </div>
-<a id="gaed4ec1cfb260fea53a0f0b1bef729c62" name="gaed4ec1cfb260fea53a0f0b1bef729c62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaed4ec1cfb260fea53a0f0b1bef729c62">&#9670;&nbsp;</a></span>ParseN2kPGN129810()</h2>
+<a id="gab2294b30167c2842e2f2b751ebb1479f" name="gab2294b30167c2842e2f2b751ebb1479f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab2294b30167c2842e2f2b751ebb1479f">&#9670;&nbsp;</a></span>ParseN2kPGN129810()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7456,8 +7520,20 @@ false Parsing of PGN Message aborted </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>VendorBufSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>Callsign</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>CallsignBufSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -7502,7 +7578,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p >This parameter group is used by Class B "CS" shipborne mobile equipment each time Part B of ITU-R M.1372 Message 24 is received.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://www.itu.int/rec/R-REC-M.1371">ITU-R M.1371</a> </dd>
 <dd>
-<a class="el" href="group__group__msg_set_up.html#gabcd11fe6e3eda6f1bf8cd4f16e7a7aec" title="Setting up PGN 129809 Message &quot;AIS static data class B part A&quot;.">SetN2kPGN129809</a> and <a class="el" href="group__group__msg_parsers.html#ga17043280910eb290a64f5ca40de8772b" title="Parsing the content of message PGN 129809 &quot;AIS static data        class B part A&quot;.">ParseN2kPGN129809</a></dd></dl>
+<a class="el" href="group__group__msg_set_up.html#gabcd11fe6e3eda6f1bf8cd4f16e7a7aec" title="Setting up PGN 129809 Message &quot;AIS static data class B part A&quot;.">SetN2kPGN129809</a> and <a class="el" href="group__group__msg_parsers.html#gafa2d780d51e04acbbf233377bbf85c97" title="Parsing the content of message PGN 129809 &quot;AIS static data        class B part A&quot;.">ParseN2kPGN129809</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">N2kMsg</td><td>Reference to a N2kMsg Object, Output: NMEA2000 message ready to be send. </td></tr>
@@ -7512,7 +7588,9 @@ false Parsing of PGN Message aborted </dd></dl>
     <tr><td class="paramname">UserID</td><td>MMSI Number </td></tr>
     <tr><td class="paramname">VesselType</td><td>Vessel Type 0 = not available or no ship = default 1-99 = as defined in § 3.3.2 100-199 = reserved, for regional use 200-255 = reserved, for future use Not applicable to SAR aircraft </td></tr>
     <tr><td class="paramname">Vendor</td><td>Unique identification of the Unit by a number as defined by the manufacturer </td></tr>
+    <tr><td class="paramname">VendorBufSize</td><td>size of Vendor buffer </td></tr>
     <tr><td class="paramname">Callsign</td><td>Call Sign - 7x -&gt; 6 bit ASCII characters </td></tr>
+    <tr><td class="paramname">CallsignBufSize</td><td>size of Callsign buffer </td></tr>
     <tr><td class="paramname">Length</td><td>Length/Diameter in meters </td></tr>
     <tr><td class="paramname">Beam</td><td>Beam/Diameter in meters </td></tr>
     <tr><td class="paramname">PosRefStbd</td><td>Position Reference Point from Starboard </td></tr>
@@ -7864,7 +7942,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Humidity" message - PGN 130313. </p>
 <p >Alias of PGN 130313. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga28b731b276aab98488a91fff00f9bd80">ParseN2kPGN130313</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05076">5076</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05082">5082</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -8466,7 +8544,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Actual Pressure" message - PGN 130314. </p>
 <p >Alias of PGN 130314. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga905d3291368c34a244980380836b5ffa">ParseN2kPGN130314</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05160">5160</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05166">5166</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -8737,7 +8815,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Temperature - DEPRECATED" message - PGN 130312. </p>
 <p >Alias of PGN 130312. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#gadce9a2ba5a8ad2556db551856dbfabad">ParseN2kPGN130312</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04995">4995</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05001">5001</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -8802,7 +8880,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Temperature, Extended Range" message - PGN 130316. </p>
 <p >Alias of PGN 130316. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga96aaf91c99a9a9a6a8514a4862c6029f">ParseN2kPGN130316</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05275">5275</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05281">5281</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -9003,7 +9081,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Trim Tab Status" message - PGN 130576. </p>
 <p >Alias of PGN 130576. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga2f334adfcd294d95cd4aa520d6cb12d4">ParseN2kPGN130576</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05465">5465</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l05471">5471</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>
@@ -9174,7 +9252,7 @@ false Parsing of PGN Message aborted </dd></dl>
 <p>Parsing the content of a "Wind Data" message - PGN 130306. </p>
 <p >Alias of PGN 130306. This alias was introduced to improve the readability of the source code. See parameter details on <a class="el" href="group__group__msg_parsers.html#ga312bf9c8c53d076be8de22eca21283f5">ParseN2kPGN130306</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04744">4744</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_n2k_messages_8h_source.html#l04750">4750</a> of file <a class="el" href="_n2k_messages_8h_source.html">N2kMessages.h</a>.</p>
 
 </div>
 </div>

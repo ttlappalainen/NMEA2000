@@ -21,7 +21,7 @@ var searchData=
   ['adddevice_18',['AddDevice',['../classt_n2k_device_list.html#add544fd3c3ea24ff54f34e0b11dd559e',1,'tN2kDeviceList']]],
   ['addfloat_19',['AddFloat',['../classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4',1,'tN2kMsg']]],
   ['addgroupfunctionhandler_20',['AddGroupFunctionHandler',['../classt_n_m_e_a2000.html#a69175692dee5cc123f2571a93ae50d44',1,'tNMEA2000']]],
-  ['addstr_21',['AddStr',['../classt_n2k_msg.html#a719ea5181274ce242045a46fe7a8af1c',1,'tN2kMsg']]],
+  ['addstr_21',['AddStr',['../classt_n2k_msg.html#a1a4ba32556104d3a10d9c644cca6809a',1,'tN2kMsg']]],
   ['adduint64_22',['AddUInt64',['../classt_n2k_msg.html#a602a0146af8d99e6c91fd8afd11ec245',1,'tN2kMsg']]],
   ['addvarstr_23',['AddVarStr',['../classt_n2k_msg.html#a760ba7be88a03a34cd138cac8853ccda',1,'tN2kMsg']]],
   ['ahtocoulomb_24',['AhToCoulomb',['../_n2k_messages_8h.html#a6d2c12a7b0a33041106b01dfca2d3d36',1,'N2kMessages.h']]],
