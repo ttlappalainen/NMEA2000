@@ -4287,12 +4287,13 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
  * \param IMOnumber       Ship identification number by IMO  
  *                        [1 .. 999999999]; 0 = not available = default  
  *                        Not applicable to SAR aircraft
- * \param Callsign        Call Sign - 7x -> 6 bit ASCII characters,
+ * \param Callsign        Call Sign - Max. 7 chars will be used. Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * \param Name            Name of the vessel; 
- *                        Maximum 20 characters 6 bit ASCII;
+ *                        Maximum 20 characters;
  *                        For SAR aircraft, it should be set
  *                        to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals
  *                        the aircraft registration number
+ *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * \param VesselType      Vessel Type 
  *                        0 = not available or no ship = default
  *                        1-99 = as defined in § 3.3.2
@@ -4307,7 +4308,8 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
  * \param ETAtime         EstimatedTimeOfArrival -seconds since midnight (UTC)
  * \param Draught         Maximum present static draught
  * \param Destination     Destination - 
- *                        Maximum 20 characters using 6-bit ASCII  
+ *                        Maximum 20 characters 
+ *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * \param AISversion      AIS version, see \ref tN2kAISVersion
  * \param GNSStype        Type of GNSS, see \ref tN2kGNSStype
  * \param DTE             Data terminal equipment (DTE) ready
@@ -4317,9 +4319,9 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
  *                        see \ref tN2kAISTransceiverInformation
  */
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
                         tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo);
 
 /************************************************************************//**
@@ -4330,9 +4332,9 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * of the source code. See parameter details on \ref SetN2kPGN129794
   */
 inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        double Draught, char const *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
                         tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo) {
   SetN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
                   Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
@@ -4359,7 +4361,7 @@ inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRep
  * \param IMOnumber       Ship identification number by IMO
  *                        [1 .. 999999999]; 0 = not available = default  
  *                        Not applicable to SAR aircraft
- * \param Callsign        Call Sign - 7x -> 6 bit ASCII characters,
+ * \param Callsign        Call Sign
  * \param CallsignBufSize size of Callsign buffer
  * \param Name            Name of the vessel; 
  *                        Maximum 20 characters 6 bit ASCII;
@@ -4437,13 +4439,14 @@ inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, t
  *                        see \ref tN2kAISRepeat
  * \param UserID          MMSI Number
  * \param Name            Name of the vessel; 
- *                        Maximum 20 characters 6 bit ASCII;
+ *                        Maximum 20 characters;
  *                        For SAR aircraft, it should be set
  *                        to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals
  *                        the aircraft registration number
+ *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * 
  */
-void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name);
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS static data class B part A" - PGN 129809
@@ -4452,7 +4455,7 @@ void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * Alias of PGN 129809. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN129809
   */
-inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name) {
+inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name) {
   SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
 }
 
@@ -4475,10 +4478,11 @@ inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  *                        see \ref tN2kAISRepeat
  * \param UserID          MMSI Number
  * \param Name            Name of the vessel; 
- *                        Maximum 20 characters 6 bit ASCII;
+ *                        Maximum 20 characters;
  *                        For SAR aircraft, it should be set
  *                        to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals
  *                        the aircraft registration number
+ *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * \param NameBufSize  size of Name buffer
  * 
  * \return true     Parsing of PGN Message successful
@@ -4524,7 +4528,8 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
  *                        Not applicable to SAR aircraft
  * \param Vendor          Unique identification of the Unit by a number as
  *                        defined by the manufacturer
- * \param Callsign        Call Sign - 7x -> 6 bit ASCII characters
+ *                        Max. 7 chars will be used. Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
+ * \param Callsign        Call Sign - Max. 7 chars will be used. Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
  * \param Length          Length/Diameter in meters
  * \param Beam            Beam/Diameter in meters
  * \param PosRefStbd      Position Reference Point from Starboard 
@@ -4533,7 +4538,7 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
  * 
  */
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID);
 
 /************************************************************************//**
@@ -4544,7 +4549,7 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * of the source code. See parameter details on \ref SetN2kPGN129810
   */
 inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID) {
   SetN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign, Length, Beam,
                   PosRefStbd, PosRefBow, MothershipID);
@@ -4578,7 +4583,7 @@ inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * \param Vendor          Unique identification of the Unit by a number as
  *                        defined by the manufacturer
  * \param VendorBufSize   size of Vendor buffer
- * \param Callsign        Call Sign - 7x -> 6 bit ASCII characters
+ * \param Callsign        Call Sign 
  * \param CallsignBufSize size of Callsign buffer
  * \param Length          Length/Diameter in meters
  * \param Beam            Beam/Diameter in meters
@@ -4591,7 +4596,7 @@ inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * 
  */
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize,double &Length, double &Beam,
+                      uint8_t &VesselType, const char *Vendor, size_t VendorBufSize, const char *Callsign, size_t CallsignBufSize,double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
 
 /************************************************************************//**

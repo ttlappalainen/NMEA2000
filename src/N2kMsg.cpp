@@ -26,6 +26,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 //#include <MemoryFree.h>  // For testing used memory
 
 #define Escape 0x10
@@ -212,6 +213,22 @@ void tN2kMsg::AddByte(unsigned char v) {
 void tN2kMsg::AddStr(const char *str, int len, bool UsePgm, unsigned char fillChar) {
   SetBufStr(str,len,DataLen,Data,UsePgm,fillChar);
 }
+
+//*****************************************************************************
+// Add AIS String
+// make sure characters fall into range defined in table 14
+// https://www.itu.int/dms_pubrec/itu-r/rec/m/R-REC-M.1371-1-200108-S!!PDF-E.pdf
+void tN2kMsg::AddAISStr(const char *str, int len) {
+  unsigned char *buf=Data+DataLen;
+  for (; len>0 && *str!=0 && DataLen<MaxDataLen; len--, DataLen++, buf++, str++) {
+    char c = toupper((int)*str);
+    *buf=(c >= 0x20 && c <= 0x5F) ? c : '?';
+  }
+
+  if ( len > MaxDataLen-DataLen ) len=MaxDataLen-DataLen;
+  if ( len>0 ) memset(buf,'@',len);
+}
+
 
 //*****************************************************************************
 void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
