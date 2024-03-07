@@ -27,6 +27,7 @@ var group__group__core =
       [ "Add4ByteUDouble", "classt_n2k_msg.html#a313ea1a5e176279aa5fd3e9de42f8555", null ],
       [ "Add4ByteUInt", "classt_n2k_msg.html#aa3d1166d76c0f87485e769ec6a50a73d", null ],
       [ "Add8ByteDouble", "classt_n2k_msg.html#a6ecfc66cd25fa556482627c7aa3e28ac", null ],
+      [ "AddAISStr", "classt_n2k_msg.html#adb8ddcf729b546476784c82877d25e72", null ],
       [ "AddBuf", "classt_n2k_msg.html#a667f843d629fb485389f40b8bb0bf20e", null ],
       [ "AddByte", "classt_n2k_msg.html#a4768bbe782a0c9dcbd8e8f5afee3c69c", null ],
       [ "AddFloat", "classt_n2k_msg.html#a15e6ff99aa27d4ef355cb1248c2402d4", null ],
