@@ -1,6 +1,18 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 06.03.2024
+
+-- reduced memory footprint for N2kMsg::AddAISStr
+-- bumped library version
+-- Ensure that strings added by N2kMsg::AddAISStr are 6 bit ASCII ITU-R M.1371-1 table 14 compliant
+
+## 26.02.2024
+
+- changed (char *) arguments to (const char *) in Set functions for PGN 129809, 129810, 129794
+- Added AddAISStr() method to N2kMsg class which filters AIS strings to make complient with ITU-R M.1371-1
+- modified Set functions for PGN 129809, 129810, 129794 to use AddAISStr()
+
 ## 23.02.2024
 
 - Compatibility change: Parsers ParseN2kPGN129809, ParseN2kPGN129810 and ParseN2kPGN129794 parameter list 

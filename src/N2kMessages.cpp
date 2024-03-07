@@ -1611,9 +1611,9 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double L
 //*****************************************************************************
 // AIS static data A
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, char *Callsign, char *Name, uint8_t VesselType, double Length,
+                        uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
                         double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+                        double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
                         tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo)
 {
     N2kMsg.SetPGN(129794L);
@@ -1621,8 +1621,8 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.Add4ByteUInt(IMOnumber);
-    N2kMsg.AddStr(Callsign, 7, false, '@');
-    N2kMsg.AddStr(Name, 20, false, '@');
+    N2kMsg.AddAISStr(Callsign,7);
+    N2kMsg.AddAISStr(Name, 20);
     N2kMsg.AddByte(VesselType);
     N2kMsg.Add2ByteDouble(Length, 0.1);
     N2kMsg.Add2ByteDouble(Beam, 0.1);
@@ -1631,7 +1631,7 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUInt(ETAdate);
     N2kMsg.Add4ByteUDouble(ETAtime, 0.0001);
     N2kMsg.Add2ByteDouble(Draught, 0.01);
-    N2kMsg.AddStr(Destination, false, 20, '@');
+    N2kMsg.AddAISStr(Destination, 20);
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
     N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
     N2kMsg.AddByte(0xff);
@@ -1670,13 +1670,13 @@ bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 
 //*****************************************************************************
 // AIS static data class B part A
-void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, char *Name)
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name)
 {
     N2kMsg.SetPGN(129809L);
     N2kMsg.Priority=6;
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
-    N2kMsg.AddStr(Name, 20, false, '@');
+    N2kMsg.AddAISStr(Name, 20);
 }
 
 bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSize)
@@ -1696,7 +1696,7 @@ bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 //*****************************************************************************
 // AIS static data class B part B
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, char *Vendor, char *Callsign, double Length, double Beam,
+                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID)
 {
     N2kMsg.SetPGN(129810L);
@@ -1704,8 +1704,8 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
     N2kMsg.Add4ByteUInt(UserID);
     N2kMsg.AddByte(VesselType);
-    N2kMsg.AddStr(Vendor, 7, false, '@');
-    N2kMsg.AddStr(Callsign, 7, false, '@');
+    N2kMsg.AddAISStr(Vendor, 7);
+    N2kMsg.AddAISStr(Callsign, 7);
     N2kMsg.Add2ByteUDouble(Length, 0.1);
     N2kMsg.Add2ByteUDouble(Beam, 0.1);
     N2kMsg.Add2ByteUDouble(PosRefStbd, 0.1);

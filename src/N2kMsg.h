@@ -950,6 +950,15 @@ public:
   */
   void AddStr(const char *str, int len, bool UsePgm=false, unsigned char fillChar=0xff);
 
+   /************************************************************************//**
+  * \brief Add string value to the buffer after filtering characters as defined in ITU-R M.1371-1
+  * The string will be added to the end (indicated by \ref DataLen) of
+  * the byte array \ref Data.
+  * \param str   String as pointer to a char array
+  * \param len   Length of the string
+  */
+  void AddAISStr(const char *str, int len);
+  
  /************************************************************************//**
   * \brief Add string value to the buffer
   * This method determines the length of the string by it self using strlen().
