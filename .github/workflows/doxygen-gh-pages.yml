@@ -8,6 +8,10 @@ on:
     branches: [ matthias-action, master ]
   pull_request:
     branches: [ master ]
+
+permissions:
+  contents: read
+  pages: write
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,7 +24,7 @@ jobs:
     steps:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     # Create a folder for the Doxygen html output
     - run:  mkdir build
