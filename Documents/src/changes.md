@@ -2,6 +2,11 @@
 \tableofcontents
 
 ## 25.03.2024
+- Added PGN 127510
+- Added PGN 127750
+- Modidified AIS PGN PGN 129038, 129039, 129794, 129809, and 129810 to include AIS Transceiver Info and SID (where applicable)
+
+## 25.03.2024
 
 - Fix for ParseN2kPGN129810 parameter list.
 - Fixed SetN2kPGN129810 - AIS spare must be 0
