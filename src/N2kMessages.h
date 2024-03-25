@@ -4596,7 +4596,8 @@ inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * 
  */
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, const char *Vendor, size_t VendorBufSize, const char *Callsign, size_t CallsignBufSize,double &Length, double &Beam,
+                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize,
+                      double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
 
 /************************************************************************//**
@@ -4608,10 +4609,13 @@ bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
  * of the source code. See parameter details on \ref ParseN2kPGN129810 
  */
 inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-		      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &Length, double &Beam,
+		                  uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, 
+                      double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
-  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, VendorBufSize, Callsign, CallsignBufSize,
-                                Length, Beam, PosRefStbd, PosRefBow, MothershipID);
+  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID,
+                           VesselType, Vendor, VendorBufSize, Callsign, CallsignBufSize,
+                           Length, Beam,
+                           PosRefStbd, PosRefBow, MothershipID);
 }
 
 /************************************************************************//**

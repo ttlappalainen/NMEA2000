@@ -1,6 +1,13 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 25.03.2024
+
+- Fix for ParseN2kPGN129810 parameter list.
+- Fixed SetN2kPGN129810 - AIS spare must be 0
+- Forced transceiver information on SetN2kPGN129810 to "channel B VDL transmission"
+- Fixed SetAISStr on N2kMsg.cpp
+
 ## 06.03.2024
 
 -- reduced memory footprint for N2kMsg::AddAISStr

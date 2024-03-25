@@ -1696,7 +1696,8 @@ bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
 //*****************************************************************************
 // AIS static data class B part B
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
+                      uint8_t VesselType, const char *Vendor, const char *Callsign,
+                      double Length, double Beam,
                       double PosRefStbd, double PosRefBow, uint32_t MothershipID)
 {
     N2kMsg.SetPGN(129810L);
@@ -1711,11 +1712,14 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUDouble(PosRefStbd, 0.1);
     N2kMsg.Add2ByteUDouble(PosRefBow, 0.1);
     N2kMsg.Add4ByteUInt(MothershipID);
-    N2kMsg.AddByte(0xff);  // Reserved
+    N2kMsg.AddByte(0x03);  // Reserved + AIS spare
+    N2kMsg.AddByte(0xe3);  // Channel B VDL transmission + reserved
+    N2kMsg.AddByte(0xff);  // SID
 }
 
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &Length, double &Beam,
+                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize,
+                      double &Length, double &Beam,
                       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID)
 {
     if (N2kMsg.PGN!=129810L) return false;

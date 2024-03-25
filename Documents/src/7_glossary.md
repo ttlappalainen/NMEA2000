@@ -338,6 +338,7 @@ The SAE J1939 protocol requires a specific format for the CAN message’s identi
 | 1095 | Wetsounds |
 | 1140 | Across Ocean Systems Ltd. |
 | 1305 | Dragonfly Energy |
+| 1439 | PredictWind |
 | 1850 | Teleflex |
 | 1851 | Raymarine |
 | 1852 | Navionics |
