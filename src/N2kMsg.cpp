@@ -226,6 +226,7 @@ void tN2kMsg::AddAISStr(const char *str, int len) {
   }
 
   if ( len > MaxDataLen-DataLen ) len=MaxDataLen-DataLen;
+  DataLen+=len;
   if ( len>0 ) memset(buf,'@',len);
 }
 
