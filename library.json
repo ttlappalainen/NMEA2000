@@ -13,7 +13,7 @@
     "url": "http://www.kave.fi",
     "maintainer": true
   },
-  "version": "4.21.3",
+  "version": "4.21.4",
   "license": "MIT",
   "frameworks": "*",
   "platforms": "*"

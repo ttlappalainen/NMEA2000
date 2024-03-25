@@ -491,7 +491,6 @@ enum tN2kOnOff  {
                             N2kOnOff_Error=2,       ///< Error
                             N2kOnOff_Unavailable=3  ///< Unavailable
                           };
-
 /*************************************************************************//**
  * \enum tN2kChargeState
  * \brief Enumeration of state of the battery charger operation according to
@@ -508,9 +507,9 @@ enum tN2kChargeState  {
                             N2kCS_Constant_VI=7,      ///< Charger operation state is in constant power
                             N2kCS_Disabled=8,         ///< Charger operation state is disabled
                             N2kCS_Fault=9,            ///< Charger operation state is in fault
+			    N2kCS_Error=14,           ///< Charger operation state is in error
                             N2kCS_Unavailable=15      ///< Charger operation state unavailable
                           };
-
 /*************************************************************************//**
  * \enum tN2kChargerMode
  * \brief Enumeration of charger modes according to PGN 127507
@@ -572,6 +571,96 @@ enum tN2kMOBPositionSource {
 enum tN2kMOBEmitterBatteryStatus {
                            Good=0,    ///< Battery status of the MOB emitter is good
                            Low=1,     ///< Battery status of the MOB emitter is low
+                          };
+/*************************************************************************//**
+ * \enum tN2kConvMode
+ * \brief Converter (Inverter/Charger) mode
+ */
+enum tN2kConvMode {  // https://github.com/canboat/canboat/pull/197/commits/a4b04eed02fce1e3d5f484920a9355d07757d007
+                           N2kCICS_Off=0,
+                           N2kCICS_LP_Mode=1,                              // Low Power mode
+                           N2kCICS_Fault=2,
+                           N2kCICS_Bulk=3,
+                           N2kCICS_Absorption=4,
+                           N2kCICS_Float=5,
+                           N2kCICS_Storage=6,
+                           N2kCICS_Equalise=7,
+                           N2kCICS_Passthru=8,
+                           N2kCICS_Inverting=9,
+                           N2kCICS_Assisting=10,
+                           N2kCICS_PSU_Mode=11,
+                           N2kCICS_Hub1=0xFC,                              // In slave/DDDC mode
+                           N2kCICS_NotAvailable=0XFF
+                        };
+
+/*************************************************************************//**
+ * \enum tN2kRippleState
+ * \brief Converter (Inverter/Charger) ripple state
+ */
+enum tN2kRippleState {
+                           N2kRP_OK=0,
+                           N2kRP_Warning=1,
+                           N2kRP_High=2,                                    // Ripple too high
+                           N2kRP_NotAvailable=3
+                       };
+
+/*************************************************************************//**
+ * \enum tN2kDCVolgateState
+ * \brief Converter (Inverter/Charger) DC voltage state
+ */
+enum tN2kDCVolgateState {
+                           N2kDCVS_OK=0,
+                           N2kDCVS_Warning=1,
+                           N2kDCVS_Low=3,                                       // DC Voltage too low
+                           N2kDCVS_NotAvailable=3
+                        };
+
+/*************************************************************************//**
+ * \enum tN2kDCVolgateState
+ * \brief Converter (Inverter/Charger) overload state
+ */
+enum tN2kOverloadState {
+                           N2kOS_OK=0,
+                           N2kOS_Warning=1,
+                           N2kOS_Overload=2,
+                           N2kOS_NotAvailable=3
+                         };
+
+/*************************************************************************//**
+ * \enum tN2kTemperatureState
+ * \brief Converter (Inverter/Charger) temperature state
+ */
+enum tN2kTemperatureState {
+                           N2kTS_OK=0,
+                           N2kTS_Warning=1,
+                           N2kTS_High=3,                                         // Over Temperature
+                           N2kTS_NotAvailable=3
+                         };
+
+/*************************************************************************//**
+ * \enum tN2kChargingAlgorithm
+ * \brief Enumeration of Charging Algorithms
+ */
+enum tN2kChargingAlgorithm {
+                            N2kCA_Trickle = 0,
+                            N2kCA_CVCC = 1,    /// Constant Voltage Constant Current)
+			    N2kCA_2Stage = 2,  /// 2nd Stage (no Float)
+			    N2kCA_3State = 3,  /// 3rd stage
+			    N2kCA_Error = 14,
+                            N2kCA_NotAvailable = 15
+                          };
+
+
+/*************************************************************************//**
+ * \enum tBattTempNoSensor
+ * \brief Battery temperature with no temperature sensor
+ */
+enum tBattTempNoSensor {
+                            N2kBT_cold = 0,
+                            N2kBT_warm = 1,
+                            N2kBT_hot  = 2,
+                            N2kBT_Error = 14,
+                            N2kBT_NotAvailable = 15
                           };
 
 //*****************************************************************************

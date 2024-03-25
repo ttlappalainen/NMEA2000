@@ -250,12 +250,14 @@ bool IsFastPacketSystemMessage(unsigned long PGN) {
  *              - 127245L: Rudder, pri=2, period=100
  *              - 127250L: Vessel Heading, pri=2, period=100
  *              - 127251L: Rate of Turn, pri=2, period=100
+ *              - 127252L: Heave, pri=3, period=100
  *              - 127257L: Attitude, pri=3, period=1000
  *              - 127488L: Engine parameters rapid, rapid Update, pri=2, period=100
  *              - 127493L: Transmission parameters: dynamic, pri=2, period=100
  *              - 127501L: Binary status report, pri=3, period=NA
  *              - 127505L: Fluid level, pri=6, period=2500
  *              - 127508L: Battery Status, pri=6, period=1500
+ *              - 127750L: Charger status new, pri=6, period=1500
  *              - 128259L: Boat speed, pri=2, period=1000
  *              - 128267L: Water depth, pri=3, period=1000
  *              - 129025L: Lat/lon rapid, pri=2, period=100
@@ -280,12 +282,14 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 127245L: // Rudder, pri=2, period=100
                                       case 127250L: // Vessel Heading, pri=2, period=100
                                       case 127251L: // Rate of Turn, pri=2, period=100
+				      case 127252L: // Heave, pri=3, period=100
                                       case 127257L: // Attitude, pri=3, period=1000
                                       case 127488L: // Engine parameters rapid, rapid Update, pri=2, period=100
                                       case 127493L: // Transmission parameters: dynamic, pri=2, period=100
                                       case 127501L: // Binary status report, pri=3, period=NA
                                       case 127505L: // Fluid level, pri=6, period=2500
                                       case 127508L: // Battery Status, pri=6, period=1500
+				      case 127750L: // Charger status new, pri=6, period=1500
                                       case 128259L: // Boat speed, pri=2, period=1000
                                       case 128267L: // Water depth, pri=3, period=1000
                                       case 129025L: // Lat/lon rapid, pri=2, period=100
