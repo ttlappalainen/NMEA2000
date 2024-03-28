@@ -1796,7 +1796,7 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUDouble(PosRefBow, 0.1);
     N2kMsg.Add4ByteUInt(MothershipID);
     N2kMsg.AddByte(0x03);  // Reserved + AIS spare
-    N2kMsg.AddByte(0xe3 | (AISInfo & 0x1f));  // AIS Tranceiver info + Channel B VDL transmission + reserved
+    N2kMsg.AddByte(0xe0 | (AISInfo & 0x1f));  // AIS Tranceiver info +  reserved
     N2kMsg.AddByte(SID);
 }
 

@@ -4790,7 +4790,7 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
  */
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
 		     uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
-		     double PosRefStbd, double PosRefBow, uint32_t MothershipID, tN2kAISTransceiverInformation AISInfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff);
+		     double PosRefStbd, double PosRefBow, uint32_t MothershipID, tN2kAISTransceiverInformation AISInfo=N2kaischannel_B_VDL_reception, uint8_t SID=0xff);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS static data class B part B" - PGN 129810
