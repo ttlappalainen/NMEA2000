@@ -2036,7 +2036,7 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
  * 
  * Alias of PGN 127507. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN127507
-  */
+ */
 inline void SetN2kChargerStatus(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char BatteryInstance,
                      tN2kChargeState ChargeState, tN2kChargerMode ChargerMode=N2kCM_Standalone,
                      tN2kOnOff Enabled=N2kOnOff_On, tN2kOnOff EqualizationPending=N2kOnOff_Unavailable, double EqualizationTimeRemaining=N2kDoubleNA) {
@@ -2157,6 +2157,85 @@ inline bool ParseN2kDCBatStatus(const tN2kMsg &N2kMsg, unsigned char &BatteryIns
 }
 
 /************************************************************************//**
+ * \brief Settingup PGN 127510 Message "Charger Configuration Status
+ * \ingroup group_msgSetUp
+ *
+ * \param N2kMsg              Reference to a N2kMsg Object,
+ *                            Output: NMEA2000 message ready to be send.
+ * \param ChargerInsance              ChargerIntance
+ * \param BatteryInstance             BatteryInstance
+ * \param Charger Enable/Disable      \ref tN2kOnOff
+ * \param ChargeCurrentLimit          CurrentLimit in % range 0-252 resolution 1%
+ * \param CharginAlgorithm            \ref tN2kChargingAlgorithm
+ * \param ChargerMode                 \ref tN2kChargerMode
+ * \param BatteryTemperature          Battery temp when no seonsor
+ * \param Equalization Enable/Disable \ref N2kOnOff.  Equalize one time enable/disable
+ * \param OverChargeEnable            \ref N2kOnOff.  Enable/Disable over charge
+ * \param EqualizationTimeRemaining   seconds
+ */
+void SetN2kPGN127510(tN2kMsg &N2kMsg, unsigned char ChargerInsance, unsigned char BatteryInstance, tN2kOnOff Enable=N2kOnOff_On,
+                     unsigned char ChargeCurrentLimit=N2kUInt8NA, tN2kChargingAlgorithm ChargingAlgorithm=N2kCA_3State, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+		     tBattTempNoSensor BatteryTemperature=N2kBT_NotAvailable, tN2kOnOff EqualizationEnabled=N2kOnOff_Off,
+		     tN2kOnOff OverChargeEnable=N2kOnOff_Off, uint16_t  EqualizationTimeRemaining=0);
+
+/************************************************************************//**
+ * \brief Setting up Message "Charger Configurationn Status" - PGN 127510
+ * \ingroup group_msgSetUp
+ *
+ * Alias of PGN 127510. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref SetN2kPGN127510
+ */
+inline void SetN2kChargerConf(tN2kMsg &N2kMsg, unsigned char ChargerInsance, unsigned char BatteryInstance, tN2kOnOff Enable=N2kOnOff_On,
+			      unsigned char ChargeCurrentLimit=N2kUInt8NA, tN2kChargingAlgorithm ChargingAlgorithm=N2kCA_3State, tN2kChargerMode ChargerMode=N2kCM_Standalone,
+			      tBattTempNoSensor BatteryTemperature=N2kBT_NotAvailable,
+			      tN2kOnOff EqualizationEnabled=N2kOnOff_Off, tN2kOnOff OverChargeEnable=N2kOnOff_Off, uint16_t EqualizationTimeRemaining=0) {
+   SetN2kPGN127510(N2kMsg,ChargerInsance,BatteryInstance,Enable,ChargeCurrentLimit,ChargingAlgorithm,ChargerMode,BatteryTemperature,
+                     EqualizationEnabled,OverChargeEnable,EqualizationTimeRemaining);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 127510  "Charger Configuation  Status"
+ * \ingroup group_msgParsers
+ *
+ * Any device capable of charing a battery can transmit this
+ *
+ * \param N2kMsg       Reference to a N2kMsg Object,
+ *                     Output: NMEA2000 message ready to be send.
+ *
+ * \param ChargerInsance              ChargerIntance
+ * \param BatteryInstance             BatteryInstance
+ * \param Charger Enable/Disable      \ref tN2kOnOff
+ * \param ChargeCurrentLimit          CurrentLimit in % range 0-252 resolution 1%
+ * \param CharginAlgorithm            \ref tN2kChargingAlgorithm
+ * \param ChargerMode                 \ref tN2kChargerMode
+ * \param BatteryTemperature          Battery temp when no seonsor
+ * \param Equalization Enable/Disable \ref N2kOnOff.  Equalize one time enable/disable
+ * \param OverChargeEnable            \ref N2kOnOff.  Enable/Disable over charge
+ * \param EqualizationTimeRemaining   seconds
+ *
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ */
+bool ParseN2kPGN127510(const tN2kMsg &N2kMsg, unsigned char &ChargerInsance, unsigned char &BatteryInstance, tN2kOnOff &Enable,
+                     unsigned char &ChargeCurrentLimit, tN2kChargingAlgorithm  &ChargingAlgorithm, tN2kChargerMode &ChargerMode, tBattTempNoSensor &BatteryTemperature,
+                                tN2kOnOff &EqualizationEnabled, tN2kOnOff &OverChargeEnable, uint16_t &EqualizationTimeRemaining);
+
+/************************************************************************//**
+ * \brief Setting up Message "Charger Configurationn Status" - PGN 127510
+ * \ingroup group_msgParsers
+ *
+ * Alias of PGN 127510. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN127510
+ */
+inline bool ParseN2kChargerConf(const tN2kMsg &N2kMsg, unsigned char &ChargerInsance, unsigned char &BatteryInstance, tN2kOnOff &Enable,
+                     unsigned char &ChargeCurrentLimit, tN2kChargingAlgorithm &ChargingAlgorithm, tN2kChargerMode &ChargerMode, tBattTempNoSensor &BatteryTemperature,
+                                tN2kOnOff &EqualizationEnabled, tN2kOnOff &OverChargeEnable, uint16_t &EqualizationTimeRemaining) {
+        return ParseN2kPGN127510(N2kMsg,ChargerInsance,BatteryInstance,Enable,ChargeCurrentLimit,ChargingAlgorithm,ChargerMode,BatteryTemperature,
+                     EqualizationEnabled,OverChargeEnable,EqualizationTimeRemaining);
+}
+
+
+/************************************************************************//**
  * \brief Setting up PGN 127513 Message "Battery Configuration Status"
  * \ingroup group_msgSetUp
  * 
@@ -2186,7 +2265,7 @@ void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType Bat
  * 
  * Alias of PGN 127513. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN127513
-  */
+ */
 inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType BatType, tN2kBatEqSupport SupportsEqual,
                      tN2kBatNomVolt BatNominalVoltage, tN2kBatChem BatChemistry, double BatCapacity, int8_t BatTemperatureCoefficient,
 				double PeukertExponent, int8_t ChargeEfficiencyFactor) {
@@ -2212,7 +2291,7 @@ inline void SetN2kBatConf(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatTyp
  * \param BatTemperatureCoefficient Battery temperature coefficient in %
  * \param PeukertExponent      Peukert Exponent
  * \param ChargeEfficiencyFactor      Charge efficiency factor
- * 
+ *
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  *
@@ -2234,6 +2313,72 @@ inline bool ParseN2kBatConf(const tN2kMsg &N2kMsg, unsigned char &BatInstance, t
 				double &PeukertExponent, int8_t &ChargeEfficiencyFactor) {
 	return ParseN2kPGN127513(N2kMsg,BatInstance,BatType,SupportsEqual,BatNominalVoltage,BatChemistry,BatCapacity,BatTemperatureCoefficient,
 				PeukertExponent,ChargeEfficiencyFactor);
+}
+
+/*****************************************************************************//**
+ * \brief Converter (Inverter/Charger) Status
+ *          message PGN 127750
+ * \ingroup group_msgSetUp
+ *
+ *  Replaces PGN 127507
+ *
+ *  Provides state and status information about charger/inverters
+ *
+ * \param N2kMsg       Reference to a N2kMsg Object,
+ *                     Output: NMEA2000 message ready to be send.
+ * \param SID                   Sequence ID
+ * \param ConnectionNumber      Connection number
+ * \param OperatingState        \ref tN2kConvMode
+ * \param TemperatureState      \ref TemperatureState
+ * \param OverloadState         \ref tN2kOverloadState
+ * \param LowDCVoltageState     \ref tN2kDCVolgateState
+ * \param RippleState           \ref tN2kRippleState
+ */
+void SetN2kPGN127750(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ConnectionNumber, tN2kConvMode OperatingState,
+                                  tN2kTemperatureState TemperatureState, tN2kOverloadState OverloadState, tN2kDCVolgateState LowDcVoltageState, tN2kRippleState RippleState);
+/*****************************************************************************//**
+ * \brief Converter (Inverter/Charger) Status
+ *          message PGN 127750
+ * \ingroup group_msgSetUp
+ *
+ * alias of PGN 127750. This alias was introduced to imporve the reliabilty
+ * of the source code. Seee parameter details on \ref SetN2kPGN127750
+ */
+inline void SetN2kDCConvStatus(tN2kMsg &N2kMsg, unsigned char SID, unsigned char ConnectionNumber, tN2kConvMode OperatingState,
+                                  tN2kTemperatureState TemperatureState, tN2kOverloadState OverloadState, tN2kDCVolgateState LowDcVoltageState, tN2kRippleState RippleState) {
+ SetN2kPGN127750(N2kMsg, SID, ConnectionNumber,OperatingState,TemperatureState,OverloadState,LowDcVoltageState,RippleState);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 127750 Converter (Inverter/Charger) Status
+ * \ingroup group_msgParsers
+ *
+ * \param N2kMsg       Reference to a N2kMsg Object,
+ *                     Output: NMEA2000 message ready to be send.
+ * \param SID                   Sequence ID
+ * \param ConnectionNumber      Connection number
+ * \param OperatingState        \ref tN2kConvMode
+ * \param TemperatureState      \ref TemperatureState
+ * \param OverloadState         \ref tN2kOverloadState
+ * \param LowDCVoltageState     \ref tN2kDCVolgateState
+ * \param RippleState           \ref tN2kRippleState
+ *
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ */
+bool ParseN2kPGN127750(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ConnectionNumber, tN2kConvMode &OperatingState,
+                                  tN2kTemperatureState &TemperatureState, tN2kOverloadState &OverloadState, tN2kDCVolgateState &LowDcVoltageState, tN2kRippleState &RippleState);
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 127513 Converter (Inverter/Charger) Status
+ * \ingroup group_msgParsers
+ *
+ * aliaso of PGN 127750.  This alias was intruduced to improve the readability
+ * of the source code. See parameter details in \ref ParseN2kPGN127750
+ */
+inline bool ParseN2kDCConvStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ConnectionNumber, tN2kConvMode &OperatingState,
+                                  tN2kTemperatureState &TemperatureState, tN2kOverloadState &OverloadState, tN2kDCVolgateState &LowDcVoltageState, tN2kRippleState &RippleState) {
+ return ParseN2kPGN127750(N2kMsg,SID,ConnectionNumber,OperatingState,TemperatureState,OverloadState,LowDcVoltageState,RippleState);
 }
 
 /************************************************************************//**
@@ -3251,12 +3396,15 @@ inline bool ParseN2kLocalOffset(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, 
  * \param Heading     heading
  * \param ROT         Rate of turn
  * \param NavStatus   Navigational status, see \ref tN2kAISNavStatus
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  */
 void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
-                        double Latitude, double Longitude, bool Accuracy, bool RAIM, 
-                        uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation, 
-                        double Heading, double ROT, tN2kAISNavStatus NavStatus);
+                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
+                        uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation,
+		     double Heading, double ROT, tN2kAISNavStatus NavStatus, uint8_t SID=0xff);
 /************************************************************************//**
  * \brief Setting up Message "AIS position reports for Class A" - PGN 129038
  * \ingroup group_msgSetUp
@@ -3265,11 +3413,11 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * of the source code. See parameter details on \ref SetN2kPGN129038
   */
 inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, 
-                        double Latitude, double Longitude, bool Accuracy, bool RAIM, 
-                        uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation,  
-                        double Heading, double ROT, tN2kAISNavStatus NavStatus) {
-  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, 
-                  Accuracy, RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, ROT, NavStatus);
+				    double Latitude, double Longitude, bool Accuracy, bool RAIM,
+				    uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation,
+				    double Heading, double ROT, tN2kAISNavStatus NavStatus, uint8_t SID=0xff) {
+  SetN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude,
+                  Accuracy, RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, ROT, NavStatus, SID);
 }
 
 /************************************************************************//**
@@ -3314,25 +3462,49 @@ inline void SetN2kAISClassAPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISR
  * \param Heading     heading
  * \param ROT         Rate of turn
  * \param NavStatus   Navigational status, see \ref tN2kAISNavStatus
+ * \param AISTransceiverInformation    AIS transeiver info, see \ref tN2kAISTransceiverInformation
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  * 
  */
 bool ParseN2kPGN129038(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus);
+		       bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus &NavStatus,
+		       tN2kAISTransceiverInformation &AISTransceiverInformation, uint8_t &SID);
 
 /************************************************************************//**
- * \brief Parsing the content of a "AIS position reports for Class A" 
+ * \brief Parsing the content of a "AIS position reports for Class A"
  *        message - PGN 129038
  * \ingroup group_msgParsers
- * 
+ *
+ * Alias of PGN 129038. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN129038
+ */
+inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
+				      bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus,
+				      tN2kAISTransceiverInformation &AISTransceiverInformation, uint8_t &SID) {
+  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus, AISTransceiverInformation, SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of a "AIS position reports for Class A"
+ *        message - PGN 129038
+ * \ingroup group_msgParsers
+ *
+ * \note Previous inline version for backwards compatibility, using temporary
+ * value to parse unused parameter
+ *
  * Alias of PGN 129038. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref ParseN2kPGN129038 
  */
 inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, double &Latitude, double &Longitude,
-                        bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus) {
-  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus);
+				      bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG, double &SOG, double &Heading, double &ROT, tN2kAISNavStatus & NavStatus) {
+  tN2kAISTransceiverInformation AISInfo;
+  uint8_t SID;
+  return ParseN2kPGN129038(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, Heading, ROT, NavStatus, AISInfo, SID);
 }
 
 /************************************************************************//**
@@ -3401,9 +3573,8 @@ inline bool ParseN2kAISClassAPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
  *                    - 0 = SOTDMA communication state follows
  *                    - 1 = ITDMA communication state follows
  *                    (always “1” for Class-B “CS”)
- * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID. \n
- *                    \n
- *                    The sequence identifier field is used to tie different PGNs data together to same 
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
  *                    sampling or calculation time.
  * 
  */
@@ -3420,7 +3591,7 @@ void SetN2kPGN129039(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * 
  * Alias of PGN 129039. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN129039
-  */
+ */
 inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
                         double Latitude, double Longitude, bool Accuracy, bool RAIM,
                         uint8_t Seconds, double COG, double SOG, tN2kAISTransceiverInformation AISTransceiverInformation,
@@ -3440,13 +3611,13 @@ inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISR
  * 
  * Alias of PGN 129039. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN129039
-  */
+ */
 inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        double Latitude, double Longitude, bool Accuracy, bool RAIM,
-                        uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
-                        bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State) {
+				    double Latitude, double Longitude, bool Accuracy, bool RAIM,
+				    uint8_t Seconds, double COG, double SOG, double Heading, tN2kAISUnit Unit,
+				    bool Display, bool DSC, bool Band, bool Msg22, tN2kAISMode Mode, bool State) {
   SetN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds,
-                    COG, SOG, N2kaischannel_A_VDL_reception, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+		  COG, SOG, N2kaischannel_A_VDL_reception, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
 }
 
 /************************************************************************//**
@@ -3516,39 +3687,63 @@ inline void SetN2kAISClassBPosition(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISR
  *                    - 0 = SOTDMA communication state follows
  *                    - 1 = ITDMA communication state follows
  *                    (always “1” for Class-B “CS”)
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  * 
  */
 bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG,
-                        double &SOG, tN2kAISTransceiverInformation &AISTransceiverInformation, double &Heading,
-                        tN2kAISUnit &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State);
+		       double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM, uint8_t &Seconds, double &COG,
+		       double &SOG, tN2kAISTransceiverInformation &AISTransceiverInformation, double &Heading,
+		       tN2kAISUnit &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State, uint8_t &SID);
 
 /************************************************************************//**
- * \brief Parsing the content of a "AIS position reports for Class B" 
+ * \brief Parsing the content of a "AIS position reports for Class B"
  *        message - PGN 129039
  * \ingroup group_msgParsers
- * 
+ *
  * (Latest inline version)
- * 
+ *
  * Alias of PGN 129039. This alias was introduced to improve the readability
- * of the source code. See parameter details on \ref ParseN2kPGN129039 
+ * of the source code. See parameter details on \ref ParseN2kPGN129039
  */
 inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, tN2kAISTransceiverInformation &AISTransceiverInformation,
-                        double &Heading, tN2kAISUnit &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode,
-                        bool &State) {
-  return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+				      double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+				      uint8_t &Seconds, double &COG, double &SOG, tN2kAISTransceiverInformation &AISTransceiverInformation,
+				      double &Heading, tN2kAISUnit &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode,
+				      bool &State, uint8_t &SID) {
+  return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy, RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, Unit, Display, DSC, Band, Msg22, Mode, State, SID);
 }
 
 /************************************************************************//**
- * \brief Parsing the content of a "AIS position reports for Class B" 
+ * \brief Parsing the content of a "AIS position reports for Class B"
  *        message - PGN 129039
  * \ingroup group_msgParsers
- * 
+ *
+ * \note Previous inline version for backwards compatibility, using temporary
+ * value to parse unused parameter
+ *
+ * Alias of PGN 129039. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN129039
+ */
+inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+				      double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+				      uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
+				      bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
+  tN2kAISTransceiverInformation AISTransceiverInformation; // for backwards compatibility
+  uint8_t SID;
+  return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
+			   RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, Unit, Display, DSC, Band, Msg22, Mode, State, SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of a "AIS position reports for Class B"
+ *        message - PGN 129039
+ * \ingroup group_msgParsers
+ *
  * \note Previous inline version for backwards compatibility, using temporary
  * value to parse unused parameter
  * 
@@ -3556,12 +3751,12 @@ inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID,
  * of the source code. See parameter details on \ref ParseN2kPGN129039 
  */
 inline bool ParseN2kAISClassBPosition(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
-                        uint8_t &Seconds, double &COG, double &SOG, double &Heading, tN2kAISUnit &Unit,
-                        bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
-  tN2kAISTransceiverInformation AISTransceiverInformation; // for backwards compatibility
+				      double &Latitude, double &Longitude, bool &Accuracy, bool &RAIM,
+				      uint8_t &Seconds, double &COG, double &SOG, tN2kAISTransceiverInformation &AISTransceiverInformation,
+				      double &Heading, tN2kAISUnit &Unit, bool &Display, bool &DSC, bool &Band, bool &Msg22, tN2kAISMode &Mode, bool &State) {
+  uint8_t SID;   // for backwards compatibility
   return ParseN2kPGN129039(N2kMsg, MessageID, Repeat, UserID, Latitude, Longitude, Accuracy,
-                            RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, Unit, Display, DSC, Band, Msg22, Mode, State);
+			   RAIM, Seconds, COG, SOG, AISTransceiverInformation, Heading, Unit, Display, DSC, Band, Msg22, Mode, State, SID);
 }
 
 /************************************************************************//**
@@ -4317,12 +4512,13 @@ inline bool ParseN2kPGNSatellitesInView(const tN2kMsg& N2kMsg, uint8_t SVIndex, 
  *                        - 1 = not available = default
  * \param AISinfo         AIS Transceiver Information,
  *                        see \ref tN2kAISTransceiverInformation
+ * \param SID             Sequence ID used to bind two PGNs from the same source together. See \ref secRefTermSID.
  */
 void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
-                        tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo);
+		     uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
+		     double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+		     double Draught, const char *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+		     tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS static data class A" - PGN 129794
@@ -4332,12 +4528,12 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * of the source code. See parameter details on \ref SetN2kPGN129794
   */
 inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                        uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
-                        double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
-                        double Draught, char const *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
-                        tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo) {
+				  uint32_t IMOnumber, const char *Callsign, const char *Name, uint8_t VesselType, double Length,
+				  double Beam, double PosRefStbd, double PosRefBow, uint16_t ETAdate, double ETAtime,
+				  double Draught, char const *Destination, tN2kAISVersion AISversion, tN2kGNSStype GNSStype,
+				  tN2kAISDTE DTE, tN2kAISTransceiverInformation AISinfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff) {
   SetN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, Name, VesselType, Length,
-                  Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo);
+                  Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, AISversion, GNSStype, DTE, AISinfo, SID);
 }
 
 /************************************************************************//**
@@ -4392,42 +4588,66 @@ inline void SetN2kAISClassAStatic(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRep
  *                        - 1 = not available = default
  * \param AISinfo         AIS Transceiver Information,
  *                        see \ref tN2kAISTransceiverInformation
- * 
+ * \param SID             Sequence ID used to bind two PGNs from the same source together
+ *
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  * 
  */
 bool ParseN2kPGN129794(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t &IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
-                        tN2kAISDTE &DTE, tN2kAISTransceiverInformation &AISinfo);
+		       uint32_t &IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &VesselType, double &Length,
+		       double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+		       double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+		       tN2kAISDTE &DTE, tN2kAISTransceiverInformation &AISinfo, uint8_t &SID);
 
 /************************************************************************//**
- * \brief Parsing the content of a "AIS static data class A" 
+ * \brief Parsing the content of a "AIS static data class A"
  *        message - PGN 129794
  * \ingroup group_msgParsers
- * 
+ *
  * Alias of PGN 129794. This alias was introduced to improve the readability
- * of the source code. See parameter details on \ref ParseN2kPGN129794 
+ * of the source code. See parameter details on \ref ParseN2kPGN129794
  */
 inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                        uint32_t & IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &VesselType, double &Length,
-                        double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
-                        double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
-                        tN2kAISDTE &DTE, tN2kAISTransceiverInformation &AISinfo) {
+				    uint32_t & IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &VesselType, double &Length,
+				    double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+				    double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+				    tN2kAISDTE &DTE, tN2kAISTransceiverInformation &AISinfo, uint8_t &SID) {
+  return ParseN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, CallsignBufSize, Name, NameBufSize, VesselType, Length,
+			   Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, DestinationBufSize,AISversion,
+			   GNSStype, DTE, AISinfo, SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of a "AIS static data class A"
+ *        message - PGN 129794
+ * \ingroup group_msgParsers
+ *
+ * \note Previous inline version for backwards compatibility, using temporary
+ * value to parse unused parameter
+ *
+ * Alias of PGN 129794. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN129794
+ */
+inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+				    uint32_t & IMOnumber, char *Callsign, size_t CallsignBufSize, char *Name, size_t NameBufSize, uint8_t &VesselType, double &Length,
+				    double &Beam, double &PosRefStbd, double &PosRefBow, uint16_t &ETAdate, double &ETAtime,
+				    double &Draught, char *Destination, size_t DestinationBufSize, tN2kAISVersion &AISversion, tN2kGNSStype &GNSStype,
+				    tN2kAISDTE &DTE) {
+  tN2kAISTransceiverInformation AISinfo;
+  uint8_t SID;
   return ParseN2kPGN129794(N2kMsg, MessageID, Repeat, UserID, IMOnumber, Callsign, CallsignBufSize, Name, NameBufSize, VesselType, Length,
                           Beam, PosRefStbd, PosRefBow, ETAdate, ETAtime, Draught, Destination, DestinationBufSize,AISversion,
-                          GNSStype, DTE, AISinfo);
+			   GNSStype, DTE, AISinfo, SID);
 }
 
 /************************************************************************//**
  * \brief Setting up PGN 129809 Message "AIS static data class B part A"
  * \ingroup group_msgSetUp
- * 
+ *
  * This parameter group is used by Class B "CS" shipborne mobile equipment
  * each time Part A of ITU-R M.1372 Message 24 is received.
- * 
+ *
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
  * \sa SetN2kPGN129810 and ParseN2kPGN129810
  * 
@@ -4444,9 +4664,13 @@ inline bool ParseN2kAISClassAStatic(const tN2kMsg &N2kMsg, uint8_t &MessageID, t
  *                        to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals
  *                        the aircraft registration number
  *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
- * 
+ * \param AISTranseiverInformation    AIS transeiver inforation \ref tN2kAISTransceiverInformation
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
+ *
  */
-void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name);
+void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name, tN2kAISTransceiverInformation AISInfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS static data class B part A" - PGN 129809
@@ -4455,8 +4679,9 @@ void SetN2kPGN129809(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * Alias of PGN 129809. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN129809
   */
-inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name) {
-  SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name);
+inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID, const char *Name,
+				       tN2kAISTransceiverInformation AISInfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff) {
+  SetN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name, AISInfo, SID);
 }
 
 /************************************************************************//**
@@ -4483,23 +4708,45 @@ inline void SetN2kAISClassBStaticPartA(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  *                        to “SAR AIRCRAFT NNNNNNN” where NNNNNNN equals
  *                        the aircraft registration number
  *                        Input string will be converted to contain only SixBit ASCII character set (see. ITU-R M.1371-1)
- * \param NameBufSize  size of Name buffer
+ * \param NameBufSize     size of Name buffer
+ * \param AISTranseiverInformation    AIS transeiver inforation \ref tN2kAISTransceiverInformation
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  */
-bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSize);
+bool ParseN2kPGN129809(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSizem, tN2kAISTransceiverInformation &AISInfo, uint8_t &SID);
+
+/************************************************************************//**
+ * \brief Parsing the content of a "AIS static data class B part A"
+ *        message - PGN 129809
+ * \ingroup group_msgParsers
+ *
+ * Alias of PGN 129809. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN129809 
+ */
+inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSize,
+					 tN2kAISTransceiverInformation &AISInfo, uint8_t &SID) {
+  return ParseN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name, NameBufSize, AISInfo, SID);
+}
 
 /************************************************************************//**
  * \brief Parsing the content of a "AIS static data class B part A" 
  *        message - PGN 129809
  * \ingroup group_msgParsers
+ *
+ * \note Previous inline version for backwards compatibility, using temporary
+ * value to parse unused parameter
  * 
  * Alias of PGN 129809. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref ParseN2kPGN129809 
  */
 inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID, char *Name, size_t NameBufSize) {
-  return ParseN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name, NameBufSize);
+  tN2kAISTransceiverInformation AISInfo;
+  uint8_t SID;
+  return ParseN2kPGN129809(N2kMsg, MessageID, Repeat, UserID, Name, NameBufSize, AISInfo, SID);
 }
 
 /************************************************************************//**
@@ -4511,7 +4758,7 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
 
  * 
  * \sa [ITU-R M.1371](https://www.itu.int/rec/R-REC-M.1371)
- * \sa SetN2kPGN129809 and ParseN2kPGN129809
+ * \sa SetN2kPGN129810 and ParseN2kPGN129810
  * 
  * \param N2kMsg        Reference to a N2kMsg Object, 
  *                      Output: NMEA2000 message ready to be send.
@@ -4535,11 +4782,15 @@ inline bool ParseN2kAISClassBStaticPartA(const tN2kMsg &N2kMsg, uint8_t &Message
  * \param PosRefStbd      Position Reference Point from Starboard 
  * \param PosRefBow       Position Reference Point from the Bow
  * \param MothershipID    MMSI of the mothership 
+ * \param AISTranseiverInformation    AIS transeiver inforation \ref tN2kAISTransceiverInformation
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  */
 void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
-                      double PosRefStbd, double PosRefBow, uint32_t MothershipID);
+		     uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
+		     double PosRefStbd, double PosRefBow, uint32_t MothershipID, tN2kAISTransceiverInformation AISInfo=N2kaischannel_B_VDL_reception, uint8_t SID=0xff);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS static data class B part B" - PGN 129810
@@ -4549,10 +4800,11 @@ void SetN2kPGN129810(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * of the source code. See parameter details on \ref SetN2kPGN129810
   */
 inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t UserID,
-                      uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
-                      double PosRefStbd, double PosRefBow, uint32_t MothershipID) {
+				       uint8_t VesselType, const char *Vendor, const char *Callsign, double Length, double Beam,
+				       double PosRefStbd, double PosRefBow, uint32_t MothershipID,
+				       tN2kAISTransceiverInformation AISInfo=N2kaischannel_A_VDL_reception, uint8_t SID=0xff) {
   SetN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, Callsign, Length, Beam,
-                  PosRefStbd, PosRefBow, MothershipID);
+                  PosRefStbd, PosRefBow, MothershipID, AISInfo, SID);
 }
 
 /************************************************************************//**
@@ -4590,15 +4842,18 @@ inline void SetN2kAISClassBStaticPartB(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kA
  * \param PosRefStbd      Position Reference Point from Starboard 
  * \param PosRefBow       Position Reference Point from the Bow
  * \param MothershipID    MMSI of the mothership 
+ * \param AISTranseiverInformation    AIS transeiver inforation, \ref tN2kAISTransceiverInformation
+ * \param SID         Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                    The sequence identifier field is used to tie different PGNs data together to same
+ *                    sampling or calculation time.
  * 
  * \return true     Parsing of PGN Message successful
  * \return false    Parsing of PGN Message aborted
  * 
  */
 bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-                      uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize,
-                      double &Length, double &Beam,
-                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID);
+		       uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize,double &Length, double &Beam,
+		       double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID, tN2kAISTransceiverInformation &AISInfo, uint8_t &SID);
 
 /************************************************************************//**
  * \brief Parsing the content of a "AIS static data class B part B" 
@@ -4609,13 +4864,30 @@ bool ParseN2kPGN129810(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
  * of the source code. See parameter details on \ref ParseN2kPGN129810 
  */
 inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
-		                  uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, 
-                      double &Length, double &Beam,
-                      double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
-  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID,
-                           VesselType, Vendor, VendorBufSize, Callsign, CallsignBufSize,
-                           Length, Beam,
-                           PosRefStbd, PosRefBow, MothershipID);
+					 uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &Length, double &Beam,
+					 double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID, tN2kAISTransceiverInformation &AISInfo, uint8_t &SID ) {
+  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, VendorBufSize, Callsign, CallsignBufSize,
+			   Length, Beam, PosRefStbd, PosRefBow, MothershipID, AISInfo, SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of a "AIS static data class B part B"
+ *        message - PGN 129810
+ * \ingroup group_msgParsers
+ *
+ * \note Previous inline version for backwards compatibility, using temporary
+ * value to parse unused parameter
+ *
+ * Alias of PGN 129810. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN129810
+ */
+inline bool ParseN2kAISClassBStaticPartB(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &UserID,
+					 uint8_t &VesselType, char *Vendor, size_t VendorBufSize, char *Callsign, size_t CallsignBufSize, double &Length, double &Beam,
+					 double &PosRefStbd, double &PosRefBow, uint32_t &MothershipID) {
+  tN2kAISTransceiverInformation AISInfo;
+  uint8_t SID;
+  return ParseN2kPGN129810(N2kMsg, MessageID, Repeat, UserID, VesselType, Vendor, VendorBufSize, Callsign, CallsignBufSize,
+			   Length, Beam, PosRefStbd, PosRefBow, MothershipID, AISInfo, SID);
 }
 
 /************************************************************************//**
