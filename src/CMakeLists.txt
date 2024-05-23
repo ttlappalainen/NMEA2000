@@ -28,6 +28,11 @@ set(srcs
   N2kMessages.cpp
   N2kTimer.cpp
   Seasmart.cpp
+  N2kDeviceList.cpp
+  N2kGroupFunction.cpp
+  N2kGroupFunctionDefaultHandlers.cpp
+  N2kMaretron.cpp
+  NMEA2000.cpp
 )
 
 if(ESP_PLATFORM)
