@@ -1376,7 +1376,7 @@ bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, uint8_t SVIndex, tSatelliteInfo& S
 
   int Index = 2;
   uint8_t NumberOfSVs=N2kMsg.GetByte(Index);
-  bool ret=( NumberOfSVs<MaxSatelliteInfoCount && SVIndex<NumberOfSVs );
+  bool ret=( NumberOfSVs<=MaxSatelliteInfoCount && SVIndex<NumberOfSVs );
   
   if ( ret ) {
     Index=3+SVIndex*12;
@@ -1712,7 +1712,6 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddAISStr(Destination, 20);
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
     N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
-    N2kMsg.AddByte(0xff);
     N2kMsg.AddByte(SID);
 }
 
