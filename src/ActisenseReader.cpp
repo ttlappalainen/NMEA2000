@@ -185,6 +185,7 @@ void tActisenseReader::ParseMessages() {
 
     while (GetMessageFromStream(N2kMsg)) {
       if (MsgHandler!=0) MsgHandler(N2kMsg);
+      if (CallbackHandlerInterface!=0) CallbackHandlerInterface->OnMessage(N2kMsg);
     }
 }
 
