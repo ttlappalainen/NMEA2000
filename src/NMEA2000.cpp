@@ -684,6 +684,7 @@ tNMEA2000::tNMEA2000() {
   MsgHandler=0;
   MsgHandlers=0;
   ISORqstHandler=0;
+  CallbackHandlerInterface=0;
 
   OpenScheduler.FromNow(0);
   OpenState=os_None;
@@ -1252,6 +1253,7 @@ bool tNMEA2000::Open() {
     SetHeartbeatIntervalAndOffset(DefaultHeartbeatInterval,10000); // Init default hearbeat interval and offset.
     #endif
     if ( OnOpen!=0 ) OnOpen();
+    if ( CallbackHandlerInterface!=0 ) CallbackHandlerInterface->OnOpen();
   } else {
     // Read rubbish out from CAN controller
     unsigned long canId;
@@ -2323,6 +2325,13 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
             return;
           }
         }
+        /* If user has established a callback handler interface */
+        if (CallbackHandlerInterface!=0) {
+            /* and if it handled the request, we are done */
+            if (CallbackHandlerInterface->OnIsoRequest(RequestedPGN,N2kMsg.Source,iDev)) {
+              return;
+            }
+          }
 
         tN2kMsg   N2kMsgR;
         // No user handler, or there was one and it returned FALSE.  Send NAK
@@ -2623,6 +2632,7 @@ void tNMEA2000::ParseMessages() {
 //*****************************************************************************
 void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
   if ( MsgHandler!=0 ) MsgHandler(N2kMsg);
+  if ( CallbackHandlerInterface!=0 ) CallbackHandlerInterface->OnMessage(N2kMsg);
 
   tMsgHandler *MsgHandler=MsgHandlers;
   // Loop through all PGN handlers
@@ -2687,6 +2697,11 @@ void tNMEA2000::DetachMsgHandler(tMsgHandler *_MsgHandler) {
 //*****************************************************************************
 void tNMEA2000::SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex)) {
   ISORqstHandler=ISORequestHandler;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetCallbackHandlerInterface(tNMEA2000CallbackInterface *_CallbackHandlerInterface) {
+	CallbackHandlerInterface=_CallbackHandlerInterface;
 }
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
