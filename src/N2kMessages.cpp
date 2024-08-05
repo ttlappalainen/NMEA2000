@@ -1376,7 +1376,7 @@ bool ParseN2kPGN129540(const tN2kMsg& N2kMsg, uint8_t SVIndex, tSatelliteInfo& S
 
   int Index = 2;
   uint8_t NumberOfSVs=N2kMsg.GetByte(Index);
-  bool ret=( NumberOfSVs<MaxSatelliteInfoCount && SVIndex<NumberOfSVs );
+  bool ret=( NumberOfSVs<=MaxSatelliteInfoCount && SVIndex<NumberOfSVs );
   
   if ( ret ) {
     Index=3+SVIndex*12;

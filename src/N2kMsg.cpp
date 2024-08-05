@@ -415,8 +415,10 @@ bool tN2kMsg::GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned ch
 
 //*****************************************************************************
 bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
-  size_t Len=GetByte(Index)-2;
+  size_t Len=GetByte(Index);
   uint8_t Type=GetByte(Index);
+  if ( Len<2) { StrBufSize=0; return false; } // invalid length
+  Len-=2;
   if ( Type!=0x01 ) { StrBufSize=0; return false; }
   if ( StrBuf!=0 ) {
     GetStr(StrBufSize,StrBuf,Len,0xff,Index);

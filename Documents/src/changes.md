@@ -1,6 +1,12 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 23.05.2024
+- Fixed GetVarStr to handle invalid length, thanks to EricvanderVelde.
+- Fixed PGN 129794 setter to set SID properly.
+- Fixed PGN 129540 to parse up to MaxSatelliteInfoCount, thanks to cosina.
+- CMakeLists.txt update by Dirlay.
+
 ## 25.03.2024
 - Added PGN 127510
 - Added PGN 127750
