@@ -2024,7 +2024,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
   bool KnownMessage;
   uint8_t MsgIndex=MaxN2kCANMsgs;
 
-    CanIdToN2k(canId,Priority,PGN,Source,Destination);
+  CanIdToN2k(canId,Priority,PGN,Source,Destination);
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
     if ( !TestHandleTPMessage(PGN,Source,Destination,len,buf,MsgIndex) )
 #endif
