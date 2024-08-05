@@ -1712,7 +1712,6 @@ void SetN2kPGN129794(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.AddAISStr(Destination, 20);
     N2kMsg.AddByte((DTE & 0x01)<<6 | (GNSStype & 0x0f)<<2 | (AISversion & 0x03));
     N2kMsg.AddByte(0xe0 | (AISinfo & 0x1f));
-    N2kMsg.AddByte(0xff);
     N2kMsg.AddByte(SID);
 }
 
