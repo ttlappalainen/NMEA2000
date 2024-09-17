@@ -593,6 +593,23 @@ double GetBuf2ByteUDouble(double precision, int &index, const unsigned char *buf
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def=0);
 
 /**************************************************************************//**
+ * \brief Extracts 3 bytes out of the given buffer
+ * and converts it to a double value.
+ * 
+ * The fixed point integer mechanism is used.
+ * 
+ * \param precision the value is rounded to the given precision (e.g. 0.01)
+ * \param index       position inside the byte array \ref tN2kMsg::Data, getting
+ *                    incremented according to the number of bytes
+ *                    extracted
+ * \param buf   Pointer to the byte array buffer 
+ * \param def   default value that will be returned if the byte array
+ *              equal to "not available"
+ * \return      double value
+ */
+double GetBuf3ByteUDouble(double precision, int &index, const unsigned char *buf, double def=0);
+
+/**************************************************************************//**
  * \brief Extracts 4 bytes out of the given buffer
  * and converts it to a double value.
  * 
