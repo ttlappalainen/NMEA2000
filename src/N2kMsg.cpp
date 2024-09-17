@@ -749,7 +749,7 @@ double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf,
 }
 
 //*****************************************************************************
-double GetBuf3ByteUouble(double precision, int &index, const unsigned char *buf, double def) {
+double GetBuf3ByteUDouble(double precision, int &index, const unsigned char *buf, double def) {
   int32_t vl = GetBuf<int32_t>(3, index, buf);
   if (vl==0x00ffffff) return def;
 
