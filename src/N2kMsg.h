@@ -257,6 +257,24 @@ void SetBuf4ByteUDouble(double v, double precision, int &index, unsigned char *b
 void SetBuf3ByteDouble(double v, double precision, int &index, unsigned char *buf);
 
 /**************************************************************************//**
+ * \brief Writes a double unsigned value into a byte array buffer using 3 bytes
+ *
+ * To write a double value into a certain position of an byte array buffer
+ * the function memcpy is used. Out of range will be handled. So if given
+ * value can not be converted to fixed integer, "out of range" constant
+ * will be set. 
+ * 
+ * There are different functions depending on how many byte should be used
+ * in the buffer. The fixed point integer mechanism is used.
+ * 
+ * \param v {double} Value to be stored in the Buffer
+ * \param precision the value is rounded to the given precision (e.g. 0.01)
+ * \param index     Position where the value should be placed inside the buffer
+ * \param buf       Pointer to the byte array buffer 
+ */
+void SetBuf3ByteUDouble(double v, double precision, int &index, unsigned char *buf);
+
+/**************************************************************************//**
  * \brief Writes a double signed value into a byte array buffer using 2 bytes
  *
  * To write a double value into a certain position of an byte array buffer
@@ -371,6 +389,21 @@ void SetBuf2ByteUInt(uint16_t v, int &index, unsigned char *buf);
  * \param buf       Pointer to the byte array buffer 
  */
 void SetBuf3ByteInt(int32_t v, int &index, unsigned char *buf);
+
+/**************************************************************************//**
+ * \brief Writes an unsigned integer value into a byte array buffer using 
+ * 3 bytes
+ * To write a integer value into a certain position of an byte array buffer
+ * the function memcpy is used. 
+ * 
+ * There are different functions depending on how many byte should be used
+ * in the buffer
+ * 
+ * \param v         Value to be stored in the Buffer
+ * \param index     Position where the value should be placed inside the buffer
+ * \param buf       Pointer to the byte array buffer 
+ */
+void SetBuf3ByteUInt(int32_t v, int &index, unsigned char *buf);
 
 /**************************************************************************//**
  * \brief Writes an unsigned integer value into a byte array buffer u

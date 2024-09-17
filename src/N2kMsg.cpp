@@ -598,7 +598,6 @@ void SetBufFloat(float v, int &index, unsigned char *buf) {
 #define N2kUInt32OR 0xfffffffe
 
 #define N2kInt32Min -2147483648L
-#define N2kInt24OR  8388606L
 #define N2kInt24Min -8388608L
 #define N2kInt16Min -32768
 #define N2kInt8Min  -128
