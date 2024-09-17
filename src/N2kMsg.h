@@ -840,6 +840,19 @@ public:
   void Add3ByteDouble(double v, double precision, double UndefVal=N2kDoubleNA);
 
   /************************************************************************//**
+   * \brief Add double value to the buffer using 3 bytes
+   * 
+   * The fixed point integer mechanism is used.
+   * The value will be added to the end (indicated by \ref DataLen) of
+   * the byte array \ref Data.
+   * 
+   * \param precision the value is rounded to the given precision (e.g. 0.01)
+   * \param v         value to add
+   * \param UndefVal  "not available" value
+   */
+  void Add3ByteUDouble(double v, double precision, double UndefVal=N2kDoubleNA);
+
+  /************************************************************************//**
    * \brief Add double value to the buffer using 2 bytes
    * 
    * The fixed point integer mechanism is used.
@@ -1110,6 +1123,19 @@ public:
   * \return        double value
   */
   double Get3ByteDouble(double precision, int &Index, double def=N2kDoubleNA) const;
+
+  /************************************************************************//**
+  * \brief Get a double from 3 bytes out of \ref Data
+  * The fixed point integer mechanism is used.
+  * 
+  * \param precision the value is rounded to the given precision (e.g. 0.01)
+  * \param Index       position inside the byte array \ref Data, getting
+  *                    incremented according to the number of bytes
+  *                    extracted
+  * \param def     default value when data is unavailable
+  * \return        double value
+  */
+  double Get3ByteUDouble(double precision, int &Index, double def=N2kDoubleNA) const;
 
   /************************************************************************//**
   * \brief Get a double from 4 bytes out of \ref Data
