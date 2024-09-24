@@ -1,6 +1,13 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 24.09.2024
+- Fixed UpdateHasPendingInformation() to use or (||) on test.
+- Fix no NAK for broadcast ISO Request
+- Fix do not call ISORqstHandler for specific messages, if request is broadcast
+- Added HandleCommand group function handler for heartbeat (PGN 126993)
+- Fixed 130316 temperature to unsigned by EricvanderVelde
+
 ## 23.05.2024
 - Fixed GetVarStr to handle invalid length, thanks to EricvanderVelde.
 - Fixed PGN 129794 setter to set SID properly.

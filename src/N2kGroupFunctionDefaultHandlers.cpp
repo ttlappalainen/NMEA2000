@@ -535,6 +535,25 @@ bool tN2kGroupFunctionHandlerForPGN126993::HandleRequest(const tN2kMsg &N2kMsg,
   }
   return true;
 }
+
+//*****************************************************************************
+bool tN2kGroupFunctionHandlerForPGN126993::HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t  NumberOfParameterPairs, int iDev) {
+
+    // As default we respond with not supported.
+    tN2kGroupFunctionPGNErrorCode PGNec=N2kgfPGNec_PGNNotSupported;
+    tN2kGroupFunctionTransmissionOrPriorityErrorCode TORec=N2kgfTPec_Acknowledge;
+    tN2kGroupFunctionParameterErrorCode PARec=N2kgfpec_Acknowledge;
+
+		if ( !(PrioritySetting == 0x08 || PrioritySetting == 0x0f || PrioritySetting == 0x09) ) TORec = N2kgfTPec_TransmitIntervalOrPriorityNotSupported;
+
+    SendAcknowledge(pNMEA2000,N2kMsg.Source,iDev,GetPGNForGroupFunction(N2kMsg),
+                    PGNec,
+                    TORec,
+                    NumberOfParameterPairs, PARec);
+
+    return true;
+}
+
 #endif
 
 #endif

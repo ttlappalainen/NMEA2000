@@ -282,14 +282,14 @@ bool IsDefaultSingleFrameMessage(unsigned long PGN) {
                                       case 127245L: // Rudder, pri=2, period=100
                                       case 127250L: // Vessel Heading, pri=2, period=100
                                       case 127251L: // Rate of Turn, pri=2, period=100
-				      case 127252L: // Heave, pri=3, period=100
+                                      case 127252L: // Heave, pri=3, period=100
                                       case 127257L: // Attitude, pri=3, period=1000
                                       case 127488L: // Engine parameters rapid, rapid Update, pri=2, period=100
                                       case 127493L: // Transmission parameters: dynamic, pri=2, period=100
                                       case 127501L: // Binary status report, pri=3, period=NA
                                       case 127505L: // Fluid level, pri=6, period=2500
                                       case 127508L: // Battery Status, pri=6, period=1500
-				      case 127750L: // Charger status new, pri=6, period=1500
+                                      case 127750L: // Charger status new, pri=6, period=1500
                                       case 128259L: // Boat speed, pri=2, period=1000
                                       case 128267L: // Water depth, pri=3, period=1000
                                       case 129025L: // Lat/lon rapid, pri=2, period=100
@@ -405,6 +405,9 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 129811L: AIS Single Slot Binary Message, pri=5, period=NA
  *          - 129812L: AIS Multi Slot Binary Message, pri=5, period=NA
  *          - 129813L: AIS Long-Range Broadcast Message, pri=5, period=NA
+ *          - 129814L: AIS single slot binary message, pri=5, period=NA
+ *          - 129815L: AIS multi slot binary message, pri=5, period=NA
+ *          - 129816L: AIS acknowledge, pri=7, period=NA
  *          - 130052L: Loran-C TD Data, pri=3, period=1000
  *          - 130053L: Loran-C Range Data, pri=3, period=1000
  *          - 130054L: Loran-C Signal Data, pri=3, period=1000
@@ -522,6 +525,9 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 129811L: // AIS Single Slot Binary Message, pri=5, period=NA
                                       case 129812L: // AIS Multi Slot Binary Message, pri=5, period=NA
                                       case 129813L: // AIS Long-Range Broadcast Message, pri=5, period=NA
+                                      case 129814L: // AIS single slot binary message, pri=5, period=NA
+                                      case 129815L: // AIS multi slot binary message, pri=5, period=NA
+                                      case 129816L: // AIS acknowledge, pri=7, period=NA
                                       case 130052L: // Loran-C TD Data, pri=3, period=1000
                                       case 130053L: // Loran-C Range Data, pri=3, period=1000
                                       case 130054L: // Loran-C Signal Data, pri=3, period=1000
@@ -586,6 +592,24 @@ bool IsProprietaryFastPacketMessage(unsigned long PGN) {
 
 bool tNMEA2000::IsProprietaryMessage(unsigned long PGN) {
   return IsProprietaryFastPacketMessage(PGN) || ( PGN==61184L ) || ( 65280L<=PGN && PGN<=65535L );
+}
+
+bool IgnoreBroadcastISORequest(unsigned long RequestedPGN) {
+  switch (RequestedPGN) {
+    case 127500L:
+    case 130060L:
+    case 130061L:
+    case 130330L:
+    case 130561L:
+    case 130562L:
+    case 130563L:
+    case 130564L:
+    case 130565L:
+    case 130566L:
+      return true;
+  }
+
+  return false;
 }
 
 /************************************************************************//**
@@ -2298,7 +2322,7 @@ bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
 }
 
 //*****************************************************************************
-void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev) {
+void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, bool Addressed, unsigned long RequestedPGN, int iDev) {
     if ( IsAddressClaimStarted(iDev) ) return; // We do not respond any queries during address claiming.
 
     switch (RequestedPGN) {
@@ -2318,18 +2342,24 @@ void tNMEA2000::RespondISORequest(const tN2kMsg &N2kMsg, unsigned long Requested
       default:
         /* If user has established a handler */
         if (ISORqstHandler!=0) {
+          // Do not respond to broadcast request for some messages
+          if ( !Addressed && IgnoreBroadcastISORequest(RequestedPGN) ) return;
+
           /* and if it handled the request, we are done */
           if (ISORqstHandler(RequestedPGN,N2kMsg.Source,iDev)) {
             return;
           }
         }
 
-        tN2kMsg   N2kMsgR;
-        // No user handler, or there was one and it returned FALSE.  Send NAK
-        SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);
-        // Direct the response to original requester.
-        N2kMsgR.Destination  = N2kMsg.Source;
-        SendMsg(N2kMsgR,iDev);
+        // Respond NAK only for addressed messages
+        if ( Addressed ) {
+          tN2kMsg   N2kMsgR;
+          // No user handler, or there was one and it retured FALSE.  Send NAK
+          SetN2kPGNISOAcknowledgement(N2kMsgR,1,0xff,RequestedPGN);
+          // Direct the response to original requester.
+          N2kMsgR.Destination  = N2kMsg.Source;
+          SendMsg(N2kMsgR,iDev);
+        }
     }
 }
 
@@ -2343,9 +2373,9 @@ void tNMEA2000::HandleISORequest(const tN2kMsg &N2kMsg) {
     ParseN2kPGNISORequest(N2kMsg,RequestedPGN);
     N2kMsgDbgStart("ISO request: "); N2kMsgDbgln(RequestedPGN);
     if (tNMEA2000::IsBroadcast(N2kMsg.Destination)) { // broadcast -> respond from all devices
-      for (iDev=0; iDev<DeviceCount; iDev++) RespondISORequest(N2kMsg,RequestedPGN,iDev);
+      for (iDev=0; iDev<DeviceCount; iDev++) RespondISORequest(N2kMsg,false,RequestedPGN,iDev);
     } else {
-      RespondISORequest(N2kMsg,RequestedPGN,iDev);
+      RespondISORequest(N2kMsg,true,RequestedPGN,iDev);
     }
 }
 

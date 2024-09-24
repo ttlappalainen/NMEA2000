@@ -921,10 +921,10 @@ protected:
     }
     void UpdateHasPendingInformation() {
       HasPendingInformation=  PendingIsoAddressClaim.IsEnabled()
-                            | PendingProductInformation.IsEnabled()
-                            | PendingConfigurationInformation.IsEnabled()
+                            || PendingProductInformation.IsEnabled()
+                            || PendingConfigurationInformation.IsEnabled()
                             #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-                            | NextDTSendTime.IsEnabled()
+                            || NextDTSendTime.IsEnabled()
                             #endif
                             ;
     }
@@ -1381,7 +1381,7 @@ protected:
      * \param RequestedPGN  Requested PGN
      * \param iDev          index of the device on \ref Devices
      */
-    void RespondISORequest(const tN2kMsg &N2kMsg, unsigned long RequestedPGN, int iDev);
+    void RespondISORequest(const tN2kMsg &N2kMsg, bool Addressed, unsigned long RequestedPGN, int iDev);
 
     /*********************************************************************//**
      * \brief Handles an ISO Request

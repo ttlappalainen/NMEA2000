@@ -120,6 +120,7 @@ class tN2kGroupFunctionHandlerForPGN126993 : public tN2kGroupFunctionHandler {
                                uint16_t TransmissionIntervalOffset, 
                                uint8_t  NumberOfParameterPairs,
                                int iDev);
+    virtual bool HandleCommand(const tN2kMsg &N2kMsg, uint8_t PrioritySetting, uint8_t NumberOfParameterPairs, int iDev);
   public:
     tN2kGroupFunctionHandlerForPGN126993(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126993L) {}
 };
