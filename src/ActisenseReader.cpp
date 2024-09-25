@@ -158,7 +158,7 @@ bool tActisenseReader::GetMessageFromStream(tN2kMsg &N2kMsg, bool ReadOut) {
               ReadStream->read(); // Read ch out
               ClearBuffer();
               StartOfTextReceived=true;
-            }
+            } else if ( ReadOut ) ReadStream->read(); // Read character to ensure the same character is not handled again in the loop
             break;
           default:
             EscapeReceived=(NewByte==Escape);
@@ -185,6 +185,7 @@ void tActisenseReader::ParseMessages() {
 
     while (GetMessageFromStream(N2kMsg)) {
       if (MsgHandler!=0) MsgHandler(N2kMsg);
+      if (CallbackHandlerInterface!=0) CallbackHandlerInterface->OnMessage(N2kMsg);
     }
 }
 
