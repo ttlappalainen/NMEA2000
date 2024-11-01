@@ -894,6 +894,31 @@ bool ParseN2kPGN127750(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   return true;
 }
 
+//*****************************************************************************
+// DC Voltage/Current
+// Temperatures should be in Kelvins
+void SetN2kPGN127751(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double Current, unsigned char SID) {
+    N2kMsg.SetPGN(127751L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(Instance);
+    N2kMsg.Add2ByteDouble(Voltage,0.1);
+    N2kMsg.Add3ByteDouble(Current,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127751(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID) {
+  if (N2kMsg.PGN!=127751L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  Instance=N2kMsg.GetByte(Index);
+  Voltage=N2kMsg.Get2ByteDouble(0.1,Index);
+  Current=N2kMsg.Get3ByteDouble(0.01,Index);
+
+  return true;
+}
 
 //*****************************************************************************
 // Leeway
@@ -1422,7 +1447,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUDouble(Heading, 1e-04);
     N2kMsg.Add2ByteDouble(ROT, 3.125E-05); // 1e-3/32.0
     N2kMsg.AddByte(0xF0 | (NavStatus & 0x0f));
-    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xfc); // Reserved.  field 18 nees to be set to 0 while 19 is set to 1s according to spec
     N2kMsg.AddByte(SID);
 }
 
