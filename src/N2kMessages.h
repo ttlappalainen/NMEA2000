@@ -2382,6 +2382,71 @@ inline bool ParseN2kDCConvStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsi
 }
 
 /************************************************************************//**
+ * \brief Setting up PGN 127751 Message "DC Voltage/Currents"
+ * \ingroup group_msgSetUp
+ *
+ * Provides parametric data for a specific DC Source, indicated by the
+ * instance field. The type of DC Source can be identified from the
+ * DC Detailed Status PGN. Used primarily by display or instrumentation
+ * devices, but may also be used by power management.
+ *
+ * \param N2kMsg              Reference to a N2kMsg Object,
+ *                            Output: NMEA2000 message ready to be send.
+ * \param Instance            Instance or connection number.
+ * \param Voltage             voltage in V
+ * \param Current             currentnt in A
+ * \param SID                 Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                            The sequence identifier field is used to tie different PGNs data together to same
+ *                            sampling or calculation time.
+ */
+void SetN2kPGN127751(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double BatteryCurrent=N2kDoubleNA, unsigned char SID=0xff);
+
+/************************************************************************//**
+ * \brief Setting up Message "DC Viltage/Current" - PGN 127751
+ * \ingroup group_msgSetUp
+ *
+ * Alias of PGN 127751. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref SetN2kPGN127751
+ */
+inline void SetN2kDCVoltageCurrent(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double Current=N2kDoubleNA, unsigned char SID=1) {
+  SetN2kPGN127751(N2kMsg,Instance,Voltage,Current,SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 127751 "DC Voltage/Current"
+ * \ingroup group_msgParsers
+ *
+ * Provides parametric data for a specific DC Source, indicated by the
+ * instance field. The type of DC Source can be identified from the
+ * DC Detailed Status PGN. Used primarily by display or instrumentation
+ * devices, but may also be used by power management.
+ *
+ * \param N2kMsg              Reference to a N2kMsg Object,
+ *                            Output: NMEA2000 message ready to be send.
+ * \param Instance            Instance or connection number.
+ * \param Voltage             voltage in V
+ * \param Current             currentnt in A
+ * \param SID                 Sequence ID. Normally you can just forget its value. See \ref secRefTermSID.
+ *
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ *
+ */
+bool ParseN2kPGN127751(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID);
+
+/************************************************************************//**
+ * \brief Parsing the content of a "DC Voltage/Current" 
+ *        message - PGN 127751
+ * \ingroup group_msgParsers
+ *
+ * Alias of PGN 127551. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN127751
+ */
+inline bool ParseN2kDCVoltageCurrent(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID) {
+  return ParseN2kPGN127751(N2kMsg, Instance, Voltage, Current, SID);
+}
+
+/************************************************************************//**
  * \brief Setting up PGN 128000 Message "Nautical Leeway Angle"
  * \ingroup group_msgSetUp
  * 

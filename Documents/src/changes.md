@@ -1,6 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 01.11.2024
+- Add PGN127751
+- Fix PGN129038 field 18
+
 ## 24.09.2024
 - Fixed UpdateHasPendingInformation() to use or (||) on test.
 - Fix no NAK for broadcast ISO Request
