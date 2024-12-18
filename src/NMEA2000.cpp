@@ -29,12 +29,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
-#define DebugStream Serial
+// #define DebugStream Serial   // outputs debug messages to the serial console (only for Arduino)
+#define DebugStream (*ForwardStream) // outputs debug messages to same destination as ForwardStream
 
 // #define NMEA2000_FRAME_ERROR_DEBUG
 // #define NMEA2000_FRAME_IN_DEBUG
 // #define NMEA2000_FRAME_OUT_DEBUG
-// #define NMEA2000_MSG_DEBUG
+// #define NMEA2000_MSG_TX_DEBUG
+// #define NMEA2000_MSG_RX_DEBUG  // This one spams the console with every parsed message
 // #define NMEA2000_BUF_DEBUG
 // #define NMEA2000_DEBUG
 
@@ -68,7 +70,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # define N2kFrameOutDbgln(fmt, args...)
 #endif
 
-#if defined(NMEA2000_MSG_DEBUG)
+#if defined(NMEA2000_MSG_TX_DEBUG)
 # define N2kMsgDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
 # define N2kMsgDbg(fmt, args...)     DebugStream.print (fmt , ## args)
 # define N2kMsgDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
@@ -76,6 +78,16 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # define N2kMsgDbgStart(fmt, args...)
 # define N2kMsgDbg(fmt, args...)
 # define N2kMsgDbgln(fmt, args...)
+#endif
+
+#if defined(NMEA2000_MSG_RX_DEBUG)
+# define N2kMsgRxDbgStart(fmt, args...) DebugStream.print(N2kMillis()); DebugStream.print(": "); DebugStream.print (fmt , ## args)
+# define N2kMsgRxDbg(fmt, args...)     DebugStream.print (fmt , ## args)
+# define N2kMsgRxDbgln(fmt, args...)   DebugStream.println (fmt , ## args)
+#else
+# define N2kMsgRxDbgStart(fmt, args...)
+# define N2kMsgRxDbg(fmt, args...)
+# define N2kMsgRxDbgln(fmt, args...)
 #endif
 
 #if defined(NMEA2000_BUF_DEBUG)
@@ -2032,7 +2044,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
                 );
                MsgIndex++);
           if (MsgIndex<MaxN2kCANMsgs) { // we found start for this message, so add data to it.
-            N2kMsgDbgStart("Use msg slot: "); N2kMsgDbgln(MsgIndex);
+            N2kMsgRxDbgStart("Use msg slot: "); N2kMsgRxDbgln(MsgIndex);
             if (N2kCANMsgBuf[MsgIndex].LastFrame+1 == buf[0]) { // Right frame is coming
               N2kCANMsgBuf[MsgIndex].LastFrame=buf[0];
               CopyBufToCANMsg(N2kCANMsgBuf[MsgIndex],1,len,buf);
@@ -2053,7 +2065,7 @@ uint8_t tNMEA2000::SetN2kCANBufMsg(unsigned long canId, unsigned char len, unsig
           FindFreeCANMsgIndex(PGN,Source,Destination,MsgIndex);
 #endif
           if ( MsgIndex<MaxN2kCANMsgs ) { // we found free place, so handle frame
-            N2kMsgDbgStart("Use msg slot: "); N2kMsgDbgln(MsgIndex);
+            N2kMsgRxDbgStart("Use msg slot: "); N2kMsgRxDbgln(MsgIndex);
             N2kCANMsgBuf[MsgIndex].FreeMsg=false;
             N2kCANMsgBuf[MsgIndex].KnownMessage=KnownMessage;
             N2kCANMsgBuf[MsgIndex].SystemMessage=SystemMessage;
@@ -2631,17 +2643,17 @@ void tNMEA2000::ParseMessages() {
 
     while (FramesRead<MaxReadFramesOnParse && CANGetFrame(canId,len,buf) ) {           // check if data coming
         FramesRead++;
-        N2kMsgDbgStart("Received frame, can ID:"); N2kMsgDbg(canId); N2kMsgDbg(" len:"); N2kMsgDbg(len); N2kMsgDbg(" data:"); DbgPrintBuf(len,buf,false); N2kMsgDbgln();
+        N2kMsgRxDbgStart("Received frame, can ID:"); N2kMsgRxDbg(canId); N2kMsgRxDbg(" len:"); N2kMsgRxDbg(len); N2kMsgRxDbg(" data:"); DbgPrintBuf(len,buf,false); N2kMsgRxDbgln();
         MsgIndex=SetN2kCANBufMsg(canId,len,buf);
         if (MsgIndex<MaxN2kCANMsgs) {
           if ( !HandleReceivedSystemMessage(MsgIndex) ) {
-            N2kMsgDbgStart(" - Non system message, MsgIndex: "); N2kMsgDbgln(MsgIndex);
+            N2kMsgRxDbgStart(" - Non system message, MsgIndex: "); N2kMsgRxDbgln(MsgIndex);
             ForwardMessage(N2kCANMsgBuf[MsgIndex]);
           }
 //          N2kCANMsgBuf[MsgIndex].N2kMsg.Print(Serial);
           RunMessageHandlers(N2kCANMsgBuf[MsgIndex].N2kMsg);
           N2kCANMsgBuf[MsgIndex].FreeMessage();
-          N2kMsgDbgStart(" - Free message, MsgIndex: "); N2kMsgDbg(MsgIndex); N2kMsgDbgln();
+          N2kMsgRxDbgStart(" - Free message, MsgIndex: "); N2kMsgRxDbg(MsgIndex); N2kMsgRxDbgln();
         }
     }
 

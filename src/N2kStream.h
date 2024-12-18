@@ -106,6 +106,14 @@ class N2kStream {
    size_t print(int val, uint8_t radix = 10);
 
    /***********************************************************************//**
+    * \brief Print newline to stream.
+    * 
+    * \param str  String data for the stream
+    * \return size_t 
+    */
+   size_t println(void);
+
+   /***********************************************************************//**
     * \brief Print string and newline to stream.
     * 
     * \param str  String data for the stream

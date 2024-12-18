@@ -72,12 +72,16 @@ size_t N2kStream::print(int val, uint8_t radix) {
    return print(ptr);
 }
 
+size_t N2kStream::println(void) {
+   return print("\r\n");
+}
+
 size_t N2kStream::println(const char *str) {
-   return print(str) + print("\r\n");
+   return print(str) + println();
 }
 
 size_t N2kStream::println(int val, uint8_t radix) {
-   return print(val, radix) + print("\r\n");
+   return print(val, radix) + println();
 }
 
 #endif
