@@ -2,7 +2,7 @@
  * NMEA2000_CAN.h
  *
  * Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
@@ -11,8 +11,8 @@
  * Software is furnished to do so, subject to the following conditions:
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -29,7 +29,7 @@
   automatically select suitable CAN library according to board
   selected on Arduino development environment. You can still force
   library by adding one of next defines before including NMEA2000_CAN.h:
- 
+
   \code{cpp}
   #define USE_N2K_CAN 1  // for use with SPI and MCP2515 can bus controller
   #define USE_N2K_CAN 2  // for use with due based CAN
@@ -40,43 +40,44 @@
   #define USE_N2K_CAN 7  // for use with ESP32
   #define USE_N2K_CAN 8  // for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards
   #define USE_N2K_CAN 9  // for use with Arduino CAN API (e.g. UNO R4 or Portenta C33)
+  #define USE_N2K_CAN 10 // for use with SAME5x built-in
   \endcode
 
-  <b>Depending of your board you will need to also install "driver" libraries:</b>  
+  <b>Depending of your board you will need to also install "driver" libraries:</b>
 
   see also \ref secHWlib
 
   Arduino CAN shield (mcp_can) with MCP2515 chip:
     - https://github.com/ttlappalainen/CAN_BUS_Shield
     - https://github.com/ttlappalainen/NMEA2000_mcp
-    
+
   Arduino DUE internal CAN:
     - https://github.com/ttlappalainen/due_can
     - https://github.com/ttlappalainen/NMEA2000_due
-    
+
   Teensy 3.2-3.6 internal CAN:
     - https://github.com/ttlappalainen/FlexCAN_Library
     - https://github.com/ttlappalainen/NMEA2000_teensy
-    
+
   Teensy 4.X internal CAN:
     - https://github.com/ttlappalainen/NMEA2000_Teensyx
-    
+
   ESP32 internal CAN:
     - https://github.com/ttlappalainen/NMEA2000_esp32
-  
+
   AVR:
     - https://github.com/thomasonw/avr_can
     - https://github.com/thomasonw/NMEA2000_avr
-  
+
   MBED (note that there may be problem with fastpackets on MBED):
     - https://github.com/thomasonw/NMEA2000_mbed
-    
+
   RPi socket CAN:
     -  https://github.com/thomasonw/NMEA2000_socketCAN
-  
+
 
   <b>There are also library specific defines:</b>
-  
+
   mcp_can:
 
     \code{cpp}
@@ -91,7 +92,7 @@
     #define ESP32_CAN_TX_PIN GPIO_NUM_16
     #define ESP32_CAN_RX_PIN GPIO_NUM_4
     \endcode
-    
+
   Teensy:
 	\code{cpp}
     #define NMEA2000_TEENSY_CAN_BUS 1 // Select second CAN bus for Teensy 3.5 or 3.6
@@ -107,7 +108,7 @@
     \endcode
 
   Arduino DUE:
-    
+
     \code{cpp}
     #define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // Use CAN bus 1 instead of 0 for Arduino DUE
     \endcode
@@ -124,11 +125,11 @@
 
 /*********************************************************************//**
  * \brief Use the mcp_can library
- * 
- * CAN_BUS_shield libraries will be originally found on 
+ *
+ * CAN_BUS_shield libraries will be originally found on
  * <https://github.com/Seeed-Studio/CAN_BUS_Shield>
- * There is improved library, which branch can 
- * be found on https://github.com/peppeve/CAN_BUS_Shield.  
+ * There is improved library, which branch can
+ * be found on https://github.com/peppeve/CAN_BUS_Shield.
  * That works also with Maple mini and 8 MHz clock. Hopefully these
  * improvements will be applied to original library
  */
@@ -143,18 +144,18 @@
 
 /*********************************************************************//**
  * \brief Use the Teensy3.x CAN Library
-- [NMEA2000_teensy](https://github.com/ttlappalainen/NMEA2000_teensy) library.  
-- [FlexCAN](https://github.com/ttlappalainen/FlexCAN_Library) library.  
-- Remember also install [Teensyduino](https://www.pjrc.com/teensy/td_download.html) ! 
+- [NMEA2000_teensy](https://github.com/ttlappalainen/NMEA2000_teensy) library.
+- [FlexCAN](https://github.com/ttlappalainen/FlexCAN_Library) library.
+- Remember also install [Teensyduino](https://www.pjrc.com/teensy/td_download.html) !
  */
-#define USE_N2K_TEENSY_CAN 3 
+#define USE_N2K_TEENSY_CAN 3
 
 /*********************************************************************//**
  * \brief  Use the AVR CAN Library
  - [NMEA2000_avr](https://github.com/thomasonw/NMEA2000_avr) library
  - [avr_can](https://github.com/thomasonw/avr_can) library
  */
-#define USE_N2K_AVR_CAN 4   
+#define USE_N2K_AVR_CAN 4
 
 /*********************************************************************//**
  * \brief Use the Linux Socket CAN Library
@@ -162,7 +163,7 @@
  * NMEA2000_socketCAN has been originally forked from
  * <https://github.com/thomasonw/NMEA2000_socketCAN>
  */
-#define USE_N2K_SOCKET_CAN 5 
+#define USE_N2K_SOCKET_CAN 5
 
 /*********************************************************************//**
  * \brief Use the MBED CAN Library
@@ -175,20 +176,26 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
  * \brief Use the ESP32 CAN Library
  * - [NMEA2000_esp32](https://github.com/ttlappalainen/NMEA2000_esp32) library
  */
-#define USE_N2K_ESP32_CAN 7   
+#define USE_N2K_ESP32_CAN 7
 
 /*********************************************************************//**
  * \brief Use the Teensy4.x CAN Library
 - [NMEA2000_Teensyx](https://github.com/ttlappalainen/NMEA2000_Teensyx)  library.
 - Remember also install [Teensyduino](https://www.pjrc.com/teensy/td_download.html) !
  */
-#define USE_N2K_TEENSYX_CAN 8 
+#define USE_N2K_TEENSYX_CAN 8
 
 /*********************************************************************//**
  * \brief Use the Official Arduino CAN Library
 - [NMEA2000_ArduinoCAN](https://github.com/jboynes/NMEA2000_ArduinoCAN) library.
  */
 #define USE_N2K_ARDUINO_CAN 9
+
+/*********************************************************************//**
+ * \brief Use the SAME5x built-in CAN
+- [NMEA2000_SAME5X](// https://github.com/ChunkySpaceman/NMEA2000_SAME5X.git) library
+ */
+#define USE_N2K_SAME5x_CAN 10
 
 
 /***********************************************************************//**
@@ -217,6 +224,8 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
 #define USE_N2K_CAN USE_N2K_SOCKET_CAN
 #elif defined(ARDUINO_ARCH_ESP32) || defined(ESP32)
 #define USE_N2K_CAN USE_N2K_ESP32_CAN
+#elif defined(ADAFRUIT_FEATHER_M4_CAN)
+#define USE_N2K_CAN USE_N2K_SAME5x_CAN
 #elif defined(__IMXRT1062__)
 #define USE_N2K_CAN USE_N2K_TEENSYX_CAN
 #elif defined(ARDUINO_UNOWIFIR4) || defined(ARDUINO_MINIMA)
@@ -238,7 +247,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_due(NMEA2000_ARDUINO_DUE_CAN_BUS));
 // Use Teensy 3.1/3.2/3.5/3.6 boards internal CAN FlexCAN library
 #include <NMEA2000_teensy.h>    // https://github.com/ttlappalainen/NMEA2000_teensy
 #ifndef NMEA2000_TEENSY_VER
-#error Update NMEA2000_Teensy for the latest version! 
+#error Update NMEA2000_Teensy for the latest version!
 #endif
 #ifndef NMEA2000_TEENSY_DEF_TIMEOUT
 #define NMEA2000_TEENSY_DEF_TIMEOUT 4
@@ -281,6 +290,10 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
 #include <NMEA2000_ArduinoCAN.h>
 tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 
+#elif USE_N2K_CAN == USE_N2K_SAME5x_CAN
+#include <NMEA2000_SAME5X.h>	// https://github.com/ChunkySpaceman/NMEA2000_SAME5X.git
+tNMEA2000 &NMEA2000=*(new tNMEA2000_SAME5X());
+
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
 // CAN_BUS_shield libraries will be originally found on https://github.com/Seeed-Studio/CAN_BUS_Shield
@@ -299,7 +312,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 
 /*********************************************************************//**
  * \brief Definition of the CAN Interrupt Pin
- * This defines the number of the CAN Interrupt PIN. Default Value 0xff 
+ * This defines the number of the CAN Interrupt PIN. Default Value 0xff
  * means not Interrupt PIN in use.
  */
 #define N2k_CAN_INT_PIN 0xff   // No interrupt.
@@ -307,7 +320,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 /*********************************************************************//**
  * \brief Definition of the MCP RX Buffer Size
  * Value of 1 is a small buffer size to save memory
- * 
+ *
  */
 #ifndef MCP_CAN_RX_BUFFER_SIZE
 #define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
@@ -319,7 +332,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 
 /*********************************************************************//**
  * \brief Definition of the SPI ChipSelectPin for the CAN Transceiver
- * This defines the the I/O Pin uses for the Chip Select Line to the 
+ * This defines the the I/O Pin uses for the Chip Select Line to the
  * corresponding CAN Transceiver.
  */
 #define N2k_SPI_CS_PIN 53  // Pin for SPI Can Select
