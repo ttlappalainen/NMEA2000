@@ -40,6 +40,7 @@
   #define USE_N2K_CAN 7  // for use with ESP32
   #define USE_N2K_CAN 8  // for use with Teensy 3.1/3.2/3.5/3.6/4.0/4.1 boards
   #define USE_N2K_CAN 9  // for use with Arduino CAN API (e.g. UNO R4 or Portenta C33)
+  #define USE_N2K_CAN 10 // for use with Pi Pico using MCP2515 PiCow hat
   \endcode
 
   <b>Depending of your board you will need to also install "driver" libraries:</b>  
@@ -182,7 +183,7 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
 - [NMEA2000_Teensyx](https://github.com/ttlappalainen/NMEA2000_Teensyx)  library.
 - Remember also install [Teensyduino](https://www.pjrc.com/teensy/td_download.html) !
  */
-#define USE_N2K_TEENSYX_CAN 8 
+#define USE_N2K_TEENSYX_CAN 8
 
 /*********************************************************************//**
  * \brief Use the Official Arduino CAN Library
@@ -190,6 +191,10 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
  */
 #define USE_N2K_ARDUINO_CAN 9
 
+/*********************************************************************//**
+ * \brief Use the Pico Pi Library
+ */
+#define USE_PICO_ADAFRUIT_CAN 10  // for use with PI Pico with Adafruit CAN PiCowBell
 
 /***********************************************************************//**
   \def USE_N2K_CAN
@@ -213,6 +218,8 @@ other related libraries. See origin for MBED port on <https://github.com/thomaso
 #elif defined(__AVR_AT90CAN32__)||defined(__AVR_AT90CAN64__)||defined(__AVR_AT90CAN128__)|| \
       defined(__AVR_ATmega32C1__)||defined(__AVR_ATmega64C1__)||defined(__AVR_ATmega16M1__)||defined(__AVR_ATmega32M1__)|| defined(__AVR_ATmega64M1__)
 #define USE_N2K_CAN USE_N2K_AVR_CAN
+#elif defined(PICO_BOARD)
+#define USE_N2K_CAN USE_PICO_ADAFRUIT_CAN
 #elif defined(__linux__)||defined(__linux)||defined(linux)
 #define USE_N2K_CAN USE_N2K_SOCKET_CAN
 #elif defined(ARDUINO_ARCH_ESP32) || defined(ESP32)
@@ -280,6 +287,41 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
 #elif USE_N2K_CAN == USE_N2K_ARDUINO_CAN
 #include <NMEA2000_ArduinoCAN.h>
 tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
+
+#elif USE_N2K_CAN == USE_PICO_ADAFRUIT_CAN
+#include "hardware/spi.h"
+#include "NMEA2000_PICO.h"
+#include "mcp2515.h"
+
+/*********************************************************************//**
+ * \brief Definition of the MCP RX Buffer Size
+ * Value of 1 is a small buffer size to save memory
+ * 
+ */
+#ifndef MCP_CAN_RX_BUFFER_SIZE
+#define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
+#endif
+
+
+#if !defined(N2k_SPI_CS_PIN)
+/*********************************************************************//**
+ * \brief Definition of the SPI ChipSelectPin for the CAN Transceiver
+ * This defines the the I/O Pin uses for the Chip Select Line to the 
+ * corresponding CAN Transceiver.
+ */
+#define N2k_SPI_CS_PIN 20  // Pin for SPI Can Select
+#endif
+
+#if !defined(N2k_CAN_INT_PIN)
+/*********************************************************************//**
+ * \brief Definition of the CAN Interrupt Pin
+ * This defines the number of the CAN Interrupt PIN. Default Value 0xff 
+ * means not Interrupt PIN in use.
+ */
+#define N2k_CAN_INT_PIN 255
+#endif
+
+tNMEA2000 &NMEA2000 = *(new tNMEA2000_pico(N2k_SPI_CS_PIN, N2k_CAN_INT_PIN, MCP_CAN_RX_BUFFER_SIZE));
 
 #else  // Use USE_N2K_MCP_CAN
 // Use mcp_can library e.g. with Arduino Mega and external MCP2551 CAN bus chip
@@ -352,5 +394,5 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_mcp(N2k_SPI_CS_PIN,MCP_CAN_CLOCK_SET,N2k_CAN
 #endif
 
 
-#endif
+#endif /* _NMEA2000_CAN_H_ */
 
