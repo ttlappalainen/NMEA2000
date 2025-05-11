@@ -77,7 +77,10 @@ const int64_t  N2kInt64NA=0x7fffffffffffffffLL;
  * \return true:      Value equal to "Not available"
  * \return false:     Value not equal to "Not available"
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 inline bool N2kIsNA(double v) { return v==N2kDoubleNA; }
+#pragma GCC diagnostic pop
 
 /**************************************************************************//**
  * \brief Verify that the specified value is equal to "Not available".
@@ -86,7 +89,10 @@ inline bool N2kIsNA(double v) { return v==N2kDoubleNA; }
  * \return true:      Value equal to "Not available"
  * \return false:     Value not equal to "Not available"
  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
 inline bool N2kIsNA(float v) { return v==N2kFloatNA; }
+#pragma GCC diagnostic pop
 
 /**************************************************************************//**
  * \brief Verify that the specified value is equal to "Not available".

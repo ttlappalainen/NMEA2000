@@ -32,7 +32,7 @@
 #ifndef _Seasmart_h_
 #define _Seasmart_h_
 
-#include <N2kMsg.h>
+#include "N2kMsg.h"
 
 /************************************************************************//**
  * \brief Converts a tN2kMsg into a $PCDIN NMEA sentence

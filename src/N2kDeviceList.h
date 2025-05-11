@@ -32,6 +32,9 @@
 
 #include "NMEA2000.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsuggest-override"
+
 /** \brief  Maximum allowed number of devices on the CAN BUS bus system
  *          is 254
 */
@@ -712,5 +715,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      */
     uint8_t Count() const;
 };
+
+#pragma GCC diagnostic pop
 
 #endif
