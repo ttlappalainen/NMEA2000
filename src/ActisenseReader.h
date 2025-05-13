@@ -41,6 +41,25 @@
 #include "N2kStream.h"
 
 /************************************************************************//**
+ * \class tActisenseReaderCallbackInterface
+ * \brief Interface for handling 'OnMessage' callbacks from tActisenseReader
+ * \ingroup group_helperClass
+ *
+ * This is an interface that might be implemented and passed as an instance
+ * using method 'SetCallbackHandlerInterface'. It's an alternative to use
+ * instead of 'SetMsgHandler', when there is a need to use C++ instances
+ * instead of C-like function pointers.
+ *
+ */
+class tActisenseReaderCallbackInterface
+{
+public:
+  virtual ~tActisenseReaderCallbackInterface() { }
+
+  virtual void OnMessage(const tN2kMsg &N2kMsg) = 0;
+};
+
+/************************************************************************//**
  * \class tActisenseReader
  * \brief Class for reading Actisense format messages
  * \ingroup group_helperClass
@@ -79,6 +98,8 @@ protected:
     N2kStream* ReadStream;
     // Handler callback
     void (*MsgHandler)(const tN2kMsg &N2kMsg);
+    /** \brief C++ variant of handling callbacks as an alternative to C-like 'MsgHandler' */
+    tActisenseReaderCallbackInterface* CallbackHandlerInterface;
 
 protected:
     /********************************************************************//**
@@ -121,6 +142,17 @@ public:
      */
      
     void SetReadStream(N2kStream* _stream) { ReadStream=_stream; }
+
+    /********************************************************************//**
+     * \brief Set callback handler interface instance
+     *
+     * Set a pointer to an instance of a callback handler to be executed when
+     * new messages arrive from Actisense protocol.
+     *
+     * \param _callbackHandlerInterface   The callback handler instance
+     */
+
+    void SetCallbackHandlerInterface(tActisenseReaderCallbackInterface* _callbackHandlerInterface) { CallbackHandlerInterface=_callbackHandlerInterface; }
 
     /********************************************************************//**
      * \brief Set the default source address for the messages

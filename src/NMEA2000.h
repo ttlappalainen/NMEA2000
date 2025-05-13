@@ -108,6 +108,27 @@
 #define N2kNullCanBusAddress 254
 
 /************************************************************************//**
+ * \class tNMEA2000CallbackInterface
+ * \brief Interface for handling various NMEA2000 callbacks using C++ objects
+ * \ingroup group_helperClass
+ *
+ * This is an interface that might be implemented and passed as an instance
+ * using method 'SetCallbackHandlerInterface'. It's an alternative to use
+ * instead of 'OnOpen', 'MsgHandler', and 'ISORqstHandler', when there is a
+ * need to use C++ instances instead of C-like function pointers.
+ *
+ */
+class tNMEA2000CallbackInterface
+{
+public:
+  virtual ~tNMEA2000CallbackInterface() { }
+
+  virtual void OnOpen() = 0;
+  virtual void OnMessage(const tN2kMsg &N2kMsg) = 0;
+  virtual bool OnIsoRequest(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex) = 0;
+};
+
+/************************************************************************//**
  * \class tNMEA2000
  * \brief tNMEA2000 device class definition.
  * \ingroup group_core
@@ -1077,6 +1098,9 @@ protected:
     void (*MsgHandler)(const tN2kMsg &N2kMsg);  
     /** \brief Handler callbacks for 'ISORequest' messages */
     bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);
+
+    /** \brief C++ variant of handling callbacks as an alternative to C-like function pointers */
+    tNMEA2000CallbackInterface *CallbackHandlerInterface;
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     /** \brief Pointer to Buffer for GRoup Function Handlers*/
@@ -2791,6 +2815,18 @@ public:
      * \param ISORequestHandler Message handler
      */
     void SetISORqstHandler(bool(*ISORequestHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex));
+
+    /********************************************************************//**
+     * \brief Set callback handler interface instance
+     *
+     * Set a pointer to an instance of a callback handler to be executed as
+     * an alternative to using C-like function pointer callbacks for 'OnOpen',
+     * 'MsgHandler', and 'ISORqstHandler'. The callback handler must implement
+     * all virtual methods of the interface.
+     *
+     * \param _CallbackHandlerInterface   The callback handler instance
+     */
+    void SetCallbackHandlerInterface(tNMEA2000CallbackInterface *_CallbackHandlerInterface);
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     
