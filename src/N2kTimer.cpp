@@ -28,10 +28,11 @@ uint64_t tN2kSyncScheduler::SyncOffset=0;
 // *****************************************************************************
 #if defined(ARDUINO_ARCH_ESP32) || defined(ESP_PLATFORM)
   // N2kMillis64() and N2kMillis() as inline on header
-#elif defined(PICO_BOARD)
+ #elif defined(PICO_BOARD)
   #include "pico/time.h" // needed for pico time
   uint64_t N2kMillis64() { return time_us_64() / 1000; }
-  uint32_t N2kMillis() { return N2kMillis64(); }
+  // Mask the 64-bit value to get the lower 32 bits
+  uint32_t N2kMillis() { return (N2kMillis64() & 0xFFFFFFFF); }
 #elif defined(__linux__) || defined(__linux) || defined(linux)
   #include <time.h>
   uint64_t N2kMillis64() {
@@ -49,8 +50,8 @@ uint32_t N2kMillis() { return N2kMillis64(); }
     // Current uptime in milliseconds. Must be implemented by application.
     extern uint32_t millis();
     }
-   uint32_t N2kMillis() { return millis(); }
- #endif
+    uint32_t N2kMillis() { return millis(); }
+  #endif
 
   uint64_t N2kMillis64() {
     static uint32_t RollCount=0;
