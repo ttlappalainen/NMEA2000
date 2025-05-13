@@ -71,7 +71,10 @@
   
   MBED (note that there may be problem with fastpackets on MBED):
     - https://github.com/thomasonw/NMEA2000_mbed
-    
+
+    RPi Picow/ CAN PiCowbell hat:
+    -  https://github.com/forcel0/NMEA2000_PICO
+
   RPi socket CAN:
     -  https://github.com/thomasonw/NMEA2000_socketCAN
   
@@ -111,6 +114,13 @@
     
     \code{cpp}
     #define NMEA2000_ARDUINO_DUE_CAN_BUS tNMEA2000_due::CANDevice1  // Use CAN bus 1 instead of 0 for Arduino DUE
+    \endcode
+
+    RPi Pico w/ CAN:
+    
+    \code{cpp}
+    #define N2k_SPI_CS_PIN 20  // Pin for SPI Can Select
+    #define N2k_CAN_INT_PIN 21 // Use interrupt  and it is connected to pin 21
     \endcode
 
 */
@@ -289,19 +299,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_esp32());
 tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
 
 #elif USE_N2K_CAN == USE_PICO_ADAFRUIT_CAN
-#include "hardware/spi.h"
 #include "NMEA2000_PICO.h"
-#include "mcp2515.h"
-
-/*********************************************************************//**
- * \brief Definition of the MCP RX Buffer Size
- * Value of 1 is a small buffer size to save memory
- * 
- */
-#ifndef MCP_CAN_RX_BUFFER_SIZE
-#define MCP_CAN_RX_BUFFER_SIZE 1   // Just small buffer to save memory
-#endif
-
 
 #if !defined(N2k_SPI_CS_PIN)
 /*********************************************************************//**
@@ -318,7 +316,7 @@ tNMEA2000 &NMEA2000=*(new tNMEA2000_ArduinoCAN());
  * This defines the number of the CAN Interrupt PIN. Default Value 0xff 
  * means not Interrupt PIN in use.
  */
-#define N2k_CAN_INT_PIN 255
+#define N2k_CAN_INT_PIN 21
 #endif
 
 tNMEA2000 &NMEA2000 = *(new tNMEA2000_pico(N2k_SPI_CS_PIN, N2k_CAN_INT_PIN, MCP_CAN_RX_BUFFER_SIZE));
