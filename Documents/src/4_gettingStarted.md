@@ -74,6 +74,10 @@ This can be used with any main board having internal CAN controller like Teensy 
 ### Arduino Mega
 
 - **unisolated** <https://wiki.seeedstudio.com/CAN-BUS_Shield_V2.0/>
+
+### Pi Pico w/ Adafruit CAN Cowbell Hat
+
+- **unisolated** <https://www.adafruit.com/product/5728>
   
 Note that there are several different shields for CAN bus available and others may use
 8 MHz chrystal instead of **default 16 MHz chrystal**. This must be set before including NMEA2000_CAN.h
@@ -96,6 +100,10 @@ under [documents](https://github.com/ttlappalainen/NMEA2000/tree/master/Document
 ### Arduino Mega
 
 - [ArduinoMega_CAN_with_MCP2515_MCP2551.pdf](https://github.com/ttlappalainen/NMEA2000/blob/master/Documents/Schematics/ArduinoMega_CAN_with_MCP2515_MCP2551.pdf) **unisolated**
+
+### Adafruit CAN PiCowbell Hat
+
+- [Schematic-can-bus-for-pico.pdf](https://github.com/forcel0/NMEA2000_PICO/blob/main/Schematic-can-bus-for-pico.pdf) **unisolated**
 
 ### ATmegaxxM1
 
@@ -152,6 +160,10 @@ so you do not need other drivers for that.
 
 - [NMEA2000_due](https://github.com/ttlappalainen/NMEA2000_due) library
 - [due_can](https://github.com/ttlappalainen/due_can) library
+
+### Pi Pico board with Adafruit CAN PiCowbel hat
+
+- [NMEA2000_pico](https://github.com/forcel0/NMEA2000_PICO) library
 
 ### Boards with MCP2515 CAN bus controller (e.g. Arduino Mega, ESP8266)
 
@@ -282,6 +294,20 @@ Your file should start with:
     #include <NMEA2000_due.h>
     //
     tNMEA2000_due NMEA2000;
+```
+
+## For use with PI Pico w/ CAN PiCowbell hat and NMEA2000_PICO library
+
+Your file should start with:
+
+```cpp
+    #include <N2kMsg.h>
+    #include <NMEA2000.h>
+    #include <NMEA2000_pico.h> // https://github.com/forcel0/NMEA2000_PICO
+    #define N2k_SPI_CS_PIN 20  // Pin for SPI Cable Select
+    #define N2k_CAN_INT_PIN 21 // Pin, where interrupt line has been connected
+    //
+    tNMEA2000_pico NMEA2000(N2k_SPI_CS_PIN, N2k_CAN_INT_PIN);
 ```
 
 ## For use with Atmel AVR processors internal CAN controller

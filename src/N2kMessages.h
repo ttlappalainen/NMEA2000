@@ -172,6 +172,13 @@ inline double msToKnots(double v) { return N2kIsNA(v)?v:v*1.94384449244060475161
 inline double KnotsToms(double v) { return N2kIsNA(v)?v:v*0.51444444444444444444444444444444L; } // 1852L/3600.0L
 
 /************************************************************************//**
+ * \brief Converting a value from MeterPerSecond to MilesPerHour
+ * \param   v   Input value in [mps]
+ * \return      Corresponding value in [MPH]
+ */
+inline double msToMPH(double v) { return N2kIsNA(v)?v:v*2.2727272727272727272727272727272L; }
+
+/************************************************************************//**
  * \brief Setting up PGN126992 Message "System date/time"
  * \ingroup group_msgSetUp
  * 
