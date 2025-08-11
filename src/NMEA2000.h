@@ -137,6 +137,8 @@
 class tNMEA2000
 {
 public:
+   virtual ~tNMEA2000() {}
+   
   /************************************************************************//**
    * \brief Check if the given PGN is proprietary
    *
