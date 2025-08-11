@@ -34,6 +34,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define EndOfText 0x03
 #define MsgTypeN2k 0x93
 
+#define N2kASCII   0x01
+#define N2kUnicode 0x00
+
 #define MaxActisenseMsgBuf 400
 
 // NMEA2000 uses little endian for binary data. Swap the endian if we are
@@ -239,13 +242,105 @@ void tN2kMsg::AddAISStr(const char *str, int len) {
   if ( len>0 ) memset(buf,'@',len);
 }
 
+/**
+ * Converts a UTF-8 encoded string to UTF-16LE (Unicode).
+ * @param utf8      Pointer to UTF-8 input string (null-terminated).
+ * @param utf16buf  Output buffer for UTF-16LE data (as uint16_t* or unsigned char*).
+ * @param maxUtf16  Maximum number of UTF-16 code units to write.
+ * @return          Number of UTF-16 code units written (not bytes).
+ */
+size_t Utf8ToUnicode(const char* utf8, uint16_t* utf16buf, size_t maxUtf16) {
+    size_t out = 0;
+    const unsigned char* p = (const unsigned char*)utf8;
+    while (*p && out < maxUtf16) {
+        uint32_t codepoint = 0;
+        int bytes = 0;
+        if ((p[0] & 0x80) == 0) {
+            codepoint = p[0];
+            bytes = 1;
+        } else if ((p[0] & 0xE0) == 0xC0 && (p[1] & 0xC0) == 0x80) {
+            codepoint = ((p[0] & 0x1F) << 6) | (p[1] & 0x3F);
+            bytes = 2;
+        } else if ((p[0] & 0xF0) == 0xE0 && (p[1] & 0xC0) == 0x80 && (p[2] & 0xC0) == 0x80) {
+            codepoint = ((p[0] & 0x0F) << 12) | ((p[1] & 0x3F) << 6) | (p[2] & 0x3F);
+            bytes = 3;
+        } else {
+            codepoint = '?';
+            bytes = 1;
+        }
+        // Only handle BMP (no surrogate pairs)
+        utf16buf[out++] = (uint16_t)codepoint;
+        p += bytes;
+    }
+    return out;
+}
 
-//*****************************************************************************
+/**
+ * Converts a UTF-16LE (Unicode) string to UTF-8.
+ * @param utf16     Pointer to UTF-16LE input buffer.
+ * @param utf16len  Number of UTF-16 code units (not bytes).
+ * @param utf8buf   Output buffer for UTF-8 string.
+ * @param maxUtf8   Maximum number of bytes to write (including null terminator).
+ * @return          Number of UTF-8 bytes written (not including null terminator).
+ */
+size_t UnicodeToUtf8(const uint16_t* utf16, size_t utf16len, char* utf8buf, size_t maxUtf8) {
+  size_t out = 0;
+  for (size_t i = 0; i < utf16len && out + 1 < maxUtf8; ++i) {
+    uint16_t codepoint = utf16[i];
+    if (codepoint < 0x80) {
+      utf8buf[out++] = (char)codepoint;
+    } else if (codepoint < 0x800) {
+      if (out + 2 >= maxUtf8) break;
+      utf8buf[out++] = (char)(0xC0 | (codepoint >> 6));
+      utf8buf[out++] = (char)(0x80 | (codepoint & 0x3F));
+    } else {
+      if (out + 3 >= maxUtf8) break;
+      utf8buf[out++] = (char)(0xE0 | (codepoint >> 12));
+      utf8buf[out++] = (char)(0x80 | ((codepoint >> 6) & 0x3F));
+      utf8buf[out++] = (char)(0x80 | (codepoint & 0x3F));
+    }
+  }
+  if (out < maxUtf8) {
+    utf8buf[out] = '\0';
+  } else if (maxUtf8 > 0) {
+    utf8buf[maxUtf8 - 1] = '\0';
+  }
+  return out;
+}
+
+// *****************************************************************************
 void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
-  int len=(str!=0?strlen(str):0);
-  AddByte(len+2);
-  AddByte(1);
-  if ( len>0 ) SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
+  if (str == nullptr || str[0] == '\0') {
+    // Empty string, add zero length
+    AddByte(2); // Length 2 for type and length bytes
+    AddByte(1); // ASCII type
+    return;
+  }
+
+  if (str[0] == 0x01) {
+    // UTF-8/Unicode string, convert to UTF-16LE and store as Unicode type (0)
+    const char *utf8 = str + 1; // skip SOH
+    // Calculate UTF-16 code units needed
+    uint16_t unicode_buf[MaxDataLen]; // Temporary buffer for UTF-16LE data
+    size_t utf16len = Utf8ToUnicode(utf8, unicode_buf, MaxDataLen);
+    int totalLen = utf16len * 2;
+    AddByte(totalLen + 2); // length includes type and length bytes
+    AddByte(0); // Unicode type
+    if (utf16len > 0) {
+      // Write UTF-16LE data
+      uint16_t utf16buf[utf16len];
+      Utf8ToUnicode(utf8, utf16buf, utf16len);
+      for (size_t i = 0; i < utf16len; ++i) {
+        AddByte((uint8_t)(utf16buf[i] & 0xFF));
+        AddByte((uint8_t)((utf16buf[i] >> 8) & 0xFF));
+      }
+    }
+  } else {
+    int len = (str != 0 ? strlen(str) : 0);
+    AddByte(len + 2);
+    AddByte(1); // ASCII type
+    if (len > 0) SetBufStr(str, len, DataLen, Data, UsePgm, 0xff);
+  }
 }
 
 //*****************************************************************************
@@ -431,18 +526,57 @@ bool tN2kMsg::GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned ch
 
 //*****************************************************************************
 bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
-  size_t Len=GetByte(Index);
-  uint8_t Type=GetByte(Index);
-  if ( Len<2) { StrBufSize=0; return false; } // invalid length
-  Len-=2;
-  if ( Type!=0x01 ) { StrBufSize=0; return false; }
-  if ( StrBuf!=0 ) {
-    GetStr(StrBufSize,StrBuf,Len,0xff,Index);
-  } else {
-    Index+=Len; // Just pass this string
-  }
-  StrBufSize=Len;
-  return true;
+    size_t Len = GetByte(Index);
+    uint8_t Type = GetByte(Index);
+
+    if (Len < 2) {
+        StrBufSize = 0;
+        return false;
+    } // invalid length
+
+    Len -= 2;
+    bool ret = false;
+    switch (Type) {
+        case N2kASCII:      // ASCII
+            if (StrBuf != 0) {
+                GetStr(StrBufSize, StrBuf, Len, 0xff, Index);
+            } else {
+                Index += Len; // Just pass this string
+            }
+            StrBufSize = Len;
+            ret = true;
+            break;
+
+        case N2kUnicode:    // Unicode (UTF-16LE)
+            if (Len % 2 != 0) {
+                Len--; // Reduce to even number
+            }
+            if (StrBuf != 0 && StrBufSize > 0) {
+                // Read UTF-16LE data into a temporary buffer
+                size_t utf16len = Len / 2;
+                uint16_t utf16buf[utf16len];
+                for (size_t i = 0; i < utf16len; ++i) {
+                    uint8_t lo = GetByte(Index);
+                    uint8_t hi = GetByte(Index);
+                    utf16buf[i] = (hi << 8) | lo;
+                }
+                // Use 0x01 (SOH) as a marker for Unicode/UTF-8
+                StrBuf[0] = (char)0x01;
+                // Convert UTF-16LE to UTF-8
+                size_t outIdx = UnicodeToUtf8(utf16buf, utf16len, StrBuf + 1, StrBufSize - 1) + 1;
+                StrBufSize = outIdx;
+            } else {
+                Index += Len; // Skip Unicode bytes
+                StrBufSize = 0;
+            }
+            ret = true;
+            break;
+
+        default:
+            StrBufSize = 0;
+            ret = false;
+    }
+    return ret;
 }
 
 //*****************************************************************************

@@ -2871,49 +2871,13 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *InstallationDescription1,
                      const char *InstallationDescription2,
                      bool UsePgm) {
-  size_t TotalLen;
-  size_t MaxLen=tN2kMsg::MaxDataLen-6; // Each field has 2 extra bytes
-  size_t ManInfoLen;
-  size_t InstDesc1Len;
-  size_t InstDesc2Len;
-
-    if ( UsePgm ) {
-      ManInfoLen=ProgmemStrLen(ManufacturerInformation);
-      InstDesc1Len=ProgmemStrLen(InstallationDescription1);
-      InstDesc2Len=ProgmemStrLen(InstallationDescription2);
-    } else {
-      ManInfoLen=StrLen(ManufacturerInformation);
-      InstDesc1Len=StrLen(InstallationDescription1);
-      InstDesc2Len=StrLen(InstallationDescription2);
-    }
-
-    if ( ManInfoLen>Max_N2kConfigurationInfoField_len ) ManInfoLen=Max_N2kConfigurationInfoField_len;
-    if ( InstDesc1Len>Max_N2kConfigurationInfoField_len ) InstDesc1Len=Max_N2kConfigurationInfoField_len;
-    if ( InstDesc2Len>Max_N2kConfigurationInfoField_len ) InstDesc2Len=Max_N2kConfigurationInfoField_len;
-
-    TotalLen=0;
-    if (TotalLen+ManInfoLen>MaxLen) ManInfoLen=MaxLen-TotalLen;
-    TotalLen+=ManInfoLen;
-    if (TotalLen+InstDesc1Len>MaxLen) InstDesc1Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc1Len;
-    if (TotalLen+InstDesc2Len>MaxLen) InstDesc2Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc2Len;
 
     N2kMsg.SetPGN(N2kPGNConfigurationInformation);
     N2kMsg.Priority=6;
-    // InstallationDescription1
-    N2kMsg.AddByte(InstDesc1Len+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(InstallationDescription1,InstDesc1Len,UsePgm);
 
-    // InstallationDescription2
-    N2kMsg.AddByte(InstDesc2Len+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(InstallationDescription2,InstDesc2Len,UsePgm);
-    // ManufacturerInformation
-    N2kMsg.AddByte(ManInfoLen+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(ManufacturerInformation,ManInfoLen,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription1,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription2,UsePgm);
+    N2kMsg.AddVarStr(ManufacturerInformation,UsePgm);
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,

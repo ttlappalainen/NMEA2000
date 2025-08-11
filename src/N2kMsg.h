@@ -1347,4 +1347,28 @@ public:
  */
 void PrintBuf(N2kStream *port, unsigned char len, const unsigned char *pData, bool AddLF=false);
 
+
+/************************************************************************//**
+ * \brief Convert a UTF-16 string to a UTF-8 string
+ *
+ * \param utf16    Pointer to the UTF-16 string
+ * \param utf16len Length of the UTF-16 string
+ * \param utf8buf  Pointer to the buffer where the UTF-8 string will be stored
+ * \param maxUtf8  Maximum length of the UTF-8 buffer
+ *
+ * \return Number of bytes written to the UTF-8 buffer
+ */
+size_t UnicodeToUtf8(const uint16_t* utf16, size_t utf16len, char* utf8buf, size_t maxUtf8);
+
+/************************************************************************//**
+ * \brief Convert a UTF-8 string to a UTF-16 string
+ *
+ * \param utf8     Pointer to the UTF-8 string
+ * \param utf16buf Pointer to the buffer where the UTF-16 string will be stored
+ * \param maxUtf16 Maximum length of the UTF-16 buffer
+ *
+ * \return Number of characters written to the UTF-16 buffer
+ */
+size_t Utf8ToUnicode(const char* utf8, uint16_t* utf16buf, size_t maxUtf16);
+
 #endif
