@@ -1284,6 +1284,23 @@ public:
   bool GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const;
 
   /************************************************************************//**
+   * \brief Get a string out of \ref Data
+   * This method determines the length of the string by it self, using 
+   * the byte (index -2) inside \ref Data
+   *
+   * \param StrBufSize  Size of String Buffer
+   * \param StrBuf      Pointer to a char array as string
+   * \param nulChar     used "null Char" in the message (e.g. '@' in AIS)
+   * \param Index       position inside the byte array \ref Data, getting
+   *                    incremented according to the number of bytes
+   *                    extracted
+   * 
+   * \return true   String data has been extracted
+   * \return false  not successful, no string data available
+   */
+  bool GetVarStr(size_t &StrBufSize, char *StrBuf, unsigned char nulChar, int &Index) const;
+
+  /************************************************************************//**
    * \brief Get a byte array out of \ref Data
    * 
    * \param buf         Pointer to byte array
