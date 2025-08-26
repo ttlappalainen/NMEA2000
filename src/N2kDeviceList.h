@@ -614,6 +614,13 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
      * \param _pNMEA2000    Pointer to an \ref NMEA2000 object
      */
     tN2kDeviceList(tNMEA2000 *_pNMEA2000);
+    
+    /********************************************************************//**
+     * \brief Destructor for the class
+     *
+     * Clean up all dynamically allocated device objects
+     */
+    ~tN2kDeviceList();
     /********************************************************************//**
      * \brief Handle NMEA2000 messages 
      * 

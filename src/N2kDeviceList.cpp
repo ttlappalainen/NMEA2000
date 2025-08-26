@@ -45,6 +45,17 @@ tN2kDeviceList::tN2kDeviceList(tNMEA2000 *_pNMEA2000) : tNMEA2000::tMsgHandler(0
 }
 
 //*****************************************************************************
+tN2kDeviceList::~tN2kDeviceList() {
+  // Clean up all dynamically allocated device objects
+  for (uint8_t i=0; i<N2kMaxBusDevices; i++) {
+    if (Sources[i] != 0) {
+      delete Sources[i];
+      Sources[i] = 0;
+    }
+  }
+}
+
+//*****************************************************************************
 tN2kDeviceList::tInternalDevice * tN2kDeviceList::LocalFindDeviceBySource(uint8_t Source) const {
   if ( Source>=N2kMaxBusDevices ) return 0;
 

@@ -137,7 +137,46 @@
 class tNMEA2000
 {
 public:
-   virtual ~tNMEA2000() {}
+  virtual ~tNMEA2000() {
+    // Detach all message handlers (do not delete, just detach)
+    tMsgHandler *handler = MsgHandlers;
+    while (handler) {
+      tMsgHandler *next = handler->pNext;
+      DetachMsgHandler(handler);
+      handler = next;
+    }
+
+    // Free internal device array
+    if (Devices) {
+      delete[] Devices;
+      Devices = nullptr;
+    }
+
+    // Free local configuration information buffer
+    if (LocalConfigurationInformationData) {
+      delete[] LocalConfigurationInformationData;
+      LocalConfigurationInformationData = nullptr;
+    }
+
+    // Free CAN message buffer
+    if (N2kCANMsgBuf) {
+      delete[] N2kCANMsgBuf;
+      N2kCANMsgBuf = nullptr;
+    }
+
+    // Free CAN send frame buffer
+    if (CANSendFrameBuf) {
+      delete[] CANSendFrameBuf;
+      CANSendFrameBuf = nullptr;
+    }
+
+#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
+    if (pGroupFunctionHandlers) {
+      delete[] pGroupFunctionHandlers;
+      pGroupFunctionHandlers = nullptr;
+    }
+#endif
+  }
    
   /************************************************************************//**
    * \brief Check if the given PGN is proprietary
