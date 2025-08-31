@@ -309,7 +309,7 @@ size_t UnicodeToUtf8(const uint16_t* utf16, size_t utf16len, char* utf8buf, size
 }
 
 // *****************************************************************************
-void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
+void tN2kMsg::AddVarStr(const char *str, bool UsePgm, size_t maxAscii, size_t maxUnicode) {
   if (str == nullptr || str[0] == '\0') {
     // Empty string, add zero length
     AddByte(2); // Length 2 for type and length bytes
@@ -320,23 +320,21 @@ void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
   if (str[0] == 0x01) {
     // UTF-8/Unicode string, convert to UTF-16LE and store as Unicode type (0)
     const char *utf8 = str + 1; // skip SOH
-    // Calculate UTF-16 code units needed
-    uint16_t unicode_buf[MaxDataLen]; // Temporary buffer for UTF-16LE data
-    size_t utf16len = Utf8ToUnicode(utf8, unicode_buf, MaxDataLen);
+    // Calculate UTF-16 code units needed, but limit to maxUnicode
+    uint16_t unicode_buf[MaxDataLen];
+    size_t utf16len = Utf8ToUnicode(utf8, unicode_buf, maxUnicode);
     int totalLen = utf16len * 2;
     AddByte(totalLen + 2); // length includes type and length bytes
     AddByte(0); // Unicode type
     if (utf16len > 0) {
-      // Write UTF-16LE data
-      uint16_t utf16buf[utf16len];
-      Utf8ToUnicode(utf8, utf16buf, utf16len);
       for (size_t i = 0; i < utf16len; ++i) {
-        AddByte((uint8_t)(utf16buf[i] & 0xFF));
-        AddByte((uint8_t)((utf16buf[i] >> 8) & 0xFF));
+        AddByte((uint8_t)(unicode_buf[i] & 0xFF));
+        AddByte((uint8_t)((unicode_buf[i] >> 8) & 0xFF));
       }
     }
   } else {
     int len = (str != 0 ? strlen(str) : 0);
+    if (len > (int)maxAscii) len = (int)maxAscii;
     AddByte(len + 2);
     AddByte(1); // ASCII type
     if (len > 0) SetBufStr(str, len, DataLen, Data, UsePgm, 0xff);
