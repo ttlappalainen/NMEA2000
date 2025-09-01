@@ -262,7 +262,7 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
  * \sa tN2kAISTransceiverInformation
  */
 void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText, uint8_t SID=255);
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText, uint8_t SID=N2kUInt8NA);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS Safety Related Broadcast Message" - 
@@ -274,7 +274,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * 
  */
 inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText, uint8_t SID=255) {
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText, uint8_t SID=N2kUInt8NA) {
    SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText, SID);
 }
 
