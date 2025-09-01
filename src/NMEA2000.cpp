@@ -2875,9 +2875,9 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
     N2kMsg.SetPGN(N2kPGNConfigurationInformation);
     N2kMsg.Priority=6;
 
-    N2kMsg.AddVarStr(InstallationDescription1,UsePgm);
-    N2kMsg.AddVarStr(InstallationDescription2,UsePgm);
-    N2kMsg.AddVarStr(ManufacturerInformation,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription1,UsePgm,70,35);  // Field 1 - Installation Description 1 - 70 ASCII or 35 Unicode characters max
+    N2kMsg.AddVarStr(InstallationDescription2,UsePgm,70,35);  // Field 2 - Installation Description 2 - 70 ASCII or 35 Unicode characters max
+    N2kMsg.AddVarStr(ManufacturerInformation,UsePgm,70,35);   // Field 3 - Manufacturer Information - 70 ASCII or 35 Unicode characters max
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
