@@ -53,14 +53,15 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
 //*****************************************************************************
 // AIS Safety Related Broadcast Message
 void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText)
+      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText, uint8_t SID)
 {
    N2kMsg.SetPGN(129802L);
    N2kMsg.Priority=5;
-   N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-   N2kMsg.Add4ByteUInt(0xc0000000 | (SourceID & 0x3fffffff));
-   N2kMsg.AddByte(0xe0 | (0x1f & AISTransceiverInformation));
-   N2kMsg.AddVarStr(SafetyRelatedText);
+   N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));   // Fields 1 & 2 - Message ID and Repeat Indicator
+   N2kMsg.Add4ByteUInt(0xc0000000 | (SourceID & 0x3fffffff)); // Field 3 - Source ID
+   N2kMsg.AddByte(0xe0 | (0x1f & AISTransceiverInformation)); // Fields 4,5,6 - Reserved, Transceiver Information, Spare
+   N2kMsg.AddVarStr(SafetyRelatedText);                       // Field 7 - Safety Related Text
+   N2kMsg.AddByte(SID);                                       // Field 8 - Sequence ID
 }
 
 bool ParseN2kPGN129802(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,

@@ -1031,7 +1031,7 @@ public:
   * \param str   String as pointer to a char array
   * \param UsePgm {bool} use the pgm_read_byte function
   */
-  void AddVarStr(const char *str, bool UsePgm=false);
+  void AddVarStr(const char *str, bool UsePgm=false, size_t maxAscii=250, size_t maxUnicode=125);
 
  /************************************************************************//**
   * \brief Add byte array to the buffer
