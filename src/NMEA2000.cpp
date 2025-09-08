@@ -28,6 +28,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 // #define DebugStream Serial   // outputs debug messages to the serial console (only for Arduino)
 #define DebugStream (*ForwardStream) // outputs debug messages to same destination as ForwardStream
@@ -738,6 +739,14 @@ tNMEA2000::tNMEA2000() {
                                      DefInstallationDescription2);
   Devices=0;
   DeviceCount=1;
+}
+
+//*****************************************************************************
+tNMEA2000::~tNMEA2000()
+{
+    // Note this class was not designed to be deleted. Delete the destructor to raise a compiler error if someone tries to delete this class.
+    // TODO: add a proper destructor
+    assert(false && "tNMEA2000 destructor called");
 }
 
 //*****************************************************************************
