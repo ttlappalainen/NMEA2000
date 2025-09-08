@@ -1282,6 +1282,7 @@ bool tNMEA2000::Open() {
   // Initialization so we start sending delayed.
   if ( OpenState==os_WaitOpen && OpenScheduler.IsTime() ) {
     OpenState=os_Open;
+    OpenScheduler.Disable();
     StartAddressClaim();
     tN2kSyncScheduler::SetSyncOffset();
     #if !defined(N2K_NO_HEARTBEAT_SUPPORT)
@@ -1301,8 +1302,24 @@ bool tNMEA2000::Open() {
 }
 
 //*****************************************************************************
-void tNMEA2000::Restart() {
-  StartAddressClaim();
+void tNMEA2000::Restart()
+{
+  if (OpenState > os_None)
+  {
+    CANSendFrameBufferWrite = 0;
+    CANSendFrameBufferRead = 0;
+    for (int i = 0; i < MaxN2kCANMsgs; i++)
+    {
+      N2kCANMsgBuf[i].FreeMessage();
+    }
+    // Assume that driver called Restart(), so it is ready to go.
+    // No need to call InitCANxx(), CANOpen(), etc.
+    if (OpenState > os_OpenCAN)
+    {
+      OpenState = os_WaitOpen;
+      OpenScheduler.FromNow(200);
+    }
+  }
 }
 
 /************************************************************************//**
