@@ -19,9 +19,6 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
-    # Only run on the original repository, not forks
-    if: github.repository == 'ttlappalainen/NMEA2000'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -52,6 +49,8 @@ jobs:
     # push the generated output to gh-pages branch
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
+      # Only publish from the master branch
+      if: github.ref == 'refs/heads/master'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/docs/html
