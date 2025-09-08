@@ -8,8 +8,6 @@
 # 1. Runs whenever code is pushed or pull requests are made
 # 2. Sets up an ESP32 Arduino development environment  
 # 3. Compiles example sketches to check for errors
-# 4. Reports memory usage and any compilation failures
-# 5. Creates reports that can be downloaded as artifacts
 #
 name: Compiles on ESP32-Arduino-v1
 
@@ -46,9 +44,6 @@ jobs:
       # Which example sketches to compile and test
       UNIVERSAL_SKETCH_PATHS: |
         - Examples/TemperatureMonitor  # Only testing this example for now
-        
-      # Where to save compilation reports
-      SKETCHES_REPORTS_PATH: sketches-reports
     
     # MATRIX STRATEGY: Test multiple board configurations
     # (Currently only testing one ESP32 board, but could be extended)
@@ -96,10 +91,3 @@ jobs:
           enable-deltas-report: true  # Track memory usage changes
           sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}  # Where to save reports
 
-      # STEP 3: Save compilation reports for download (only for pull requests)
-      - name: Save memory usage change report as artifact
-        if: github.event_name == 'pull_request'  # Only run this step for PRs
-        uses: actions/upload-artifact@v4
-        with:
-          path: ${{ env.SKETCHES_REPORTS_PATH }}  # Reports from compilation step
-          name: ${{ env.SKETCHES_REPORTS_PATH }}  # Name for the downloadable artifact

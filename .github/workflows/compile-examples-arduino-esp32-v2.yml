@@ -8,8 +8,8 @@
 # 1. Runs whenever code is pushed or pull requests are made
 # 2. Sets up an ESP32 Arduino development environment (v2.x series)
 # 3. Compiles example sketches to check for errors
-# 4. Reports memory usage and any compilation failures
-# 5. Creates reports that can be downloaded as artifacts
+# 4. Reports memory usage and any compilation failures that can be downloaded as artifacts
+# 5. Comments memory usage delta report on pull requests
 #
 name: Compiles on ESP32-Arduino-v2
 
@@ -31,6 +31,12 @@ on:
       - ".github/workflows/compile-examples-arduino-esp32-v2.yml"
       - "Examples/**"
       - "src/**"
+
+# PERMISSIONS: Required for the memory reporting action to comment on PRs
+permissions:
+  contents: read        # Read repository contents
+  pull-requests: write  # Write comments to pull requests
+  issues: write        # Write comments to issues (PRs are issues)
 
 jobs:
   build:
@@ -89,17 +95,25 @@ jobs:
             ${{ env.UNIVERSAL_SKETCH_PATHS }}  # From environment variables above
             
           # COMPILATION FLAGS: Options passed to the Arduino compiler
-          cli-compile-flags: |
-            - --warnings="none"  # Suppress compiler warnings (focus on errors)
+          # cli-compile-flags: |
+          #   - --warnings="none"  # Suppress compiler warnings (focus on errors)
             
           # REPORTING: Generate detailed reports about compilation results
           enable-deltas-report: true  # Track memory usage changes
-          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}  # Where to save reports
 
-      # STEP 3: Save compilation reports for download (only for pull requests)
+      # STEP 3: Save compilation reports for download
       - name: Save memory usage change report as artifact
-        if: github.event_name == 'pull_request'  # Only run this step for PRs
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ env.SKETCHES_REPORTS_PATH }}  # Reports from compilation step
-          name: ${{ env.SKETCHES_REPORTS_PATH }}  # Name for the downloadable artifact
+          path: sketches-reports  # Use default path
+          name: sketches-reports  # Use default name
+          retention-days: 30  # Keep artifacts for 30 days (default is 90)
+
+      # STEP 4: Post detailed memory usage report to PR (using official Arduino action)
+      - name: Report memory usage changes
+        uses: arduino/report-size-deltas@v1
+        # Note: Only runs for PRs from the same repository (not forks) due to permission requirements for posting comments
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        with:
+          sketches-reports-source: sketches-reports  # Use default path
+          github-token: ${{ secrets.GITHUB_TOKEN }}
