@@ -2634,13 +2634,9 @@ public:
     inline bool IsOpen() const { return OpenState==os_Open; }
 
     /*********************************************************************//**
-     * \brief Restart the device
+     * \brief Restart the library after CAN driver detects bus is ready.
      * 
-     * This is preliminary function for e.g. battery powered or devices, 
-     * which may go to sleep or of the bus in any way. Function is under 
-     * development.
-     * 
-     * \note At the moment this functions just restarts the IsoAddressClaim
+     * This should only be called by the driver and assumes the CAN driver is in ready state.
      */
     void Restart();
 
