@@ -1,0 +1,119 @@
+# GitHub Action: ESP32 Arduino v2 Example Compilation Test
+# 
+# PURPOSE: This workflow automatically tests that NMEA2000 library examples
+# compile correctly for ESP32 boards using Arduino framework version 2.x.
+# This helps catch compilation errors before they reach users.
+#
+# WHAT IT DOES:
+# 1. Runs whenever code is pushed or pull requests are made
+# 2. Sets up an ESP32 Arduino development environment (v2.x series)
+# 3. Compiles example sketches to check for errors
+# 4. Reports memory usage and any compilation failures that can be downloaded as artifacts
+# 5. Comments memory usage delta report on pull requests
+#
+name: Compiles on ESP32-Arduino-v2
+
+# WHEN THIS RUNS:
+# - workflow_dispatch: Manually triggered from GitHub web interface
+# - pull_request: When someone submits a pull request with changes to examples or source
+# - push: When changes are pushed to main branches (but not PR branches to avoid double runs)
+on:
+  workflow_dispatch:  # Allow manual triggering
+  pull_request:
+    paths:  # Only run when these files/folders change
+      - ".github/workflows/compile-examples-arduino-esp32-v2.yml"  # This workflow file
+      - "Examples/**"      # Any example sketch
+      - "src/**"           # Any library source code
+  push:
+    # Only run on push to main branches, not on pushes that are part of PRs
+    branches: [master, main]
+    paths:  # Same file patterns as pull_request
+      - ".github/workflows/compile-examples-arduino-esp32-v2.yml"
+      - "Examples/**"
+      - "src/**"
+
+# PERMISSIONS: Required for the memory reporting action to comment on PRs
+permissions:
+  contents: read        # Read repository contents
+  pull-requests: write  # Write comments to pull requests
+  issues: write        # Write comments to issues (PRs are issues)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use Ubuntu Linux virtual machine
+    
+    # ENVIRONMENT VARIABLES: Configuration shared across all steps
+    env:
+      # Libraries that need to be installed for compilation to work
+      UNIVERSAL_LIBRARIES: |
+        # Install this library from the repository (the NMEA2000 library itself)
+        - source-path: ./
+        
+      # Which example sketches to compile and test
+      UNIVERSAL_SKETCH_PATHS: |
+        - Examples/TemperatureMonitor  # Only testing this example for now
+        
+      # Where to save compilation reports
+      SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # MATRIX STRATEGY: Test multiple board configurations
+    # (Currently only testing one ESP32 board, but could be extended)
+    strategy:
+      fail-fast: false  # Don't stop if one board fails - test them all
+      
+      matrix:
+        fqbn:  # Fully Qualified Board Name - identifies the target board
+          - esp32:esp32:esp32  # Standard ESP32 board
+          
+    # COMPILATION STEPS: The actual work done by this workflow
+    steps:
+      # STEP 1: Download the repository code to the virtual machine
+      - uses: actions/checkout@v3
+      
+      # STEP 2: Compile the example sketches using Arduino CLI
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1  # Official Arduino GitHub Action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}  # Authentication for GitHub API
+          fqbn: ${{ matrix.fqbn }}  # Which board to compile for (from matrix above)
+          
+          # LIBRARIES: External libraries needed for compilation
+          libraries: |
+            ${{ env.UNIVERSAL_LIBRARIES }}  # The NMEA2000 library itself
+            # ESP32-specific CAN bus library (dependency)
+            - source-url: https://github.com/phatpaul/NMEA2000_esp32.git
+            
+          # ARDUINO PLATFORMS: Board definitions and toolchain
+          platforms: |
+            - name: "esp32:esp32"  # ESP32 board package name
+              # Where to download ESP32 board definitions
+              source-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+              version: "2.0.9"  # Specific Arduino-ESP32 version (v2.x series - newer APIs)
+              
+          # SKETCHES: Which example programs to compile
+          sketch-paths: |
+            ${{ env.UNIVERSAL_SKETCH_PATHS }}  # From environment variables above
+            
+          # COMPILATION FLAGS: Options passed to the Arduino compiler
+          # cli-compile-flags: |
+          #   - --warnings="none"  # Suppress compiler warnings (focus on errors)
+            
+          # REPORTING: Generate detailed reports about compilation results
+          enable-deltas-report: true  # Track memory usage changes
+
+      # STEP 3: Save compilation reports for download
+      - name: Save memory usage change report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: sketches-reports  # Use default path
+          name: sketches-reports  # Use default name
+          retention-days: 30  # Keep artifacts for 30 days (default is 90)
+
+      # STEP 4: Post detailed memory usage report to PR (using official Arduino action)
+      - name: Report memory usage changes
+        uses: arduino/report-size-deltas@v1
+        # Note: Only runs for PRs from the same repository (not forks) due to permission requirements for posting comments
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        with:
+          sketches-reports-source: sketches-reports  # Use default path
+          github-token: ${{ secrets.GITHUB_TOKEN }}

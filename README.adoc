@@ -1,5 +1,9 @@
 = NMEA2000 library for C++ =
 
+image:https://github.com/phatpaul/NMEA2000/actions/workflows/compile-examples-arduino-esp32-v1.yml/badge.svg[title=Compiles on ESP32-Arduino-v1,link=https://github.com/phatpaul/NMEA2000/actions/workflows/compile-examples-arduino-esp32-v1.yml]
+image:https://github.com/phatpaul/NMEA2000/actions/workflows/compile-examples-arduino-esp32-v2.yml/badge.svg[title=Compiles on ESP32-Arduino-v2,link=https://github.com/phatpaul/NMEA2000/actions/workflows/compile-examples-arduino-esp32-v2.yml]
+image:https://github.com/phatpaul/NMEA2000/actions/workflows/unit-tests.yml/badge.svg[title=Unit Tests,link=https://github.com/phatpaul/NMEA2000/actions/workflows/unit-tests.yml]
+
 NMEA2000 library is object oriented C++ library for developing NMEA2000 bus devices. Library fulfills automatically NMEA 2000 mandatory requirements leaving only interesting data handling for developer.  ** Library has been used in several commercial certified NMEA2000 devices. **
 
 Library provides you easy way to make different kind of NMEA2000 bus devices like sensor transducers (battery, temperature, wind, engine, etc.), NMEA2000 information displays,NMEA2000->PC interface (like Actisense NGT1), NMEA0183->NMEA2000 or NMEA2000->NMEA0183 converter.

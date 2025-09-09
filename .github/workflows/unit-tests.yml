@@ -1,0 +1,65 @@
+# GitHub Action: C++ Unit Tests
+# 
+# PURPOSE: This workflow automatically runs unit tests for the NMEA2000 library
+# to ensure code changes don't break existing functionality. Unit tests verify
+# that individual components work correctly in isolation.
+#
+# WHAT IT DOES:
+# 1. Runs when source code or tests are modified
+# 2. Sets up a C++ build environment using CMake
+# 3. Compiles the library and test executables
+# 4. Runs all unit tests and reports results
+# 5. Fails the workflow if any tests fail, preventing broken code from being merged
+#
+name: Unit Tests
+
+# WHEN THIS RUNS:
+# - pull_request: When someone submits a pull request with changes to tests or source
+# - push: When changes are pushed to main branches (but not PR branches to avoid double runs)
+on:
+  pull_request:
+    paths:  # Only run when these files/folders change
+      - ".github/workflows/unit-tests.yml"  # This workflow file
+      - 'test/**'   # Any unit test files
+      - 'src/**'    # Any library source code
+
+  push:
+    # Only run on push to main branches, not on pushes that are part of PRs
+    branches: [master, main]
+    paths:  # Same file patterns as pull_request
+      - ".github/workflows/unit-tests.yml"
+      - 'test/**'
+      - 'src/**'
+
+jobs:
+  test:
+    name: Run unit tests  # Descriptive name shown in GitHub UI
+    runs-on: ubuntu-latest  # Use Ubuntu Linux virtual machine
+
+    # TESTING STEPS: The actual work done by this workflow
+    steps:
+    # STEP 1: Download the repository code to the virtual machine
+    - uses: actions/checkout@v3
+
+    # STEP 2: Configure the build system using CMake
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory.
+      # This reads CMakeLists.txt and sets up the build environment
+      # including finding dependencies, setting compiler flags, etc.
+      run: cmake -B ${{github.workspace}}/build
+
+    # STEP 3: Compile the library and test executables
+    - name: Build
+      # Build your program with the given configuration
+      # This compiles all source code and creates test executables
+      run: cmake --build ${{github.workspace}}/build
+
+    # STEP 4: Execute all unit tests
+    - name: Test
+      # cd to the build dir before run ctest
+      working-directory: ${{github.workspace}}/build
+      # Execute tests defined by the CMake configuration.
+      # -V flag provides verbose output showing each test result
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -V
+      

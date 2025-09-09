@@ -49,6 +49,10 @@ jobs:
     # push the generated output to gh-pages branch
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
+      # Only attempt to deploy from the master branch
+      if: github.ref == 'refs/heads/master'
+      # To avoid nuisance job errors, this step is allowed to fail on forks or non-master branches without signaling workflow failure
+      continue-on-error: ${{ github.repository != 'ttlappalainen/NMEA2000' || github.ref != 'refs/heads/master' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/docs/html
