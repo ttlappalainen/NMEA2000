@@ -29,7 +29,6 @@ static constexpr unsigned long N2kPGNCZoneSwitchStatusFastPacket  = 65301UL;
 static constexpr uint8_t N2kCZoneSwitchCount = 6;
 
 struct tN2kCZoneSwitchStatus {
-  uint16_t ProprietaryCode = 0;   // Little-endian value from bytes 0-1 (0x9927 observed)
   uint8_t BankInstance = 0;       // Byte 2: matches the device instance reported via PGN 126996
   uint8_t FieldIdentifier = 0;    // Byte 3: 0x1E marks the switch summary record
   uint8_t SwitchBits = 0;         // Byte 4: bit0=SW1 … bit5=SW6, 1 = ON

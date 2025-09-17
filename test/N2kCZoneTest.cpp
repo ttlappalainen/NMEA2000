@@ -23,7 +23,6 @@ TEST_CASE("PGN 65284 single-frame switch status parsing") {
 
   tN2kCZoneSwitchStatus status{};
   REQUIRE(ParseN2kPGN65284CZoneSwitchStatus(msg, status));
-  CHECK(status.ProprietaryCode == 0x9927);
   CHECK(status.BankInstance == 0x01);
   CHECK(status.FieldIdentifier == 0x1e);
   CHECK(status.SwitchBitsValid);
@@ -60,6 +59,19 @@ TEST_CASE("PGN 65301 non-summary frames are ignored") {
           {0x27, 0x99, 0x03, 0x9e, 0x00, 0x00, 0x00, 0x00});
 
   tN2kCZoneSwitchStatus status{};
+  REQUIRE_FALSE(ParseN2kPGN65301CZoneSwitchStatus(msg, status));
+}
+
+TEST_CASE("CZone parsers reject frames with foreign proprietary header") {
+  tN2kMsg msg;
+  FillMsg(msg, N2kPGNCZoneSwitchStatusSingleFrame,
+          {0x27, 0x98, 0x01, 0x1e, 0x07});
+
+  tN2kCZoneSwitchStatus status{};
+  REQUIRE_FALSE(ParseN2kPGN65284CZoneSwitchStatus(msg, status));
+
+  FillMsg(msg, N2kPGNCZoneSwitchStatusFastPacket,
+          {0x26, 0x99, 0x03, 0x1e, 0x37});
   REQUIRE_FALSE(ParseN2kPGN65301CZoneSwitchStatus(msg, status));
 }
 
