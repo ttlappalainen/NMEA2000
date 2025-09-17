@@ -16,7 +16,6 @@ constexpr uint8_t kSwitchSummaryField = 0x1Eu;
 constexpr uint16_t kCZoneProprietaryId = 0x9927u;
 
 bool MatchesCZoneHeader(const tN2kMsg &msg, int &index) {
-  if (msg.GetRemainingDataLength(index) < 2) return false;
   return msg.Get2ByteUInt(index) == kCZoneProprietaryId;
 }
 
