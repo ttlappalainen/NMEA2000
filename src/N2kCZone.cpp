@@ -13,52 +13,71 @@ NMEA2000 library.
 
 namespace {
 constexpr uint8_t kSwitchSummaryField = 0x1Eu;
-constexpr uint16_t kCZoneManufacturerCode = 0x0127u;  // BEP Marine
-constexpr uint8_t kCZoneIndustryGroup = 0x03u;         // Marine industry group
+constexpr uint16_t kCZoneProprietaryId = 0x9927u;
 
-bool MatchesCZoneHeader(const tN2kMsg &msg) {
-  if (msg.DataLen < 2) return false;
-  const uint16_t header = static_cast<uint16_t>(msg.Data[0]) |
-                          (static_cast<uint16_t>(msg.Data[1]) << 8);
-  const uint16_t manufacturer = header & 0x07ffu;
-  const uint8_t industry = static_cast<uint8_t>((header >> 11) & 0x07u);
-  return manufacturer == kCZoneManufacturerCode && industry == kCZoneIndustryGroup;
+bool MatchesCZoneHeader(const tN2kMsg &msg, int &index) {
+  if (msg.GetRemainingDataLength(index) < 2) return false;
+  return msg.Get2ByteUInt(index) == kCZoneProprietaryId;
 }
 
-void FillStatusFromMsg(const tN2kMsg &msg, tN2kCZoneSwitchStatus &status) {
-  status.RawLen = (msg.DataLen > 8) ? 8 : static_cast<uint8_t>(msg.DataLen);
+void CopyRawPayload(const tN2kMsg &msg, tN2kCZoneSwitchStatus &status) {
+  const int available = std::min(msg.GetRemainingDataLength(0),
+                                 static_cast<int>(sizeof(status.RawData)));
+  status.RawLen = static_cast<uint8_t>(available);
   std::fill(std::begin(status.RawData), std::end(status.RawData), 0);
-  for (uint8_t i = 0; i < status.RawLen; ++i) {
-    status.RawData[i] = msg.Data[i];
+
+  int rawIndex = 0;
+  for (int i = 0; i < available; ++i) {
+    status.RawData[i] = msg.GetByte(rawIndex);
+  }
+}
+
+bool PopulateStatusFields(const tN2kMsg &msg, int &index,
+                          tN2kCZoneSwitchStatus &status) {
+  if (msg.GetRemainingDataLength(index) < 3) return false;
+
+  status.BankInstance = msg.GetByte(index);
+  status.FieldIdentifier = msg.GetByte(index);
+  status.SwitchBits = msg.GetByte(index);
+  status.SwitchBitsValid = (status.FieldIdentifier == kSwitchSummaryField);
+
+  for (uint8_t &reserved_byte : status.Reserved) {
+    reserved_byte = 0;
+    if (msg.GetRemainingDataLength(index) > 0) {
+      reserved_byte = msg.GetByte(index);
+    }
   }
 
-  status.BankInstance = (msg.DataLen > 2) ? msg.Data[2] : 0;
-  status.FieldIdentifier = (msg.DataLen > 3) ? msg.Data[3] : 0;
-  status.SwitchBits = (msg.DataLen > 4) ? msg.Data[4] : 0;
-  status.SwitchBitsValid = (status.FieldIdentifier == kSwitchSummaryField);
-  status.Reserved[0] = (msg.DataLen > 5) ? msg.Data[5] : 0;
-  status.Reserved[1] = (msg.DataLen > 6) ? msg.Data[6] : 0;
-  status.Reserved[2] = (msg.DataLen > 7) ? msg.Data[7] : 0;
+  return true;
 }
 }  // namespace
 
 bool ParseN2kPGN65284CZoneSwitchStatus(const tN2kMsg &N2kMsg,
                                        tN2kCZoneSwitchStatus &Status) {
   if (N2kMsg.PGN != N2kPGNCZoneSwitchStatusSingleFrame) return false;
-  if (N2kMsg.DataLen < 5) return false;
-  if (!MatchesCZoneHeader(N2kMsg)) return false;
+  if (N2kMsg.GetRemainingDataLength(0) < 5) return false;
 
-  FillStatusFromMsg(N2kMsg, Status);
+  int index = 0;
+  if (!MatchesCZoneHeader(N2kMsg, index)) return false;
+
+  Status = {};
+  CopyRawPayload(N2kMsg, Status);
+  if (!PopulateStatusFields(N2kMsg, index, Status)) return false;
+
   return true;
 }
 
 bool ParseN2kPGN65301CZoneSwitchStatus(const tN2kMsg &N2kMsg,
                                        tN2kCZoneSwitchStatus &Status) {
   if (N2kMsg.PGN != N2kPGNCZoneSwitchStatusFastPacket) return false;
-  if (N2kMsg.DataLen < 5) return false;
-  if (!MatchesCZoneHeader(N2kMsg)) return false;
+  if (N2kMsg.GetRemainingDataLength(0) < 5) return false;
 
-  FillStatusFromMsg(N2kMsg, Status);
+  int index = 0;
+  if (!MatchesCZoneHeader(N2kMsg, index)) return false;
+
+  Status = {};
+  CopyRawPayload(N2kMsg, Status);
+  if (!PopulateStatusFields(N2kMsg, index, Status)) return false;
   if (!Status.SwitchBitsValid) {
     return false;  // Skip frames that do not carry the switch summary
   }
