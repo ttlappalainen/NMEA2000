@@ -435,6 +435,7 @@ bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
   uint8_t Type=GetByte(Index);
   if ( Len<2) { StrBufSize=0; return false; } // invalid length
   Len-=2;
+  if ((Len+Index) > DataLen) Len=DataLen-Index; //seems to happen e.g. with 129041, canboat also does clipping this way
   if ( Type!=0x01 ) { StrBufSize=0; return false; }
   if ( StrBuf!=0 ) {
     GetStr(StrBufSize,StrBuf,Len,0xff,Index);
