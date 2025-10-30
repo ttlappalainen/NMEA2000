@@ -1,7 +1,7 @@
 /*
  * N2kMsg.h
  * 
- * Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -1034,6 +1034,18 @@ public:
   void AddVarStr(const char *str, bool UsePgm=false);
 
  /************************************************************************//**
+  * \brief Add string value to the buffer
+  * This method determines the length of the string by it self using strlen().
+  * The string will be added to the end (indicated by \ref DataLen) of
+  * the byte array \ref Data.
+  * 
+  * \param str   String as pointer to a char array
+  * \param maxLen Maximum bytes for string
+  * \param UsePgm {bool} use the pgm_read_byte function
+  */
+  void AddVarStr(const char *str, int maxLen, bool UsePgm=false);
+
+ /************************************************************************//**
   * \brief Add byte array to the buffer
   * 
   * The buffer will be added to the end (indicated by \ref DataLen) of
@@ -1267,7 +1279,24 @@ public:
    */
   bool GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned char nulChar, int &Index) const;
 
-  /************************************************************************//**
+    /************************************************************************//**
+   * \brief Get a string out of \ref Data
+   * This method determines the length of the string by it self, using 
+   * the byte (index -2) inside \ref Data
+   *
+   * \param StrBufSize  Size of String Buffer
+   * \param StrBuf      Pointer to a char array as string
+   * \param nulChar     used "null Char" in the message (e.g. '@' in AIS)
+   * \param Index       position inside the byte array \ref Data, getting
+   *                    incremented according to the number of bytes
+   *                    extracted
+   * 
+   * \return true   String data has been extracted
+   * \return false  not successful, no string data available
+   */
+  bool GetVarStr(size_t &StrBufSize, char *StrBuf, unsigned char nulChar, int &Index) const;
+
+/************************************************************************//**
    * \brief Get a string out of \ref Data
    * This method determines the length of the string by it self, using 
    * the byte (index -2) inside \ref Data

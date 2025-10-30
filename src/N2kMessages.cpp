@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -1589,7 +1589,7 @@ bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
     N2kData.AtoNStatus=N2kMsg.GetByte(Index);  
     N2kData.AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
     size_t AtoNNameSize = sizeof(N2kData.AtoNName);
-    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, Index);
+    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, '@', Index);
 
     return true;
 }

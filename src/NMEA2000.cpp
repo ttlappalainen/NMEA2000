@@ -1,7 +1,7 @@
 /*
 NMEA2000.cpp
 
-Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -451,12 +451,14 @@ bool IsMandatoryFastPacketMessage(unsigned long PGN) {
  *          - 130567L: Watermaker input setting and status, pri=6, period=2500
  *          - 130577L: Direction data PGN, pri=3, period=1000
  *          - 130578L: Vessel speed components, pri=2, period=250
+ *          - 130568L: Entertainment diagnostic status, pri=6, period=1000
  *          - 130569L: Entertainment current file and status, pri=6, period=500
  *          - 130570L: Entertainment library data file, pri=6, period=NA
  *          - 130571L: Entertainment library data group, pri=6, period=NA
  *          - 130572L: Entertainment library data search, pri=6, period=NA
  *          - 130573L: Entertainment supported source data, pri=6, period=NA
  *          - 130574L: Entertainment supported zone data, pri=6, period=NA
+ *          - 130575L: Entertainment parental control status, pri=6, period=NA
  *          - 130580L: Entertainment system configuration status, pri=6, period=NA
  *          - 130581L: Entertainment zone configuration status, pri=6, period=NA
  *          - 130583L: Entertainment available dudio EQ presets, pri=6, period=NA
@@ -572,12 +574,14 @@ bool IsDefaultFastPacketMessage(unsigned long PGN) {
                                       case 130577L: // Direction Data PGN, pri=3, period=1000
                                       case 130578L: // Vessel Speed Components, pri=2, period=250
                                       // Entertainment PGNs
+                                      case 130568L: // Diagnostic status, pri=6, period=1000
                                       case 130569L: // Current File and Status, pri=6, period=500
                                       case 130570L: // Library Data File, pri=6, period=NA
                                       case 130571L: // Library Data Group, pri=6, period=NA
                                       case 130572L: // Library Data Search, pri=6, period=NA
                                       case 130573L: // Supported Source Data, pri=6, period=NA
                                       case 130574L: // Supported Zone Data, pri=6, period=NA
+                                      case 130575L: // Parental control status, pri=6, period=NA
                                       case 130580L: // System Configuration Status, pri=6, period=NA
                                       case 130581L: // Zone Configuration Status, pri=6, period=NA
                                       case 130583L: // Available Audio EQ Presets, pri=6, period=NA
@@ -2871,49 +2875,14 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
                      const char *InstallationDescription1,
                      const char *InstallationDescription2,
                      bool UsePgm) {
-  size_t TotalLen;
-  size_t MaxLen=tN2kMsg::MaxDataLen-6; // Each field has 2 extra bytes
-  size_t ManInfoLen;
-  size_t InstDesc1Len;
-  size_t InstDesc2Len;
-
-    if ( UsePgm ) {
-      ManInfoLen=ProgmemStrLen(ManufacturerInformation);
-      InstDesc1Len=ProgmemStrLen(InstallationDescription1);
-      InstDesc2Len=ProgmemStrLen(InstallationDescription2);
-    } else {
-      ManInfoLen=StrLen(ManufacturerInformation);
-      InstDesc1Len=StrLen(InstallationDescription1);
-      InstDesc2Len=StrLen(InstallationDescription2);
-    }
-
-    if ( ManInfoLen>Max_N2kConfigurationInfoField_len ) ManInfoLen=Max_N2kConfigurationInfoField_len;
-    if ( InstDesc1Len>Max_N2kConfigurationInfoField_len ) InstDesc1Len=Max_N2kConfigurationInfoField_len;
-    if ( InstDesc2Len>Max_N2kConfigurationInfoField_len ) InstDesc2Len=Max_N2kConfigurationInfoField_len;
-
-    TotalLen=0;
-    if (TotalLen+ManInfoLen>MaxLen) ManInfoLen=MaxLen-TotalLen;
-    TotalLen+=ManInfoLen;
-    if (TotalLen+InstDesc1Len>MaxLen) InstDesc1Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc1Len;
-    if (TotalLen+InstDesc2Len>MaxLen) InstDesc2Len=MaxLen-TotalLen;
-    TotalLen+=InstDesc2Len;
-
     N2kMsg.SetPGN(N2kPGNConfigurationInformation);
     N2kMsg.Priority=6;
     // InstallationDescription1
-    N2kMsg.AddByte(InstDesc1Len+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(InstallationDescription1,InstDesc1Len,UsePgm);
-
+    N2kMsg.AddVarStr(InstallationDescription1,Max_N2kConfigurationInfoField_len,UsePgm);
     // InstallationDescription2
-    N2kMsg.AddByte(InstDesc2Len+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(InstallationDescription2,InstDesc2Len,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription2,Max_N2kConfigurationInfoField_len,UsePgm);
     // ManufacturerInformation
-    N2kMsg.AddByte(ManInfoLen+2);
-    N2kMsg.AddByte(0x01);
-    N2kMsg.AddStr(ManufacturerInformation,ManInfoLen,UsePgm);
+    N2kMsg.AddVarStr(ManufacturerInformation,Max_N2kConfigurationInfoField_len,UsePgm);
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,

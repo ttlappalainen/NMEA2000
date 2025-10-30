@@ -1,7 +1,7 @@
 /*
 N2kMsg.cpp
 
-Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -55,6 +55,142 @@ double round(double val) {
       : ceil(val - 0.5);
 }
 #endif
+
+// *****************************************************************************
+bool N2kRequireUnicode(const char *str) {
+  if ( str==0 ) return false;
+
+  unsigned char byte = *str;
+  size_t num;
+ 
+  while ( byte != 0x00 ) {
+    if ( (byte & 0x80) == 0x00 ) {
+      // U+0000 to U+007F 
+      num = 1;
+    } else if ((byte & 0xE0) == 0xC0) {
+      // U+0080 to U+07FF 
+      num = 2;
+    } else if ((byte & 0xF0) == 0xE0) {
+      // U+0800 to U+FFFF 
+      num = 3;
+    } else if ((byte & 0xF8) == 0xF0) {
+      // U+10000 to U+10FFFF 
+      num = 4;
+    } else if ( (byte & 0xFC) == 0xF8 ) {
+      num = 5; 
+    } else if ( (byte & 0xFE) == 0xFC ) {
+      num = 6; 
+    } else return false;
+
+    str++;
+    byte = *str;
+    for ( size_t i = 1; i < num; ++i ) {
+      if ( (byte & 0xC0) != 0x80) return false; // Invalid UTF8
+      str++;
+      byte = *str;
+    }
+
+    if ( num>1 ) return true;
+  }
+
+  return false;
+}
+
+//*****************************************************************************
+int N2kUCS2ToUTF8(const unsigned char *str, int strLen, char* buf, int bufLen, unsigned char nulChar=0xff) {
+  int UTF8Len=0;
+  if ( buf==0 || bufLen<=0 ) return 0;
+  bufLen--; // Reserve termination;
+
+  for (int i=0; i+1<strLen && UTF8Len<bufLen; i+=2) {
+    uint16_t UCS2Char = str[i] + (str[i+1] << 8);
+
+    // Decode
+    if ( 0x80 > UCS2Char ) {
+      //Tokensize: 1 byte
+      buf[UTF8Len] = UCS2Char;
+      if ( buf[UTF8Len]!=nulChar ) UTF8Len++;
+    } else if ( 0x800 > UCS2Char ) {
+      //Tokensize: 2 bytes
+      if ( UTF8Len+1<bufLen ) {
+        buf[UTF8Len+1] = (0x80 | (UCS2Char & 0x3F));
+        UCS2Char = (UCS2Char >> 6);
+        buf[UTF8Len] = (0xC0 | UCS2Char);
+        UTF8Len+=2;
+      } else {
+        i=strLen;
+      }
+    } else {
+      //Tokensize: 3 bytes
+      if ( UTF8Len+2<bufLen ) {
+        buf[UTF8Len+2] = (0x80 | (UCS2Char & 0x3F));
+        UCS2Char = (UCS2Char >> 6);
+        buf[UTF8Len+1] = (0x80 | (UCS2Char & 0x3F));
+        UCS2Char = (UCS2Char >> 6);
+        buf[UTF8Len] = (0xE0 | UCS2Char);
+        UTF8Len+=3;
+      } else {
+        i=strLen;
+      }
+    }
+  }
+  buf[UTF8Len]=0;
+
+  return UTF8Len;
+}
+
+//*****************************************************************************
+int N2kUTF8ToUCS2(const char *str, unsigned char *buf, int bufLen) {
+  int Len=0;
+  const unsigned char* UTF8Chars=(const unsigned char *)str;
+  size_t usedBytes=1;
+  for ( ; *UTF8Chars!=0 && Len<bufLen-2; UTF8Chars+=usedBytes, Len+=2 ) {
+    uint16_t ucs2Char;
+    if ( (*UTF8Chars & 0x80) == 0x00 ) {
+      *buf=*UTF8Chars;
+      buf++;
+      *buf=0x00;
+      buf++;
+      usedBytes=1; 
+    } else if ( (*UTF8Chars & 0xE0) == 0xC0 ) {
+      // 2 byte
+      ucs2Char=(UTF8Chars[0] & 0x1F) << 6 | (UTF8Chars[1] & 0x3F);
+      *buf=ucs2Char;
+      buf++; 
+      *buf=ucs2Char>>8;
+      buf++;
+      usedBytes=2; 
+    } else if ( (UTF8Chars[0] & 0xF0) == 0xE0 ) {
+      // 3 byte
+      ucs2Char = (UTF8Chars[0] & 0x0F) << 12 | (UTF8Chars[1] & 0x3F) << 6 | (UTF8Chars[2] & 0x3F);
+      *buf=ucs2Char;
+      buf++; 
+      *buf=ucs2Char>>8;
+      buf++;
+      usedBytes=3; 
+    } else if ( (UTF8Chars[0] & 0xF8) == 0xF0 ) {
+      *buf='?';
+      buf++;
+      *buf=0x00;
+      buf++;
+      usedBytes=4; 
+    } else if ( (UTF8Chars[0] & 0xFC) == 0xF8 ) {
+      *buf='?';
+      buf++;
+      *buf=0x00;
+      buf++;
+      usedBytes=5; 
+    } else if ( (UTF8Chars[0] & 0xFE) == 0xFC ) {
+      *buf='?';
+      buf++;
+      *buf=0x00;
+      buf++;
+      usedBytes=6; 
+    }
+  }
+
+  return Len;
+}
 
 //*****************************************************************************
 tN2kMsg::tN2kMsg(unsigned char _Source, unsigned char _Priority, unsigned long _PGN, int _DataLen) {
@@ -239,13 +375,41 @@ void tN2kMsg::AddAISStr(const char *str, int len) {
   if ( len>0 ) memset(buf,'@',len);
 }
 
+//*****************************************************************************
+void tN2kMsg::AddVarStr(const char *str, int maxLen, bool UsePgm) {
+  int len=(str!=0?strlen(str):0);
+  int bufFree=(DataLen<MaxDataLen?MaxDataLen-DataLen:0);
+  if ( bufFree<=2 || len==0 ) {
+    if ( bufFree>=2 ) {
+      AddByte(2);
+      AddByte(1);
+    } else if ( bufFree==1 ) {
+      AddByte(1); // This may not work, since var string should have minimum len and type
+    }
+    return; // Can not do more
+  }
+
+  int dataStart=DataLen;
+  AddByte(len+2);
+  AddByte(1);
+
+  if ( N2kRequireUnicode(str) ) {
+    unsigned char *destBuf=&Data[DataLen];
+    bufFree-=2;
+    if ( bufFree>maxLen ) bufFree=maxLen;
+    len=N2kUTF8ToUCS2(str,destBuf,bufFree);
+    DataLen+=len;
+    Data[dataStart]=len+2; dataStart++;
+    Data[dataStart]=0x00;
+  } else {
+    if ( len>maxLen ) len=maxLen;
+    SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
+  }
+}
 
 //*****************************************************************************
 void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
-  int len=(str!=0?strlen(str):0);
-  AddByte(len+2);
-  AddByte(1);
-  if ( len>0 ) SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
+  AddVarStr(str,5000,UsePgm);
 }
 
 //*****************************************************************************
@@ -430,19 +594,42 @@ bool tN2kMsg::GetStr(size_t StrBufSize, char *StrBuf, size_t Length, unsigned ch
 }
 
 //*****************************************************************************
-bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
-  size_t Len=GetByte(Index);
+bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, unsigned char nulChar, int &Index) const {
+  uint8_t Len=GetByte(Index);
   uint8_t Type=GetByte(Index);
-  if ( Len<2) { StrBufSize=0; return false; } // invalid length
+  if ( Len<=2 || N2kIsNA(Len) || Type>1 || Index>=DataLen ) { // 0 length or invalid length or type
+    if ( StrBuf!=0 && StrBufSize>0 ) *StrBuf=0;
+    StrBufSize=0; 
+    if ( Len==2 && Type<=1 ) { // 0 length ok string
+      return true;
+    } else { // invalid
+      Index=MaxDataLen; // Pass rest
+      return false;
+    }
+  } 
+
   Len-=2;
-  if ( Type!=0x01 ) { StrBufSize=0; return false; }
-  if ( StrBuf!=0 ) {
-    GetStr(StrBufSize,StrBuf,Len,0xff,Index);
-  } else {
+  if ( (Len+Index) > DataLen ) Len=DataLen-Index;
+
+  if ( StrBuf!=0 && StrBufSize>0 ) {
+    if ( Type==0x01 ) {
+      GetStr(StrBufSize,StrBuf,Len,nulChar,Index);
+      StrBufSize=Len;
+    } else {
+      const unsigned char *UnicodeStr=&Data[Index];
+      StrBufSize=N2kUCS2ToUTF8(UnicodeStr,Len,StrBuf,StrBufSize,nulChar);
+      Index+=Len;
+    }
+  } else { // No room to copy anything
+    StrBufSize=0;
     Index+=Len; // Just pass this string
   }
-  StrBufSize=Len;
   return true;
+}
+
+//*****************************************************************************
+bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, int &Index) const {
+  return GetVarStr(StrBufSize,StrBuf,0xff,Index);
 }
 
 //*****************************************************************************

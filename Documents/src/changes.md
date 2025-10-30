@@ -1,6 +1,10 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 30.10.2025
+- UTF8 support for AddVarStr
+- Pi Pico support for NMEA2000_CAN
+
 ## 01.11.2024
 - Add PGN127751
 - Fix PGN129038 field 18
