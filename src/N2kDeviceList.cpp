@@ -340,30 +340,27 @@ void tN2kDeviceList::HandleProductInformation(const tN2kMsg &N2kMsg) {
 
 //*****************************************************************************
 void tN2kDeviceList::HandleConfigurationInformation(const tN2kMsg &N2kMsg) {
+  tNMEA2000::tConfigurationInformation ConfI;
 
   if ( N2kMsg.Source>=N2kMaxBusDevices || Sources[N2kMsg.Source]==0 ) return;
-
-//  unsigned long t1=micros();
-  size_t ManISize;
-  size_t InstDesc1Size;
-  size_t InstDesc2Size;
 
   tInternalDevice *pDevice=Sources[N2kMsg.Source];
 
   N2kHandleInDbg(" Handle configuration information for source: "); N2kHandleInDbgln(N2kMsg.Source);
 
-  if ( ParseN2kPGN126998(N2kMsg,ManISize,0,InstDesc1Size,0,InstDesc2Size,0) ) { // First query required size
-    pDevice->InitConfigurationInformation(ManISize,InstDesc1Size,InstDesc2Size);
-    int TotalSize=ManISize+InstDesc1Size+InstDesc2Size;
-    if ( TotalSize>0 ) {
-      ParseN2kPGN126998(N2kMsg,
-                        ManISize,pDevice->GetManufacturerInformation(),
-                        InstDesc1Size,pDevice->GetInstallationDescription1(),
-                        InstDesc2Size,pDevice->GetInstallationDescription2());
+  if ( !pDevice->HasConfigurationInformation() &&
+       ParseN2kPGN126998(N2kMsg,
+                         sizeof(ConfI.ManufacturerInformation),ConfI.ManufacturerInformation,
+                         sizeof(ConfI.InstallationDescription1),ConfI.InstallationDescription1,
+                         sizeof(ConfI.InstallationDescription2),ConfI.InstallationDescription2) ) {
+    if ( !pDevice->IsSameConfigurationInformation(ConfI) ) {
+      pDevice->SetConfigurationInformation(
+        ConfI.ManufacturerInformation, 
+        ConfI.InstallationDescription1, 
+        ConfI.InstallationDescription2);
+      ListUpdated=true;
     }
-    ListUpdated=true;
   }
-
 //  unsigned long t2=micros();
 //  if ( ListUpdated ) { Serial.print("  Updated source: "); Serial.println(N2kMsg.Source); }
 //  Serial.print(" - 126996 elapsed: "); Serial.println(t2-t1);
@@ -410,8 +407,7 @@ uint8_t tN2kDeviceList::Count() const {
 
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice::tInternalDevice(uint64_t _Name, uint8_t _Source) : tNMEA2000::tDevice(_Name,_Source) {
-  ProdI.Clear(); ProdILoaded=false; ConfILoaded=false;
-  ConfI=0; ConfISize=0; ManufacturerInformation=0; InstallationDescription1=0; InstallationDescription2=0;
+  ProdI.Clear(); ConfI.Clear(); ProdILoaded=false; ConfILoaded=false;
   TransmitPGNsSize=0; TransmitPGNs=0; ReceivePGNsSize=0; ReceivePGNs=0;
   nNameRequested=0;
   ClearProductInformationLoaded();
@@ -421,38 +417,8 @@ tN2kDeviceList::tInternalDevice::tInternalDevice(uint64_t _Name, uint8_t _Source
 
 //*****************************************************************************
 tN2kDeviceList::tInternalDevice::~tInternalDevice() {
-  if ( ConfI!=0 ) free(ConfI);
   if ( TransmitPGNs!=0 ) free(TransmitPGNs);
   if ( ReceivePGNs!=0 ) free(ReceivePGNs);
-}
-
-//*****************************************************************************
-char * tN2kDeviceList::tInternalDevice::InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size) {
-  if ( _ManISize>0 ) _ManISize++; // Reserve '/0' terminator
-  if ( _InstDesc1Size>0 ) _InstDesc1Size++; // Reserve '/0' terminator
-  if ( _InstDesc2Size>0 ) _InstDesc2Size++; // Reserve '/0' terminator
-  uint16_t _ConfISize=_ManISize+_InstDesc1Size+_InstDesc2Size;
-  if ( ConfI!=0 && ConfISize<_ConfISize ) { // We can not fit new data, so release mem.
-    free(ConfI); ConfI=0; ConfISize=0;
-  }
-  if ( ConfI==0 ) {
-    ConfISize=_ConfISize;
-    ConfI=(char*)(ConfISize>0?malloc(ConfISize):0);
-    if ( _ManISize>0 ) {
-      ManufacturerInformation=ConfI;
-      ManufacturerInformation[0]='\0';
-    } else ManufacturerInformation=0;
-    if ( _InstDesc1Size>0 ) {
-      InstallationDescription1=ConfI+_ManISize;
-      InstallationDescription1[0]='\0';
-    } else InstallationDescription1=0;
-    if ( _InstDesc2Size>0 ) {
-      InstallationDescription2=ConfI+_ManISize+_InstDesc1Size;
-      InstallationDescription2[0]='\0';
-    } else InstallationDescription2=0;
-  }
-  ConfILoaded=true;
-  return ConfI;
 }
 
 //*****************************************************************************
