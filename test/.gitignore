@@ -1,2 +1,5 @@
-# ignore all files that have no extension, i.e. built binaries
-/[^\.]*
+# Ignore binaries without an extension (built test executables)
+*
+!*/
+!*.*
+!.gitignore
