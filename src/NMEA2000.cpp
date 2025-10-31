@@ -718,6 +718,7 @@ tNMEA2000::tNMEA2000() {
 
   OnOpen=0;
   MsgHandler=0;
+  AddressClaimHandler=0;
   MsgHandlers=0;
   ISORqstHandler=0;
 
@@ -1386,6 +1387,7 @@ bool tNMEA2000::SendFrame(unsigned long id, unsigned char len, const unsigned ch
     Frame->wait_sent=wait_sent;
     for (int i=0; i<len; i++) Frame->buf[i]=buf[i];
     N2kFrameOutDbgStart("Frame buffered "); N2kFrameOutDbgln(id);
+    if (OnSendFrame!=0) OnSendFrame(id,len,buf);
   }
 
   return true;
@@ -2506,6 +2508,7 @@ void tNMEA2000::HandleCommandedAddress(uint64_t CommandedName, unsigned char New
     Devices[iDev].UpdateAddressClaimEndSource();
     StartAddressClaim(iDev);
     AddressChanged=true;
+    if (AddressClaimHandler!=0) AddressClaimHandler(NewAddress);
   }
 }
 
@@ -2574,6 +2577,7 @@ void tNMEA2000::GetNextAddress(int DeviceIndex, bool RestartAtEnd) {
     } else {
       Devices[DeviceIndex].N2kSource=N2kNullCanBusAddress; // Force null address = cannot claim address
       AddressChanged=true;
+      if (AddressClaimHandler!=0) AddressClaimHandler(N2kNullCanBusAddress);
       return;
     }
     FoundSame=false;
@@ -2583,6 +2587,7 @@ void tNMEA2000::GetNextAddress(int DeviceIndex, bool RestartAtEnd) {
     }
   } while (FoundSame);
   AddressChanged=true;
+  if(AddressClaimHandler!=0) AddressClaimHandler(Devices[DeviceIndex].N2kSource);
 }
 
 //*****************************************************************************
@@ -2683,6 +2688,15 @@ void tNMEA2000::SetOnOpen(void (*_OnOpen)()) {
 //*****************************************************************************
 void tNMEA2000::SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg)) {
   MsgHandler=_MsgHandler;
+}
+
+//*****************************************************************************
+void tNMEA2000::SetOnAddressClaimed(void (*_OnAddressClaimed)(const uint8_t address)) {
+  AddressClaimHandler=_OnAddressClaimed;
+}
+
+void tNMEA2000::SetOnSendFrame(void (*_OnSendFrame)(const unsigned long id, const unsigned char len, const unsigned char *buf)) {
+  OnSendFrame=_OnSendFrame;
 }
 
 //*****************************************************************************

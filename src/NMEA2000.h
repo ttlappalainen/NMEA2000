@@ -1116,6 +1116,13 @@ protected:
         
     /** \brief Handler callbacks for normal messages */
     void (*MsgHandler)(const tN2kMsg &N2kMsg);  
+
+    /** \brief Handler callbacks for address claims */
+    void (*AddressClaimHandler)(uint8_t address);
+
+    /** \brief Handler callback for transmitting CAN frames  */
+    void (*OnSendFrame)(const unsigned long id, const unsigned char len, const unsigned char *buf);
+
     /** \brief Handler callbacks for 'ISORequest' messages */
     bool (*ISORqstHandler)(unsigned long RequestedPGN, unsigned char Requester, int DeviceIndex);
 
@@ -2782,6 +2789,29 @@ public:
      * \param _MsgHandler Old style - callback function pointer
      */
     void SetMsgHandler(void (*_MsgHandler)(const tN2kMsg &N2kMsg));
+
+    /*********************************************************************//**
+     * \brief Set the handler to be called when the node address changes.
+     *
+     * Certified NMEA 2000 devices must store their assigned node address 
+     * in non-volatile memory, and use that address when restarting.  This
+     * method allows you to register a callback to be invoked if the assigned
+     * address changes so that it can be persistent.
+     *  
+     * \param _OnAddressClaimed Old style - callback function pointer
+     */
+    void SetOnAddressClaimed(void (*_OnAddressClaimed)(const uint8_t address));
+
+    /*********************************************************************//**
+     * \brief Set the handler to be called when a frame is sent.
+     *
+     * This functionality is provide to make it easy to trigger events, such 
+     * as an activity indicator, when an NMEA 2000 message is transmitted
+     *  
+     * \param _OnSendFrame - callback function pointer
+     */
+    void SetOnSendFrame(void (*_OnSendFrame)(const unsigned long id, const unsigned char len, const unsigned char *buf));
+
 
     /*********************************************************************//**
      * \brief Attach a  message handler for incoming N2kMessages
