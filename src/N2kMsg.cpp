@@ -272,6 +272,8 @@ void tN2kMsg::Clear() {
 }
 
 //*****************************************************************************
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal" 
 void tN2kMsg::AddFloat(float v, float UndefVal) {
   if (v!=UndefVal) {
     SetBufFloat(v,DataLen,Data);
@@ -279,6 +281,7 @@ void tN2kMsg::AddFloat(float v, float UndefVal) {
     SetBuf4ByteUInt(N2kInt32NA,DataLen,Data);
   }
 }
+#pragma GCC diagnostic pop
 
 //*****************************************************************************
 void tN2kMsg::Add8ByteDouble(double v, double precision, double UndefVal) {
