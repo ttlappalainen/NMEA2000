@@ -2878,11 +2878,11 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
     N2kMsg.SetPGN(N2kPGNConfigurationInformation);
     N2kMsg.Priority=6;
     // InstallationDescription1
-    N2kMsg.AddVarStr(InstallationDescription1,Max_N2kConfigurationInfoField_len,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription1,Max_N2kConfigurationInfoField_len,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseBytes,UsePgm);
     // InstallationDescription2
-    N2kMsg.AddVarStr(InstallationDescription2,Max_N2kConfigurationInfoField_len,UsePgm);
+    N2kMsg.AddVarStr(InstallationDescription2,Max_N2kConfigurationInfoField_len,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseBytes,UsePgm);
     // ManufacturerInformation
-    N2kMsg.AddVarStr(ManufacturerInformation,Max_N2kConfigurationInfoField_len,UsePgm);
+    N2kMsg.AddVarStr(ManufacturerInformation,Max_N2kConfigurationInfoField_len,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseBytes,UsePgm);
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,

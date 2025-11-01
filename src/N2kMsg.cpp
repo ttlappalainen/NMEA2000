@@ -193,6 +193,44 @@ int N2kUTF8ToUCS2(const char *str, unsigned char *buf, int bufLen) {
 }
 
 //*****************************************************************************
+int N2kUTF8ToASCII(const char *str, unsigned char *buf, int bufLen) {
+  int Len=0;
+  const unsigned char* UTF8Chars=(const unsigned char *)str;
+  size_t usedBytes=1;
+  for ( ; *UTF8Chars!=0 && Len<bufLen; UTF8Chars+=usedBytes, Len++ ) {
+    if ( (*UTF8Chars & 0x80) == 0x00 ) {
+      *buf=*UTF8Chars;
+      buf++;
+      usedBytes=1; 
+    } else if ( (*UTF8Chars & 0xE0) == 0xC0 ) {
+      // 2 byte
+      *buf='?';
+      buf++;
+      usedBytes=2; 
+    } else if ( (UTF8Chars[0] & 0xF0) == 0xE0 ) {
+      // 3 byte
+      *buf='?';
+      buf++;
+      usedBytes=3; 
+    } else if ( (UTF8Chars[0] & 0xF8) == 0xF0 ) {
+      *buf='?';
+      buf++;
+      usedBytes=4; 
+    } else if ( (UTF8Chars[0] & 0xFC) == 0xF8 ) {
+      *buf='?';
+      buf++;
+      usedBytes=5; 
+    } else if ( (UTF8Chars[0] & 0xFE) == 0xFC ) {
+      *buf='?';
+      buf++;
+      usedBytes=6; 
+    }
+  }
+
+  return Len;
+}
+
+//*****************************************************************************
 tN2kMsg::tN2kMsg(unsigned char _Source, unsigned char _Priority, unsigned long _PGN, int _DataLen) {
   Init(_Priority,_PGN,_Source,255);
   if ( _DataLen>0 && _DataLen<MaxDataLen ) DataLen=_DataLen;
@@ -376,10 +414,9 @@ void tN2kMsg::AddAISStr(const char *str, int len) {
 }
 
 //*****************************************************************************
-void tN2kMsg::AddVarStr(const char *str, int maxLen, bool UsePgm) {
-  int len=(str!=0?strlen(str):0);
+void tN2kMsg::AddVarStr(const char *str, int maxLen, tVarStrSupport varStrSupport, tVarStrLen varStrMaxLen, bool UsePgm) {
   int bufFree=(DataLen<MaxDataLen?MaxDataLen-DataLen:0);
-  if ( bufFree<=2 || len==0 ) {
+  if ( bufFree<=2 || str==0 || *str==0 ) {
     if ( bufFree>=2 ) {
       AddByte(2);
       AddByte(1);
@@ -389,27 +426,39 @@ void tN2kMsg::AddVarStr(const char *str, int maxLen, bool UsePgm) {
     return; // Can not do more
   }
 
+  int len;
   int dataStart=DataLen;
-  AddByte(len+2);
-  AddByte(1);
+  unsigned char type=1;
+  
+  AddByte(2);
+  AddByte(type);
+  bufFree-=2;
 
   if ( N2kRequireUnicode(str) ) {
     unsigned char *destBuf=&Data[DataLen];
-    bufFree-=2;
-    if ( bufFree>maxLen ) bufFree=maxLen;
-    len=N2kUTF8ToUCS2(str,destBuf,bufFree);
+    if ( varStrSupport==vss_SupportUnicode ) {
+      if ( varStrMaxLen==vsl_UseCharacters ) maxLen*=2; // maxLen is in characters and UCS2 uses 2 byte / char.
+      if ( bufFree>maxLen ) bufFree=maxLen;
+      len=N2kUTF8ToUCS2(str,destBuf,bufFree);
+      type=0;
+    } else {
+      if ( bufFree>maxLen ) bufFree=maxLen;
+      len=N2kUTF8ToASCII(str,destBuf,bufFree);
+    }
     DataLen+=len;
-    Data[dataStart]=len+2; dataStart++;
-    Data[dataStart]=0x00;
   } else {
+    len=strlen(str);
     if ( len>maxLen ) len=maxLen;
+    if ( bufFree<len ) len=bufFree;
     SetBufStr(str,len,DataLen,Data,UsePgm,0xff);
   }
+  Data[dataStart]=len+2; dataStart++;
+  Data[dataStart]=type;
 }
 
 //*****************************************************************************
 void tN2kMsg::AddVarStr(const char *str, bool UsePgm) {
-  AddVarStr(str,5000,UsePgm);
+  AddVarStr(str,5000,vss_SupportUnicode,vsl_UseBytes,UsePgm);
 }
 
 //*****************************************************************************

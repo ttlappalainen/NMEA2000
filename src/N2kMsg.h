@@ -702,8 +702,11 @@ float GetBufFloat(int &index, const unsigned char *buf, float def=0);
  * 
  * \sa N2kMessages.h
  */
-class tN2kMsg
-{
+class tN2kMsg {
+public:
+  enum tVarStrSupport { vss_ForceASCII, vss_SupportUnicode };
+  enum tVarStrLen { vsl_UseBytes, vsl_UseCharacters };
+  
 public:
   /************************************************************************//**
    * \brief Maximum number of bytes that can be stored in the data buffer 
@@ -1041,9 +1044,11 @@ public:
   * 
   * \param str   String as pointer to a char array
   * \param maxLen Maximum bytes for string
+  * \param varStrSupport Set vss_ForceASCII for fields with only ascii support.
+  * \param varStrMaxLen Defines maxLen definition either as bytes or characters.
   * \param UsePgm {bool} use the pgm_read_byte function
   */
-  void AddVarStr(const char *str, int maxLen, bool UsePgm=false);
+  void AddVarStr(const char *str, int maxLen, tVarStrSupport varStrSupport=vss_SupportUnicode, tVarStrLen varStrMaxLen=vsl_UseBytes, bool UsePgm=false);
 
  /************************************************************************//**
   * \brief Add byte array to the buffer
