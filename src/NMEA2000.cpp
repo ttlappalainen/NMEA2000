@@ -654,19 +654,6 @@ const tNMEA2000::tProductInformation DefProductInformation PROGMEM = {
                                        1 // LoadEquivalency
                                       };
 
-/************************************************************************//**
- * \brief Default Manufacturer Information
- */
-const char DefManufacturerInformation [] PROGMEM = "NMEA2000 library, https://github.com/ttlappalainen/NMEA2000";
-/************************************************************************//**
- * \brief Default Installation Description (Field1)
- */
-const char DefInstallationDescription1 [] PROGMEM = "";
-/************************************************************************//**
- * \brief Default Installation Description (Field2)
- */
-const char DefInstallationDescription2 [] PROGMEM = "";
-
 //*****************************************************************************
 void tNMEA2000::tProductInformation::Clear() {
   memset(this,0,sizeof(tProductInformation));
@@ -675,6 +662,33 @@ void tNMEA2000::tProductInformation::Clear() {
 //*****************************************************************************
 bool tNMEA2000::tProductInformation::IsSame(const tProductInformation &Other) {
   return memcmp(this,&Other,sizeof(tProductInformation))==0;
+}
+
+
+/************************************************************************//**
+ * \brief Default Configuration Information 
+ * 
+ * This structure holds the default Configuration Information of the device:
+ * 
+ * - ManufacturerInformation = NMEA2000 library, https://github.com/ttlappalainen/NMEA2000
+ * - InstallationDescription1 = 
+ * - InstallationDescription2 = 
+ * 
+ */
+const tNMEA2000::tConfigurationInformation DefConfigurationInformation PROGMEM = {
+                                             "NMEA2000 library, https://github.com/ttlappalainen/NMEA2000",
+                                             "",
+                                             ""
+                                            };
+
+//*****************************************************************************
+void tNMEA2000::tConfigurationInformation::Clear() {
+  memset(this,0,sizeof(tConfigurationInformation));
+}
+
+//*****************************************************************************
+bool tNMEA2000::tConfigurationInformation::IsSame(const tConfigurationInformation &Other) {
+  return memcmp(this,&Other,sizeof(tConfigurationInformation))==0;
 }
 
 //*****************************************************************************
@@ -736,10 +750,6 @@ tNMEA2000::tNMEA2000() {
   EnableForward();
   SetForwardSystemMessages();
   SetForwardOwnMessages();
-  LocalConfigurationInformationData=0;
-  SetProgmemConfigurationInformation(DefManufacturerInformation,
-                                     DefInstallationDescription1,
-                                     DefInstallationDescription2);
   Devices=0;
   DeviceCount=1;
 }
@@ -760,6 +770,8 @@ void tNMEA2000::InitDevices() {
     // We set default device information here.
     Devices[0].LocalProductInformation=0;
     Devices[0].ProductInformation=&DefProductInformation;
+    Devices[0].LocalConfigurationInformation=0;
+    Devices[0].ConfigurationInformation=&DefConfigurationInformation;
     for ( int i=0; i<DeviceCount; i++) { // Initialize all devices with some value
       SetDeviceInformation(1+i, // 21 bit resolution, max 2097151. Each device from same manufacturer should have unique number.
                            130, // PC Gateway. See codes on https://web.archive.org/web/20190531120557/https://www.nmea.org/Assets/20120726%20nmea%202000%20class%20&%20function%20codes%20v%202.00.pdf
@@ -771,6 +783,8 @@ void tNMEA2000::InitDevices() {
       if ( i>0 ) {
         Devices[i].LocalProductInformation=0;
         Devices[i].ProductInformation=0;
+        Devices[i].LocalConfigurationInformation=0;
+        Devices[i].ConfigurationInformation=0;
       }
     }
   }
@@ -805,53 +819,29 @@ void tNMEA2000::SetProductInformation(const char *_ModelSerialCode,
 }
 
 //*****************************************************************************
-void tNMEA2000::SetConfigurationInformation(const char *ManufacturerInformation,
-                                            const char *InstallationDescription1,
-                                            const char *InstallationDescription2) {
-  if ( LocalConfigurationInformationData!=0 ) free(LocalConfigurationInformationData); // This happens on second call, which is not good.
-  LocalConfigurationInformationData=0;
-
-  size_t ManInfoLen=(ManufacturerInformation?strlen(ManufacturerInformation)+1:0);
-#if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
-  size_t InstDesc1Len=Max_N2kConfigurationInfoField_len;
-  size_t InstDesc2Len=Max_N2kConfigurationInfoField_len;
-#else
-  size_t InstDesc1Len=(InstallationDescription1?strlen(InstallationDescription1)+1:0);
-  size_t InstDesc2Len=(InstallationDescription2?strlen(InstallationDescription2)+1:0);
-#endif
-
-  if ( ManInfoLen>Max_N2kConfigurationInfoField_len ) ManInfoLen=Max_N2kConfigurationInfoField_len;
-  if ( InstDesc1Len>Max_N2kConfigurationInfoField_len ) InstDesc1Len=Max_N2kConfigurationInfoField_len;
-  if ( InstDesc2Len>Max_N2kConfigurationInfoField_len ) InstDesc2Len=Max_N2kConfigurationInfoField_len;
-
-  size_t TotalSize=ManInfoLen+InstDesc1Len+InstDesc2Len;
-  void *mem=(TotalSize>0?malloc(TotalSize):0);
-
-  LocalConfigurationInformationData=(char*)mem;
-  char *Info=LocalConfigurationInformationData;
-
-  SetCharBuf(InstallationDescription1,InstDesc1Len,Info);
-  ConfigurationInformation.InstallationDescription1=(InstallationDescription1?Info:0);
-  Info+=InstDesc1Len;
-
-  SetCharBuf(InstallationDescription2,InstDesc2Len,Info);
-  ConfigurationInformation.InstallationDescription2=(InstallationDescription2?Info:0);
-  Info+=InstDesc2Len;
-
-  SetCharBuf(ManufacturerInformation,ManInfoLen,Info);
-  ConfigurationInformation.ManufacturerInformation=(ManufacturerInformation?Info:0);
+void tNMEA2000::SetConfigurationInformation(const tConfigurationInformation *_ConfigurationInformation, int iDev) {
+  if ( !IsValidDevice(iDev) ) return;
+  InitDevices();
+  Devices[iDev].ConfigurationInformation=_ConfigurationInformation;
+  if (Devices[iDev].ConfigurationInformation==0) Devices[iDev].ConfigurationInformation=Devices[iDev].LocalConfigurationInformation;
+  if (Devices[iDev].ConfigurationInformation==0) Devices[iDev].ConfigurationInformation=&DefConfigurationInformation;
 }
 
 //*****************************************************************************
-void tNMEA2000::SetProgmemConfigurationInformation(const char *ManufacturerInformation,
-                                            const char *InstallationDescription1,
-                                            const char *InstallationDescription2) {
-  if ( LocalConfigurationInformationData!=0 ) free(LocalConfigurationInformationData); // This happens on second call, which is not good.
-  LocalConfigurationInformationData=0;
-  ConfigurationInformation.ManufacturerInformation=ManufacturerInformation;
-  ConfigurationInformation.InstallationDescription1=InstallationDescription1;
-  ConfigurationInformation.InstallationDescription2=InstallationDescription2;
+void tNMEA2000::SetConfigurationInformation(const char *_ManufacturerInformation,
+                                            const char *_InstallationDescription1,
+                                            const char *_InstallationDescription2,
+                                            int iDev) {
+  if (!IsValidDevice(iDev) ) return;
+  InitDevices();
+  if (Devices[iDev].LocalConfigurationInformation==0) {
+    Devices[iDev].LocalConfigurationInformation=new tConfigurationInformation();
+  }
+  Devices[iDev].ConfigurationInformation=Devices[iDev].LocalConfigurationInformation;
+  Devices[iDev].LocalConfigurationInformation->Set(_ManufacturerInformation, _InstallationDescription1, _InstallationDescription2);
 }
+
+
 
 //*****************************************************************************
 size_t tNMEA2000::GetFastPacketTxPGNCount(int iDev) {
@@ -941,6 +931,8 @@ const tNMEA2000::tProductInformation * tNMEA2000::GetProductInformation(int iDev
     IsProgMem = (Devices[iPIDev].ProductInformation!=Devices[iPIDev].LocalProductInformation );
     return Devices[iPIDev].ProductInformation;
 }
+
+
 
 //*****************************************************************************
 unsigned short tNMEA2000::GetN2kVersion(int iDev) const {
@@ -1063,63 +1055,134 @@ unsigned char tNMEA2000::GetLoadEquivalency(int iDev) const {
 }
 
 //*****************************************************************************
-void tNMEA2000::CopyProgmemConfigurationInformationToLocal() {
-  if ( LocalConfigurationInformationData==0 ) {
-    char Buf[Max_N2kConfigurationInfoField_len];
-    const char *ID1=ConfigurationInformation.InstallationDescription1;
-    const char *ID2=ConfigurationInformation.InstallationDescription2;
-    CopyProgmemString(ConfigurationInformation.ManufacturerInformation,Max_N2kConfigurationInfoField_len,Buf);
-    SetConfigurationInformation(Buf);
-    CopyProgmemString(ID1,Max_N2kConfigurationInfoField_len,Buf);
-    SetInstallationDescription1(Buf);
-    CopyProgmemString(ID2,Max_N2kConfigurationInfoField_len,Buf);
-    SetInstallationDescription2(Buf);
+const tNMEA2000::tConfigurationInformation * tNMEA2000::GetConfigurationInformation(int iDev, bool &IsProgMem) const {
+  if ( !IsValidDevice(iDev) ) return 0;
+  int iPIDev=iDev;
+
+    if ( Devices[iPIDev].ProductInformation==0 ) iPIDev=0;
+    if ( Devices[iPIDev].ProductInformation==0 ) return 0;
+    IsProgMem = (Devices[iPIDev].ConfigurationInformation!=Devices[iPIDev].LocalConfigurationInformation );
+    return Devices[iPIDev].ConfigurationInformation;
+}
+
+//*****************************************************************************
+void tNMEA2000::GetInstallationDescription1(char *buf, size_t max_len, int iDev) {
+  if ( max_len==0 ) return;
+  buf[0]=0;
+  bool IsProgMem;
+  const tConfigurationInformation *ConfigurationInformation=GetConfigurationInformation(iDev,IsProgMem);
+
+  if ( ConfigurationInformation==0 ) return;
+
+  if ( !IsProgMem ) {
+    SetCharBuf(ConfigurationInformation->InstallationDescription1,max_len,buf);
+  } else {
+    CopyProgmemString(ConfigurationInformation->InstallationDescription1,max_len,buf);
   }
 }
 
 //*****************************************************************************
-void tNMEA2000::SetInstallationDescription1(const char *InstallationDescription1) {
-  CopyProgmemConfigurationInformationToLocal();
-  // Get pointer to local InstallationDescription1, which is after
-  char *Info=LocalConfigurationInformationData;
-  SetCharBuf(InstallationDescription1,Max_N2kConfigurationInfoField_len,Info);
-  ConfigurationInformation.InstallationDescription1=(InstallationDescription1?Info:0);
-  InstallationDescriptionChanged=true;
+void tNMEA2000::SetInstallationDescription1(const char *_InstallationDescription1,
+                                            int iDev) {
+  if (!IsValidDevice(iDev) ) return;
+  InitDevices();
+  bool IsProgMem;
+  const tConfigurationInformation *ConfigurationInformation=GetConfigurationInformation(iDev,IsProgMem);
+  if (Devices[iDev].LocalConfigurationInformation==0) {
+    Devices[iDev].LocalConfigurationInformation=new tConfigurationInformation();
+    if ( !IsProgMem ) {
+      ClearSetCharBuf(
+        ConfigurationInformation->ManufacturerInformation,
+        sizeof(Devices[iDev].LocalConfigurationInformation->ManufacturerInformation),
+        Devices[iDev].LocalConfigurationInformation->ManufacturerInformation);
+      ClearSetCharBuf(
+        ConfigurationInformation->InstallationDescription2,
+        sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription2),
+        Devices[iDev].LocalConfigurationInformation->InstallationDescription2);
+    } else {
+      CopyProgmemString(
+        ConfigurationInformation->ManufacturerInformation,
+        sizeof(Devices[iDev].LocalConfigurationInformation->ManufacturerInformation),
+        Devices[iDev].LocalConfigurationInformation->ManufacturerInformation);
+      CopyProgmemString(
+        ConfigurationInformation->InstallationDescription2,
+        sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription2),
+        Devices[iDev].LocalConfigurationInformation->InstallationDescription2);
+    }
+  }
+  Devices[iDev].ConfigurationInformation=Devices[iDev].LocalConfigurationInformation;
+  ClearSetCharBuf(
+    _InstallationDescription1,
+    sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription1),
+    Devices[iDev].LocalConfigurationInformation->InstallationDescription1);
 }
 
 //*****************************************************************************
-void tNMEA2000::SetInstallationDescription2(const char *InstallationDescription2) {
-  CopyProgmemConfigurationInformationToLocal();
-  char *Info=LocalConfigurationInformationData+Max_N2kConfigurationInfoField_len;
-  SetCharBuf(InstallationDescription2,Max_N2kConfigurationInfoField_len,Info);
-  ConfigurationInformation.InstallationDescription2=(InstallationDescription2?Info:0);
-  InstallationDescriptionChanged=true;
-}
+void tNMEA2000::GetInstallationDescription2(char *buf, size_t max_len, int iDev) {
+  if ( max_len==0 ) return;
+  buf[0]=0;
+  bool IsProgMem;
+  const tConfigurationInformation *ConfigurationInformation=GetConfigurationInformation(iDev,IsProgMem);
 
-//*****************************************************************************
-void tNMEA2000::GetInstallationDescription1(char *buf, size_t max_len) {
-  if ( LocalConfigurationInformationData!=0 ) {
-    SetCharBuf(ConfigurationInformation.InstallationDescription1,max_len,buf);
+  if ( ConfigurationInformation==0 ) return;
+
+  if ( !IsProgMem ) {
+    SetCharBuf(ConfigurationInformation->InstallationDescription2,max_len,buf);
   } else {
-    CopyProgmemString(ConfigurationInformation.InstallationDescription1,max_len,buf);
+    CopyProgmemString(ConfigurationInformation->InstallationDescription2,max_len,buf);
   }
 }
 
 //*****************************************************************************
-void tNMEA2000::GetInstallationDescription2(char *buf, size_t max_len) {
-  if ( LocalConfigurationInformationData!=0 ) {
-    SetCharBuf(ConfigurationInformation.InstallationDescription2,max_len,buf);
-  } else {
-    CopyProgmemString(ConfigurationInformation.InstallationDescription2,max_len,buf);
+void tNMEA2000::SetInstallationDescription2(const char *_InstallationDescription2,
+                                            int iDev) {
+
+  if (!IsValidDevice(iDev) ) return;
+  InitDevices();
+  bool IsProgMem;
+  const tConfigurationInformation *ConfigurationInformation=GetConfigurationInformation(iDev,IsProgMem);
+  if (Devices[iDev].LocalConfigurationInformation==0) {
+    Devices[iDev].LocalConfigurationInformation=new tConfigurationInformation();
+    if ( !IsProgMem ) {
+      ClearSetCharBuf(
+        ConfigurationInformation->ManufacturerInformation,
+        sizeof(Devices[iDev].LocalConfigurationInformation->ManufacturerInformation),
+        Devices[iDev].LocalConfigurationInformation->ManufacturerInformation);
+      ClearSetCharBuf(
+        ConfigurationInformation->InstallationDescription1,
+        sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription1),
+        Devices[iDev].LocalConfigurationInformation->InstallationDescription1);
+    } else {
+      CopyProgmemString(
+        ConfigurationInformation->ManufacturerInformation,
+        sizeof(Devices[iDev].LocalConfigurationInformation->ManufacturerInformation),
+        Devices[iDev].LocalConfigurationInformation->ManufacturerInformation);
+      CopyProgmemString(
+        ConfigurationInformation->InstallationDescription1,
+        sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription1),
+        Devices[iDev].LocalConfigurationInformation->InstallationDescription1);
+    }
   }
+  Devices[iDev].ConfigurationInformation=Devices[iDev].LocalConfigurationInformation;
+  ClearSetCharBuf(
+    _InstallationDescription2,
+    sizeof(Devices[iDev].LocalConfigurationInformation->InstallationDescription2),
+    Devices[iDev].LocalConfigurationInformation->InstallationDescription2);
 }
 
 //*****************************************************************************
-void tNMEA2000::GetManufacturerInformation(char *buf, size_t max_len) {
-  if ( LocalConfigurationInformationData!=0 ) {
-    SetCharBuf(ConfigurationInformation.ManufacturerInformation,max_len,buf);
+void tNMEA2000::GetManufacturerInformation(char *buf, size_t max_len, int iDev) {
+  if ( max_len==0 ) return;
+  buf[0]=0;
+  bool IsProgMem;
+  const tConfigurationInformation *ConfigurationInformation=GetConfigurationInformation(iDev,IsProgMem);
+
+  if ( ConfigurationInformation==0 ) return;
+
+  if ( !IsProgMem ) {
+    SetCharBuf(ConfigurationInformation->ManufacturerInformation,max_len,buf);
   } else {
-    CopyProgmemString(ConfigurationInformation.ManufacturerInformation,max_len,buf);
+    CopyProgmemString(ConfigurationInformation->ManufacturerInformation,max_len,buf);
   }
 }
 
@@ -2301,25 +2364,25 @@ bool tNMEA2000::SendProductInformation(int iDev) {
 
 //*****************************************************************************
 #if !defined(N2K_NO_ISO_MULTI_PACKET_SUPPORT)
-bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
-  return SendConfigurationInformation(0xff,DeviceIndex,false);
+bool tNMEA2000::SendConfigurationInformation(int iDev) {
+  return SendConfigurationInformation(0xff,iDev,false);
 }
 
-bool tNMEA2000::SendConfigurationInformation(unsigned char Destination, int DeviceIndex, bool UseTP) {
+bool tNMEA2000::SendConfigurationInformation(unsigned char Destination, int iDev, bool UseTP) {
 #else
-bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
+bool tNMEA2000::SendConfigurationInformation(int iDev) {
 #endif
-  if ( !IsValidDevice(DeviceIndex) ) return false;
-  tN2kMsg RespondMsg(Devices[DeviceIndex].N2kSource);
+  if ( !IsValidDevice(iDev) ) return false;
+  tN2kMsg RespondMsg(Devices[iDev].N2kSource);
+  int iPIDev=iDev;
 
-    if ( ConfigurationInformation.ManufacturerInformation!=0 ||
-         ConfigurationInformation.InstallationDescription1!=0 ||
-         ConfigurationInformation.InstallationDescription2!=0 ) {
+    if ( Devices[iPIDev].ConfigurationInformation==0 ) iPIDev=0; // Use first device configuration information
+    if ( Devices[iPIDev].ConfigurationInformation==0 ) return false; // Can not do anything.
+    if ( Devices[iPIDev].ConfigurationInformation==Devices[iPIDev].LocalConfigurationInformation) {
         SetN2kConfigurationInformation(RespondMsg,
-                                       ConfigurationInformation.ManufacturerInformation,
-                                       ConfigurationInformation.InstallationDescription1,
-                                       ConfigurationInformation.InstallationDescription2,
-                                       LocalConfigurationInformationData==0);
+                                       Devices[iPIDev].ConfigurationInformation->ManufacturerInformation,
+                                       Devices[iPIDev].ConfigurationInformation->InstallationDescription1,
+                                       Devices[iPIDev].ConfigurationInformation->InstallationDescription2);
     } else { // No information provided, so respond not available
       SetN2kPGNISOAcknowledgement(RespondMsg,1,0xff,126998L);
     }
@@ -2328,12 +2391,12 @@ bool tNMEA2000::SendConfigurationInformation(int DeviceIndex) {
     RespondMsg.Destination=Destination;
     RespondMsg.SetIsTPMessage(UseTP);
 #endif
-    if (SendMsg(RespondMsg,DeviceIndex) ) {
-      Devices[DeviceIndex].ClearPendingConfigurationInformation();
+    if (SendMsg(RespondMsg,iDev) ) {
+      Devices[iDev].ClearPendingConfigurationInformation();
       return true;
     }
 
-    Devices[DeviceIndex].SetPendingConfigurationInformation();
+    Devices[iDev].SetPendingConfigurationInformation();
     return false;
 }
 
@@ -2886,9 +2949,9 @@ void SetN2kPGN126998(tN2kMsg &N2kMsg,
 }
 
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
-                       size_t &ManufacturerInformationSize, char *ManufacturerInformation,
-                       size_t &InstallationDescription1Size, char *InstallationDescription1,
-                       size_t &InstallationDescription2Size, char *InstallationDescription2) {
+                       size_t ManufacturerInformationSize, char *ManufacturerInformation,
+                       size_t InstallationDescription1Size, char *InstallationDescription1,
+                       size_t InstallationDescription2Size, char *InstallationDescription2) {
   if (N2kMsg.PGN!=N2kPGNConfigurationInformation) return false;
 
   int Index=0;
