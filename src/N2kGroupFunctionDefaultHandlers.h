@@ -41,6 +41,9 @@
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsuggest-override"
+
 /************************************************************************//**
  * \class   tN2kGroupFunctionHandlerForPGN60928
  * \brief   Default Group Function Handler for PGN 60928 - "ISO Address Claim"
@@ -171,6 +174,8 @@ class tN2kGroupFunctionHandlerForPGN126998 : public tN2kGroupFunctionHandler {
   public:
     tN2kGroupFunctionHandlerForPGN126998(tNMEA2000 *_pNMEA2000) : tN2kGroupFunctionHandler(_pNMEA2000,126998L) {}
 };
+
+#pragma GCC diagnostic pop
 
 #endif
 #endif

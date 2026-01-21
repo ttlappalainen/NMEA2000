@@ -29,6 +29,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-declarations"
+
 // #define DebugStream Serial   // outputs debug messages to the serial console (only for Arduino)
 #define DebugStream (*ForwardStream) // outputs debug messages to same destination as ForwardStream
 
@@ -2670,12 +2673,12 @@ void tNMEA2000::ParseMessages() {
 void tNMEA2000::RunMessageHandlers(const tN2kMsg &N2kMsg) {
   if ( MsgHandler!=0 ) MsgHandler(N2kMsg);
 
-  tMsgHandler *MsgHandler=MsgHandlers;
+  tMsgHandler *_local_MsgHandler=MsgHandlers;
   // Loop through all PGN handlers
-  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()==0; MsgHandler=MsgHandler->pNext) MsgHandler->HandleMsg(N2kMsg);
+  for ( ;_local_MsgHandler!=0 && _local_MsgHandler->GetPGN()==0; _local_MsgHandler=_local_MsgHandler->pNext) _local_MsgHandler->HandleMsg(N2kMsg);
   // Loop through specific PGN handlers
-  for ( ;MsgHandler!=0 && MsgHandler->GetPGN()<=N2kMsg.PGN; MsgHandler=MsgHandler->pNext) {
-    if ( MsgHandler->GetPGN()==N2kMsg.PGN ) MsgHandler->HandleMsg(N2kMsg);
+  for ( ;_local_MsgHandler!=0 && _local_MsgHandler->GetPGN()<=N2kMsg.PGN; _local_MsgHandler=_local_MsgHandler->pNext) {
+    if ( _local_MsgHandler->GetPGN()==N2kMsg.PGN ) _local_MsgHandler->HandleMsg(N2kMsg);
   }
 }
 
@@ -2700,14 +2703,14 @@ void tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler) {
   if ( MsgHandlers==0 ) {
     MsgHandlers=_MsgHandler;
   } else {
-    tMsgHandler *MsgHandler=MsgHandlers;
-    if ( MsgHandler->GetPGN()>_MsgHandler->GetPGN() ) { // Add to first
-      _MsgHandler->pNext=MsgHandler;
+    tMsgHandler *_local_MsgHandler=MsgHandlers;
+    if ( _local_MsgHandler->GetPGN()>_MsgHandler->GetPGN() ) { // Add to first
+      _MsgHandler->pNext=_local_MsgHandler;
       MsgHandlers=_MsgHandler;
     } else {
-      for ( ; MsgHandler->pNext!=0 && MsgHandler->pNext->GetPGN()<_MsgHandler->GetPGN(); MsgHandler=MsgHandler->pNext );
-      _MsgHandler->pNext=MsgHandler->pNext;
-      MsgHandler->pNext=_MsgHandler;
+      for ( ; _local_MsgHandler->pNext!=0 && _local_MsgHandler->pNext->GetPGN()<_MsgHandler->GetPGN(); _local_MsgHandler=_local_MsgHandler->pNext );
+      _MsgHandler->pNext=_local_MsgHandler->pNext;
+      _local_MsgHandler->pNext=_MsgHandler;
     }
   }
 
@@ -2718,13 +2721,13 @@ void tNMEA2000::AttachMsgHandler(tMsgHandler *_MsgHandler) {
 void tNMEA2000::DetachMsgHandler(tMsgHandler *_MsgHandler) {
   if ( _MsgHandler==0 || _MsgHandler->pNMEA2000==0 ) return;
 
-  tMsgHandler *MsgHandler=_MsgHandler->pNMEA2000->MsgHandlers;
+  tMsgHandler *_local_MsgHandler=_MsgHandler->pNMEA2000->MsgHandlers;
 
-  if ( MsgHandler==_MsgHandler ) { // Is this at first
-    _MsgHandler->pNMEA2000->MsgHandlers=MsgHandler->pNext;
+  if ( _local_MsgHandler==_MsgHandler ) { // Is this at first
+    _MsgHandler->pNMEA2000->MsgHandlers=_local_MsgHandler->pNext;
   } else {
-    for ( ; MsgHandler!=0 && MsgHandler->pNext!=_MsgHandler; MsgHandler=MsgHandler->pNext );
-    if ( MsgHandler!=0 ) MsgHandler->pNext=_MsgHandler->pNext;
+    for ( ; _local_MsgHandler!=0 && _local_MsgHandler->pNext!=_MsgHandler; _local_MsgHandler=_local_MsgHandler->pNext );
+    if ( _local_MsgHandler!=0 ) _local_MsgHandler->pNext=_MsgHandler->pNext;
   }
   _MsgHandler->pNext=0;
   _MsgHandler->pNMEA2000=0;
@@ -2948,3 +2951,4 @@ void SetN2kPGN126993(tN2kMsg &N2kMsg, uint32_t timeInterval_ms, uint8_t sequence
 	N2kMsg.Add4ByteUInt(0xffffffff); // Reserved
 }
 #endif
+#pragma GCC diagnostic pop
