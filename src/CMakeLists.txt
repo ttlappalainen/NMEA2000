@@ -32,6 +32,7 @@ set(srcs
   N2kGroupFunction.cpp
   N2kGroupFunctionDefaultHandlers.cpp
   N2kMaretron.cpp
+  N2kCZone.cpp
   NMEA2000.cpp
 )
 

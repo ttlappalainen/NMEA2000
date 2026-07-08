@@ -1,7 +1,7 @@
 /*
 N2kMessages.cpp
 
-Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -50,17 +50,20 @@ bool ParseN2kPGN126992(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Syst
   return true;
 }
 
+#define AISMaxSafetyTextLength 163
+
 //*****************************************************************************
 // AIS Safety Related Broadcast Message
 void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText)
+      tN2kAISTransceiverInformation AISTransceiverInformation, const char * SafetyRelatedText)
 {
    N2kMsg.SetPGN(129802L);
    N2kMsg.Priority=5;
    N2kMsg.AddByte((Repeat & 0x03)<<6 | (MessageID & 0x3f));
-   N2kMsg.Add4ByteUInt(0xc0000000 | (SourceID & 0x3fffffff));
-   N2kMsg.AddByte(0xe0 | (0x1f & AISTransceiverInformation));
-   N2kMsg.AddVarStr(SafetyRelatedText);
+   N2kMsg.Add4ByteUInt(SourceID & 0x3fffffff);
+   N2kMsg.AddByte( ((0x1f & AISTransceiverInformation)<<1) | 0x01); // NMEA reserved must be set 1 and AIS spares 0
+   N2kMsg.AddVarStr(SafetyRelatedText,AISMaxSafetyTextLength,tN2kMsg::vss_ForceASCII);
+   N2kMsg.AddByte(0xff); // SID
 }
 
 bool ParseN2kPGN129802(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat &Repeat, uint32_t &SourceID,
@@ -75,7 +78,7 @@ bool ParseN2kPGN129802(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
    MessageID=(vb & 0x3f);
    Repeat=(tN2kAISRepeat)(vb>>6 & 0x03);
    SourceID = N2kMsg.Get4ByteUInt(Index) & 0x3fffffff;
-   AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
+   AISTransceiverInformation = (tN2kAISTransceiverInformation)( (N2kMsg.GetByte(Index)>>1) & 0x1f);
    N2kMsg.GetVarStr(SafetyRelatedTextMaxSize, SafetyRelatedText, Index);
 
    return true;
@@ -895,6 +898,31 @@ bool ParseN2kPGN127750(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   return true;
 }
 
+//*****************************************************************************
+// DC Voltage/Current
+// Temperatures should be in Kelvins
+void SetN2kPGN127751(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double Current, unsigned char SID) {
+    N2kMsg.SetPGN(127751L);
+    N2kMsg.Priority=6;
+    N2kMsg.AddByte(SID);
+    N2kMsg.AddByte(Instance);
+    N2kMsg.Add2ByteDouble(Voltage,0.1);
+    N2kMsg.Add3ByteDouble(Current,0.01);
+    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xff); // Reserved
+}
+
+//*****************************************************************************
+bool ParseN2kPGN127751(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID) {
+  if (N2kMsg.PGN!=127751L) return false;
+  int Index=0;
+  SID=N2kMsg.GetByte(Index);
+  Instance=N2kMsg.GetByte(Index);
+  Voltage=N2kMsg.Get2ByteDouble(0.1,Index);
+  Current=N2kMsg.Get3ByteDouble(0.01,Index);
+
+  return true;
+}
 
 //*****************************************************************************
 // Leeway
@@ -1423,7 +1451,7 @@ void SetN2kPGN129038(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
     N2kMsg.Add2ByteUDouble(Heading, 1e-04);
     N2kMsg.Add2ByteDouble(ROT, 3.125E-05); // 1e-3/32.0
     N2kMsg.AddByte(0xF0 | (NavStatus & 0x0f));
-    N2kMsg.AddByte(0xff); // Reserved
+    N2kMsg.AddByte(0xfc); // Reserved.  field 18 nees to be set to 0 while 19 is set to 1s according to spec
     N2kMsg.AddByte(SID);
 }
 
@@ -1517,6 +1545,8 @@ bool ParseN2kPGN129039(const tN2kMsg &N2kMsg, uint8_t &MessageID, tN2kAISRepeat 
     return true;
 }
 
+#define AISMaxATONNameLength 34 // 20 + 14 extended ASCII
+
 //*****************************************************************************
 // AIS Aids to Navigation (AtoN) Report (PGN 129041)
 void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
@@ -1538,7 +1568,7 @@ void SetN2kPGN129041(tN2kMsg &N2kMsg, const tN2kAISAtoNReportData &N2kData) {
     N2kMsg.AddByte((N2kData.GNSSType & 0x0F) << 1 | 0xe0);
     N2kMsg.AddByte(N2kData.AtoNStatus);
     N2kMsg.AddByte((N2kData.AISTransceiverInformation & 0x1f) | 0xe0);
-    N2kMsg.AddVarStr((char*)N2kData.AtoNName);
+    N2kMsg.AddVarStr((char*)N2kData.AtoNName,AISMaxATONNameLength,tN2kMsg::vss_ForceASCII);
 }
 
 
@@ -1565,7 +1595,7 @@ bool ParseN2kPGN129041(const tN2kMsg &N2kMsg, tN2kAISAtoNReportData &N2kData) {
     N2kData.AtoNStatus=N2kMsg.GetByte(Index);  
     N2kData.AISTransceiverInformation = (tN2kAISTransceiverInformation)(N2kMsg.GetByte(Index) & 0x1f);
     size_t AtoNNameSize = sizeof(N2kData.AtoNName);
-    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, Index);
+    N2kMsg.GetVarStr(AtoNNameSize, (char*)N2kData.AtoNName, '@', Index);
 
     return true;
 }
@@ -1649,6 +1679,8 @@ bool ParseN2kPGN129284(const tN2kMsg &N2kMsg, unsigned char& SID, double& Distan
     return true;
 }
 
+#define MaxRouteOrWPNameLength 30 // This is not clear definition is "Max 30 ASCII or Unicode Characters".                              
+
 //*****************************************************************************
 // Waypoint list
 void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_t Route,
@@ -1660,7 +1692,7 @@ void SetN2kPGN129285(tN2kMsg &N2kMsg, uint16_t Start, uint16_t Database, uint16_
     N2kMsg.Add2ByteUInt(Database);
     N2kMsg.Add2ByteUInt(Route);
     N2kMsg.AddByte(0xE0 | (SupplementaryData & 0x03)<<3 | (NavDirection & 0x07));
-    N2kMsg.AddVarStr(RouteName);
+    N2kMsg.AddVarStr(RouteName,MaxRouteOrWPNameLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
     N2kMsg.AddByte(0xff); // reserved
 }
 
@@ -1669,22 +1701,30 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double L
 
     int NumItemsIdx, len;
     uint16_t NumItems;
+    int StartDataLen=N2kMsg.DataLen;
+    bool ret=false;
 
-    len = 12 + strlen(Name);
+    len = 12 + strlen(Name); // This is estimation since unicode will require more.
 
     if ( N2kMsg.DataLen + len < N2kMsg.MaxDataLen ) {
-        NumItemsIdx = 2;
-        NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
-        NumItemsIdx = 2;
-        N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
         N2kMsg.Add2ByteUInt(ID);                          // add the new item
-        N2kMsg.AddVarStr(Name);
-        N2kMsg.Add4ByteDouble(Latitude,1e-07);
-        N2kMsg.Add4ByteDouble(Longitude,1e-07);
-        return true;
-    } else {
-        return false;
+        N2kMsg.AddVarStr(Name,MaxRouteOrWPNameLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
+        if ( N2kMsg.DataLen+8<N2kMsg.MaxDataLen ) {
+          N2kMsg.Add4ByteDouble(Latitude,1e-07);
+          N2kMsg.Add4ByteDouble(Longitude,1e-07);
+
+          NumItemsIdx = 2;
+          NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
+          NumItemsIdx = 2;
+          N2kMsg.Set2ByteUInt(++NumItems, NumItemsIdx);     // increment the number of items
+          ret=true;
+        } else {
+          // No room for WP, restore DataLen
+          N2kMsg.DataLen=StartDataLen;
+        }
     }
+    
+    return ret;
 }
 
 //*****************************************************************************
@@ -2071,6 +2111,11 @@ bool ParseN2kPGN130316(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
   return true;
 }
 
+// For meteorological station ID and name definition has been given in characters, so allow
+// length also as unicode characters.
+#define MaxMeteorologicalStationIDLength 15
+#define MaxMeteorologicalStationNameLength 50
+
 //*****************************************************************************
 // Meteorological Station Data
 void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kData) {
@@ -2087,8 +2132,8 @@ void SetN2kPGN130323(tN2kMsg &N2kMsg, const tN2kMeteorlogicalStationData &N2kDat
     N2kMsg.Add2ByteUDouble(N2kData.WindGusts,0.01);
     N2kMsg.Add2ByteUDouble(N2kData.AtmosphericPressure,100);
     N2kMsg.Add2ByteUDouble(N2kData.OutsideAmbientAirTemperature,0.01);
-    N2kMsg.AddVarStr((char*)N2kData.StationID);
-    N2kMsg.AddVarStr((char*)N2kData.StationName);
+    N2kMsg.AddVarStr((char*)N2kData.StationID,MaxMeteorologicalStationIDLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
+    N2kMsg.AddVarStr((char*)N2kData.StationName,MaxMeteorologicalStationNameLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
 }
 
 

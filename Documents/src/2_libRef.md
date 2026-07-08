@@ -242,6 +242,19 @@ Importing library from GitHub is also very simple. So you have heard or found go
   Click that and then on popup button “Download ZIP” and choose “Save to disk” and press “OK”
 - Now just follow "Importing library from zip".
 
+## Programming Raspberry Pi Pico with VS Code IDE
+
+### Getting started with Pi Pico and VS Code
+
+- Download and install [VS Code](https://code.visualstudio.com/)
+- For the Raspberry Pi Pico borads [Pi Pico](https://www.raspberrypi.com/products/raspberry-pi-pico/)
+
+- See [Get started with Raspberry Pi Pico-series and VS Code](https://www.raspberrypi.com/news/get-started-with-raspberry-pi-pico-series-and-vs-code/)
+
+- Sample project to read Airmar DST-810 [NMEA2K-Pico](https://github.com/forcel0/NMEA2K-Pico)
+ - Library: [NMEA2000](https://github.com/ttlappalainen/NMEA2000)
+ - Library: [NMEA2000_PICO](https://github.com/forcel0/NMEA2000_PICO)
+
 ## NMEA2000 library reference
 
 NMEA2000 is closed standard. You can buy documents for it for high price. As far as I have understood,
@@ -381,6 +394,16 @@ To use this class, you need to include  in your project beginning:
 ```cpp
   #include "NMEA2000_avr.h"
   tNMEA2000_avr NMEA2000;
+```
+
+##### Inherited class tNMEA2000_pico
+
+The tNMEA2000_pico class is for using the library with Pi Pico based boards with CAN hat.
+To use this class, you need to include the following in your project:
+
+```cpp
+  #include "NMEA2000_PICO.h"
+  tNMEA2000_pico NMEA2000;
 ```
 
 #### Message container class tN2kMsg

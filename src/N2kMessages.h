@@ -1,6 +1,6 @@
 /* N2kMessages.h
  * 
- * Copyright (c) 2015-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2015-2025 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -172,6 +172,13 @@ inline double msToKnots(double v) { return N2kIsNA(v)?v:v*1.94384449244060475161
 inline double KnotsToms(double v) { return N2kIsNA(v)?v:v*0.51444444444444444444444444444444L; } // 1852L/3600.0L
 
 /************************************************************************//**
+ * \brief Converting a value from MeterPerSecond to MilesPerHour
+ * \param   v   Input value in [mps]
+ * \return      Corresponding value in [MPH]
+ */
+inline double msToMPH(double v) { return N2kIsNA(v)?v:v*2.2727272727272727272727272727272L; }
+
+/************************************************************************//**
  * \brief Setting up PGN126992 Message "System date/time"
  * \ingroup group_msgSetUp
  * 
@@ -262,7 +269,7 @@ inline bool ParseN2kSystemTime(const tN2kMsg &N2kMsg, unsigned char &SID, uint16
  * \sa tN2kAISTransceiverInformation
  */
 void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText);
+      tN2kAISTransceiverInformation AISTransceiverInformation, const char * SafetyRelatedText);
 
 /************************************************************************//**
  * \brief Setting up Message "AIS Safety Related Broadcast Message" - 
@@ -274,7 +281,7 @@ void SetN2kPGN129802(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, u
  * 
  */
 inline void SetN2kAISSafetyRelatedBroadcastMsg(tN2kMsg &N2kMsg, uint8_t MessageID, tN2kAISRepeat Repeat, uint32_t SourceID,
-      tN2kAISTransceiverInformation AISTransceiverInformation, char * SafetyRelatedText) {
+      tN2kAISTransceiverInformation AISTransceiverInformation, const char * SafetyRelatedText) {
    SetN2kPGN129802(N2kMsg, MessageID, Repeat, SourceID, AISTransceiverInformation, SafetyRelatedText);
 }
 
@@ -2380,6 +2387,71 @@ bool ParseN2kPGN127750(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char 
 inline bool ParseN2kDCConvStatus(const tN2kMsg &N2kMsg, unsigned char &SID, unsigned char &ConnectionNumber, tN2kConvMode &OperatingState,
                                   tN2kTemperatureState &TemperatureState, tN2kOverloadState &OverloadState, tN2kDCVolgateState &LowDcVoltageState, tN2kRippleState &RippleState) {
  return ParseN2kPGN127750(N2kMsg,SID,ConnectionNumber,OperatingState,TemperatureState,OverloadState,LowDcVoltageState,RippleState);
+}
+
+/************************************************************************//**
+ * \brief Setting up PGN 127751 Message "DC Voltage/Currents"
+ * \ingroup group_msgSetUp
+ *
+ * Provides parametric data for a specific DC Source, indicated by the
+ * instance field. The type of DC Source can be identified from the
+ * DC Detailed Status PGN. Used primarily by display or instrumentation
+ * devices, but may also be used by power management.
+ *
+ * \param N2kMsg              Reference to a N2kMsg Object,
+ *                            Output: NMEA2000 message ready to be send.
+ * \param Instance            Instance or connection number.
+ * \param Voltage             voltage in V
+ * \param Current             currentnt in A
+ * \param SID                 Sequence identifier. In most cases you can use just 0xff for SID. See \ref secRefTermSID.
+ *                            The sequence identifier field is used to tie different PGNs data together to same
+ *                            sampling or calculation time.
+ */
+void SetN2kPGN127751(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double BatteryCurrent=N2kDoubleNA, unsigned char SID=0xff);
+
+/************************************************************************//**
+ * \brief Setting up Message "DC Viltage/Current" - PGN 127751
+ * \ingroup group_msgSetUp
+ *
+ * Alias of PGN 127751. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref SetN2kPGN127751
+ */
+inline void SetN2kDCVoltageCurrent(tN2kMsg &N2kMsg, unsigned char Instance, double Voltage, double Current=N2kDoubleNA, unsigned char SID=1) {
+  SetN2kPGN127751(N2kMsg,Instance,Voltage,Current,SID);
+}
+
+/************************************************************************//**
+ * \brief Parsing the content of message PGN 127751 "DC Voltage/Current"
+ * \ingroup group_msgParsers
+ *
+ * Provides parametric data for a specific DC Source, indicated by the
+ * instance field. The type of DC Source can be identified from the
+ * DC Detailed Status PGN. Used primarily by display or instrumentation
+ * devices, but may also be used by power management.
+ *
+ * \param N2kMsg              Reference to a N2kMsg Object,
+ *                            Output: NMEA2000 message ready to be send.
+ * \param Instance            Instance or connection number.
+ * \param Voltage             voltage in V
+ * \param Current             currentnt in A
+ * \param SID                 Sequence ID. Normally you can just forget its value. See \ref secRefTermSID.
+ *
+ * \return true     Parsing of PGN Message successful
+ * \return false    Parsing of PGN Message aborted
+ *
+ */
+bool ParseN2kPGN127751(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID);
+
+/************************************************************************//**
+ * \brief Parsing the content of a "DC Voltage/Current" 
+ *        message - PGN 127751
+ * \ingroup group_msgParsers
+ *
+ * Alias of PGN 127551. This alias was introduced to improve the readability
+ * of the source code. See parameter details on \ref ParseN2kPGN127751
+ */
+inline bool ParseN2kDCVoltageCurrent(const tN2kMsg &N2kMsg, unsigned char &Instance, double &Voltage, double &Current, unsigned char &SID) {
+  return ParseN2kPGN127751(N2kMsg, Instance, Voltage, Current, SID);
 }
 
 /************************************************************************//**

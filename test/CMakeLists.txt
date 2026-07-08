@@ -37,3 +37,12 @@ add_executable(N2kMessagesTests
 target_link_libraries(N2kMessagesTests catch)
 target_link_libraries(N2kMessagesTests nmea2000)
 add_test(N2kMessages N2kMessagesTests)
+
+add_executable(N2kCZoneTests 
+  N2kCZoneTest.cpp
+  millis.cpp
+)
+
+target_link_libraries(N2kCZoneTests catch)
+target_link_libraries(N2kCZoneTests nmea2000)
+add_test(N2kCZone N2kCZoneTests)
