@@ -841,7 +841,7 @@ void SetN2kPGN127513(tN2kMsg &N2kMsg, unsigned char BatInstance, tN2kBatType Bat
     N2kMsg.Add2ByteUDouble(BatCapacity,3600);
     N2kMsg.AddByte((int8_t)BatTemperatureCoefficient);
     PeukertExponent-=1; // Is this right or not I am not yet sure!
-    if (PeukertExponent<0 || PeukertExponent>0.504) { N2kMsg.AddByte(0xff); } else { N2kMsg.Add1ByteUDouble(PeukertExponent,0.002,-1); }
+    if (PeukertExponent<0 || PeukertExponent>0.504L) { N2kMsg.AddByte(0xff); } else { N2kMsg.Add1ByteUDouble(PeukertExponent,0.002,-1); }
     N2kMsg.AddByte((int8_t)ChargeEfficiencyFactor);
 }
 

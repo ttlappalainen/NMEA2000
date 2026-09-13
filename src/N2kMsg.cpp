@@ -51,8 +51,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(round)
 double round(double val) {
   return val >= 0
-      ? floor(val + 0.5)
-      : ceil(val - 0.5);
+      ? floor(val + 0.5L)
+      : ceil(val - 0.5L);
 }
 #endif
 
@@ -843,7 +843,7 @@ void SetBuf8ByteDouble(double v, double precision, int &index, unsigned char *bu
   int64_t vll;
   if ( !N2kIsNA(v) ) {
     if ( sizeof(double)<8 ) {
-      double fp=precision*1e6;
+      double fp=precision*1e6L;
       int64_t fpll=1/fp;
       vll=v*1e6L;
       vll*=fpll;
