@@ -34,6 +34,7 @@ set(srcs
   N2kMaretron.cpp
   N2kCZone.cpp
   NMEA2000.cpp
+  ActisenseReader.cpp
 )
 
 if(ESP_PLATFORM)

@@ -46,3 +46,11 @@ add_executable(N2kCZoneTests
 target_link_libraries(N2kCZoneTests catch)
 target_link_libraries(N2kCZoneTests nmea2000)
 add_test(N2kCZone N2kCZoneTests)
+
+add_executable(ActisenseReaderTests
+  ActisenseReaderTest.cpp
+  millis.cpp
+)
+target_link_libraries(ActisenseReaderTests catch)
+target_link_libraries(ActisenseReaderTests nmea2000)
+add_test(ActisenseReader ActisenseReaderTests)
