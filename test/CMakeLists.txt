@@ -54,3 +54,19 @@ add_executable(ActisenseReaderTests
 target_link_libraries(ActisenseReaderTests catch)
 target_link_libraries(ActisenseReaderTests nmea2000)
 add_test(ActisenseReader ActisenseReaderTests)
+
+add_executable(N2kDeviceListTests
+  N2kDeviceListTest.cpp
+  millis.cpp
+)
+target_link_libraries(N2kDeviceListTests catch)
+target_link_libraries(N2kDeviceListTests nmea2000)
+add_test(N2kDeviceList N2kDeviceListTests)
+
+add_executable(SeasmartOverreadTests
+  SeasmartOverreadTest.cpp
+  millis.cpp
+)
+target_link_libraries(SeasmartOverreadTests catch)
+target_link_libraries(SeasmartOverreadTests nmea2000)
+add_test(SeasmartOverread SeasmartOverreadTests)
