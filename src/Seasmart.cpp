@@ -57,7 +57,9 @@ static uint8_t nmea_compute_checksum(const char *sentence) {
   int i = 1;
 
   int checksum = 0;
-  while (sentence[i] != '*') {
+  // Stop at the terminator as well: a sentence without '*' must not be scanned
+  // past its end.
+  while (sentence[i] != '*' && sentence[i] != 0) {
     checksum ^= sentence[i];
     i++;
   }
@@ -122,7 +124,10 @@ bool SeasmartToN2k(const char *buffer, uint32_t &timestamp, tN2kMsg &msg) {
   msg.Clear();
 
   const char *s = buffer;
-  if (strncmp("$PCDIN,", s, 6) != 0) {
+  // Every field is followed by a separator that the old code skipped blindly;
+  // on a truncated sentence that stepped over the terminator and the following
+  // reads ran off the end of the buffer. Each skip now checks the separator.
+  if (strncmp("$PCDIN,", s, 7) != 0) {
     return false;
   }
   s += 7;
@@ -136,20 +141,32 @@ bool SeasmartToN2k(const char *buffer, uint32_t &timestamp, tN2kMsg &msg) {
   if (!readNHexByte(s, 2, pgnLow)) {
     return false;
   }
-  s += 5;
+  s += 4;
+  if (*s != ',') {
+    return false;
+  }
+  s += 1;
   msg.PGN = (pgnHigh << 16) + pgnLow;
 
   if (!readNHexByte(s, 4, timestamp)) {
     return false;
   }
-  s += 9;
+  s += 8;
+  if (*s != ',') {
+    return false;
+  }
+  s += 1;
 
   uint32_t source;
   if (!readNHexByte(s, 1, source)) {
     return false;
   }
   msg.Source = source;
-  s += 3;
+  s += 2;
+  if (*s != ',') {
+    return false;
+  }
+  s += 1;
 
   int dataLen = 0;
   while (s[dataLen] != 0 && s[dataLen] != '*') {
@@ -173,7 +190,10 @@ bool SeasmartToN2k(const char *buffer, uint32_t &timestamp, tN2kMsg &msg) {
     s += 2;
   }
 
-  // Skip the terminating '*' which marks beginning of checksum
+  // The data scan stops at '*' or at the terminator; only '*' may be skipped.
+  if (*s != '*') {
+    return false;
+  }
   s += 1;
   uint32_t checksum;
   if (!readNHexByte(s, 1, checksum)) {

@@ -261,8 +261,11 @@ void tN2kDeviceList::HandleIsoAddressClaim(const tN2kMsg &N2kMsg) {
     pDevice=Sources[N2kMsg.Source];
     N2kHandleInDbg("ISO address claim. Caller:"); N2kHandleInDbg((uint32_t)CallerName); N2kHandleInDbg(", uniq:" ); N2kHandleInDbgln(pDevice->GetUniqueNumber());
     if ( pDevice->GetName()==0 ) {  // Device reservation made by HandleMsg, Name has not set yet
-      tInternalDevice *pDevice2=LocalFindDeviceByName(CallerName); // Find does this actually exist with other source
-      if ( pDevice2!=0 ) { // We have already seen that message on other address, so move it here
+      // A claim with NAME 0 matches every unnamed reservation, including this
+      // one: moving "it" here deleted pDevice and then used it. Never match the
+      // device being updated, and never treat NAME 0 as an identity.
+      tInternalDevice *pDevice2=(CallerName!=0)?LocalFindDeviceByName(CallerName):0; // Find does this actually exist with other source
+      if ( pDevice2!=0 && pDevice2!=pDevice ) { // We have already seen that message on other address, so move it here
         delete pDevice;
         Sources[pDevice2->GetSource()]=0;
         SaveDevice(pDevice2,N2kMsg.Source);
