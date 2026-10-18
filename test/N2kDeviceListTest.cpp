@@ -52,15 +52,35 @@ TEST_CASE("device list survives repeated ISO address claims with NAME 0 from one
   // a bus the same unnamed entry is created by a first claim carrying NAME 0.
   list.HandleMsg(addressClaim(0x23, 0));
   REQUIRE(list.FindDeviceBySource(0x23) != 0);
+  REQUIRE(list.ReadResetIsListUpdated()); // a new source appeared
 
   // A second claim with NAME 0 used to match that very entry by name, delete it
   // and keep using the freed object (heap-use-after-free under ASan).
+  const tNMEA2000::tDevice *reserved = list.FindDeviceBySource(0x23);
   list.HandleMsg(addressClaim(0x23, 0));
-  REQUIRE(list.FindDeviceBySource(0x23) != 0);
+  REQUIRE(list.FindDeviceBySource(0x23) == reserved);
+  // NAME 0 carries no identity, so nothing in the list changed.
+  REQUIRE_FALSE(list.ReadResetIsListUpdated());
 
   // Still usable afterwards.
   list.HandleMsg(heading(0x23));
-  REQUIRE(list.FindDeviceBySource(0x23) != 0);
+  REQUIRE(list.FindDeviceBySource(0x23) == reserved);
+}
+
+TEST_CASE("a NAME 0 claim from one source does not take another source's unnamed reservation") {
+  NullBus bus;
+  tN2kDeviceList list(&bus);
+
+  list.HandleMsg(addressClaim(0x23, 0));
+  const tNMEA2000::tDevice *reserved = list.FindDeviceBySource(0x23);
+  REQUIRE(reserved != 0);
+
+  // A different source also claims with NAME 0. Before, LocalFindDeviceByName(0)
+  // matched the 0x23 reservation and moved it to 0x42.
+  list.HandleMsg(addressClaim(0x42, 0));
+  REQUIRE(list.FindDeviceBySource(0x23) == reserved);
+  REQUIRE(list.FindDeviceBySource(0x42) != 0);
+  REQUIRE(list.FindDeviceBySource(0x42) != reserved);
 }
 
 TEST_CASE("device list moves a named device that re-claims from another address") {
