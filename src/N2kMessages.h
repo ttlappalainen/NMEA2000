@@ -64,14 +64,14 @@
  * \param   v   Input value in [rad]
  * \return      Corresponding value in [deg]
  */
-inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0/3.1415926535897932384626433832795L; }
+inline double RadToDeg(double v) { return N2kIsNA(v)?v:v*180.0L/3.1415926535897932384626433832795L; }
 
 /************************************************************************//**
  * \brief Converting a value from Deg to Rad
  * \param   v   Input value in [deg]
  * \return      Corresponding value in [rad]
  */
-inline double DegToRad(double v) { return N2kIsNA(v)?v:v/180.0*3.1415926535897932384626433832795L; }
+inline double DegToRad(double v) { return N2kIsNA(v)?v:v/180.0L*3.1415926535897932384626433832795L; }
 
 /************************************************************************//**
  * \brief Converting a value from Celsius to Kelvin
@@ -92,14 +92,14 @@ inline double KelvinToC(double v) { return N2kIsNA(v)?v:v-273.15L; }
  * \param   v   Input value in [degF]
  * \return      Corresponding value in [K]
  */
-inline double FToKelvin(double v) { return N2kIsNA(v)?v:(v-32)*5.0/9.0+273.15; }
+inline double FToKelvin(double v) { return N2kIsNA(v)?v:(v-32L)*5.0L/9.0L+273.15L; }
 
 /************************************************************************//**
  * \brief Converting a value from Kelvin to Fahrenheit
  * \param   v   Input value in [F]
  * \return      Corresponding value in [degF]
  */
-inline double KelvinToF(double v) { return N2kIsNA(v)?v:(v-273.15)*9.0/5.0+32; }
+inline double KelvinToF(double v) { return N2kIsNA(v)?v:(v-273.15L)*9.0L/5.0L+32L; }
 
 /************************************************************************//**
  * \brief Converting a value from Millibar to Pascal
