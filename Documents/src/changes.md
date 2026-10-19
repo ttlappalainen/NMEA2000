@@ -1,6 +1,19 @@
 # Changes to the Library {#changes}
 \tableofcontents
 
+## 19.10.2026
+- Fix three memory-safety bugs in Actisense, Seasmart and device-list input handling.
+- Always use unsigned dimension values for AIS PGNs
+- Fix regression in GetVarStr
+- Fixed some warnings that are treated as errors on strict compilers
+- Updated version to 4.25.1
+
+## 18.12.2025
+- Add N2kmagvar_WMM2025 to magnetic deviation enum
+
+## 05.12.2025
+- avoid an endless loop in ActisenseReader
+
 ## 01.11.2025
 - Improved AddVarStr handling. Some PGN fields max size is define 
   in characters and some like AIS must be forced to ASCII

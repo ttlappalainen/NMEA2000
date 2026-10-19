@@ -1,6 +1,6 @@
 /*
  * N2kDef.h
- * Copyright (c) 2019-2024 Timo Lappalainen, Kave Oy, www.kave.fi
+ * Copyright (c) 2019-2026 Timo Lappalainen, Kave Oy, www.kave.fi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
