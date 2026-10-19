@@ -31,13 +31,6 @@
 
 #include <stdint.h>
 
-#if !defined(ARDUINO)
-extern "C" {
-// Current uptime in milliseconds. Must be implemented by application.
-extern uint32_t millis();
-}
-#endif
-
 // Declare PROGMEM macros to nothing on non-AVR targets.
 #if !defined(__AVR__) && !defined(ARDUINO)
 // ESP8266 provides it's own definition - Do not override it.

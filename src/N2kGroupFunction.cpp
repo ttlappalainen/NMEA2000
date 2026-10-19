@@ -328,6 +328,7 @@ bool tN2kGroupFunctionHandler::ParseAcknowledgeParams(const tN2kMsg &N2kMsg,
 
 //*****************************************************************************
 bool tN2kGroupFunctionHandler::StartParseReadOrWriteParameters(const tN2kMsg &N2kMsg, bool Proprietary, int &Index) {
+  (void)(N2kMsg); // this does nothing but prevents unused parameter warning/error
   Index=N2kgf_OffsetToParams;
   if ( Proprietary ) {
     Index+=5;
