@@ -91,7 +91,16 @@ bool tActisenseReader::CheckMessage(tN2kMsg &N2kMsg) {
      return false; // Too long data
    }
 
-   for (int j=0; i<MsgWritePos-1; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
+   // The frame length byte (MsgBuf[1]) and the N2k data length byte are
+   // independent fields of the stream. Only accept a frame whose remaining
+   // bytes are exactly the declared data, so the copy below is bounded by
+   // DataLen (<= MaxDataLen) and can never run past N2kMsg.Data.
+   if ( MsgWritePos-1-i!=N2kMsg.DataLen ) {
+     N2kMsg.Clear();
+     return false; // Data length does not match frame length
+   }
+
+   for (int j=0; j<N2kMsg.DataLen; i++, j++) N2kMsg.Data[j]=MsgBuf[i];
 
    return true;
 }
