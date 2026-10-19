@@ -184,7 +184,7 @@ enum tN2kTempSource {
                             N2kts_HeatIndexTemperature=12,                  ///< value is representing a heat index temperature
                             N2kts_FreezerTemperature=13,                    ///< value is representing a freezer temperature
                             N2kts_ExhaustGasTemperature=14,                 ///< value is representing a exhaust gas temperature
-                            N2kts_ShaftSealTemperature=15					///< value is representing a shaft seal temperature
+                            N2kts_ShaftSealTemperature=15                   ///< value is representing a shaft seal temperature
                           };
 /*************************************************************************//**
  * \enum tN2kHumiditySource
@@ -333,7 +333,7 @@ enum tN2kBatChem {
                             N2kDCbc_LeadAcid=0,   ///< battery chemistry is lead acid
                             N2kDCbc_LiIon=1,      ///< battery chemistry is lithium ion
                             N2kDCbc_NiCad=2,      ///< battery chemistry is nickel cadmium
-                            N2kDCbc_ZnO=3,		  ///< battery chemistry is zink oxide
+                            N2kDCbc_ZnO=3,        ///< battery chemistry is zink oxide
                             N2kDCbc_NiMh=4        ///< battery chemistry is nickel metal hydride
                           };
 /*************************************************************************//**
@@ -507,7 +507,7 @@ enum tN2kChargeState  {
                             N2kCS_Constant_VI=7,      ///< Charger operation state is in constant power
                             N2kCS_Disabled=8,         ///< Charger operation state is disabled
                             N2kCS_Fault=9,            ///< Charger operation state is in fault
-			    N2kCS_Error=14,           ///< Charger operation state is in error
+                            N2kCS_Error=14,           ///< Charger operation state is in error
                             N2kCS_Unavailable=15      ///< Charger operation state unavailable
                           };
 /*************************************************************************//**
@@ -644,9 +644,9 @@ enum tN2kTemperatureState {
 enum tN2kChargingAlgorithm {
                             N2kCA_Trickle = 0,
                             N2kCA_CVCC = 1,    /// Constant Voltage Constant Current)
-			    N2kCA_2Stage = 2,  /// 2nd Stage (no Float)
-			    N2kCA_3State = 3,  /// 3rd stage
-			    N2kCA_Error = 14,
+                            N2kCA_2Stage = 2,  /// 2nd Stage (no Float)
+                            N2kCA_3State = 3,  /// 3rd stage
+                            N2kCA_Error = 14,
                             N2kCA_NotAvailable = 15
                           };
 
@@ -674,7 +674,7 @@ using tN2kEngineDiscreteStatus2 = tN2kDD223;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD002*/
 using tN2kGenericStatusPair = tN2kDD002;
-			    // Enum type members:
+                // Enum type members:
                   // N2kDD002_No=0
                   // N2kDD002_Yes=1
                   // N2kDD002_Error=2
@@ -720,7 +720,7 @@ using tN2kPRNUsageStatus = tN2kDD124;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD305*/
 using tN2kAISAtoNType = tN2kDD305;
-			    // Enum type members:
+                // Enum type members:
                 // N2kAISAtoN_not_specified=0,
                 // N2kAISAtoN_reference_point=1,
                 // N2kAISAtoN_RACON=2,
@@ -765,47 +765,47 @@ using tN2kDelaySource = tN2kDD374;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD471*/
 using tN2kThrusterMotorEvents = tN2kDD471;
-	// .Event.MotorOverTemperatureCutout = 0 | 1
-	// .Event.MotorOverCurrentCutout = 0 | 1
-	// .Event.LowOilLevelWarning = 0 | 1
-	// .Event.OilOverTemperatureWarning = 0 | 1
-	// .Event.ControllerUnderVoltageCutout = 0 | 1
-	// .Event.ManufacturerDefined = 0 | 1
-	// .Event.DataNotAvailable = 0 | 1
+    // .Event.MotorOverTemperatureCutout = 0 | 1
+    // .Event.MotorOverCurrentCutout = 0 | 1
+    // .Event.LowOilLevelWarning = 0 | 1
+    // .Event.OilOverTemperatureWarning = 0 | 1
+    // .Event.ControllerUnderVoltageCutout = 0 | 1
+    // .Event.ManufacturerDefined = 0 | 1
+    // .Event.DataNotAvailable = 0 | 1
 
 /** \brief Alias easier for humans to read for \ref tN2kDD473*/
 using tN2kThrusterDirectionControl = tN2kDD473;
-	// N2kDD473_OFF=0
-	// N2kDD473_ThrusterReady=1
-	// N2kDD473_ThrusterToPORT=2
-	// N2kDD473_ThrusterToSTARBOARD=3
+    // N2kDD473_OFF=0
+    // N2kDD473_ThrusterReady=1
+    // N2kDD473_ThrusterToPORT=2
+    // N2kDD473_ThrusterToSTARBOARD=3
 
 /** \brief Alias easier for humans to read for \ref tN2kDD474*/
 using tN2kThrusterRetraction = tN2kDD474;
-	// N2kDD474_OFF=0
-	// N2kDD474_Extend=1
-	// N2kDD474_Retract=2
+    // N2kDD474_OFF=0
+    // N2kDD474_Extend=1
+    // N2kDD474_Retract=2
 
 /** \brief Alias easier for humans to read for \ref tN2kDD475*/
 using tN2kThrusterControlEvents = tN2kDD475;
-	// .Event.AnotherDeviceControllingThruster = 0 | 1
-	// .Event.BoatSpeedTooFast = 0 | 1
+    // .Event.AnotherDeviceControllingThruster = 0 | 1
+    // .Event.BoatSpeedTooFast = 0 | 1
 
 /** \brief Alias easier for humans to read for \ref tN2kDD477*/
 using tN2kWindlassMonitoringEvents = tN2kDD477;
-			    // Union type with fields:
+                // Union type with fields:
                             // .Event.ControllerUnderVoltageCutout = 0 | 1
                             // .Event.ControllerOverCurrentCutout = 0 | 1
                             // .Event.ControllerOverTemperatureCutout = 0 | 1
  
 /** \brief Alias easier for humans to read for \ref tN2kDD478*/
 using tN2kWindlassControlEvents = tN2kDD478;
-			    // Union type with field:
+                // Union type with field:
                             // .Event.AnotherDeviceControllingWindlass = 0 | 1
 
 /** \brief Alias easier for humans to read for \ref tN2kDD480*/
 using tN2kWindlassMotionStates = tN2kDD480;
-			    // Enum type members:
+                // Enum type members:
                             // N2kDD480_WindlassStopped=0
                             // N2kDD480_DeploymentOccurring=1
                             // N2kDD480_RetrievalOccurring=2
@@ -813,7 +813,7 @@ using tN2kWindlassMotionStates = tN2kDD480;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD481*/
 using tN2kRodeTypeStates = tN2kDD481;
-			    // Enum type members:
+                // Enum type members:
                             // N2kDD481_ChainPresentlyDetected=0
                             // N2kDD481_RopePresentlyDetected=1
                             // N2kDD481_Error=2
@@ -821,7 +821,7 @@ using tN2kRodeTypeStates = tN2kDD481;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD482*/
 using tN2kAnchorDockingStates = tN2kDD482;
-			    // Enum type members:
+                // Enum type members:
                             // N2kDD482_NotDocked=0
                             // N2kDD482_FullyDocked=1
                             // N2kDD482_Error=2
@@ -829,7 +829,7 @@ using tN2kAnchorDockingStates = tN2kDD482;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD483*/
 using tN2kWindlassOperatingEvents = tN2kDD483;
-			    // Union type with fields:
+                // Union type with fields:
                             // .Event.SystemError =  0 | 1
                             // .Event.SensorError = 0 | 1
                             // .Event.NoWindlassMotionDetected = 0 | 1
@@ -838,7 +838,7 @@ using tN2kWindlassOperatingEvents = tN2kDD483;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD484*/
 using tN2kWindlassDirectionControl = tN2kDD484;
-			    // Enum type members:
+                // Enum type members:
                             // N2kDD484_Off=0
                             // N2kDD484_Down=1
                             // N2kDD484_Up=2
@@ -846,15 +846,15 @@ using tN2kWindlassDirectionControl = tN2kDD484;
 
 /** \brief Alias easier for humans to read for \ref tN2kDD487*/
 using tN2kMotorPowerType = tN2kDD487;
-	// N2kDD487_12VDC=0
-	// N2kDD487_24VDC=1
-	// N2kDD487_48VDC=2
-	// N2kDD487_12VAC=3
-	// N2kDD487_Hydraulic=4
+    // N2kDD487_12VDC=0
+    // N2kDD487_24VDC=1
+    // N2kDD487_48VDC=2
+    // N2kDD487_12VAC=3
+    // N2kDD487_Hydraulic=4
 
 /** \brief Alias easier for humans to read for \ref tN2kDD488*/
 using tN2kSpeedType = tN2kDD488;
-			    // Enum type members:
+                // Enum type members:
                             // N2kDD488_SingleSpeed=0
                             // N2kDD488_DualSpeed=1
                             // N2kDD488_ProportionalSpeed=2
