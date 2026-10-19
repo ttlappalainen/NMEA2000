@@ -480,6 +480,7 @@ enum tN2kMagneticVariation {
                             N2kmagvar_WMM2010=6,    ///< magnetic deviation derived from the WMM 2010 report
                             N2kmagvar_WMM2015=7,    ///< magnetic deviation derived from the WMM 2015 report
                             N2kmagvar_WMM2020=8,    ///< magnetic deviation derived from the WMM 2020 report
+                            N2kmagvar_WMM2025=9,    ///< magnetic deviation derived from the WMM 2025 report
                           };
 /*************************************************************************//**
  * \enum tN2kOnOff
