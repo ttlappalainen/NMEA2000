@@ -97,6 +97,29 @@ bool N2kRequireUnicode(const char *str) {
 }
 
 //*****************************************************************************
+int N2kUCS2ToUTF8Len(const unsigned char *str, int strLen, unsigned char nulChar=0xff) {
+  int UTF8Len=0;
+
+  for (int i=0; i+1<strLen; i+=2) {
+    uint16_t UCS2Char = str[i] + (str[i+1] << 8);
+
+    // Decode
+    if ( 0x80 > UCS2Char ) {
+      //Tokensize: 1 byte
+      if ( UCS2Char!=nulChar ) UTF8Len++;
+    } else if ( 0x800 > UCS2Char ) {
+      //Tokensize: 2 bytes
+      UTF8Len+=2;
+    } else {
+      //Tokensize: 3 bytes
+      UTF8Len+=3;
+    }
+  }
+
+  return UTF8Len;
+}
+
+//*****************************************************************************
 int N2kUCS2ToUTF8(const unsigned char *str, int strLen, char* buf, int bufLen, unsigned char nulChar=0xff) {
   int UTF8Len=0;
   if ( buf==0 || bufLen<=0 ) return 0;
@@ -669,8 +692,13 @@ bool tN2kMsg::GetVarStr(size_t &StrBufSize, char *StrBuf, unsigned char nulChar,
       StrBufSize=N2kUCS2ToUTF8(UnicodeStr,Len,StrBuf,StrBufSize,nulChar);
       Index+=Len;
     }
-  } else { // No room to copy anything
-    StrBufSize=0;
+  } else { // No room to copy anything, just return the length needed.
+    if ( Type==0x01 ) {
+      StrBufSize=Len;
+    } else {
+      const unsigned char *UnicodeStr=&Data[Index];
+      StrBufSize=N2kUCS2ToUTF8Len(UnicodeStr,Len,nulChar);
+    }
     Index+=Len; // Just pass this string
   }
   return true;
