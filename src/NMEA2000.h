@@ -1754,6 +1754,12 @@ public:
      */
     tNMEA2000();
 
+    /*********************************************************************//**
+    * \brief Destroy the tNMEA2000 object
+    * 
+    */ 
+    virtual ~tNMEA2000();
+
     /**********************************************************************//**
      * \brief Finds a device on \ref Devices by its source address
      *
