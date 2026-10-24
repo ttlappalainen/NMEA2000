@@ -404,19 +404,19 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleRequest(const tN2kMsg &N2kMsg,
           case N2kPGN126998_InstallationDescription1_field:
             QueryStrSize=Max_N2kConfigurationInfoField_len;
             N2kMsg.GetVarStr(QueryStrSize,Query,Index);
-            pNMEA2000->GetInstallationDescription1(CurVal,Max_N2kConfigurationInfoField_len);
+            pNMEA2000->GetInstallationDescription1(CurVal,Max_N2kConfigurationInfoField_len, iDev);
             MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126998_InstallationDescription2_field:
             QueryStrSize=Max_N2kConfigurationInfoField_len;
             N2kMsg.GetVarStr(QueryStrSize,Query,Index);
-            pNMEA2000->GetInstallationDescription2(CurVal,Max_N2kConfigurationInfoField_len);
+            pNMEA2000->GetInstallationDescription2(CurVal,Max_N2kConfigurationInfoField_len, iDev);
             MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
             break;
           case N2kPGN126998_ManufacturerInformation_field:
             QueryStrSize=Max_N2kConfigurationInfoField_len;
             N2kMsg.GetVarStr(QueryStrSize,Query,Index);
-            pNMEA2000->GetManufacturerInformation(CurVal,Max_N2kConfigurationInfoField_len);
+            pNMEA2000->GetManufacturerInformation(CurVal,Max_N2kConfigurationInfoField_len, iDev);
             MatchRequestField(Query,CurVal,MatchFilter,FieldErrorCode);
             break;
           default:
@@ -478,13 +478,13 @@ bool tN2kGroupFunctionHandlerForPGN126998::HandleCommand(const tN2kMsg &N2kMsg, 
         case 1: // Installation description 1
           InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
           N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
-          pNMEA2000->SetInstallationDescription1(InstallationDescription);
+          pNMEA2000->SetInstallationDescription1(InstallationDescription, iDev);
           AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
           break;
         case 2:  // Installation description 2
           InstallationDescriptionSize=Max_N2kConfigurationInfoField_len;
           N2kMsg.GetVarStr(InstallationDescriptionSize,InstallationDescription,Index);
-          pNMEA2000->SetInstallationDescription2(InstallationDescription);
+          pNMEA2000->SetInstallationDescription2(InstallationDescription, iDev);
           AddAcknowledgeParameter(N2kRMsg,i,N2kgfpec_Acknowledge);
           break;
         default:

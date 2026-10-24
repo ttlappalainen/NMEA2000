@@ -595,13 +595,13 @@ public:
       // Configuration information
       /** \brief Get the manufacturer information from the configuration 
        * information of this device*/
-      virtual const char * GetManufacturerInformation() const { return 0; }
+      virtual const char * GetManufacturerInformation() const=0;
       /** \brief Get the installation description 1 from the configuration 
        * information of this device*/
-      virtual const char * GetInstallationDescription1() const { return 0; }
+      virtual const char * GetInstallationDescription1() const=0;
       /** \brief Get the installation description 2 from the configuration 
        * information of this device*/
-      virtual const char * GetInstallationDescription2() const { return 0; }
+      virtual const char * GetInstallationDescription2() const=0;
 
       /** \brief Get the list of transmitted PGNs from this device*/
       virtual const unsigned long * GetTransmitPGNs() const { return 0; }
@@ -733,11 +733,48 @@ public:
    */
   struct tConfigurationInformation {
       /** \brief pointer to char array holding the manufacturer information */
-      const char *ManufacturerInformation;
+      char ManufacturerInformation[Max_N2kConfigurationInfoField_len+1];
       /** \brief pointer to char array holding the installation description 1 */
-      const char *InstallationDescription1;
+      char InstallationDescription1[Max_N2kConfigurationInfoField_len+1];
       /** \brief pointer to char array holding the installation description 2 */
-      const char *InstallationDescription2;
+      char InstallationDescription2[Max_N2kConfigurationInfoField_len+1];
+
+      /********************************************************************//**
+       * \brief Set all the configuration information data of the structure
+       *
+       * \param _ModelSerialCode        Manufacturer's Model serial code,
+       *                                default="". Max 32 chars. 
+       * \param _ProductCode            Manufacturer's product code,
+       *                                default=666
+       * \param _ModelID                Manufacturer's  Model ID,
+       *                                default="". Max 33 chars
+       * \param _SwCode                 Manufacturer's software version code,
+       *                                default="". Max 40 chars
+       * \param _ModelVersion           Manufacturer's Model version
+       *                                default="". Max 24 chars
+       * \param _LoadEquivalency        Load equivalency ( x * 50mA, default=1)
+       * \param _N2kVersion             N2k Standard version, default=2101
+       * \param _CertificationLevel     Certification level, default=0
+       */
+      void Set(const char *_ManufacturerInformation, 
+               const char *_InstallationDescription1=0, 
+               const char *_InstallationDescription2=0
+              ) {
+        ClearSetCharBuf(_ManufacturerInformation,sizeof(ManufacturerInformation),ManufacturerInformation);
+        ClearSetCharBuf(_InstallationDescription1,sizeof(InstallationDescription1),InstallationDescription1);
+        ClearSetCharBuf(_InstallationDescription2,sizeof(InstallationDescription2),InstallationDescription2);
+      }
+      /*******************************************************************//**
+       * \brief Clears out all data  */
+      void Clear();
+      /*******************************************************************//**
+       * \brief Compares two product information structures
+       *
+       * \param Other An other product information structure
+       * \retval true 
+       * \retval false 
+       */
+      bool IsSame(const tConfigurationInformation &Other);
   };
 
 protected:
@@ -784,6 +821,12 @@ protected:
     /** \brief This holds the Manufacturer Code for this 
      * specific device*/
     char *ManufacturerSerialCode;
+    /** \brief This holds all the Configuration Informations for this 
+     * specific device*/
+    const tConfigurationInformation *ConfigurationInformation;
+    /** \brief This holds all the local (???) Configuration Informations for this 
+     * specific device*/
+    tConfigurationInformation *LocalConfigurationInformation;
     /** \brief Timestamp set while last \ref tNMEA2000::SendIsoAddressClaim 
      * was executed*/
     tN2kScheduler PendingIsoAddressClaim;
@@ -838,6 +881,7 @@ protected:
       N2kSource=0;
       HasPendingInformation=false;
       ProductInformation=0; LocalProductInformation=0; ManufacturerSerialCode=0;
+      ConfigurationInformation=0; LocalConfigurationInformation=0;
       AddressClaimEndSource=N2kMaxCanBusAddress; //GetNextAddressFromBeginning=true;
       TransmitMessages=0; ReceiveMessages=0;
       PGNSequenceCounters=0; MaxPGNSequenceCounters=0;
@@ -976,11 +1020,6 @@ protected:
     /** \brief  Number of devices */
     int DeviceCount;
 //    unsigned long N2kSource[Max_N2kDevices];
-
-    /** \brief  Pointer to a buffer for local Configuration Information*/
-    char *LocalConfigurationInformationData;
-    /** \brief Configuration Information of the device*/
-    tConfigurationInformation ConfigurationInformation;
 
     const unsigned long *SingleFrameMessages[N2kMessageGroups];
     const unsigned long *FastPacketMessages[N2kMessageGroups];
@@ -1731,16 +1770,6 @@ protected:
 #endif
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
     /*********************************************************************//**
-     * \brief Copy Configuration Information to local memory
-     *
-     * \sa
-     * - \ref SetConfigurationInformation
-     * - \ref SetInstallationDescription1
-     * - \ref SetInstallationDescription2
-     */
-    void CopyProgmemConfigurationInformationToLocal();
-
-    /*********************************************************************//**
      * \brief Flag the Installation description has changed
      */
     bool InstallationDescriptionChanged;
@@ -1955,34 +1984,28 @@ public:
      *                                    To handle externally updated Installation Description you should
      *                                    listen changes of them. See tNMEA2000::ReadResetInstallationDescriptionChanged
      * \param InstallationDescription2    Buffer for Installation Description 2.
+     * \param iDev                        index of the device on \ref Devices
      */
     void SetConfigurationInformation(const char *ManufacturerInformation,
                                      const char *InstallationDescription1=0,
-                                     const char *InstallationDescription2=0);
+                                     const char *InstallationDescription2=0,
+                                     int iDev=0);
 
     /*********************************************************************//**
-     * \brief Set the Configuration Information located on PROGMEM
+     * \brief Set the Configuration Information of this device
      *
-     * With this function you can set configuration information, which 
-     * will be saved on device program memory.
-     * See example BatteryMonitor.ino.
+     * Call this if you want to save RAM and you have defined \ref 
+     * tConfigurationInformation to PROGMEM as in example BatteryMonitor.ino
      * 
-     * This function is useful only on MCUs with very small RAM. By using
-     * PROGMEM, installation description can not be changed by group function.
+     * \note I have not yet found a way to test is pointer in PROGMEM or not,
+     * so this does not work, if you define tProductInformation to RAM.
      * 
-     * As default system has build in configuration information on progmem. 
-     * If you do not want to have configuration information at all, 
-     * you can disable it by calling SetConfigurationInformation(0);
-     * 
-     * \param ManufacturerInformation     Buffer for Manufacturer information
-     * \param InstallationDescription1    Buffer for Installation 
-     *                                    Description 1
-     * \param InstallationDescription2    Buffer for Installation 
-     *                                    Description 2
+     * \param _ConfigurationInformation   Configuration information, see \ref
+     *                              tConfigurationInformation
+     * \param iDev    index of the device on \ref Devices
      */
-    void SetProgmemConfigurationInformation(const char *ManufacturerInformation,
-                                     const char *InstallationDescription1=0,
-                                     const char *InstallationDescription2=0);
+    void SetConfigurationInformation(const tConfigurationInformation *_ConfigurationInformation, int iDev=0);
+
 
 #if !defined(N2K_NO_GROUP_FUNCTION_SUPPORT)
 
@@ -2077,27 +2100,16 @@ public:
      * \return unsigned char 
      */
     unsigned char GetLoadEquivalency(int iDev=0) const;
-    
-    /*********************************************************************//**
-     * \brief Set the Installation Description 1 of this device
+
+    /**********************************************************************//**
+     * \brief Get the Product Information of the device
      *
-     * This is automatically used by class. You only need to use this, if you 
-     * want to write your own behavior.
-     * 
-     * \param InstallationDescription1 Description
+     * \param iDev        index of the device on \ref Devices
+     * \param IsProgMem   Program memory has been used for the data
+     * \return const tNMEA2000::tProductInformation* 
      */
-    void SetInstallationDescription1(const char *InstallationDescription1);
-    
-    /*********************************************************************//**
-     * \brief Set the Installation Description 2 of this device
-     *
-     * This is automatically used by class. You only need to use this, if you 
-     * want to write your own behavior.
-     * 
-     * \param InstallationDescription2 Description
-     */
-    void SetInstallationDescription2(const char *InstallationDescription2);
-    
+    const tNMEA2000::tConfigurationInformation * GetConfigurationInformation(int iDev, bool &IsProgMem) const;
+
     /*********************************************************************//**
      * \brief Get the Install Description 1 of this device
      * 
@@ -2105,8 +2117,19 @@ public:
      * \param max_len   Max size of the buffer
      * 
      */
-    void GetInstallationDescription1(char *buf, size_t max_len);
-    
+    void GetInstallationDescription1(char *buf, size_t max_len, int iDev=0);
+
+     /*********************************************************************//**
+     * \brief Set the InstallationDescription1 of this device
+     *
+     * Set specific parts of the Configuration Information for this device
+     * 
+     * \param _InstallationDescription1 Installation Description1, see \ref
+     *                              tConfigurationInformation
+     * \param iDev    index of the device on \ref Devices
+     */
+    void SetInstallationDescription1(const char *_InstallationDescription1, int iDev=0);
+
     /*********************************************************************//**
      * \brief Get the Install Description 2 of this device
      * 
@@ -2114,8 +2137,19 @@ public:
      * \param max_len   Max size of the buffer
      * 
      */
-    void GetInstallationDescription2(char *buf, size_t max_len);
+    void GetInstallationDescription2(char *buf, size_t max_len, int iDev=0);
     
+     /*********************************************************************//**
+     * \brief Set the InstallationDescription1 of this device
+     *
+     * Set specific parts of the Configuration Information for this device
+     * 
+     * \param _InstallationDescription1 Installation Description1, see \ref
+     *                              tConfigurationInformation
+     * \param iDev    index of the device on \ref Devices
+     */
+    void SetInstallationDescription2(const char *_InstallationDescription2, int iDev=0);
+
     /*********************************************************************//**
      * \brief Get the Manufacturer Information of this device
      * 
@@ -2123,7 +2157,7 @@ public:
      * \param max_len   Max size of the buffer
      * 
      */
-    void GetManufacturerInformation(char *buf, size_t max_len);
+    void GetManufacturerInformation(char *buf, size_t max_len, int iDev=0);
     
     /*********************************************************************//**
      * \brief Check if this device has changed its Install Description
@@ -3199,9 +3233,9 @@ inline void SetN2kConfigurationInformation(tN2kMsg &N2kMsg,
  * 
  */
 bool ParseN2kPGN126998(const tN2kMsg& N2kMsg,
-                       size_t &ManufacturerInformationSize, char *ManufacturerInformation,
-                       size_t &InstallationDescription1Size, char *InstallationDescription1,
-                       size_t &InstallationDescription2Size, char *InstallationDescription2);
+                       size_t ManufacturerInformationSize, char *ManufacturerInformation,
+                       size_t InstallationDescription1Size, char *InstallationDescription1,
+                       size_t InstallationDescription2Size, char *InstallationDescription2);
 
 /************************************************************************//**
  * \brief Setting up PGN 59904 Message "ISO request"
