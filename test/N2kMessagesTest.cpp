@@ -568,3 +568,34 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
     }
   }
 }
+
+TEST_CASE("PGN127507 charger equalization time uses minute resolution")
+{
+  tN2kMsg msg;
+  const double durations[] = {0, 60, 1800, 3931920};
+  for (double duration : durations) {
+    SetN2kPGN127507(msg, 1, 2, N2kCS_Equalise, N2kCM_Standalone,
+                   N2kOnOff_On, N2kOnOff_On, duration);
+    int index = 4;
+    REQUIRE(msg.Get2ByteUInt(index) == static_cast<uint16_t>(duration / 60));
+
+    unsigned char instance, battery;
+    tN2kChargeState state;
+    tN2kChargerMode mode;
+    tN2kOnOff enabled, pending;
+    double remaining;
+    REQUIRE(ParseN2kPGN127507(msg, instance, battery, state, mode,
+                            enabled, pending, remaining));
+    REQUIRE(remaining == duration);
+    REQUIRE(instance == 1);
+    REQUIRE(battery == 2);
+  }
+}
+
+TEST_CASE("PGN127507 preserves unavailable equalization time")
+{
+  tN2kMsg msg;
+  SetN2kPGN127507(msg, 1, 2, N2kCS_Bulk);
+  int index = 4;
+  REQUIRE(msg.Get2ByteUInt(index) == 0xffff);
+}
