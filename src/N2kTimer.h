@@ -185,7 +185,10 @@ public:
    *
    * \return uint64_t Remaining time till \ref NextTime
    */
-  inline uint64_t Remaining() { return IsTime()?0:NextTime-N2kMillis64(); }
+  inline uint64_t Remaining() {
+    const uint64_t now=N2kMillis64();
+    return now>=NextTime?0:NextTime-now;
+  }
 
   /************************************************************************//**
    * \brief Set the Period of the Scheduler
