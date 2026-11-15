@@ -1015,8 +1015,8 @@ bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &S
 
     DaysSince1970=N2kMsg.Get2ByteUInt(Index);
     SecondsSinceMidnight=N2kMsg.Get4ByteUDouble(0.0001,Index);
-    Log=N2kMsg.Get4ByteUDouble(1,Index);
-    TripLog=N2kMsg.Get4ByteUDouble(1,Index);
+    Log=N2kMsg.Get4ByteUInt(Index);
+    TripLog=N2kMsg.Get4ByteUInt(Index);
 
     return true;
 }
