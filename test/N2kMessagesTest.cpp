@@ -568,3 +568,17 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
     }
   }
 }
+
+TEST_CASE("PGN128275 preserves integer distance log counters") {
+  const uint32_t values[] = {0, 1234567, 0xfffffffe, N2kUInt32NA};
+  for (uint32_t value : values) {
+    tN2kMsg msg;
+    SetN2kPGN128275(msg, 20000, 43200, value, value);
+    uint16_t day;
+    double time;
+    uint32_t log, trip;
+    REQUIRE(ParseN2kPGN128275(msg, day, time, log, trip));
+    REQUIRE(log == value);
+    REQUIRE(trip == value);
+  }
+}
