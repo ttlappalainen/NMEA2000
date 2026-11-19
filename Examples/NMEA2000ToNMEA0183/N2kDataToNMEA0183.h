@@ -35,7 +35,9 @@ protected:
   double Longitude;
   double Altitude;
   double Variation;
-  double Heading;
+  double Deviation;
+  double Heading; // True heading
+  double MagneticHeading; // Heading corrected for deviation, before variation
   double COG;
   double SOG;
   double WindSpeed;
@@ -71,6 +73,8 @@ public:
     SendNMEA0183MessageCallback=0;
     pNMEA0183=_pNMEA0183;
     Latitude=N2kDoubleNA; Longitude=N2kDoubleNA; Altitude=N2kDoubleNA;
+    Deviation=0;
+    MagneticHeading=N2kDoubleNA;
     Variation=N2kDoubleNA; Heading=N2kDoubleNA; COG=N2kDoubleNA; SOG=N2kDoubleNA;
     SecondsSinceMidnight=N2kDoubleNA; DaysSince1970=N2kUInt16NA;
     LastPosSend=0;
