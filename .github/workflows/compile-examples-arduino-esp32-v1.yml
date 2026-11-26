@@ -70,7 +70,7 @@ jobs:
           libraries: |
             ${{ env.UNIVERSAL_LIBRARIES }}  # The NMEA2000 library itself
             # ESP32-specific CAN bus library (dependency)
-            - source-url: https://github.com/phatpaul/NMEA2000_esp32.git
+            - source-url: https://github.com/ttlappalainen/NMEA2000_esp32.git
             
           # ARDUINO PLATFORMS: Board definitions and toolchain
           platforms: |

@@ -46,7 +46,7 @@ jobs:
       # Configure CMake in a 'build' subdirectory.
       # This reads CMakeLists.txt and sets up the build environment
       # including finding dependencies, setting compiler flags, etc.
-      run: cmake -B ${{github.workspace}}/build
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
     # STEP 3: Compile the library and test executables
     - name: Build
