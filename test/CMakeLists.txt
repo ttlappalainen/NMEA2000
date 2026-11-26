@@ -91,3 +91,8 @@ if(NMEA0183_SOURCE_DIR)
   target_link_libraries(N2kDataToNMEA0183Tests catch nmea2000)
   add_test(N2kDataToNMEA0183 N2kDataToNMEA0183Tests)
 endif()
+
+add_executable(N2kTimerTests N2kTimerTest.cpp)
+target_include_directories(N2kTimerTests PRIVATE ../src)
+target_link_libraries(N2kTimerTests catch)
+add_test(N2kTimer N2kTimerTests)
