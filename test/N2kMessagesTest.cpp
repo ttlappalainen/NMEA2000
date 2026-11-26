@@ -2,6 +2,72 @@
 #include <catch.hpp>
 #include <N2kMessages.h>
 
+TEST_CASE("Signed three-byte values decode their sign bit", "[signed24]") {
+  const struct {
+    unsigned char bytes[3];
+    int32_t value;
+  } cases[] = {
+    {{0x00, 0x00, 0x00}, 0},
+    {{0x01, 0x00, 0x00}, 1},
+    {{0xfd, 0xff, 0x7f}, 8388605},
+    {{0xff, 0xff, 0xff}, -1},
+    {{0x00, 0x00, 0x80}, -8388608},
+    {{0xb0, 0x61, 0xfc}, -237136}
+  };
+  for (const auto &sample : cases) {
+    int index=0;
+    CAPTURE(sample.value);
+    REQUIRE(GetBuf3ByteDouble(0.001,index,sample.bytes)==Approx(sample.value*0.001));
+    REQUIRE(index==3);
+  }
+}
+
+TEST_CASE("Issue 450 negative three-byte value round trips", "[signed24]") {
+  unsigned char data[5]={0x12,0,0,0,0x34};
+  int index=1;
+  SetBuf3ByteDouble(-237.136,0.001,index,data);
+  REQUIRE(index==4);
+  REQUIRE(data[0]==0x12);
+  REQUIRE(data[1]==0xb0);
+  REQUIRE(data[2]==0x61);
+  REQUIRE(data[3]==0xfc);
+  REQUIRE(data[4]==0x34);
+  index=1;
+  REQUIRE(GetBuf3ByteDouble(0.001,index,data)==Approx(-237.136));
+  REQUIRE(index==4);
+}
+
+TEST_CASE("Three-byte unavailable and unsigned values keep their meanings", "[signed24]") {
+  const unsigned char unavailable[]={0xff,0xff,0x7f};
+  int index=0;
+  REQUIRE(GetBuf3ByteDouble(0.001,index,unavailable,-123.25)==-123.25);
+  REQUIRE(index==3);
+
+  const unsigned char unsignedValue[]={0x00,0x00,0x80};
+  index=0;
+  REQUIRE(GetBuf3ByteUDouble(1,index,unsignedValue)==8388608);
+  REQUIRE(index==3);
+
+  tN2kMsg msg;
+  msg.AddByte(0xff);
+  msg.AddByte(0xff);
+  index=0;
+  REQUIRE(msg.Get3ByteDouble(0.001,index,-123.25)==-123.25);
+  REQUIRE(index==0);
+}
+
+TEST_CASE("PGN127751 preserves negative DC current", "[signed24]") {
+  tN2kMsg msg;
+  SetN2kPGN127751(msg,2,12.3,-237.13,4);
+  unsigned char instance=0, sid=0;
+  double voltage=0, current=0;
+  REQUIRE(ParseN2kPGN127751(msg,instance,voltage,current,sid));
+  REQUIRE(instance==2);
+  REQUIRE(sid==4);
+  REQUIRE(voltage==Approx(12.3));
+  REQUIRE(current==Approx(-237.13));
+}
+
 // This is a test file for checking N2k message syntax.
 // Each test case deals with a single PGN type.
 // Test case sets arbitrary parameter values and checks if the same values are parsed back. Not all messages are tested.
@@ -585,4 +651,35 @@ TEST_CASE("PGN127513 preserves unavailable Peukert exponents") {
     if (N2kIsNA(value)) REQUIRE(N2kIsNA(exponent));
     else REQUIRE(exponent == Approx(value));
   }
+}
+
+TEST_CASE("PGN127507 charger equalization time uses minute resolution")
+{
+  tN2kMsg msg;
+  const double durations[] = {0, 60, 1800, 3931920};
+  for (double duration : durations) {
+    SetN2kPGN127507(msg, 1, 2, N2kCS_Equalise, N2kCM_Standalone,
+                   N2kOnOff_On, N2kOnOff_On, duration);
+    int index = 4;
+    REQUIRE(msg.Get2ByteUInt(index) == static_cast<uint16_t>(duration / 60));
+
+    unsigned char instance, battery;
+    tN2kChargeState state;
+    tN2kChargerMode mode;
+    tN2kOnOff enabled, pending;
+    double remaining;
+    REQUIRE(ParseN2kPGN127507(msg, instance, battery, state, mode,
+                            enabled, pending, remaining));
+    REQUIRE(remaining == duration);
+    REQUIRE(instance == 1);
+    REQUIRE(battery == 2);
+  }
+}
+
+TEST_CASE("PGN127507 preserves unavailable equalization time")
+{
+  tN2kMsg msg;
+  SetN2kPGN127507(msg, 1, 2, N2kCS_Bulk);
+  int index = 4;
+  REQUIRE(msg.Get2ByteUInt(index) == 0xffff);
 }
