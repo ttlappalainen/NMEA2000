@@ -70,3 +70,8 @@ add_executable(SeasmartOverreadTests
 target_link_libraries(SeasmartOverreadTests catch)
 target_link_libraries(SeasmartOverreadTests nmea2000)
 add_test(SeasmartOverread SeasmartOverreadTests)
+
+add_executable(N2kTimerTests N2kTimerTest.cpp)
+target_include_directories(N2kTimerTests PRIVATE ../src)
+target_link_libraries(N2kTimerTests catch)
+add_test(N2kTimer N2kTimerTests)
