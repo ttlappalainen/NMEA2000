@@ -446,6 +446,21 @@ TEST_CASE("PGN127233 MOB")
 
 }
 
+TEST_CASE("PGN128275 preserves integer distance log counters") {
+  const uint32_t values[] = {0, 1234567, 0xfffffffe, N2kUInt32NA};
+  for (uint32_t value : values) {
+    tN2kMsg msg;
+    SetN2kPGN128275(msg, 20000, 43200, value, value);
+    uint16_t day;
+    double time;
+    uint32_t log, trip;
+    REQUIRE(ParseN2kPGN128275(msg, day, time, log, trip));
+    REQUIRE(log == value);
+    REQUIRE(trip == value);
+  }
+}
+
+
 TEST_CASE("PGN127237 HeadingTrackControl")
 {
   tN2kMsg N2kMsg;
@@ -635,17 +650,28 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
   }
 }
 
-TEST_CASE("PGN128275 preserves integer distance log counters") {
-  const uint32_t values[] = {0, 1234567, 0xfffffffe, N2kUInt32NA};
-  for (uint32_t value : values) {
+TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
+{
+  const double capacities[] = {N2kDoubleNA, 0, 100*3600.0, 40000*3600.0};
+  for (double capacity : capacities) {
     tN2kMsg msg;
-    SetN2kPGN128275(msg, 20000, 43200, value, value);
-    uint16_t day;
-    double time;
-    uint32_t log, trip;
-    REQUIRE(ParseN2kPGN128275(msg, day, time, log, trip));
-    REQUIRE(log == value);
-    REQUIRE(trip == value);
+    SetN2kPGN127513(msg, 1, N2kDCbt_AGM, N2kDCES_Yes, N2kDCbnv_12v,
+                   N2kDCbc_LeadAcid, capacity, 0, 1.1, 90);
+    unsigned char instance;
+    tN2kBatType type;
+    tN2kBatEqSupport equalization;
+    tN2kBatNomVolt voltage;
+    tN2kBatChem chemistry;
+    double parsedCapacity, exponent;
+    int8_t temperatureCoefficient, efficiency;
+    REQUIRE(ParseN2kPGN127513(msg, instance, type, equalization, voltage,
+                            chemistry, parsedCapacity, temperatureCoefficient,
+                            exponent, efficiency));
+    if (N2kIsNA(capacity)) {
+      REQUIRE(N2kIsNA(parsedCapacity));
+    } else {
+      REQUIRE(parsedCapacity == capacity);
+    }
   }
 }
 
