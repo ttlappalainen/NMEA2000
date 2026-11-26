@@ -72,6 +72,27 @@ TEST_CASE("PGN127751 preserves negative DC current", "[signed24]") {
 // Each test case deals with a single PGN type.
 // Test case sets arbitrary parameter values and checks if the same values are parsed back. Not all messages are tested.
 
+TEST_CASE("PGN129029 preserves twelve-bit reference station IDs") {
+  const uint16_t ids[] = {0, 2047, 2048, 3000, 4094};
+  for (uint16_t expected : ids) {
+    tN2kMsg msg;
+    SetN2kPGN129029(msg, 1, 20000, 43200, 50, -1, 10,
+      N2kGNSSt_GPS, N2kGNSSm_GNSSfix, 8, 1, 2, 3, 1,
+      N2kGNSSt_GPS, expected, 0.5);
+    unsigned char sid, satellites, stations;
+    uint16_t date, id;
+    double time, lat, lon, altitude, hdop, pdop, geoid, age;
+    tN2kGNSStype type, reference;
+    tN2kGNSSmethod method;
+    REQUIRE(ParseN2kPGN129029(msg, sid, date, time, lat, lon, altitude,
+      type, method, satellites, hdop, pdop, geoid, stations, reference, id, age));
+    REQUIRE(id == expected);
+    REQUIRE(reference == N2kGNSSt_GPS);
+    REQUIRE(age == Approx(0.5));
+  }
+}
+
+
 TEST_CASE("PGN129039 AIS Class B Position")
 {
 
@@ -635,23 +656,28 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
   }
 }
 
-TEST_CASE("PGN129029 preserves twelve-bit reference station IDs") {
-  const uint16_t ids[] = {0, 2047, 2048, 3000, 4094};
-  for (uint16_t expected : ids) {
+TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
+{
+  const double capacities[] = {N2kDoubleNA, 0, 100*3600.0, 40000*3600.0};
+  for (double capacity : capacities) {
     tN2kMsg msg;
-    SetN2kPGN129029(msg, 1, 20000, 43200, 50, -1, 10,
-      N2kGNSSt_GPS, N2kGNSSm_GNSSfix, 8, 1, 2, 3, 1,
-      N2kGNSSt_GPS, expected, 0.5);
-    unsigned char sid, satellites, stations;
-    uint16_t date, id;
-    double time, lat, lon, altitude, hdop, pdop, geoid, age;
-    tN2kGNSStype type, reference;
-    tN2kGNSSmethod method;
-    REQUIRE(ParseN2kPGN129029(msg, sid, date, time, lat, lon, altitude,
-      type, method, satellites, hdop, pdop, geoid, stations, reference, id, age));
-    REQUIRE(id == expected);
-    REQUIRE(reference == N2kGNSSt_GPS);
-    REQUIRE(age == Approx(0.5));
+    SetN2kPGN127513(msg, 1, N2kDCbt_AGM, N2kDCES_Yes, N2kDCbnv_12v,
+                   N2kDCbc_LeadAcid, capacity, 0, 1.1, 90);
+    unsigned char instance;
+    tN2kBatType type;
+    tN2kBatEqSupport equalization;
+    tN2kBatNomVolt voltage;
+    tN2kBatChem chemistry;
+    double parsedCapacity, exponent;
+    int8_t temperatureCoefficient, efficiency;
+    REQUIRE(ParseN2kPGN127513(msg, instance, type, equalization, voltage,
+                            chemistry, parsedCapacity, temperatureCoefficient,
+                            exponent, efficiency));
+    if (N2kIsNA(capacity)) {
+      REQUIRE(N2kIsNA(parsedCapacity));
+    } else {
+      REQUIRE(parsedCapacity == capacity);
+    }
   }
 }
 
