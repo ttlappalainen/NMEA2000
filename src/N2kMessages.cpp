@@ -738,7 +738,7 @@ void SetN2kPGN127507(tN2kMsg &N2kMsg, unsigned char Instance, unsigned char Batt
     N2kMsg.AddByte(BatteryInstance);
     N2kMsg.AddByte((ChargerMode & 0x0f)<<4 | (ChargeState & 0x0f));
     N2kMsg.AddByte(0x0f<<4 | (EqualizationPending & 0x03) << 2 | (Enabled & 0x03));
-    N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,1);
+    N2kMsg.Add2ByteUDouble(EqualizationTimeRemaining,60);
 }
 
 bool ParseN2kPGN127507(const tN2kMsg &N2kMsg, unsigned char &Instance, unsigned char &BatteryInstance,

@@ -1008,6 +1008,8 @@ float GetBufFloat(int &index, const unsigned char *buf, float def) {
 double GetBuf3ByteDouble(double precision, int &index, const unsigned char *buf, double def) {
   int32_t vl = GetBuf<int32_t>(3, index, buf);
   if (vl==0x007fffff) return def;
+  // GetBuf zero-fills the fourth byte; restore the signed 24-bit value.
+  if (vl & 0x00800000) vl-=0x01000000;
 
   return vl * precision;
 }
