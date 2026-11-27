@@ -86,23 +86,8 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
 
       /** \brief Product Information has been loaded */
       bool ConfILoaded;
-      /** \brief Size of the Config Information (number of bytes)*/
-      uint16_t ConfISize;
-      /** \brief Size of the Manufacturer Information (number of bytes) */
-      uint16_t ManISize;
-      /** \brief Size of the Installation Description 1 (number of bytes) */
-      uint16_t InstDesc1Size;
-      /** \brief Size of the Installation Description 2 (number of bytes) */
-      uint16_t InstDesc2Size;
-
       /** \brief Pointer to the Config Information */
-      char *ConfI;
-      /** \brief Pointer to the Manufacturer Information */
-      char *ManufacturerInformation;
-      /** \brief Pointer to the Installation Description 1 */
-      char *InstallationDescription1;
-      /** \brief Pointer to the Installation Description 2 */
-      char *InstallationDescription2;
+      tNMEA2000::tConfigurationInformation ConfI;
 
       /** \brief Size of the transmitted PGN (number of bytes)*/
       uint8_t TransmitPGNsSize;
@@ -240,6 +225,27 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
          */
         unsigned short GetLoadEquivalency() const { return ProdI.LoadEquivalency; }
 
+        /*******************************************************************//**
+         * \brief Set the Configuration Information of the device
+         *
+         * \param _ManufacturerInformation 
+         *                          Default="". Max 70 chars. 
+         *                          Manufacturer
+         * \param _InstallationDescription1
+         *                          Default="". Max 70 chars. 
+         *                          Installation Description1
+         * \param _InstallationDescription1
+         *                          Default="". Max 70 chars. 
+         *                          Installation Description2
+         */
+        void SetConfigurationInformation(const char *_ManufacturerInformation, 
+                                         const char *_InstallationDescription1,
+                                         const char *_InstallationDescription2
+                                        ) {
+          ConfI.Set(_ManufacturerInformation, _InstallationDescription1, _InstallationDescription2);
+          ConfILoaded=true;
+        }
+
         /******************************************************************//**
          * \brief Has the Configuration  Information for the device 
          *        already been loaded
@@ -251,48 +257,17 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
          * \brief Get the Manufacturer Information of this device
          * \return const char *
          */
-        const char * GetManufacturerInformation() const { return ManufacturerInformation; }
+        const char * GetManufacturerInformation() const { return ConfI.ManufacturerInformation; }
         /******************************************************************//**
          * \brief Get the Installation Description 1 of this device
          * \return const char *
          */
-        const char * GetInstallationDescription1() const { return InstallationDescription1; }
+        const char * GetInstallationDescription1() const { return ConfI.InstallationDescription1; }
         /******************************************************************//**
          * \brief Get the Installation Description 2 of this device
          * \return const char *
          */
-        const char * GetInstallationDescription2() const { return InstallationDescription2; }
-
-        /******************************************************************//**
-         * \brief Initialize the Configuration Information of this device 
-         * 
-         * This function gives back an empty string for the Configuration 
-         * Information. Adequate memory has been allocated and the leading 
-         * character ('\0' terminators ) have been added.
-         * 
-         * \param _ManISize       Size of the Manufacturer Information 
-         * \param _InstDesc1Size  Size of the Install Description 1
-         * \param _InstDesc2Size  Size of the Install Description 2
-         * 
-         * \return char* ->  empty Configuration Information
-         */
-        char * InitConfigurationInformation(size_t &_ManISize, size_t &_InstDesc1Size, size_t &_InstDesc2Size);
-        
-        /******************************************************************//**
-         * \brief Get the Manufacturer Information of this device
-         * \return char *
-         */
-        char * GetManufacturerInformation() { return ManufacturerInformation; }
-        /******************************************************************//**
-         * \brief Get the Installation Description 1 of this device
-         * \return char *
-         */
-        char * GetInstallationDescription1() { return InstallationDescription1; }
-        /******************************************************************//**
-         * \brief Get the Installation Description 2 of this device
-         * \return char *
-         */
-        char * GetInstallationDescription2() { return InstallationDescription2; }
+        const char * GetInstallationDescription2() const { return ConfI.InstallationDescription2; }
 
         /******************************************************************//**
          * \brief Get the transmitted PGNs of this device
@@ -377,7 +352,7 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
               return false;
             }
           }
-        
+
         /****************************************************************//**
          *  \brief  Resets the Configuration Information Loaded values of 
          *          the device */        
@@ -407,6 +382,18 @@ class tN2kDeviceList : public tNMEA2000::tMsgHandler {
          *        Information has already been requested and stores the 
          *        timestamp*/
         void SetConfigurationInformationRequested() { ConfIRequested=N2kMillis(); nConfIRequested++; }
+        /****************************************************************//**
+         * \brief Compares two Product Informations
+         * \return true
+         * \return false
+         * */
+        bool IsSameConfigurationInformation(tNMEA2000::tConfigurationInformation &Other) {
+            if (ConfI.IsSame(Other)) {
+              ConfILoaded=true; return true;
+            } else {
+              return false;
+            }
+          }
 
         /****************************************************************//**
          *  \brief  Resets the PGN List Loaded values of 
