@@ -1000,16 +1000,30 @@ bool ParseN2kPGN128267(const tN2kMsg &N2kMsg, unsigned char &SID, double &DepthB
 
 //*****************************************************************************
 // Distance log
-void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, double Log, double TripLog) {
     N2kMsg.SetPGN(128275L);
     N2kMsg.Priority=6;
     N2kMsg.Add2ByteUInt(DaysSince1970);
     N2kMsg.Add4ByteUDouble(SecondsSinceMidnight,0.0001);
-    N2kMsg.Add4ByteUInt(Log);
-    N2kMsg.Add4ByteUInt(TripLog);
+    N2kMsg.Add4ByteUDouble(Log,1);
+    N2kMsg.Add4ByteUDouble(TripLog,1);
 }
 
-bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, double &Log, double &TripLog) {
+    if (N2kMsg.PGN!=128275L) return false;
+
+    int Index=0;
+
+    DaysSince1970=N2kMsg.Get2ByteUInt(Index);
+    SecondsSinceMidnight=N2kMsg.Get4ByteUDouble(0.0001,Index);
+    Log=N2kMsg.Get4ByteUDouble(1,Index);
+    TripLog=N2kMsg.Get4ByteUDouble(1,Index);
+
+    return true;
+}
+
+
+static bool ParseN2kDistanceLogRaw(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
     if (N2kMsg.PGN!=128275L) return false;
 
     int Index=0;
@@ -1022,6 +1036,26 @@ bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &S
     return true;
 }
 
+
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+    SetN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,
+                   Log==N2kUInt32NA ? N2kDoubleNA : double(Log),
+                   TripLog==N2kUInt32NA ? N2kDoubleNA : double(TripLog));
+}
+
+void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+    SetN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,
+                   Log==N2kUInt32NA ? N2kDoubleNA : double(Log),
+                   TripLog==N2kUInt32NA ? N2kDoubleNA : double(TripLog));
+}
+
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+    return ParseN2kDistanceLogRaw(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
+}
+
+bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+    return ParseN2kDistanceLogRaw(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
+}
 
 //*****************************************************************************
 // PGN128776 - Windlass Control Status
