@@ -71,6 +71,27 @@ target_link_libraries(SeasmartOverreadTests catch)
 target_link_libraries(SeasmartOverreadTests nmea2000)
 add_test(SeasmartOverread SeasmartOverreadTests)
 
+# Optional integration test for the NMEA0183 conversion example. Point this at
+# a checkout of https://github.com/ttlappalainen/NMEA0183 (no automatic download).
+set(NMEA0183_SOURCE_DIR "" CACHE PATH "NMEA0183 source directory for converter tests")
+if(NMEA0183_SOURCE_DIR)
+  add_executable(N2kDataToNMEA0183Tests
+    N2kDataToNMEA0183Test.cpp
+    millis.cpp
+    ../Examples/NMEA2000ToNMEA0183/N2kDataToNMEA0183.cpp
+    ${NMEA0183_SOURCE_DIR}/NMEA0183.cpp
+    ${NMEA0183_SOURCE_DIR}/NMEA0183Msg.cpp
+    ${NMEA0183_SOURCE_DIR}/NMEA0183Messages.cpp
+    ${NMEA0183_SOURCE_DIR}/NMEA0183Stream.cpp
+  )
+  target_include_directories(N2kDataToNMEA0183Tests PRIVATE
+    ../Examples/NMEA2000ToNMEA0183 ${NMEA0183_SOURCE_DIR})
+  target_compile_options(N2kDataToNMEA0183Tests PRIVATE
+    -include ${CMAKE_CURRENT_SOURCE_DIR}/ConverterClock.h)
+  target_link_libraries(N2kDataToNMEA0183Tests catch nmea2000)
+  add_test(N2kDataToNMEA0183 N2kDataToNMEA0183Tests)
+endif()
+
 add_executable(N2kTimerTests N2kTimerTest.cpp)
 target_include_directories(N2kTimerTests PRIVATE ../src)
 target_link_libraries(N2kTimerTests catch)
