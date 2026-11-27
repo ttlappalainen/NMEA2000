@@ -1270,7 +1270,7 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   if (N2kMsg.PGN!=129029L) return false;
   int Index=0;
   unsigned char vb;
-  int16_t vi;
+  uint16_t vi;
 
   SID=N2kMsg.GetByte(Index);
   DaysSince1970=N2kMsg.Get2ByteUInt(Index);

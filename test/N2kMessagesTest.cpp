@@ -72,6 +72,27 @@ TEST_CASE("PGN127751 preserves negative DC current", "[signed24]") {
 // Each test case deals with a single PGN type.
 // Test case sets arbitrary parameter values and checks if the same values are parsed back. Not all messages are tested.
 
+TEST_CASE("PGN129029 preserves twelve-bit reference station IDs") {
+  const uint16_t ids[] = {0, 2047, 2048, 3000, 4094};
+  for (uint16_t expected : ids) {
+    tN2kMsg msg;
+    SetN2kPGN129029(msg, 1, 20000, 43200, 50, -1, 10,
+      N2kGNSSt_GPS, N2kGNSSm_GNSSfix, 8, 1, 2, 3, 1,
+      N2kGNSSt_GPS, expected, 0.5);
+    unsigned char sid, satellites, stations;
+    uint16_t date, id;
+    double time, lat, lon, altitude, hdop, pdop, geoid, age;
+    tN2kGNSStype type, reference;
+    tN2kGNSSmethod method;
+    REQUIRE(ParseN2kPGN129029(msg, sid, date, time, lat, lon, altitude,
+      type, method, satellites, hdop, pdop, geoid, stations, reference, id, age));
+    REQUIRE(id == expected);
+    REQUIRE(reference == N2kGNSSt_GPS);
+    REQUIRE(age == Approx(0.5));
+  }
+}
+
+
 TEST_CASE("PGN129039 AIS Class B Position")
 {
 
