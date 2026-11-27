@@ -467,6 +467,71 @@ TEST_CASE("PGN127233 MOB")
 
 }
 
+TEST_CASE("PGN128275 distance log uses double distances and unavailable values") {
+  const double values[] = {0.0, 1234567.0, 4294967294.0, N2kDoubleNA};
+  for (double log : values) {
+    for (double trip : values) {
+      tN2kMsg msg;
+      SetN2kDistanceLog(msg, 20000, 43200.5, log, trip);
+      REQUIRE(msg.PGN == 128275);
+      REQUIRE(msg.DataLen == 14);
+      int index = 6;
+      REQUIRE(msg.Get4ByteUInt(index) == (log == N2kDoubleNA ? N2kUInt32NA : uint32_t(log)));
+      REQUIRE(msg.Get4ByteUInt(index) == (trip == N2kDoubleNA ? N2kUInt32NA : uint32_t(trip)));
+      uint16_t day = 0;
+      double time = 0, parsedLog = 0, parsedTrip = 0;
+      REQUIRE(ParseN2kDistanceLog(msg, day, time, parsedLog, parsedTrip));
+      REQUIRE(day == 20000);
+      REQUIRE(time == Approx(43200.5));
+      REQUIRE(parsedLog == log);
+      REQUIRE(parsedTrip == trip);
+    }
+  }
+}
+
+TEST_CASE("PGN128275 rejects other PGNs without changing outputs") {
+  tN2kMsg msg;
+  msg.SetPGN(128267);
+  uint16_t day = 123;
+  double time = 456, log = 789, trip = 1011;
+  REQUIRE_FALSE(ParseN2kPGN128275(msg, day, time, log, trip));
+  REQUIRE(day == 123);
+  REQUIRE(time == 456);
+  REQUIRE(log == 789);
+  REQUIRE(trip == 1011);
+}
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+TEST_CASE("PGN128275 preserves deprecated raw distance log calls") {
+  const uint32_t values[] = {0, 1234567, 0xfffffffe, N2kUInt32NA};
+  for (uint32_t value : values) {
+    tN2kMsg msg, aliasMsg;
+    SetN2kPGN128275(msg, 20000, 43200, value, value);
+    SetN2kDistanceLog(aliasMsg, 20000, 43200, value, value);
+    REQUIRE(msg.DataLen == aliasMsg.DataLen);
+    for (int index = 0; index < msg.DataLen; ++index) {
+      REQUIRE(msg.Data[index] == aliasMsg.Data[index]);
+    }
+    uint16_t day;
+    double time;
+    uint32_t log, trip;
+    REQUIRE(ParseN2kPGN128275(msg, day, time, log, trip));
+    REQUIRE(log == value);
+    REQUIRE(trip == value);
+    REQUIRE(ParseN2kDistanceLog(aliasMsg, day, time, log, trip));
+    REQUIRE(log == value);
+    REQUIRE(trip == value);
+    double distance, tripDistance;
+    REQUIRE(ParseN2kDistanceLog(msg, day, time, distance, tripDistance));
+    const double expected = value == N2kUInt32NA ? N2kDoubleNA : double(value);
+    REQUIRE(distance == expected);
+    REQUIRE(tripDistance == expected);
+  }
+}
+
+#pragma GCC diagnostic pop
+
 TEST_CASE("PGN127237 HeadingTrackControl")
 {
   tN2kMsg N2kMsg;

@@ -2717,7 +2717,11 @@ inline bool ParseN2kWaterDepth(const tN2kMsg &N2kMsg, unsigned char &SID, double
  *                              traveled through the water since last reset 
  *                              in units of 1 m.
  */
-void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog);
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, double Log, double TripLog);
+
+// Legacy raw counters: migrate to double distances and N2kDoubleNA.
+// Use double literals (e.g. 0.0) to select the new setter unambiguously.
+void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) __attribute__((deprecated("Use double distances and N2kDoubleNA")));
 
 /************************************************************************//**
  * \brief Setting up Message "Distance log" - PGN 128275
@@ -2726,9 +2730,12 @@ void SetN2kPGN128275(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinc
  * Alias of PGN 128275. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref SetN2kPGN128275
   */
-inline void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog) {
+inline void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, double Log, double TripLog) {
   SetN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
 }
+
+void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double SecondsSinceMidnight, uint32_t Log, uint32_t TripLog)
+  __attribute__((deprecated("Use double distances and N2kDoubleNA")));
 
 /************************************************************************//**
  * \brief Parsing the content of message PGN 128275 "Distance log"
@@ -2752,7 +2759,9 @@ inline void SetN2kDistanceLog(tN2kMsg &N2kMsg, uint16_t DaysSince1970, double Se
  * \return false    Parsing of PGN Message aborted
  *
  */
-bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog);
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, double &Log, double &TripLog);
+
+bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) __attribute__((deprecated("Use double distances and N2kDoubleNA")));
 
 /************************************************************************//**
  * \brief Parsing the content of a "Distance log" 
@@ -2762,9 +2771,12 @@ bool ParseN2kPGN128275(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &S
  * Alias of PGN 128275. This alias was introduced to improve the readability
  * of the source code. See parameter details on \ref ParseN2kPGN128275 
  */
-inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog) {
+inline bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, double &Log, double &TripLog) {
   return ParseN2kPGN128275(N2kMsg,DaysSince1970,SecondsSinceMidnight,Log,TripLog);
 }
+
+bool ParseN2kDistanceLog(const tN2kMsg &N2kMsg, uint16_t &DaysSince1970, double &SecondsSinceMidnight, uint32_t &Log, uint32_t &TripLog)
+  __attribute__((deprecated("Use double distances and N2kDoubleNA")));
 
 /************************************************************************//**
  * \brief Setting up PGN 128776 Message "Anchor Windlass Control Status"
