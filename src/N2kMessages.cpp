@@ -822,7 +822,7 @@ bool ParseN2kPGN127510(const tN2kMsg &N2kMsg, unsigned char &ChargerInsance, uns
   v = N2kMsg.GetByte(Index);
   OverChargeEnable = (tN2kOnOff)( (v>>6)&0x03);
   EqualizationEnabled = (tN2kOnOff)((v>>4)&0x03);
-  BatteryTemperature = (tBattTempNoSensor)(v&0x04);
+  BatteryTemperature = (tBattTempNoSensor)(v&0x0f);
   EqualizationTimeRemaining = N2kMsg.Get2ByteUInt(Index);
 
   return true;
@@ -857,7 +857,8 @@ bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBa
   v = N2kMsg.GetByte(Index); BatNominalVoltage=(tN2kBatNomVolt)(v & 0x0f);  BatChemistry=(tN2kBatChem)((v>>4) & 0x0f);
   BatCapacity=N2kMsg.Get2ByteUDouble(3600,Index);
   BatTemperatureCoefficient=N2kMsg.GetByte(Index);
-  PeukertExponent=N2kMsg.Get1ByteUDouble(0.002,Index); PeukertExponent+=1;
+  PeukertExponent=N2kMsg.Get1ByteUDouble(0.002,Index);
+  if (!N2kIsNA(PeukertExponent)) PeukertExponent+=1;
   ChargeEfficiencyFactor=N2kMsg.GetByte(Index);
 
   return true;
@@ -1270,7 +1271,7 @@ bool ParseN2kPGN129029(const tN2kMsg &N2kMsg, unsigned char &SID, uint16_t &Days
   if (N2kMsg.PGN!=129029L) return false;
   int Index=0;
   unsigned char vb;
-  int16_t vi;
+  uint16_t vi;
 
   SID=N2kMsg.GetByte(Index);
   DaysSince1970=N2kMsg.Get2ByteUInt(Index);
@@ -1705,10 +1706,10 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double L
 
     len = 12 + strlen(Name); // This is estimation since unicode will require more.
 
-    if ( N2kMsg.DataLen + len < N2kMsg.MaxDataLen ) {
+    if ( N2kMsg.DataLen + len <= N2kMsg.MaxDataLen ) {
         N2kMsg.Add2ByteUInt(ID);                          // add the new item
         N2kMsg.AddVarStr(Name,MaxRouteOrWPNameLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
-        if ( N2kMsg.DataLen+8<N2kMsg.MaxDataLen ) {
+        if ( N2kMsg.DataLen+8<=N2kMsg.MaxDataLen ) {
           N2kMsg.Add4ByteDouble(Latitude,1e-07);
           N2kMsg.Add4ByteDouble(Longitude,1e-07);
 
@@ -1891,7 +1892,7 @@ bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
     else
         len = 13;
 
-    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+    if (N2kMsg.DataLen + len <= N2kMsg.MaxDataLen) {
         NumItemsIdx = 2;
         NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
         NumItemsIdx = 2;

@@ -29,6 +29,13 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const double radToDeg=180.0/M_PI;
 
+// Never turn an unavailable angle into a numeric heading by adding an offset.
+static double OffsetHeading(double heading, double offset) {
+  if ( N2kIsNA(heading) || N2kIsNA(offset) ) return N2kDoubleNA;
+  double result=fmod(heading+offset,2*M_PI);
+  return result<0 ? result+2*M_PI : result;
+}
+
 //*****************************************************************************
 void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
   switch (N2kMsg.PGN) {
@@ -47,7 +54,7 @@ void tN2kDataToNMEA0183::HandleMsg(const tN2kMsg &N2kMsg) {
 //*****************************************************************************
 void tN2kDataToNMEA0183::Update() {
   SendRMC();
-  if ( LastHeadingTime+2000<millis() ) Heading=N2kDoubleNA;
+  if ( LastHeadingTime+2000<millis() ) { Heading=N2kDoubleNA; MagneticHeading=N2kDoubleNA; }
   if ( LastCOGSOGTime+2000<millis() ) { COG=N2kDoubleNA; SOG=N2kDoubleNA; }
   if ( LastPositionTime+4000<millis() ) { Latitude=N2kDoubleNA; Longitude=N2kDoubleNA; }
   if ( LastWindTime+2000<millis() ) { WindSpeed=N2kDoubleNA; WindAngle=N2kDoubleNA; }
@@ -86,18 +93,40 @@ tNMEA0183Msg NMEA0183Msg;
 void tN2kDataToNMEA0183::HandleHeading(const tN2kMsg &N2kMsg) {
 unsigned char SID;
 tN2kHeadingReference ref;
-double _Deviation=0;
+double _Deviation;
 double _Variation;
+double _Heading;
 tNMEA0183Msg NMEA0183Msg;
 
-  if ( ParseN2kHeading(N2kMsg, SID, Heading, _Deviation, _Variation, ref) ) {
+  if ( ParseN2kHeading(N2kMsg, SID, _Heading, _Deviation, _Variation, ref) ) {
+    if ( ref!=N2khr_true && ref!=N2khr_magnetic ) {
+      Heading=N2kDoubleNA;
+      MagneticHeading=N2kDoubleNA;
+      return;
+    }
+    if ( !N2kIsNA(_Variation) ) Variation=_Variation;
+    double CompassHeading=N2kDoubleNA;
     if ( ref==N2khr_magnetic ) {
-      if ( !N2kIsNA(_Variation) ) Variation=_Variation; // Update Variation
-      if ( !N2kIsNA(Heading) && !N2kIsNA(Variation) ) Heading-=Variation;
+      // Keep deviation for a following true-heading message, where it may be NA.
+      Deviation=N2kIsNA(_Deviation) ? 0 : _Deviation;
+      CompassHeading=_Heading;
+      MagneticHeading=OffsetHeading(_Heading,Deviation);
+      Heading=OffsetHeading(MagneticHeading,Variation);
+    } else {
+      Heading=_Heading;
+      MagneticHeading=OffsetHeading(Heading,N2kIsNA(Variation) ? N2kDoubleNA : -Variation);
+      CompassHeading=OffsetHeading(MagneticHeading,-Deviation);
     }
     LastHeadingTime=millis();
-    if ( NMEA0183SetHDG(NMEA0183Msg,Heading,_Deviation,Variation) ) {
-      SendMessage(NMEA0183Msg);
+    // Send one sentence in the available reference, not true heading labelled HDG.
+    if ( !N2kIsNA(CompassHeading) ) {
+      if ( !N2kIsNA(Variation) ) {
+        if ( NMEA0183SetHDG(NMEA0183Msg,CompassHeading,Deviation,Variation) ) SendMessage(NMEA0183Msg);
+      } else {
+        if ( NMEA0183SetHDM(NMEA0183Msg,MagneticHeading) ) SendMessage(NMEA0183Msg);
+      }
+    } else if ( !N2kIsNA(Heading) ) {
+      if ( NMEA0183SetHDT(NMEA0183Msg,Heading) ) SendMessage(NMEA0183Msg);
     }
   }
 }
@@ -119,7 +148,6 @@ tN2kSpeedWaterReferenceType SWRT;
 
   if ( ParseN2kBoatSpeed(N2kMsg,SID,WaterReferenced,GroundReferenced,SWRT) ) {
     tNMEA0183Msg NMEA0183Msg;
-    double MagneticHeading=( !N2kIsNA(Heading) && !N2kIsNA(Variation)?Heading+Variation: NMEA0183DoubleNA);
     if ( NMEA0183SetVHW(NMEA0183Msg,Heading,MagneticHeading,WaterReferenced) ) {
       SendMessage(NMEA0183Msg);
     }
@@ -160,10 +188,14 @@ tNMEA0183Msg NMEA0183Msg;
 
   if ( ParseN2kCOGSOGRapid(N2kMsg,SID,HeadingReference,COG,SOG) ) {
     LastCOGSOGTime=millis();
-    double MCOG=( !N2kIsNA(COG) && !N2kIsNA(Variation)?COG-Variation:NMEA0183DoubleNA );
+    double MCOG=NMEA0183DoubleNA;
     if ( HeadingReference==N2khr_magnetic ) {
       MCOG=COG;
-      if ( !N2kIsNA(Variation) ) COG-=Variation;
+      COG=OffsetHeading(COG,Variation);
+    } else if ( HeadingReference==N2khr_true ) {
+      MCOG=OffsetHeading(COG,N2kIsNA(Variation) ? N2kDoubleNA : -Variation);
+    } else {
+      COG=N2kDoubleNA;
     }
     if ( NMEA0183SetVTG(NMEA0183Msg,COG,MCOG,SOG) ) {
       SendMessage(NMEA0183Msg);

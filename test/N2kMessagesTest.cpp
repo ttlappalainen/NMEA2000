@@ -72,6 +72,27 @@ TEST_CASE("PGN127751 preserves negative DC current", "[signed24]") {
 // Each test case deals with a single PGN type.
 // Test case sets arbitrary parameter values and checks if the same values are parsed back. Not all messages are tested.
 
+TEST_CASE("PGN129029 preserves twelve-bit reference station IDs") {
+  const uint16_t ids[] = {0, 2047, 2048, 3000, 4094};
+  for (uint16_t expected : ids) {
+    tN2kMsg msg;
+    SetN2kPGN129029(msg, 1, 20000, 43200, 50, -1, 10,
+      N2kGNSSt_GPS, N2kGNSSm_GNSSfix, 8, 1, 2, 3, 1,
+      N2kGNSSt_GPS, expected, 0.5);
+    unsigned char sid, satellites, stations;
+    uint16_t date, id;
+    double time, lat, lon, altitude, hdop, pdop, geoid, age;
+    tN2kGNSStype type, reference;
+    tN2kGNSSmethod method;
+    REQUIRE(ParseN2kPGN129029(msg, sid, date, time, lat, lon, altitude,
+      type, method, satellites, hdop, pdop, geoid, stations, reference, id, age));
+    REQUIRE(id == expected);
+    REQUIRE(reference == N2kGNSSt_GPS);
+    REQUIRE(age == Approx(0.5));
+  }
+}
+
+
 TEST_CASE("PGN129039 AIS Class B Position")
 {
 
@@ -542,6 +563,44 @@ TEST_CASE("PGN127237 HeadingTrackControl")
   }
 }
 
+TEST_CASE("Waypoint records may fill the message exactly") {
+  tN2kMsg msg;
+  SECTION("Route waypoints") {
+    SetN2kPGN129285(msg, 0, 0, 0, N2kdir_forward, "", (tN2kGenericStatusPair)0);
+    for (unsigned i = 0; i < 16; ++i)
+      REQUIRE(AppendN2kPGN129285(msg, i, "", 50.0, -1.0));
+    const int remaining = msg.MaxDataLen - msg.DataLen;
+    REQUIRE(remaining >= 12);
+    std::string name(remaining - 12, 'W');
+    REQUIRE(AppendN2kPGN129285(msg, 16, name.c_str(), 50.0, -1.0));
+    const int maximum = msg.MaxDataLen;
+    REQUIRE(msg.DataLen == maximum);
+    int index = 2;
+    REQUIRE(msg.Get2ByteUInt(index) == 17);
+    const int length = msg.DataLen;
+    REQUIRE_FALSE(AppendN2kPGN129285(msg, 17, "", 50.0, -1.0));
+    REQUIRE(msg.DataLen == length);
+  }
+  SECTION("Waypoint database") {
+    SetN2kPGN130074(msg, 0, 20, 0);
+    char empty[] = "";
+    unsigned count = 0;
+    while (msg.MaxDataLen - msg.DataLen > 42)
+      REQUIRE(AppendN2kPGN130074(msg, count++, empty, 50.0, -1.0));
+    const int remaining = msg.MaxDataLen - msg.DataLen;
+    std::string name(remaining - 12, 'W');
+    REQUIRE(AppendN2kPGN130074(msg, count++, &name[0], 50.0, -1.0));
+    const int maximum = msg.MaxDataLen;
+    REQUIRE(msg.DataLen == maximum);
+    int index = 2;
+    REQUIRE(msg.Get2ByteUInt(index) == count);
+    REQUIRE_FALSE(AppendN2kPGN130074(msg, count, empty, 50.0, -1.0));
+    REQUIRE(msg.DataLen == maximum);
+  }
+
+}
+
+
 TEST_CASE("PGN129285 Route/WP information")
 {
    tN2kMsg N2kMsg1, N2kMsg2;
@@ -650,6 +709,25 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
   }
 }
 
+TEST_CASE("PGN127513 preserves unavailable Peukert exponents") {
+  const double values[] = {1.0, 1.2, N2kDoubleNA};
+  for (double value : values) {
+    tN2kMsg msg;
+    SetN2kPGN127513(msg, 0, (tN2kBatType)0, (tN2kBatEqSupport)0,
+      (tN2kBatNomVolt)0, (tN2kBatChem)0, 360000, 0, value, 95);
+    unsigned char instance;
+    tN2kBatType type; tN2kBatEqSupport equalization;
+    tN2kBatNomVolt voltage; tN2kBatChem chemistry;
+    double capacity, exponent;
+    int8_t temperature, efficiency;
+    REQUIRE(ParseN2kPGN127513(msg, instance, type, equalization,
+      voltage, chemistry, capacity, temperature, exponent, efficiency));
+    if (N2kIsNA(value)) REQUIRE(N2kIsNA(exponent));
+    else REQUIRE(exponent == Approx(value));
+  }
+}
+
+
 TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
 {
   const double capacities[] = {N2kDoubleNA, 0, 100*3600.0, 40000*3600.0};
@@ -674,6 +752,28 @@ TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
     }
   }
 }
+
+TEST_CASE("PGN127510 preserves battery temperature presets") {
+  const tBattTempNoSensor presets[] = {N2kBT_cold, N2kBT_warm, N2kBT_hot,
+                                      N2kBT_Error, N2kBT_NotAvailable};
+  for (auto expected : presets) {
+    tN2kMsg msg;
+    SetN2kPGN127510(msg, 1, 2, (tN2kOnOff)1, 80,
+      (tN2kChargingAlgorithm)0, (tN2kChargerMode)0, expected,
+      (tN2kOnOff)0, (tN2kOnOff)1, 50);
+    unsigned char charger, battery, limit;
+    tN2kOnOff enabled, equalization, overcharge;
+    tN2kChargingAlgorithm algorithm;
+    tN2kChargerMode mode;
+    tBattTempNoSensor temperature;
+    uint16_t remaining;
+    REQUIRE(ParseN2kPGN127510(msg, charger, battery, enabled, limit,
+      algorithm, mode, temperature, equalization, overcharge, remaining));
+    REQUIRE(temperature == expected);
+    REQUIRE(overcharge == (tN2kOnOff)1);
+  }
+}
+
 
 TEST_CASE("PGN127507 charger equalization time uses minute resolution")
 {
