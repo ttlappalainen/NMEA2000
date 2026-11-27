@@ -548,6 +548,44 @@ TEST_CASE("PGN127237 HeadingTrackControl")
   }
 }
 
+TEST_CASE("Waypoint records may fill the message exactly") {
+  tN2kMsg msg;
+  SECTION("Route waypoints") {
+    SetN2kPGN129285(msg, 0, 0, 0, N2kdir_forward, "", (tN2kGenericStatusPair)0);
+    for (unsigned i = 0; i < 16; ++i)
+      REQUIRE(AppendN2kPGN129285(msg, i, "", 50.0, -1.0));
+    const int remaining = msg.MaxDataLen - msg.DataLen;
+    REQUIRE(remaining >= 12);
+    std::string name(remaining - 12, 'W');
+    REQUIRE(AppendN2kPGN129285(msg, 16, name.c_str(), 50.0, -1.0));
+    const int maximum = msg.MaxDataLen;
+    REQUIRE(msg.DataLen == maximum);
+    int index = 2;
+    REQUIRE(msg.Get2ByteUInt(index) == 17);
+    const int length = msg.DataLen;
+    REQUIRE_FALSE(AppendN2kPGN129285(msg, 17, "", 50.0, -1.0));
+    REQUIRE(msg.DataLen == length);
+  }
+  SECTION("Waypoint database") {
+    SetN2kPGN130074(msg, 0, 20, 0);
+    char empty[] = "";
+    unsigned count = 0;
+    while (msg.MaxDataLen - msg.DataLen > 42)
+      REQUIRE(AppendN2kPGN130074(msg, count++, empty, 50.0, -1.0));
+    const int remaining = msg.MaxDataLen - msg.DataLen;
+    std::string name(remaining - 12, 'W');
+    REQUIRE(AppendN2kPGN130074(msg, count++, &name[0], 50.0, -1.0));
+    const int maximum = msg.MaxDataLen;
+    REQUIRE(msg.DataLen == maximum);
+    int index = 2;
+    REQUIRE(msg.Get2ByteUInt(index) == count);
+    REQUIRE_FALSE(AppendN2kPGN130074(msg, count, empty, 50.0, -1.0));
+    REQUIRE(msg.DataLen == maximum);
+  }
+
+}
+
+
 TEST_CASE("PGN129285 Route/WP information")
 {
    tN2kMsg N2kMsg1, N2kMsg2;

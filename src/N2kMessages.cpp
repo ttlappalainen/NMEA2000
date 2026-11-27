@@ -1706,10 +1706,10 @@ bool AppendN2kPGN129285(tN2kMsg &N2kMsg, uint16_t ID, const char* Name, double L
 
     len = 12 + strlen(Name); // This is estimation since unicode will require more.
 
-    if ( N2kMsg.DataLen + len < N2kMsg.MaxDataLen ) {
+    if ( N2kMsg.DataLen + len <= N2kMsg.MaxDataLen ) {
         N2kMsg.Add2ByteUInt(ID);                          // add the new item
         N2kMsg.AddVarStr(Name,MaxRouteOrWPNameLength,tN2kMsg::vss_SupportUnicode,tN2kMsg::vsl_UseCharacters);
-        if ( N2kMsg.DataLen+8<N2kMsg.MaxDataLen ) {
+        if ( N2kMsg.DataLen+8<=N2kMsg.MaxDataLen ) {
           N2kMsg.Add4ByteDouble(Latitude,1e-07);
           N2kMsg.Add4ByteDouble(Longitude,1e-07);
 
@@ -1892,7 +1892,7 @@ bool AppendN2kPGN130074(tN2kMsg &N2kMsg, uint16_t ID, char* Name, double Latitud
     else
         len = 13;
 
-    if (N2kMsg.DataLen + len < N2kMsg.MaxDataLen) {
+    if (N2kMsg.DataLen + len <= N2kMsg.MaxDataLen) {
         NumItemsIdx = 2;
         NumItems = N2kMsg.Get2ByteUInt(NumItemsIdx);      // get and increment the number of items
         NumItemsIdx = 2;
