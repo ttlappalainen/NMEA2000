@@ -656,6 +656,25 @@ TEST_CASE("PGN127501 Binary status report and PGN127502 Switch Bank Control")
   }
 }
 
+TEST_CASE("PGN127513 preserves unavailable Peukert exponents") {
+  const double values[] = {1.0, 1.2, N2kDoubleNA};
+  for (double value : values) {
+    tN2kMsg msg;
+    SetN2kPGN127513(msg, 0, (tN2kBatType)0, (tN2kBatEqSupport)0,
+      (tN2kBatNomVolt)0, (tN2kBatChem)0, 360000, 0, value, 95);
+    unsigned char instance;
+    tN2kBatType type; tN2kBatEqSupport equalization;
+    tN2kBatNomVolt voltage; tN2kBatChem chemistry;
+    double capacity, exponent;
+    int8_t temperature, efficiency;
+    REQUIRE(ParseN2kPGN127513(msg, instance, type, equalization,
+      voltage, chemistry, capacity, temperature, exponent, efficiency));
+    if (N2kIsNA(value)) REQUIRE(N2kIsNA(exponent));
+    else REQUIRE(exponent == Approx(value));
+  }
+}
+
+
 TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
 {
   const double capacities[] = {N2kDoubleNA, 0, 100*3600.0, 40000*3600.0};

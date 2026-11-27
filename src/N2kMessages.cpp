@@ -857,7 +857,8 @@ bool ParseN2kPGN127513(const tN2kMsg &N2kMsg, unsigned char &BatInstance, tN2kBa
   v = N2kMsg.GetByte(Index); BatNominalVoltage=(tN2kBatNomVolt)(v & 0x0f);  BatChemistry=(tN2kBatChem)((v>>4) & 0x0f);
   BatCapacity=N2kMsg.Get2ByteUDouble(3600,Index);
   BatTemperatureCoefficient=N2kMsg.GetByte(Index);
-  PeukertExponent=N2kMsg.Get1ByteUDouble(0.002,Index); PeukertExponent+=1;
+  PeukertExponent=N2kMsg.Get1ByteUDouble(0.002,Index);
+  if (!N2kIsNA(PeukertExponent)) PeukertExponent+=1;
   ChargeEfficiencyFactor=N2kMsg.GetByte(Index);
 
   return true;
