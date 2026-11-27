@@ -822,7 +822,7 @@ bool ParseN2kPGN127510(const tN2kMsg &N2kMsg, unsigned char &ChargerInsance, uns
   v = N2kMsg.GetByte(Index);
   OverChargeEnable = (tN2kOnOff)( (v>>6)&0x03);
   EqualizationEnabled = (tN2kOnOff)((v>>4)&0x03);
-  BatteryTemperature = (tBattTempNoSensor)(v&0x04);
+  BatteryTemperature = (tBattTempNoSensor)(v&0x0f);
   EqualizationTimeRemaining = N2kMsg.Get2ByteUInt(Index);
 
   return true;

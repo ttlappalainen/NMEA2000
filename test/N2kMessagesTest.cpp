@@ -681,6 +681,28 @@ TEST_CASE("PGN127513 battery capacity uses an unsigned value and NA sentinel")
   }
 }
 
+TEST_CASE("PGN127510 preserves battery temperature presets") {
+  const tBattTempNoSensor presets[] = {N2kBT_cold, N2kBT_warm, N2kBT_hot,
+                                      N2kBT_Error, N2kBT_NotAvailable};
+  for (auto expected : presets) {
+    tN2kMsg msg;
+    SetN2kPGN127510(msg, 1, 2, (tN2kOnOff)1, 80,
+      (tN2kChargingAlgorithm)0, (tN2kChargerMode)0, expected,
+      (tN2kOnOff)0, (tN2kOnOff)1, 50);
+    unsigned char charger, battery, limit;
+    tN2kOnOff enabled, equalization, overcharge;
+    tN2kChargingAlgorithm algorithm;
+    tN2kChargerMode mode;
+    tBattTempNoSensor temperature;
+    uint16_t remaining;
+    REQUIRE(ParseN2kPGN127510(msg, charger, battery, enabled, limit,
+      algorithm, mode, temperature, equalization, overcharge, remaining));
+    REQUIRE(temperature == expected);
+    REQUIRE(overcharge == (tN2kOnOff)1);
+  }
+}
+
+
 TEST_CASE("PGN127507 charger equalization time uses minute resolution")
 {
   tN2kMsg msg;
